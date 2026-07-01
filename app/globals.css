@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  min-height: 100%;
+  background-color: #0F172A;
+  color: #f1f5f9;
+}
+
+@layer base {
+  * {
+    border-color: #334155;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-lg transition-colors;
+  }
+  .btn-outline {
+    @apply border border-slate-600 hover:border-slate-400 text-slate-300 hover:text-white font-medium px-5 py-2.5 rounded-lg transition-colors;
+  }
+  .card {
+    @apply bg-card rounded-xl border border-slate-700/50 p-6;
+  }
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+}
