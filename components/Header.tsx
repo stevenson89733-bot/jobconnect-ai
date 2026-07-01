@@ -10,7 +10,7 @@ export default function Header({ userEmail }: { userEmail?: string | null }) {
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-slate-800">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-bold text-xl">
-          <span className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white text-sm font-black">J</span>
+          <img src="/logo.png" alt="JobConnect AI" height={40} className="object-contain" style={{ height: 40, width: 'auto' }} />
           <span className="text-white">JobConnect <span className="text-primary">AI</span></span>
         </Link>
 
