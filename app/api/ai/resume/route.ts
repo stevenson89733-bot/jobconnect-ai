@@ -45,10 +45,10 @@ Return a JSON object with this exact structure:
     model: 'gpt-4o',
     messages: [{ role: 'user', content: prompt }],
     max_tokens: 2000,
-    response_format: { type: 'json_object' },
   })
 
-  const content = res.choices?.[0]?.message?.content ?? '{}'
-  const parsed = JSON.parse(content)
+  const raw = res.choices?.[0]?.message?.content ?? '{}'
+  const jsonMatch = raw.match(/\{[\s\S]*\}/)
+  const parsed = JSON.parse(jsonMatch ? jsonMatch[0] : raw)
   return NextResponse.json(parsed)
 }
