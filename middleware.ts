@@ -1,47 +1,35 @@
-import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? ''
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''
-const supabaseReady = supabaseUrl.startsWith('https://') && supabaseKey.length > 20
+/**
+ * Lightweight Edge-compatible middleware for route protection.
+ * Checks for the Supabase session cookie without importing the
+ * Supabase SDK (which uses Node.js APIs incompatible with Edge runtime).
+ * Full token validation happens in each server component via lib/supabase/server.ts.
+ */
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
 
-// Step 9: protect /candidate and /recruiter — redirect to /login if no session
-export async function middleware(request: NextRequest) {
-  // Skip auth check until Supabase env vars are configured
-  if (!supabaseReady) return NextResponse.next({ request })
+  // Derive the cookie name from the project ref in the Supabase URL
+  // e.g. https://fqlrhybynsdlbtamitay.supabase.co → sb-fqlrhybynsdlbtamitay-auth-token
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? ''
+  const projectRef = supabaseUrl.match(/https:\/\/([^.]+)\.supabase\.co/)?.[1]
 
-  let supabaseResponse = NextResponse.next({ request })
+  // If Supabase isn't configured yet, allow all requests through
+  if (!projectRef) return NextResponse.next()
 
-  const supabase = createServerClient(supabaseUrl, supabaseKey,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll()
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
-          supabaseResponse = NextResponse.next({ request })
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
-          )
-        },
-      },
-    }
-  )
+  const cookieName = `sb-${projectRef}-auth-token`
+  const hasSession = request.cookies.has(cookieName)
 
-  // Refresh session token on every request
-  const { data: { user } } = await supabase.auth.getUser()
-
-  if (!user) {
+  if (!hasSession) {
     const loginUrl = request.nextUrl.clone()
     loginUrl.pathname = '/login'
+    loginUrl.searchParams.set('redirectTo', pathname)
     return NextResponse.redirect(loginUrl)
   }
 
-  return supabaseResponse
+  return NextResponse.next()
 }
 
 export const config = {
-  // Protect candidate dashboard, employer dashboard, and generic dashboard
   matcher: ['/candidate/:path*', '/recruiter/:path*', '/dashboard/:path*'],
 }
