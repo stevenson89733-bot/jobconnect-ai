@@ -1,13 +1,32 @@
+import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
-import prisma from '../../../lib/prisma'
 
 export async function GET() {
-  const jobs = await prisma.job.findMany({ take: 20 })
+  const supabase = createClient()
+  const { data: jobs, error } = await supabase
+    .from('jobs')
+    .select('*')
+    .eq('is_active', true)
+    .order('is_featured', { ascending: false })
+    .order('created_at', { ascending: false })
+    .limit(20)
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json(jobs)
 }
 
 export async function POST(req: Request) {
+  const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
   const body = await req.json()
-  const job = await prisma.job.create({ data: body })
-  return NextResponse.json(job)
+  const { data: job, error } = await supabase
+    .from('jobs')
+    .insert({ ...body, posted_by: user.id })
+    .select()
+    .single()
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  return NextResponse.json(job, { status: 201 })
 }
