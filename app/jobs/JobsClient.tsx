@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
+import ApplyModal from '@/components/ApplyModal'
 
 export type Job = {
   id: string
@@ -49,13 +50,21 @@ export default function JobsClient({
   jobs: Job[]
   initialQuery?: string
 }) {
-  const [query, setQuery]     = useState(initialQuery)
+  const [query, setQuery]       = useState(initialQuery)
   const [category, setCategory] = useState('All')
   const [jobType, setJobType]   = useState('All')
   const [company, setCompany]   = useState('All')
+  const [appliedIds, setAppliedIds] = useState<Set<string>>(new Set())
 
-  // Sync if parent changes initialQuery (e.g. back-navigation)
   useEffect(() => { setQuery(initialQuery) }, [initialQuery])
+
+  // Load jobs the current user already applied to (silently ignored if not logged in)
+  useEffect(() => {
+    fetch('/api/applications')
+      .then(r => r.ok ? r.json() : [])
+      .then((ids: string[]) => setAppliedIds(new Set(ids)))
+      .catch(() => {})
+  }, [])
 
   const companies = ['All', ...Array.from(new Set(jobs.map(j => j.company_name))).sort()]
 
@@ -230,9 +239,12 @@ export default function JobsClient({
                       </span>
                     </div>
 
-                    <button className="btn-primary text-xs py-1.5 px-4 whitespace-nowrap">
-                      Apply Now
-                    </button>
+                    <ApplyModal
+                      jobId={job.id}
+                      jobTitle={job.title}
+                      company={job.company_name}
+                      alreadyApplied={appliedIds.has(job.id)}
+                    />
                   </div>
 
                 </div>

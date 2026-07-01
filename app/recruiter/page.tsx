@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { createClient } from '@/lib/supabase/server'
 
 const METRICS = [
   { label: 'Active Job Posts', value: '8', delta: '+2 this month', icon: '📋', color: 'text-primary' },
@@ -20,7 +21,61 @@ const TOP_CANDIDATES = [
   { name: 'Marcus Lee', role: 'Product Designer', match: 91, location: 'New York', skills: ['Figma', 'UX', 'Design Systems'] },
 ]
 
-export default function EmployerDashboard() {
+type Application = {
+  id: string
+  message: string | null
+  status: string
+  created_at: string
+  candidate_id: string
+  profiles: { full_name: string; email: string }[] | null
+  jobs: { id: string; title: string }[] | null
+}
+
+function timeAgo(dateStr: string) {
+  const diff = Date.now() - new Date(dateStr).getTime()
+  const days = Math.floor(diff / 86400000)
+  if (days === 0) return 'Today'
+  if (days === 1) return '1d ago'
+  if (days < 7) return `${days}d ago`
+  return `${Math.floor(days / 7)}w ago`
+}
+
+export default async function EmployerDashboard() {
+  // Fetch real applications for this employer's jobs
+  let applicationsByJob: Record<string, { jobTitle: string; applications: Application[] }> = {}
+
+  try {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (user) {
+      const { data } = await supabase
+        .from('applications')
+        .select(`
+          id, message, status, created_at, candidate_id,
+          profiles!candidate_id ( full_name, email ),
+          jobs!job_id ( id, title )
+        `)
+        .order('created_at', { ascending: false })
+
+      if (data) {
+        for (const app of data as Application[]) {
+          const jobRow = Array.isArray(app.jobs) ? app.jobs[0] : app.jobs
+          const jobId = jobRow?.id ?? 'unknown'
+          const jobTitle = jobRow?.title ?? 'Unknown Job'
+          if (!applicationsByJob[jobId]) {
+            applicationsByJob[jobId] = { jobTitle, applications: [] }
+          }
+          applicationsByJob[jobId].applications.push(app)
+        }
+      }
+    }
+  } catch {
+    // Supabase not configured or table doesn't exist yet — silently skip
+  }
+
+  const hasApplications = Object.keys(applicationsByJob).length > 0
+
   return (
     <div className="max-w-7xl mx-auto px-6 py-10">
       {/* Header */}
@@ -52,6 +107,70 @@ export default function EmployerDashboard() {
             <div className="text-xs text-slate-500">{m.label}</div>
           </div>
         ))}
+      </div>
+
+      {/* Real Applications Section */}
+      <div className="card mb-6">
+        <div className="flex items-center justify-between mb-5">
+          <div>
+            <h2 className="font-semibold text-white">Applications Received</h2>
+            <p className="text-xs text-slate-500 mt-0.5">Real candidates who applied to your job postings</p>
+          </div>
+          {hasApplications && (
+            <span className="badge bg-accent/20 text-accent text-xs">
+              {Object.values(applicationsByJob).reduce((n, g) => n + g.applications.length, 0)} total
+            </span>
+          )}
+        </div>
+
+        {!hasApplications ? (
+          <div className="text-center py-10 text-slate-500">
+            <div className="text-3xl mb-2">📭</div>
+            <p className="text-sm text-slate-400">No applications yet.</p>
+            <p className="text-xs mt-1">
+              Make sure you've run <code className="bg-slate-800 px-1.5 py-0.5 rounded text-slate-300">supabase/applications.sql</code> in your Supabase SQL Editor.
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-6">
+            {Object.entries(applicationsByJob).map(([jobId, group]) => (
+              <div key={jobId}>
+                <h3 className="text-sm font-semibold text-primary mb-3 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block" />
+                  {group.jobTitle}
+                  <span className="text-xs text-slate-500 font-normal">({group.applications.length})</span>
+                </h3>
+                <div className="space-y-2">
+                  {group.applications.map(app => (
+                    <div key={app.id} className="flex items-start gap-4 p-3 bg-slate-800/50 rounded-xl">
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center text-white text-xs font-bold shrink-0">
+                        {(() => { const p = Array.isArray(app.profiles) ? app.profiles[0] : app.profiles; return (p?.full_name ?? p?.email ?? '?')[0].toUpperCase() })()}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        {(() => { const p = Array.isArray(app.profiles) ? app.profiles[0] : app.profiles; return (
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-sm font-medium text-white">
+                            {p?.full_name ?? 'Candidate'}
+                          </span>
+                          <span className="text-xs text-slate-500">{p?.email}</span>
+                          <span className="text-xs text-slate-600 ml-auto">{timeAgo(app.created_at)}</span>
+                        </div>
+                        ) })()}
+                        {app.message && (
+                          <p className="text-xs text-slate-400 mt-1 line-clamp-2">{app.message}</p>
+                        )}
+                        {!app.message && (
+                          <p className="text-xs text-slate-600 mt-1 italic">No message provided</p>
+                        )}
+                      </div>
+                      <span className="badge bg-blue-900/40 text-blue-400 text-xs shrink-0">{app.status}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="grid xl:grid-cols-3 gap-6 mb-6">
