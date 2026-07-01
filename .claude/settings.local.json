@@ -11,7 +11,8 @@
       "Bash(git push *)",
       "Bash(git rm *)",
       "Bash(rm /Users/stevensonjean-louis/Projects/jobconnect-ai/pages/api/auth/\\\\[...nextauth\\\\].ts && rmdir /Users/stevensonjean-louis/Projects/jobconnect-ai/pages/api/auth/ 2>/dev/null; rmdir /Users/stevensonjean-louis/Projects/jobconnect-ai/pages/api/ 2>/dev/null; rmdir /Users/stevensonjean-louis/Projects/jobconnect-ai/pages/ 2>/dev/null; echo \"done\")",
-      "Bash(npm uninstall *)"
+      "Bash(npm uninstall *)",
+      "Bash(npm run *)"
     ]
   }
 }
