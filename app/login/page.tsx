@@ -1,6 +1,10 @@
 import Link from 'next/link'
 import { signIn } from '@/app/actions/auth'
 import { Suspense } from 'react'
+import { redirect } from 'next/navigation'
+import { createClient } from '@/lib/supabase/server'
+
+export const dynamic = 'force-dynamic'
 
 async function LoginError({ error }: { error?: string }) {
   if (!error) return null
@@ -73,7 +77,13 @@ function LoginForm({ error }: { error?: string }) {
   )
 }
 
-export default function Login({ searchParams }: { searchParams: { error?: string } }) {
+export default async function Login({ searchParams }: { searchParams: { error?: string } }) {
+  try {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (user) redirect('/dashboard')
+  } catch {}
+
   return (
     <Suspense>
       <LoginForm error={searchParams.error} />
