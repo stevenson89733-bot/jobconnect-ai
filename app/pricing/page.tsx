@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 const FEATURES_FREE = [
   'Browse all remote jobs',
@@ -21,6 +21,7 @@ const FEATURES_PREMIUM = [
 ]
 
 export default function PricingPage() {
+  const router = useRouter()
   const searchParams = useSearchParams()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -30,6 +31,10 @@ export default function PricingPage() {
   useEffect(() => {
     if (canceled) setError('Payment canceled — you were not charged.')
   }, [canceled])
+
+  useEffect(() => {
+    if (success) router.refresh()
+  }, [success, router])
 
   async function handleUpgrade() {
     setLoading(true)
