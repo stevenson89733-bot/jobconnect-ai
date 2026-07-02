@@ -78,11 +78,14 @@ function LoginForm({ error }: { error?: string }) {
 }
 
 export default async function Login({ searchParams }: { searchParams: { error?: string } }) {
+  let isLoggedIn = false
   try {
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
-    if (user) redirect('/dashboard')
+    isLoggedIn = !!user
   } catch {}
+
+  if (isLoggedIn) redirect('/dashboard')
 
   return (
     <Suspense>
