@@ -1,5 +1,2 @@
-import { NextResponse } from 'next/server'
-
-export async function POST(req: Request) {
-  return NextResponse.json({ ok: true })
-}
+// Stripe endpoints live at /api/stripe/checkout and /api/stripe/webhook
+export {}
