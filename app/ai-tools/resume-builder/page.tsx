@@ -1,6 +1,8 @@
 import { createClient } from '@/lib/supabase/server'
 import ResumeBuilderClient from './ResumeBuilderClient'
 
+export const dynamic = 'force-dynamic'
+
 export default async function ResumeBuilderPage() {
   let isPremium = false
   try {

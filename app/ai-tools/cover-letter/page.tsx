@@ -1,6 +1,8 @@
 import { createClient } from '@/lib/supabase/server'
 import CoverLetterClient from './CoverLetterClient'
 
+export const dynamic = 'force-dynamic'
+
 export default async function CoverLetterPage() {
   let isPremium = false
   try {
