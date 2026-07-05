@@ -1,7 +1,9 @@
 import './globals.css'
 import React from 'react'
+import { cookies } from 'next/headers'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import { ThemeProvider } from '../components/ThemeProvider'
 import { createClient } from '@/lib/supabase/server'
 
 export const metadata = {
@@ -26,12 +28,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     }
   }
 
+  // Read the persisted theme cookie so SSR can emit the right initial class
+  // (no flash). For "system"/absent we let next-themes' inline script resolve it.
+  const themeCookie = cookies().get('theme')?.value
+  const htmlClass = themeCookie === 'dark' ? 'dark' : themeCookie === 'light' ? 'light' : undefined
+
   return (
-    <html lang="en" className="dark">
-      <body className="bg-background text-slate-100 antialiased font-sans">
-        <Header userEmail={user?.email} />
-        <main>{children}</main>
-        <Footer />
+    <html lang="en" className={htmlClass} suppressHydrationWarning>
+      <body className="bg-white text-slate-900 dark:bg-background dark:text-slate-100 antialiased font-sans">
+        <ThemeProvider>
+          <Header userEmail={user?.email} />
+          <main>{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   )

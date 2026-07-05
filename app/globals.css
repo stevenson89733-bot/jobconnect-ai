@@ -6,12 +6,14 @@
 
 html, body {
   min-height: 100%;
-  background-color: #0F172A;
-  color: #f1f5f9;
 }
 
 @layer base {
+  /* Default border color: light theme; dark overrides below. */
   * {
+    border-color: #e2e8f0;
+  }
+  .dark * {
     border-color: #334155;
   }
 }
