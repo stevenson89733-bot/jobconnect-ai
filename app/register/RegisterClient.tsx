@@ -25,36 +25,36 @@ function RegisterForm() {
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 font-bold text-xl">
             <span className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-white text-sm font-black">J</span>
-            <span className="text-white">JobConnect <span className="text-primary">AI</span></span>
+            <span className="text-slate-900 dark:text-white">JobConnect <span className="text-primary">AI</span></span>
           </Link>
-          <h1 className="text-2xl font-bold text-white mt-4">Create your account</h1>
-          <p className="text-slate-400 mt-1 text-sm">Get started with AI-powered job matching</p>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white mt-4">Create your account</h1>
+          <p className="text-slate-600 dark:text-slate-400 mt-1 text-sm">Get started with AI-powered job matching</p>
         </div>
 
         <div className="card">
           {error && (
-            <div className="mb-4 px-4 py-3 rounded-lg bg-red-900/30 border border-red-700 text-red-400 text-sm">
+            <div className="mb-4 px-4 py-3 rounded-lg bg-red-50 dark:bg-red-900/30 border border-red-300 dark:border-red-700 text-red-700 dark:text-red-400 text-sm">
               {decodeURIComponent(error)}
             </div>
           )}
 
           {/* Role selector */}
           <div className="mb-6">
-            <p className="text-sm font-medium text-slate-300 mb-3">I want to</p>
+            <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">I want to</p>
             <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
                 onClick={() => setRole('candidate')}
                 className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
                   role === 'candidate'
-                    ? 'border-primary bg-primary/10 text-white'
-                    : 'border-slate-700 text-slate-400 hover:border-slate-600'
+                    ? 'border-primary bg-primary/10 text-slate-900 dark:text-white'
+                    : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600'
                 }`}
               >
                 <span className="text-2xl">👤</span>
                 <div>
                   <div className="font-semibold text-sm">Find a Job</div>
-                  <div className="text-xs text-slate-500 mt-0.5">I&apos;m a Candidate</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-500 mt-0.5">I&apos;m a Candidate</div>
                 </div>
               </button>
               <button
@@ -62,14 +62,14 @@ function RegisterForm() {
                 onClick={() => setRole('employer')}
                 className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
                   role === 'employer'
-                    ? 'border-accent bg-accent/10 text-white'
-                    : 'border-slate-700 text-slate-400 hover:border-slate-600'
+                    ? 'border-accent bg-accent/10 text-slate-900 dark:text-white'
+                    : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600'
                 }`}
               >
                 <span className="text-2xl">🏢</span>
                 <div>
                   <div className="font-semibold text-sm">Hire Talent</div>
-                  <div className="text-xs text-slate-500 mt-0.5">I&apos;m an Employer</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-500 mt-0.5">I&apos;m an Employer</div>
                 </div>
               </button>
             </div>
@@ -78,29 +78,29 @@ function RegisterForm() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5">First Name</label>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">First Name</label>
                 <input
                   name="firstName"
                   type="text"
                   required
                   placeholder="Jane"
-                  className="w-full bg-background border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                  className="w-full bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5">Last Name</label>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Last Name</label>
                 <input
                   name="lastName"
                   type="text"
                   required
                   placeholder="Doe"
-                  className="w-full bg-background border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                  className="w-full bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Email</label>
               <input
                 name="email"
                 type="email"
@@ -112,18 +112,18 @@ function RegisterForm() {
 
             {role === 'employer' && (
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5">Company Name</label>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Company Name</label>
                 <input
                   name="companyName"
                   type="text"
                   placeholder="Acme Inc."
-                  className="w-full bg-background border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                  className="w-full bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                 />
               </div>
             )}
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Password</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Password</label>
               <input
                 name="password"
                 type="password"
@@ -146,16 +146,16 @@ function RegisterForm() {
               {isPending ? 'Creating account…' : role === 'candidate' ? 'Create Candidate Account' : 'Create Employer Account'}
             </button>
 
-            <p className="text-xs text-slate-500 text-center">
+            <p className="text-xs text-slate-600 dark:text-slate-500 text-center">
               By creating an account you agree to our{' '}
-              <Link href="/terms" className="text-slate-400 hover:text-white underline">Terms</Link> and{' '}
-              <Link href="/privacy" className="text-slate-400 hover:text-white underline">Privacy Policy</Link>.
+              <Link href="/terms" className="text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white underline">Terms</Link> and{' '}
+              <Link href="/privacy" className="text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white underline">Privacy Policy</Link>.
             </p>
           </form>
 
-          <p className="mt-4 text-center text-sm text-slate-500">
+          <p className="mt-4 text-center text-sm text-slate-600 dark:text-slate-500">
             Already have an account?{' '}
-            <Link href="/login" className="text-primary hover:text-blue-400 font-medium">Sign in</Link>
+            <Link href="/login" className="text-primary hover:text-blue-500 dark:hover:text-blue-400 font-medium">Sign in</Link>
           </p>
         </div>
       </div>

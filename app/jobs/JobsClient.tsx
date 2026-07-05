@@ -37,10 +37,10 @@ const CATEGORIES = ['All', 'Engineering', 'Design', 'Data', 'Research', 'Develop
 const JOB_TYPES  = ['All', 'Full-time', 'Contract', 'Part-time']
 
 const TYPE_COLORS: Record<string, string> = {
-  'Full-time': 'bg-green-900/40 text-green-400',
-  'Contract':  'bg-orange-900/40 text-orange-400',
-  'Part-time': 'bg-purple-900/40 text-purple-400',
-  'Internship':'bg-blue-900/40 text-blue-400',
+  'Full-time': 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400',
+  'Contract':  'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-400',
+  'Part-time': 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-400',
+  'Internship':'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400',
 }
 
 export default function JobsClient({
@@ -82,8 +82,8 @@ export default function JobsClient({
   return (
     <div className="max-w-7xl mx-auto px-6 py-10">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-1">Remote Jobs</h1>
-        <p className="text-slate-400">
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-1">Remote Jobs</h1>
+        <p className="text-slate-600 dark:text-slate-400">
           {filtered.length} of {jobs.length} positions{query ? ` matching "${query}"` : ' available'}
         </p>
       </div>
@@ -92,7 +92,7 @@ export default function JobsClient({
       <div className="card mb-6">
         <div className="flex flex-col sm:flex-row gap-3 mb-4">
           <div className="relative flex-1">
-            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"
+            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500"
               fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -102,22 +102,22 @@ export default function JobsClient({
               placeholder="Search jobs, skills, companies…"
               value={query}
               onChange={e => setQuery(e.target.value)}
-              className="w-full bg-background border border-slate-700 rounded-xl pl-9 pr-4 py-2.5
-                         text-sm text-white placeholder-slate-500
+              className="w-full bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-4 py-2.5
+                         text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500
                          focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
             />
             {query && (
               <button
                 onClick={() => setQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
               >✕</button>
             )}
           </div>
           <select
             value={company}
             onChange={e => setCompany(e.target.value)}
-            className="bg-background border border-slate-700 rounded-xl px-4 py-2.5
-                       text-sm text-slate-300 focus:outline-none focus:border-primary"
+            className="bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5
+                       text-sm text-slate-700 dark:text-slate-300 focus:outline-none focus:border-primary"
           >
             {companies.map(c => (
               <option key={c} value={c}>{c === 'All' ? 'All Companies' : c}</option>
@@ -132,20 +132,20 @@ export default function JobsClient({
                 className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${
                   category === cat
                     ? 'bg-primary border-primary text-white'
-                    : 'border-slate-700 text-slate-400 hover:border-slate-600 hover:text-slate-300'
+                    : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-slate-300'
                 }`}>
                 {cat}
               </button>
             ))}
           </div>
-          <div className="w-px bg-slate-700 mx-1 hidden sm:block" />
+          <div className="w-px bg-slate-200 dark:bg-slate-700 mx-1 hidden sm:block" />
           <div className="flex gap-1.5 flex-wrap">
             {JOB_TYPES.map(type => (
               <button key={type} onClick={() => setJobType(type)}
                 className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${
                   jobType === type
-                    ? 'bg-accent/20 border-accent text-accent'
-                    : 'border-slate-700 text-slate-400 hover:border-slate-600 hover:text-slate-300'
+                    ? 'bg-accent/10 dark:bg-accent/20 border-accent text-orange-700 dark:text-accent'
+                    : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-slate-300'
                 }`}>
                 {type}
               </button>
@@ -156,9 +156,9 @@ export default function JobsClient({
 
       {/* ── Job Cards ────────────────────────────────────── */}
       {filtered.length === 0 ? (
-        <div className="text-center py-20 text-slate-500">
+        <div className="text-center py-20 text-slate-600 dark:text-slate-500">
           <div className="text-4xl mb-3">🔍</div>
-          <p className="font-medium text-slate-400">No jobs found</p>
+          <p className="font-medium text-slate-700 dark:text-slate-400">No jobs found</p>
           <p className="text-sm mt-1">Try different keywords or clear your filters</p>
           <button onClick={() => { setQuery(''); setCategory('All'); setJobType('All'); setCompany('All') }}
             className="mt-4 btn-outline text-xs px-4 py-2">
@@ -179,40 +179,40 @@ export default function JobsClient({
 
                   {/* Left: logo + info */}
                   <div className="flex items-center gap-4 flex-1 min-w-0">
-                    <div className="w-12 h-12 rounded-xl bg-slate-700 flex items-center justify-center
-                                    text-xl font-bold text-slate-300 shrink-0">
+                    <div className="w-12 h-12 rounded-xl bg-slate-200 dark:bg-slate-700 flex items-center justify-center
+                                    text-xl font-bold text-slate-700 dark:text-slate-300 shrink-0">
                       {job.company_name[0]}
                     </div>
 
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2 mb-0.5">
-                        <h3 className="font-semibold text-white group-hover:text-primary transition-colors">
+                        <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-primary transition-colors">
                           {job.title}
                         </h3>
                         {job.is_featured && (
-                          <span className="badge bg-primary/20 text-primary text-xs">⭐ Featured</span>
+                          <span className="badge bg-primary/10 dark:bg-primary/20 text-primary text-xs">⭐ Featured</span>
                         )}
                       </div>
 
-                      <div className="flex flex-wrap items-center gap-2 text-sm text-slate-400 mb-2">
-                        <span className="font-medium text-slate-300">{job.company_name}</span>
-                        <span className="text-slate-600">·</span>
+                      <div className="flex flex-wrap items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-2">
+                        <span className="font-medium text-slate-700 dark:text-slate-300">{job.company_name}</span>
+                        <span className="text-slate-400 dark:text-slate-600">·</span>
                         {/* Remote badge */}
                         <span className="flex items-center gap-1">
-                          <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block"></span>
-                          <span className="text-green-400 text-xs font-medium">Remote</span>
+                          <span className="w-1.5 h-1.5 rounded-full bg-green-500 dark:bg-green-400 inline-block"></span>
+                          <span className="text-green-600 dark:text-green-400 text-xs font-medium">Remote</span>
                         </span>
-                        <span className="text-slate-600">·</span>
-                        <span className="text-slate-500 text-xs">
+                        <span className="text-slate-400 dark:text-slate-600">·</span>
+                        <span className="text-slate-600 dark:text-slate-500 text-xs">
                           {job.location.replace('Remote · ', '')}
                         </span>
-                        <span className="text-slate-600">·</span>
-                        <span className="text-slate-500 text-xs">{timeAgo(job.created_at)}</span>
+                        <span className="text-slate-400 dark:text-slate-600">·</span>
+                        <span className="text-slate-600 dark:text-slate-500 text-xs">{timeAgo(job.created_at)}</span>
                       </div>
 
                       <div className="flex flex-wrap gap-1.5">
                         {job.tags.map(tag => (
-                          <span key={tag} className="badge bg-slate-700/60 text-slate-400 text-xs">
+                          <span key={tag} className="badge bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-400 text-xs">
                             {tag}
                           </span>
                         ))}
@@ -223,18 +223,18 @@ export default function JobsClient({
                   {/* Right: salary + badges + button */}
                   <div className="flex sm:flex-col items-center sm:items-end gap-3 sm:gap-2 shrink-0 flex-wrap">
                     {job.salary_label && (
-                      <span className="font-semibold text-accent text-sm whitespace-nowrap">
+                      <span className="font-semibold text-orange-700 dark:text-accent text-sm whitespace-nowrap">
                         {job.salary_label}
                       </span>
                     )}
 
                     <div className="flex sm:flex-col gap-2 sm:items-end">
-                      <span className={`badge text-xs ${TYPE_COLORS[job.job_type] ?? 'bg-slate-700 text-slate-400'}`}>
+                      <span className={`badge text-xs ${TYPE_COLORS[job.job_type] ?? 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-400'}`}>
                         {job.job_type}
                       </span>
 
                       {/* AI Match Score */}
-                      <span className="badge bg-blue-900/40 text-blue-300 text-xs font-semibold whitespace-nowrap">
+                      <span className="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 text-xs font-semibold whitespace-nowrap">
                         🤖 {score}% match
                       </span>
                     </div>

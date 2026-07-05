@@ -59,7 +59,7 @@ export function mdToHtml(text: string): string {
 function renderInline(text: string): ReactNode[] {
   return text.split(/(\*\*[^*]+\*\*)/g).map((part, i) =>
     /^\*\*[^*]+\*\*$/.test(part) ? (
-      <strong key={i} className="font-semibold text-white">
+      <strong key={i} className="font-semibold text-slate-900 dark:text-white">
         {part.slice(2, -2)}
       </strong>
     ) : (

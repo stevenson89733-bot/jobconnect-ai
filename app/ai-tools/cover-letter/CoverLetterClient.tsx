@@ -26,7 +26,7 @@ function ScoreRing({ score }: { score: number }) {
   return (
     <div className="relative flex items-center justify-center w-36 h-36">
       <svg className="absolute inset-0 -rotate-90" viewBox="0 0 120 120">
-        <circle cx="60" cy="60" r={r} fill="none" stroke="#1e293b" strokeWidth="10" />
+        <circle cx="60" cy="60" r={r} fill="none" className="stroke-slate-200 dark:stroke-slate-700" strokeWidth="10" />
         <circle
           cx="60" cy="60" r={r} fill="none" stroke={color} strokeWidth="10"
           strokeDasharray={`${dash} ${circ}`} strokeLinecap="round"
@@ -34,8 +34,8 @@ function ScoreRing({ score }: { score: number }) {
         />
       </svg>
       <div className="text-center">
-        <div className="text-3xl font-extrabold text-white">{score}</div>
-        <div className="text-xs text-slate-400">Quality Score</div>
+        <div className="text-3xl font-extrabold text-slate-900 dark:text-white">{score}</div>
+        <div className="text-xs text-slate-600 dark:text-slate-400">Quality Score</div>
       </div>
     </div>
   )
@@ -59,20 +59,20 @@ ${mdToHtml(letter.signature)}`
 function PremiumSkeleton() {
   return (
     <div className="max-w-5xl mx-auto px-6 py-10 animate-pulse">
-      <div className="h-4 bg-slate-800 rounded w-48 mb-6" />
-      <div className="h-8 bg-slate-800 rounded w-72 mb-2" />
-      <div className="h-4 bg-slate-800 rounded w-96 mb-8" />
+      <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-48 mb-6" />
+      <div className="h-8 bg-slate-200 dark:bg-slate-800 rounded w-72 mb-2" />
+      <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-96 mb-8" />
       <div className="grid md:grid-cols-2 gap-6">
         <div className="card space-y-4">
           {[...Array(4)].map((_, i) => (
             <div key={i} className="space-y-1.5">
-              <div className="h-3 bg-slate-800 rounded w-1/3" />
-              <div className="h-10 bg-slate-700 rounded" />
+              <div className="h-3 bg-slate-200 dark:bg-slate-800 rounded w-1/3" />
+              <div className="h-10 bg-slate-300 dark:bg-slate-700 rounded" />
             </div>
           ))}
         </div>
         <div className="card flex items-center justify-center">
-          <div className="w-16 h-16 rounded-full border-4 border-slate-700" />
+          <div className="w-16 h-16 rounded-full border-4 border-slate-300 dark:border-slate-700" />
         </div>
       </div>
     </div>
@@ -118,19 +118,19 @@ export default function CoverLetterClient({ isPremium }: { isPremium: boolean })
     <div className="max-w-5xl mx-auto px-6 py-10">
       {/* Header */}
       <div className="mb-8">
-        <div className="flex items-center gap-2 text-sm text-slate-500 mb-3">
-          <Link href="/candidate" className="hover:text-white transition-colors">Dashboard</Link>
+        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-500 mb-3">
+          <Link href="/candidate" className="hover:text-slate-900 dark:hover:text-white transition-colors">Dashboard</Link>
           <span>/</span>
-          <span className="text-slate-300">AI Cover Letter Generator</span>
+          <span className="text-slate-700 dark:text-slate-300">AI Cover Letter Generator</span>
         </div>
         <div className="flex items-start justify-between flex-wrap gap-4">
           <div>
-            <h1 className="text-3xl font-extrabold text-white mb-1">
-              AI Cover Letter Generator <span className="text-accent">✦</span>
+            <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">
+              AI Cover Letter Generator <span className="text-orange-600 dark:text-accent">✦</span>
             </h1>
-            <p className="text-slate-400">Generate a personalized, compelling cover letter for any role using GPT-4o.</p>
+            <p className="text-slate-600 dark:text-slate-400">Generate a personalized, compelling cover letter for any role using GPT-4o.</p>
           </div>
-          <span className="inline-flex items-center gap-1.5 bg-accent/10 text-accent border border-accent/30 rounded-full px-3 py-1 text-xs font-semibold">
+          <span className="inline-flex items-center gap-1.5 bg-accent/10 text-orange-700 dark:text-accent border border-accent/30 rounded-full px-3 py-1 text-xs font-semibold">
             ✦ Premium Feature
           </span>
         </div>
@@ -139,16 +139,16 @@ export default function CoverLetterClient({ isPremium }: { isPremium: boolean })
       {/* Premium gate */}
       {!isPremium && (
         <div className="relative mb-8">
-          <div className="card border-accent/40 bg-gradient-to-br from-accent/5 to-card text-center py-12 px-6">
+          <div className="card border-accent/40 bg-gradient-to-br from-accent/5 to-white dark:to-card text-center py-12 px-6">
             <div className="text-5xl mb-4">🔒</div>
-            <h2 className="text-xl font-bold text-white mb-2">Unlock AI Cover Letter Generator</h2>
-            <p className="text-slate-400 mb-6 max-w-md mx-auto">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Unlock AI Cover Letter Generator</h2>
+            <p className="text-slate-600 dark:text-slate-400 mb-6 max-w-md mx-auto">
               Generate personalized cover letters for any job in seconds — tailored to the company and role, powered by GPT-4o.
             </p>
-            <div className="flex flex-wrap gap-3 justify-center mb-8 text-sm text-slate-300">
+            <div className="flex flex-wrap gap-3 justify-center mb-8 text-sm text-slate-700 dark:text-slate-300">
               {['Unlimited cover letters', 'Quality Score (0–100)', 'PDF download', 'Company-specific tone', 'Improvement tips'].map(f => (
-                <span key={f} className="flex items-center gap-1.5 bg-slate-800 rounded-full px-3 py-1">
-                  <span className="text-green-400">✓</span> {f}
+                <span key={f} className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 rounded-full px-3 py-1">
+                  <span className="text-green-600 dark:text-green-400">✓</span> {f}
                 </span>
               ))}
             </div>
@@ -159,21 +159,21 @@ export default function CoverLetterClient({ isPremium }: { isPremium: boolean })
 
           {/* Blurred preview */}
           <div className="mt-6 relative select-none pointer-events-none">
-            <div className="absolute inset-0 z-10 backdrop-blur-sm bg-background/60 rounded-2xl" />
+            <div className="absolute inset-0 z-10 backdrop-blur-sm bg-white/60 dark:bg-background/60 rounded-2xl" />
             <div className="grid md:grid-cols-2 gap-6 opacity-40">
               <div className="card space-y-4">
-                <div className="h-4 bg-slate-700 rounded w-1/2" />
-                <div className="h-10 bg-slate-800 rounded" />
-                <div className="h-4 bg-slate-700 rounded w-1/3" />
-                <div className="h-10 bg-slate-800 rounded" />
-                <div className="h-4 bg-slate-700 rounded w-2/5" />
-                <div className="h-24 bg-slate-800 rounded" />
+                <div className="h-4 bg-slate-300 dark:bg-slate-700 rounded w-1/2" />
+                <div className="h-10 bg-slate-200 dark:bg-slate-800 rounded" />
+                <div className="h-4 bg-slate-300 dark:bg-slate-700 rounded w-1/3" />
+                <div className="h-10 bg-slate-200 dark:bg-slate-800 rounded" />
+                <div className="h-4 bg-slate-300 dark:bg-slate-700 rounded w-2/5" />
+                <div className="h-24 bg-slate-200 dark:bg-slate-800 rounded" />
               </div>
               <div className="card flex flex-col items-center justify-center gap-4 py-10">
-                <div className="w-36 h-36 rounded-full border-8 border-slate-700" />
-                <div className="h-4 bg-slate-700 rounded w-24" />
-                <div className="h-3 bg-slate-800 rounded w-40" />
-                <div className="h-3 bg-slate-800 rounded w-32" />
+                <div className="w-36 h-36 rounded-full border-8 border-slate-300 dark:border-slate-700" />
+                <div className="h-4 bg-slate-300 dark:bg-slate-700 rounded w-24" />
+                <div className="h-3 bg-slate-200 dark:bg-slate-800 rounded w-40" />
+                <div className="h-3 bg-slate-200 dark:bg-slate-800 rounded w-32" />
               </div>
             </div>
           </div>
@@ -185,40 +185,40 @@ export default function CoverLetterClient({ isPremium }: { isPremium: boolean })
         <div className="grid md:grid-cols-2 gap-6">
           {/* Input form */}
           <form onSubmit={handleGenerate} className="card space-y-5">
-            <h2 className="font-semibold text-white text-lg">Job Details</h2>
+            <h2 className="font-semibold text-slate-900 dark:text-white text-lg">Job Details</h2>
 
             <div>
-              <label className="block text-sm text-slate-400 mb-1.5">Target Job Title <span className="text-red-400">*</span></label>
+              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Target Job Title <span className="text-red-500 dark:text-red-400">*</span></label>
               <input
                 value={targetRole} onChange={e => setTargetRole(e.target.value)}
                 required placeholder="e.g. Senior Product Designer"
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-primary"
+                className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary"
               />
             </div>
 
             <div>
-              <label className="block text-sm text-slate-400 mb-1.5">Company Name <span className="text-red-400">*</span></label>
+              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Company Name <span className="text-red-500 dark:text-red-400">*</span></label>
               <input
                 value={company} onChange={e => setCompany(e.target.value)}
                 required placeholder="e.g. Figma"
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-primary"
+                className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary"
               />
             </div>
 
             <div>
-              <label className="block text-sm text-slate-400 mb-1.5">Your Key Strengths & Highlights</label>
+              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Your Key Strengths & Highlights</label>
               <textarea
                 value={strengths} onChange={e => setStrengths(e.target.value)}
                 rows={5} placeholder="e.g. 5 years of product design at B2B SaaS companies, led redesign that increased conversions by 40%, strong Figma and design systems experience..."
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-primary resize-none"
+                className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary resize-none"
               />
             </div>
 
             <div>
-              <label className="block text-sm text-slate-400 mb-1.5">Tone</label>
+              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Tone</label>
               <select
                 value={tone} onChange={e => setTone(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-primary"
+                className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-primary"
               >
                 <option>Professional and enthusiastic</option>
                 <option>Confident and direct</option>
@@ -227,7 +227,7 @@ export default function CoverLetterClient({ isPremium }: { isPremium: boolean })
               </select>
             </div>
 
-            {error && <p className="text-red-400 text-sm">{error}</p>}
+            {error && <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>}
 
             <button type="submit" disabled={loading} className="btn-primary w-full py-3 text-sm font-semibold disabled:opacity-50">
               {loading ? (
@@ -245,7 +245,7 @@ export default function CoverLetterClient({ isPremium }: { isPremium: boolean })
           {/* Results panel */}
           <div className="space-y-5">
             {!result && !loading && (
-              <div className="card flex flex-col items-center justify-center py-16 text-center text-slate-500">
+              <div className="card flex flex-col items-center justify-center py-16 text-center text-slate-600 dark:text-slate-500">
                 <div className="text-4xl mb-3">✉️</div>
                 <p className="text-sm">Fill in the job details and click Generate to get your personalized cover letter.</p>
               </div>
@@ -257,7 +257,7 @@ export default function CoverLetterClient({ isPremium }: { isPremium: boolean })
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
                 </svg>
-                <p className="text-sm text-slate-400">GPT-4o is writing your cover letter…</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">GPT-4o is writing your cover letter…</p>
               </div>
             )}
 
@@ -266,7 +266,7 @@ export default function CoverLetterClient({ isPremium }: { isPremium: boolean })
                 {/* Score card */}
                 <div className="card">
                   <div className="flex items-center justify-between mb-4">
-                    <h2 className="font-semibold text-white">Quality Score</h2>
+                    <h2 className="font-semibold text-slate-900 dark:text-white">Quality Score</h2>
                     <button
                       onClick={() => downloadLetter(result, targetRole, company)}
                       className="btn-primary text-xs py-2 px-4 flex items-center gap-1.5"
@@ -280,10 +280,10 @@ export default function CoverLetterClient({ isPremium }: { isPremium: boolean })
                       {Object.entries(result.scoreBreakdown).map(([key, val]) => (
                         <div key={key}>
                           <div className="flex justify-between text-xs mb-1">
-                            <span className="capitalize text-slate-400">{key}</span>
-                            <span className="text-slate-300">{val}/25</span>
+                            <span className="capitalize text-slate-600 dark:text-slate-400">{key}</span>
+                            <span className="text-slate-700 dark:text-slate-300">{val}/25</span>
                           </div>
-                          <div className="h-1.5 bg-slate-700 rounded-full overflow-hidden">
+                          <div className="h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                             <div className="h-full bg-gradient-to-r from-primary to-blue-400 rounded-full" style={{ width: `${(val / 25) * 100}%` }} />
                           </div>
                         </div>
@@ -294,11 +294,11 @@ export default function CoverLetterClient({ isPremium }: { isPremium: boolean })
 
                 {/* Improvements */}
                 <div className="card">
-                  <h2 className="font-semibold text-white mb-3">How to Improve</h2>
+                  <h2 className="font-semibold text-slate-900 dark:text-white mb-3">How to Improve</h2>
                   <ul className="space-y-2">
                     {result.improvements.map((tip, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
-                        <span className="text-accent mt-0.5">→</span> {tip}
+                      <li key={i} className="flex items-start gap-2 text-sm text-slate-700 dark:text-slate-300">
+                        <span className="text-orange-600 dark:text-accent mt-0.5">→</span> {tip}
                       </li>
                     ))}
                   </ul>
@@ -306,15 +306,15 @@ export default function CoverLetterClient({ isPremium }: { isPremium: boolean })
 
                 {/* Letter preview */}
                 <div className="card">
-                  <h2 className="font-semibold text-white mb-4">Generated Cover Letter</h2>
-                  <div className="bg-slate-900 rounded-xl p-5 text-sm space-y-4">
-                    <p className="text-slate-500 text-xs">{result.letter.subject}</p>
-                    <div className="border-t border-slate-800 pt-4 space-y-4 text-slate-300 leading-relaxed">
+                  <h2 className="font-semibold text-slate-900 dark:text-white mb-4">Generated Cover Letter</h2>
+                  <div className="bg-slate-50 dark:bg-slate-900 rounded-xl p-5 text-sm space-y-4">
+                    <p className="text-slate-600 dark:text-slate-500 text-xs">{result.letter.subject}</p>
+                    <div className="border-t border-slate-200 dark:border-slate-800 pt-4 space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed">
                       <Markdown text={result.letter.greeting} />
                       <Markdown text={result.letter.opening} />
                       <Markdown text={result.letter.body} className="space-y-3" />
                       <Markdown text={result.letter.closing} />
-                      <Markdown text={result.letter.signature} className="text-slate-400" />
+                      <Markdown text={result.letter.signature} className="text-slate-600 dark:text-slate-400" />
                     </div>
                   </div>
                 </div>
