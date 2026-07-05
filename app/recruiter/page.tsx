@@ -3,9 +3,9 @@ import { createClient } from '@/lib/supabase/server'
 
 const METRICS = [
   { label: 'Active Job Posts', value: '8', delta: '+2 this month', icon: '📋', color: 'text-primary' },
-  { label: 'Total Applicants', value: '347', delta: '+64 this week', icon: '👥', color: 'text-green-400' },
-  { label: 'Interviews Scheduled', value: '12', delta: '5 this week', icon: '📅', color: 'text-accent' },
-  { label: 'Avg. Time to Hire', value: '14d', delta: '3 days faster', icon: '⚡', color: 'text-purple-400' },
+  { label: 'Total Applicants', value: '347', delta: '+64 this week', icon: '👥', color: 'text-green-600 dark:text-green-400' },
+  { label: 'Interviews Scheduled', value: '12', delta: '5 this week', icon: '📅', color: 'text-orange-600 dark:text-accent' },
+  { label: 'Avg. Time to Hire', value: '14d', delta: '3 days faster', icon: '⚡', color: 'text-purple-600 dark:text-purple-400' },
 ]
 
 const ACTIVE_JOBS = [
@@ -85,8 +85,8 @@ export default async function EmployerDashboard() {
             A
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white">Employer Dashboard</h1>
-            <p className="text-slate-400 text-sm">Acme Corporation · Updated just now</p>
+            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Employer Dashboard</h1>
+            <p className="text-slate-600 dark:text-slate-400 text-sm">Acme Corporation · Updated just now</p>
           </div>
         </div>
         <div className="flex gap-3">
@@ -101,10 +101,10 @@ export default async function EmployerDashboard() {
           <div key={m.label} className="card">
             <div className="flex items-start justify-between mb-3">
               <span className="text-2xl">{m.icon}</span>
-              <span className="text-xs text-green-400 bg-green-900/30 px-2 py-0.5 rounded-full">{m.delta}</span>
+              <span className="text-xs text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-900/30 px-2 py-0.5 rounded-full">{m.delta}</span>
             </div>
             <div className={`text-3xl font-extrabold ${m.color} mb-1`}>{m.value}</div>
-            <div className="text-xs text-slate-500">{m.label}</div>
+            <div className="text-xs text-slate-600 dark:text-slate-500">{m.label}</div>
           </div>
         ))}
       </div>
@@ -113,22 +113,22 @@ export default async function EmployerDashboard() {
       <div className="card mb-6">
         <div className="flex items-center justify-between mb-5">
           <div>
-            <h2 className="font-semibold text-white">Applications Received</h2>
-            <p className="text-xs text-slate-500 mt-0.5">Real candidates who applied to your job postings</p>
+            <h2 className="font-semibold text-slate-900 dark:text-white">Applications Received</h2>
+            <p className="text-xs text-slate-600 dark:text-slate-500 mt-0.5">Real candidates who applied to your job postings</p>
           </div>
           {hasApplications && (
-            <span className="badge bg-accent/20 text-accent text-xs">
+            <span className="badge bg-accent/10 dark:bg-accent/20 text-orange-700 dark:text-accent text-xs">
               {Object.values(applicationsByJob).reduce((n, g) => n + g.applications.length, 0)} total
             </span>
           )}
         </div>
 
         {!hasApplications ? (
-          <div className="text-center py-10 text-slate-500">
+          <div className="text-center py-10 text-slate-600 dark:text-slate-500">
             <div className="text-3xl mb-2">📭</div>
-            <p className="text-sm text-slate-400">No applications yet.</p>
+            <p className="text-sm text-slate-600 dark:text-slate-400">No applications yet.</p>
             <p className="text-xs mt-1">
-              Make sure you've run <code className="bg-slate-800 px-1.5 py-0.5 rounded text-slate-300">supabase/applications.sql</code> in your Supabase SQL Editor.
+              Make sure you've run <code className="bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-700 dark:text-slate-300">supabase/applications.sql</code> in your Supabase SQL Editor.
             </p>
           </div>
         ) : (
@@ -138,32 +138,32 @@ export default async function EmployerDashboard() {
                 <h3 className="text-sm font-semibold text-primary mb-3 flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block" />
                   {group.jobTitle}
-                  <span className="text-xs text-slate-500 font-normal">({group.applications.length})</span>
+                  <span className="text-xs text-slate-600 dark:text-slate-500 font-normal">({group.applications.length})</span>
                 </h3>
                 <div className="space-y-2">
                   {group.applications.map(app => (
-                    <div key={app.id} className="flex items-start gap-4 p-3 bg-slate-800/50 rounded-xl">
+                    <div key={app.id} className="flex items-start gap-4 p-3 bg-slate-100 dark:bg-slate-800/50 rounded-xl">
                       <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center text-white text-xs font-bold shrink-0">
                         {(() => { const p = Array.isArray(app.profiles) ? app.profiles[0] : app.profiles; return (p?.full_name ?? p?.email ?? '?')[0].toUpperCase() })()}
                       </div>
                       <div className="flex-1 min-w-0">
                         {(() => { const p = Array.isArray(app.profiles) ? app.profiles[0] : app.profiles; return (
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-sm font-medium text-white">
+                          <span className="text-sm font-medium text-slate-900 dark:text-white">
                             {p?.full_name ?? 'Candidate'}
                           </span>
-                          <span className="text-xs text-slate-500">{p?.email}</span>
-                          <span className="text-xs text-slate-600 ml-auto">{timeAgo(app.created_at)}</span>
+                          <span className="text-xs text-slate-600 dark:text-slate-500">{p?.email}</span>
+                          <span className="text-xs text-slate-500 dark:text-slate-600 ml-auto">{timeAgo(app.created_at)}</span>
                         </div>
                         ) })()}
                         {app.message && (
-                          <p className="text-xs text-slate-400 mt-1 line-clamp-2">{app.message}</p>
+                          <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 line-clamp-2">{app.message}</p>
                         )}
                         {!app.message && (
-                          <p className="text-xs text-slate-600 mt-1 italic">No message provided</p>
+                          <p className="text-xs text-slate-500 dark:text-slate-600 mt-1 italic">No message provided</p>
                         )}
                       </div>
-                      <span className="badge bg-blue-900/40 text-blue-400 text-xs shrink-0">{app.status}</span>
+                      <span className="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400 text-xs shrink-0">{app.status}</span>
                     </div>
                   ))}
                 </div>
@@ -177,26 +177,26 @@ export default async function EmployerDashboard() {
         {/* Active Jobs */}
         <div className="xl:col-span-2 card">
           <div className="flex items-center justify-between mb-5">
-            <h2 className="font-semibold text-white">Active Job Postings</h2>
-            <button className="text-xs text-primary hover:text-blue-400">+ Post new job</button>
+            <h2 className="font-semibold text-slate-900 dark:text-white">Active Job Postings</h2>
+            <button className="text-xs text-primary hover:text-blue-500 dark:hover:text-blue-400">+ Post new job</button>
           </div>
           <div className="space-y-3">
             {ACTIVE_JOBS.map((job) => (
-              <div key={job.title} className="flex items-center justify-between p-3 bg-slate-800/50 rounded-xl hover:bg-slate-800 transition-colors">
+              <div key={job.title} className="flex items-center justify-between p-3 bg-slate-100 dark:bg-slate-800/50 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-0.5">
-                    <span className="font-medium text-sm text-white truncate">{job.title}</span>
-                    <span className={`badge ${job.status === 'Active' ? 'bg-green-900/40 text-green-400' : 'bg-slate-700 text-slate-400'}`}>
+                    <span className="font-medium text-sm text-slate-900 dark:text-white truncate">{job.title}</span>
+                    <span className={`badge ${job.status === 'Active' ? 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400' : 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-400'}`}>
                       {job.status}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-500">{job.posted} · {job.applicants} applicants</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-500">{job.posted} · {job.applicants} applicants</p>
                 </div>
                 <div className="flex items-center gap-3 ml-4">
                   {job.new > 0 && (
-                    <span className="badge bg-accent/20 text-accent">{job.new} new</span>
+                    <span className="badge bg-accent/10 dark:bg-accent/20 text-orange-700 dark:text-accent">{job.new} new</span>
                   )}
-                  <button className="text-xs text-slate-400 hover:text-white transition-colors">Review →</button>
+                  <button className="text-xs text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">Review →</button>
                 </div>
               </div>
             ))}
@@ -205,7 +205,7 @@ export default async function EmployerDashboard() {
 
         {/* Pipeline */}
         <div className="card">
-          <h2 className="font-semibold text-white mb-5">Hiring Pipeline</h2>
+          <h2 className="font-semibold text-slate-900 dark:text-white mb-5">Hiring Pipeline</h2>
           <div className="space-y-3">
             {[
               { stage: 'New Applications', count: 64, color: 'bg-blue-500' },
@@ -216,10 +216,10 @@ export default async function EmployerDashboard() {
             ].map((stage) => (
               <div key={stage.stage}>
                 <div className="flex justify-between text-sm mb-1.5">
-                  <span className="text-slate-300">{stage.stage}</span>
-                  <span className="text-slate-400 font-medium">{stage.count}</span>
+                  <span className="text-slate-700 dark:text-slate-300">{stage.stage}</span>
+                  <span className="text-slate-600 dark:text-slate-400 font-medium">{stage.count}</span>
                 </div>
-                <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
+                <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                   <div
                     className={`h-full ${stage.color} rounded-full`}
                     style={{ width: `${Math.min((stage.count / 64) * 100, 100)}%` }}
@@ -235,29 +235,29 @@ export default async function EmployerDashboard() {
       <div className="card">
         <div className="flex items-center justify-between mb-5">
           <div>
-            <h2 className="font-semibold text-white">Top AI-Matched Candidates</h2>
-            <p className="text-xs text-slate-500 mt-0.5">Automatically ranked by fit score</p>
+            <h2 className="font-semibold text-slate-900 dark:text-white">Top AI-Matched Candidates</h2>
+            <p className="text-xs text-slate-600 dark:text-slate-500 mt-0.5">Automatically ranked by fit score</p>
           </div>
-          <Link href="/candidates" className="text-xs text-primary hover:text-blue-400">View all →</Link>
+          <Link href="/candidates" className="text-xs text-primary hover:text-blue-500 dark:hover:text-blue-400">View all →</Link>
         </div>
         <div className="grid md:grid-cols-3 gap-4">
           {TOP_CANDIDATES.map((c) => (
-            <div key={c.name} className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4 hover:border-primary/50 transition-colors">
+            <div key={c.name} className="bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4 hover:border-primary/50 transition-colors">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center text-white text-sm font-bold">
                   {c.name.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div>
-                  <div className="font-semibold text-sm text-white">{c.name}</div>
-                  <div className="text-xs text-slate-500">{c.location}</div>
+                  <div className="font-semibold text-sm text-slate-900 dark:text-white">{c.name}</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-500">{c.location}</div>
                 </div>
               </div>
               <div className="flex items-center gap-1.5 mb-3">
-                <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-semibold">🤖 {c.match}% match</span>
+                <span className="text-xs bg-primary/10 dark:bg-primary/20 text-primary px-2 py-0.5 rounded-full font-semibold">🤖 {c.match}% match</span>
               </div>
               <div className="flex flex-wrap gap-1 mb-4">
                 {c.skills.map((s) => (
-                  <span key={s} className="badge bg-slate-700 text-slate-400 text-xs">{s}</span>
+                  <span key={s} className="badge bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 text-xs">{s}</span>
                 ))}
               </div>
               <div className="grid grid-cols-2 gap-2">
