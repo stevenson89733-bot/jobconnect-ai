@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 type ScoreBreakdown = { keywords: number; formatting: number; experience: number; skills: number }
@@ -84,7 +84,31 @@ function downloadPDF(data: ResumeData) {
   URL.revokeObjectURL(url)
 }
 
+function PremiumSkeleton() {
+  return (
+    <div className="max-w-5xl mx-auto px-6 py-10 animate-pulse">
+      <div className="h-4 bg-slate-800 rounded w-48 mb-6" />
+      <div className="h-8 bg-slate-800 rounded w-72 mb-2" />
+      <div className="h-4 bg-slate-800 rounded w-96 mb-8" />
+      <div className="grid md:grid-cols-2 gap-6">
+        <div className="card space-y-4">
+          {[...Array(5)].map((_, i) => (
+            <div key={i} className="space-y-1.5">
+              <div className="h-3 bg-slate-800 rounded w-1/3" />
+              <div className="h-10 bg-slate-700 rounded" />
+            </div>
+          ))}
+        </div>
+        <div className="card flex items-center justify-center">
+          <div className="w-16 h-16 rounded-full border-4 border-slate-700" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function ResumeBuilderClient({ isPremium }: { isPremium: boolean }) {
+  const [mounted, setMounted] = useState(false)
   const [targetRole, setTargetRole] = useState('')
   const [experience, setExperience] = useState('')
   const [skills, setSkills] = useState('')
@@ -93,6 +117,9 @@ export default function ResumeBuilderClient({ isPremium }: { isPremium: boolean 
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<ResumeData | null>(null)
   const [error, setError] = useState('')
+  useEffect(() => setMounted(true), [])
+
+  if (!mounted) return <PremiumSkeleton />
 
   async function handleGenerate(e: React.FormEvent) {
     e.preventDefault()

@@ -97,9 +97,6 @@ function PremiumSkeleton() {
 
 export default function CoverLetterClient({ isPremium }: { isPremium: boolean }) {
   const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
-  if (!mounted) return <PremiumSkeleton />
-
   const [targetRole, setTargetRole] = useState('')
   const [company, setCompany] = useState('')
   const [strengths, setStrengths] = useState('')
@@ -107,6 +104,9 @@ export default function CoverLetterClient({ isPremium }: { isPremium: boolean })
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<CoverLetterData | null>(null)
   const [error, setError] = useState('')
+  useEffect(() => setMounted(true), [])
+
+  if (!mounted) return <PremiumSkeleton />
 
   async function handleGenerate(e: React.FormEvent) {
     e.preventDefault()
