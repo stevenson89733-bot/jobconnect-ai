@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { Markdown, mdToHtml, printAsPdf } from '@/lib/docExport'
 
 type ScoreBreakdown = { relevance: number; impact: number; tone: number; structure: number }
 type CoverLetterData = {
@@ -42,34 +43,17 @@ function ScoreRing({ score }: { score: number }) {
 
 function downloadLetter(data: CoverLetterData, targetRole: string, company: string) {
   const { letter } = data
-  const fullLetter = [letter.greeting, '', letter.opening, '', letter.body, '', letter.closing, '', letter.signature].join('\n')
-  const html = `<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8"/>
-<title>Cover Letter — ${targetRole} at ${company}</title>
-<style>
-  body { font-family: Georgia, serif; max-width: 680px; margin: 60px auto; color: #1e293b; font-size: 14px; line-height: 1.8; }
-  .subject { font-size: 12px; color: #64748b; margin-bottom: 32px; }
-  .score { background: #f1f5f9; border-radius: 6px; padding: 6px 12px; display: inline-block; font-size: 11px; font-family: Arial; margin-bottom: 32px; }
-  p { margin: 0 0 16px; }
-  pre { white-space: pre-wrap; font-family: Georgia, serif; font-size: 14px; line-height: 1.8; margin: 0; }
-</style>
-</head>
-<body>
-<div class="subject">${letter.subject}</div>
+  const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  const body = `
+<div class="subject">${esc(letter.subject)}</div>
 <div class="score">Quality Score: <strong>${data.score}/100</strong></div>
-<pre>${fullLetter}</pre>
-</body>
-</html>`
+${mdToHtml(letter.greeting)}
+${mdToHtml(letter.opening)}
+${mdToHtml(letter.body)}
+${mdToHtml(letter.closing)}
+${mdToHtml(letter.signature)}`
 
-  const blob = new Blob([html], { type: 'text/html' })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = `Cover_Letter_${company.replace(/\s+/g, '_')}_${targetRole.replace(/\s+/g, '_')}.html`
-  a.click()
-  URL.revokeObjectURL(url)
+  printAsPdf(body, `Cover_Letter_${company.replace(/\s+/g, '_')}_${targetRole.replace(/\s+/g, '_')}`)
 }
 
 function PremiumSkeleton() {
@@ -326,13 +310,11 @@ export default function CoverLetterClient({ isPremium }: { isPremium: boolean })
                   <div className="bg-slate-900 rounded-xl p-5 text-sm space-y-4">
                     <p className="text-slate-500 text-xs">{result.letter.subject}</p>
                     <div className="border-t border-slate-800 pt-4 space-y-4 text-slate-300 leading-relaxed">
-                      <p>{result.letter.greeting}</p>
-                      <p>{result.letter.opening}</p>
-                      {result.letter.body.split('\n\n').map((para, i) => (
-                        <p key={i}>{para}</p>
-                      ))}
-                      <p>{result.letter.closing}</p>
-                      <p className="whitespace-pre-line text-slate-400">{result.letter.signature}</p>
+                      <Markdown text={result.letter.greeting} />
+                      <Markdown text={result.letter.opening} />
+                      <Markdown text={result.letter.body} className="space-y-3" />
+                      <Markdown text={result.letter.closing} />
+                      <Markdown text={result.letter.signature} className="text-slate-400" />
                     </div>
                   </div>
                 </div>

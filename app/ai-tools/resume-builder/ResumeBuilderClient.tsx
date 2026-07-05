@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { Markdown, mdToHtml, printAsPdf } from '@/lib/docExport'
 
 type ScoreBreakdown = { keywords: number; formatting: number; experience: number; skills: number }
 type ResumeData = {
@@ -43,45 +44,22 @@ function ScoreRing({ score }: { score: number }) {
 
 function downloadPDF(data: ResumeData) {
   const { resume } = data
-  const html = `<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8"/>
-<title>${resume.name} — Resume</title>
-<style>
-  body { font-family: Arial, sans-serif; max-width: 760px; margin: 40px auto; color: #1e293b; font-size: 13px; line-height: 1.6; }
-  h1 { font-size: 24px; margin: 0 0 2px; color: #1e293b; }
-  .title { font-size: 14px; color: #2563eb; font-weight: 600; margin-bottom: 4px; }
-  .contact { color: #64748b; font-size: 12px; margin-bottom: 18px; }
-  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: #2563eb; border-bottom: 1.5px solid #2563eb; padding-bottom: 3px; margin: 18px 0 8px; }
-  p { margin: 0 0 6px; }
-  .score { background: #f1f5f9; border-radius: 6px; padding: 8px 14px; display: inline-block; font-size: 12px; margin-bottom: 18px; }
-  pre { white-space: pre-wrap; font-family: inherit; margin: 0; }
-</style>
-</head>
-<body>
-<h1>${resume.name}</h1>
-<div class="title">${resume.title}</div>
-<div class="contact">${resume.contact}</div>
+  const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  const body = `
+<h1>${esc(resume.name)}</h1>
+<div class="title">${esc(resume.title)}</div>
+<div class="contact">${esc(resume.contact)}</div>
 <div class="score">ATS Score: <strong>${data.score}/100</strong></div>
 <h2>Professional Summary</h2>
-<p>${resume.summary}</p>
+${mdToHtml(resume.summary)}
 <h2>Experience</h2>
-<pre>${resume.experience}</pre>
+${mdToHtml(resume.experience)}
 <h2>Skills</h2>
-<p>${resume.skills}</p>
+${mdToHtml(resume.skills)}
 <h2>Education</h2>
-<pre>${resume.education}</pre>
-</body>
-</html>`
+${mdToHtml(resume.education)}`
 
-  const blob = new Blob([html], { type: 'text/html' })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = `${resume.name.replace(/\s+/g, '_')}_Resume.html`
-  a.click()
-  URL.revokeObjectURL(url)
+  printAsPdf(body, `${resume.name.replace(/\s+/g, '_')}_Resume`)
 }
 
 function PremiumSkeleton() {
@@ -347,19 +325,19 @@ export default function ResumeBuilderClient({ isPremium }: { isPremium: boolean 
                     </div>
                     <div>
                       <div className="text-accent text-xs font-bold uppercase tracking-wider mb-1">Summary</div>
-                      <p className="text-slate-300 leading-relaxed whitespace-pre-wrap">{result.resume.summary}</p>
+                      <Markdown text={result.resume.summary} className="text-slate-300 leading-relaxed space-y-1" />
                     </div>
                     <div>
                       <div className="text-accent text-xs font-bold uppercase tracking-wider mb-1">Experience</div>
-                      <p className="text-slate-300 leading-relaxed whitespace-pre-wrap">{result.resume.experience}</p>
+                      <Markdown text={result.resume.experience} className="text-slate-300 leading-relaxed space-y-1" />
                     </div>
                     <div>
                       <div className="text-accent text-xs font-bold uppercase tracking-wider mb-1">Skills</div>
-                      <p className="text-slate-300 leading-relaxed">{result.resume.skills}</p>
+                      <Markdown text={result.resume.skills} className="text-slate-300 leading-relaxed space-y-1" />
                     </div>
                     <div>
                       <div className="text-accent text-xs font-bold uppercase tracking-wider mb-1">Education</div>
-                      <p className="text-slate-300 leading-relaxed whitespace-pre-wrap">{result.resume.education}</p>
+                      <Markdown text={result.resume.education} className="text-slate-300 leading-relaxed space-y-1" />
                     </div>
                   </div>
                 </div>
