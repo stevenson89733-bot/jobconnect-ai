@@ -49,6 +49,29 @@ export default function CandidateDashboard() {
         </div>
       </div>
 
+      {/* AI Tools */}
+      <div className="mb-8">
+        <h2 className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">
+          <span className="text-orange-600 dark:text-accent">✦</span> AI Tools
+        </h2>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <Link href="/ai-tools/resume-builder" className="card hover:border-primary/50 transition-all group flex items-start gap-4">
+            <div className="text-3xl">📄</div>
+            <div>
+              <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-primary transition-colors mb-0.5">AI Resume Builder</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400">Generate an ATS-optimized resume with GPT-4o and a resume score.</p>
+            </div>
+          </Link>
+          <Link href="/ai-tools/cover-letter" className="card hover:border-accent/50 transition-all group flex items-start gap-4">
+            <div className="text-3xl">✉️</div>
+            <div>
+              <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-accent transition-colors mb-0.5">AI Cover Letter</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400">Write a personalized cover letter tailored to any company and role.</p>
+            </div>
+          </Link>
+        </div>
+      </div>
+
       {/* Metrics */}
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
         {METRICS.map((m) => (

@@ -18,6 +18,30 @@ export default function Header({ userEmail }: { userEmail?: string | null }) {
         <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600 dark:text-slate-400">
           <Link href="/jobs" className="hover:text-slate-900 dark:hover:text-white transition-colors">Browse Jobs</Link>
           <Link href="/companies" className="hover:text-slate-900 dark:hover:text-white transition-colors">Companies</Link>
+
+          {/* AI Tools dropdown (hover) */}
+          <div className="relative group">
+            <button className="flex items-center gap-1 hover:text-slate-900 dark:hover:text-white transition-colors">
+              <span className="text-orange-600 dark:text-accent">✦</span> AI Tools
+              <svg className="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            {/* pt-2 bridges the gap so the menu stays open while moving the cursor */}
+            <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 hidden group-hover:block">
+              <div className="w-64 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-card shadow-lg dark:shadow-black/40 p-1.5">
+                <Link href="/ai-tools/resume-builder" className="flex flex-col rounded-lg px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                  <span className="font-medium text-slate-900 dark:text-white">📄 Resume Builder</span>
+                  <span className="text-xs text-slate-500 dark:text-slate-400">ATS-optimized resume with GPT-4o</span>
+                </Link>
+                <Link href="/ai-tools/cover-letter" className="flex flex-col rounded-lg px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                  <span className="font-medium text-slate-900 dark:text-white">✉️ Cover Letter</span>
+                  <span className="text-xs text-slate-500 dark:text-slate-400">Personalized letter for any role</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+
           <Link href="/pricing" className="hover:text-slate-900 dark:hover:text-white transition-colors">Pricing</Link>
         </nav>
 
@@ -65,6 +89,14 @@ export default function Header({ userEmail }: { userEmail?: string | null }) {
           <Link href="/jobs" className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>Browse Jobs</Link>
           <Link href="/companies" className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>Companies</Link>
           <Link href="/pricing" className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>Pricing</Link>
+
+          <div className="pt-2 mt-1 border-t border-slate-200 dark:border-slate-800">
+            <span className="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-500 mb-2">
+              <span className="text-orange-600 dark:text-accent">✦</span> AI Tools
+            </span>
+            <Link href="/ai-tools/resume-builder" className="block text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white mb-2" onClick={() => setOpen(false)}>📄 Resume Builder</Link>
+            <Link href="/ai-tools/cover-letter" className="block text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>✉️ Cover Letter</Link>
+          </div>
           {userEmail ? (
             <>
               <Link href="/dashboard" className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>Dashboard</Link>
