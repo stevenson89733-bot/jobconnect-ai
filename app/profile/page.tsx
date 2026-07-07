@@ -1,8 +1,43 @@
-export default function Profile() {
-  return (
-    <section className="py-8">
-      <h2 className="text-2xl font-semibold mb-4 text-slate-900 dark:text-white">Candidate Profile</h2>
-      <p className="text-slate-600 dark:text-slate-400">Profile editor and resume builder (AI) will be here.</p>
-    </section>
-  )
+import { redirect } from 'next/navigation'
+import { createClient } from '@/lib/supabase/server'
+import ProfileForm from './ProfileForm'
+
+export const dynamic = 'force-dynamic'
+
+const FIELDS = ['full_name', 'title', 'bio', 'experience', 'skills', 'education', 'linkedin_url', 'github_url'] as const
+
+export default async function ProfilePage() {
+  let user = null
+  let profile: Record<string, string | null> | null = null
+  try {
+    const supabase = createClient()
+    const res = await supabase.auth.getUser()
+    user = res.data.user
+    if (user) {
+      const { data } = await supabase
+        .from('profiles')
+        .select(FIELDS.join(', '))
+        .eq('user_id', user.id)
+        .single()
+      profile = (data as Record<string, string | null> | null) ?? null
+    }
+  } catch {
+    // Supabase unavailable — fall through to the login redirect below
+  }
+
+  // redirect() must live outside try/catch (it throws NEXT_REDIRECT internally)
+  if (!user) redirect('/login?redirectTo=/profile')
+
+  const initial = {
+    full_name:    profile?.full_name    ?? '',
+    title:        profile?.title        ?? '',
+    bio:          profile?.bio          ?? '',
+    experience:   profile?.experience   ?? '',
+    skills:       profile?.skills       ?? '',
+    education:    profile?.education     ?? '',
+    linkedin_url: profile?.linkedin_url ?? '',
+    github_url:   profile?.github_url   ?? '',
+  }
+
+  return <ProfileForm initial={initial} email={user.email ?? ''} />
 }
