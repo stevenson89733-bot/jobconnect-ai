@@ -2,12 +2,24 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { updateProfile, type ProfileFields } from '@/app/actions/profile'
+import AvatarUpload from './AvatarUpload'
 
 const inputClass =
   'w-full bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors'
 const labelClass = 'block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5'
 
-export default function ProfileForm({ initial, email }: { initial: ProfileFields; email: string }) {
+const AVAILABILITY_OPTIONS = ['Immediate', 'Within 1 month', 'Within 3 months']
+const WORK_PREFERENCE_OPTIONS = ['Remote', 'Hybrid', 'On-site']
+
+export default function ProfileForm({
+  initial,
+  email,
+  avatarUrl,
+}: {
+  initial: ProfileFields
+  email: string
+  avatarUrl: string | null
+}) {
   const [form, setForm] = useState<ProfileFields>(initial)
   const [saving, setSaving] = useState(false)
   const [status, setStatus] = useState<{ type: 'ok' | 'error'; msg: string } | null>(null)
@@ -46,6 +58,12 @@ export default function ProfileForm({ initial, email }: { initial: ProfileFields
       </div>
 
       <form onSubmit={handleSave} className="card space-y-5">
+        {/* Profile photo — uploads and saves immediately, independent of the Save button below */}
+        <div>
+          <label className={labelClass}>Profile Photo</label>
+          <AvatarUpload initialAvatarUrl={avatarUrl} fullName={initial.full_name} />
+        </div>
+
         {/* Email (read-only, managed by auth) */}
         <div>
           <label className={labelClass}>Email</label>
@@ -69,6 +87,39 @@ export default function ProfileForm({ initial, email }: { initial: ProfileFields
           <div>
             <label className={labelClass}>Location</label>
             <input value={form.location} onChange={e => set('location', e.target.value)} placeholder="Remote · Paris, France" className={inputClass} />
+          </div>
+        </div>
+
+        <div className="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label className={labelClass}>Years of Experience</label>
+            <input
+              value={form.years_experience}
+              onChange={e => set('years_experience', e.target.value)}
+              type="number" min={0} max={80} placeholder="5"
+              className={inputClass}
+            />
+          </div>
+          <div>
+            <label className={labelClass}>Availability</label>
+            <select value={form.availability} onChange={e => set('availability', e.target.value)} className={inputClass}>
+              <option value="">Not specified</option>
+              {AVAILABILITY_OPTIONS.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+            </select>
+          </div>
+        </div>
+
+        <div className="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label className={labelClass}>Work Preference</label>
+            <select value={form.work_preference} onChange={e => set('work_preference', e.target.value)} className={inputClass}>
+              <option value="">Not specified</option>
+              {WORK_PREFERENCE_OPTIONS.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+            </select>
+          </div>
+          <div>
+            <label className={labelClass}>Portfolio / Website URL</label>
+            <input value={form.portfolio_url} onChange={e => set('portfolio_url', e.target.value)} type="url" placeholder="https://yourname.dev" className={inputClass} />
           </div>
         </div>
 
@@ -101,6 +152,13 @@ export default function ProfileForm({ initial, email }: { initial: ProfileFields
             <label className={labelClass}>GitHub URL</label>
             <input value={form.github_url} onChange={e => set('github_url', e.target.value)} type="url" placeholder="https://github.com/you" className={inputClass} />
           </div>
+        </div>
+
+        <div>
+          <label className={labelClass}>
+            Phone <span className="text-slate-500 dark:text-slate-500 font-normal">— private, never shown to employers</span>
+          </label>
+          <input value={form.phone} onChange={e => set('phone', e.target.value)} type="tel" placeholder="+1 555 123 4567" className={inputClass} />
         </div>
 
         {status && (

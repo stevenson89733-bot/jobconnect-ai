@@ -7,6 +7,10 @@ export type CandidateCard = {
   location: string | null
   bio: string | null
   skills: string | null
+  avatar_url: string | null
+  years_experience: number | null
+  availability: string | null
+  work_preference: string | null
 }
 
 const SKILLS_PREVIEW = 5
@@ -36,8 +40,13 @@ function CandidateCardItem({ candidate }: { candidate: CandidateCard }) {
   return (
     <div className="card flex flex-col">
       <div className="flex items-center gap-3 mb-3">
-        <div className="w-11 h-11 rounded-full bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center text-white text-sm font-bold shrink-0">
-          {initialsOf(name)}
+        <div className="w-11 h-11 rounded-full overflow-hidden bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center text-white text-sm font-bold shrink-0">
+          {candidate.avatar_url ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={candidate.avatar_url} alt={name} className="w-full h-full object-cover" />
+          ) : (
+            initialsOf(name)
+          )}
         </div>
         <div className="min-w-0">
           <div className="font-semibold text-sm text-slate-900 dark:text-white truncate">{name}</div>
@@ -53,6 +62,26 @@ function CandidateCardItem({ candidate }: { candidate: CandidateCard }) {
           </svg>
           {location}
         </p>
+      )}
+
+      {(candidate.years_experience != null || candidate.work_preference?.trim() || candidate.availability?.trim()) && (
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          {candidate.years_experience != null && (
+            <span className="badge bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 text-xs">
+              {candidate.years_experience} yr{candidate.years_experience === 1 ? '' : 's'}
+            </span>
+          )}
+          {candidate.work_preference?.trim() && (
+            <span className="badge bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 text-xs">
+              {candidate.work_preference}
+            </span>
+          )}
+          {candidate.availability?.trim() && (
+            <span className="badge bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs">
+              {candidate.availability}
+            </span>
+          )}
+        </div>
       )}
 
       {bio && (

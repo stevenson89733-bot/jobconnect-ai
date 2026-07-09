@@ -10,6 +10,11 @@ type Profile = {
   bio: string | null
   experience: string | null
   skills: string | null
+  avatar_url: string | null
+  years_experience: number | null
+  portfolio_url: string | null
+  availability: string | null
+  work_preference: string | null
 }
 
 type JobRef = { title: string; company_name: string }
@@ -54,7 +59,9 @@ export default async function CandidateDashboard() {
       email = user.email ?? ''
 
       const [{ data: profileData }, { count }, { data: appsData }] = await Promise.all([
-        supabase.from('profiles').select('full_name, title, location, bio, experience, skills').eq('user_id', user.id).single(),
+        supabase.from('profiles')
+          .select('full_name, title, location, bio, experience, skills, avatar_url, years_experience, portfolio_url, availability, work_preference')
+          .eq('user_id', user.id).single(),
         supabase.from('applications').select('*', { count: 'exact', head: true }).eq('candidate_id', user.id),
         supabase.from('applications')
           .select('id, status, created_at, jobs!job_id(title, company_name)')
@@ -77,20 +84,26 @@ export default async function CandidateDashboard() {
     ? fullName.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]?.toUpperCase()).join('')
     : (email[0] ?? '?').toUpperCase()
 
-  // Profile completion — the 6 fields expected: name, title, location, skills,
-  // experience, and bio (as "résumé").
-  const completionFields = [profile?.full_name, profile?.title, profile?.location, profile?.bio, profile?.skills, profile?.experience]
-  const filledCount = completionFields.filter(f => !!f?.trim()).length
-  const completion = Math.round((filledCount / completionFields.length) * 100)
+  // Profile completion — text fields + years_experience (numeric) + avatar.
+  // phone is intentionally excluded: optional and private, not a signal of
+  // "profile completeness" for employers to see.
+  const textCompletionFields = [
+    profile?.full_name, profile?.title, profile?.location, profile?.bio,
+    profile?.skills, profile?.experience, profile?.avatar_url,
+    profile?.portfolio_url, profile?.availability, profile?.work_preference,
+  ]
+  const filledCount = textCompletionFields.filter(f => !!f?.trim()).length + (profile?.years_experience != null ? 1 : 0)
+  const completion = Math.round((filledCount / (textCompletionFields.length + 1)) * 100)
 
   const skillTags = (profile?.skills ?? '').split(',').map(s => s.trim()).filter(Boolean)
   const previewSkills = skillTags.slice(0, 6)
   const hiddenSkillCount = Math.max(0, skillTags.length - previewSkills.length)
 
-  // "Years of experience" was requested but there's no structured numeric
-  // field for it — `profiles.experience` is free-text work history, not a
-  // count. Intentionally not shown rather than guessed/parsed from text.
-  const hasSummaryContent = !!(profile?.title?.trim() || profile?.location?.trim() || profile?.bio?.trim() || skillTags.length)
+  const hasSummaryContent = !!(
+    profile?.title?.trim() || profile?.location?.trim() || profile?.bio?.trim() ||
+    skillTags.length || profile?.years_experience != null ||
+    profile?.availability?.trim() || profile?.work_preference?.trim() || profile?.portfolio_url?.trim()
+  )
 
   // TODO: no profile_views tracking table yet — wire up once view analytics exist.
   const profileViews = 0
@@ -109,8 +122,13 @@ export default async function CandidateDashboard() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center text-white text-xl font-bold">
-            {initials}
+          <div className="w-14 h-14 rounded-2xl overflow-hidden bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center text-white text-xl font-bold shrink-0">
+            {profile?.avatar_url ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={profile.avatar_url} alt={fullName || 'Profile photo'} className="w-full h-full object-cover" />
+            ) : (
+              initials
+            )}
           </div>
           <div>
             <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Welcome back, {firstName} 👋</h1>
@@ -171,6 +189,26 @@ export default async function CandidateDashboard() {
               </div>
             )}
 
+            {(profile?.years_experience != null || profile?.availability?.trim() || profile?.work_preference?.trim()) && (
+              <div className="flex flex-wrap gap-2 mb-3">
+                {profile?.years_experience != null && (
+                  <span className="badge bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300 text-xs">
+                    {profile.years_experience} yr{profile.years_experience === 1 ? '' : 's'} experience
+                  </span>
+                )}
+                {profile?.work_preference?.trim() && (
+                  <span className="badge bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300 text-xs">
+                    {profile.work_preference}
+                  </span>
+                )}
+                {profile?.availability?.trim() && (
+                  <span className="badge bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs">
+                    Available: {profile.availability}
+                  </span>
+                )}
+              </div>
+            )}
+
             {profile?.bio?.trim() ? (
               <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed line-clamp-3 mb-4">
                 {profile.bio}
@@ -192,6 +230,13 @@ export default async function CandidateDashboard() {
                   <span className="text-xs text-slate-500 dark:text-slate-500">+{hiddenSkillCount} more</span>
                 )}
               </div>
+            )}
+
+            {profile?.portfolio_url?.trim() && (
+              <a href={profile.portfolio_url} target="_blank" rel="noopener noreferrer"
+                className="inline-block mt-3 text-xs text-primary hover:text-blue-500 dark:hover:text-blue-400 underline underline-offset-2 break-all">
+                Portfolio →
+              </a>
             )}
           </>
         )}
