@@ -7,7 +7,7 @@ function Section({ title, value }: { title: string; value: string | null }) {
   return (
     <div>
       <h2 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">{title}</h2>
-      <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">{value}</p>
+      <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">{value.trim()}</p>
     </div>
   )
 }
@@ -34,7 +34,16 @@ export default function PublicProfileView({ profile }: { profile: Profile }) {
           <div className="min-w-0">
             <h1 className="text-2xl font-bold text-slate-900 dark:text-white truncate">{name}</h1>
             {profile.title?.trim() && (
-              <p className="text-slate-600 dark:text-slate-400">{profile.title}</p>
+              <p className="text-slate-600 dark:text-slate-400">{profile.title.trim()}</p>
+            )}
+            {profile.location?.trim() && (
+              <p className="flex items-center gap-1 text-sm text-slate-500 dark:text-slate-500 mt-0.5">
+                <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                {profile.location.trim()}
+              </p>
             )}
           </div>
         </div>

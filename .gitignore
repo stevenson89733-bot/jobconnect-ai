@@ -4,6 +4,7 @@ node_modules/
 # Next.js build output
 .next/
 out/
+*.tsbuildinfo
 
 # environment variables — never commit these
 .env.local

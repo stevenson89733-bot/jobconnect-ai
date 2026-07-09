@@ -15,12 +15,6 @@ const ACTIVE_JOBS = [
   { title: 'Backend Engineer', applicants: 93, new: 5, status: 'Paused', posted: '12 days ago' },
 ]
 
-const TOP_CANDIDATES = [
-  { name: 'Alex Chen', role: 'AI Engineer', match: 97, location: 'San Francisco', skills: ['Python', 'ML', 'LLMs'] },
-  { name: 'Sarah Park', role: 'Frontend Engineer', match: 94, location: 'Remote · EU', skills: ['React', 'TypeScript', 'Next.js'] },
-  { name: 'Marcus Lee', role: 'Product Designer', match: 91, location: 'New York', skills: ['Figma', 'UX', 'Design Systems'] },
-]
-
 type Application = {
   id: string
   message: string | null
@@ -231,42 +225,13 @@ export default async function EmployerDashboard() {
         </div>
       </div>
 
-      {/* Top AI-Matched Candidates */}
-      <div className="card">
-        <div className="flex items-center justify-between mb-5">
-          <div>
-            <h2 className="font-semibold text-slate-900 dark:text-white">Top AI-Matched Candidates</h2>
-            <p className="text-xs text-slate-600 dark:text-slate-500 mt-0.5">Automatically ranked by fit score</p>
-          </div>
-          <Link href="/candidates" className="text-xs text-primary hover:text-blue-500 dark:hover:text-blue-400">View all →</Link>
+      {/* Browse Candidates */}
+      <div className="card flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <h2 className="font-semibold text-slate-900 dark:text-white">Browse Candidates</h2>
+          <p className="text-xs text-slate-600 dark:text-slate-500 mt-0.5">View candidate profiles on JobConnect AI</p>
         </div>
-        <div className="grid md:grid-cols-3 gap-4">
-          {TOP_CANDIDATES.map((c) => (
-            <div key={c.name} className="bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4 hover:border-primary/50 transition-colors">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center text-white text-sm font-bold">
-                  {c.name.split(' ').map(n => n[0]).join('')}
-                </div>
-                <div>
-                  <div className="font-semibold text-sm text-slate-900 dark:text-white">{c.name}</div>
-                  <div className="text-xs text-slate-600 dark:text-slate-500">{c.location}</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-1.5 mb-3">
-                <span className="text-xs bg-primary/10 dark:bg-primary/20 text-primary px-2 py-0.5 rounded-full font-semibold">🤖 {c.match}% match</span>
-              </div>
-              <div className="flex flex-wrap gap-1 mb-4">
-                {c.skills.map((s) => (
-                  <span key={s} className="badge bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 text-xs">{s}</span>
-                ))}
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <button className="text-xs btn-outline py-1.5 text-center rounded-lg">View Profile</button>
-                <button className="text-xs btn-primary py-1.5 rounded-lg">Contact</button>
-              </div>
-            </div>
-          ))}
-        </div>
+        <Link href="/candidates" className="btn-primary text-sm px-6 py-2.5">View all →</Link>
       </div>
     </div>
   )
