@@ -4,7 +4,7 @@ import ProfileForm from './ProfileForm'
 
 export const dynamic = 'force-dynamic'
 
-const FIELDS = ['full_name', 'title', 'bio', 'experience', 'skills', 'education', 'linkedin_url', 'github_url'] as const
+const FIELDS = ['full_name', 'title', 'location', 'bio', 'experience', 'skills', 'education', 'linkedin_url', 'github_url'] as const
 
 export default async function ProfilePage() {
   let user = null
@@ -31,6 +31,7 @@ export default async function ProfilePage() {
   const initial = {
     full_name:    profile?.full_name    ?? '',
     title:        profile?.title        ?? '',
+    location:     profile?.location     ?? '',
     bio:          profile?.bio          ?? '',
     experience:   profile?.experience   ?? '',
     skills:       profile?.skills       ?? '',

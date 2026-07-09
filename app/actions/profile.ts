@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 export type ProfileFields = {
   full_name: string
   title: string
+  location: string
   bio: string
   experience: string
   skills: string
@@ -25,6 +26,7 @@ export async function updateProfile(fields: ProfileFields): Promise<{ ok: boolea
       .update({
         full_name:    fields.full_name,
         title:        fields.title,
+        location:     fields.location,
         bio:          fields.bio,
         experience:   fields.experience,
         skills:       fields.skills,

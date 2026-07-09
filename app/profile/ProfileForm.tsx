@@ -56,14 +56,19 @@ export default function ProfileForm({ initial, email }: { initial: ProfileFields
           />
         </div>
 
+        <div>
+          <label className={labelClass}>Full Name</label>
+          <input value={form.full_name} onChange={e => set('full_name', e.target.value)} placeholder="Jane Doe" className={inputClass} />
+        </div>
+
         <div className="grid sm:grid-cols-2 gap-4">
-          <div>
-            <label className={labelClass}>Full Name</label>
-            <input value={form.full_name} onChange={e => set('full_name', e.target.value)} placeholder="Jane Doe" className={inputClass} />
-          </div>
           <div>
             <label className={labelClass}>Professional Title</label>
             <input value={form.title} onChange={e => set('title', e.target.value)} placeholder="Senior Frontend Engineer" className={inputClass} />
+          </div>
+          <div>
+            <label className={labelClass}>Location</label>
+            <input value={form.location} onChange={e => set('location', e.target.value)} placeholder="Remote · Paris, France" className={inputClass} />
           </div>
         </div>
 
