@@ -84,6 +84,13 @@ export default async function CandidateDashboard() {
   const completion = Math.round((filledCount / completionFields.length) * 100)
 
   const skillTags = (profile?.skills ?? '').split(',').map(s => s.trim()).filter(Boolean)
+  const previewSkills = skillTags.slice(0, 6)
+  const hiddenSkillCount = Math.max(0, skillTags.length - previewSkills.length)
+
+  // "Years of experience" was requested but there's no structured numeric
+  // field for it — `profiles.experience` is free-text work history, not a
+  // count. Intentionally not shown rather than guessed/parsed from text.
+  const hasSummaryContent = !!(profile?.title?.trim() || profile?.location?.trim() || profile?.bio?.trim() || skillTags.length)
 
   // TODO: no profile_views tracking table yet — wire up once view analytics exist.
   const profileViews = 0
@@ -134,6 +141,61 @@ export default async function CandidateDashboard() {
           <Link href="/profile" className="btn-primary text-sm shrink-0">Complete Profile</Link>
         </div>
       )}
+
+      {/* Profile Summary */}
+      <div className="card mb-8">
+        {!hasSummaryContent ? (
+          <div className="text-center py-6">
+            <div className="text-3xl mb-2">🧑‍💻</div>
+            <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">Your profile summary is empty.</p>
+            <Link href="/profile" className="text-xs text-primary hover:text-blue-500 dark:hover:text-blue-400">
+              Add a summary →
+            </Link>
+          </div>
+        ) : (
+          <>
+            {(profile?.title?.trim() || profile?.location?.trim()) && (
+              <div className="mb-3">
+                {profile?.title?.trim() && (
+                  <h2 className="text-lg font-semibold text-slate-900 dark:text-white">{profile.title}</h2>
+                )}
+                {profile?.location?.trim() && (
+                  <p className="flex items-center gap-1 text-sm text-slate-600 dark:text-slate-400 mt-0.5">
+                    <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    {profile.location}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {profile?.bio?.trim() ? (
+              <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed line-clamp-3 mb-4">
+                {profile.bio}
+              </p>
+            ) : (
+              <Link href="/profile" className="inline-block text-xs text-primary hover:text-blue-500 dark:hover:text-blue-400 mb-4">
+                + Add a summary
+              </Link>
+            )}
+
+            {previewSkills.length > 0 && (
+              <div className="flex flex-wrap items-center gap-2">
+                {previewSkills.map((skill) => (
+                  <span key={skill} className="badge bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300 text-xs">
+                    {skill}
+                  </span>
+                ))}
+                {hiddenSkillCount > 0 && (
+                  <span className="text-xs text-slate-500 dark:text-slate-500">+{hiddenSkillCount} more</span>
+                )}
+              </div>
+            )}
+          </>
+        )}
+      </div>
 
       {/* AI Tools */}
       <div className="mb-8">
