@@ -5,13 +5,11 @@ import { createClient } from '@supabase/supabase-js'
  * SERVER-ONLY: it reads SUPABASE_SERVICE_ROLE_KEY. Never import this into a
  * client component or expose the key to the browser.
  *
- * Current callers: app/candidates/page.tsx and app/candidate/[user_id]/page.tsx,
- * to let a signed-in employer read candidate profiles. That's a temporary
- * workaround, not the intended end state — see
- * supabase/employer_read_candidates_proposal.sql for the additive RLS policy
- * that would let those reads go through the normal (RLS-respecting) client
- * instead, with the database enforcing the employer check rather than only
- * application code (lib/auth/requireEmployer.ts).
+ * Reserve this for contexts with no user session to scope RLS against (e.g.
+ * a webhook). If a viewer's role/identity can gate the read, prefer the
+ * normal createClient() plus an RLS policy — see supabase/
+ * employer_read_candidates_proposal.sql for an example (employer reads of
+ * candidate profiles now go through the normal client for that reason).
  */
 export function createAdminClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
