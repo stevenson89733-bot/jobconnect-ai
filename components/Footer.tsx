@@ -24,7 +24,7 @@ export default function Footer() {
             <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">For Employers</h4>
             <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-500">
               <li><Link href="/register?role=employer" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">Post a Job</Link></li>
-              <li><Link href="/dashboard/employer" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">Employer Dashboard</Link></li>
+              <li><Link href="/recruiter" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">Employer Dashboard</Link></li>
             </ul>
           </div>
           <div>
