@@ -1,18 +1,32 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
-export async function GET() {
+const PAGE_SIZE = 20
+
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url)
+  const page = Math.max(1, parseInt(searchParams.get('page') ?? '1', 10) || 1)
+  const from = (page - 1) * PAGE_SIZE
+  const to = from + PAGE_SIZE - 1
+
   const supabase = createClient()
-  const { data: jobs, error } = await supabase
+  const { data: jobs, count, error } = await supabase
     .from('jobs')
-    .select('*')
+    .select('*', { count: 'exact' })
     .eq('is_active', true)
     .order('is_featured', { ascending: false })
     .order('created_at', { ascending: false })
-    .limit(20)
+    .range(from, to)
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
-  return NextResponse.json(jobs)
+
+  const total = count ?? 0
+  return NextResponse.json({
+    jobs,
+    page,
+    totalPages: Math.max(1, Math.ceil(total / PAGE_SIZE)),
+    total,
+  })
 }
 
 export async function POST(req: Request) {

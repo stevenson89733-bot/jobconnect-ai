@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import ApplyModal from '@/components/ApplyModal'
 
 export type Job = {
@@ -38,9 +39,15 @@ const TYPE_COLORS: Record<string, string> = {
 export default function JobsClient({
   jobs,
   initialQuery = '',
+  page = 1,
+  totalPages = 1,
+  total,
 }: {
   jobs: Job[]
   initialQuery?: string
+  page?: number
+  totalPages?: number
+  total?: number
 }) {
   const [query, setQuery]       = useState(initialQuery)
   const [category, setCategory] = useState('All')
@@ -76,7 +83,8 @@ export default function JobsClient({
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-1">Remote Jobs</h1>
         <p className="text-slate-600 dark:text-slate-400">
-          {filtered.length} of {jobs.length} positions{query ? ` matching "${query}"` : ' available'}
+          {filtered.length} of {jobs.length} positions on this page{query ? ` matching "${query}"` : ''}
+          {total != null && totalPages > 1 ? ` · ${total} total` : ''}
         </p>
       </div>
 
@@ -237,6 +245,26 @@ export default function JobsClient({
               </div>
             )
           })}
+        </div>
+      )}
+
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-4 mt-8">
+          <Link
+            href={`/jobs?page=${page - 1}`}
+            aria-disabled={page <= 1}
+            className={`btn-outline text-sm px-4 py-2 ${page <= 1 ? 'pointer-events-none opacity-40' : ''}`}
+          >
+            ← Previous
+          </Link>
+          <span className="text-sm text-slate-600 dark:text-slate-400">Page {page} of {totalPages}</span>
+          <Link
+            href={`/jobs?page=${page + 1}`}
+            aria-disabled={page >= totalPages}
+            className={`btn-outline text-sm px-4 py-2 ${page >= totalPages ? 'pointer-events-none opacity-40' : ''}`}
+          >
+            Next →
+          </Link>
         </div>
       )}
     </div>
