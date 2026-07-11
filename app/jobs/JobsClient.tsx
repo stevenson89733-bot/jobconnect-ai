@@ -13,14 +13,6 @@ export type Job = {
   tags: string[]
   is_featured: boolean
   created_at: string
-  match_score?: number
-}
-
-// Stable per-job match score derived from the id (consistent across renders)
-function matchScore(id: string) {
-  let hash = 0
-  for (let i = 0; i < id.length; i++) hash = (hash * 31 + id.charCodeAt(i)) & 0xfffffff
-  return 85 + (hash % 14) // 85–98
 }
 
 function timeAgo(dateStr: string) {
@@ -168,7 +160,6 @@ export default function JobsClient({
       ) : (
         <div className="space-y-3">
           {filtered.map(job => {
-            const score = matchScore(job.id)
             return (
               <div
                 key={job.id}
@@ -231,11 +222,6 @@ export default function JobsClient({
                     <div className="flex sm:flex-col gap-2 sm:items-end">
                       <span className={`badge text-xs ${TYPE_COLORS[job.job_type] ?? 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-400'}`}>
                         {job.job_type}
-                      </span>
-
-                      {/* AI Match Score */}
-                      <span className="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 text-xs font-semibold whitespace-nowrap">
-                        🤖 {score}% match
                       </span>
                     </div>
 
