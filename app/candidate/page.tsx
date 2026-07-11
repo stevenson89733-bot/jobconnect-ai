@@ -1,5 +1,14 @@
-import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import { Send, CheckCircle2, Layers } from 'lucide-react'
+import WelcomeHeader from '@/components/dashboard/WelcomeHeader'
+import ProfileCompletionCard from '@/components/dashboard/ProfileCompletionCard'
+import ProfileSummaryCard from '@/components/dashboard/ProfileSummaryCard'
+import StatCard from '@/components/dashboard/StatCard'
+import RecentApplications, { type ApplicationRow } from '@/components/dashboard/RecentApplications'
+import SkillsCard from '@/components/dashboard/SkillsCard'
+import JobRecommendations, { type RecommendedJob } from '@/components/dashboard/JobRecommendations'
+import AIAssistantCard from '@/components/dashboard/AIAssistantCard'
+import QuickActions from '@/components/dashboard/QuickActions'
 
 export const dynamic = 'force-dynamic'
 
@@ -18,29 +27,22 @@ type Profile = {
 }
 
 type JobRef = { title: string; company_name: string }
-type ApplicationRow = {
+type RawApplicationRow = {
   id: string
   status: string
   created_at: string
   jobs: JobRef[] | JobRef | null
 }
 
-// AI-recommended jobs require a real matching pipeline that doesn't exist yet —
-// intentionally left out of this pass rather than shipped with invented % match.
-const AI_MATCHES: never[] = []
-
-const STATUS_COLORS: Record<string, string> = {
-  submitted: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400',
-  interview: 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400',
-  rejected:  'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400',
-  viewed:    'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400',
+type RawJob = {
+  id: string
+  title: string
+  company_name: string
+  salary_label: string | null
+  tags: string[] | null
 }
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-}
-
-function jobInfo(row: ApplicationRow): JobRef {
+function jobInfo(row: RawApplicationRow): JobRef {
   const job = Array.isArray(row.jobs) ? row.jobs[0] : row.jobs
   return { title: job?.title ?? 'Unknown role', company_name: job?.company_name ?? 'Unknown company' }
 }
@@ -52,13 +54,14 @@ export default async function CandidateDashboard() {
   let profile: Profile | null = null
   let applicationsCount = 0
   let applications: ApplicationRow[] = []
+  let recommendedJobs: RecommendedJob[] = []
 
   try {
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
       email = user.email ?? ''
 
-      const [{ data: profileData }, { count }, { data: appsData }] = await Promise.all([
+      const [{ data: profileData }, { count }, { data: appsData }, { data: appliedJobIds }, { data: activeJobs }] = await Promise.all([
         supabase.from('profiles')
           .select('full_name, title, location, bio, experience, skills, avatar_url, years_experience, portfolio_url, availability, work_preference')
           .eq('user_id', user.id).single(),
@@ -68,11 +71,42 @@ export default async function CandidateDashboard() {
           .eq('candidate_id', user.id)
           .order('created_at', { ascending: false })
           .limit(5),
+        supabase.from('applications').select('job_id').eq('candidate_id', user.id),
+        supabase.from('jobs')
+          .select('id, title, company_name, salary_label, tags')
+          .eq('is_active', true)
+          .limit(50),
       ])
 
       profile = (profileData as Profile | null) ?? null
       applicationsCount = count ?? 0
-      applications = (appsData as unknown as ApplicationRow[] | null) ?? []
+      applications = ((appsData as unknown as RawApplicationRow[] | null) ?? []).map((row) => ({
+        id: row.id,
+        status: row.status,
+        created_at: row.created_at,
+        ...jobInfo(row),
+      }))
+
+      // Real recommendations: overlap between the candidate's own listed
+      // skills and each active job's tags — no invented match score, and the
+      // section is simply omitted (in JobRecommendations) if there's nothing
+      // to show. Already-applied jobs are excluded.
+      const appliedIds = new Set((appliedJobIds ?? []).map((r) => r.job_id as string))
+      const skillSet = new Set(
+        (profile?.skills ?? '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean)
+      )
+
+      if (skillSet.size > 0) {
+        recommendedJobs = ((activeJobs as RawJob[] | null) ?? [])
+          .filter((job) => !appliedIds.has(job.id))
+          .map((job) => {
+            const matchedTags = (job.tags ?? []).filter((tag) => skillSet.has(tag.trim().toLowerCase()))
+            return { id: job.id, title: job.title, company_name: job.company_name, salary_label: job.salary_label, matchedTags }
+          })
+          .filter((job) => job.matchedTags.length > 0)
+          .sort((a, b) => b.matchedTags.length - a.matchedTags.length)
+          .slice(0, 4)
+      }
     }
   } catch {
     // Supabase unavailable — render with empty/zeroed data rather than crashing
@@ -96,266 +130,48 @@ export default async function CandidateDashboard() {
   const completion = Math.round((filledCount / (textCompletionFields.length + 1)) * 100)
 
   const skillTags = (profile?.skills ?? '').split(',').map(s => s.trim()).filter(Boolean)
-  const previewSkills = skillTags.slice(0, 6)
-  const hiddenSkillCount = Math.max(0, skillTags.length - previewSkills.length)
-
-  const hasSummaryContent = !!(
-    profile?.title?.trim() || profile?.location?.trim() || profile?.bio?.trim() ||
-    skillTags.length || profile?.years_experience != null ||
-    profile?.availability?.trim() || profile?.work_preference?.trim() || profile?.portfolio_url?.trim()
-  )
-
-  // TODO: no profile_views tracking table yet — wire up once view analytics exist.
-  const profileViews = 0
-  // TODO: no interviews table / no application-status workflow sets a real
-  // "interview" state yet — wire up once that exists.
-  const interviewsScheduled = 0
-
-  const METRICS = [
-    { label: 'Applications Sent', value: applicationsCount, icon: '📤', color: 'text-primary' },
-    { label: 'Profile Views', value: profileViews, icon: '👁', color: 'text-green-600 dark:text-green-400' },
-    { label: 'Interviews Scheduled', value: interviewsScheduled, icon: '📅', color: 'text-purple-600 dark:text-purple-400' },
-  ]
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-10">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-        <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl overflow-hidden bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center text-white text-xl font-bold shrink-0">
-            {profile?.avatar_url ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={profile.avatar_url} alt={fullName || 'Profile photo'} className="w-full h-full object-cover" />
-            ) : (
-              initials
-            )}
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Welcome back, {firstName} 👋</h1>
-            <p className="text-slate-600 dark:text-slate-400 text-sm">Your career snapshot</p>
-          </div>
-        </div>
-        <div className="flex gap-3">
-          <Link href="/jobs" className="btn-outline text-sm">Browse Jobs</Link>
-          <Link href="/profile" className="btn-primary text-sm">Edit Profile</Link>
-        </div>
+    <div className="max-w-7xl mx-auto px-6 py-10 space-y-8">
+      <WelcomeHeader firstName={firstName} initials={initials} avatarUrl={profile?.avatar_url ?? null} />
+
+      <ProfileCompletionCard completion={completion} />
+
+      <ProfileSummaryCard
+        profile={{
+          title: profile?.title ?? null,
+          location: profile?.location ?? null,
+          bio: profile?.bio ?? null,
+          yearsExperience: profile?.years_experience ?? null,
+          workPreference: profile?.work_preference ?? null,
+          availability: profile?.availability ?? null,
+          portfolioUrl: profile?.portfolio_url ?? null,
+        }}
+      />
+
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <StatCard label="Applications Sent" value={applicationsCount} icon={Send} delay={0} />
+        <StatCard label="Profile Completion" value={`${completion}%`} icon={CheckCircle2} accent="text-primary" delay={0.05} />
+        <StatCard
+          label={`Skill${skillTags.length === 1 ? '' : 's'} Listed`}
+          value={skillTags.length}
+          icon={Layers}
+          delay={0.1}
+        />
       </div>
 
-      {/* Profile completion */}
-      {completion < 100 && (
-        <div className="card mb-8 flex items-center justify-between gap-4 flex-wrap">
-          <div className="flex-1 min-w-[220px]">
-            <div className="flex items-center justify-between mb-1.5">
-              <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Profile completion</span>
-              <span className="text-sm font-semibold text-primary">{completion}%</span>
-            </div>
-            <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-primary to-blue-400 rounded-full" style={{ width: `${completion}%` }} />
-            </div>
-            <p className="text-xs text-slate-600 dark:text-slate-500 mt-2">
-              Complete your profile to get noticed by more recruiters.
-            </p>
-          </div>
-          <Link href="/profile" className="btn-primary text-sm shrink-0">Complete Profile</Link>
+      <AIAssistantCard />
+
+      <JobRecommendations jobs={recommendedJobs} />
+
+      <div className="grid xl:grid-cols-3 gap-6">
+        <div className="xl:col-span-2">
+          <RecentApplications applications={applications} />
         </div>
-      )}
-
-      {/* Profile Summary */}
-      <div className="card mb-8">
-        {!hasSummaryContent ? (
-          <div className="text-center py-6">
-            <div className="text-3xl mb-2">🧑‍💻</div>
-            <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">Your profile summary is empty.</p>
-            <Link href="/profile" className="text-xs text-primary hover:text-blue-500 dark:hover:text-blue-400">
-              Add a summary →
-            </Link>
-          </div>
-        ) : (
-          <>
-            {(profile?.title?.trim() || profile?.location?.trim()) && (
-              <div className="mb-3">
-                {profile?.title?.trim() && (
-                  <h2 className="text-lg font-semibold text-slate-900 dark:text-white">{profile.title}</h2>
-                )}
-                {profile?.location?.trim() && (
-                  <p className="flex items-center gap-1 text-sm text-slate-600 dark:text-slate-400 mt-0.5">
-                    <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    {profile.location}
-                  </p>
-                )}
-              </div>
-            )}
-
-            {(profile?.years_experience != null || profile?.availability?.trim() || profile?.work_preference?.trim()) && (
-              <div className="flex flex-wrap gap-2 mb-3">
-                {profile?.years_experience != null && (
-                  <span className="badge bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300 text-xs">
-                    {profile.years_experience} yr{profile.years_experience === 1 ? '' : 's'} experience
-                  </span>
-                )}
-                {profile?.work_preference?.trim() && (
-                  <span className="badge bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300 text-xs">
-                    {profile.work_preference}
-                  </span>
-                )}
-                {profile?.availability?.trim() && (
-                  <span className="badge bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs">
-                    Available: {profile.availability}
-                  </span>
-                )}
-              </div>
-            )}
-
-            {profile?.bio?.trim() ? (
-              <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed line-clamp-3 mb-4">
-                {profile.bio}
-              </p>
-            ) : (
-              <Link href="/profile" className="inline-block text-xs text-primary hover:text-blue-500 dark:hover:text-blue-400 mb-4">
-                + Add a summary
-              </Link>
-            )}
-
-            {previewSkills.length > 0 && (
-              <div className="flex flex-wrap items-center gap-2">
-                {previewSkills.map((skill) => (
-                  <span key={skill} className="badge bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300 text-xs">
-                    {skill}
-                  </span>
-                ))}
-                {hiddenSkillCount > 0 && (
-                  <span className="text-xs text-slate-500 dark:text-slate-500">+{hiddenSkillCount} more</span>
-                )}
-              </div>
-            )}
-
-            {profile?.portfolio_url?.trim() && (
-              <a href={profile.portfolio_url} target="_blank" rel="noopener noreferrer"
-                className="inline-block mt-3 text-xs text-primary hover:text-blue-500 dark:hover:text-blue-400 underline underline-offset-2 break-all">
-                Portfolio →
-              </a>
-            )}
-          </>
-        )}
+        <SkillsCard skills={skillTags} />
       </div>
 
-      {/* AI Tools */}
-      <div className="mb-8">
-        <h2 className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">
-          <span className="text-orange-600 dark:text-accent">✦</span> AI Tools
-        </h2>
-        <div className="grid sm:grid-cols-2 gap-4">
-          <Link href="/ai-tools/resume-builder" className="card hover:border-primary/50 transition-all group flex items-start gap-4">
-            <div className="text-3xl">📄</div>
-            <div>
-              <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-primary transition-colors mb-0.5">AI Resume Builder</h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400">Generate an ATS-optimized resume with GPT-4o and a resume score.</p>
-            </div>
-          </Link>
-          <Link href="/ai-tools/cover-letter" className="card hover:border-accent/50 transition-all group flex items-start gap-4">
-            <div className="text-3xl">✉️</div>
-            <div>
-              <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-accent transition-colors mb-0.5">AI Cover Letter</h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400">Write a personalized cover letter tailored to any company and role.</p>
-            </div>
-          </Link>
-        </div>
-      </div>
-
-      {/* Metrics */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-        {METRICS.map((m) => (
-          <div key={m.label} className="card">
-            <div className="mb-3">
-              <span className="text-2xl">{m.icon}</span>
-            </div>
-            <div className={`text-3xl font-extrabold ${m.color} mb-1`}>{m.value}</div>
-            <div className="text-xs text-slate-600 dark:text-slate-500">{m.label}</div>
-          </div>
-        ))}
-      </div>
-
-      <div className="grid xl:grid-cols-3 gap-6 mb-6">
-        {/* Applications table */}
-        <div className="xl:col-span-2 card">
-          <div className="flex items-center justify-between mb-5">
-            <h2 className="font-semibold text-slate-900 dark:text-white">Recent Applications</h2>
-            <Link href="/jobs" className="text-xs text-primary hover:text-blue-500 dark:hover:text-blue-400">Browse jobs →</Link>
-          </div>
-          {applications.length === 0 ? (
-            <div className="text-center py-10 text-slate-600 dark:text-slate-500">
-              <div className="text-3xl mb-2">📭</div>
-              <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">You haven&apos;t applied to any jobs yet.</p>
-              <Link href="/jobs" className="text-xs text-primary hover:text-blue-500 dark:hover:text-blue-400">Browse jobs →</Link>
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="text-xs text-slate-600 dark:text-slate-500 border-b border-slate-200 dark:border-slate-700">
-                    <th className="text-left pb-3 font-medium">Company</th>
-                    <th className="text-left pb-3 font-medium">Role</th>
-                    <th className="text-left pb-3 font-medium">Status</th>
-                    <th className="text-left pb-3 font-medium">Date</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
-                  {applications.map((app) => {
-                    const { title, company_name } = jobInfo(app)
-                    return (
-                      <tr key={app.id} className="hover:bg-slate-100 dark:hover:bg-slate-800/40 transition-colors">
-                        <td className="py-3 font-medium text-slate-800 dark:text-slate-200">{company_name}</td>
-                        <td className="py-3 text-slate-600 dark:text-slate-400">{title}</td>
-                        <td className="py-3">
-                          <span className={`badge ${STATUS_COLORS[app.status] ?? 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-400'}`}>
-                            {app.status}
-                          </span>
-                        </td>
-                        <td className="py-3 text-slate-600 dark:text-slate-500">{formatDate(app.created_at)}</td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-
-        {/* Skills */}
-        <div className="card">
-          <h2 className="font-semibold text-slate-900 dark:text-white mb-5">Skills</h2>
-          {skillTags.length === 0 ? (
-            <p className="text-sm text-slate-600 dark:text-slate-500 text-center py-6">No skills added yet.</p>
-          ) : (
-            <div className="flex flex-wrap gap-2">
-              {skillTags.map((skill) => (
-                <span key={skill} className="badge bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300 text-xs">
-                  {skill}
-                </span>
-              ))}
-            </div>
-          )}
-          <Link href="/profile" className="mt-5 block text-center text-xs text-primary hover:text-blue-500 dark:hover:text-blue-400">
-            Update skills →
-          </Link>
-        </div>
-      </div>
-
-      {/* AI Matches — hidden until a real matching pipeline exists */}
-      {AI_MATCHES.length > 0 && (
-        <div className="card">
-          <div className="flex items-center justify-between mb-5">
-            <div>
-              <h2 className="font-semibold text-slate-900 dark:text-white">AI-Matched Jobs for You</h2>
-              <p className="text-xs text-slate-600 dark:text-slate-500 mt-0.5">Based on your profile and preferences</p>
-            </div>
-            <Link href="/jobs" className="text-xs text-primary hover:text-blue-500 dark:hover:text-blue-400">See all matches →</Link>
-          </div>
-        </div>
-      )}
+      <QuickActions />
     </div>
   )
 }
