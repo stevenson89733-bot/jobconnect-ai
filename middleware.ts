@@ -5,7 +5,7 @@ import { NextResponse, type NextRequest } from 'next/server'
  * Routes that require an authenticated user. If no valid session is present,
  * the request is redirected to /login (carrying the refreshed session cookies).
  */
-const PROTECTED_PREFIXES = ['/dashboard', '/candidate', '/recruiter']
+const PROTECTED_PREFIXES = ['/dashboard', '/candidate', '/recruiter', '/admin']
 
 /**
  * Official @supabase/ssr middleware pattern.
@@ -82,6 +82,7 @@ export const config = {
     '/dashboard/:path*',
     '/candidate/:path*',
     '/recruiter/:path*',
+    '/admin/:path*',
     '/login',
     '/register',
   ],
