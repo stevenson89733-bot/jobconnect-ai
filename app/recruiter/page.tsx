@@ -122,7 +122,7 @@ export default async function EmployerDashboard() {
             <div className="text-3xl mb-2">📭</div>
             <p className="text-sm text-slate-600 dark:text-slate-400">No applications yet.</p>
             <p className="text-xs mt-1">
-              Make sure you've run <code className="bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-700 dark:text-slate-300">supabase/applications.sql</code> in your Supabase SQL Editor.
+              Make sure you&apos;ve run <code className="bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-700 dark:text-slate-300">supabase/applications.sql</code> in your Supabase SQL Editor.
             </p>
           </div>
         ) : (
