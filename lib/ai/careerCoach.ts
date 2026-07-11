@@ -1,4 +1,4 @@
-import OpenAI from 'openai'
+import { createPremiumOpenAIClient, AiConfigError } from './openaiClient'
 
 /**
  * AI Career Coach — single structured GPT-4o call per analysis.
@@ -125,10 +125,13 @@ function normalizeAnalysis(raw: unknown): CareerAnalysis {
 }
 
 export async function generateCareerAnalysis(profile: CandidateProfileInput): Promise<CareerAnalysis> {
-  const apiKey = process.env.OPENAI_API_KEY
-  if (!apiKey) throw new CareerCoachError('OpenAI not configured', 503)
-
-  const client = new OpenAI({ apiKey })
+  let client
+  try {
+    client = createPremiumOpenAIClient()
+  } catch (err) {
+    if (err instanceof AiConfigError) throw new CareerCoachError(err.message, err.status)
+    throw err
+  }
 
   let raw: unknown
   try {

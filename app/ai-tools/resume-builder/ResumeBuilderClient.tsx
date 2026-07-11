@@ -1,7 +1,15 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { Gauge, FileCheck2, KeyRound, SpellCheck2, TrendingUp, Wand2, AlertTriangle, RefreshCw } from 'lucide-react'
 import { Markdown, mdToHtml, printAsPdf } from '@/lib/docExport'
+import InsightCard from '@/components/career-coach/InsightCard'
+import SkillTag from '@/components/career-coach/SkillTag'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import RewriteSuggestion from '@/components/resume-builder/RewriteSuggestion'
+import { analyzeResume } from '@/app/actions/resumeAnalysis'
+import type { ResumeAnalysis, RewriteSection } from '@/lib/ai/resumeAnalysis'
 
 type ScoreBreakdown = { keywords: number; formatting: number; experience: number; skills: number }
 type ResumeData = {
@@ -95,6 +103,11 @@ export default function ResumeBuilderClient({ isPremium }: { isPremium: boolean 
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<ResumeData | null>(null)
   const [error, setError] = useState('')
+
+  const [analysis, setAnalysis] = useState<ResumeAnalysis | null>(null)
+  const [analysisLoading, setAnalysisLoading] = useState(false)
+  const [analysisError, setAnalysisError] = useState('')
+
   useEffect(() => setMounted(true), [])
 
   if (!mounted) return <PremiumSkeleton />
@@ -105,6 +118,9 @@ export default function ResumeBuilderClient({ isPremium }: { isPremium: boolean 
     setLoading(true)
     setError('')
     setResult(null)
+    // A newly generated resume invalidates any prior analysis.
+    setAnalysis(null)
+    setAnalysisError('')
     try {
       const res = await fetch('/api/ai/resume', {
         method: 'POST',
@@ -119,6 +135,32 @@ export default function ResumeBuilderClient({ isPremium }: { isPremium: boolean 
     } finally {
       setLoading(false)
     }
+  }
+
+  async function handleAnalyze() {
+    if (!result) return
+    setAnalysisLoading(true)
+    setAnalysisError('')
+    try {
+      const res = await analyzeResume({
+        targetRole,
+        summary: result.resume.summary,
+        experience: result.resume.experience,
+        skills: result.resume.skills,
+        education: result.resume.education,
+      })
+      if (res.ok) {
+        setAnalysis(res.analysis)
+      } else {
+        setAnalysisError(res.error)
+      }
+    } finally {
+      setAnalysisLoading(false)
+    }
+  }
+
+  function handleAcceptRewrite(section: RewriteSection, text: string) {
+    setResult((prev) => prev && { ...prev, resume: { ...prev.resume, [section]: text } })
   }
 
   return (
@@ -340,6 +382,99 @@ export default function ResumeBuilderClient({ isPremium }: { isPremium: boolean 
                       <Markdown text={result.resume.education} className="text-slate-700 dark:text-slate-300 leading-relaxed space-y-1" />
                     </div>
                   </div>
+                </div>
+
+                {/* Deep analysis — explicit action, not automatic */}
+                <div className="card">
+                  <div className="flex items-center justify-between mb-1">
+                    <h2 className="font-semibold text-slate-900 dark:text-white">Deep Analysis</h2>
+                    <Button variant="primary" size="sm" onClick={handleAnalyze} disabled={analysisLoading}>
+                      <RefreshCw className={`w-3.5 h-3.5 ${analysisLoading ? 'animate-spin' : ''}`} />
+                      {analysisLoading ? 'Analyzing…' : analysis ? 'Re-analyze' : 'Analyze Resume'}
+                    </Button>
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-slate-500 mb-4">
+                    Score, keywords, grammar, achievements, and rewrite suggestions for this exact resume.
+                  </p>
+
+                  {analysisError && (
+                    <Card className="border-red-300 dark:border-red-800/50 mb-4">
+                      <CardContent className="p-3 flex items-start gap-2">
+                        <AlertTriangle className="w-4 h-4 text-red-600 dark:text-red-400 shrink-0 mt-0.5" strokeWidth={1.75} />
+                        <p className="text-xs text-red-700 dark:text-red-400">{analysisError}</p>
+                      </CardContent>
+                    </Card>
+                  )}
+
+                  {analysisLoading && !analysis && (
+                    <div className="flex flex-col items-center justify-center py-10 text-center gap-3 text-slate-600 dark:text-slate-400">
+                      <RefreshCw className="w-6 h-6 animate-spin text-primary" strokeWidth={1.75} />
+                      <p className="text-sm">GPT-4o is analyzing your resume — this can take up to a minute.</p>
+                    </div>
+                  )}
+
+                  {analysis && (
+                    <div className="space-y-5">
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <InsightCard icon={Gauge} title="Resume Score"
+                          badge={<span className="text-xl font-extrabold text-primary tabular-nums">{analysis.resumeScore.score}</span>}>
+                          {analysis.resumeScore.explanation}
+                        </InsightCard>
+                        <InsightCard icon={FileCheck2} title="ATS Score"
+                          badge={<span className="text-xl font-extrabold text-primary tabular-nums">{analysis.atsScore.score}</span>}>
+                          {analysis.atsScore.explanation}
+                        </InsightCard>
+                      </div>
+
+                      <InsightCard icon={KeyRound} title="Keyword Optimization">
+                        {analysis.keywordOptimization.length === 0 ? (
+                          <p className="text-slate-500 dark:text-slate-500">No significant gaps found.</p>
+                        ) : (
+                          <div className="flex flex-wrap gap-1.5">
+                            {analysis.keywordOptimization.map((k) => <SkillTag key={k} label={k} />)}
+                          </div>
+                        )}
+                      </InsightCard>
+
+                      <InsightCard icon={SpellCheck2} title="Grammar Suggestions">
+                        {analysis.grammarSuggestions.length === 0 ? (
+                          <p className="text-slate-500 dark:text-slate-500">No issues found.</p>
+                        ) : (
+                          <ul className="space-y-1.5 list-disc list-inside">
+                            {analysis.grammarSuggestions.map((s, i) => <li key={i}>{s}</li>)}
+                          </ul>
+                        )}
+                      </InsightCard>
+
+                      <InsightCard icon={TrendingUp} title="Achievement Suggestions">
+                        {analysis.achievementSuggestions.length === 0 ? (
+                          <p className="text-slate-500 dark:text-slate-500">Nothing significant flagged.</p>
+                        ) : (
+                          <ul className="space-y-1.5 list-disc list-inside">
+                            {analysis.achievementSuggestions.map((s, i) => <li key={i}>{s}</li>)}
+                          </ul>
+                        )}
+                      </InsightCard>
+
+                      {analysis.aiRewrite.length > 0 && (
+                        <InsightCard icon={Wand2} title="AI Rewrite Suggestions">
+                          <p className="text-xs text-slate-500 dark:text-slate-500 mb-3">
+                            Review each suggestion — accepting updates the resume above, rejecting leaves it unchanged.
+                          </p>
+                          <div className="space-y-3">
+                            {analysis.aiRewrite.map((r, i) => (
+                              <RewriteSuggestion
+                                key={`${r.section}-${i}`}
+                                label={r.section}
+                                suggestion={r.suggestion}
+                                onAccept={(text) => handleAcceptRewrite(r.section, text)}
+                              />
+                            ))}
+                          </div>
+                        </InsightCard>
+                      )}
+                    </div>
+                  )}
                 </div>
               </>
             )}
