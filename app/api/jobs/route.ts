@@ -20,6 +20,11 @@ export async function POST(req: Request) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
+  const { data: profile } = await supabase.from('profiles').select('role').eq('user_id', user.id).single()
+  if (profile?.role !== 'employer') {
+    return NextResponse.json({ error: 'Only employer accounts can post jobs' }, { status: 403 })
+  }
+
   const body = await req.json()
   const { data: job, error } = await supabase
     .from('jobs')
