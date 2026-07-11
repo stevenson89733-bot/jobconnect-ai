@@ -2,21 +2,14 @@ import Link from 'next/link'
 import { Sparkles } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import type { MatchedJob } from '@/lib/jobMatching'
 import FadeIn from './FadeIn'
-
-export type RecommendedJob = {
-  id: string
-  title: string
-  company_name: string
-  salary_label: string | null
-  matchedTags: string[]
-}
 
 // Real recommendations: active job postings whose tags overlap with the
 // candidate's own listed skills. No score/percentage is invented — only the
 // actual matched tags are shown, and the section only renders when there's
 // at least one genuine match.
-export default function JobRecommendations({ jobs }: { jobs: RecommendedJob[] }) {
+export default function JobRecommendations({ jobs }: { jobs: MatchedJob[] }) {
   if (jobs.length === 0) return null
 
   return (

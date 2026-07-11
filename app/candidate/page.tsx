@@ -1,12 +1,13 @@
 import { createClient } from '@/lib/supabase/server'
 import { Send, CheckCircle2, Layers } from 'lucide-react'
+import { matchJobsToSkills } from '@/lib/jobMatching'
 import WelcomeHeader from '@/components/dashboard/WelcomeHeader'
 import ProfileCompletionCard from '@/components/dashboard/ProfileCompletionCard'
 import ProfileSummaryCard from '@/components/dashboard/ProfileSummaryCard'
 import StatCard from '@/components/dashboard/StatCard'
 import RecentApplications, { type ApplicationRow } from '@/components/dashboard/RecentApplications'
 import SkillsCard from '@/components/dashboard/SkillsCard'
-import JobRecommendations, { type RecommendedJob } from '@/components/dashboard/JobRecommendations'
+import JobRecommendations from '@/components/dashboard/JobRecommendations'
 import AIAssistantCard from '@/components/dashboard/AIAssistantCard'
 import QuickActions from '@/components/dashboard/QuickActions'
 
@@ -34,14 +35,6 @@ type RawApplicationRow = {
   jobs: JobRef[] | JobRef | null
 }
 
-type RawJob = {
-  id: string
-  title: string
-  company_name: string
-  salary_label: string | null
-  tags: string[] | null
-}
-
 function jobInfo(row: RawApplicationRow): JobRef {
   const job = Array.isArray(row.jobs) ? row.jobs[0] : row.jobs
   return { title: job?.title ?? 'Unknown role', company_name: job?.company_name ?? 'Unknown company' }
@@ -54,14 +47,14 @@ export default async function CandidateDashboard() {
   let profile: Profile | null = null
   let applicationsCount = 0
   let applications: ApplicationRow[] = []
-  let recommendedJobs: RecommendedJob[] = []
+  let recommendedJobs: Awaited<ReturnType<typeof matchJobsToSkills>> = []
 
   try {
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
       email = user.email ?? ''
 
-      const [{ data: profileData }, { count }, { data: appsData }, { data: appliedJobIds }, { data: activeJobs }] = await Promise.all([
+      const [{ data: profileData }, { count }, { data: appsData }, { data: appliedJobIds }] = await Promise.all([
         supabase.from('profiles')
           .select('full_name, title, location, bio, experience, skills, avatar_url, years_experience, portfolio_url, availability, work_preference')
           .eq('user_id', user.id).single(),
@@ -72,10 +65,6 @@ export default async function CandidateDashboard() {
           .order('created_at', { ascending: false })
           .limit(5),
         supabase.from('applications').select('job_id').eq('candidate_id', user.id),
-        supabase.from('jobs')
-          .select('id, title, company_name, salary_label, tags')
-          .eq('is_active', true)
-          .limit(50),
       ])
 
       profile = (profileData as Profile | null) ?? null
@@ -87,26 +76,8 @@ export default async function CandidateDashboard() {
         ...jobInfo(row),
       }))
 
-      // Real recommendations: overlap between the candidate's own listed
-      // skills and each active job's tags — no invented match score, and the
-      // section is simply omitted (in JobRecommendations) if there's nothing
-      // to show. Already-applied jobs are excluded.
       const appliedIds = new Set((appliedJobIds ?? []).map((r) => r.job_id as string))
-      const skillSet = new Set(
-        (profile?.skills ?? '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean)
-      )
-
-      if (skillSet.size > 0) {
-        recommendedJobs = ((activeJobs as RawJob[] | null) ?? [])
-          .filter((job) => !appliedIds.has(job.id))
-          .map((job) => {
-            const matchedTags = (job.tags ?? []).filter((tag) => skillSet.has(tag.trim().toLowerCase()))
-            return { id: job.id, title: job.title, company_name: job.company_name, salary_label: job.salary_label, matchedTags }
-          })
-          .filter((job) => job.matchedTags.length > 0)
-          .sort((a, b) => b.matchedTags.length - a.matchedTags.length)
-          .slice(0, 4)
-      }
+      recommendedJobs = await matchJobsToSkills(profile?.skills, appliedIds)
     }
   } catch {
     // Supabase unavailable — render with empty/zeroed data rather than crashing
