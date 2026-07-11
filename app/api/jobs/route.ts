@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
+import { revalidateTag } from 'next/cache'
 
 const PAGE_SIZE = 20
 
@@ -47,5 +48,10 @@ export async function POST(req: Request) {
     .single()
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+  // New post — invalidate every cached /jobs page immediately rather than
+  // waiting out the 60s revalidate window (see app/jobs/page.tsx).
+  revalidateTag('jobs')
+
   return NextResponse.json(job, { status: 201 })
 }
