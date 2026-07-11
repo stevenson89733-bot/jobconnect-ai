@@ -41,28 +41,59 @@ type CoverLetterInput = {
 
 type Provider = { client: OpenAI; model: string; tier: 'premium' | 'free' }
 
-// Reads the current user's premium status server-side and returns the provider.
-async function resolveProvider(): Promise<Provider> {
+// Real contact info pulled from the authenticated candidate's own profile —
+// never client-submitted (that would let a request claim someone else's
+// name/email) and never fabricated by the LLM.
+export type ContactInfo = {
+  name: string
+  email: string
+  phone: string
+  linkedinUrl: string
+  githubUrl: string
+  portfolioUrl: string
+}
+
+const EMPTY_CONTACT: ContactInfo = { name: '', email: '', phone: '', linkedinUrl: '', githubUrl: '', portfolioUrl: '' }
+
+// Builds the single "email | phone | linkedin | github | portfolio" contact
+// line, omitting any field the candidate hasn't set — never a placeholder.
+export function formatContactLine(contact: ContactInfo): string {
+  return [contact.email, contact.phone, contact.linkedinUrl, contact.githubUrl, contact.portfolioUrl]
+    .filter((part) => part.trim().length > 0)
+    .join(' | ')
+}
+
+// Reads the current user's premium status AND real contact info server-side.
+async function resolveProvider(): Promise<Provider & { contact: ContactInfo }> {
   let isPremium = false
+  let contact: ContactInfo = EMPTY_CONTACT
   try {
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
       const { data } = await supabase
         .from('profiles')
-        .select('is_premium')
+        .select('is_premium, full_name, email, phone, linkedin_url, github_url, portfolio_url')
         .eq('user_id', user.id)
         .single()
       isPremium = data?.is_premium ?? false
+      contact = {
+        name: data?.full_name?.trim() || user.email?.split('@')[0] || '',
+        email: data?.email?.trim() || user.email || '',
+        phone: data?.phone?.trim() || '',
+        linkedinUrl: data?.linkedin_url?.trim() || '',
+        githubUrl: data?.github_url?.trim() || '',
+        portfolioUrl: data?.portfolio_url?.trim() || '',
+      }
     }
   } catch {
-    // No session / Supabase unavailable → treat as free tier
+    // No session / Supabase unavailable → treat as free tier, no real contact to show
   }
 
   if (isPremium) {
     const apiKey = process.env.OPENAI_API_KEY
     if (!apiKey) throw new AiError('OpenAI not configured', 503)
-    return { client: new OpenAI({ apiKey }), model: 'gpt-4o', tier: 'premium' }
+    return { client: new OpenAI({ apiKey }), model: 'gpt-4o', tier: 'premium', contact }
   }
 
   const apiKey = process.env.MISTRAL_API_KEY
@@ -71,12 +102,15 @@ async function resolveProvider(): Promise<Provider> {
     client: new OpenAI({ apiKey, baseURL: 'https://api.mistral.ai/v1' }),
     model: 'mistral-small-latest',
     tier: 'free',
+    contact,
   }
 }
 
 // Runs the prompt on the tier-appropriate provider and parses the JSON result.
-async function completeJson(prompt: string, maxTokens: number): Promise<unknown> {
-  const { client, model } = await resolveProvider()
+// Returns the real contact info alongside so callers can inject it themselves
+// rather than trusting the model to preserve it verbatim.
+async function completeJson(prompt: string, maxTokens: number): Promise<{ data: unknown; contact: ContactInfo }> {
+  const { client, model, contact } = await resolveProvider()
   const res = await client.chat.completions.create({
     model,
     messages: [{ role: 'user', content: prompt }],
@@ -84,7 +118,7 @@ async function completeJson(prompt: string, maxTokens: number): Promise<unknown>
     response_format: { type: 'json_object' },
   })
   const raw = res.choices?.[0]?.message?.content ?? '{}'
-  return JSON.parse(raw)
+  return { data: JSON.parse(raw), contact }
 }
 
 function buildResumePrompt({ targetRole, experience, skills, education, summary }: ResumeInput): string {
@@ -107,9 +141,7 @@ Return a JSON object with this exact structure:
   },
   "improvements": [<string>, <string>, <string>],
   "resume": {
-    "name": "<infer a professional placeholder name or use 'Your Name'>",
     "title": "${targetRole}",
-    "contact": "yourname@email.com | linkedin.com/in/yourname | github.com/yourname",
     "summary": "<2-3 sentence professional summary tailored to ${targetRole}, ATS-optimized>",
     "experience": "<formatted work experience with bullet points using action verbs and metrics, markdown-style>",
     "skills": "<comma-separated technical and soft skills relevant to ${targetRole}>",
@@ -139,14 +171,15 @@ Return a JSON object with this exact structure:
   },
   "improvements": [<string>, <string>, <string>],
   "letter": {
-    "subject": "Application for ${targetRole} — [Candidate Name]",
+    "subject": "Application for ${targetRole}",
     "greeting": "Dear Hiring Manager,",
     "opening": "<compelling 2-3 sentence opening paragraph that hooks the reader and states the role>",
     "body": "<2 paragraphs: first highlights the candidate's top strengths and achievements relevant to ${company} and ${targetRole}; second shows knowledge of ${company} and cultural fit>",
-    "closing": "<strong closing paragraph with clear call to action>",
-    "signature": "Sincerely,\\n[Your Name]\\n[Your Email] | [Your LinkedIn] | [Your Phone]"
+    "closing": "<strong closing paragraph with clear call to action>"
   }
-}`
+}
+
+Do NOT include a "signature" field — that is added separately from the candidate's real contact info.`
 }
 
 // Safety net: coerce a value to a readable string if a model returns an array
@@ -176,16 +209,34 @@ function coerceFields(parent: unknown, keys: string[]): void {
   }
 }
 
-function normalizeResume(data: unknown): unknown {
+// Injects the candidate's real name/contact line into the model's output —
+// the model is never asked to produce these, so there's nothing to
+// overwrite/trust here, just real profile data filled in after the fact.
+function normalizeResume(data: unknown, contact: ContactInfo): unknown {
   if (data && typeof data === 'object' && 'resume' in data) {
-    coerceFields((data as { resume: unknown }).resume, ['summary', 'experience', 'skills', 'education'])
+    const resume = (data as { resume: unknown }).resume
+    coerceFields(resume, ['summary', 'experience', 'skills', 'education'])
+    if (resume && typeof resume === 'object') {
+      const obj = resume as Record<string, unknown>
+      obj.name = contact.name
+      obj.contact = formatContactLine(contact)
+    }
   }
   return data
 }
 
-function normalizeLetter(data: unknown): unknown {
+// Same pattern as normalizeResume — the model never generates the
+// signature, so the candidate's real name/contact line (reusing
+// formatContactLine, same helper as the resume) is filled in here instead.
+function normalizeLetter(data: unknown, contact: ContactInfo): unknown {
   if (data && typeof data === 'object' && 'letter' in data) {
-    coerceFields((data as { letter: unknown }).letter, ['subject', 'greeting', 'opening', 'body', 'closing', 'signature'])
+    const letter = (data as { letter: unknown }).letter
+    coerceFields(letter, ['subject', 'greeting', 'opening', 'body', 'closing'])
+    if (letter && typeof letter === 'object') {
+      const obj = letter as Record<string, unknown>
+      const contactLine = formatContactLine(contact)
+      obj.signature = `Sincerely,\n${contact.name}${contactLine ? `\n${contactLine}` : ''}`
+    }
   }
   return data
 }
@@ -203,7 +254,8 @@ export async function generateResume(input: ResumeInput): Promise<NextResponse> 
     if (!input.targetRole || !input.experience) {
       return NextResponse.json({ error: 'targetRole and experience are required' }, { status: 400 })
     }
-    const data = normalizeResume(await completeJson(buildResumePrompt(input), 2000))
+    const { data: raw, contact } = await completeJson(buildResumePrompt(input), 2000)
+    const data = normalizeResume(raw, contact)
     return NextResponse.json(data)
   } catch (err) {
     return toErrorResponse(err, 'resume')
@@ -215,7 +267,8 @@ export async function generateCoverLetter(input: CoverLetterInput): Promise<Next
     if (!input.targetRole || !input.company) {
       return NextResponse.json({ error: 'targetRole and company are required' }, { status: 400 })
     }
-    const data = normalizeLetter(await completeJson(buildCoverLetterPrompt(input), 1800))
+    const { data: raw, contact } = await completeJson(buildCoverLetterPrompt(input), 1800)
+    const data = normalizeLetter(raw, contact)
     return NextResponse.json(data)
   } catch (err) {
     return toErrorResponse(err, 'cover-letter')
