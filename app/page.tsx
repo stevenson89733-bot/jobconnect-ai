@@ -19,11 +19,10 @@ const FEATURED_JOBS = [
   { title: 'DevRel Engineer', company: 'Notion', location: 'Remote · Worldwide', salary: '$130k–$160k', type: 'Contract', tags: ['APIs', 'Developer Docs', 'Community'] },
 ]
 
-const STATS = [
-  { value: '50K+', label: 'Remote Jobs' },
-  { value: '12K+', label: 'Companies Hiring' },
-  { value: '2.4M+', label: 'Candidates Placed' },
-  { value: '94%', label: 'Match Accuracy' },
+const HIGHLIGHTS = [
+  { icon: '🌍', title: 'Real remote openings', desc: 'Browse and filter jobs from real companies — no filler listings.' },
+  { icon: '✦', title: 'AI-assisted applications', desc: 'Draft a tailored resume or cover letter with AI in seconds.' },
+  { icon: '🔒', title: 'Privacy by design', desc: 'Your email and phone are never shown to employers.' },
 ]
 
 export default function Home() {
@@ -40,7 +39,7 @@ export default function Home() {
         <div className="relative max-w-7xl mx-auto px-6 pt-24 pb-20 text-center">
           <div className="inline-flex items-center gap-2 bg-white dark:bg-card border border-slate-200 dark:border-slate-700 rounded-full px-4 py-1.5 text-sm text-slate-600 dark:text-slate-400 mb-8">
             <span className="w-2 h-2 rounded-full bg-green-500 dark:bg-green-400 animate-pulse" />
-            <span>AI-Powered Matching · 50,000+ Remote Jobs Available</span>
+            <span>AI-assisted resume &amp; cover letter tools</span>
           </div>
 
           <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white leading-tight tracking-tight mb-6">
@@ -53,7 +52,7 @@ export default function Home() {
           </h1>
 
           <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Our AI matches your skills and experience with the best remote opportunities. Upload your resume, answer a few questions, and let AI do the heavy lifting.
+            Browse real remote openings, then use our AI Resume Builder and Cover Letter Generator to tailor your application to each one.
           </p>
 
           {/* Search bar — live filtering via /jobs?q= */}
@@ -76,13 +75,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats */}
+      {/* Highlights */}
       <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {STATS.map((s) => (
-            <div key={s.label} className="card text-center">
-              <div className="text-4xl font-extrabold text-primary mb-1">{s.value}</div>
-              <div className="text-sm text-slate-600 dark:text-slate-400">{s.label}</div>
+        <div className="grid gap-6 md:grid-cols-3">
+          {HIGHLIGHTS.map((h) => (
+            <div key={h.title} className="card text-center">
+              <div className="text-3xl mb-2">{h.icon}</div>
+              <div className="font-semibold text-slate-900 dark:text-white mb-1">{h.title}</div>
+              <div className="text-sm text-slate-600 dark:text-slate-400">{h.desc}</div>
             </div>
           ))}
         </div>
@@ -134,9 +134,9 @@ export default function Home() {
           <p className="text-slate-600 dark:text-slate-400 mb-14 max-w-xl mx-auto">Three steps to your next remote role</p>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { step: '01', icon: '📄', title: 'Upload Your Resume', desc: 'Our AI parses your resume and builds a comprehensive skills profile instantly.' },
-              { step: '02', icon: '🤖', title: 'AI Matches You', desc: 'We surface the jobs that best fit your skills, experience level, and preferences.' },
-              { step: '03', icon: '🚀', title: 'Apply in One Click', desc: 'Apply to multiple roles at once with your AI-optimized profile and cover letter.' },
+              { step: '01', icon: '📝', title: 'Build Your Profile', desc: 'Add your skills, experience, and links — the details employers actually look for.' },
+              { step: '02', icon: '✦', title: 'Use AI to Prep', desc: 'Draft a tailored resume or cover letter for a specific role with our AI tools.' },
+              { step: '03', icon: '📨', title: 'Apply Directly', desc: 'Apply to a job with an optional message to the hiring team — no middleman.' },
             ].map((item) => (
               <div key={item.step} className="relative">
                 <div className="text-6xl mb-4">{item.icon}</div>
@@ -152,7 +152,7 @@ export default function Home() {
       {/* CTA */}
       <section className="max-w-7xl mx-auto px-6 py-24 text-center">
         <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-4">Ready to land your dream remote job?</h2>
-        <p className="text-slate-600 dark:text-slate-400 mb-8 text-lg">Join 2.4 million candidates who found their next role through JobConnect AI.</p>
+        <p className="text-slate-600 dark:text-slate-400 mb-8 text-lg">Build your profile, browse real openings, and let our AI tools help you put your best foot forward.</p>
         <div className="flex justify-center gap-4 flex-wrap">
           <Link href="/register?role=candidate" className="btn-primary text-base px-8 py-3">Start as Candidate</Link>
           <Link href="/register?role=employer" className="btn-outline text-base px-8 py-3">Hire with AI</Link>
