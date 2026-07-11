@@ -1,5 +1,6 @@
 'use server'
 import { createClient } from '@/lib/supabase/server'
+import { rateLimit, getClientIp } from '@/lib/rateLimit'
 
 export type ContactFields = {
   name: string
@@ -8,6 +9,9 @@ export type ContactFields = {
 }
 
 export async function submitContactMessage(fields: ContactFields): Promise<{ ok: boolean; error?: string }> {
+  const { ok: withinLimit } = rateLimit(`contact:${getClientIp()}`, 3, 10 * 60 * 1000)
+  if (!withinLimit) return { ok: false, error: 'Too many messages sent. Please try again in a few minutes.' }
+
   const name = fields.name.trim()
   const email = fields.email.trim()
   const message = fields.message.trim()

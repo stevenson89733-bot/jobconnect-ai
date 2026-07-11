@@ -1,9 +1,13 @@
 'use server'
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
+import { rateLimit, getClientIp } from '@/lib/rateLimit'
 
 // ── Step 6: Save user to Supabase on signup with role ─────────────────────────
 export async function signUp(formData: FormData) {
+  const { ok } = rateLimit(`signup:${getClientIp()}`, 5, 10 * 60 * 1000)
+  if (!ok) redirect(`/register?error=${encodeURIComponent('Too many signup attempts. Please try again in a few minutes.')}`)
+
   const supabase = createClient()
 
   const email       = formData.get('email')       as string
@@ -46,6 +50,9 @@ export async function signUp(formData: FormData) {
 
 // ── Step 7: Authenticate via Supabase, Step 8: redirect by role ───────────────
 export async function signIn(formData: FormData) {
+  const { ok } = rateLimit(`signin:${getClientIp()}`, 8, 5 * 60 * 1000)
+  if (!ok) redirect(`/login?error=${encodeURIComponent('Too many sign-in attempts. Please try again in a few minutes.')}`)
+
   const supabase = createClient()
 
   const email    = formData.get('email')    as string
