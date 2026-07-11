@@ -1,10 +1,18 @@
 import './globals.css'
 import React from 'react'
 import { cookies } from 'next/headers'
+import { Inter } from 'next/font/google'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { ThemeProvider } from '../components/ThemeProvider'
 import { createClient } from '@/lib/supabase/server'
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-inter',
+  display: 'swap',
+})
 
 export const metadata = {
   title: 'JobConnect AI — Find Your Next Remote Job with AI',
@@ -34,7 +42,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const htmlClass = themeCookie === 'dark' ? 'dark' : themeCookie === 'light' ? 'light' : undefined
 
   return (
-    <html lang="en" className={htmlClass} suppressHydrationWarning>
+    <html lang="en" className={`${htmlClass ?? ''} ${inter.variable}`.trim()} suppressHydrationWarning>
       <body className="bg-white text-slate-900 dark:bg-background dark:text-slate-100 antialiased font-sans">
         <ThemeProvider>
           <Header userEmail={user?.email} />
