@@ -3,13 +3,10 @@ import { createClient } from '@/lib/supabase/server'
 import { rateLimit } from '@/lib/rateLimit'
 import { renderResumePdf } from '@/lib/resumeExport/pdf'
 import { renderResumeDocx } from '@/lib/resumeExport/docx'
+import { sanitizeFilenamePart } from '@/lib/resumeExport/filename'
 import type { ResumeContent, ResumeTemplateId } from '@/components/resume-builder/ResumePreview'
 
 type ExportFormat = 'pdf' | 'docx'
-
-function sanitizeFilenamePart(value: string): string {
-  return value.replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'Resume'
-}
 
 function isResumeContent(value: unknown): value is ResumeContent {
   if (!value || typeof value !== 'object') return false
@@ -47,7 +44,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Generate a resume first — there\'s nothing to export yet.' }, { status: 400 })
   }
 
-  const filenameBase = `${sanitizeFilenamePart(resume.name)}_Resume`
+  const filenameBase = `${sanitizeFilenamePart(resume.name, 'Resume')}_Resume`
 
   try {
     if (format === 'docx') {

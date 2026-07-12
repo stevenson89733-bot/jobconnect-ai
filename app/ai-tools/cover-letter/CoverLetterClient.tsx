@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Markdown, mdToHtml, printAsPdf } from '@/lib/docExport'
+import { Markdown } from '@/lib/docExport'
 import RewriteSuggestion from '@/components/resume-builder/RewriteSuggestion'
 import StyleSelector, { type CoverLetterStyle } from '@/components/cover-letter/StyleSelector'
 import { sanitizeTargetRole, stripTargetRoleNewlines, MAX_TARGET_ROLE_LENGTH } from '@/lib/ai/resumeGuard'
@@ -54,22 +54,41 @@ function ScoreRing({ score }: { score: number }) {
   )
 }
 
-function downloadLetter(data: CoverLetterData, targetRole: string, company: string, dateLine: string) {
-  const { letter } = data
-  const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-  const body = `
-<div class="subject">${esc(letter.subject)}</div>
-<div class="score">Quality Score: <strong>${data.score}/100</strong></div>
-<div class="date">${esc(dateLine)}</div>
-${mdToHtml(letter.greeting)}
-<div class="justify">
-${mdToHtml(letter.opening)}
-${mdToHtml(letter.body)}
-${mdToHtml(letter.closing)}
-</div>
-${mdToHtml(letter.signature)}`
-
-  printAsPdf(body, `Cover_Letter_${company.replace(/\s+/g, '_')}_${targetRole.replace(/\s+/g, '_')}`)
+// Downloads the cover letter as a real PDF/DOCX file rendered server-side
+// (see app/api/cover-letter/export/route.ts) from the exact same content
+// shown in the preview — including the date line and any accepted
+// suggestion edits — never a separately reconstructed version.
+async function downloadCoverLetterFile(
+  letter: CoverLetterData['letter'],
+  dateLine: string,
+  companyName: string,
+  format: 'pdf' | 'docx'
+) {
+  const res = await fetch('/api/cover-letter/export', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      letter: { ...letter, dateLine },
+      companyName,
+      format,
+    }),
+  })
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}))
+    throw new Error(data.error || 'Export failed')
+  }
+  const disposition = res.headers.get('Content-Disposition') ?? ''
+  const match = disposition.match(/filename="([^"]+)"/)
+  const filename = match?.[1] ?? `CoverLetter.${format}`
+  const blob = await res.blob()
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  URL.revokeObjectURL(url)
 }
 
 function PremiumSkeleton() {
@@ -122,6 +141,8 @@ export default function CoverLetterClient({
   const [saveError, setSaveError] = useState('')
   const [copyStatus, setCopyStatus] = useState<'idle' | 'copied' | 'manual'>('idle')
   const [copyText, setCopyText] = useState('')
+  const [exportingFormat, setExportingFormat] = useState<'pdf' | 'docx' | null>(null)
+  const [exportError, setExportError] = useState('')
   useEffect(() => setMounted(true), [])
 
   if (!mounted) return <PremiumSkeleton />
@@ -229,6 +250,19 @@ export default function CoverLetterClient({
     } else {
       setSaveStatus('error')
       setSaveError(res.error)
+    }
+  }
+
+  async function handleExport(format: 'pdf' | 'docx') {
+    if (!result) return
+    setExportingFormat(format)
+    setExportError('')
+    try {
+      await downloadCoverLetterFile(result.letter, dateLine, company, format)
+    } catch (err) {
+      setExportError(err instanceof Error ? err.message : 'Export failed')
+    } finally {
+      setExportingFormat(null)
     }
   }
 
@@ -411,13 +445,24 @@ export default function CoverLetterClient({
                         {saveStatus === 'saving' ? 'Saving…' : saveStatus === 'saved' ? '✓ Saved' : '💾 Save Draft'}
                       </button>
                       <button
-                        onClick={() => downloadLetter(result, targetRole, company, dateLine)}
-                        className="btn-primary text-xs py-2 px-4 flex items-center gap-1.5"
+                        onClick={() => handleExport('pdf')}
+                        disabled={exportingFormat !== null}
+                        className="btn-outline text-xs py-2 px-4 flex items-center gap-1.5 disabled:opacity-50"
                       >
-                        ⬇ Download
+                        {exportingFormat === 'pdf' ? 'Preparing PDF…' : '⬇ Download PDF'}
+                      </button>
+                      <button
+                        onClick={() => handleExport('docx')}
+                        disabled={exportingFormat !== null}
+                        className="btn-primary text-xs py-2 px-4 flex items-center gap-1.5 disabled:opacity-50"
+                      >
+                        {exportingFormat === 'docx' ? 'Preparing DOCX…' : '⬇ Download DOCX'}
                       </button>
                     </div>
                   </div>
+                  {exportError && (
+                    <p className="text-red-600 dark:text-red-400 text-xs mb-3">{exportError}</p>
+                  )}
                   {saveStatus === 'error' && (
                     <p className="text-red-600 dark:text-red-400 text-xs mb-3">{saveError}</p>
                   )}
