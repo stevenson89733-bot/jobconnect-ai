@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { getCandidateProfile } from '@/lib/profile'
+import { buildContactInfo, formatContactLine } from '@/lib/resumeContact'
 import ResumeBuilderClient from './ResumeBuilderClient'
 
 export const dynamic = 'force-dynamic'
@@ -15,6 +16,11 @@ export default async function ResumeBuilderPage() {
   let initialSkills = ''
   let initialEducation = ''
   let initialSummary = ''
+  // Real name/contact for the lot-2 live preview — same buildContactInfo()
+  // helper the actual generation call uses server-side, so the live draft
+  // preview and the eventual AI-generated resume never disagree.
+  let initialName = ''
+  let initialContact = ''
 
   try {
     const supabase = createClient()
@@ -27,6 +33,10 @@ export default async function ResumeBuilderPage() {
       initialSkills = profile?.skills?.trim() ?? ''
       initialEducation = profile?.education?.trim() ?? ''
       initialSummary = profile?.bio?.trim() ?? ''
+
+      const contact = buildContactInfo(profile, user.email)
+      initialName = contact.name
+      initialContact = formatContactLine(contact)
     }
   } catch {}
 
@@ -38,6 +48,8 @@ export default async function ResumeBuilderPage() {
       initialSkills={initialSkills}
       initialEducation={initialEducation}
       initialSummary={initialSummary}
+      initialName={initialName}
+      initialContact={initialContact}
     />
   )
 }

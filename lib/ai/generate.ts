@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { createClient } from '@/lib/supabase/server'
 import { hasEnoughExperience, sanitizeTargetRole } from './resumeGuard'
+import { type ContactInfo, EMPTY_CONTACT, buildContactInfo, formatContactLine } from '@/lib/resumeContact'
 
 /**
  * Tier-based AI routing.
@@ -42,29 +43,9 @@ type CoverLetterInput = {
 
 type Provider = { client: OpenAI; model: string; tier: 'premium' | 'free' }
 
-// Real contact info pulled from the authenticated candidate's own profile —
-// never client-submitted (that would let a request claim someone else's
-// name/email) and never fabricated by the LLM.
-export type ContactInfo = {
-  name: string
-  email: string
-  phone: string
-  linkedinUrl: string
-  githubUrl: string
-  portfolioUrl: string
-}
-
-const EMPTY_CONTACT: ContactInfo = { name: '', email: '', phone: '', linkedinUrl: '', githubUrl: '', portfolioUrl: '' }
-
-// Builds the single "email | phone | linkedin | github | portfolio" contact
-// line, omitting any field the candidate hasn't set — never a placeholder.
-export function formatContactLine(contact: ContactInfo): string {
-  return [contact.email, contact.phone, contact.linkedinUrl, contact.githubUrl, contact.portfolioUrl]
-    .filter((part) => part.trim().length > 0)
-    .join(' | ')
-}
-
 // Reads the current user's premium status AND real contact info server-side.
+// Contact building itself lives in lib/resumeContact.ts, shared with the
+// client-side live resume preview (lot 2) so both use identical real data.
 async function resolveProvider(): Promise<Provider & { contact: ContactInfo }> {
   let isPremium = false
   let contact: ContactInfo = EMPTY_CONTACT
@@ -78,14 +59,7 @@ async function resolveProvider(): Promise<Provider & { contact: ContactInfo }> {
         .eq('user_id', user.id)
         .single()
       isPremium = data?.is_premium ?? false
-      contact = {
-        name: data?.full_name?.trim() || user.email?.split('@')[0] || '',
-        email: data?.email?.trim() || user.email || '',
-        phone: data?.phone?.trim() || '',
-        linkedinUrl: data?.linkedin_url?.trim() || '',
-        githubUrl: data?.github_url?.trim() || '',
-        portfolioUrl: data?.portfolio_url?.trim() || '',
-      }
+      contact = buildContactInfo(data, user.email)
     }
   } catch {
     // No session / Supabase unavailable → treat as free tier, no real contact to show

@@ -2,12 +2,14 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Gauge, FileCheck2, KeyRound, SpellCheck2, TrendingUp, Wand2, AlertTriangle, RefreshCw } from 'lucide-react'
-import { Markdown, mdToHtml, printAsPdf } from '@/lib/docExport'
+import { mdToHtml, printAsPdf } from '@/lib/docExport'
 import InsightCard from '@/components/career-coach/InsightCard'
 import SkillTag from '@/components/career-coach/SkillTag'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import RewriteSuggestion from '@/components/resume-builder/RewriteSuggestion'
+import ResumePreview, { type ResumeContent, type ResumeTemplateId } from '@/components/resume-builder/ResumePreview'
+import TemplateSelector from '@/components/resume-builder/TemplateSelector'
 import { analyzeResume } from '@/app/actions/resumeAnalysis'
 import type { ResumeAnalysis, RewriteSection } from '@/lib/ai/resumeAnalysis'
 import { hasEnoughExperience, stripTargetRoleNewlines, sanitizeTargetRole, MAX_TARGET_ROLE_LENGTH } from '@/lib/ai/resumeGuard'
@@ -101,6 +103,8 @@ export default function ResumeBuilderClient({
   initialSkills = '',
   initialEducation = '',
   initialSummary = '',
+  initialName = '',
+  initialContact = '',
 }: {
   isPremium: boolean
   initialTargetRole?: string
@@ -108,6 +112,8 @@ export default function ResumeBuilderClient({
   initialSkills?: string
   initialEducation?: string
   initialSummary?: string
+  initialName?: string
+  initialContact?: string
 }) {
   const [mounted, setMounted] = useState(false)
   // Pre-filled from the candidate's real saved profile (see page.tsx) —
@@ -124,8 +130,32 @@ export default function ResumeBuilderClient({
   const [analysis, setAnalysis] = useState<ResumeAnalysis | null>(null)
   const [analysisLoading, setAnalysisLoading] = useState(false)
   const [analysisError, setAnalysisError] = useState('')
+  // Snapshot of the resume content at the moment analysis last ran, to
+  // detect when the candidate has since edited it (e.g. accepted a rewrite
+  // suggestion) — see isAnalysisStale below.
+  const [analyzedSnapshot, setAnalyzedSnapshot] = useState<string | null>(null)
+
+  const [template, setTemplate] = useState<ResumeTemplateId>('classic')
 
   useEffect(() => setMounted(true), [])
+
+  // Real-time, client-only preview — no LLM call. Before the first
+  // generation this reflects exactly what's typed in the form (plus the
+  // candidate's real name/contact); after generation it shows the AI
+  // output, still through the same template renderer. Templates never
+  // alter this content, only how it's laid out.
+  const draftContent: ResumeContent = {
+    name: initialName,
+    contact: initialContact,
+    title: targetRole,
+    summary,
+    experience,
+    skills,
+    education,
+  }
+  const previewContent: ResumeContent = result ? result.resume : draftContent
+  const resumeContentKey = JSON.stringify(previewContent)
+  const isAnalysisStale = !!analysis && analyzedSnapshot !== null && analyzedSnapshot !== resumeContentKey
 
   if (!mounted) return <PremiumSkeleton />
 
@@ -143,6 +173,7 @@ export default function ResumeBuilderClient({
     setResult(null)
     // A newly generated resume invalidates any prior analysis.
     setAnalysis(null)
+    setAnalyzedSnapshot(null)
     setAnalysisError('')
     try {
       const res = await fetch('/api/ai/resume', {
@@ -174,6 +205,7 @@ export default function ResumeBuilderClient({
       })
       if (res.ok) {
         setAnalysis(res.analysis)
+        setAnalyzedSnapshot(resumeContentKey)
       } else {
         setAnalysisError(res.error)
       }
@@ -324,12 +356,20 @@ export default function ResumeBuilderClient({
 
           {/* Results panel */}
           <div className="space-y-5">
-            {!result && !loading && (
-              <div className="card flex flex-col items-center justify-center py-16 text-center text-slate-600 dark:text-slate-500">
-                <div className="text-4xl mb-3">📄</div>
-                <p className="text-sm">Fill in your details and click Generate to get your ATS-optimized resume.</p>
+            {/* Live preview — pure client-side rendering, no LLM call. Shows
+                the AI output once generated, the raw form content until then. */}
+            <div className="card">
+              <div className="flex items-center justify-between mb-1">
+                <h2 className="font-semibold text-slate-900 dark:text-white">{result ? 'Generated Resume' : 'Live Preview'}</h2>
+                <TemplateSelector value={template} onChange={setTemplate} />
               </div>
-            )}
+              <p className="text-xs text-slate-500 dark:text-slate-500 mb-4">
+                {result
+                  ? 'AI-polished with GPT-4o. Switching templates never changes this content.'
+                  : 'Updates instantly as you type — click Generate for an AI-polished, ATS-optimized version.'}
+              </p>
+              <ResumePreview content={previewContent} template={template} />
+            </div>
 
             {loading && (
               <div className="card flex flex-col items-center justify-center py-16 text-center gap-3">
@@ -384,34 +424,6 @@ export default function ResumeBuilderClient({
                   </ul>
                 </div>
 
-                {/* Resume preview */}
-                <div className="card">
-                  <h2 className="font-semibold text-slate-900 dark:text-white mb-4">Generated Resume</h2>
-                  <div className="bg-slate-50 dark:bg-slate-900 rounded-xl p-5 text-sm space-y-4 font-mono">
-                    <div>
-                      <div className="text-slate-900 dark:text-white font-bold text-base">{result.resume.name}</div>
-                      <div className="text-primary text-xs">{result.resume.title}</div>
-                      <div className="text-slate-600 dark:text-slate-500 text-xs">{result.resume.contact}</div>
-                    </div>
-                    <div>
-                      <div className="text-orange-600 dark:text-accent text-xs font-bold uppercase tracking-wider mb-1">Summary</div>
-                      <Markdown text={result.resume.summary} className="text-slate-700 dark:text-slate-300 leading-relaxed space-y-1" />
-                    </div>
-                    <div>
-                      <div className="text-orange-600 dark:text-accent text-xs font-bold uppercase tracking-wider mb-1">Experience</div>
-                      <Markdown text={result.resume.experience} className="text-slate-700 dark:text-slate-300 leading-relaxed space-y-1" />
-                    </div>
-                    <div>
-                      <div className="text-orange-600 dark:text-accent text-xs font-bold uppercase tracking-wider mb-1">Skills</div>
-                      <Markdown text={result.resume.skills} className="text-slate-700 dark:text-slate-300 leading-relaxed space-y-1" />
-                    </div>
-                    <div>
-                      <div className="text-orange-600 dark:text-accent text-xs font-bold uppercase tracking-wider mb-1">Education</div>
-                      <Markdown text={result.resume.education} className="text-slate-700 dark:text-slate-300 leading-relaxed space-y-1" />
-                    </div>
-                  </div>
-                </div>
-
                 {/* Deep analysis — explicit action, not automatic */}
                 <div className="card">
                   <div className="flex items-center justify-between mb-1">
@@ -424,6 +436,12 @@ export default function ResumeBuilderClient({
                   <p className="text-xs text-slate-500 dark:text-slate-500 mb-4">
                     Score, keywords, grammar, achievements, and rewrite suggestions for this exact resume.
                   </p>
+                  {isAnalysisStale && (
+                    <p className="text-xs text-yellow-700 dark:text-yellow-500 mb-4 flex items-center gap-1.5">
+                      <AlertTriangle className="w-3.5 h-3.5 shrink-0" strokeWidth={1.75} />
+                      Analysis may be outdated — the resume changed since this was generated. Click Re-analyze to refresh.
+                    </p>
+                  )}
 
                   {analysisError && (
                     <Card className="border-red-300 dark:border-red-800/50 mb-4">
