@@ -5,6 +5,7 @@ import { Markdown, mdToHtml, printAsPdf } from '@/lib/docExport'
 import RewriteSuggestion from '@/components/resume-builder/RewriteSuggestion'
 import StyleSelector, { type CoverLetterStyle } from '@/components/cover-letter/StyleSelector'
 import { sanitizeTargetRole, stripTargetRoleNewlines, MAX_TARGET_ROLE_LENGTH } from '@/lib/ai/resumeGuard'
+import { saveCoverLetterDraft } from '@/app/actions/coverLetters'
 
 type ScoreBreakdown = { relevance: number; impact: number; tone: number; structure: number }
 type LetterSection = 'opening' | 'body' | 'closing'
@@ -117,6 +118,9 @@ export default function CoverLetterClient({
   const [result, setResult] = useState<CoverLetterData | null>(null)
   const [dateLine, setDateLine] = useState('')
   const [error, setError] = useState('')
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
+  const [saveError, setSaveError] = useState('')
+  const [copyStatus, setCopyStatus] = useState<'idle' | 'copied' | 'error'>('idle')
   useEffect(() => setMounted(true), [])
 
   if (!mounted) return <PremiumSkeleton />
@@ -127,6 +131,7 @@ export default function CoverLetterClient({
     setLoading(true)
     setError('')
     setResult(null)
+    setSaveStatus('idle')
     try {
       const res = await fetch('/api/ai/cover-letter', {
         method: 'POST',
@@ -153,6 +158,44 @@ export default function CoverLetterClient({
   // fabricated).
   function handleAcceptSuggestion(section: LetterSection, text: string) {
     setResult((prev) => prev && { ...prev, letter: { ...prev.letter, [section]: text } })
+    setSaveStatus('idle')
+  }
+
+  // Plain-text version of exactly what's on screen — client-side only, no
+  // server round-trip needed just to put text on the clipboard.
+  async function handleCopy() {
+    if (!result) return
+    const { letter } = result
+    const text = [dateLine, '', letter.greeting, '', letter.opening, '', letter.body, '', letter.closing, '', letter.signature]
+      .join('\n')
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopyStatus('copied')
+      setTimeout(() => setCopyStatus('idle'), 2000)
+    } catch {
+      setCopyStatus('error')
+    }
+  }
+
+  // Saves exactly the letter currently on screen — including any accepted
+  // suggestion edits — never a separately reconstructed version.
+  async function handleSaveDraft() {
+    if (!result) return
+    setSaveStatus('saving')
+    setSaveError('')
+    const res = await saveCoverLetterDraft({
+      companyName: company,
+      targetRole,
+      jobDescription,
+      style,
+      letterContent: result.letter,
+    })
+    if (res.ok) {
+      setSaveStatus('saved')
+    } else {
+      setSaveStatus('error')
+      setSaveError(res.error)
+    }
   }
 
   return (
@@ -171,9 +214,16 @@ export default function CoverLetterClient({
             </h1>
             <p className="text-slate-600 dark:text-slate-400">Generate a personalized, compelling cover letter for any role using GPT-4o.</p>
           </div>
-          <span className="inline-flex items-center gap-1.5 bg-accent/10 text-orange-700 dark:text-accent border border-accent/30 rounded-full px-3 py-1 text-xs font-semibold">
-            ✦ Premium Feature
-          </span>
+          <div className="flex items-center gap-3">
+            {isPremium && (
+              <Link href="/ai-tools/cover-letter/history" className="text-sm text-primary hover:underline">
+                View History
+              </Link>
+            )}
+            <span className="inline-flex items-center gap-1.5 bg-accent/10 text-orange-700 dark:text-accent border border-accent/30 rounded-full px-3 py-1 text-xs font-semibold">
+              ✦ Premium Feature
+            </span>
+          </div>
         </div>
       </div>
 
@@ -312,13 +362,31 @@ export default function CoverLetterClient({
                 <div className="card">
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="font-semibold text-slate-900 dark:text-white">Quality Score</h2>
-                    <button
-                      onClick={() => downloadLetter(result, targetRole, company, dateLine)}
-                      className="btn-primary text-xs py-2 px-4 flex items-center gap-1.5"
-                    >
-                      ⬇ Download
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={handleCopy}
+                        className="btn-outline text-xs py-2 px-4 flex items-center gap-1.5"
+                      >
+                        {copyStatus === 'copied' ? '✓ Copied' : copyStatus === 'error' ? 'Copy failed' : '📋 Copy'}
+                      </button>
+                      <button
+                        onClick={handleSaveDraft}
+                        disabled={saveStatus === 'saving'}
+                        className="btn-outline text-xs py-2 px-4 flex items-center gap-1.5 disabled:opacity-50"
+                      >
+                        {saveStatus === 'saving' ? 'Saving…' : saveStatus === 'saved' ? '✓ Saved' : '💾 Save Draft'}
+                      </button>
+                      <button
+                        onClick={() => downloadLetter(result, targetRole, company, dateLine)}
+                        className="btn-primary text-xs py-2 px-4 flex items-center gap-1.5"
+                      >
+                        ⬇ Download
+                      </button>
+                    </div>
                   </div>
+                  {saveStatus === 'error' && (
+                    <p className="text-red-600 dark:text-red-400 text-xs mb-3">{saveError}</p>
+                  )}
                   <div className="flex items-center gap-6">
                     <ScoreRing score={result.score} />
                     <div className="flex-1 space-y-2.5">
