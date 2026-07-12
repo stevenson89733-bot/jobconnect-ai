@@ -6,6 +6,7 @@ import RewriteSuggestion from '@/components/resume-builder/RewriteSuggestion'
 import StyleSelector, { type CoverLetterStyle } from '@/components/cover-letter/StyleSelector'
 import { sanitizeTargetRole, stripTargetRoleNewlines, MAX_TARGET_ROLE_LENGTH } from '@/lib/ai/resumeGuard'
 import { saveCoverLetterDraft } from '@/app/actions/coverLetters'
+import { copyToClipboard } from '@/lib/clipboard'
 
 type ScoreBreakdown = { relevance: number; impact: number; tone: number; structure: number }
 type LetterSection = 'opening' | 'body' | 'closing'
@@ -183,29 +184,6 @@ export default function CoverLetterClient({
     setSaveStatus('idle')
   }
 
-  // Legacy fallback for when the async Clipboard API throws — most commonly
-  // NotAllowedError: "Document is not focused" (a real, documented Clipboard
-  // API constraint, not just a sandbox artifact: it can also fire in normal
-  // use, e.g. focus having just moved elsewhere). execCommand('copy') works
-  // synchronously off a real user click even when the Clipboard API refuses.
-  function legacyCopy(text: string): boolean {
-    const textarea = document.createElement('textarea')
-    textarea.value = text
-    textarea.style.position = 'fixed'
-    textarea.style.opacity = '0'
-    document.body.appendChild(textarea)
-    textarea.focus()
-    textarea.select()
-    let ok = false
-    try {
-      ok = document.execCommand('copy')
-    } catch {
-      ok = false
-    }
-    document.body.removeChild(textarea)
-    return ok
-  }
-
   // Plain-text version of exactly what's on screen — client-side only, no
   // server round-trip needed just to put text on the clipboard.
   async function handleCopy() {
@@ -213,15 +191,8 @@ export default function CoverLetterClient({
     const { letter } = result
     const text = [dateLine, '', letter.greeting, '', letter.opening, '', letter.body, '', letter.closing, '', letter.signature]
       .join('\n')
-    try {
-      await navigator.clipboard.writeText(text)
-      setCopyStatus('copied')
-      setTimeout(() => setCopyStatus('idle'), 2000)
-      return
-    } catch {
-      // fall through to the legacy fallback below
-    }
-    if (legacyCopy(text)) {
+    const res = await copyToClipboard(text)
+    if (res.ok) {
       setCopyStatus('copied')
       setTimeout(() => setCopyStatus('idle'), 2000)
     } else {
