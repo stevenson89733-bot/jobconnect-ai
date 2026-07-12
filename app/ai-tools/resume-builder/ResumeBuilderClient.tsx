@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Gauge, FileCheck2, KeyRound, SpellCheck2, TrendingUp, Wand2, AlertTriangle, RefreshCw } from 'lucide-react'
-import { mdToHtml, printAsPdf } from '@/lib/docExport'
 import InsightCard from '@/components/career-coach/InsightCard'
 import SkillTag from '@/components/career-coach/SkillTag'
 import { Button } from '@/components/ui/button'
@@ -53,24 +52,34 @@ function ScoreRing({ score }: { score: number }) {
   )
 }
 
-function downloadPDF(data: ResumeData) {
-  const { resume } = data
-  const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-  const body = `
-<h1>${esc(resume.name)}</h1>
-<div class="title">${esc(resume.title)}</div>
-<div class="contact">${esc(resume.contact)}</div>
-<div class="score">ATS Score: <strong>${data.score}/100</strong></div>
-<h2>Professional Summary</h2>
-${mdToHtml(resume.summary)}
-<h2>Experience</h2>
-${mdToHtml(resume.experience)}
-<h2>Skills</h2>
-${mdToHtml(resume.skills)}
-<h2>Education</h2>
-${mdToHtml(resume.education)}`
+// Downloads the resume as a real PDF/DOCX file rendered server-side (see
+// app/api/resume/export/route.ts) from the exact same content object shown
+// in the preview — including any accepted rewrite suggestions — for
+// whichever template is currently selected. Never reconstructs a separate
+// version of the resume.
+async function downloadResumeFile(content: ResumeContent, template: ResumeTemplateId, format: 'pdf' | 'docx') {
+  const res = await fetch('/api/resume/export', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ resume: content, template, format }),
+  })
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}))
+    throw new Error(data.error || 'Export failed')
+  }
+  const disposition = res.headers.get('Content-Disposition') ?? ''
+  const match = disposition.match(/filename="([^"]+)"/)
+  const filename = match?.[1] ?? `Resume.${format}`
 
-  printAsPdf(body, `${resume.name.replace(/\s+/g, '_')}_Resume`)
+  const blob = await res.blob()
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename
+  document.body.appendChild(a)
+  a.click()
+  a.remove()
+  URL.revokeObjectURL(url)
 }
 
 function PremiumSkeleton() {
@@ -136,6 +145,8 @@ export default function ResumeBuilderClient({
   const [analyzedSnapshot, setAnalyzedSnapshot] = useState<string | null>(null)
 
   const [template, setTemplate] = useState<ResumeTemplateId>('classic')
+  const [exportingFormat, setExportingFormat] = useState<'pdf' | 'docx' | null>(null)
+  const [exportError, setExportError] = useState('')
 
   useEffect(() => setMounted(true), [])
 
@@ -216,6 +227,18 @@ export default function ResumeBuilderClient({
 
   function handleAcceptRewrite(section: RewriteSection, text: string) {
     setResult((prev) => prev && { ...prev, resume: { ...prev.resume, [section]: text } })
+  }
+
+  async function handleExport(format: 'pdf' | 'docx') {
+    setExportError('')
+    setExportingFormat(format)
+    try {
+      await downloadResumeFile(previewContent, template, format)
+    } catch (err) {
+      setExportError(err instanceof Error ? err.message : 'Export failed')
+    } finally {
+      setExportingFormat(null)
+    }
   }
 
   return (
@@ -369,6 +392,20 @@ export default function ResumeBuilderClient({
                   : 'Updates instantly as you type — click Generate for an AI-polished, ATS-optimized version.'}
               </p>
               <ResumePreview content={previewContent} template={template} />
+
+              {result && (
+                <>
+                  {exportError && <p className="text-red-600 dark:text-red-400 text-xs mt-3">{exportError}</p>}
+                  <div className="flex gap-2 mt-4">
+                    <Button variant="primary" size="sm" onClick={() => handleExport('pdf')} disabled={exportingFormat !== null}>
+                      {exportingFormat === 'pdf' ? 'Preparing PDF…' : '⬇ Download PDF'}
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={() => handleExport('docx')} disabled={exportingFormat !== null}>
+                      {exportingFormat === 'docx' ? 'Preparing DOCX…' : '⬇ Download DOCX'}
+                    </Button>
+                  </div>
+                </>
+              )}
             </div>
 
             {loading && (
@@ -385,15 +422,7 @@ export default function ResumeBuilderClient({
               <>
                 {/* Score card */}
                 <div className="card">
-                  <div className="flex items-center justify-between mb-4">
-                    <h2 className="font-semibold text-slate-900 dark:text-white">Resume Score</h2>
-                    <button
-                      onClick={() => downloadPDF(result)}
-                      className="btn-primary text-xs py-2 px-4 flex items-center gap-1.5"
-                    >
-                      ⬇ Download PDF
-                    </button>
-                  </div>
+                  <h2 className="font-semibold text-slate-900 dark:text-white mb-4">Resume Score</h2>
                   <div className="flex items-center gap-6">
                     <ScoreRing score={result.score} />
                     <div className="flex-1 space-y-2.5">
