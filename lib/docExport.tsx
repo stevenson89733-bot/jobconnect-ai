@@ -109,6 +109,8 @@ const PRINT_CSS = `
   .title { font-size: 14px; color: #2563eb; font-weight: 600; margin-bottom: 4px; }
   .contact { color: #64748b; font-size: 12px; margin-bottom: 16px; }
   .subject { font-size: 12px; color: #64748b; margin-bottom: 20px; }
+  .date { font-size: 12px; color: #64748b; margin-bottom: 16px; }
+  .justify p { text-align: justify; }
   h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: #2563eb; border-bottom: 1.5px solid #2563eb; padding-bottom: 3px; margin: 18px 0 8px; }
   p { margin: 0 0 8px; }
   ul { margin: 0 0 8px; padding-left: 20px; }

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { createClient } from '@/lib/supabase/server'
-import { hasEnoughExperience, sanitizeTargetRole } from './resumeGuard'
+import { MIN_EXPERIENCE_LENGTH, hasEnoughExperience, sanitizeTargetRole } from './resumeGuard'
 import { type ContactInfo, EMPTY_CONTACT, buildContactInfo, formatContactLine } from '@/lib/resumeContact'
 
 /**
@@ -34,11 +34,15 @@ type ResumeInput = {
   summary?: string
 }
 
+type CoverLetterStyle = 'Formal' | 'Conversational' | 'Concise'
+const COVER_LETTER_STYLES: CoverLetterStyle[] = ['Formal', 'Conversational', 'Concise']
+
 type CoverLetterInput = {
   targetRole?: string
   company?: string
+  jobDescription?: string
   strengths?: string
-  tone?: string
+  style?: string
 }
 
 type Provider = { client: OpenAI; model: string; tier: 'premium' | 'free' }
@@ -134,34 +138,55 @@ Return a JSON object with this exact structure:
 IMPORTANT: In the "resume" object, the fields "summary", "experience", "skills", and "education" MUST EACH be a single plain string (markdown-formatted — use "\\n" line breaks and "-" bullet points where useful). NEVER return them as arrays or nested objects.`
 }
 
-function buildCoverLetterPrompt({ targetRole, company, strengths, tone }: CoverLetterInput): string {
-  return `You are an expert career coach and professional cover letter writer. Generate a compelling, personalized cover letter and a quality score.
+const STYLE_GUIDANCE: Record<CoverLetterStyle, string> = {
+  Formal: 'Traditional and respectful register, complete sentences, no contractions, measured and polished — the kind of letter appropriate for a conservative or executive-level employer.',
+  Conversational: 'Warm, personable, first-person voice, contractions are fine — still professional, but reads like a genuine person talking about work they care about, not a template.',
+  Concise: 'Short and direct. Minimal fluff, no throat-clearing sentences, get to the point in each paragraph. Prioritize the single strongest piece of evidence over a list of several.',
+}
+
+function buildCoverLetterPrompt({ targetRole, company, jobDescription, strengths, style }: CoverLetterInput): string {
+  const resolvedStyle = (COVER_LETTER_STYLES as string[]).includes(style ?? '') ? (style as CoverLetterStyle) : 'Formal'
+
+  return `You are an expert career coach and professional cover letter writer. Your job is to WRITE a cover letter using ONLY the candidate's real, provided strengths and the real job description below — you must NOT invent employers, job titles, achievements, metrics, or company facts that are not explicitly present in the input.
+
+STRICT RULES — read carefully:
+- Use ONLY the achievements, experience, and skills explicitly present in "Candidate Strengths / Key Points" below. Do NOT invent a prior job title, employer, metric, or accomplishment (e.g. "increased sales by 20%") that isn't stated there — even if it would sound more persuasive.
+- If "Candidate Strengths / Key Points" is thin or general, keep the letter's claims correspondingly general and honest. A shorter, honest letter is correct behavior — a longer, fabricated one is not.
+- If a Job Description is provided below, you MAY reference concrete requirements, responsibilities, or technologies it explicitly mentions to show fit. Do NOT invent facts about ${company || 'the company'} (culture, mission, awards, recent news, etc.) beyond what's literally written in the Job Description text — if the Job Description doesn't mention something, don't claim it.
+- If no Job Description is provided, keep the letter focused on the target role and the candidate's real strengths, without inventing company-specific claims.
 
 Target Job Title: ${targetRole}
 Company: ${company}
+Job Description (if provided): ${jobDescription?.trim() || 'Not provided'}
 Candidate Strengths / Key Points: ${strengths || 'Not provided'}
-Tone: ${tone || 'Professional and enthusiastic'}
+Writing Style: ${resolvedStyle} — ${STYLE_GUIDANCE[resolvedStyle]}
 
 Return a JSON object with this exact structure:
 {
   "score": <integer 0-100 representing cover letter quality>,
   "scoreBreakdown": {
-    "relevance": <0-25, how well it targets the role and company>,
-    "impact": <0-25, strength of achievements and value proposition>,
-    "tone": <0-25, appropriateness of tone and voice>,
+    "relevance": <0-25, how well it targets the role, company, and job description>,
+    "impact": <0-25, strength of the REAL achievements and value proposition actually provided>,
+    "tone": <0-25, appropriateness and consistency of the ${resolvedStyle} style>,
     "structure": <0-25, clarity and professional formatting>
   },
   "improvements": [<string>, <string>, <string>],
   "letter": {
     "subject": "Application for ${targetRole}",
     "greeting": "Dear Hiring Manager,",
-    "opening": "<compelling 2-3 sentence opening paragraph that hooks the reader and states the role>",
-    "body": "<2 paragraphs: first highlights the candidate's top strengths and achievements relevant to ${company} and ${targetRole}; second shows knowledge of ${company} and cultural fit>",
-    "closing": "<strong closing paragraph with clear call to action>"
-  }
+    "opening": "<2-3 sentence opening paragraph that hooks the reader and states the role, in the ${resolvedStyle} style>",
+    "body": "<2 paragraphs: first highlights the candidate's REAL strengths/achievements from the input relevant to ${targetRole}; second connects to concrete details from the Job Description if provided, or the role in general if not — never invented company facts>",
+    "closing": "<strong closing paragraph with clear call to action, in the ${resolvedStyle} style>"
+  },
+  "suggestions": [
+    {
+      "section": "<one of: opening, body, closing>",
+      "suggestion": "<an alternative phrasing for that paragraph, still using ONLY real facts from the input above — a genuinely different angle or emphasis, not just a synonym swap>"
+    }
+  ]
 }
 
-Do NOT include a "signature" field — that is added separately from the candidate's real contact info.`
+Include 1 to 3 items in "suggestions", each for a different section, only where you have a genuinely useful alternative grounded in the real input — do not pad with filler suggestions. If "Candidate Strengths / Key Points" is empty or too thin to vary honestly (fewer than ${MIN_EXPERIENCE_LENGTH} real characters), return an empty "suggestions" array — do NOT invent phrases like "in my previous roles" or any other claim not present in the input just to fill a suggestion. Do NOT include a "signature" field — that is added separately from the candidate's real contact info.`
 }
 
 // Safety net: coerce a value to a readable string if a model returns an array
@@ -210,7 +235,9 @@ function normalizeResume(data: unknown, contact: ContactInfo): unknown {
 // Same pattern as normalizeResume — the model never generates the
 // signature, so the candidate's real name/contact line (reusing
 // formatContactLine, same helper as the resume) is filled in here instead.
-function normalizeLetter(data: unknown, contact: ContactInfo): unknown {
+const LETTER_SECTIONS = ['opening', 'body', 'closing'] as const
+
+function normalizeLetter(data: unknown, contact: ContactInfo, strengths: string | undefined): unknown {
   if (data && typeof data === 'object' && 'letter' in data) {
     const letter = (data as { letter: unknown }).letter
     coerceFields(letter, ['subject', 'greeting', 'opening', 'body', 'closing'])
@@ -219,6 +246,23 @@ function normalizeLetter(data: unknown, contact: ContactInfo): unknown {
       const contactLine = formatContactLine(contact)
       obj.signature = `Sincerely,\n${contact.name}${contactLine ? `\n${contactLine}` : ''}`
     }
+  }
+  // Defensive validation, same reasoning as coerceFields — never trust the
+  // model's output shape blindly. Drop anything that isn't a well-formed
+  // { section, suggestion } pair rather than let a malformed entry reach the UI.
+  if (data && typeof data === 'object') {
+    const obj = data as Record<string, unknown>
+    // Hard guard, not just a prompt instruction: with too little real
+    // material, ANY "alternate phrasing" the model offers has to invent
+    // something to fill the gap (seen in testing: "in my previous roles..."
+    // out of thin air with empty strengths input) — so suggestions are
+    // suppressed entirely rather than trusted to self-police.
+    const rawSuggestions = hasEnoughExperience(strengths) && Array.isArray(obj.suggestions) ? obj.suggestions : []
+    obj.suggestions = rawSuggestions
+      .filter((s): s is Record<string, unknown> => !!s && typeof s === 'object')
+      .map((s) => ({ section: coerceToString(s.section), suggestion: coerceToString(s.suggestion) }))
+      .filter((s) => (LETTER_SECTIONS as readonly string[]).includes(s.section) && s.suggestion.trim().length > 0)
+      .slice(0, 3)
   }
   return data
 }
@@ -260,16 +304,25 @@ export async function generateResume(rawInput: ResumeInput): Promise<NextRespons
   }
 }
 
+const MAX_JOB_DESCRIPTION_LENGTH = 6000
+
 export async function generateCoverLetter(rawInput: CoverLetterInput): Promise<NextResponse> {
   try {
     if (!rawInput.targetRole || !rawInput.company) {
       return NextResponse.json({ error: 'targetRole and company are required' }, { status: 400 })
     }
     // Same defense-in-depth sanitization as generateResume — targetRole is
-    // interpolated into this prompt too (subject line, body).
-    const input: CoverLetterInput = { ...rawInput, targetRole: sanitizeTargetRole(rawInput.targetRole) }
-    const { data: raw, contact } = await completeJson(buildCoverLetterPrompt(input), 1800)
-    const data = normalizeLetter(raw, contact)
+    // interpolated into this prompt too (subject line, body). style is
+    // re-validated here (not just trusted from the client dropdown) since
+    // it's interpolated directly into the prompt text.
+    const input: CoverLetterInput = {
+      ...rawInput,
+      targetRole: sanitizeTargetRole(rawInput.targetRole),
+      jobDescription: rawInput.jobDescription?.trim().slice(0, MAX_JOB_DESCRIPTION_LENGTH),
+      style: (COVER_LETTER_STYLES as string[]).includes(rawInput.style ?? '') ? rawInput.style : 'Formal',
+    }
+    const { data: raw, contact } = await completeJson(buildCoverLetterPrompt(input), 2000)
+    const data = normalizeLetter(raw, contact, input.strengths)
     return NextResponse.json(data)
   } catch (err) {
     return toErrorResponse(err, 'cover-letter')

@@ -2,8 +2,13 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Markdown, mdToHtml, printAsPdf } from '@/lib/docExport'
+import RewriteSuggestion from '@/components/resume-builder/RewriteSuggestion'
+import StyleSelector, { type CoverLetterStyle } from '@/components/cover-letter/StyleSelector'
+import { sanitizeTargetRole, stripTargetRoleNewlines, MAX_TARGET_ROLE_LENGTH } from '@/lib/ai/resumeGuard'
 
 type ScoreBreakdown = { relevance: number; impact: number; tone: number; structure: number }
+type LetterSection = 'opening' | 'body' | 'closing'
+type LetterSuggestion = { section: LetterSection; suggestion: string }
 type CoverLetterData = {
   score: number
   scoreBreakdown: ScoreBreakdown
@@ -16,6 +21,13 @@ type CoverLetterData = {
     closing: string
     signature: string
   }
+  suggestions: LetterSuggestion[]
+}
+
+const SECTION_LABELS: Record<LetterSection, string> = {
+  opening: 'Opening Paragraph',
+  body: 'Body',
+  closing: 'Closing Paragraph',
 }
 
 function ScoreRing({ score }: { score: number }) {
@@ -41,16 +53,19 @@ function ScoreRing({ score }: { score: number }) {
   )
 }
 
-function downloadLetter(data: CoverLetterData, targetRole: string, company: string) {
+function downloadLetter(data: CoverLetterData, targetRole: string, company: string, dateLine: string) {
   const { letter } = data
   const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
   const body = `
 <div class="subject">${esc(letter.subject)}</div>
 <div class="score">Quality Score: <strong>${data.score}/100</strong></div>
+<div class="date">${esc(dateLine)}</div>
 ${mdToHtml(letter.greeting)}
+<div class="justify">
 ${mdToHtml(letter.opening)}
 ${mdToHtml(letter.body)}
 ${mdToHtml(letter.closing)}
+</div>
 ${mdToHtml(letter.signature)}`
 
   printAsPdf(body, `Cover_Letter_${company.replace(/\s+/g, '_')}_${targetRole.replace(/\s+/g, '_')}`)
@@ -79,14 +94,28 @@ function PremiumSkeleton() {
   )
 }
 
-export default function CoverLetterClient({ isPremium }: { isPremium: boolean }) {
+export default function CoverLetterClient({
+  isPremium,
+  initialTargetRole = '',
+  initialCompany = '',
+  initialJobDescription = '',
+  initialStrengths = '',
+}: {
+  isPremium: boolean
+  initialTargetRole?: string
+  initialCompany?: string
+  initialJobDescription?: string
+  initialStrengths?: string
+}) {
   const [mounted, setMounted] = useState(false)
-  const [targetRole, setTargetRole] = useState('')
-  const [company, setCompany] = useState('')
-  const [strengths, setStrengths] = useState('')
-  const [tone, setTone] = useState('Professional and enthusiastic')
+  const [targetRole, setTargetRole] = useState(initialTargetRole)
+  const [company, setCompany] = useState(initialCompany)
+  const [jobDescription, setJobDescription] = useState(initialJobDescription)
+  const [strengths, setStrengths] = useState(initialStrengths)
+  const [style, setStyle] = useState<CoverLetterStyle>('Formal')
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<CoverLetterData | null>(null)
+  const [dateLine, setDateLine] = useState('')
   const [error, setError] = useState('')
   useEffect(() => setMounted(true), [])
 
@@ -102,16 +131,28 @@ export default function CoverLetterClient({ isPremium }: { isPremium: boolean })
       const res = await fetch('/api/ai/cover-letter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ targetRole, company, strengths, tone }),
+        body: JSON.stringify({ targetRole, company, jobDescription, strengths, style }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Generation failed')
+      // Real current date at generation time — never model-generated, never
+      // a placeholder. Captured once here so it doesn't drift if the result
+      // stays on screen across a day boundary.
+      setDateLine(new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }))
       setResult(data)
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Something went wrong')
     } finally {
       setLoading(false)
     }
+  }
+
+  // Same accept/reject pattern as the Resume Builder's rewrite suggestions —
+  // accepting replaces the corresponding letter section with the suggested
+  // text, which is itself grounded in the same real input (never separately
+  // fabricated).
+  function handleAcceptSuggestion(section: LetterSection, text: string) {
+    setResult((prev) => prev && { ...prev, letter: { ...prev.letter, [section]: text } })
   }
 
   return (
@@ -190,7 +231,10 @@ export default function CoverLetterClient({ isPremium }: { isPremium: boolean })
             <div>
               <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Target Job Title <span className="text-red-500 dark:text-red-400">*</span></label>
               <input
-                value={targetRole} onChange={e => setTargetRole(e.target.value)}
+                value={targetRole}
+                onChange={e => setTargetRole(stripTargetRoleNewlines(e.target.value))}
+                onBlur={e => setTargetRole(sanitizeTargetRole(e.target.value))}
+                maxLength={MAX_TARGET_ROLE_LENGTH}
                 required placeholder="e.g. Senior Product Designer"
                 className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary"
               />
@@ -206,6 +250,15 @@ export default function CoverLetterClient({ isPremium }: { isPremium: boolean })
             </div>
 
             <div>
+              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Job Description <span className="text-slate-400 dark:text-slate-500">(optional, recommended)</span></label>
+              <textarea
+                value={jobDescription} onChange={e => setJobDescription(e.target.value)}
+                rows={6} placeholder="Paste the job listing text here — the letter will reference real requirements mentioned in it, never invented ones."
+                className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary resize-none"
+              />
+            </div>
+
+            <div>
               <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Your Key Strengths & Highlights</label>
               <textarea
                 value={strengths} onChange={e => setStrengths(e.target.value)}
@@ -215,16 +268,8 @@ export default function CoverLetterClient({ isPremium }: { isPremium: boolean })
             </div>
 
             <div>
-              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Tone</label>
-              <select
-                value={tone} onChange={e => setTone(e.target.value)}
-                className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-primary"
-              >
-                <option>Professional and enthusiastic</option>
-                <option>Confident and direct</option>
-                <option>Warm and conversational</option>
-                <option>Formal and precise</option>
-              </select>
+              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Writing Style</label>
+              <StyleSelector value={style} onChange={setStyle} />
             </div>
 
             {error && <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>}
@@ -268,7 +313,7 @@ export default function CoverLetterClient({ isPremium }: { isPremium: boolean })
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="font-semibold text-slate-900 dark:text-white">Quality Score</h2>
                     <button
-                      onClick={() => downloadLetter(result, targetRole, company)}
+                      onClick={() => downloadLetter(result, targetRole, company, dateLine)}
                       className="btn-primary text-xs py-2 px-4 flex items-center gap-1.5"
                     >
                       ⬇ Download
@@ -309,15 +354,35 @@ export default function CoverLetterClient({ isPremium }: { isPremium: boolean })
                   <h2 className="font-semibold text-slate-900 dark:text-white mb-4">Generated Cover Letter</h2>
                   <div className="bg-slate-50 dark:bg-slate-900 rounded-xl p-5 text-sm space-y-4">
                     <p className="text-slate-600 dark:text-slate-500 text-xs">{result.letter.subject}</p>
+                    <p className="text-slate-600 dark:text-slate-500 text-xs">{dateLine}</p>
                     <div className="border-t border-slate-200 dark:border-slate-800 pt-4 space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed">
                       <Markdown text={result.letter.greeting} />
-                      <Markdown text={result.letter.opening} />
-                      <Markdown text={result.letter.body} className="space-y-3" />
-                      <Markdown text={result.letter.closing} />
+                      <div className="space-y-4 text-justify">
+                        <Markdown text={result.letter.opening} />
+                        <Markdown text={result.letter.body} className="space-y-3" />
+                        <Markdown text={result.letter.closing} />
+                      </div>
                       <Markdown text={result.letter.signature} className="text-slate-600 dark:text-slate-400" />
                     </div>
                   </div>
                 </div>
+
+                {/* AI suggestions — same accept/reject pattern as Resume Builder */}
+                {result.suggestions.length > 0 && (
+                  <div className="card">
+                    <h2 className="font-semibold text-slate-900 dark:text-white mb-3">Suggestions</h2>
+                    <div className="space-y-3">
+                      {result.suggestions.map((s, i) => (
+                        <RewriteSuggestion
+                          key={`${s.section}-${i}`}
+                          label={SECTION_LABELS[s.section]}
+                          suggestion={s.suggestion}
+                          onAccept={(text) => handleAcceptSuggestion(s.section, text)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
               </>
             )}
           </div>
