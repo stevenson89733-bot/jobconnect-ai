@@ -10,6 +10,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import RewriteSuggestion from '@/components/resume-builder/RewriteSuggestion'
 import { analyzeResume } from '@/app/actions/resumeAnalysis'
 import type { ResumeAnalysis, RewriteSection } from '@/lib/ai/resumeAnalysis'
+import { hasEnoughExperience } from '@/lib/ai/resumeGuard'
 
 type ScoreBreakdown = { keywords: number; formatting: number; experience: number; skills: number }
 type ResumeData = {
@@ -93,13 +94,29 @@ function PremiumSkeleton() {
   )
 }
 
-export default function ResumeBuilderClient({ isPremium }: { isPremium: boolean }) {
+export default function ResumeBuilderClient({
+  isPremium,
+  initialTargetRole = '',
+  initialExperience = '',
+  initialSkills = '',
+  initialEducation = '',
+  initialSummary = '',
+}: {
+  isPremium: boolean
+  initialTargetRole?: string
+  initialExperience?: string
+  initialSkills?: string
+  initialEducation?: string
+  initialSummary?: string
+}) {
   const [mounted, setMounted] = useState(false)
-  const [targetRole, setTargetRole] = useState('')
-  const [experience, setExperience] = useState('')
-  const [skills, setSkills] = useState('')
-  const [education, setEducation] = useState('')
-  const [summary, setSummary] = useState('')
+  // Pre-filled from the candidate's real saved profile (see page.tsx) —
+  // still fully editable, this is a starting point, not a lockdown.
+  const [targetRole, setTargetRole] = useState(initialTargetRole)
+  const [experience, setExperience] = useState(initialExperience)
+  const [skills, setSkills] = useState(initialSkills)
+  const [education, setEducation] = useState(initialEducation)
+  const [summary, setSummary] = useState(initialSummary)
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<ResumeData | null>(null)
   const [error, setError] = useState('')
@@ -115,6 +132,10 @@ export default function ResumeBuilderClient({ isPremium }: { isPremium: boolean 
   async function handleGenerate(e: React.FormEvent) {
     e.preventDefault()
     if (!isPremium) return
+    if (!hasEnoughExperience(experience)) {
+      setError('Add a bit more detail to Work Experience — a few words isn\'t enough for a real resume, and we won\'t invent one for you.')
+      return
+    }
     setLoading(true)
     setError('')
     setResult(null)
@@ -250,6 +271,11 @@ export default function ResumeBuilderClient({ isPremium }: { isPremium: boolean 
                 required rows={5} placeholder="List your roles, companies, dates, and key achievements..."
                 className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary resize-none"
               />
+              {experience.trim().length > 0 && !hasEnoughExperience(experience) && (
+                <p className="text-xs text-yellow-700 dark:text-yellow-500 mt-1.5">
+                  A bit more detail will give you a real, non-fabricated resume instead of a generic one.
+                </p>
+              )}
             </div>
 
             <div>

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { createClient } from '@/lib/supabase/server'
+import { hasEnoughExperience } from './resumeGuard'
 
 /**
  * Tier-based AI routing.
@@ -122,7 +123,14 @@ async function completeJson(prompt: string, maxTokens: number): Promise<{ data: 
 }
 
 function buildResumePrompt({ targetRole, experience, skills, education, summary }: ResumeInput): string {
-  return `You are an expert resume writer and ATS optimization specialist. Generate a professional, ATS-optimized resume and a resume score.
+  return `You are an expert resume writer and ATS optimization specialist. Your job is to REFORMAT and POLISH the candidate's real information below — improving wording, structure, and clarity. You must NOT invent, embellish, or add anything not present in the source text.
+
+STRICT RULES — read carefully:
+- Use ONLY the employers, job titles, dates, responsibilities, and achievements explicitly present in "Work Experience" below. Do NOT invent a different job title, employer, or date range, even if it would seem more relevant to the target role.
+- Do NOT invent metrics, percentages, or quantified achievements ("30% improvement", "$2M in savings", etc.) unless that exact number appears in the source text. If no metrics are given, describe the work qualitatively instead — do not make numbers up to sound more impressive.
+- The "skills" output must list ONLY skills explicitly present in the "Skills" field or clearly stated in the "Work Experience"/"Professional Summary" text below. Do NOT add skills just because they're commonly associated with the target role — if the candidate didn't mention it, it doesn't go in.
+- If the provided information is thin, keep the corresponding resume section brief and general. A short, honest resume is correct behavior — a longer, fabricated one is not.
+- Reformatting, rewording, and reordering for clarity/impact is encouraged. Inventing new facts is not.
 
 Target Job Title: ${targetRole}
 Work Experience: ${experience}
@@ -142,10 +150,10 @@ Return a JSON object with this exact structure:
   "improvements": [<string>, <string>, <string>],
   "resume": {
     "title": "${targetRole}",
-    "summary": "<2-3 sentence professional summary tailored to ${targetRole}, ATS-optimized>",
-    "experience": "<formatted work experience with bullet points using action verbs and metrics, markdown-style>",
-    "skills": "<comma-separated technical and soft skills relevant to ${targetRole}>",
-    "education": "<formatted education section>"
+    "summary": "<2-3 sentence professional summary based strictly on the candidate's real background above, ATS-optimized wording only>",
+    "experience": "<the candidate's real work experience above, reformatted with bullet points and action verbs — same employers/titles/dates/facts, better wording only, markdown-style>",
+    "skills": "<comma-separated list containing ONLY skills explicitly present in the input above>",
+    "education": "<the candidate's real education above, reformatted only>"
   }
 }
 
@@ -254,6 +262,24 @@ export async function generateResume(input: ResumeInput): Promise<NextResponse> 
     if (!input.targetRole || !input.experience) {
       return NextResponse.json({ error: 'targetRole and experience are required' }, { status: 400 })
     }
+    // Server-side backstop for the same guard the client already shows —
+    // never send the LLM so little real material that it has to invent the
+    // rest to produce a "complete-looking" resume.
+    if (!hasEnoughExperience(input.experience)) {
+      return NextResponse.json(
+        { error: 'Work experience is too short to generate a real resume from — please add more detail.' },
+        { status: 400 }
+      )
+    }
+    // Temporary debug logging (per investigation into the fabricated-experience
+    // bug) — logs only lengths, not full content, to server logs.
+    console.log('[ai/resume] input lengths', {
+      targetRole: input.targetRole.length,
+      experience: input.experience.length,
+      skills: (input.skills ?? '').length,
+      education: (input.education ?? '').length,
+      summary: (input.summary ?? '').length,
+    })
     const { data: raw, contact } = await completeJson(buildResumePrompt(input), 2000)
     const data = normalizeResume(raw, contact)
     return NextResponse.json(data)

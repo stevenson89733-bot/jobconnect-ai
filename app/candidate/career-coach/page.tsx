@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Lock } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { matchJobsToSkills } from '@/lib/jobMatching'
+import { getCandidateProfile } from '@/lib/profile'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import CareerCoachClient from '@/components/career-coach/CareerCoachClient'
@@ -33,11 +34,8 @@ export default async function CareerCoachPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return <UpsellGate />
 
-  const [{ data: profileRow }, { data: analysisRow }, { data: appliedJobIds }] = await Promise.all([
-    supabase.from('profiles')
-      .select('is_premium, skills')
-      .eq('user_id', user.id)
-      .single(),
+  const [profileRow, { data: analysisRow }, { data: appliedJobIds }] = await Promise.all([
+    getCandidateProfile(supabase, user.id),
     supabase.from('career_analysis')
       .select('analysis_json, generated_at')
       .eq('candidate_id', user.id)
