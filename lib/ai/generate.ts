@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { createClient } from '@/lib/supabase/server'
-import { hasEnoughExperience } from './resumeGuard'
+import { hasEnoughExperience, sanitizeTargetRole } from './resumeGuard'
 
 /**
  * Tier-based AI routing.
@@ -257,11 +257,18 @@ function toErrorResponse(err: unknown, tag: string): NextResponse {
   return NextResponse.json({ error: message }, { status })
 }
 
-export async function generateResume(input: ResumeInput): Promise<NextResponse> {
+export async function generateResume(rawInput: ResumeInput): Promise<NextResponse> {
   try {
-    if (!input.targetRole || !input.experience) {
+    if (!rawInput.targetRole || !rawInput.experience) {
       return NextResponse.json({ error: 'targetRole and experience are required' }, { status: 400 })
     }
+    // Defense in depth: sanitize server-side too, not just in the form's
+    // onChange — covers requests from old saved profile data, and any path
+    // that reaches this function other than the sanitized client input. A
+    // real job title is one short line; this is echoed verbatim into
+    // "title" and interpolated into the prompt, so a pasted paragraph here
+    // would otherwise show up as a giant "title" in the generated resume.
+    const input: ResumeInput = { ...rawInput, targetRole: sanitizeTargetRole(rawInput.targetRole) }
     // Server-side backstop for the same guard the client already shows —
     // never send the LLM so little real material that it has to invent the
     // rest to produce a "complete-looking" resume.
@@ -271,15 +278,6 @@ export async function generateResume(input: ResumeInput): Promise<NextResponse> 
         { status: 400 }
       )
     }
-    // Temporary debug logging (per investigation into the fabricated-experience
-    // bug) — logs only lengths, not full content, to server logs.
-    console.log('[ai/resume] input lengths', {
-      targetRole: input.targetRole.length,
-      experience: input.experience.length,
-      skills: (input.skills ?? '').length,
-      education: (input.education ?? '').length,
-      summary: (input.summary ?? '').length,
-    })
     const { data: raw, contact } = await completeJson(buildResumePrompt(input), 2000)
     const data = normalizeResume(raw, contact)
     return NextResponse.json(data)
@@ -288,11 +286,14 @@ export async function generateResume(input: ResumeInput): Promise<NextResponse> 
   }
 }
 
-export async function generateCoverLetter(input: CoverLetterInput): Promise<NextResponse> {
+export async function generateCoverLetter(rawInput: CoverLetterInput): Promise<NextResponse> {
   try {
-    if (!input.targetRole || !input.company) {
+    if (!rawInput.targetRole || !rawInput.company) {
       return NextResponse.json({ error: 'targetRole and company are required' }, { status: 400 })
     }
+    // Same defense-in-depth sanitization as generateResume — targetRole is
+    // interpolated into this prompt too (subject line, body).
+    const input: CoverLetterInput = { ...rawInput, targetRole: sanitizeTargetRole(rawInput.targetRole) }
     const { data: raw, contact } = await completeJson(buildCoverLetterPrompt(input), 1800)
     const data = normalizeLetter(raw, contact)
     return NextResponse.json(data)

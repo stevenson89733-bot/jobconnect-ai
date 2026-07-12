@@ -10,7 +10,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import RewriteSuggestion from '@/components/resume-builder/RewriteSuggestion'
 import { analyzeResume } from '@/app/actions/resumeAnalysis'
 import type { ResumeAnalysis, RewriteSection } from '@/lib/ai/resumeAnalysis'
-import { hasEnoughExperience } from '@/lib/ai/resumeGuard'
+import { hasEnoughExperience, stripTargetRoleNewlines, sanitizeTargetRole, MAX_TARGET_ROLE_LENGTH } from '@/lib/ai/resumeGuard'
 
 type ScoreBreakdown = { keywords: number; formatting: number; experience: number; skills: number }
 type ResumeData = {
@@ -136,6 +136,8 @@ export default function ResumeBuilderClient({
       setError('Add a bit more detail to Work Experience — a few words isn\'t enough for a real resume, and we won\'t invent one for you.')
       return
     }
+    const cleanTargetRole = sanitizeTargetRole(targetRole)
+    setTargetRole(cleanTargetRole)
     setLoading(true)
     setError('')
     setResult(null)
@@ -146,7 +148,7 @@ export default function ResumeBuilderClient({
       const res = await fetch('/api/ai/resume', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ targetRole, experience, skills, education, summary }),
+        body: JSON.stringify({ targetRole: cleanTargetRole, experience, skills, education, summary }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Generation failed')
@@ -258,8 +260,8 @@ export default function ResumeBuilderClient({
             <div>
               <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Target Job Title <span className="text-red-500 dark:text-red-400">*</span></label>
               <input
-                value={targetRole} onChange={e => setTargetRole(e.target.value)}
-                required placeholder="e.g. Senior Frontend Engineer"
+                value={targetRole} onChange={e => setTargetRole(stripTargetRoleNewlines(e.target.value))}
+                required maxLength={MAX_TARGET_ROLE_LENGTH} placeholder="e.g. Senior Frontend Engineer"
                 className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary"
               />
             </div>
