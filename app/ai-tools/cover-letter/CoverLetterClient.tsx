@@ -120,7 +120,8 @@ export default function CoverLetterClient({
   const [error, setError] = useState('')
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const [saveError, setSaveError] = useState('')
-  const [copyStatus, setCopyStatus] = useState<'idle' | 'copied' | 'error'>('idle')
+  const [copyStatus, setCopyStatus] = useState<'idle' | 'copied' | 'manual'>('idle')
+  const [copyText, setCopyText] = useState('')
   useEffect(() => setMounted(true), [])
 
   if (!mounted) return <PremiumSkeleton />
@@ -161,6 +162,29 @@ export default function CoverLetterClient({
     setSaveStatus('idle')
   }
 
+  // Legacy fallback for when the async Clipboard API throws — most commonly
+  // NotAllowedError: "Document is not focused" (a real, documented Clipboard
+  // API constraint, not just a sandbox artifact: it can also fire in normal
+  // use, e.g. focus having just moved elsewhere). execCommand('copy') works
+  // synchronously off a real user click even when the Clipboard API refuses.
+  function legacyCopy(text: string): boolean {
+    const textarea = document.createElement('textarea')
+    textarea.value = text
+    textarea.style.position = 'fixed'
+    textarea.style.opacity = '0'
+    document.body.appendChild(textarea)
+    textarea.focus()
+    textarea.select()
+    let ok = false
+    try {
+      ok = document.execCommand('copy')
+    } catch {
+      ok = false
+    }
+    document.body.removeChild(textarea)
+    return ok
+  }
+
   // Plain-text version of exactly what's on screen — client-side only, no
   // server round-trip needed just to put text on the clipboard.
   async function handleCopy() {
@@ -172,8 +196,18 @@ export default function CoverLetterClient({
       await navigator.clipboard.writeText(text)
       setCopyStatus('copied')
       setTimeout(() => setCopyStatus('idle'), 2000)
+      return
     } catch {
-      setCopyStatus('error')
+      // fall through to the legacy fallback below
+    }
+    if (legacyCopy(text)) {
+      setCopyStatus('copied')
+      setTimeout(() => setCopyStatus('idle'), 2000)
+    } else {
+      // Both copy mechanisms failed — surface the raw text so the candidate
+      // can still copy it manually rather than just seeing an error.
+      setCopyText(text)
+      setCopyStatus('manual')
     }
   }
 
@@ -367,7 +401,7 @@ export default function CoverLetterClient({
                         onClick={handleCopy}
                         className="btn-outline text-xs py-2 px-4 flex items-center gap-1.5"
                       >
-                        {copyStatus === 'copied' ? '✓ Copied' : copyStatus === 'error' ? 'Copy failed' : '📋 Copy'}
+                        {copyStatus === 'copied' ? '✓ Copied' : '📋 Copy'}
                       </button>
                       <button
                         onClick={handleSaveDraft}
@@ -386,6 +420,21 @@ export default function CoverLetterClient({
                   </div>
                   {saveStatus === 'error' && (
                     <p className="text-red-600 dark:text-red-400 text-xs mb-3">{saveError}</p>
+                  )}
+                  {copyStatus === 'manual' && (
+                    <div className="mb-3">
+                      <p className="text-xs text-slate-600 dark:text-slate-400 mb-1.5">
+                        Your browser blocked automatic copying — select the text below and press Cmd/Ctrl+C.
+                      </p>
+                      <textarea
+                        readOnly
+                        value={copyText}
+                        onFocus={(e) => e.currentTarget.select()}
+                        ref={(el) => el?.focus()}
+                        rows={4}
+                        className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-white resize-none"
+                      />
+                    </div>
                   )}
                   <div className="flex items-center gap-6">
                     <ScoreRing score={result.score} />
