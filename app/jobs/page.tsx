@@ -1,26 +1,23 @@
 import { unstable_cache } from 'next/cache'
 import { createPublicClient } from '@/lib/supabase/public'
+import { createClient } from '@/lib/supabase/server'
+import { getCandidateProfile } from '@/lib/profile'
+import { parseSkillSet, calculateMatchPercent } from '@/lib/jobMatching'
+import { applyJobFilters, normalizeJobCompany, parseSort, JOB_SELECT_FIELDS, type JobFilters } from '@/lib/jobsQuery'
 import JobsClient from './JobsClient'
 
 const PAGE_SIZE = 20
-
-export type SortOption = 'relevance' | 'date' | 'salary'
-
-type Filters = {
-  q: string
-  remote: boolean
-  jobType: string
-  category: string
-  sort: SortOption
-  page: number
-}
+export type { SortOption } from '@/lib/jobsQuery'
 
 // Cached independently per unique combination of filters/page — see
 // lib/supabase/public.ts for why this can't use the cookie-based server
 // client. Tagged 'jobs' so POST /api/jobs can invalidate every cached
 // variant immediately on a new post instead of waiting out the 60s window.
+// Deliberately has NO candidate-specific data (no match %) — that's
+// computed fresh per-request below, outside the cache, so it's never
+// leaked across different users.
 const getJobsPage = unstable_cache(
-  async ({ q, remote, jobType, category, sort, page }: Filters) => {
+  async ({ q, remote, jobType, category, sort, page }: JobFilters & { page: number }) => {
     const from = (page - 1) * PAGE_SIZE
     const to = from + PAGE_SIZE - 1
 
@@ -31,41 +28,10 @@ const getJobsPage = unstable_cache(
       // every job right now (companies table has no rows yet), so the
       // client always falls back to an initials avatar until real company
       // rows with logo_url exist. Never a stock/generic logo.
-      .select(
-        'id, title, company_name, location, salary_label, salary_min, job_type, category, tags, description, is_featured, created_at, company:companies(logo_url)',
-        { count: 'exact' }
-      )
+      .select(JOB_SELECT_FIELDS, { count: 'exact' })
       .eq('is_active', true)
 
-    if (q) {
-      // Real keyword match across title/company/description only — no
-      // fabricated relevance scoring beyond what these ilike hits are.
-      const escaped = q.replace(/[%_]/g, (c) => `\\${c}`)
-      query = query.or(
-        `title.ilike.%${escaped}%,company_name.ilike.%${escaped}%,description.ilike.%${escaped}%`
-      )
-    }
-    if (remote) {
-      // Derived directly from the job's own real location text (every
-      // active job today is written as "Remote · <region>") — never
-      // inferred from company name/industry.
-      query = query.ilike('location', 'Remote%')
-    }
-    if (jobType && jobType !== 'All') query = query.eq('job_type', jobType)
-    if (category && category !== 'All') query = query.eq('category', category)
-
-    if (sort === 'salary') {
-      // nullsFirst: false keeps jobs without a real salary_min at the end
-      // regardless of sort direction, rather than guessing a value for them.
-      query = query.order('salary_min', { ascending: false, nullsFirst: false })
-    } else if (sort === 'date') {
-      query = query.order('created_at', { ascending: false })
-    } else {
-      // "Relevance" with no real per-query relevance signal beyond the
-      // keyword match itself just means the same sensible default order:
-      // featured first, then most recent.
-      query = query.order('is_featured', { ascending: false }).order('created_at', { ascending: false })
-    }
+    query = applyJobFilters(query, { q, remote, jobType, category, sort })
 
     const { data: jobs, count, error } = await query.range(from, to)
 
@@ -73,14 +39,7 @@ const getJobsPage = unstable_cache(
       console.error('Failed to fetch jobs:', error.message)
     }
 
-    // Supabase's JS types the to-one embedded relation as an array even
-    // though company_id is a single FK — flatten to match the real shape.
-    const normalized = (jobs ?? []).map((job) => ({
-      ...job,
-      company: Array.isArray(job.company) ? job.company[0] ?? null : job.company,
-    }))
-
-    return { jobs: normalized, total: count ?? 0 }
+    return { jobs: (jobs ?? []).map(normalizeJobCompany), total: count ?? 0 }
   },
   ['jobs-page'],
   { revalidate: 60, tags: ['jobs'] }
@@ -91,27 +50,44 @@ export default async function JobsPage({
 }: {
   searchParams: { q?: string; page?: string; remote?: string; type?: string; category?: string; sort?: string }
 }) {
-  const page = Math.max(1, parseInt(searchParams.page ?? '1', 10) || 1)
   const q = (searchParams.q ?? '').trim()
   const remote = searchParams.remote === '1'
   const jobType = searchParams.type ?? 'All'
   const category = searchParams.category ?? 'All'
-  const sort: SortOption = (['relevance', 'date', 'salary'] as const).includes(searchParams.sort as SortOption)
-    ? (searchParams.sort as SortOption)
-    : 'relevance'
+  const sort = parseSort(searchParams.sort)
 
-  const { jobs, total } = await getJobsPage({ q, remote, jobType, category, sort, page })
+  const { jobs, total } = await getJobsPage({ q, remote, jobType, category, sort, page: 1 })
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE))
+
+  // Real Match % — a plain array/set comparison against the candidate's own
+  // real profile skills (lib/jobMatching.ts), never an LLM call, so no rate
+  // limiting is warranted here (same reasoning as any cheap authenticated
+  // read). Only computed when the candidate is signed in AND has real
+  // skills listed; otherwise every job's matchPercent stays null and the
+  // client omits the badge entirely rather than showing a fabricated score.
+  let skillSet = new Set<string>()
+  try {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (user) {
+      const profile = await getCandidateProfile(supabase, user.id)
+      skillSet = parseSkillSet(profile?.skills)
+    }
+  } catch {}
+
+  const jobsWithMatch = jobs.map((job) => ({
+    ...job,
+    matchPercent: calculateMatchPercent(job.tags, skillSet),
+  }))
 
   return (
     <JobsClient
-      jobs={jobs ?? []}
+      jobs={jobsWithMatch}
       initialQuery={q}
       initialRemote={remote}
       initialJobType={jobType}
       initialCategory={category}
       initialSort={sort}
-      page={page}
       totalPages={totalPages}
       total={total}
     />

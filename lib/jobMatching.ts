@@ -18,6 +18,29 @@ type RawJob = {
   tags: string[] | null
 }
 
+// Shared by matchJobsToSkills below and the Jobs page's "Match %" badge —
+// one real computation, not a second matching system. Comma-separated,
+// case-insensitive, same as the candidate's profile skills field.
+export function parseSkillSet(skillsCsv: string | null | undefined): Set<string> {
+  return new Set(
+    (skillsCsv ?? '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean)
+  )
+}
+
+// Real percentage: how many of THIS job's own stated tags the candidate's
+// real skills cover. Returns null (never 0%) when there's nothing genuine
+// to compare — no tags on the job, no skills on the profile, or zero
+// overlap — so the UI can omit the badge entirely rather than show a
+// technically-true-but-useless "0% Match", same precedent as
+// JobRecommendations only rendering on a genuine match.
+export function calculateMatchPercent(jobTags: string[] | null | undefined, skillSet: Set<string>): number | null {
+  const tags = jobTags ?? []
+  if (tags.length === 0 || skillSet.size === 0) return null
+  const matched = tags.filter((tag) => skillSet.has(tag.trim().toLowerCase())).length
+  if (matched === 0) return null
+  return Math.round((matched / tags.length) * 100)
+}
+
 /**
  * Real overlap between a candidate's comma-separated skills string and each
  * active job's tags — no invented match score. Shared by the candidate
@@ -30,9 +53,7 @@ export async function matchJobsToSkills(
   excludeJobIds: Set<string>,
   limit = 4
 ): Promise<MatchedJob[]> {
-  const skillSet = new Set(
-    (skillsCsv ?? '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean)
-  )
+  const skillSet = parseSkillSet(skillsCsv)
   if (skillSet.size === 0) return []
 
   const supabase = createPublicClient()

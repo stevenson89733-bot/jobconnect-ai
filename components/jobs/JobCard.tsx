@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Bookmark, Share2, Check } from 'lucide-react'
+import { Bookmark, Share2, Check, Sparkles } from 'lucide-react'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -84,6 +84,11 @@ export default function JobCard({
             <div className="flex flex-wrap items-center gap-2 mb-0.5">
               <h3 className="font-semibold text-slate-900 dark:text-white">{job.title}</h3>
               {job.is_featured && <Badge variant="primary">⭐ Featured</Badge>}
+              {job.matchPercent != null && (
+                <Badge variant="success" className="flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" strokeWidth={2} /> {job.matchPercent}% Match
+                </Badge>
+              )}
             </div>
 
             <div className="flex flex-wrap items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-2">
