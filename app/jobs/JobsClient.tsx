@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useTransition, useCallback } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import JobCard from '@/components/jobs/JobCard'
 import JobCardSkeleton from '@/components/jobs/JobCardSkeleton'
+import { useJobInteractions } from '@/lib/useJobInteractions'
 import type { SortOption } from './page'
 
 export type Job = {
@@ -12,6 +13,7 @@ export type Job = {
   location: string
   salary_label: string | null
   salary_min: number | null
+  salary_max: number | null
   job_type: string
   category: string
   tags: string[]
@@ -73,19 +75,7 @@ export default function JobsClient({
   const [loadingMore, setLoadingMore] = useState(false)
   const sentinelRef = useRef<HTMLDivElement>(null)
 
-  const [appliedIds, setAppliedIds] = useState<Set<string>>(new Set())
-  const [savedIds, setSavedIds] = useState<Set<string>>(new Set())
-
-  useEffect(() => {
-    fetch('/api/applications')
-      .then((r) => (r.ok ? r.json() : []))
-      .then((ids: string[]) => setAppliedIds(new Set(ids)))
-      .catch(() => {})
-    fetch('/api/saved-jobs')
-      .then((r) => (r.ok ? r.json() : []))
-      .then((ids: string[]) => setSavedIds(new Set(ids)))
-      .catch(() => {})
-  }, [])
+  const { appliedIds, savedIds, toggleSave } = useJobInteractions('/jobs')
 
   // A fresh server render (new `jobs` prop) means the filters changed —
   // reset the accumulated infinite-scroll list to exactly that new page 1
@@ -153,36 +143,6 @@ export default function JobsClient({
     observer.observe(el)
     return () => observer.disconnect()
   }, [loadMore])
-
-  async function handleToggleSave(jobId: string) {
-    const wasSaved = savedIds.has(jobId)
-    // Optimistic update — reverted below only if the request actually fails.
-    setSavedIds((prev) => {
-      const next = new Set(prev)
-      wasSaved ? next.delete(jobId) : next.add(jobId)
-      return next
-    })
-    try {
-      const res = wasSaved
-        ? await fetch(`/api/saved-jobs?job_id=${jobId}`, { method: 'DELETE' })
-        : await fetch('/api/saved-jobs', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ job_id: jobId }),
-          })
-      if (res.status === 401) {
-        router.push('/login?redirectTo=/jobs')
-        return
-      }
-      if (!res.ok && res.status !== 409) throw new Error('failed')
-    } catch {
-      setSavedIds((prev) => {
-        const next = new Set(prev)
-        wasSaved ? next.add(jobId) : next.delete(jobId)
-        return next
-      })
-    }
-  }
 
   function clearAll() {
     setQuery('')
@@ -318,7 +278,7 @@ export default function JobsClient({
                 key={job.id}
                 job={job}
                 isSaved={savedIds.has(job.id)}
-                onToggleSave={handleToggleSave}
+                onToggleSave={toggleSave}
                 alreadyApplied={appliedIds.has(job.id)}
               />
             ))}

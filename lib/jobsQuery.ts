@@ -5,7 +5,7 @@
 export type SortOption = 'relevance' | 'date' | 'salary'
 
 export const JOB_SELECT_FIELDS =
-  'id, title, company_name, location, salary_label, salary_min, job_type, category, tags, description, is_featured, created_at, company:companies(logo_url)'
+  'id, title, company_name, location, salary_label, salary_min, salary_max, job_type, category, tags, description, is_featured, created_at, company:companies(logo_url)'
 
 export type JobFilters = {
   q: string

@@ -7,6 +7,8 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import ApplyModal from '@/components/ApplyModal'
 import { copyToClipboard } from '@/lib/clipboard'
+import { companyInitials } from '@/lib/companyDisplay'
+import Link from 'next/link'
 import type { Job } from '@/app/jobs/JobsClient'
 
 const TYPE_VARIANT: Record<string, 'success' | 'accent' | 'primary' | 'default'> = {
@@ -24,11 +26,6 @@ function timeAgo(dateStr: string) {
   if (days < 7) return `${days}d ago`
   if (days < 14) return '1w ago'
   return `${Math.floor(days / 7)}w ago`
-}
-
-function initials(name: string) {
-  const parts = name.trim().split(/\s+/)
-  return ((parts[0]?.[0] ?? '') + (parts[1]?.[0] ?? '')).toUpperCase() || name[0]?.toUpperCase() || '?'
 }
 
 export default function JobCard({
@@ -77,7 +74,7 @@ export default function JobCard({
         <div className="flex items-start gap-4 flex-1 min-w-0">
           <Avatar className="w-12 h-12 shrink-0">
             {job.company?.logo_url && <AvatarImage src={job.company.logo_url} alt={job.company_name} />}
-            <AvatarFallback>{initials(job.company_name)}</AvatarFallback>
+            <AvatarFallback>{companyInitials(job.company_name)}</AvatarFallback>
           </Avatar>
 
           <div className="min-w-0 flex-1">
@@ -92,7 +89,13 @@ export default function JobCard({
             </div>
 
             <div className="flex flex-wrap items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-2">
-              <span className="font-medium text-slate-700 dark:text-slate-300">{job.company_name}</span>
+              <Link
+                href={`/companies/${encodeURIComponent(job.company_name)}`}
+                className="font-medium text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {job.company_name}
+              </Link>
               {isRemote && (
                 <>
                   <span className="text-slate-400 dark:text-slate-600">·</span>
