@@ -52,6 +52,9 @@ export default function Header({ userEmail }: { userEmail?: string | null }) {
               <Link href="/dashboard" className="text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors px-4 py-2">
                 Dashboard
               </Link>
+              <Link href="/profile" className="text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors px-4 py-2">
+                Profile
+              </Link>
               <form action={signOut}>
                 <button type="submit" className="btn-outline text-sm py-2 text-slate-700 dark:text-slate-300">
                   Sign out
@@ -100,6 +103,7 @@ export default function Header({ userEmail }: { userEmail?: string | null }) {
           {userEmail ? (
             <>
               <Link href="/dashboard" className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>Dashboard</Link>
+              <Link href="/profile" className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>Profile</Link>
               <form action={signOut}><button type="submit" className="text-left text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">Sign out</button></form>
             </>
           ) : (

@@ -3,7 +3,7 @@ import { Send, CheckCircle2, Layers } from 'lucide-react'
 import { matchJobsToSkills } from '@/lib/jobMatching'
 import WelcomeHeader from '@/components/dashboard/WelcomeHeader'
 import ProfileCompletionCard from '@/components/dashboard/ProfileCompletionCard'
-import ProfileSummaryCard from '@/components/dashboard/ProfileSummaryCard'
+import ProfileSnapshot from '@/components/dashboard/ProfileSnapshot'
 import StatCard from '@/components/dashboard/StatCard'
 import RecentApplications, { type ApplicationRow } from '@/components/dashboard/RecentApplications'
 import SkillsCard from '@/components/dashboard/SkillsCard'
@@ -123,17 +123,7 @@ export default async function CandidateDashboard() {
 
       <ProfileCompletionCard completion={completion} />
 
-      <ProfileSummaryCard
-        profile={{
-          title: profile?.title ?? null,
-          location: profile?.location ?? null,
-          bio: profile?.bio ?? null,
-          yearsExperience: profile?.years_experience ?? null,
-          workPreference: profile?.work_preference ?? null,
-          availability: profile?.availability ?? null,
-          portfolioUrl: profile?.portfolio_url ?? null,
-        }}
-      />
+      <ProfileSnapshot title={profile?.title ?? null} />
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <StatCard label="Applications Sent" value={applicationsCount} icon={Send} delay={0} />
@@ -152,6 +142,7 @@ export default async function CandidateDashboard() {
           atsScore={atsScore}
           profileStrength={profileStrength}
           generatedAt={analysisGeneratedAt}
+          compact
         />
       </FadeIn>
 
