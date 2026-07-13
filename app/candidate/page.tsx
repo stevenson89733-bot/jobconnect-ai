@@ -10,6 +10,8 @@ import SkillsCard from '@/components/dashboard/SkillsCard'
 import JobRecommendations from '@/components/dashboard/JobRecommendations'
 import AIAssistantCard from '@/components/dashboard/AIAssistantCard'
 import QuickActions from '@/components/dashboard/QuickActions'
+import CareerCoachSummary from '@/components/shared/CareerCoachSummary'
+import FadeIn from '@/components/dashboard/FadeIn'
 
 export const dynamic = 'force-dynamic'
 
@@ -25,6 +27,7 @@ type Profile = {
   portfolio_url: string | null
   availability: string | null
   work_preference: string | null
+  is_premium: boolean | null
 }
 
 type JobRef = { title: string; company_name: string }
@@ -48,15 +51,21 @@ export default async function CandidateDashboard() {
   let applicationsCount = 0
   let applications: ApplicationRow[] = []
   let recommendedJobs: Awaited<ReturnType<typeof matchJobsToSkills>> = []
+  // Same career_analysis row read as-is on /profile — no second scoring
+  // system computed here, just the one existing result surfaced in a
+  // second, read-only place.
+  let atsScore: number | null = null
+  let profileStrength: number | null = null
+  let analysisGeneratedAt: string | null = null
 
   try {
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
       email = user.email ?? ''
 
-      const [{ data: profileData }, { count }, { data: appsData }, { data: appliedJobIds }] = await Promise.all([
+      const [{ data: profileData }, { count }, { data: appsData }, { data: appliedJobIds }, { data: analysisRow }] = await Promise.all([
         supabase.from('profiles')
-          .select('full_name, title, location, bio, experience, skills, avatar_url, years_experience, portfolio_url, availability, work_preference')
+          .select('full_name, title, location, bio, experience, skills, avatar_url, years_experience, portfolio_url, availability, work_preference, is_premium')
           .eq('user_id', user.id).single(),
         supabase.from('applications').select('*', { count: 'exact', head: true }).eq('candidate_id', user.id),
         supabase.from('applications')
@@ -65,6 +74,7 @@ export default async function CandidateDashboard() {
           .order('created_at', { ascending: false })
           .limit(5),
         supabase.from('applications').select('job_id').eq('candidate_id', user.id),
+        supabase.from('career_analysis').select('analysis_json, generated_at').eq('candidate_id', user.id).maybeSingle(),
       ])
 
       profile = (profileData as Profile | null) ?? null
@@ -78,6 +88,11 @@ export default async function CandidateDashboard() {
 
       const appliedIds = new Set((appliedJobIds ?? []).map((r) => r.job_id as string))
       recommendedJobs = await matchJobsToSkills(profile?.skills, appliedIds)
+
+      const analysisJson = analysisRow?.analysis_json as { atsScore?: { score?: number }; profileStrength?: { score?: number } } | undefined
+      atsScore = analysisJson?.atsScore?.score ?? null
+      profileStrength = analysisJson?.profileStrength?.score ?? null
+      analysisGeneratedAt = analysisRow?.generated_at ?? null
     }
   } catch {
     // Supabase unavailable — render with empty/zeroed data rather than crashing
@@ -130,6 +145,15 @@ export default async function CandidateDashboard() {
           delay={0.1}
         />
       </div>
+
+      <FadeIn delay={0.05}>
+        <CareerCoachSummary
+          isPremium={!!profile?.is_premium}
+          atsScore={atsScore}
+          profileStrength={profileStrength}
+          generatedAt={analysisGeneratedAt}
+        />
+      </FadeIn>
 
       <AIAssistantCard />
 
