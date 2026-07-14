@@ -21,6 +21,7 @@ export const metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   let user = null
+  let isAdmin = false
   const supabaseConfigured =
     process.env.NEXT_PUBLIC_SUPABASE_URL?.startsWith('https://') &&
     !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY &&
@@ -31,6 +32,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       const supabase = createClient()
       const { data } = await supabase.auth.getUser()
       user = data.user
+      if (user) {
+        // Resolved server-side, same as requireAdmin() on /admin/reviews
+        // itself — the Header never receives this for a non-admin user, so
+        // there's no "Admin" link in the rendered HTML to find, not just one
+        // hidden by CSS/client-side.
+        const { data: profile } = await supabase.from('profiles').select('is_admin').eq('user_id', user.id).single()
+        isAdmin = profile?.is_admin ?? false
+      }
     } catch {
       // silently ignore — session unavailable
     }
@@ -45,7 +54,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en" className={`${htmlClass ?? ''} ${inter.variable}`.trim()} suppressHydrationWarning>
       <body className="bg-white text-slate-900 dark:bg-background dark:text-slate-100 antialiased font-sans">
         <ThemeProvider>
-          <Header userEmail={user?.email} />
+          <Header userEmail={user?.email} isAdmin={isAdmin} />
           <main>{children}</main>
           <Footer />
         </ThemeProvider>

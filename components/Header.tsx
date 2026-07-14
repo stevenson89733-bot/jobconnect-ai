@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { signOut } from '@/app/actions/auth'
 import ThemeToggle from './ThemeToggle'
 
-export default function Header({ userEmail }: { userEmail?: string | null }) {
+export default function Header({ userEmail, isAdmin }: { userEmail?: string | null; isAdmin?: boolean }) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -55,6 +55,11 @@ export default function Header({ userEmail }: { userEmail?: string | null }) {
               <Link href="/profile" className="text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors px-4 py-2">
                 Profile
               </Link>
+              {isAdmin && (
+                <Link href="/admin/reviews" className="text-sm text-orange-700 dark:text-accent hover:text-orange-800 dark:hover:text-accent/80 transition-colors px-4 py-2">
+                  🛡️ Admin
+                </Link>
+              )}
               <form action={signOut}>
                 <button type="submit" className="btn-outline text-sm py-2 text-slate-700 dark:text-slate-300">
                   Sign out
@@ -104,6 +109,9 @@ export default function Header({ userEmail }: { userEmail?: string | null }) {
             <>
               <Link href="/dashboard" className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>Dashboard</Link>
               <Link href="/profile" className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>Profile</Link>
+              {isAdmin && (
+                <Link href="/admin/reviews" className="text-orange-700 dark:text-accent hover:text-orange-800 dark:hover:text-accent/80" onClick={() => setOpen(false)}>🛡️ Admin</Link>
+              )}
               <form action={signOut}><button type="submit" className="text-left text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">Sign out</button></form>
             </>
           ) : (
