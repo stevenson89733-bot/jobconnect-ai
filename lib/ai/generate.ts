@@ -3,6 +3,8 @@ import OpenAI from 'openai'
 import { createClient } from '@/lib/supabase/server'
 import { MIN_EXPERIENCE_LENGTH, hasEnoughExperience, sanitizeTargetRole } from './resumeGuard'
 import { type ContactInfo, EMPTY_CONTACT, buildContactInfo, formatContactLine } from '@/lib/resumeContact'
+import { researchCompany, type CompanySource } from './companyResearch'
+import { rateLimit } from '@/lib/rateLimit'
 
 /**
  * Tier-based AI routing.
@@ -45,18 +47,27 @@ type CoverLetterInput = {
   style?: string
 }
 
+// company research is resolved server-side (real Tavily search) and passed
+// separately from the rest of the input — never something the client can
+// spoof directly into the prompt.
+type CompanyResearchContext = { summary: string } | null
+
 type Provider = { client: OpenAI; model: string; tier: 'premium' | 'free' }
 
 // Reads the current user's premium status AND real contact info server-side.
 // Contact building itself lives in lib/resumeContact.ts, shared with the
 // client-side live resume preview (lot 2) so both use identical real data.
-async function resolveProvider(): Promise<Provider & { contact: ContactInfo }> {
+// userId is also exposed so callers can rate-limit other side-effects (e.g.
+// the company research web search) per real user, not just per AI call.
+async function resolveProvider(): Promise<Provider & { contact: ContactInfo; userId: string | null }> {
   let isPremium = false
   let contact: ContactInfo = EMPTY_CONTACT
+  let userId: string | null = null
   try {
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
+      userId = user.id
       const { data } = await supabase
         .from('profiles')
         .select('is_premium, full_name, email, phone, linkedin_url, github_url, portfolio_url')
@@ -72,7 +83,7 @@ async function resolveProvider(): Promise<Provider & { contact: ContactInfo }> {
   if (isPremium) {
     const apiKey = process.env.OPENAI_API_KEY
     if (!apiKey) throw new AiError('OpenAI not configured', 503)
-    return { client: new OpenAI({ apiKey }), model: 'gpt-4o', tier: 'premium', contact }
+    return { client: new OpenAI({ apiKey }), model: 'gpt-4o', tier: 'premium', contact, userId }
   }
 
   const apiKey = process.env.MISTRAL_API_KEY
@@ -82,14 +93,21 @@ async function resolveProvider(): Promise<Provider & { contact: ContactInfo }> {
     model: 'mistral-small-latest',
     tier: 'free',
     contact,
+    userId,
   }
 }
 
 // Runs the prompt on the tier-appropriate provider and parses the JSON result.
 // Returns the real contact info alongside so callers can inject it themselves
-// rather than trusting the model to preserve it verbatim.
-async function completeJson(prompt: string, maxTokens: number): Promise<{ data: unknown; contact: ContactInfo }> {
-  const { client, model, contact } = await resolveProvider()
+// rather than trusting the model to preserve it verbatim. Accepts an
+// already-resolved provider so callers that need it earlier (e.g. to
+// rate-limit company research by the same real user) don't re-resolve it.
+async function completeJson(
+  prompt: string,
+  maxTokens: number,
+  resolved?: Provider & { contact: ContactInfo; userId: string | null }
+): Promise<{ data: unknown; contact: ContactInfo }> {
+  const { client, model, contact } = resolved ?? (await resolveProvider())
   const res = await client.chat.completions.create({
     model,
     messages: [{ role: 'user', content: prompt }],
@@ -144,7 +162,10 @@ const STYLE_GUIDANCE: Record<CoverLetterStyle, string> = {
   Concise: 'Short and direct. Minimal fluff, no throat-clearing sentences, get to the point in each paragraph. Prioritize the single strongest piece of evidence over a list of several.',
 }
 
-function buildCoverLetterPrompt({ targetRole, company, jobDescription, strengths, style }: CoverLetterInput): string {
+function buildCoverLetterPrompt(
+  { targetRole, company, jobDescription, strengths, style }: CoverLetterInput,
+  research: CompanyResearchContext
+): string {
   const resolvedStyle = (COVER_LETTER_STYLES as string[]).includes(style ?? '') ? (style as CoverLetterStyle) : 'Formal'
 
   return `You are an expert career coach and professional cover letter writer. Your job is to WRITE a cover letter using ONLY the candidate's real, provided strengths and the real job description below — you must NOT invent employers, job titles, achievements, metrics, or company facts that are not explicitly present in the input.
@@ -152,12 +173,14 @@ function buildCoverLetterPrompt({ targetRole, company, jobDescription, strengths
 STRICT RULES — read carefully:
 - Use ONLY the achievements, experience, and skills explicitly present in "Candidate Strengths / Key Points" below. Do NOT invent a prior job title, employer, metric, or accomplishment (e.g. "increased sales by 20%") that isn't stated there — even if it would sound more persuasive.
 - If "Candidate Strengths / Key Points" is thin or general, keep the letter's claims correspondingly general and honest. A shorter, honest letter is correct behavior — a longer, fabricated one is not.
-- If a Job Description is provided below, you MAY reference concrete requirements, responsibilities, or technologies it explicitly mentions to show fit. Do NOT invent facts about ${company || 'the company'} (culture, mission, awards, recent news, etc.) beyond what's literally written in the Job Description text — if the Job Description doesn't mention something, don't claim it.
-- If no Job Description is provided, keep the letter focused on the target role and the candidate's real strengths, without inventing company-specific claims.
+- If a Job Description is provided below, you MAY reference concrete requirements, responsibilities, or technologies it explicitly mentions to show fit. Do NOT invent facts about ${company || 'the company'} (culture, mission, awards, recent news, etc.) beyond what's literally written in the Job Description text or the Company Research block below — if neither mentions something, don't claim it.
+- If a "Company Research" block is provided below, you MAY reference the real facts in it (mission, focus, recent news) to show genuine interest — but ONLY what is literally written there. Do NOT add, infer, or embellish beyond that text, even if it sounds plausible.
+- If no Job Description and no Company Research block is provided, keep the letter focused on the target role and the candidate's real strengths, without inventing company-specific claims.
 
 Target Job Title: ${targetRole}
 Company: ${company}
 Job Description (if provided): ${jobDescription?.trim() || 'Not provided'}
+Company Research (real, sourced from web search — if provided): ${research?.summary || 'Not provided'}
 Candidate Strengths / Key Points: ${strengths || 'Not provided'}
 Writing Style: ${resolvedStyle} — ${STYLE_GUIDANCE[resolvedStyle]}
 
@@ -305,6 +328,12 @@ export async function generateResume(rawInput: ResumeInput): Promise<NextRespons
 }
 
 const MAX_JOB_DESCRIPTION_LENGTH = 6000
+// Cheap first line of defense against spamming paid Tavily calls via repeated
+// generation clicks — same reasoning/pattern as every other rate-limited AI
+// feature in this app (in-memory, per-process, not a hard cross-instance
+// guarantee on Vercel serverless, but good enough to blunt casual abuse).
+const COMPANY_RESEARCH_LIMIT = 15
+const COMPANY_RESEARCH_WINDOW_MS = 60 * 60 * 1000
 
 export async function generateCoverLetter(rawInput: CoverLetterInput): Promise<NextResponse> {
   try {
@@ -321,8 +350,35 @@ export async function generateCoverLetter(rawInput: CoverLetterInput): Promise<N
       jobDescription: rawInput.jobDescription?.trim().slice(0, MAX_JOB_DESCRIPTION_LENGTH),
       style: (COVER_LETTER_STYLES as string[]).includes(rawInput.style ?? '') ? rawInput.style : 'Formal',
     }
-    const { data: raw, contact } = await completeJson(buildCoverLetterPrompt(input), 2000)
+
+    const provider = await resolveProvider()
+
+    let research: CompanyResearchContext = null
+    let companyResearch: { used: boolean; sources?: CompanySource[] } | undefined
+    const companyName = input.company?.trim()
+    if (companyName) {
+      const limitKey = `company-research:${provider.userId ?? 'anon'}`
+      const { ok } = rateLimit(limitKey, COMPANY_RESEARCH_LIMIT, COMPANY_RESEARCH_WINDOW_MS)
+      if (ok) {
+        const result = await researchCompany(companyName)
+        if (result.found) {
+          research = { summary: result.summary }
+          companyResearch = { used: true, sources: result.sources }
+        } else {
+          companyResearch = { used: false }
+        }
+      } else {
+        // Rate-limited: skip research silently and generate a general letter
+        // rather than failing the whole request over a nice-to-have.
+        companyResearch = { used: false }
+      }
+    }
+
+    const { data: raw, contact } = await completeJson(buildCoverLetterPrompt(input, research), 2000, provider)
     const data = normalizeLetter(raw, contact, input.strengths)
+    if (data && typeof data === 'object' && companyResearch) {
+      ;(data as Record<string, unknown>).companyResearch = companyResearch
+    }
     return NextResponse.json(data)
   } catch (err) {
     return toErrorResponse(err, 'cover-letter')

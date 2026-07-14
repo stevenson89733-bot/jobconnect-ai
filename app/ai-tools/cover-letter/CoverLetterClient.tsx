@@ -24,6 +24,7 @@ type CoverLetterData = {
     signature: string
   }
   suggestions: LetterSuggestion[]
+  companyResearch?: { used: boolean; sources?: { title: string; url: string }[] }
 }
 
 const SECTION_LABELS: Record<LetterSection, string> = {
@@ -481,6 +482,35 @@ export default function CoverLetterClient({
                     ))}
                   </ul>
                 </div>
+
+                {/* Company research indicator — tells the candidate whether the
+                    letter draws on real, sourced web search results or not */}
+                {result.companyResearch && (
+                  result.companyResearch.used ? (
+                    <div className="card border-green-500/30 bg-green-50 dark:bg-green-500/5">
+                      <p className="text-sm text-green-700 dark:text-green-400 flex items-center gap-1.5 font-medium">
+                        ✓ Company research used — sourced via web search
+                      </p>
+                      {!!result.companyResearch.sources?.length && (
+                        <ul className="mt-2 space-y-1">
+                          {result.companyResearch.sources.map((s, i) => (
+                            <li key={i} className="text-xs">
+                              <a href={s.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline break-all">
+                                {s.title || s.url}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="card">
+                      <p className="text-sm text-slate-600 dark:text-slate-400">
+                        No verified company info found — proceeding with a general letter.
+                      </p>
+                    </div>
+                  )
+                )}
 
                 {/* Letter preview */}
                 <div className="card">
