@@ -6,6 +6,7 @@ import { getCandidateProfile } from '@/lib/profile'
 import { parseSkillSet, calculateMatchPercent } from '@/lib/jobMatching'
 import { JOB_SELECT_FIELDS, normalizeJobCompany } from '@/lib/jobsQuery'
 import { candidateHasApplicationAt, type OwnReview, type PublicReview } from '@/lib/reviews'
+import { getCompanyProfileSummary, type CompanyProfileSummary } from '@/lib/companyProfileSummary'
 import CompanyClient from './CompanyClient'
 
 // Cached per company name — no candidate-specific data (that's computed
@@ -94,6 +95,16 @@ export default async function CompanyPage({ params }: { params: { name: string }
     reviews = (data as PublicReview[] | null) ?? []
   } catch {}
 
+  // Real, sourced overview (Tavily search + LLM synthesis, both reused from
+  // Cover Letter's Company Research) — cached with a 21-day TTL, rate
+  // limited per-IP on a cache miss. Never blocks the page: any failure here
+  // (rate-limited with no stale fallback, Tavily down, etc.) just omits the
+  // section entirely rather than erroring the whole Company Profile page.
+  let companySummary: CompanyProfileSummary | null = null
+  try {
+    companySummary = await getCompanyProfileSummary(displayName)
+  } catch {}
+
   const jobsWithMatch = jobs.map((job) => ({
     ...job,
     matchPercent: calculateMatchPercent(job.tags, skillSet),
@@ -122,6 +133,7 @@ export default async function CompanyPage({ params }: { params: { name: string }
       reviews={reviews}
       canReview={canReview}
       ownReview={ownReview}
+      companySummary={companySummary}
     />
   )
 }

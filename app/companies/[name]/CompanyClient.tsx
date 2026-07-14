@@ -7,7 +7,9 @@ import { companyInitials } from '@/lib/companyDisplay'
 import { useJobInteractions } from '@/lib/useJobInteractions'
 import type { Job } from '@/app/jobs/JobsClient'
 import ReviewsSection from './ReviewsSection'
+import CompanySummarySection from './CompanySummarySection'
 import type { OwnReview, PublicReview } from '@/lib/reviews'
+import type { CompanyProfileSummary } from '@/lib/companyProfileSummary'
 
 export default function CompanyClient({
   name,
@@ -18,6 +20,7 @@ export default function CompanyClient({
   reviews,
   canReview,
   ownReview,
+  companySummary,
 }: {
   name: string
   logoUrl: string | null
@@ -27,6 +30,7 @@ export default function CompanyClient({
   reviews: PublicReview[]
   canReview: boolean
   ownReview: OwnReview | null
+  companySummary: CompanyProfileSummary | null
 }) {
   const { appliedIds, savedIds, toggleSave } = useJobInteractions(`/companies/${encodeURIComponent(name)}`)
   const isHiring = jobs.length > 0
@@ -69,6 +73,8 @@ export default function CompanyClient({
           </div>
         </div>
       </div>
+
+      <CompanySummarySection name={name} summary={companySummary} />
 
       {/* ── Salary Insights — factual aggregation of THIS company's real
           postings only, never market-wide data ─────────────── */}
