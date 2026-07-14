@@ -9,6 +9,7 @@ export type PublicReview = {
   company_name: string
   rating: number
   review_text: string
+  interview_difficulty: number | null
   created_at: string
 }
 
@@ -18,6 +19,7 @@ export type OwnReview = {
   id: string
   rating: number
   review_text: string
+  interview_difficulty: number | null
   status: ReviewStatus
   created_at: string
 }

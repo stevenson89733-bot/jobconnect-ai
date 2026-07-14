@@ -13,6 +13,7 @@ export async function submitCompanyReview(input: {
   companyName: string
   rating: number
   reviewText: string
+  interviewDifficulty?: number | null
 }): Promise<SubmitReviewResult> {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -31,6 +32,17 @@ export async function submitCompanyReview(input: {
     return { ok: false, error: 'Rating must be between 1 and 5.' }
   }
 
+  // Optional — a candidate may not have interviewed, or may choose to skip
+  // it. Never defaulted to a number; either a real 1-5 value or null.
+  let interviewDifficulty: number | null = null
+  if (input.interviewDifficulty != null) {
+    const rounded = Math.round(input.interviewDifficulty)
+    if (!Number.isFinite(rounded) || rounded < 1 || rounded > 5) {
+      return { ok: false, error: 'Interview difficulty must be between 1 and 5.' }
+    }
+    interviewDifficulty = rounded
+  }
+
   const eligible = await candidateHasApplicationAt(supabase, user.id, companyName)
   if (!eligible) {
     return { ok: false, error: 'You can only review a company you have applied to.' }
@@ -41,6 +53,7 @@ export async function submitCompanyReview(input: {
     company_name: companyName,
     rating,
     review_text: reviewText,
+    interview_difficulty: interviewDifficulty,
   })
 
   if (error) {

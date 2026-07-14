@@ -9,6 +9,7 @@ type ReviewRow = {
   company_name: string
   rating: number
   review_text: string
+  interview_difficulty: number | null
   status: ReviewStatus
   created_at: string
 }
@@ -47,6 +48,11 @@ function ReviewRowCard({ review, onDecide }: { review: ReviewRow; onDecide: (id:
         <span className="text-xs text-slate-500 dark:text-slate-500">{timeAgo(review.created_at)}</span>
       </div>
       <p className="text-sm text-amber-500 dark:text-amber-400 mb-2">{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}</p>
+      {review.interview_difficulty != null && (
+        <p className="text-xs text-slate-500 dark:text-slate-500 mb-2">
+          Interview difficulty: <span className="font-medium text-slate-700 dark:text-slate-300">{review.interview_difficulty}/5</span>
+        </p>
+      )}
       <p className="text-sm text-slate-700 dark:text-slate-300 whitespace-pre-wrap mb-3">{review.review_text}</p>
       {error && <p className="text-red-600 dark:text-red-400 text-xs mb-2">{error}</p>}
       {review.status === 'pending' && (

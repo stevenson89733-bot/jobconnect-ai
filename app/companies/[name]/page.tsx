@@ -66,7 +66,7 @@ export default async function CompanyPage({ params }: { params: { name: string }
 
       const { data: existing } = await supabase
         .from('company_reviews')
-        .select('id, rating, review_text, status, created_at')
+        .select('id, rating, review_text, interview_difficulty, status, created_at')
         .eq('candidate_id', user.id)
         .eq('company_name', displayName)
         .maybeSingle()
@@ -88,7 +88,7 @@ export default async function CompanyPage({ params }: { params: { name: string }
     const publicSupabase = createPublicClient()
     const { data } = await publicSupabase
       .from('company_reviews_public')
-      .select('id, company_name, rating, review_text, created_at')
+      .select('id, company_name, rating, review_text, interview_difficulty, created_at')
       .ilike('company_name', displayName)
       .order('created_at', { ascending: false })
     reviews = (data as PublicReview[] | null) ?? []

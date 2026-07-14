@@ -22,6 +22,9 @@ const STATUS_LABEL: Record<OwnReview['status'], string> = {
 function WriteReviewForm({ companyName, onSubmitted }: { companyName: string; onSubmitted: (review: OwnReview) => void }) {
   const [rating, setRating] = useState(5)
   const [reviewText, setReviewText] = useState('')
+  // null = not set — an optional field, never defaulted to a number the
+  // candidate didn't actually pick.
+  const [interviewDifficulty, setInterviewDifficulty] = useState<number | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
 
@@ -30,12 +33,13 @@ function WriteReviewForm({ companyName, onSubmitted }: { companyName: string; on
     if (!reviewText.trim()) return
     setSubmitting(true)
     setError('')
-    const res = await submitCompanyReview({ companyName, rating, reviewText })
+    const res = await submitCompanyReview({ companyName, rating, reviewText, interviewDifficulty })
     if (res.ok) {
       onSubmitted({
         id: 'local-pending',
         rating,
         review_text: reviewText.trim(),
+        interview_difficulty: interviewDifficulty,
         status: 'pending',
         created_at: new Date().toISOString(),
       })
@@ -63,6 +67,37 @@ function WriteReviewForm({ companyName, onSubmitted }: { companyName: string; on
             </button>
           ))}
         </div>
+      </div>
+      <div>
+        <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Interview Difficulty (optional)</label>
+        <div className="flex gap-1.5">
+          {[1, 2, 3, 4, 5].map((n) => (
+            <button
+              key={n}
+              type="button"
+              onClick={() => setInterviewDifficulty(interviewDifficulty === n ? null : n)}
+              className={`w-8 h-8 rounded-full text-sm font-medium border transition-colors ${
+                interviewDifficulty === n
+                  ? 'bg-primary text-white border-primary'
+                  : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400'
+              }`}
+              aria-label={`Interview difficulty ${n} of 5`}
+              aria-pressed={interviewDifficulty === n}
+            >
+              {n}
+            </button>
+          ))}
+          {interviewDifficulty != null && (
+            <button
+              type="button"
+              onClick={() => setInterviewDifficulty(null)}
+              className="text-xs text-slate-500 dark:text-slate-500 hover:underline ml-1"
+            >
+              Clear
+            </button>
+          )}
+        </div>
+        <p className="text-xs text-slate-500 dark:text-slate-500 mt-1">1 = very easy, 5 = very difficult.</p>
       </div>
       <div>
         <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Your Review</label>
@@ -103,6 +138,13 @@ export default function ReviewsSection({
     ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
     : null
 
+  // Only ever computed from reviews that actually have a real submitted
+  // value — never shown at all if zero approved reviews filled it in.
+  const difficultyValues = reviews.map((r) => r.interview_difficulty).filter((v): v is number => v != null)
+  const averageDifficulty = difficultyValues.length > 0
+    ? difficultyValues.reduce((sum, v) => sum + v, 0) / difficultyValues.length
+    : null
+
   return (
     <div className="mt-6 space-y-4">
       <div className="flex items-center justify-between flex-wrap gap-2">
@@ -116,6 +158,13 @@ export default function ReviewsSection({
           </div>
         )}
       </div>
+
+      {averageDifficulty != null && (
+        <p className="text-sm text-slate-600 dark:text-slate-400">
+          Average interview difficulty: <span className="font-medium text-slate-900 dark:text-white">{averageDifficulty.toFixed(1)}/5</span>
+          {' '}based on {difficultyValues.length} review{difficultyValues.length === 1 ? '' : 's'}.
+        </p>
+      )}
 
       {reviews.length === 0 ? (
         <div className="card text-center py-10 text-slate-600 dark:text-slate-500">
@@ -131,7 +180,14 @@ export default function ReviewsSection({
                 <span className="text-xs text-slate-500 dark:text-slate-500">{timeAgo(r.created_at)}</span>
               </div>
               <p className="text-sm text-slate-700 dark:text-slate-300 whitespace-pre-wrap mb-2">{r.review_text}</p>
-              <p className="text-xs font-medium text-slate-500 dark:text-slate-500">Verified Candidate</p>
+              <div className="flex items-center justify-between">
+                <p className="text-xs font-medium text-slate-500 dark:text-slate-500">Verified Candidate</p>
+                {r.interview_difficulty != null && (
+                  <p className="text-xs text-slate-500 dark:text-slate-500">
+                    Interview difficulty: <span className="font-medium text-slate-700 dark:text-slate-300">{r.interview_difficulty}/5</span>
+                  </p>
+                )}
+              </div>
             </div>
           ))}
         </div>
@@ -145,6 +201,11 @@ export default function ReviewsSection({
           <div className="flex items-center gap-2 mt-1">
             <Stars rating={ownReview.rating} />
           </div>
+          {ownReview.interview_difficulty != null && (
+            <p className="text-xs text-slate-500 dark:text-slate-500 mt-1">
+              Interview difficulty: {ownReview.interview_difficulty}/5
+            </p>
+          )}
           <p className="text-sm text-slate-600 dark:text-slate-400 mt-2 whitespace-pre-wrap">{ownReview.review_text}</p>
         </div>
       ) : canReview ? (

@@ -9,6 +9,7 @@ type ReviewRow = {
   company_name: string
   rating: number
   review_text: string
+  interview_difficulty: number | null
   status: 'pending' | 'approved' | 'rejected'
   created_at: string
 }
@@ -33,7 +34,7 @@ export default async function AdminReviewsPage() {
   const supabase = createClient()
   const { data, error } = await supabase
     .from('company_reviews')
-    .select('id, company_name, rating, review_text, status, created_at')
+    .select('id, company_name, rating, review_text, interview_difficulty, status, created_at')
     .order('created_at', { ascending: false })
 
   if (error) console.error('[admin/reviews]', error.message)
