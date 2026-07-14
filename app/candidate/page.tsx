@@ -34,6 +34,7 @@ type JobRef = { title: string; company_name: string }
 type RawApplicationRow = {
   id: string
   status: string
+  status_updated_at: string | null
   created_at: string
   jobs: JobRef[] | JobRef | null
 }
@@ -69,7 +70,7 @@ export default async function CandidateDashboard() {
           .eq('user_id', user.id).single(),
         supabase.from('applications').select('*', { count: 'exact', head: true }).eq('candidate_id', user.id),
         supabase.from('applications')
-          .select('id, status, created_at, jobs!job_id(title, company_name)')
+          .select('id, status, status_updated_at, created_at, jobs!job_id(title, company_name)')
           .eq('candidate_id', user.id)
           .order('created_at', { ascending: false })
           .limit(5),
@@ -82,6 +83,7 @@ export default async function CandidateDashboard() {
       applications = ((appsData as unknown as RawApplicationRow[] | null) ?? []).map((row) => ({
         id: row.id,
         status: row.status,
+        status_updated_at: row.status_updated_at,
         created_at: row.created_at,
         ...jobInfo(row),
       }))

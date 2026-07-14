@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import ApplicationStatusControl from '@/components/recruiter/ApplicationStatusControl'
+import type { ApplicationStatus } from '@/lib/applicationStatus'
 
 const METRICS = [
   { label: 'Active Job Posts', value: '8', delta: '+2 this month', icon: '📋', color: 'text-primary' },
@@ -18,10 +20,11 @@ const ACTIVE_JOBS = [
 type Application = {
   id: string
   message: string | null
-  status: string
+  status: ApplicationStatus
+  status_updated_at: string | null
   created_at: string
   candidate_id: string
-  profiles: { full_name: string; email: string }[] | null
+  profiles: { full_name: string | null; email: string } | null
   jobs: { id: string; title: string }[] | null
 }
 
@@ -43,24 +46,46 @@ export default async function EmployerDashboard() {
     const { data: { user } } = await supabase.auth.getUser()
 
     if (user) {
-      const { data } = await supabase
+      // Two separate queries, joined in JS — applications.candidate_id and
+      // profiles.user_id both reference auth.users(id) independently, with
+      // no direct FK between applications and profiles, so PostgREST can't
+      // embed `profiles!candidate_id` in one request (confirmed: this was
+      // silently failing with PGRST200 even before this lot, which is why
+      // this section always rendered "No applications yet" regardless of
+      // real data — the error was never logged, just swallowed).
+      const { data, error } = await supabase
         .from('applications')
         .select(`
-          id, message, status, created_at, candidate_id,
-          profiles!candidate_id ( full_name, email ),
+          id, message, status, status_updated_at, created_at, candidate_id,
           jobs!job_id ( id, title )
         `)
         .order('created_at', { ascending: false })
 
-      if (data) {
-        for (const app of data as Application[]) {
+      if (error) console.error('[recruiter/applications]', error.message)
+
+      if (data && data.length > 0) {
+        const candidateIds = [...new Set(data.map((a) => a.candidate_id))]
+        const { data: profileRows, error: profilesError } = await supabase
+          .from('profiles')
+          .select('user_id, full_name, email')
+          .in('user_id', candidateIds)
+
+        if (profilesError) console.error('[recruiter/applicant-profiles]', profilesError.message)
+
+        const profileByUserId = new Map((profileRows ?? []).map((p) => [p.user_id, p]))
+
+        for (const app of data) {
           const jobRow = Array.isArray(app.jobs) ? app.jobs[0] : app.jobs
           const jobId = jobRow?.id ?? 'unknown'
           const jobTitle = jobRow?.title ?? 'Unknown Job'
           if (!applicationsByJob[jobId]) {
             applicationsByJob[jobId] = { jobTitle, applications: [] }
           }
-          applicationsByJob[jobId].applications.push(app)
+          applicationsByJob[jobId].applications.push({
+            ...app,
+            status: app.status as ApplicationStatus,
+            profiles: profileByUserId.get(app.candidate_id) ?? null,
+          })
         }
       }
     }
@@ -157,7 +182,11 @@ export default async function EmployerDashboard() {
                           <p className="text-xs text-slate-500 dark:text-slate-600 mt-1 italic">No message provided</p>
                         )}
                       </div>
-                      <span className="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400 text-xs shrink-0">{app.status}</span>
+                      <ApplicationStatusControl
+                        applicationId={app.id}
+                        initialStatus={app.status}
+                        initialStatusUpdatedAt={app.status_updated_at}
+                      />
                     </div>
                   ))}
                 </div>

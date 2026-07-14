@@ -7,6 +7,7 @@ import FadeIn from './FadeIn'
 export type ApplicationRow = {
   id: string
   status: string
+  status_updated_at: string | null
   created_at: string
   title: string
   company_name: string
@@ -14,13 +15,22 @@ export type ApplicationRow = {
 
 const STATUS_VARIANT: Record<string, NonNullable<BadgeProps['variant']>> = {
   submitted: 'primary',
-  interview: 'success',
-  rejected: 'default',
   viewed: 'warning',
+  interview: 'accent',
+  offer: 'success',
+  rejected: 'default',
 }
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+}
+
+function timeAgo(iso: string) {
+  const diff = Date.now() - new Date(iso).getTime()
+  const days = Math.floor(diff / 86400000)
+  if (days === 0) return 'today'
+  if (days === 1) return '1 day ago'
+  return `${days} days ago`
 }
 
 export default function RecentApplications({ applications }: { applications: ApplicationRow[] }) {
@@ -60,6 +70,11 @@ export default function RecentApplications({ applications }: { applications: App
                       <td className="py-3 text-slate-600 dark:text-slate-400">{app.title}</td>
                       <td className="py-3">
                         <Badge variant={STATUS_VARIANT[app.status] ?? 'default'}>{app.status}</Badge>
+                        {app.status !== 'submitted' && app.status_updated_at && (
+                          <div className="text-[11px] text-slate-500 dark:text-slate-500 mt-1">
+                            {timeAgo(app.status_updated_at)}
+                          </div>
+                        )}
                       </td>
                       <td className="py-3 text-slate-600 dark:text-slate-500">{formatDate(app.created_at)}</td>
                     </tr>
