@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { UserRound, Search, Sparkles } from 'lucide-react'
+import { UserRound, Search, Sparkles, BarChart3 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import FadeIn from './FadeIn'
 
@@ -9,12 +9,13 @@ const ACTIONS: { label: string; href: string; icon: LucideIcon }[] = [
   { label: 'Edit Profile', href: '/profile', icon: UserRound },
   { label: 'Browse Jobs', href: '/jobs', icon: Search },
   { label: 'Career Coach', href: '/candidate/career-coach', icon: Sparkles },
+  { label: 'Analytics', href: '/candidate/analytics', icon: BarChart3 },
 ]
 
 export default function QuickActions() {
   return (
     <FadeIn>
-      <div className="grid grid-cols-3 gap-3 max-w-xl">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl">
         {ACTIONS.map(({ label, href, icon: Icon }) => (
           <Link
             key={href}
