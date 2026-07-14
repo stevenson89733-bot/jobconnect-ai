@@ -3,10 +3,12 @@ import { Lock, Send } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { getCandidateProfile } from '@/lib/profile'
 import { buildWeeklyActivity } from '@/lib/weeklyActivity'
+import { computeApplicationRates } from '@/lib/applicationRates'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import StatCard from '@/components/dashboard/StatCard'
 import WeeklyActivityChart from '@/components/analytics/WeeklyActivityChart'
+import AnalyticsRateCards from '@/components/analytics/AnalyticsRateCards'
 import AnalyticsAIInsights from '@/components/analytics/AnalyticsAIInsights'
 import type { CareerAnalysis } from '@/lib/ai/careerCoach'
 
@@ -39,7 +41,7 @@ export default async function AnalyticsPage() {
   if (!profileRow?.is_premium) return <UpsellGate />
 
   const [{ data: applications }, { data: savedJobs }, { data: analysisRow }] = await Promise.all([
-    supabase.from('applications').select('created_at').eq('candidate_id', user.id),
+    supabase.from('applications').select('created_at, status').eq('candidate_id', user.id),
     supabase.from('saved_jobs').select('created_at').eq('candidate_id', user.id),
     supabase.from('career_analysis').select('analysis_json, generated_at').eq('candidate_id', user.id).maybeSingle(),
   ])
@@ -49,6 +51,7 @@ export default async function AnalyticsPage() {
     (applications ?? []).map((a) => a.created_at as string),
     (savedJobs ?? []).map((s) => s.created_at as string)
   )
+  const rates = computeApplicationRates((applications ?? []).map((a) => a.status as string))
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-10 space-y-8">
@@ -64,6 +67,8 @@ export default async function AnalyticsPage() {
       </div>
 
       <WeeklyActivityChart weeks={weeklyActivity} />
+
+      <AnalyticsRateCards rates={rates} />
 
       <AnalyticsAIInsights
         isPremium={!!profileRow.is_premium}
