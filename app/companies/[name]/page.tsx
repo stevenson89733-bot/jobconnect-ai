@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/server'
 import { getCandidateProfile } from '@/lib/profile'
 import { parseSkillSet, calculateMatchPercent } from '@/lib/jobMatching'
 import { JOB_SELECT_FIELDS, normalizeJobCompany } from '@/lib/jobsQuery'
+import { candidateHasApplicationAt, type OwnReview, type PublicReview } from '@/lib/reviews'
 import CompanyClient from './CompanyClient'
 
 // Cached per company name — no candidate-specific data (that's computed
@@ -54,13 +55,43 @@ export default async function CompanyPage({ params }: { params: { name: string }
   // Real Match % — same computation as the Jobs page (lib/jobMatching.ts),
   // never a second matching system.
   let skillSet = new Set<string>()
+  let canReview = false
+  let ownReview: OwnReview | null = null
   try {
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
       const profile = await getCandidateProfile(supabase, user.id)
       skillSet = parseSkillSet(profile?.skills)
+
+      const { data: existing } = await supabase
+        .from('company_reviews')
+        .select('id, rating, review_text, status, created_at')
+        .eq('candidate_id', user.id)
+        .eq('company_name', displayName)
+        .maybeSingle()
+      ownReview = (existing as OwnReview | null) ?? null
+
+      if (!ownReview) {
+        canReview = await candidateHasApplicationAt(supabase, user.id, displayName)
+      }
     }
+  } catch {}
+
+  // Approved reviews only, via the anonymity-enforcing public view — never
+  // the base table, and never includes candidate_id (lib/reviews.ts,
+  // supabase/reviews.sql). Fetched fresh per request, not cached alongside
+  // the 'jobs'-tagged data above — moderation approvals should show up on
+  // the next real page load, not wait on an unrelated cache tag.
+  let reviews: PublicReview[] = []
+  try {
+    const publicSupabase = createPublicClient()
+    const { data } = await publicSupabase
+      .from('company_reviews_public')
+      .select('id, company_name, rating, review_text, created_at')
+      .ilike('company_name', displayName)
+      .order('created_at', { ascending: false })
+    reviews = (data as PublicReview[] | null) ?? []
   } catch {}
 
   const jobsWithMatch = jobs.map((job) => ({
@@ -88,6 +119,9 @@ export default async function CompanyPage({ params }: { params: { name: string }
       website={company?.website ?? null}
       jobs={jobsWithMatch}
       salaryInsights={salaryInsights}
+      reviews={reviews}
+      canReview={canReview}
+      ownReview={ownReview}
     />
   )
 }

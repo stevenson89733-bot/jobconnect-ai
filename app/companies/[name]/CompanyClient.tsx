@@ -6,6 +6,8 @@ import JobCard from '@/components/jobs/JobCard'
 import { companyInitials } from '@/lib/companyDisplay'
 import { useJobInteractions } from '@/lib/useJobInteractions'
 import type { Job } from '@/app/jobs/JobsClient'
+import ReviewsSection from './ReviewsSection'
+import type { OwnReview, PublicReview } from '@/lib/reviews'
 
 export default function CompanyClient({
   name,
@@ -13,12 +15,18 @@ export default function CompanyClient({
   website,
   jobs,
   salaryInsights,
+  reviews,
+  canReview,
+  ownReview,
 }: {
   name: string
   logoUrl: string | null
   website: string | null
   jobs: Job[]
   salaryInsights: { min: number; max: number; count: number } | null
+  reviews: PublicReview[]
+  canReview: boolean
+  ownReview: OwnReview | null
 }) {
   const { appliedIds, savedIds, toggleSave } = useJobInteractions(`/companies/${encodeURIComponent(name)}`)
   const isHiring = jobs.length > 0
@@ -101,6 +109,8 @@ export default function CompanyClient({
           </div>
         )}
       </div>
+
+      <ReviewsSection companyName={name} reviews={reviews} canReview={canReview} ownReview={ownReview} />
     </div>
   )
 }
