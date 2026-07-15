@@ -4,7 +4,19 @@ import { createClient } from '@/lib/supabase/server'
 import { MIN_EXPERIENCE_LENGTH, hasEnoughExperience, sanitizeTargetRole } from './resumeGuard'
 import { type ContactInfo, EMPTY_CONTACT, buildContactInfo, formatContactLine } from '@/lib/resumeContact'
 import { researchCompany, type CompanySource } from './companyResearch'
-import { rateLimit } from '@/lib/rateLimit'
+import { rateLimit, getClientIp } from '@/lib/rateLimit'
+
+// Rate limit for the primary GPT-4o/Mistral generation call itself — the
+// most expensive, most exposed calls in the app, previously unlimited
+// (audit finding). Resume/cover letter generation is naturally iterative —
+// a candidate reasonably regenerates several times while tuning wording or
+// trying a different style, unlike Career Coach's "one full analysis"
+// usage pattern (3/hr) — so this is more generous but still bounded against
+// scripted abuse. Independent of, and never double-counted with, the
+// separate company-research (Tavily) rate limit below — that one guards a
+// different concern (the search call), keyed under its own prefix.
+const AI_GENERATION_LIMIT = 10
+const AI_GENERATION_WINDOW_MS = 60 * 60 * 1000
 
 /**
  * Tier-based AI routing.
@@ -319,7 +331,17 @@ export async function generateResume(rawInput: ResumeInput): Promise<NextRespons
         { status: 400 }
       )
     }
-    const { data: raw, contact } = await completeJson(buildResumePrompt(input), 2000)
+
+    const provider = await resolveProvider()
+    const { ok } = rateLimit(`ai-generate:resume:${provider.userId ?? getClientIp()}`, AI_GENERATION_LIMIT, AI_GENERATION_WINDOW_MS)
+    if (!ok) {
+      return NextResponse.json(
+        { error: 'You\'ve generated a lot of resumes recently — please wait a bit before trying again.' },
+        { status: 429 }
+      )
+    }
+
+    const { data: raw, contact } = await completeJson(buildResumePrompt(input), 2000, provider)
     const data = normalizeResume(raw, contact)
     return NextResponse.json(data)
   } catch (err) {
@@ -352,6 +374,18 @@ export async function generateCoverLetter(rawInput: CoverLetterInput): Promise<N
     }
 
     const provider = await resolveProvider()
+
+    const { ok: withinGenerationLimit } = rateLimit(
+      `ai-generate:cover-letter:${provider.userId ?? getClientIp()}`,
+      AI_GENERATION_LIMIT,
+      AI_GENERATION_WINDOW_MS
+    )
+    if (!withinGenerationLimit) {
+      return NextResponse.json(
+        { error: 'You\'ve generated a lot of cover letters recently — please wait a bit before trying again.' },
+        { status: 429 }
+      )
+    }
 
     let research: CompanyResearchContext = null
     let companyResearch: { used: boolean; sources?: CompanySource[] } | undefined
