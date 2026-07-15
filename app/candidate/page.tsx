@@ -75,7 +75,7 @@ export default async function CandidateDashboard() {
           .order('created_at', { ascending: false })
           .limit(5),
         supabase.from('applications').select('job_id').eq('candidate_id', user.id),
-        supabase.from('career_analysis').select('analysis_json, generated_at').eq('candidate_id', user.id).maybeSingle(),
+        supabase.from('career_analysis').select('analysis_json, generated_at').eq('candidate_id', user.id).order('generated_at', { ascending: false }).limit(1).maybeSingle(),
       ])
 
       profile = (profileData as Profile | null) ?? null

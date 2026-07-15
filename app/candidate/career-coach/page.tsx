@@ -39,6 +39,8 @@ export default async function CareerCoachPage() {
     supabase.from('career_analysis')
       .select('analysis_json, generated_at')
       .eq('candidate_id', user.id)
+      .order('generated_at', { ascending: false })
+      .limit(1)
       .maybeSingle(),
     supabase.from('applications').select('job_id').eq('candidate_id', user.id),
   ])

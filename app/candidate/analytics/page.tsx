@@ -4,11 +4,13 @@ import { createClient } from '@/lib/supabase/server'
 import { getCandidateProfile } from '@/lib/profile'
 import { buildWeeklyActivity } from '@/lib/weeklyActivity'
 import { computeApplicationRates } from '@/lib/applicationRates'
+import { buildCareerProgressPoints } from '@/lib/careerProgress'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import StatCard from '@/components/dashboard/StatCard'
 import WeeklyActivityChart from '@/components/analytics/WeeklyActivityChart'
 import AnalyticsRateCards from '@/components/analytics/AnalyticsRateCards'
+import CareerProgressChart from '@/components/analytics/CareerProgressChart'
 import AnalyticsAIInsights from '@/components/analytics/AnalyticsAIInsights'
 import type { CareerAnalysis } from '@/lib/ai/careerCoach'
 
@@ -40,10 +42,13 @@ export default async function AnalyticsPage() {
   const profileRow = await getCandidateProfile(supabase, user.id)
   if (!profileRow?.is_premium) return <UpsellGate />
 
-  const [{ data: applications }, { data: savedJobs }, { data: analysisRow }] = await Promise.all([
+  const [{ data: applications }, { data: savedJobs }, { data: analysisHistory }] = await Promise.all([
     supabase.from('applications').select('created_at, status').eq('candidate_id', user.id),
     supabase.from('saved_jobs').select('created_at').eq('candidate_id', user.id),
-    supabase.from('career_analysis').select('analysis_json, generated_at').eq('candidate_id', user.id).maybeSingle(),
+    // Full history, oldest first — feeds both Career Progress (the whole
+    // list) and AI Insights (just the most recent row) from one query,
+    // rather than fetching "most recent" separately.
+    supabase.from('career_analysis').select('analysis_json, generated_at').eq('candidate_id', user.id).order('generated_at', { ascending: true }),
   ])
 
   const applicationsCount = applications?.length ?? 0
@@ -52,6 +57,9 @@ export default async function AnalyticsPage() {
     (savedJobs ?? []).map((s) => s.created_at as string)
   )
   const rates = computeApplicationRates((applications ?? []).map((a) => a.status as string))
+
+  const careerProgressPoints = buildCareerProgressPoints(analysisHistory ?? [])
+  const analysisRow = analysisHistory && analysisHistory.length > 0 ? analysisHistory[analysisHistory.length - 1] : null
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-10 space-y-8">
@@ -69,6 +77,8 @@ export default async function AnalyticsPage() {
       <WeeklyActivityChart weeks={weeklyActivity} />
 
       <AnalyticsRateCards rates={rates} />
+
+      <CareerProgressChart points={careerProgressPoints} />
 
       <AnalyticsAIInsights
         isPremium={!!profileRow.is_premium}

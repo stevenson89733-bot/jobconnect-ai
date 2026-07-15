@@ -26,12 +26,13 @@ export default async function ProfilePage() {
     if (user) {
       const [{ data }, { data: analysisRow }] = await Promise.all([
         supabase.from('profiles').select(FIELDS.join(', ')).eq('user_id', user.id).single(),
-        supabase.from('career_analysis').select('analysis_json, generated_at').eq('candidate_id', user.id).maybeSingle(),
+        supabase.from('career_analysis').select('analysis_json, generated_at').eq('candidate_id', user.id).order('generated_at', { ascending: false }).limit(1).maybeSingle(),
       ])
       profile = (data as Record<string, unknown> | null) ?? null
 
-      // Reads the ONE existing career_analysis result — never a second
-      // scoring system computed on this page.
+      // Reads the MOST RECENT career_analysis row (history now accumulates,
+      // one row per "Refresh Analysis" click) — never a second scoring
+      // system computed on this page.
       const analysisJson = analysisRow?.analysis_json as { atsScore?: { score?: number }; profileStrength?: { score?: number } } | undefined
       atsScore = analysisJson?.atsScore?.score ?? null
       profileStrength = analysisJson?.profileStrength?.score ?? null

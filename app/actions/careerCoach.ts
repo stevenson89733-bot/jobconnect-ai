@@ -51,17 +51,18 @@ export async function refreshCareerAnalysis(): Promise<CareerAnalysisResult> {
   }
 
   const generatedAt = new Date().toISOString()
-  const { error: upsertError } = await supabase
+  // Plain insert, not upsert — career_analysis no longer has a
+  // unique(candidate_id) constraint, so every "Refresh Analysis" click adds
+  // a new row instead of overwriting the last one. This is what lets Career
+  // Progress plot real history instead of a single overwritten point.
+  const { error: insertError } = await supabase
     .from('career_analysis')
-    .upsert(
-      { candidate_id: user.id, analysis_json: analysis, generated_at: generatedAt },
-      { onConflict: 'candidate_id' }
-    )
+    .insert({ candidate_id: user.id, analysis_json: analysis, generated_at: generatedAt })
 
-  if (upsertError) {
+  if (insertError) {
     // The analysis was generated successfully — still return it even if
     // caching failed, rather than throwing the result away.
-    console.error('[career-coach] failed to cache analysis:', upsertError.message)
+    console.error('[career-coach] failed to cache analysis:', insertError.message)
   }
 
   return { ok: true, analysis, generatedAt }
