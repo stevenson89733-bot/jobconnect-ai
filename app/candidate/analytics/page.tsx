@@ -5,12 +5,14 @@ import { getCandidateProfile } from '@/lib/profile'
 import { buildWeeklyActivity } from '@/lib/weeklyActivity'
 import { computeApplicationRates } from '@/lib/applicationRates'
 import { buildCareerProgressPoints } from '@/lib/careerProgress'
+import { computeSalaryBenchmark } from '@/lib/salaryBenchmark'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import StatCard from '@/components/dashboard/StatCard'
 import WeeklyActivityChart from '@/components/analytics/WeeklyActivityChart'
 import AnalyticsRateCards from '@/components/analytics/AnalyticsRateCards'
 import CareerProgressChart from '@/components/analytics/CareerProgressChart'
+import MarketSalaryInsights from '@/components/analytics/MarketSalaryInsights'
 import AnalyticsAIInsights from '@/components/analytics/AnalyticsAIInsights'
 import type { CareerAnalysis } from '@/lib/ai/careerCoach'
 
@@ -61,6 +63,8 @@ export default async function AnalyticsPage() {
   const careerProgressPoints = buildCareerProgressPoints(analysisHistory ?? [])
   const analysisRow = analysisHistory && analysisHistory.length > 0 ? analysisHistory[analysisHistory.length - 1] : null
 
+  const salaryBenchmark = await computeSalaryBenchmark(supabase, profileRow.title)
+
   return (
     <div className="max-w-5xl mx-auto px-6 py-10 space-y-8">
       <div>
@@ -79,6 +83,8 @@ export default async function AnalyticsPage() {
       <AnalyticsRateCards rates={rates} />
 
       <CareerProgressChart points={careerProgressPoints} />
+
+      <MarketSalaryInsights benchmark={salaryBenchmark} />
 
       <AnalyticsAIInsights
         isPremium={!!profileRow.is_premium}
