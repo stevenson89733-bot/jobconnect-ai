@@ -1,17 +1,36 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import { FileText } from 'lucide-react'
 import { updateProfile, type ProfileFields } from '@/app/actions/profile'
 import { Button } from '@/components/ui/button'
 import EditableSection from '@/components/profile/EditableSection'
 import Timeline from '@/components/profile/Timeline'
 import CareerCoachSummary from '@/components/shared/CareerCoachSummary'
-import ProjectsSection from '@/components/profile/ProjectsSection'
-import CertificatesSection from '@/components/profile/CertificatesSection'
-import LanguagesSection from '@/components/profile/LanguagesSection'
-import AvatarUpload from './AvatarUpload'
 import type { Project, Certificate, Language } from '@/lib/profileSections'
+
+// Code-split: none of these four are needed for initial paint (Projects/
+// Certificates/Languages render below the always-visible Basics/Bio/
+// Experience fields; AvatarUpload is visible immediately but is a self-
+// contained upload widget with its own client-only logic). Each gets a
+// same-size placeholder so there's no layout shift while its chunk loads.
+const AvatarUpload = dynamic(() => import('./AvatarUpload'), {
+  loading: () => (
+    <div className="flex items-center gap-4">
+      <div className="w-20 h-20 rounded-full bg-slate-200 dark:bg-slate-700 animate-pulse shrink-0" />
+    </div>
+  ),
+})
+const ProjectsSection = dynamic(() => import('@/components/profile/ProjectsSection'), {
+  loading: () => <div className="h-24 rounded-xl bg-slate-100 dark:bg-slate-800/60 animate-pulse" />,
+})
+const CertificatesSection = dynamic(() => import('@/components/profile/CertificatesSection'), {
+  loading: () => <div className="h-24 rounded-xl bg-slate-100 dark:bg-slate-800/60 animate-pulse" />,
+})
+const LanguagesSection = dynamic(() => import('@/components/profile/LanguagesSection'), {
+  loading: () => <div className="h-24 rounded-xl bg-slate-100 dark:bg-slate-800/60 animate-pulse" />,
+})
 
 const inputClass =
   'w-full bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors'

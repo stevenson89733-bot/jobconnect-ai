@@ -1,8 +1,27 @@
+import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { getCandidateProfile } from '@/lib/profile'
+import { absoluteUrl } from '@/lib/seo'
 import CoverLetterClient from './CoverLetterClient'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = {
+  title: 'AI Cover Letter Generator | JobConnect AI',
+  description: 'Generate a tailored cover letter from a real job description and your own profile, with automatic company research.',
+  alternates: { canonical: absoluteUrl('/ai-tools/cover-letter') },
+  openGraph: {
+    title: 'AI Cover Letter Generator | JobConnect AI',
+    description: 'Generate a tailored cover letter from a real job description and your own profile.',
+    url: absoluteUrl('/ai-tools/cover-letter'),
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'AI Cover Letter Generator | JobConnect AI',
+    description: 'Generate a tailored cover letter from a real job description and your own profile.',
+  },
+}
 
 export default async function CoverLetterPage({
   searchParams,

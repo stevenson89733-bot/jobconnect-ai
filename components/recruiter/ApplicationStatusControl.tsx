@@ -1,33 +1,9 @@
 'use client'
 import { useState } from 'react'
 import { updateApplicationStatus } from '@/app/actions/applications'
-import { APPLICATION_STATUSES, type ApplicationStatus } from '@/lib/applicationStatus'
-import { Badge, type BadgeProps } from '@/components/ui/badge'
-
-const STATUS_VARIANT: Record<ApplicationStatus, NonNullable<BadgeProps['variant']>> = {
-  submitted: 'primary',
-  viewed: 'warning',
-  interview: 'accent',
-  offer: 'success',
-  rejected: 'default',
-}
-
-const STATUS_LABEL: Record<ApplicationStatus, string> = {
-  submitted: 'Submitted',
-  viewed: 'Viewed',
-  interview: 'Interview',
-  offer: 'Offer',
-  rejected: 'Rejected',
-}
-
-function timeAgo(dateStr: string) {
-  const diff = Date.now() - new Date(dateStr).getTime()
-  const days = Math.floor(diff / 86400000)
-  if (days === 0) return 'today'
-  if (days === 1) return '1 day ago'
-  if (days < 7) return `${days} days ago`
-  return `${Math.floor(days / 7)}w ago`
-}
+import { APPLICATION_STATUSES, APPLICATION_STATUS_LABEL, APPLICATION_STATUS_VARIANT, type ApplicationStatus } from '@/lib/applicationStatus'
+import { timeAgo } from '@/lib/timeAgo'
+import { Badge } from '@/components/ui/badge'
 
 // Real employer-facing status control — ownership is enforced by the RLS
 // policy the server action relies on (an employer can only ever affect
@@ -65,7 +41,7 @@ export default function ApplicationStatusControl({
   return (
     <div className="flex flex-col items-end gap-1 shrink-0">
       <div className="flex items-center gap-2">
-        <Badge variant={STATUS_VARIANT[status]}>{STATUS_LABEL[status]}</Badge>
+        <Badge variant={APPLICATION_STATUS_VARIANT[status]}>{APPLICATION_STATUS_LABEL[status]}</Badge>
         <select
           value={status}
           disabled={saving}
@@ -74,13 +50,13 @@ export default function ApplicationStatusControl({
           className="text-xs bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-md px-1.5 py-1 text-slate-700 dark:text-slate-300 focus:outline-none focus:border-primary disabled:opacity-50"
         >
           {APPLICATION_STATUSES.map((s) => (
-            <option key={s} value={s}>{STATUS_LABEL[s]}</option>
+            <option key={s} value={s}>{APPLICATION_STATUS_LABEL[s]}</option>
           ))}
         </select>
       </div>
       {statusUpdatedAt && status !== 'submitted' && (
         <span className="text-[11px] text-slate-600 dark:text-slate-400">
-          {STATUS_LABEL[status]} {timeAgo(statusUpdatedAt)}
+          {APPLICATION_STATUS_LABEL[status]} {timeAgo(statusUpdatedAt, 'verbose')}
         </span>
       )}
       {error && <span className="text-[11px] text-red-600 dark:text-red-400">{error}</span>}

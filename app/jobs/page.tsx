@@ -1,13 +1,32 @@
+import type { Metadata } from 'next'
 import { unstable_cache } from 'next/cache'
 import { createPublicClient } from '@/lib/supabase/public'
 import { createClient } from '@/lib/supabase/server'
 import { getCandidateProfile } from '@/lib/profile'
 import { parseSkillSet, calculateMatchPercent } from '@/lib/jobMatching'
 import { applyJobFilters, normalizeJobCompany, parseSort, JOB_SELECT_FIELDS, type JobFilters } from '@/lib/jobsQuery'
+import { absoluteUrl } from '@/lib/seo'
 import JobsClient from './JobsClient'
 
 const PAGE_SIZE = 20
 export type { SortOption } from '@/lib/jobsQuery'
+
+export const metadata: Metadata = {
+  title: 'Browse Remote Jobs | JobConnect AI',
+  description: 'Search real remote job openings by keyword, category, and job type — from AI Engineering to Design, Data, and Developer Relations.',
+  alternates: { canonical: absoluteUrl('/jobs') },
+  openGraph: {
+    title: 'Browse Remote Jobs | JobConnect AI',
+    description: 'Search real remote job openings by keyword, category, and job type.',
+    url: absoluteUrl('/jobs'),
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Browse Remote Jobs | JobConnect AI',
+    description: 'Search real remote job openings by keyword, category, and job type.',
+  },
+}
 
 // Cached independently per unique combination of filters/page — see
 // lib/supabase/public.ts for why this can't use the cookie-based server

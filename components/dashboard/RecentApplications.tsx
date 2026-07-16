@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import { Inbox } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
-import { Badge, type BadgeProps } from '@/components/ui/badge'
+import { Badge } from '@/components/ui/badge'
+import { APPLICATION_STATUS_VARIANT, type ApplicationStatus } from '@/lib/applicationStatus'
+import { timeAgo } from '@/lib/timeAgo'
 import FadeIn from './FadeIn'
 
 export type ApplicationRow = {
@@ -13,24 +15,8 @@ export type ApplicationRow = {
   company_name: string
 }
 
-const STATUS_VARIANT: Record<string, NonNullable<BadgeProps['variant']>> = {
-  submitted: 'primary',
-  viewed: 'warning',
-  interview: 'accent',
-  offer: 'success',
-  rejected: 'default',
-}
-
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-}
-
-function timeAgo(iso: string) {
-  const diff = Date.now() - new Date(iso).getTime()
-  const days = Math.floor(diff / 86400000)
-  if (days === 0) return 'today'
-  if (days === 1) return '1 day ago'
-  return `${days} days ago`
 }
 
 export default function RecentApplications({ applications }: { applications: ApplicationRow[] }) {
@@ -69,10 +55,10 @@ export default function RecentApplications({ applications }: { applications: App
                       <td className="py-3 font-medium text-slate-800 dark:text-slate-200">{app.company_name}</td>
                       <td className="py-3 text-slate-600 dark:text-slate-400">{app.title}</td>
                       <td className="py-3">
-                        <Badge variant={STATUS_VARIANT[app.status] ?? 'default'}>{app.status}</Badge>
+                        <Badge variant={APPLICATION_STATUS_VARIANT[app.status as ApplicationStatus] ?? 'default'}>{app.status}</Badge>
                         {app.status !== 'submitted' && app.status_updated_at && (
                           <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">
-                            {timeAgo(app.status_updated_at)}
+                            {timeAgo(app.status_updated_at, 'verbose')}
                           </div>
                         )}
                       </td>

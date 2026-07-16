@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import ApplyModal from '@/components/ApplyModal'
 import { copyToClipboard } from '@/lib/clipboard'
 import { companyInitials } from '@/lib/companyDisplay'
+import { timeAgo } from '@/lib/timeAgo'
 import Link from 'next/link'
 import type { Job } from '@/app/jobs/JobsClient'
 
@@ -16,16 +17,6 @@ const TYPE_VARIANT: Record<string, 'success' | 'accent' | 'primary' | 'default'>
   Contract: 'accent',
   'Part-time': 'primary',
   Internship: 'default',
-}
-
-function timeAgo(dateStr: string) {
-  const diff = Date.now() - new Date(dateStr).getTime()
-  const days = Math.floor(diff / 86400000)
-  if (days === 0) return 'Today'
-  if (days === 1) return '1d ago'
-  if (days < 7) return `${days}d ago`
-  if (days < 14) return '1w ago'
-  return `${Math.floor(days / 7)}w ago`
 }
 
 export default function JobCard({

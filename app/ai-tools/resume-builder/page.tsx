@@ -1,9 +1,28 @@
+import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { getCandidateProfile } from '@/lib/profile'
 import { buildContactInfo, formatContactLine } from '@/lib/resumeContact'
+import { absoluteUrl } from '@/lib/seo'
 import ResumeBuilderClient from './ResumeBuilderClient'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = {
+  title: 'AI Resume Builder | JobConnect AI',
+  description: 'Generate an ATS-optimized, GPT-4o-polished resume from your real profile — with a live preview and instant resume/ATS scoring.',
+  alternates: { canonical: absoluteUrl('/ai-tools/resume-builder') },
+  openGraph: {
+    title: 'AI Resume Builder | JobConnect AI',
+    description: 'Generate an ATS-optimized, GPT-4o-polished resume from your real profile.',
+    url: absoluteUrl('/ai-tools/resume-builder'),
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'AI Resume Builder | JobConnect AI',
+    description: 'Generate an ATS-optimized, GPT-4o-polished resume from your real profile.',
+  },
+}
 
 export default async function ResumeBuilderPage() {
   let isPremium = false

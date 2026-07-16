@@ -2,7 +2,8 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import ApplicationStatusControl from '@/components/recruiter/ApplicationStatusControl'
 import { companyInitials } from '@/lib/companyDisplay'
-import { APPLICATION_STATUSES, type ApplicationStatus } from '@/lib/applicationStatus'
+import { APPLICATION_STATUSES, APPLICATION_STATUS_LABEL, APPLICATION_STATUS_BAR_COLOR, type ApplicationStatus } from '@/lib/applicationStatus'
+import { timeAgo } from '@/lib/timeAgo'
 
 type Application = {
   id: string
@@ -21,31 +22,6 @@ type JobRow = {
   title: string
   is_active: boolean
   created_at: string
-}
-
-const STATUS_LABEL: Record<ApplicationStatus, string> = {
-  submitted: 'Submitted',
-  viewed: 'Viewed',
-  interview: 'Interview',
-  offer: 'Offer',
-  rejected: 'Rejected',
-}
-
-const STATUS_COLOR: Record<ApplicationStatus, string> = {
-  submitted: 'bg-blue-500',
-  viewed: 'bg-yellow-500',
-  interview: 'bg-accent',
-  offer: 'bg-green-500',
-  rejected: 'bg-slate-400 dark:bg-slate-600',
-}
-
-function timeAgo(dateStr: string) {
-  const diff = Date.now() - new Date(dateStr).getTime()
-  const days = Math.floor(diff / 86400000)
-  if (days === 0) return 'Today'
-  if (days === 1) return '1d ago'
-  if (days < 7) return `${days}d ago`
-  return `${Math.floor(days / 7)}w ago`
 }
 
 export default async function EmployerDashboard() {
@@ -298,12 +274,12 @@ export default async function EmployerDashboard() {
               {statusCounts.map(({ status, count }) => (
                 <div key={status}>
                   <div className="flex justify-between text-sm mb-1.5">
-                    <span className="text-slate-700 dark:text-slate-300">{STATUS_LABEL[status]}</span>
+                    <span className="text-slate-700 dark:text-slate-300">{APPLICATION_STATUS_LABEL[status]}</span>
                     <span className="text-slate-600 dark:text-slate-400 font-medium">{count}</span>
                   </div>
                   <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                     <div
-                      className={`h-full ${STATUS_COLOR[status]} rounded-full`}
+                      className={`h-full ${APPLICATION_STATUS_BAR_COLOR[status]} rounded-full`}
                       style={{ width: `${(count / maxStatusCount) * 100}%` }}
                     />
                   </div>

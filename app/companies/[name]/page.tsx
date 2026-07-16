@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { unstable_cache } from 'next/cache'
 import { notFound } from 'next/navigation'
 import { createPublicClient } from '@/lib/supabase/public'
@@ -7,6 +8,7 @@ import { parseSkillSet, calculateMatchPercent } from '@/lib/jobMatching'
 import { JOB_SELECT_FIELDS, normalizeJobCompany } from '@/lib/jobsQuery'
 import { candidateHasApplicationAt, type OwnReview, type PublicReview } from '@/lib/reviews'
 import { getCompanyProfileSummary, type CompanyProfileSummary } from '@/lib/companyProfileSummary'
+import { absoluteUrl } from '@/lib/seo'
 import CompanyClient from './CompanyClient'
 
 // Cached per company name — no candidate-specific data (that's computed
@@ -41,6 +43,30 @@ const getCompanyData = unstable_cache(
   ['company-page'],
   { revalidate: 60, tags: ['jobs'] }
 )
+
+// Reuses the same cached fetcher the page itself calls (unstable_cache means
+// this is a cache hit, not a second real query) so the metadata never
+// disagrees with what the page actually renders.
+export async function generateMetadata({ params }: { params: { name: string } }): Promise<Metadata> {
+  const name = decodeURIComponent(params.name)
+  const { company, jobs } = await getCompanyData(name)
+  if (jobs.length === 0 && !company) return {}
+
+  const displayName = company?.name ?? jobs[0]?.company_name ?? name
+  const title = `${displayName} — Remote Jobs & Reviews | JobConnect AI`
+  const description = jobs.length > 0
+    ? `${jobs.length} open remote position${jobs.length === 1 ? '' : 's'} at ${displayName}. See real salaries, job details, and candidate reviews.`
+    : `Company profile and candidate reviews for ${displayName} on JobConnect AI.`
+  const url = absoluteUrl(`/companies/${encodeURIComponent(displayName)}`)
+
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { title, description, url, type: 'website' },
+    twitter: { card: 'summary', title, description },
+  }
+}
 
 export default async function CompanyPage({ params }: { params: { name: string } }) {
   const name = decodeURIComponent(params.name)
