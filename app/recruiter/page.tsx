@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import ApplicationStatusControl from '@/components/recruiter/ApplicationStatusControl'
+import PostJobModal from '@/components/recruiter/PostJobModal'
 import { companyInitials } from '@/lib/companyDisplay'
 import { APPLICATION_STATUSES, APPLICATION_STATUS_LABEL, APPLICATION_STATUS_BAR_COLOR, type ApplicationStatus } from '@/lib/applicationStatus'
 import { timeAgo } from '@/lib/timeAgo'
@@ -125,7 +126,7 @@ export default async function EmployerDashboard() {
         </div>
         <div className="flex gap-3">
           <Link href="/jobs" className="btn-outline text-sm">View All Jobs</Link>
-          <button className="btn-primary text-sm">+ Post a Job</button>
+          <PostJobModal companyName={companyName} triggerClassName="btn-primary text-sm" triggerLabel="+ Post a Job" />
         </div>
       </div>
 
@@ -227,7 +228,7 @@ export default async function EmployerDashboard() {
         <div className="xl:col-span-2 card">
           <div className="flex items-center justify-between mb-5">
             <h2 className="font-semibold text-slate-900 dark:text-white">Your Job Postings</h2>
-            <button className="text-xs text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">+ Post new job</button>
+            <PostJobModal companyName={companyName} triggerClassName="text-xs text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300" triggerLabel="+ Post new job" />
           </div>
           {jobs.length === 0 ? (
             <div className="text-center py-10 text-slate-600 dark:text-slate-400">
