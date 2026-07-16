@@ -22,7 +22,7 @@ function RoadmapColumn({ title, items }: { title: string; items: string[] }) {
   if (items.length === 0) return null
   return (
     <div>
-      <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-500 mb-2">{title}</h4>
+      <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-2">{title}</h4>
       <ul className="space-y-1.5 text-sm text-slate-700 dark:text-slate-300 list-disc list-inside">
         {items.map((item, i) => <li key={i}>{item}</li>)}
       </ul>
@@ -31,7 +31,7 @@ function RoadmapColumn({ title, items }: { title: string; items: string[] }) {
 }
 
 function BulletList({ items }: { items: string[] }) {
-  if (items.length === 0) return <p className="text-slate-500 dark:text-slate-500">Nothing to show.</p>
+  if (items.length === 0) return <p className="text-slate-600 dark:text-slate-400">Nothing to show.</p>
   return (
     <ul className="space-y-1.5 list-disc list-inside">
       {items.map((item, i) => <li key={i}>{item}</li>)}
@@ -152,9 +152,9 @@ export default function CareerCoachClient({
 
           <div className="grid sm:grid-cols-2 gap-6">
             <InsightCard icon={ListChecks} title="Missing Skills" delay={0.1}>
-              <p className="text-xs text-slate-500 dark:text-slate-500 mb-3">Based on your profile</p>
+              <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">Based on your profile</p>
               {analysis.missingSkills.length === 0 ? (
-                <p className="text-slate-500 dark:text-slate-500">Nothing significant flagged.</p>
+                <p className="text-slate-600 dark:text-slate-400">Nothing significant flagged.</p>
               ) : (
                 <div className="flex flex-wrap gap-1.5">
                   {analysis.missingSkills.map((s) => <SkillTag key={s} label={s} />)}
@@ -162,9 +162,9 @@ export default function CareerCoachClient({
               )}
             </InsightCard>
             <InsightCard icon={KeyRound} title="Missing Keywords" delay={0.15}>
-              <p className="text-xs text-slate-500 dark:text-slate-500 mb-3">For resume/ATS optimization</p>
+              <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">For resume/ATS optimization</p>
               {analysis.missingKeywords.length === 0 ? (
-                <p className="text-slate-500 dark:text-slate-500">Nothing significant flagged.</p>
+                <p className="text-slate-600 dark:text-slate-400">Nothing significant flagged.</p>
               ) : (
                 <div className="flex flex-wrap gap-1.5">
                   {analysis.missingKeywords.map((s) => <SkillTag key={s} label={s} />)}
@@ -192,7 +192,7 @@ export default function CareerCoachClient({
 
           <InsightCard icon={GraduationCap} title="Recommended Certifications" delay={0.35}>
             {analysis.recommendedCertifications.length === 0 ? (
-              <p className="text-slate-500 dark:text-slate-500">Nothing significant flagged.</p>
+              <p className="text-slate-600 dark:text-slate-400">Nothing significant flagged.</p>
             ) : (
               <ul className="space-y-2">
                 {analysis.recommendedCertifications.map((c) => (
@@ -226,9 +226,9 @@ export default function CareerCoachClient({
         <Card>
           <CardContent className="p-6">
             <h2 className="font-semibold text-slate-900 dark:text-white mb-1">Recommended Jobs</h2>
-            <p className="text-xs text-slate-500 dark:text-slate-500 mb-4">Real open roles matching your skills</p>
+            <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">Real open roles matching your skills</p>
             {matchedJobs.length === 0 ? (
-              <p className="text-sm text-slate-600 dark:text-slate-500 text-center py-6">
+              <p className="text-sm text-slate-600 dark:text-slate-400 text-center py-6">
                 No matching roles yet — check back soon.
               </p>
             ) : (

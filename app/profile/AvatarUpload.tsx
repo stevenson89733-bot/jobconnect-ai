@@ -107,7 +107,7 @@ export default function AvatarUpload({
             disabled={uploading}
           />
         </label>
-        <p className="text-xs text-slate-500 dark:text-slate-500 mt-1.5">JPG, PNG or WEBP. Max 5MB.</p>
+        <p className="text-xs text-slate-600 dark:text-slate-400 mt-1.5">JPG, PNG or WEBP. Max 5MB.</p>
         {error && <p className="text-xs text-red-600 dark:text-red-400 mt-1">{error}</p>}
       </div>
     </div>

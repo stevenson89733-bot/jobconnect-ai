@@ -39,7 +39,7 @@ export default function LanguagesSection({ initial }: { initial: Language[] }) {
       }}
       renderView={() =>
         saved.length === 0 ? (
-          <p className="text-sm text-slate-500 dark:text-slate-500">No languages added yet.</p>
+          <p className="text-sm text-slate-600 dark:text-slate-400">No languages added yet.</p>
         ) : (
           <div className="flex flex-wrap gap-2">
             {saved.map((l) => (

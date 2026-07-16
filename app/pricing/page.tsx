@@ -86,7 +86,7 @@ export default function PricingPage() {
           <div className="mb-6">
             <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Free</div>
             <div className="text-4xl font-extrabold text-slate-900 dark:text-white">$0</div>
-            <div className="text-slate-600 dark:text-slate-500 text-sm mt-1">Forever free</div>
+            <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">Forever free</div>
           </div>
           <ul className="space-y-3 mb-8 flex-1">
             {FEATURES_FREE.map(f => (
@@ -111,7 +111,7 @@ export default function PricingPage() {
               <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$19</span>
               <span className="text-slate-600 dark:text-slate-400 mb-1">/mo</span>
             </div>
-            <div className="text-slate-600 dark:text-slate-500 text-sm mt-1">Cancel anytime</div>
+            <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">Cancel anytime</div>
           </div>
           <ul className="space-y-3 mb-8 flex-1">
             {FEATURES_PREMIUM.map(f => (
@@ -138,7 +138,7 @@ export default function PricingPage() {
               </span>
             ) : 'Upgrade to Premium — $19/mo'}
           </button>
-          <p className="text-xs text-slate-600 dark:text-slate-600 text-center mt-3">
+          <p className="text-xs text-slate-600 dark:text-slate-400 text-center mt-3">
             Secure payment via Stripe · Test mode active
           </p>
         </div>

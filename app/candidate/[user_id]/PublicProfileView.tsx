@@ -7,7 +7,7 @@ function Section({ title, value }: { title: string; value: string | number | nul
   if (!text) return null
   return (
     <div>
-      <h2 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">{title}</h2>
+      <h2 className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-2">{title}</h2>
       <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">{text}</p>
     </div>
   )
@@ -34,7 +34,7 @@ export default function PublicProfileView({ profile }: { profile: Profile }) {
   return (
     <div className="max-w-3xl mx-auto px-6 py-10">
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-500 mb-6">
+      <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-6">
         <Link href="/recruiter" className="hover:text-slate-900 dark:hover:text-white transition-colors">Employer Dashboard</Link>
         <span>/</span>
         <span className="text-slate-700 dark:text-slate-300">Candidate Profile</span>
@@ -55,7 +55,7 @@ export default function PublicProfileView({ profile }: { profile: Profile }) {
             <h1 className="text-2xl font-bold text-slate-900 dark:text-white truncate">{name}</h1>
             {title && <p className="text-slate-600 dark:text-slate-400">{title}</p>}
             {location && (
-              <p className="flex items-center gap-1 text-sm text-slate-500 dark:text-slate-500 mt-0.5">
+              <p className="flex items-center gap-1 text-sm text-slate-600 dark:text-slate-400 mt-0.5">
                 <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -94,7 +94,7 @@ export default function PublicProfileView({ profile }: { profile: Profile }) {
 
           {hasLinks && (
             <div>
-              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">Links</h2>
+              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-2">Links</h2>
               <div className="flex flex-wrap gap-3">
                 {linkedinUrl && (
                   <a href={linkedinUrl} target="_blank" rel="noopener noreferrer"

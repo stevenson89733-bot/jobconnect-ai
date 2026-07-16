@@ -110,7 +110,7 @@ export default function TermsOfService() {
         </Section>
 
         <Section title="Governing law">
-          <p className="italic text-slate-500 dark:text-slate-500">
+          <p className="italic text-slate-600 dark:text-slate-400">
             [Governing law and jurisdiction to be specified by JobConnect AI.]
           </p>
         </Section>

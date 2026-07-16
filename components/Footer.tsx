@@ -8,34 +8,34 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 font-bold text-lg mb-3">
               <span className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center text-white text-xs font-black">J</span>
-              <span className="text-slate-900 dark:text-white">JobConnect <span className="text-primary">AI</span></span>
+              <span className="text-slate-900 dark:text-white">JobConnect <span className="text-primary dark:text-blue-400">AI</span></span>
             </Link>
-            <p className="text-slate-600 dark:text-slate-500 text-sm leading-relaxed">AI-powered remote job platform connecting top candidates with leading companies worldwide.</p>
+            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">AI-powered remote job platform connecting top candidates with leading companies worldwide.</p>
           </div>
           <div>
-            <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Product</h4>
-            <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-500">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Product</h3>
+            <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
               <li><Link href="/jobs" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">Browse Jobs</Link></li>
               <li><Link href="/companies" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">Companies</Link></li>
               <li><Link href="/pricing" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">Pricing</Link></li>
             </ul>
           </div>
           <div>
-            <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">For Employers</h4>
-            <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-500">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">For Employers</h3>
+            <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
               <li><Link href="/register?role=employer" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">Post a Job</Link></li>
               <li><Link href="/recruiter" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">Employer Dashboard</Link></li>
             </ul>
           </div>
           <div>
-            <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Company</h4>
-            <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-500">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Company</h3>
+            <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
               <li><Link href="/about" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">About</Link></li>
               <li><Link href="/contact" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">Contact</Link></li>
             </ul>
           </div>
         </div>
-        <div className="border-t border-slate-200 dark:border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-600">
+        <div className="border-t border-slate-200 dark:border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600 dark:text-slate-400">
           <p>&copy; {new Date().getFullYear()} JobConnect AI. All rights reserved.</p>
           <div className="flex gap-4">
             <Link href="/privacy" className="hover:text-slate-700 dark:hover:text-slate-400">Privacy</Link>

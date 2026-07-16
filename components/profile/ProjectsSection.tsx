@@ -38,14 +38,14 @@ export default function ProjectsSection({ initial }: { initial: Project[] }) {
       }}
       renderView={() =>
         saved.length === 0 ? (
-          <p className="text-sm text-slate-500 dark:text-slate-500">No projects added yet.</p>
+          <p className="text-sm text-slate-600 dark:text-slate-400">No projects added yet.</p>
         ) : (
           <div className="space-y-4">
             {saved.map((p) => (
               <div key={p.id}>
                 <div className="flex items-center gap-2 flex-wrap">
                   <h3 className="font-medium text-slate-900 dark:text-white text-sm">{p.title}</h3>
-                  {p.dates && <span className="text-xs text-slate-500 dark:text-slate-500">· {p.dates}</span>}
+                  {p.dates && <span className="text-xs text-slate-600 dark:text-slate-400">· {p.dates}</span>}
                   {p.link && (
                     <a href={p.link} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
                       <ExternalLink className="w-3.5 h-3.5" />

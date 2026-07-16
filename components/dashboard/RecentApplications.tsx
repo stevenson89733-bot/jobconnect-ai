@@ -45,7 +45,7 @@ export default function RecentApplications({ applications }: { applications: App
         </CardHeader>
         <CardContent>
           {applications.length === 0 ? (
-            <div className="text-center py-10 text-slate-600 dark:text-slate-500">
+            <div className="text-center py-10 text-slate-600 dark:text-slate-400">
               <Inbox className="w-8 h-8 mx-auto mb-3 opacity-60" strokeWidth={1.5} />
               <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">You haven&apos;t applied to any jobs yet.</p>
               <Link href="/jobs" className="text-xs text-primary hover:text-blue-500 dark:hover:text-blue-400">
@@ -56,7 +56,7 @@ export default function RecentApplications({ applications }: { applications: App
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="text-xs text-slate-600 dark:text-slate-500 border-b border-slate-200 dark:border-slate-700">
+                  <tr className="text-xs text-slate-600 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
                     <th className="text-left pb-3 font-medium">Company</th>
                     <th className="text-left pb-3 font-medium">Role</th>
                     <th className="text-left pb-3 font-medium">Status</th>
@@ -71,12 +71,12 @@ export default function RecentApplications({ applications }: { applications: App
                       <td className="py-3">
                         <Badge variant={STATUS_VARIANT[app.status] ?? 'default'}>{app.status}</Badge>
                         {app.status !== 'submitted' && app.status_updated_at && (
-                          <div className="text-[11px] text-slate-500 dark:text-slate-500 mt-1">
+                          <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">
                             {timeAgo(app.status_updated_at)}
                           </div>
                         )}
                       </td>
-                      <td className="py-3 text-slate-600 dark:text-slate-500">{formatDate(app.created_at)}</td>
+                      <td className="py-3 text-slate-600 dark:text-slate-400">{formatDate(app.created_at)}</td>
                     </tr>
                   ))}
                 </tbody>

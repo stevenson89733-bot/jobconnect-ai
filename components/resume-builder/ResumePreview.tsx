@@ -51,7 +51,7 @@ function ClassicTemplate({ content }: { content: ResumeContent }) {
       <div>
         <div className="text-slate-900 dark:text-white font-bold text-base">{content.name}</div>
         {content.title && <div className="text-primary text-xs">{content.title}</div>}
-        {content.contact && <div className="text-slate-600 dark:text-slate-500 text-xs">{content.contact}</div>}
+        {content.contact && <div className="text-slate-600 dark:text-slate-400 text-xs">{content.contact}</div>}
       </div>
       {SECTIONS.map(({ key, label }) => (
         <Section
@@ -85,7 +85,7 @@ function ModernTemplate({ content }: { content: ResumeContent }) {
           {content.contact && (
             <div>
               <div className={sidebarLabel}>Contact</div>
-              <div className="text-slate-600 dark:text-slate-500 text-xs leading-relaxed break-words">
+              <div className="text-slate-600 dark:text-slate-400 text-xs leading-relaxed break-words">
                 {content.contact.split(' | ').map((line) => <div key={line}>{line}</div>)}
               </div>
             </div>

@@ -24,13 +24,13 @@ export default function WeeklyActivityChart({ weeks }: { weeks: WeekBucket[] }) 
               Weekly Activity
             </h2>
             {totalActivity > 0 && (
-              <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-500">
+              <div className="flex items-center gap-3 text-xs text-slate-600 dark:text-slate-400">
                 <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-primary" /> Applications</span>
                 <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-accent" /> Saved Jobs</span>
               </div>
             )}
           </div>
-          <p className="text-xs text-slate-500 dark:text-slate-500 mb-5">Last 8 weeks</p>
+          <p className="text-xs text-slate-600 dark:text-slate-400 mb-5">Last 8 weeks</p>
 
           {totalActivity === 0 ? (
             <div className="text-center py-10">
@@ -59,7 +59,7 @@ export default function WeeklyActivityChart({ weeks }: { weeks: WeekBucket[] }) 
                       title={`${w.savedJobs} saved job${w.savedJobs === 1 ? '' : 's'}`}
                     />
                   </div>
-                  <span className="text-[10px] text-slate-500 dark:text-slate-500 whitespace-nowrap">{w.weekLabel}</span>
+                  <span className="text-[10px] text-slate-600 dark:text-slate-400 whitespace-nowrap">{w.weekLabel}</span>
                 </div>
               ))}
             </div>

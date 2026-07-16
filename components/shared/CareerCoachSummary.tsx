@@ -56,16 +56,16 @@ export default function CareerCoachSummary({
           <>
             <div className="grid grid-cols-2 gap-4 mb-4 mt-3">
               <div>
-                <p className="text-2xl font-bold text-slate-900 dark:text-white">{atsScore}<span className="text-sm font-normal text-slate-500">/100</span></p>
-                <p className="text-xs text-slate-500 dark:text-slate-500">ATS Score</p>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white">{atsScore}<span className="text-sm font-normal text-slate-600">/100</span></p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">ATS Score</p>
               </div>
               <div>
-                <p className="text-2xl font-bold text-slate-900 dark:text-white">{profileStrength}<span className="text-sm font-normal text-slate-500">/100</span></p>
-                <p className="text-xs text-slate-500 dark:text-slate-500">Profile Strength</p>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white">{profileStrength}<span className="text-sm font-normal text-slate-600">/100</span></p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">Profile Strength</p>
               </div>
             </div>
             {!compact && generatedAt && (
-              <p className="text-xs text-slate-500 dark:text-slate-500 mb-3">
+              <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">
                 Last generated {new Date(generatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
               </p>
             )}

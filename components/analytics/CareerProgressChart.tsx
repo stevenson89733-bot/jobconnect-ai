@@ -35,13 +35,13 @@ export default function CareerProgressChart({ points }: { points: CareerProgress
               Career Progress
             </h2>
             {points.length > 0 && (
-              <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-500">
+              <div className="flex items-center gap-3 text-xs text-slate-600 dark:text-slate-400">
                 <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-primary" /> ATS Score</span>
                 <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-accent" /> Profile Strength</span>
               </div>
             )}
           </div>
-          <p className="text-xs text-slate-500 dark:text-slate-500 mb-5">From your real AI Career Coach runs</p>
+          <p className="text-xs text-slate-600 dark:text-slate-400 mb-5">From your real AI Career Coach runs</p>
 
           {points.length < 2 ? (
             <div className="text-center py-8">
@@ -81,7 +81,7 @@ export default function CareerProgressChart({ points }: { points: CareerProgress
                 <g key={i}>
                   <circle cx={xFor(i)} cy={yFor(p.atsScore)} r={3.5} className="fill-primary" />
                   <circle cx={xFor(i)} cy={yFor(p.profileStrength)} r={3.5} className="fill-accent" />
-                  <text x={xFor(i)} y={HEIGHT - 8} textAnchor="middle" className="fill-slate-500 dark:fill-slate-500" fontSize={10}>
+                  <text x={xFor(i)} y={HEIGHT - 8} textAnchor="middle" className="fill-slate-600 dark:fill-slate-400" fontSize={10}>
                     {formatDate(p.generatedAt)}
                   </text>
                 </g>

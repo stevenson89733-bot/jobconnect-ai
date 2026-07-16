@@ -21,7 +21,7 @@ export default function CompanySummarySection({
         <>
           <p className="text-sm text-slate-700 dark:text-slate-300 whitespace-pre-wrap mb-3">{summary.summary}</p>
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <p className="text-xs text-slate-500 dark:text-slate-500">✦ Sourced via web search</p>
+            <p className="text-xs text-slate-600 dark:text-slate-400">✦ Sourced via web search</p>
             {summary.sources.length > 0 && (
               <div className="flex flex-wrap gap-x-3 gap-y-1">
                 {summary.sources.map((s, i) => (
@@ -40,7 +40,7 @@ export default function CompanySummarySection({
           </div>
         </>
       ) : (
-        <p className="text-sm text-slate-600 dark:text-slate-500">
+        <p className="text-sm text-slate-600 dark:text-slate-400">
           No verified company information available for {name}.
         </p>
       )}

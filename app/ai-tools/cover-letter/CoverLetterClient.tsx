@@ -242,7 +242,7 @@ export default function CoverLetterClient({
     <div className="max-w-5xl mx-auto px-6 py-10">
       {/* Header */}
       <div className="mb-8">
-        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-500 mb-3">
+        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-3">
           <Link href="/candidate" className="hover:text-slate-900 dark:hover:text-white transition-colors">Dashboard</Link>
           <span>/</span>
           <span className="text-slate-700 dark:text-slate-300">AI Cover Letter Generator</span>
@@ -340,7 +340,7 @@ export default function CoverLetterClient({
             </div>
 
             <div>
-              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Job Description <span className="text-slate-400 dark:text-slate-500">(optional, recommended)</span></label>
+              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Job Description <span className="text-slate-400 dark:text-slate-400">(optional, recommended)</span></label>
               <textarea
                 value={jobDescription} onChange={e => setJobDescription(e.target.value)}
                 rows={6} placeholder="Paste the job listing text here — the letter will reference real requirements mentioned in it, never invented ones."
@@ -380,7 +380,7 @@ export default function CoverLetterClient({
           {/* Results panel */}
           <div className="space-y-5">
             {!result && !loading && (
-              <div className="card flex flex-col items-center justify-center py-16 text-center text-slate-600 dark:text-slate-500">
+              <div className="card flex flex-col items-center justify-center py-16 text-center text-slate-600 dark:text-slate-400">
                 <div className="text-4xl mb-3">✉️</div>
                 <p className="text-sm">Fill in the job details and click Generate to get your personalized cover letter.</p>
               </div>
@@ -516,8 +516,8 @@ export default function CoverLetterClient({
                 <div className="card">
                   <h2 className="font-semibold text-slate-900 dark:text-white mb-4">Generated Cover Letter</h2>
                   <div className="bg-slate-50 dark:bg-slate-900 rounded-xl p-5 text-sm space-y-4">
-                    <p className="text-slate-600 dark:text-slate-500 text-xs">{result.letter.subject}</p>
-                    <p className="text-slate-600 dark:text-slate-500 text-xs">{dateLine}</p>
+                    <p className="text-slate-600 dark:text-slate-400 text-xs">{result.letter.subject}</p>
+                    <p className="text-slate-600 dark:text-slate-400 text-xs">{dateLine}</p>
                     <div className="border-t border-slate-200 dark:border-slate-800 pt-4 space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed">
                       <Markdown text={result.letter.greeting} />
                       <div className="space-y-4 text-justify">

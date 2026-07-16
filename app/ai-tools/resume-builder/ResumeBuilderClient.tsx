@@ -245,7 +245,7 @@ export default function ResumeBuilderClient({
     <div className="max-w-5xl mx-auto px-6 py-10">
       {/* Header */}
       <div className="mb-8">
-        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-500 mb-3">
+        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-3">
           <Link href="/candidate" className="hover:text-slate-900 dark:hover:text-white transition-colors">Dashboard</Link>
           <span>/</span>
           <span className="text-slate-700 dark:text-slate-300">AI Resume Builder</span>
@@ -386,7 +386,7 @@ export default function ResumeBuilderClient({
                 <h2 className="font-semibold text-slate-900 dark:text-white">{result ? 'Generated Resume' : 'Live Preview'}</h2>
                 <TemplateSelector value={template} onChange={setTemplate} />
               </div>
-              <p className="text-xs text-slate-500 dark:text-slate-500 mb-4">
+              <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">
                 {result
                   ? 'AI-polished with GPT-4o. Switching templates never changes this content.'
                   : 'Updates instantly as you type — click Generate for an AI-polished, ATS-optimized version.'}
@@ -462,7 +462,7 @@ export default function ResumeBuilderClient({
                       {analysisLoading ? 'Analyzing…' : analysis ? 'Re-analyze' : 'Analyze Resume'}
                     </Button>
                   </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-500 mb-4">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">
                     Score, keywords, grammar, achievements, and rewrite suggestions for this exact resume.
                   </p>
                   {isAnalysisStale && (
@@ -503,7 +503,7 @@ export default function ResumeBuilderClient({
 
                       <InsightCard icon={KeyRound} title="Keyword Optimization">
                         {analysis.keywordOptimization.length === 0 ? (
-                          <p className="text-slate-500 dark:text-slate-500">No significant gaps found.</p>
+                          <p className="text-slate-600 dark:text-slate-400">No significant gaps found.</p>
                         ) : (
                           <div className="flex flex-wrap gap-1.5">
                             {analysis.keywordOptimization.map((k) => <SkillTag key={k} label={k} />)}
@@ -513,7 +513,7 @@ export default function ResumeBuilderClient({
 
                       <InsightCard icon={SpellCheck2} title="Grammar Suggestions">
                         {analysis.grammarSuggestions.length === 0 ? (
-                          <p className="text-slate-500 dark:text-slate-500">No issues found.</p>
+                          <p className="text-slate-600 dark:text-slate-400">No issues found.</p>
                         ) : (
                           <ul className="space-y-1.5 list-disc list-inside">
                             {analysis.grammarSuggestions.map((s, i) => <li key={i}>{s}</li>)}
@@ -523,7 +523,7 @@ export default function ResumeBuilderClient({
 
                       <InsightCard icon={TrendingUp} title="Achievement Suggestions">
                         {analysis.achievementSuggestions.length === 0 ? (
-                          <p className="text-slate-500 dark:text-slate-500">Nothing significant flagged.</p>
+                          <p className="text-slate-600 dark:text-slate-400">Nothing significant flagged.</p>
                         ) : (
                           <ul className="space-y-1.5 list-disc list-inside">
                             {analysis.achievementSuggestions.map((s, i) => <li key={i}>{s}</li>)}
@@ -533,7 +533,7 @@ export default function ResumeBuilderClient({
 
                       {analysis.aiRewrite.length > 0 && (
                         <InsightCard icon={Wand2} title="AI Rewrite Suggestions">
-                          <p className="text-xs text-slate-500 dark:text-slate-500 mb-3">
+                          <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">
                             Review each suggestion — accepting updates the resume above, rejecting leaves it unchanged.
                           </p>
                           <div className="space-y-3">

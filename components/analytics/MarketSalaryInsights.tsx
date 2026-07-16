@@ -22,7 +22,7 @@ export default function MarketSalaryInsights({ benchmark }: { benchmark: SalaryB
             <LineChart className="w-4 h-4 text-primary" strokeWidth={1.75} />
             <h2 className="font-semibold text-slate-900 dark:text-white">Market Salary Insights</h2>
           </div>
-          <p className="text-xs text-slate-500 dark:text-slate-500 mb-5">
+          <p className="text-xs text-slate-600 dark:text-slate-400 mb-5">
             Real salary data from current job postings matching your target role — not your personal salary history.
           </p>
 
@@ -36,7 +36,7 @@ export default function MarketSalaryInsights({ benchmark }: { benchmark: SalaryB
           )}
 
           {benchmark.status === 'insufficient_data' && (
-            <p className="text-sm text-slate-600 dark:text-slate-500 text-center py-6">
+            <p className="text-sm text-slate-600 dark:text-slate-400 text-center py-6">
               Not enough market data for &ldquo;{benchmark.targetRole}&rdquo; yet
               {benchmark.sampleSize > 0 ? ` (only ${benchmark.sampleSize} matching posting${benchmark.sampleSize === 1 ? '' : 's'} found — need at least 3)` : ''}.
             </p>
@@ -47,14 +47,14 @@ export default function MarketSalaryInsights({ benchmark }: { benchmark: SalaryB
               <div className="grid grid-cols-2 gap-6 mb-2">
                 <div>
                   <p className="text-2xl font-bold text-slate-900 dark:text-white">{formatUsd(benchmark.averageSalary)}</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-500">Average posted salary</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">Average posted salary</p>
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-slate-900 dark:text-white">{formatUsd(benchmark.rangeMin)}–{formatUsd(benchmark.rangeMax)}</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-500">Real posted range</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">Real posted range</p>
                 </div>
               </div>
-              <p className="text-xs text-slate-500 dark:text-slate-500">
+              <p className="text-xs text-slate-600 dark:text-slate-400">
                 Based on {benchmark.sampleSize} real posting{benchmark.sampleSize === 1 ? '' : 's'} for &ldquo;{benchmark.targetRole}&rdquo;.
               </p>
             </>

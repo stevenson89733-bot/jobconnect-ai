@@ -38,7 +38,7 @@ export default function CertificatesSection({ initial }: { initial: Certificate[
       }}
       renderView={() =>
         saved.length === 0 ? (
-          <p className="text-sm text-slate-500 dark:text-slate-500">No certificates added yet.</p>
+          <p className="text-sm text-slate-600 dark:text-slate-400">No certificates added yet.</p>
         ) : (
           <div className="space-y-3">
             {saved.map((c) => (
@@ -53,7 +53,7 @@ export default function CertificatesSection({ initial }: { initial: Certificate[
                       </a>
                     )}
                   </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-500">
+                  <p className="text-xs text-slate-600 dark:text-slate-400">
                     {[c.issuer, c.date].filter(Boolean).join(' · ')}
                   </p>
                 </div>

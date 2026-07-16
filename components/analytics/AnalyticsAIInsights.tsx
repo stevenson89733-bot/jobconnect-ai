@@ -6,7 +6,7 @@ import FadeIn from '@/components/dashboard/FadeIn'
 import type { CareerAnalysis } from '@/lib/ai/careerCoach'
 
 function BulletList({ items }: { items: string[] }) {
-  if (items.length === 0) return <p className="text-slate-500 dark:text-slate-500">Nothing to show.</p>
+  if (items.length === 0) return <p className="text-slate-600 dark:text-slate-400">Nothing to show.</p>
   return (
     <ul className="space-y-1.5 list-disc list-inside">
       {items.map((item, i) => <li key={i}>{item}</li>)}
@@ -43,9 +43,9 @@ export default function AnalyticsAIInsights({
       {analysis && (
         <div className="grid sm:grid-cols-2 gap-6">
           <InsightCard icon={ListChecks} title="Missing Skills" delay={0.05}>
-            <p className="text-xs text-slate-500 dark:text-slate-500 mb-3">Based on your profile</p>
+            <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">Based on your profile</p>
             {analysis.missingSkills.length === 0 ? (
-              <p className="text-slate-500 dark:text-slate-500">Nothing significant flagged.</p>
+              <p className="text-slate-600 dark:text-slate-400">Nothing significant flagged.</p>
             ) : (
               <div className="flex flex-wrap gap-1.5">
                 {analysis.missingSkills.map((s) => <SkillTag key={s} label={s} />)}

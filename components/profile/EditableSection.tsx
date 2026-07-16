@@ -57,7 +57,7 @@ export default function EditableSection({
         <div className="flex items-start justify-between gap-4 mb-3">
           <div>
             <h2 className="font-semibold text-slate-900 dark:text-white">{title}</h2>
-            {description && <p className="text-xs text-slate-500 dark:text-slate-500 mt-0.5">{description}</p>}
+            {description && <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">{description}</p>}
           </div>
           {!editing && (
             <Button variant="ghost" size="sm" onClick={onEdit} aria-label={`Edit ${title}`}>

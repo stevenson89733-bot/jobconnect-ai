@@ -30,7 +30,7 @@ export default function AIAssistantCard() {
                 ATS-optimized resume with a real-time score.
               </p>
             </div>
-            <ArrowRight className="w-4 h-4 text-slate-400 dark:text-slate-500 shrink-0 ml-auto mt-0.5 group-hover:translate-x-0.5 transition-transform" />
+            <ArrowRight className="w-4 h-4 text-slate-400 dark:text-slate-400 shrink-0 ml-auto mt-0.5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
           <Link
             href="/ai-tools/cover-letter"
@@ -45,7 +45,7 @@ export default function AIAssistantCard() {
                 A personalized letter for any role in seconds.
               </p>
             </div>
-            <ArrowRight className="w-4 h-4 text-slate-400 dark:text-slate-500 shrink-0 ml-auto mt-0.5 group-hover:translate-x-0.5 transition-transform" />
+            <ArrowRight className="w-4 h-4 text-slate-400 dark:text-slate-400 shrink-0 ml-auto mt-0.5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </CardContent>
       </Card>

@@ -88,7 +88,7 @@ export default function ApplyModal({
               </div>
               <button
                 onClick={() => setOpen(false)}
-                className="text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors text-xl leading-none ml-4"
+                className="text-slate-400 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors text-xl leading-none ml-4"
               >
                 ✕
               </button>
@@ -97,7 +97,7 @@ export default function ApplyModal({
             <form onSubmit={handleApply} className="p-6 space-y-4">
               <div>
                 <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">
-                  Message to the hiring team <span className="text-slate-500 dark:text-slate-600">(optional)</span>
+                  Message to the hiring team <span className="text-slate-600 dark:text-slate-400">(optional)</span>
                 </label>
                 <textarea
                   value={message}

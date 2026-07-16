@@ -70,6 +70,7 @@ export default function ApplicationStatusControl({
           value={status}
           disabled={saving}
           onChange={(e) => handleChange(e.target.value as ApplicationStatus)}
+          aria-label="Update application status"
           className="text-xs bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-md px-1.5 py-1 text-slate-700 dark:text-slate-300 focus:outline-none focus:border-primary disabled:opacity-50"
         >
           {APPLICATION_STATUSES.map((s) => (
@@ -78,7 +79,7 @@ export default function ApplicationStatusControl({
         </select>
       </div>
       {statusUpdatedAt && status !== 'submitted' && (
-        <span className="text-[11px] text-slate-500 dark:text-slate-500">
+        <span className="text-[11px] text-slate-600 dark:text-slate-400">
           {STATUS_LABEL[status]} {timeAgo(statusUpdatedAt)}
         </span>
       )}

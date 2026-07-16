@@ -17,7 +17,7 @@ export default function ProfileCompletionCard({ completion }: { completion: numb
               <span className="text-sm font-semibold text-primary tabular-nums">{completion}%</span>
             </div>
             <Progress value={completion} />
-            <p className="text-xs text-slate-600 dark:text-slate-500 mt-2">
+            <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">
               Complete your profile to get noticed by more recruiters.
             </p>
           </div>

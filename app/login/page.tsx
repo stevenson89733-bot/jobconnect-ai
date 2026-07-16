@@ -22,7 +22,7 @@ function LoginForm({ error }: { error?: string }) {
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 font-bold text-xl mb-6">
             <span className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-white text-sm font-black">J</span>
-            <span className="text-slate-900 dark:text-white">JobConnect <span className="text-primary">AI</span></span>
+            <span className="text-slate-900 dark:text-white">JobConnect <span className="text-primary dark:text-blue-400">AI</span></span>
           </Link>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white mt-4">Welcome back</h1>
           <p className="text-slate-600 dark:text-slate-400 mt-1 text-sm">Sign in to your account</p>
@@ -67,7 +67,7 @@ function LoginForm({ error }: { error?: string }) {
             </button>
           </form>
 
-          <p className="mt-5 text-center text-sm text-slate-600 dark:text-slate-500">
+          <p className="mt-5 text-center text-sm text-slate-600 dark:text-slate-400">
             Don&apos;t have an account?{' '}
             <Link href="/register" className="text-primary hover:text-blue-500 dark:hover:text-blue-400 font-medium">Create one</Link>
           </p>

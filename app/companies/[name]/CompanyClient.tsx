@@ -37,7 +37,7 @@ export default function CompanyClient({
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-10">
-      <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-500 mb-6">
+      <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-6">
         <Link href="/jobs" className="hover:text-slate-900 dark:hover:text-white transition-colors">Jobs</Link>
         <span>/</span>
         <span className="text-slate-700 dark:text-slate-300">{name}</span>
@@ -84,7 +84,7 @@ export default function CompanyClient({
           <p className="text-2xl font-bold text-orange-700 dark:text-accent mb-1">
             ${Math.round(salaryInsights.min / 1000)}k – ${Math.round(salaryInsights.max / 1000)}k
           </p>
-          <p className="text-xs text-slate-500 dark:text-slate-500">
+          <p className="text-xs text-slate-600 dark:text-slate-400">
             Based on {salaryInsights.count} open position{salaryInsights.count === 1 ? '' : 's'} at {name} — not a market-wide estimate.
           </p>
         </div>
@@ -97,7 +97,7 @@ export default function CompanyClient({
         </h2>
 
         {jobs.length === 0 ? (
-          <div className="card text-center py-12 text-slate-600 dark:text-slate-500">
+          <div className="card text-center py-12 text-slate-600 dark:text-slate-400">
             <div className="text-3xl mb-2">📭</div>
             <p className="text-sm">No open positions at {name} right now.</p>
           </div>

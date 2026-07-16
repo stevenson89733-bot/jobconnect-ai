@@ -63,10 +63,10 @@ export default function Home() {
       {/* Trusted by */}
       <section className="border-y border-slate-200 dark:border-slate-800 py-8">
         <div className="max-w-7xl mx-auto px-6">
-          <p className="text-center text-sm text-slate-600 dark:text-slate-500 mb-6 uppercase tracking-widest">Trusted by teams at</p>
+          <p className="text-center text-sm text-slate-600 dark:text-slate-400 mb-6 uppercase tracking-widest">Trusted by teams at</p>
           <div className="flex flex-wrap items-center justify-center gap-8 md:gap-14">
             {TRUSTED_COMPANIES.map((c) => (
-              <div key={c.name} className="flex items-center gap-2 text-slate-600 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-300 transition-colors">
+              <div key={c.name} className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-300 transition-colors">
                 <span className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-sm font-bold">{c.logo}</span>
                 <span className="font-semibold text-sm">{c.name}</span>
               </div>
@@ -111,7 +111,7 @@ export default function Home() {
               </div>
               <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-primary transition-colors mb-1">{job.title}</h3>
               <p className="text-sm text-slate-600 dark:text-slate-400 mb-1">{job.company}</p>
-              <p className="text-xs text-slate-600 dark:text-slate-500 mb-4">{job.location}</p>
+              <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">{job.location}</p>
               <div className="flex flex-wrap gap-1.5 mb-4">
                 {job.tags.map((tag) => (
                   <span key={tag} className="badge bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-400">{tag}</span>

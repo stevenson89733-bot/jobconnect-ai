@@ -9,7 +9,7 @@ export default function AnalyticsRateCards({ rates }: { rates: ApplicationRates 
   if (rates.total === 0) {
     return (
       <FadeIn delay={0.05}>
-        <div className="card text-center py-10 text-slate-600 dark:text-slate-500">
+        <div className="card text-center py-10 text-slate-600 dark:text-slate-400">
           <div className="text-3xl mb-2">📊</div>
           <p className="text-sm">Apply to jobs to see your response, interview, and offer rates here.</p>
         </div>
@@ -26,7 +26,7 @@ export default function AnalyticsRateCards({ rates }: { rates: ApplicationRates 
       </div>
       {!rates.anyResponseYet && (
         <FadeIn delay={0.2}>
-          <p className="text-xs text-slate-500 dark:text-slate-500 text-center sm:text-left">
+          <p className="text-xs text-slate-600 dark:text-slate-400 text-center sm:text-left">
             Rates update as employers review your applications.
           </p>
         </FadeIn>

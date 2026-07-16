@@ -45,11 +45,11 @@ function ReviewRowCard({ review, onDecide }: { review: ReviewRow; onDecide: (id:
             {review.status}
           </span>
         </div>
-        <span className="text-xs text-slate-500 dark:text-slate-500">{timeAgo(review.created_at)}</span>
+        <span className="text-xs text-slate-600 dark:text-slate-400">{timeAgo(review.created_at)}</span>
       </div>
       <p className="text-sm text-amber-500 dark:text-amber-400 mb-2">{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}</p>
       {review.interview_difficulty != null && (
-        <p className="text-xs text-slate-500 dark:text-slate-500 mb-2">
+        <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">
           Interview difficulty: <span className="font-medium text-slate-700 dark:text-slate-300">{review.interview_difficulty}/5</span>
         </p>
       )}
@@ -94,7 +94,7 @@ export default function AdminReviewsClient({ reviews: initialReviews }: { review
           Pending ({pending.length})
         </h2>
         {pending.length === 0 ? (
-          <p className="text-sm text-slate-600 dark:text-slate-500">Nothing waiting on moderation.</p>
+          <p className="text-sm text-slate-600 dark:text-slate-400">Nothing waiting on moderation.</p>
         ) : (
           <div className="space-y-3">
             {pending.map((r) => (

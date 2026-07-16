@@ -12,7 +12,7 @@ export default function ProfileSnapshot({ title }: { title: string | null }) {
       <Card>
         <CardContent className="p-5 flex items-center justify-between gap-4 flex-wrap">
           <p className="text-sm text-slate-700 dark:text-slate-300">
-            {title?.trim() || <span className="text-slate-500 dark:text-slate-500">Add a professional title on your profile.</span>}
+            {title?.trim() || <span className="text-slate-600 dark:text-slate-400">Add a professional title on your profile.</span>}
           </p>
           <Link href="/profile" className="text-xs font-medium text-primary hover:text-blue-500 dark:hover:text-blue-400 shrink-0">
             View Profile →

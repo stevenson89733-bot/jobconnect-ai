@@ -42,7 +42,7 @@ export default function CoverLetterHistoryClient({
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-10">
-      <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-500 mb-3">
+      <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-3">
         <Link href="/candidate" className="hover:text-slate-900 dark:hover:text-white transition-colors">Dashboard</Link>
         <span>/</span>
         <Link href="/ai-tools/cover-letter" className="hover:text-slate-900 dark:hover:text-white transition-colors">AI Cover Letter Generator</Link>
@@ -58,7 +58,7 @@ export default function CoverLetterHistoryClient({
       {error && <p className="text-red-600 dark:text-red-400 text-sm mb-4">{error}</p>}
 
       {drafts.length === 0 && !error && (
-        <div className="card flex flex-col items-center justify-center py-16 text-center text-slate-600 dark:text-slate-500">
+        <div className="card flex flex-col items-center justify-center py-16 text-center text-slate-600 dark:text-slate-400">
           <div className="text-4xl mb-3">📄</div>
           <p className="text-sm mb-4">No saved letters yet.</p>
           <Link href="/ai-tools/cover-letter" className="btn-primary text-sm py-2 px-4">
@@ -85,7 +85,7 @@ export default function CoverLetterHistoryClient({
                       {draft.style}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-500 mb-2">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">
                     {new Date(draft.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                   </p>
                   {!isExpanded && (
@@ -103,7 +103,7 @@ export default function CoverLetterHistoryClient({
 
               {isExpanded && (
                 <div className="mt-4 bg-slate-50 dark:bg-slate-900 rounded-xl p-5 text-sm space-y-4">
-                  <p className="text-slate-600 dark:text-slate-500 text-xs">{draft.letter_content.subject}</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-xs">{draft.letter_content.subject}</p>
                   <div className="border-t border-slate-200 dark:border-slate-800 pt-4 space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed">
                     <Markdown text={draft.letter_content.greeting} />
                     <div className="space-y-4 text-justify">

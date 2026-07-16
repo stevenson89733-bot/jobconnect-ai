@@ -84,7 +84,7 @@ export default function ProfileEditor({
     <div className="max-w-3xl mx-auto px-6 py-10 space-y-6">
       {/* Header */}
       <div className="mb-2">
-        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-500 mb-3">
+        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-3">
           <Link href="/candidate" className="hover:text-slate-900 dark:hover:text-white transition-colors">Dashboard</Link>
           <span>/</span>
           <span className="text-slate-700 dark:text-slate-300">Profile</span>
@@ -110,7 +110,7 @@ export default function ProfileEditor({
             <div className="space-y-1">
               <h2 className="text-xl font-bold text-slate-900 dark:text-white">{basics.full_name || 'Add your name'}</h2>
               <p className="text-slate-600 dark:text-slate-400 text-sm">{basics.title || 'Add a professional title'}</p>
-              <p className="text-slate-500 dark:text-slate-500 text-xs">{email}</p>
+              <p className="text-slate-600 dark:text-slate-400 text-xs">{email}</p>
               <div className="flex flex-wrap gap-1.5 pt-1 text-xs text-slate-600 dark:text-slate-400">
                 {basics.location && <span className="badge bg-slate-100 dark:bg-slate-700/60">{basics.location}</span>}
                 {basics.years_experience && <span className="badge bg-slate-100 dark:bg-slate-700/60">{basics.years_experience} yrs experience</span>}
@@ -163,7 +163,7 @@ export default function ProfileEditor({
                 </select>
               </div>
               <div>
-                <label className={labelClass}>Phone <span className="text-slate-500 font-normal">— private</span></label>
+                <label className={labelClass}>Phone <span className="text-slate-600 font-normal">— private</span></label>
                 <input value={basicsDraft.phone} onChange={(e) => setBasicsDraft((d) => ({ ...d, phone: e.target.value }))} type="tel" className={inputClass} />
               </div>
             </div>
@@ -190,7 +190,7 @@ export default function ProfileEditor({
         }}
         renderView={() => (
           <p className="text-sm text-slate-700 dark:text-slate-300 whitespace-pre-wrap">
-            {bio || <span className="text-slate-500 dark:text-slate-500">Add a short summary about you and what you&rsquo;re looking for.</span>}
+            {bio || <span className="text-slate-600 dark:text-slate-400">Add a short summary about you and what you&rsquo;re looking for.</span>}
           </p>
         )}
         renderEdit={() => (
@@ -212,7 +212,7 @@ export default function ProfileEditor({
           experience.trim() ? (
             <Timeline text={experience} />
           ) : (
-            <p className="text-sm text-slate-500 dark:text-slate-500">Add your roles, companies, dates, and key achievements.</p>
+            <p className="text-sm text-slate-600 dark:text-slate-400">Add your roles, companies, dates, and key achievements.</p>
           )
         }
         renderEdit={() => (
@@ -234,7 +234,7 @@ export default function ProfileEditor({
           education.trim() ? (
             <Timeline text={education} />
           ) : (
-            <p className="text-sm text-slate-500 dark:text-slate-500">Add your degrees, schools, and dates.</p>
+            <p className="text-sm text-slate-600 dark:text-slate-400">Add your degrees, schools, and dates.</p>
           )
         }
         renderEdit={() => (
@@ -258,7 +258,7 @@ export default function ProfileEditor({
               {skillTags.map((s) => <span key={s} className="badge bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300">{s}</span>)}
             </div>
           ) : (
-            <p className="text-sm text-slate-500 dark:text-slate-500">Add your skills, comma-separated.</p>
+            <p className="text-sm text-slate-600 dark:text-slate-400">Add your skills, comma-separated.</p>
           )
         }
         renderEdit={() => (
@@ -286,7 +286,7 @@ export default function ProfileEditor({
             {links.github_url && <a href={links.github_url} target="_blank" rel="noopener noreferrer" className="block text-primary hover:underline break-all">{links.github_url}</a>}
             {links.portfolio_url && <a href={links.portfolio_url} target="_blank" rel="noopener noreferrer" className="block text-primary hover:underline break-all">{links.portfolio_url}</a>}
             {!links.linkedin_url && !links.github_url && !links.portfolio_url && (
-              <p className="text-slate-500 dark:text-slate-500">Add your LinkedIn, GitHub, or portfolio URL.</p>
+              <p className="text-slate-600 dark:text-slate-400">Add your LinkedIn, GitHub, or portfolio URL.</p>
             )}
           </div>
         )}
@@ -305,7 +305,7 @@ export default function ProfileEditor({
           <FileText className="w-5 h-5 text-primary shrink-0" strokeWidth={1.75} />
           <div>
             <h2 className="font-semibold text-slate-900 dark:text-white">Resume</h2>
-            <p className="text-xs text-slate-500 dark:text-slate-500">Generate and export your resume from this same profile data.</p>
+            <p className="text-xs text-slate-600 dark:text-slate-400">Generate and export your resume from this same profile data.</p>
           </div>
         </div>
         <Link href="/ai-tools/resume-builder"><Button variant="primary" size="sm">Open Resume Builder</Button></Link>

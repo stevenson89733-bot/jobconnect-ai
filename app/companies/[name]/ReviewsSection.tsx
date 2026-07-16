@@ -91,13 +91,13 @@ function WriteReviewForm({ companyName, onSubmitted }: { companyName: string; on
             <button
               type="button"
               onClick={() => setInterviewDifficulty(null)}
-              className="text-xs text-slate-500 dark:text-slate-500 hover:underline ml-1"
+              className="text-xs text-slate-600 dark:text-slate-400 hover:underline ml-1"
             >
               Clear
             </button>
           )}
         </div>
-        <p className="text-xs text-slate-500 dark:text-slate-500 mt-1">1 = very easy, 5 = very difficult.</p>
+        <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">1 = very easy, 5 = very difficult.</p>
       </div>
       <div>
         <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Your Review</label>
@@ -111,7 +111,7 @@ function WriteReviewForm({ companyName, onSubmitted }: { companyName: string; on
         />
       </div>
       {error && <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>}
-      <p className="text-xs text-slate-500 dark:text-slate-500">
+      <p className="text-xs text-slate-600 dark:text-slate-400">
         Your review is published anonymously as &ldquo;Verified Candidate&rdquo; — never with your name. It won&rsquo;t appear publicly until approved.
       </p>
       <button type="submit" disabled={submitting} className="btn-primary text-sm px-5 py-2 disabled:opacity-50">
@@ -167,7 +167,7 @@ export default function ReviewsSection({
       )}
 
       {reviews.length === 0 ? (
-        <div className="card text-center py-10 text-slate-600 dark:text-slate-500">
+        <div className="card text-center py-10 text-slate-600 dark:text-slate-400">
           <div className="text-3xl mb-2">💬</div>
           <p className="text-sm">No reviews yet for {companyName}.</p>
         </div>
@@ -177,13 +177,13 @@ export default function ReviewsSection({
             <div key={r.id} className="card">
               <div className="flex items-center justify-between mb-2">
                 <Stars rating={r.rating} />
-                <span className="text-xs text-slate-500 dark:text-slate-500">{timeAgo(r.created_at)}</span>
+                <span className="text-xs text-slate-600 dark:text-slate-400">{timeAgo(r.created_at)}</span>
               </div>
               <p className="text-sm text-slate-700 dark:text-slate-300 whitespace-pre-wrap mb-2">{r.review_text}</p>
               <div className="flex items-center justify-between">
-                <p className="text-xs font-medium text-slate-500 dark:text-slate-500">Verified Candidate</p>
+                <p className="text-xs font-medium text-slate-600 dark:text-slate-400">Verified Candidate</p>
                 {r.interview_difficulty != null && (
-                  <p className="text-xs text-slate-500 dark:text-slate-500">
+                  <p className="text-xs text-slate-600 dark:text-slate-400">
                     Interview difficulty: <span className="font-medium text-slate-700 dark:text-slate-300">{r.interview_difficulty}/5</span>
                   </p>
                 )}
@@ -202,7 +202,7 @@ export default function ReviewsSection({
             <Stars rating={ownReview.rating} />
           </div>
           {ownReview.interview_difficulty != null && (
-            <p className="text-xs text-slate-500 dark:text-slate-500 mt-1">
+            <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
               Interview difficulty: {ownReview.interview_difficulty}/5
             </p>
           )}

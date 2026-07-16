@@ -167,7 +167,7 @@ export default function JobsClient({
         <div className="flex flex-col sm:flex-row gap-3 mb-4">
           <div className="relative flex-1">
             <svg
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500"
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -187,7 +187,7 @@ export default function JobsClient({
             {query && (
               <button
                 onClick={() => { setQuery(''); navigate({ q: '' }) }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
               >
                 ✕
               </button>
@@ -209,7 +209,9 @@ export default function JobsClient({
           >
             🌍 Remote only
           </button>
+          <label htmlFor="job-sort" className="sr-only">Sort jobs by</label>
           <select
+            id="job-sort"
             value={sort}
             onChange={(e) => { const s = e.target.value as SortOption; setSort(s); navigate({ sort: s }) }}
             className="bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5
@@ -245,7 +247,7 @@ export default function JobsClient({
                 onClick={() => { setJobType(type); navigate({ type }) }}
                 className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${
                   jobType === type
-                    ? 'bg-accent/10 dark:bg-accent/20 border-accent text-orange-700 dark:text-accent'
+                    ? 'bg-accent/10 dark:bg-accent/20 border-accent text-orange-700 dark:text-orange-400'
                     : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-slate-300'
                 }`}
               >
@@ -262,7 +264,7 @@ export default function JobsClient({
           {Array.from({ length: 6 }).map((_, i) => <JobCardSkeleton key={i} />)}
         </div>
       ) : allJobs.length === 0 ? (
-        <div className="text-center py-20 text-slate-600 dark:text-slate-500">
+        <div className="text-center py-20 text-slate-600 dark:text-slate-400">
           <div className="text-4xl mb-3">🔍</div>
           <p className="font-medium text-slate-700 dark:text-slate-400">No jobs found</p>
           <p className="text-sm mt-1">Try different keywords or clear your filters</p>
@@ -295,7 +297,7 @@ export default function JobsClient({
           {hasMore && <div ref={sentinelRef} className="h-1" />}
 
           {!hasMore && (
-            <p className="text-center text-sm text-slate-500 dark:text-slate-500 py-8">
+            <p className="text-center text-sm text-slate-600 dark:text-slate-400 py-8">
               You&rsquo;ve reached the end — {total ?? allJobs.length} position{(total ?? allJobs.length) === 1 ? '' : 's'} total.
             </p>
           )}

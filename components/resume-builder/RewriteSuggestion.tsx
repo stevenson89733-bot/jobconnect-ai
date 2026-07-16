@@ -28,7 +28,7 @@ export default function RewriteSuggestion({
 
   return (
     <div className="rounded-lg border border-slate-200 dark:border-slate-700/50 p-3">
-      <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-500 mb-1.5">{label}</p>
+      <p className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">{label}</p>
       <p className="text-sm text-slate-700 dark:text-slate-300 whitespace-pre-wrap mb-3">{suggestion}</p>
       <div className="flex gap-2">
         <Button

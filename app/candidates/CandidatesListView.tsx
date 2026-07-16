@@ -55,7 +55,7 @@ function CandidateCardItem({ candidate }: { candidate: CandidateCard }) {
       </div>
 
       {location && (
-        <p className="flex items-center gap-1 text-xs text-slate-500 dark:text-slate-500 mb-3">
+        <p className="flex items-center gap-1 text-xs text-slate-600 dark:text-slate-400 mb-3">
           <svg className="w-3 h-3 shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -96,7 +96,7 @@ function CandidateCardItem({ candidate }: { candidate: CandidateCard }) {
             </span>
           ))}
           {hiddenCount > 0 && (
-            <span className="text-xs text-slate-500 dark:text-slate-500 self-center">+{hiddenCount} more</span>
+            <span className="text-xs text-slate-600 dark:text-slate-400 self-center">+{hiddenCount} more</span>
           )}
         </div>
       )}
@@ -122,7 +122,7 @@ export default function CandidatesListView({
   return (
     <div className="max-w-7xl mx-auto px-6 py-10">
       <div className="mb-8">
-        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-500 mb-3">
+        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-3">
           <Link href="/recruiter" className="hover:text-slate-900 dark:hover:text-white transition-colors">Employer Dashboard</Link>
           <span>/</span>
           <span className="text-slate-700 dark:text-slate-300">Candidates</span>
@@ -134,7 +134,7 @@ export default function CandidatesListView({
       </div>
 
       {candidates.length === 0 ? (
-        <div className="card text-center py-16 text-slate-600 dark:text-slate-500">
+        <div className="card text-center py-16 text-slate-600 dark:text-slate-400">
           <div className="text-4xl mb-3">🧑‍💻</div>
           <p className="text-sm">No candidates yet.</p>
         </div>

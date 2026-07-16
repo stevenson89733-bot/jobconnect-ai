@@ -25,7 +25,7 @@ function RegisterForm() {
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 font-bold text-xl">
             <span className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-white text-sm font-black">J</span>
-            <span className="text-slate-900 dark:text-white">JobConnect <span className="text-primary">AI</span></span>
+            <span className="text-slate-900 dark:text-white">JobConnect <span className="text-primary dark:text-blue-400">AI</span></span>
           </Link>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white mt-4">Create your account</h1>
           <p className="text-slate-600 dark:text-slate-400 mt-1 text-sm">Get started with AI-powered job matching</p>
@@ -54,7 +54,7 @@ function RegisterForm() {
                 <span className="text-2xl">👤</span>
                 <div>
                   <div className="font-semibold text-sm">Find a Job</div>
-                  <div className="text-xs text-slate-600 dark:text-slate-500 mt-0.5">I&apos;m a Candidate</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">I&apos;m a Candidate</div>
                 </div>
               </button>
               <button
@@ -69,7 +69,7 @@ function RegisterForm() {
                 <span className="text-2xl">🏢</span>
                 <div>
                   <div className="font-semibold text-sm">Hire Talent</div>
-                  <div className="text-xs text-slate-600 dark:text-slate-500 mt-0.5">I&apos;m an Employer</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">I&apos;m an Employer</div>
                 </div>
               </button>
             </div>
@@ -146,14 +146,14 @@ function RegisterForm() {
               {isPending ? 'Creating account…' : role === 'candidate' ? 'Create Candidate Account' : 'Create Employer Account'}
             </button>
 
-            <p className="text-xs text-slate-600 dark:text-slate-500 text-center">
+            <p className="text-xs text-slate-600 dark:text-slate-400 text-center">
               By creating an account you agree to our{' '}
               <Link href="/terms" className="text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white underline">Terms</Link> and{' '}
               <Link href="/privacy" className="text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white underline">Privacy Policy</Link>.
             </p>
           </form>
 
-          <p className="mt-4 text-center text-sm text-slate-600 dark:text-slate-500">
+          <p className="mt-4 text-center text-sm text-slate-600 dark:text-slate-400">
             Already have an account?{' '}
             <Link href="/login" className="text-primary hover:text-blue-500 dark:hover:text-blue-400 font-medium">Sign in</Link>
           </p>

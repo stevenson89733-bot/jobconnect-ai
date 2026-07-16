@@ -12,7 +12,7 @@ export default function SkillsCard({ skills }: { skills: string[] }) {
         </CardHeader>
         <CardContent className="flex-1 flex flex-col">
           {skills.length === 0 ? (
-            <p className="text-sm text-slate-600 dark:text-slate-500 text-center py-6">No skills added yet.</p>
+            <p className="text-sm text-slate-600 dark:text-slate-400 text-center py-6">No skills added yet.</p>
           ) : (
             <div className="flex flex-wrap gap-2">
               {skills.map((skill) => (
