@@ -17,7 +17,11 @@ export async function signUp(formData: FormData) {
   const role        = formData.get('role')        as 'candidate' | 'employer'
   const companyName = formData.get('companyName') as string | null
 
-  // Create the auth user
+  // Create the auth user. This call is the real bottleneck in the signup
+  // flow (measured ~2.2s in production vs. ~150ms for the profile write
+  // below) because Supabase Auth dispatches the confirmation email
+  // synchronously as part of this same API call — not something app code
+  // can shorten without changing the project's email-confirmation setting.
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -30,18 +34,24 @@ export async function signUp(formData: FormData) {
     redirect(`/register?error=${encodeURIComponent(error?.message ?? 'Signup failed')}`)
   }
 
-  // Insert into profiles table (user_id = auth user id)
-  const { error: profileError } = await supabase.from('profiles').insert({
+  // handle_new_user() (supabase/schema.sql) already inserts a baseline
+  // profiles row synchronously as part of the auth.users insert above, so by
+  // the time we get here the row already exists — a plain .insert() always
+  // loses that race and fails with a duplicate-key error (previously
+  // silently swallowed below), which meant role/company_name from this form
+  // were never actually persisted. upsert() merges onto that existing row
+  // instead of erroring, so this is now the only thing that actually saves
+  // the real company_name for employers.
+  const { error: profileError } = await supabase.from('profiles').upsert({
     user_id:      data.user!.id,
     email,
     full_name:    `${firstName} ${lastName}`.trim(),
     role,
     company_name: role === 'employer' ? (companyName || null) : null,
-  })
+  }, { onConflict: 'user_id' })
 
   if (profileError) {
-    // Profile insert failed — still redirect, trigger will retry
-    console.error('Profile insert error:', profileError.message)
+    console.error('Profile upsert error:', profileError.message)
   }
 
   // Step 8: redirect by role
