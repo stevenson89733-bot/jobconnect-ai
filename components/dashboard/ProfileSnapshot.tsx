@@ -14,7 +14,7 @@ export default function ProfileSnapshot({ title }: { title: string | null }) {
           <p className="text-sm text-slate-700 dark:text-slate-300">
             {title?.trim() || <span className="text-slate-600 dark:text-slate-400">Add a professional title on your profile.</span>}
           </p>
-          <Link href="/profile" className="text-xs font-medium text-primary hover:text-blue-500 dark:hover:text-blue-400 shrink-0">
+          <Link href="/profile" className="text-xs font-medium text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 shrink-0">
             View Profile →
           </Link>
         </CardContent>

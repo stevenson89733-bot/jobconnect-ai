@@ -14,7 +14,7 @@ export default function ProfileCompletionCard({ completion }: { completion: numb
           <div className="flex-1 min-w-[220px]">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Profile completion</span>
-              <span className="text-sm font-semibold text-primary tabular-nums">{completion}%</span>
+              <span className="text-sm font-semibold text-primary dark:text-blue-400 tabular-nums">{completion}%</span>
             </div>
             <Progress value={completion} />
             <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">

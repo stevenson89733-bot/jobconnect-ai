@@ -159,7 +159,7 @@ export default async function EmployerDashboard() {
           <div className="flex items-start justify-between mb-3">
             <span className="text-2xl">📋</span>
           </div>
-          <div className="text-3xl font-extrabold text-primary mb-1">{activeJobsCount}</div>
+          <div className="text-3xl font-extrabold text-primary dark:text-blue-400 mb-1">{activeJobsCount}</div>
           <div className="text-xs text-slate-600 dark:text-slate-400">Active Job Posts</div>
         </div>
         <div className="card">
@@ -204,7 +204,7 @@ export default async function EmployerDashboard() {
           <div className="space-y-6">
             {Object.entries(applicationsByJob).map(([jobId, group]) => (
               <div key={jobId}>
-                <h3 className="text-sm font-semibold text-primary mb-3 flex items-center gap-2">
+                <h3 className="text-sm font-semibold text-primary dark:text-blue-400 mb-3 flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block" />
                   {group.jobTitle}
                   <span className="text-xs text-slate-600 dark:text-slate-400 font-normal">({group.applications.length})</span>
@@ -251,7 +251,7 @@ export default async function EmployerDashboard() {
         <div className="xl:col-span-2 card">
           <div className="flex items-center justify-between mb-5">
             <h2 className="font-semibold text-slate-900 dark:text-white">Your Job Postings</h2>
-            <button className="text-xs text-primary hover:text-blue-500 dark:hover:text-blue-400">+ Post new job</button>
+            <button className="text-xs text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">+ Post new job</button>
           </div>
           {jobs.length === 0 ? (
             <div className="text-center py-10 text-slate-600 dark:text-slate-400">

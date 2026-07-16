@@ -98,19 +98,19 @@ export default function PublicProfileView({ profile }: { profile: Profile }) {
               <div className="flex flex-wrap gap-3">
                 {linkedinUrl && (
                   <a href={linkedinUrl} target="_blank" rel="noopener noreferrer"
-                    className="text-sm text-primary hover:text-blue-500 dark:hover:text-blue-400 underline underline-offset-2 break-all">
+                    className="text-sm text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 underline underline-offset-2 break-all">
                     LinkedIn
                   </a>
                 )}
                 {githubUrl && (
                   <a href={githubUrl} target="_blank" rel="noopener noreferrer"
-                    className="text-sm text-primary hover:text-blue-500 dark:hover:text-blue-400 underline underline-offset-2 break-all">
+                    className="text-sm text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 underline underline-offset-2 break-all">
                     GitHub
                   </a>
                 )}
                 {portfolioUrl && (
                   <a href={portfolioUrl} target="_blank" rel="noopener noreferrer"
-                    className="text-sm text-primary hover:text-blue-500 dark:hover:text-blue-400 underline underline-offset-2 break-all">
+                    className="text-sm text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 underline underline-offset-2 break-all">
                     Portfolio
                   </a>
                 )}

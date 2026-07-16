@@ -23,7 +23,7 @@ export default function JobRecommendations({ jobs }: { jobs: MatchedJob[] }) {
             </CardTitle>
             <CardDescription className="mt-0.5">Based on the skills in your profile</CardDescription>
           </div>
-          <Link href="/jobs" className="text-xs text-primary hover:text-blue-500 dark:hover:text-blue-400 shrink-0">
+          <Link href="/jobs" className="text-xs text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 shrink-0">
             See all jobs →
           </Link>
         </CardHeader>

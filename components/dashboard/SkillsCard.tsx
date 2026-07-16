@@ -20,7 +20,7 @@ export default function SkillsCard({ skills }: { skills: string[] }) {
               ))}
             </div>
           )}
-          <Link href="/profile" className="mt-5 block text-center text-xs text-primary hover:text-blue-500 dark:hover:text-blue-400">
+          <Link href="/profile" className="mt-5 block text-center text-xs text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">
             Update skills →
           </Link>
         </CardContent>

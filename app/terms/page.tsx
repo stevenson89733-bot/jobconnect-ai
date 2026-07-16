@@ -125,7 +125,7 @@ export default function TermsOfService() {
         <Section title="Contact us">
           <p>
             Questions about these terms? Reach out via our{' '}
-            <Link href="/contact" className="text-primary hover:text-blue-500 dark:hover:text-blue-400 underline underline-offset-2">Contact page</Link>.
+            <Link href="/contact" className="text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 underline underline-offset-2">Contact page</Link>.
           </p>
         </Section>
       </div>

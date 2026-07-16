@@ -492,11 +492,11 @@ export default function ResumeBuilderClient({
                     <div className="space-y-5">
                       <div className="grid sm:grid-cols-2 gap-4">
                         <InsightCard icon={Gauge} title="Resume Score"
-                          badge={<span className="text-xl font-extrabold text-primary tabular-nums">{analysis.resumeScore.score}</span>}>
+                          badge={<span className="text-xl font-extrabold text-primary dark:text-blue-400 tabular-nums">{analysis.resumeScore.score}</span>}>
                           {analysis.resumeScore.explanation}
                         </InsightCard>
                         <InsightCard icon={FileCheck2} title="ATS Score"
-                          badge={<span className="text-xl font-extrabold text-primary tabular-nums">{analysis.atsScore.score}</span>}>
+                          badge={<span className="text-xl font-extrabold text-primary dark:text-blue-400 tabular-nums">{analysis.atsScore.score}</span>}>
                           {analysis.atsScore.explanation}
                         </InsightCard>
                       </div>

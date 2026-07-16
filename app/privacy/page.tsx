@@ -76,7 +76,7 @@ export default function PrivacyPolicy() {
         <Section title="Your rights">
           <p>
             You can review and update most of your information at any time from your{' '}
-            <Link href="/profile" className="text-primary hover:text-blue-500 dark:hover:text-blue-400 underline underline-offset-2">profile settings</Link>.
+            <Link href="/profile" className="text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 underline underline-offset-2">profile settings</Link>.
             To request a copy of your data or to delete your account, contact us using the details
             below.
           </p>
@@ -92,7 +92,7 @@ export default function PrivacyPolicy() {
         <Section title="Contact us">
           <p>
             Questions about this policy or your data? Reach out via our{' '}
-            <Link href="/contact" className="text-primary hover:text-blue-500 dark:hover:text-blue-400 underline underline-offset-2">Contact page</Link>.
+            <Link href="/contact" className="text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 underline underline-offset-2">Contact page</Link>.
           </p>
         </Section>
       </div>

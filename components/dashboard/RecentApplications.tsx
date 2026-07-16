@@ -39,7 +39,7 @@ export default function RecentApplications({ applications }: { applications: App
       <Card className="h-full">
         <CardHeader className="flex-row items-center justify-between space-y-0">
           <CardTitle>Recent Applications</CardTitle>
-          <Link href="/jobs" className="text-xs text-primary hover:text-blue-500 dark:hover:text-blue-400">
+          <Link href="/jobs" className="text-xs text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">
             Browse jobs →
           </Link>
         </CardHeader>
@@ -48,7 +48,7 @@ export default function RecentApplications({ applications }: { applications: App
             <div className="text-center py-10 text-slate-600 dark:text-slate-400">
               <Inbox className="w-8 h-8 mx-auto mb-3 opacity-60" strokeWidth={1.5} />
               <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">You haven&apos;t applied to any jobs yet.</p>
-              <Link href="/jobs" className="text-xs text-primary hover:text-blue-500 dark:hover:text-blue-400">
+              <Link href="/jobs" className="text-xs text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">
                 Browse jobs →
               </Link>
             </div>

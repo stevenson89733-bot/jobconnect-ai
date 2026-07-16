@@ -140,7 +140,7 @@ export default function Home() {
             ].map((item) => (
               <div key={item.step} className="relative">
                 <div className="text-6xl mb-4">{item.icon}</div>
-                <div className="text-xs font-mono text-primary mb-2">{item.step}</div>
+                <div className="text-xs font-mono text-primary dark:text-blue-400 mb-2">{item.step}</div>
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">{item.title}</h3>
                 <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{item.desc}</p>
               </div>

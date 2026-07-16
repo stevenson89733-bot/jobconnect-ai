@@ -15,7 +15,7 @@ export default function Timeline({ text }: { text: string | null | undefined }) 
         <li key={i} className="relative">
           <span className="absolute -left-[26px] top-1.5 w-2.5 h-2.5 rounded-full bg-primary" />
           {entry.dateLabel && (
-            <p className="text-xs font-semibold text-primary mb-0.5">{entry.dateLabel}</p>
+            <p className="text-xs font-semibold text-primary dark:text-blue-400 mb-0.5">{entry.dateLabel}</p>
           )}
           <p className="text-sm text-slate-700 dark:text-slate-300 whitespace-pre-wrap leading-relaxed">{entry.text}</p>
         </li>

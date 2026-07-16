@@ -47,7 +47,7 @@ function LoginForm({ error }: { error?: string }) {
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label htmlFor="password" className="text-sm font-medium text-slate-700 dark:text-slate-300">Password</label>
-                <Link href="/forgot-password" className="text-xs text-primary hover:text-blue-500 dark:hover:text-blue-400">Forgot password?</Link>
+                <Link href="/forgot-password" className="text-xs text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">Forgot password?</Link>
               </div>
               <input
                 id="password"
@@ -69,7 +69,7 @@ function LoginForm({ error }: { error?: string }) {
 
           <p className="mt-5 text-center text-sm text-slate-600 dark:text-slate-400">
             Don&apos;t have an account?{' '}
-            <Link href="/register" className="text-primary hover:text-blue-500 dark:hover:text-blue-400 font-medium">Create one</Link>
+            <Link href="/register" className="text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 font-medium">Create one</Link>
           </p>
         </div>
       </div>

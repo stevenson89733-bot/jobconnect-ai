@@ -50,7 +50,7 @@ function ClassicTemplate({ content }: { content: ResumeContent }) {
     <div className="space-y-4 text-sm font-mono">
       <div>
         <div className="text-slate-900 dark:text-white font-bold text-base">{content.name}</div>
-        {content.title && <div className="text-primary text-xs">{content.title}</div>}
+        {content.title && <div className="text-primary dark:text-blue-400 text-xs">{content.title}</div>}
         {content.contact && <div className="text-slate-600 dark:text-slate-400 text-xs">{content.contact}</div>}
       </div>
       {SECTIONS.map(({ key, label }) => (
@@ -70,7 +70,7 @@ function ClassicTemplate({ content }: { content: ResumeContent }) {
 // (summary + experience), subtle accent-colored headers. Still plain
 // text/divs only — no images, no tables — so it stays ATS-safe.
 function ModernTemplate({ content }: { content: ResumeContent }) {
-  const sidebarLabel = 'text-primary text-xs font-bold uppercase tracking-wider mb-1'
+  const sidebarLabel = 'text-primary dark:text-blue-400 text-xs font-bold uppercase tracking-wider mb-1'
   const mainLabel = 'text-slate-900 dark:text-white text-xs font-bold uppercase tracking-wider mb-1 border-b border-primary/30 pb-1'
   const bodyText = 'text-slate-700 dark:text-slate-300 leading-relaxed space-y-1'
 
@@ -78,7 +78,7 @@ function ModernTemplate({ content }: { content: ResumeContent }) {
     <div className="text-sm font-mono">
       <div className="mb-4 pb-3 border-b-2 border-primary">
         <div className="text-slate-900 dark:text-white font-bold text-xl">{content.name}</div>
-        {content.title && <div className="text-primary text-sm">{content.title}</div>}
+        {content.title && <div className="text-primary dark:text-blue-400 text-sm">{content.title}</div>}
       </div>
       <div className="grid grid-cols-3 gap-5">
         <div className="col-span-1 space-y-4">

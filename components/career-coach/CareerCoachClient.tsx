@@ -141,11 +141,11 @@ export default function CareerCoachClient({
         <>
           <div className="grid sm:grid-cols-2 gap-6">
             <InsightCard icon={Gauge} title="ATS Score" delay={0}
-              badge={<span className="text-2xl font-extrabold text-primary tabular-nums">{analysis.atsScore.score}</span>}>
+              badge={<span className="text-2xl font-extrabold text-primary dark:text-blue-400 tabular-nums">{analysis.atsScore.score}</span>}>
               {analysis.atsScore.explanation}
             </InsightCard>
             <InsightCard icon={FileCheck2} title="Profile Strength" delay={0.05}
-              badge={<span className="text-2xl font-extrabold text-primary tabular-nums">{analysis.profileStrength.score}</span>}>
+              badge={<span className="text-2xl font-extrabold text-primary dark:text-blue-400 tabular-nums">{analysis.profileStrength.score}</span>}>
               {analysis.profileStrength.explanation}
             </InsightCard>
           </div>

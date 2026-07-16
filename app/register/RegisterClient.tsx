@@ -155,7 +155,7 @@ function RegisterForm() {
 
           <p className="mt-4 text-center text-sm text-slate-600 dark:text-slate-400">
             Already have an account?{' '}
-            <Link href="/login" className="text-primary hover:text-blue-500 dark:hover:text-blue-400 font-medium">Sign in</Link>
+            <Link href="/login" className="text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 font-medium">Sign in</Link>
           </p>
         </div>
       </div>

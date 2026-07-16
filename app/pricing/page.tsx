@@ -103,10 +103,10 @@ export default function PricingPage() {
         {/* Premium plan */}
         <div className="card border-primary/50 bg-gradient-to-br from-primary/5 to-white dark:to-card flex flex-col relative overflow-hidden">
           <div className="absolute top-4 right-4">
-            <span className="text-xs font-semibold bg-accent text-white px-2.5 py-1 rounded-full">Most Popular</span>
+            <span className="text-xs font-semibold bg-orange-700 text-white px-2.5 py-1 rounded-full">Most Popular</span>
           </div>
           <div className="mb-6">
-            <div className="text-sm font-semibold text-primary uppercase tracking-wider mb-1">Premium</div>
+            <div className="text-sm font-semibold text-primary dark:text-blue-400 uppercase tracking-wider mb-1">Premium</div>
             <div className="flex items-end gap-1">
               <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$19</span>
               <span className="text-slate-600 dark:text-slate-400 mb-1">/mo</span>
