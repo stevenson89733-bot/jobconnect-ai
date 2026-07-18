@@ -18,3 +18,10 @@ export const CATEGORY_KEY: Record<string, string> = {
   'Developer Relations': 'categoryDevRel',
   Content: 'categoryContent',
 }
+
+// Maps jobs.work_type raw DB values to `jobs` namespace translation keys.
+export const WORK_TYPE_KEY: Record<string, string> = {
+  remote: 'workTypeRemote',
+  hybrid: 'workTypeHybrid',
+  onsite: 'workTypeOnsite',
+}

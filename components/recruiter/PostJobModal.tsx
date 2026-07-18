@@ -5,12 +5,16 @@ import { useTranslations } from 'next-intl'
 
 const JOB_TYPES = ['Full-time', 'Part-time', 'Contract', 'Internship']
 const CATEGORIES = ['Engineering', 'Design', 'Data', 'Research', 'Developer Relations', 'Content']
+const WORK_TYPES = ['remote', 'hybrid', 'onsite']
 const JOB_TYPE_KEYS: Record<string, string> = {
   'Full-time': 'typeFullTime', 'Part-time': 'typePartTime', Contract: 'typeContract', Internship: 'typeInternship',
 }
 const CATEGORY_KEYS: Record<string, string> = {
   Engineering: 'categoryEngineering', Design: 'categoryDesign', Data: 'categoryData',
   Research: 'categoryResearch', 'Developer Relations': 'categoryDevRel', Content: 'categoryContent',
+}
+const WORK_TYPE_KEYS: Record<string, string> = {
+  remote: 'workTypeRemote', hybrid: 'workTypeHybrid', onsite: 'workTypeOnsite',
 }
 
 const inputClass =
@@ -42,6 +46,7 @@ export default function PostJobModal({
   const [title, setTitle] = useState('')
   const [company, setCompany] = useState(companyName)
   const [location, setLocation] = useState('Remote')
+  const [workType, setWorkType] = useState('remote')
   const [jobType, setJobType] = useState('Full-time')
   const [category, setCategory] = useState('Engineering')
   const [description, setDescription] = useState('')
@@ -54,6 +59,7 @@ export default function PostJobModal({
     setTitle('')
     setCompany(companyName)
     setLocation('Remote')
+    setWorkType('remote')
     setJobType('Full-time')
     setCategory('Engineering')
     setDescription('')
@@ -80,6 +86,7 @@ export default function PostJobModal({
         title: title.trim(),
         company_name: company.trim(),
         location: location.trim(),
+        work_type: workType,
         job_type: jobType,
         category,
         description: description.trim(),
@@ -145,6 +152,13 @@ export default function PostJobModal({
               <div>
                 <label className={labelClass}>{t('location')}</label>
                 <input required value={location} onChange={(e) => setLocation(e.target.value)} placeholder={t('locationPlaceholder')} className={inputClass} />
+              </div>
+
+              <div>
+                <label className={labelClass}>{t('workType')}</label>
+                <select required value={workType} onChange={(e) => setWorkType(e.target.value)} className={inputClass}>
+                  {WORK_TYPES.map((wt) => <option key={wt} value={wt}>{tj(WORK_TYPE_KEYS[wt])}</option>)}
+                </select>
               </div>
 
               <div className="grid grid-cols-2 gap-3">

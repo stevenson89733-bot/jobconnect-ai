@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import ApplyModal from '@/components/ApplyModal'
 import { copyToClipboard } from '@/lib/clipboard'
 import { companyInitials } from '@/lib/companyDisplay'
-import { JOB_TYPE_KEY, CATEGORY_KEY } from '@/lib/i18n/jobLabels'
+import { JOB_TYPE_KEY, CATEGORY_KEY, WORK_TYPE_KEY } from '@/lib/i18n/jobLabels'
 import Link from 'next/link'
 import type { Job } from '@/app/jobs/JobsClient'
 
@@ -18,6 +18,19 @@ const TYPE_VARIANT: Record<string, 'success' | 'accent' | 'primary' | 'default'>
   Contract: 'accent',
   'Part-time': 'primary',
   Internship: 'default',
+}
+
+// Distinct color per work type — Remote keeps the pre-existing green dot
+// styling; Hybrid/On-site get their own colors to stay visually distinct.
+const WORK_TYPE_DOT: Record<string, string> = {
+  remote: 'bg-green-500 dark:bg-green-400',
+  hybrid: 'bg-amber-500 dark:bg-amber-400',
+  onsite: 'bg-slate-500 dark:bg-slate-400',
+}
+const WORK_TYPE_TEXT: Record<string, string> = {
+  remote: 'text-green-700 dark:text-green-400',
+  hybrid: 'text-amber-700 dark:text-amber-400',
+  onsite: 'text-slate-700 dark:text-slate-400',
 }
 
 // Same day/week thresholds as lib/timeAgo.ts's 'compact' style, but using
@@ -46,12 +59,12 @@ export default function JobCard({
   const [shareStatus, setShareStatus] = useState<'idle' | 'copied' | 'manual'>('idle')
   const [shareUrl, setShareUrl] = useState('')
   const t = useTranslations('jobs')
-  const tc = useTranslations('common')
 
-  // Derived directly from the job's own real location text — never
-  // inferred from company name or industry.
-  const isRemote = /^remote/i.test(job.location)
+  // Real structured field set by the employer at posting time — no longer
+  // inferred from location text.
   const locationDetail = job.location.replace(/^remote\s*·?\s*/i, '').trim()
+  const workTypeKey = WORK_TYPE_KEY[job.work_type]
+  const workTypeLabel = workTypeKey ? t(workTypeKey) : job.work_type
 
   const jobTypeKey = JOB_TYPE_KEY[job.job_type]
   const jobTypeLabel = jobTypeKey ? t(jobTypeKey) : job.job_type
@@ -107,12 +120,12 @@ export default function JobCard({
               >
                 {job.company_name}
               </Link>
-              {isRemote && (
+              {job.work_type && (
                 <>
                   <span className="text-slate-400 dark:text-slate-600">·</span>
                   <span className="flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-green-500 dark:bg-green-400 inline-block" />
-                    <span className="text-green-700 dark:text-green-400 text-xs font-medium">{tc('remote')}</span>
+                    <span className={`w-1.5 h-1.5 rounded-full inline-block ${WORK_TYPE_DOT[job.work_type] ?? WORK_TYPE_DOT.onsite}`} />
+                    <span className={`text-xs font-medium ${WORK_TYPE_TEXT[job.work_type] ?? WORK_TYPE_TEXT.onsite}`}>{workTypeLabel}</span>
                   </span>
                 </>
               )}

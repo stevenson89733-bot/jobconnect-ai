@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl'
 import JobCard from '@/components/jobs/JobCard'
 import JobCardSkeleton from '@/components/jobs/JobCardSkeleton'
 import { useJobInteractions } from '@/lib/useJobInteractions'
-import { CATEGORY_KEY, JOB_TYPE_KEY } from '@/lib/i18n/jobLabels'
+import { CATEGORY_KEY, JOB_TYPE_KEY, WORK_TYPE_KEY } from '@/lib/i18n/jobLabels'
 import type { SortOption } from './page'
 
 export type Job = {
@@ -13,6 +13,7 @@ export type Job = {
   title: string
   company_name: string
   location: string
+  work_type: string
   salary_label: string | null
   salary_min: number | null
   salary_max: number | null
@@ -35,12 +36,13 @@ export type Job = {
 // Display labels are resolved via the `jobs` namespace below.
 const CATEGORIES = ['All', 'Engineering', 'Design', 'Data', 'Research', 'Developer Relations', 'Content']
 const JOB_TYPES = ['All', 'Full-time', 'Contract', 'Part-time']
+const WORK_TYPES = ['All', 'remote', 'hybrid', 'onsite']
 const SORT_IDS: SortOption[] = ['relevance', 'date', 'salary']
 
 export default function JobsClient({
   jobs,
   initialQuery = '',
-  initialRemote = false,
+  initialWorkType = 'All',
   initialJobType = 'All',
   initialCategory = 'All',
   initialSort = 'relevance',
@@ -49,7 +51,7 @@ export default function JobsClient({
 }: {
   jobs: Job[]
   initialQuery?: string
-  initialRemote?: boolean
+  initialWorkType?: string
   initialJobType?: string
   initialCategory?: string
   initialSort?: SortOption
@@ -69,12 +71,16 @@ export default function JobsClient({
     if (type === 'All') return t('typeAll')
     return JOB_TYPE_KEY[type] ? t(JOB_TYPE_KEY[type]) : type
   }
+  function workTypeLabel(wt: string) {
+    if (wt === 'All') return t('workTypeAll')
+    return WORK_TYPE_KEY[wt] ? t(WORK_TYPE_KEY[wt]) : wt
+  }
   function sortLabel(id: SortOption) {
     return id === 'relevance' ? t('sortRelevance') : id === 'date' ? t('sortNewest') : t('sortSalary')
   }
 
   const [query, setQuery] = useState(initialQuery)
-  const [remote, setRemote] = useState(initialRemote)
+  const [workType, setWorkType] = useState(initialWorkType)
   const [jobType, setJobType] = useState(initialJobType)
   const [category, setCategory] = useState(initialCategory)
   const [sort, setSort] = useState<SortOption>(initialSort)
@@ -100,16 +106,16 @@ export default function JobsClient({
     setHasMore(totalPages > 1)
   }, [jobs, totalPages])
 
-  function navigate(next: { q?: string; remote?: boolean; type?: string; category?: string; sort?: SortOption }) {
+  function navigate(next: { q?: string; workType?: string; type?: string; category?: string; sort?: SortOption }) {
     const params = new URLSearchParams()
     const q = next.q ?? query
-    const r = next.remote ?? remote
+    const w = next.workType ?? workType
     const t = next.type ?? jobType
     const c = next.category ?? category
     const s = next.sort ?? sort
 
     if (q) params.set('q', q)
-    if (r) params.set('remote', '1')
+    if (w !== 'All') params.set('workType', w)
     if (t !== 'All') params.set('type', t)
     if (c !== 'All') params.set('category', c)
     if (s !== 'relevance') params.set('sort', s)
@@ -125,7 +131,7 @@ export default function JobsClient({
     try {
       const params = new URLSearchParams()
       if (query) params.set('q', query)
-      if (remote) params.set('remote', '1')
+      if (workType !== 'All') params.set('workType', workType)
       if (jobType !== 'All') params.set('type', jobType)
       if (category !== 'All') params.set('category', category)
       if (sort !== 'relevance') params.set('sort', sort)
@@ -143,7 +149,7 @@ export default function JobsClient({
     } finally {
       setLoadingMore(false)
     }
-  }, [loadingMore, hasMore, query, remote, jobType, category, sort, nextPage])
+  }, [loadingMore, hasMore, query, workType, jobType, category, sort, nextPage])
 
   useEffect(() => {
     const el = sentinelRef.current
@@ -160,10 +166,10 @@ export default function JobsClient({
 
   function clearAll() {
     setQuery('')
-    setRemote(false)
+    setWorkType('All')
     setJobType('All')
     setCategory('All')
-    navigate({ q: '', remote: false, type: 'All', category: 'All' })
+    navigate({ q: '', workType: 'All', type: 'All', category: 'All' })
   }
 
   return (
@@ -213,16 +219,6 @@ export default function JobsClient({
           >
             {t('search')}
           </button>
-          <button
-            onClick={() => { const next = !remote; setRemote(next); navigate({ remote: next }) }}
-            className={`text-xs px-4 py-2.5 rounded-xl border transition-colors shrink-0 ${
-              remote
-                ? 'bg-green-100 dark:bg-green-900/30 border-green-300 dark:border-green-800/50 text-green-700 dark:text-green-400'
-                : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600'
-            }`}
-          >
-            {t('remoteOnly')}
-          </button>
           <label htmlFor="job-sort" className="sr-only">{t('sortJobsBy')}</label>
           <select
             id="job-sort"
@@ -238,6 +234,22 @@ export default function JobsClient({
         </div>
 
         <div className="flex flex-wrap gap-2">
+          <div className="flex gap-1.5 flex-wrap">
+            {WORK_TYPES.map((wt) => (
+              <button
+                key={wt}
+                onClick={() => { setWorkType(wt); navigate({ workType: wt }) }}
+                className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${
+                  workType === wt
+                    ? 'bg-green-100 dark:bg-green-900/30 border-green-300 dark:border-green-800/50 text-green-700 dark:text-green-400'
+                    : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-slate-300'
+                }`}
+              >
+                {workTypeLabel(wt)}
+              </button>
+            ))}
+          </div>
+          <div className="w-px bg-slate-200 dark:bg-slate-700 mx-1 hidden sm:block" />
           <div className="flex gap-1.5 flex-wrap">
             {CATEGORIES.map((cat) => (
               <button

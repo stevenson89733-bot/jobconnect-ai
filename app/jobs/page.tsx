@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 // computed fresh per-request below, outside the cache, so it's never
 // leaked across different users.
 const getJobsPage = unstable_cache(
-  async ({ q, remote, jobType, category, sort, page }: JobFilters & { page: number }) => {
+  async ({ q, workType, jobType, category, sort, page }: JobFilters & { page: number }) => {
     const from = (page - 1) * PAGE_SIZE
     const to = from + PAGE_SIZE - 1
 
@@ -50,7 +50,7 @@ const getJobsPage = unstable_cache(
       .select(JOB_SELECT_FIELDS, { count: 'exact' })
       .eq('is_active', true)
 
-    query = applyJobFilters(query, { q, remote, jobType, category, sort })
+    query = applyJobFilters(query, { q, workType, jobType, category, sort })
 
     const { data: jobs, count, error } = await query.range(from, to)
 
@@ -67,15 +67,15 @@ const getJobsPage = unstable_cache(
 export default async function JobsPage({
   searchParams,
 }: {
-  searchParams: { q?: string; page?: string; remote?: string; type?: string; category?: string; sort?: string }
+  searchParams: { q?: string; page?: string; workType?: string; type?: string; category?: string; sort?: string }
 }) {
   const q = (searchParams.q ?? '').trim()
-  const remote = searchParams.remote === '1'
+  const workType = searchParams.workType ?? 'All'
   const jobType = searchParams.type ?? 'All'
   const category = searchParams.category ?? 'All'
   const sort = parseSort(searchParams.sort)
 
-  const { jobs, total } = await getJobsPage({ q, remote, jobType, category, sort, page: 1 })
+  const { jobs, total } = await getJobsPage({ q, workType, jobType, category, sort, page: 1 })
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE))
 
   // Real Match % — a plain array/set comparison against the candidate's own
@@ -103,7 +103,7 @@ export default async function JobsPage({
     <JobsClient
       jobs={jobsWithMatch}
       initialQuery={q}
-      initialRemote={remote}
+      initialWorkType={workType}
       initialJobType={jobType}
       initialCategory={category}
       initialSort={sort}

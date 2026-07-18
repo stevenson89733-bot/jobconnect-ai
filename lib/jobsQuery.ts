@@ -5,11 +5,11 @@
 export type SortOption = 'relevance' | 'date' | 'salary'
 
 export const JOB_SELECT_FIELDS =
-  'id, title, company_name, location, salary_label, salary_min, salary_max, job_type, category, tags, description, is_featured, created_at, company:companies(logo_url)'
+  'id, title, company_name, location, work_type, salary_label, salary_min, salary_max, job_type, category, tags, description, is_featured, created_at, company:companies(logo_url)'
 
 export type JobFilters = {
   q: string
-  remote: boolean
+  workType: string
   jobType: string
   category: string
   sort: SortOption
@@ -23,7 +23,7 @@ export function parseSort(value: string | null | undefined): SortOption {
 
 export function applyJobFilters<T extends { or: any; ilike: any; eq: any; order: any }>(
   query: T,
-  { q, remote, jobType, category, sort }: JobFilters
+  { q, workType, jobType, category, sort }: JobFilters
 ): T {
   if (q) {
     // Real keyword match across title/company/description only — no
@@ -31,12 +31,7 @@ export function applyJobFilters<T extends { or: any; ilike: any; eq: any; order:
     const escaped = q.replace(/[%_]/g, (c) => `\\${c}`)
     query = query.or(`title.ilike.%${escaped}%,company_name.ilike.%${escaped}%,description.ilike.%${escaped}%`)
   }
-  if (remote) {
-    // Derived directly from the job's own real location text (every
-    // active job today is written as "Remote · <region>") — never
-    // inferred from company name/industry.
-    query = query.ilike('location', 'Remote%')
-  }
+  if (workType && workType !== 'All') query = query.eq('work_type', workType)
   if (jobType && jobType !== 'All') query = query.eq('job_type', jobType)
   if (category && category !== 'All') query = query.eq('category', category)
 

@@ -19,7 +19,7 @@ export async function GET(req: Request) {
   const to = from + PAGE_SIZE - 1
 
   const q = (searchParams.get('q') ?? '').trim()
-  const remote = searchParams.get('remote') === '1'
+  const workType = searchParams.get('workType') ?? 'All'
   const jobType = searchParams.get('type') ?? 'All'
   const category = searchParams.get('category') ?? 'All'
   const sort = parseSort(searchParams.get('sort'))
@@ -30,7 +30,7 @@ export async function GET(req: Request) {
     .select(JOB_SELECT_FIELDS, { count: 'exact' })
     .eq('is_active', true)
 
-  query = applyJobFilters(query, { q, remote, jobType, category, sort })
+  query = applyJobFilters(query, { q, workType, jobType, category, sort })
 
   const { data: jobs, count, error } = await query.range(from, to)
 
