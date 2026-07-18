@@ -1,11 +1,13 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { LOCALE_COOKIE, detectLocaleFromAcceptLanguage } from '@/lib/i18n/config'
 
 /**
  * Routes that require an authenticated user. If no valid session is present,
  * the request is redirected to /login (carrying the refreshed session cookies).
  */
 const PROTECTED_PREFIXES = ['/dashboard', '/candidate', '/recruiter', '/admin']
+const AUTH_PATHS = ['/login', '/register']
 
 /**
  * Official @supabase/ssr middleware pattern.
@@ -74,16 +76,30 @@ async function updateSession(request: NextRequest) {
 }
 
 export async function middleware(request: NextRequest) {
-  return updateSession(request)
+  const { pathname } = request.nextUrl
+  const needsAuthCheck =
+    PROTECTED_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + '/')) ||
+    AUTH_PATHS.includes(pathname)
+
+  // Only the auth-relevant paths pay for the Supabase session-refresh round
+  // trip above; every other request gets a plain pass-through response that
+  // the locale check below can still attach a cookie to.
+  const response = needsAuthCheck ? await updateSession(request) : NextResponse.next({ request })
+
+  // First-visit browser-language detection — only when no locale has ever
+  // been chosen (manual switch or a prior visit already set this cookie).
+  if (!request.cookies.get(LOCALE_COOKIE)) {
+    const detected = detectLocaleFromAcceptLanguage(request.headers.get('accept-language'))
+    if (detected) {
+      response.cookies.set(LOCALE_COOKIE, detected, { path: '/', maxAge: 31536000 })
+    }
+  }
+
+  return response
 }
 
 export const config = {
-  matcher: [
-    '/dashboard/:path*',
-    '/candidate/:path*',
-    '/recruiter/:path*',
-    '/admin/:path*',
-    '/login',
-    '/register',
-  ],
+  // Runs on every page request (not just auth-relevant paths) so first-visit
+  // locale detection works site-wide; static assets/Next internals excluded.
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)'],
 }

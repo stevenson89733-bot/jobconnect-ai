@@ -1,9 +1,11 @@
 'use client'
 import { useState, useEffect, useRef, useTransition, useCallback } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import JobCard from '@/components/jobs/JobCard'
 import JobCardSkeleton from '@/components/jobs/JobCardSkeleton'
 import { useJobInteractions } from '@/lib/useJobInteractions'
+import { CATEGORY_KEY, JOB_TYPE_KEY } from '@/lib/i18n/jobLabels'
 import type { SortOption } from './page'
 
 export type Job = {
@@ -28,13 +30,12 @@ export type Job = {
   matchPercent: number | null
 }
 
+// Values stay in English — these are the real filter values sent to the API
+// and used in URL params, matching the DB's job_type/category columns.
+// Display labels are resolved via the `jobs` namespace below.
 const CATEGORIES = ['All', 'Engineering', 'Design', 'Data', 'Research', 'Developer Relations', 'Content']
 const JOB_TYPES = ['All', 'Full-time', 'Contract', 'Part-time']
-const SORTS: { id: SortOption; label: string }[] = [
-  { id: 'relevance', label: 'Relevance' },
-  { id: 'date', label: 'Newest' },
-  { id: 'salary', label: 'Salary' },
-]
+const SORT_IDS: SortOption[] = ['relevance', 'date', 'salary']
 
 export default function JobsClient({
   jobs,
@@ -58,6 +59,19 @@ export default function JobsClient({
   const router = useRouter()
   const pathname = usePathname()
   const [isPending, startTransition] = useTransition()
+  const t = useTranslations('jobs')
+
+  function categoryLabel(cat: string) {
+    if (cat === 'All') return t('categoryAll')
+    return CATEGORY_KEY[cat] ? t(CATEGORY_KEY[cat]) : cat
+  }
+  function jobTypeLabel(type: string) {
+    if (type === 'All') return t('typeAll')
+    return JOB_TYPE_KEY[type] ? t(JOB_TYPE_KEY[type]) : type
+  }
+  function sortLabel(id: SortOption) {
+    return id === 'relevance' ? t('sortRelevance') : id === 'date' ? t('sortNewest') : t('sortSalary')
+  }
 
   const [query, setQuery] = useState(initialQuery)
   const [remote, setRemote] = useState(initialRemote)
@@ -155,10 +169,10 @@ export default function JobsClient({
   return (
     <div className="max-w-7xl mx-auto px-6 py-10">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-1">Remote Jobs</h1>
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{t('title')}</h1>
         <p className="text-slate-600 dark:text-slate-400">
-          {total ?? jobs.length} position{(total ?? jobs.length) === 1 ? '' : 's'}
-          {query ? ` matching "${query}"` : ''}
+          {t('positionCount', { count: total ?? jobs.length })}
+          {query ? t('matchingQuery', { query }) : ''}
         </p>
       </div>
 
@@ -176,7 +190,7 @@ export default function JobsClient({
             </svg>
             <input
               type="text"
-              placeholder="Search jobs, companies…"
+              placeholder={t('searchPlaceholder')}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && navigate({ q: query })}
@@ -197,7 +211,7 @@ export default function JobsClient({
             onClick={() => navigate({ q: query })}
             className="btn-primary text-sm px-5 py-2.5 shrink-0"
           >
-            Search
+            {t('search')}
           </button>
           <button
             onClick={() => { const next = !remote; setRemote(next); navigate({ remote: next }) }}
@@ -207,9 +221,9 @@ export default function JobsClient({
                 : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600'
             }`}
           >
-            🌍 Remote only
+            {t('remoteOnly')}
           </button>
-          <label htmlFor="job-sort" className="sr-only">Sort jobs by</label>
+          <label htmlFor="job-sort" className="sr-only">{t('sortJobsBy')}</label>
           <select
             id="job-sort"
             value={sort}
@@ -217,8 +231,8 @@ export default function JobsClient({
             className="bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5
                        text-sm text-slate-700 dark:text-slate-300 focus:outline-none focus:border-primary shrink-0"
           >
-            {SORTS.map((s) => (
-              <option key={s.id} value={s.id}>Sort: {s.label}</option>
+            {SORT_IDS.map((id) => (
+              <option key={id} value={id}>{t('sortLabel', { label: sortLabel(id) })}</option>
             ))}
           </select>
         </div>
@@ -235,7 +249,7 @@ export default function JobsClient({
                     : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-slate-300'
                 }`}
               >
-                {cat}
+                {categoryLabel(cat)}
               </button>
             ))}
           </div>
@@ -251,7 +265,7 @@ export default function JobsClient({
                     : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-slate-300'
                 }`}
               >
-                {type}
+                {jobTypeLabel(type)}
               </button>
             ))}
           </div>
@@ -266,10 +280,10 @@ export default function JobsClient({
       ) : allJobs.length === 0 ? (
         <div className="text-center py-20 text-slate-600 dark:text-slate-400">
           <div className="text-4xl mb-3">🔍</div>
-          <p className="font-medium text-slate-700 dark:text-slate-400">No jobs found</p>
-          <p className="text-sm mt-1">Try different keywords or clear your filters</p>
+          <p className="font-medium text-slate-700 dark:text-slate-400">{t('noJobsFound')}</p>
+          <p className="text-sm mt-1">{t('tryDifferentKeywords')}</p>
           <button onClick={clearAll} className="mt-4 btn-outline text-xs px-4 py-2">
-            Clear all filters
+            {t('clearAllFilters')}
           </button>
         </div>
       ) : (
@@ -298,7 +312,7 @@ export default function JobsClient({
 
           {!hasMore && (
             <p className="text-center text-sm text-slate-600 dark:text-slate-400 py-8">
-              You&rsquo;ve reached the end — {total ?? allJobs.length} position{(total ?? allJobs.length) === 1 ? '' : 's'} total.
+              {t('reachedEnd', { count: total ?? allJobs.length })}
             </p>
           )}
         </>

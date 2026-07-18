@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useState, useTransition } from 'react'
+import { useTranslations } from 'next-intl'
 import { signUp } from '@/app/actions/auth'
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
@@ -11,6 +12,8 @@ function RegisterForm() {
   const [isPending, startTransition] = useTransition()
   const searchParams = useSearchParams()
   const error = searchParams.get('error')
+  const t = useTranslations('auth.register')
+  const tc = useTranslations('common')
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -25,10 +28,10 @@ function RegisterForm() {
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 font-bold text-xl">
             <span className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-white text-sm font-black">J</span>
-            <span className="text-slate-900 dark:text-white">JobConnect <span className="text-primary dark:text-blue-400">AI</span></span>
+            <span className="text-slate-900 dark:text-white">{tc('brand')} <span className="text-primary dark:text-blue-400">{tc('brandSuffix')}</span></span>
           </Link>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white mt-4">Create your account</h1>
-          <p className="text-slate-600 dark:text-slate-400 mt-1 text-sm">Get started with AI-powered job matching</p>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white mt-4">{t('createAccount')}</h1>
+          <p className="text-slate-600 dark:text-slate-400 mt-1 text-sm">{t('getStarted')}</p>
         </div>
 
         <div className="card">
@@ -40,7 +43,7 @@ function RegisterForm() {
 
           {/* Role selector */}
           <div className="mb-6">
-            <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">I want to</p>
+            <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">{t('iWantTo')}</p>
             <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
@@ -53,8 +56,8 @@ function RegisterForm() {
               >
                 <span className="text-2xl">👤</span>
                 <div>
-                  <div className="font-semibold text-sm">Find a Job</div>
-                  <div className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">I&apos;m a Candidate</div>
+                  <div className="font-semibold text-sm">{t('findAJob')}</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">{t('imACandidate')}</div>
                 </div>
               </button>
               <button
@@ -68,8 +71,8 @@ function RegisterForm() {
               >
                 <span className="text-2xl">🏢</span>
                 <div>
-                  <div className="font-semibold text-sm">Hire Talent</div>
-                  <div className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">I&apos;m an Employer</div>
+                  <div className="font-semibold text-sm">{t('hireTalent')}</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">{t('imAnEmployer')}</div>
                 </div>
               </button>
             </div>
@@ -78,7 +81,7 @@ function RegisterForm() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">First Name</label>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">{t('firstName')}</label>
                 <input
                   name="firstName"
                   type="text"
@@ -88,7 +91,7 @@ function RegisterForm() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Last Name</label>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">{t('lastName')}</label>
                 <input
                   name="lastName"
                   type="text"
@@ -100,7 +103,7 @@ function RegisterForm() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Email</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">{t('email')}</label>
               <input
                 name="email"
                 type="email"
@@ -112,7 +115,7 @@ function RegisterForm() {
 
             {role === 'employer' && (
               <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Company Name</label>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">{t('companyName')}</label>
                 <input
                   name="companyName"
                   type="text"
@@ -123,7 +126,7 @@ function RegisterForm() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Password</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">{t('password')}</label>
               <input
                 name="password"
                 type="password"
@@ -149,21 +152,22 @@ function RegisterForm() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                   </svg>
-                  Creating account…
+                  {t('creatingAccount')}
                 </span>
-              ) : role === 'candidate' ? 'Create Candidate Account' : 'Create Employer Account'}
+              ) : role === 'candidate' ? t('createCandidateAccount') : t('createEmployerAccount')}
             </button>
 
             <p className="text-xs text-slate-600 dark:text-slate-400 text-center">
-              By creating an account you agree to our{' '}
-              <Link href="/terms" className="text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white underline">Terms</Link> and{' '}
-              <Link href="/privacy" className="text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white underline">Privacy Policy</Link>.
+              {t.rich('termsAgreement', {
+                terms: (chunks) => <Link href="/terms" className="text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white underline">{chunks}</Link>,
+                privacy: (chunks) => <Link href="/privacy" className="text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white underline">{chunks}</Link>,
+              })}
             </p>
           </form>
 
           <p className="mt-4 text-center text-sm text-slate-600 dark:text-slate-400">
-            Already have an account?{' '}
-            <Link href="/login" className="text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 font-medium">Sign in</Link>
+            {t('alreadyHaveAccount')}{' '}
+            <Link href="/login" className="text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 font-medium">{t('signIn')}</Link>
           </p>
         </div>
       </div>

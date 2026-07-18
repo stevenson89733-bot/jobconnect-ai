@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 import { Bookmark, Share2, Check, Sparkles } from 'lucide-react'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
@@ -8,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import ApplyModal from '@/components/ApplyModal'
 import { copyToClipboard } from '@/lib/clipboard'
 import { companyInitials } from '@/lib/companyDisplay'
-import { timeAgo } from '@/lib/timeAgo'
+import { JOB_TYPE_KEY, CATEGORY_KEY } from '@/lib/i18n/jobLabels'
 import Link from 'next/link'
 import type { Job } from '@/app/jobs/JobsClient'
 
@@ -17,6 +18,18 @@ const TYPE_VARIANT: Record<string, 'success' | 'accent' | 'primary' | 'default'>
   Contract: 'accent',
   'Part-time': 'primary',
   Internship: 'default',
+}
+
+// Same day/week thresholds as lib/timeAgo.ts's 'compact' style, but using
+// the `jobs` namespace's translated strings — kept local to this component
+// rather than changing lib/timeAgo.ts's signature, since its other call
+// sites (recruiter dashboard, application status) are still English-only
+// in this lot.
+function localizedTimeAgo(dateStr: string, t: ReturnType<typeof useTranslations<'jobs'>>) {
+  const days = Math.floor((Date.now() - new Date(dateStr).getTime()) / 86400000)
+  if (days === 0) return t('today')
+  if (days < 7) return t('daysAgo', { count: days })
+  return t('weeksAgo', { count: Math.floor(days / 7) })
 }
 
 export default function JobCard({
@@ -32,11 +45,18 @@ export default function JobCard({
 }) {
   const [shareStatus, setShareStatus] = useState<'idle' | 'copied' | 'manual'>('idle')
   const [shareUrl, setShareUrl] = useState('')
+  const t = useTranslations('jobs')
+  const tc = useTranslations('common')
 
   // Derived directly from the job's own real location text — never
   // inferred from company name or industry.
   const isRemote = /^remote/i.test(job.location)
   const locationDetail = job.location.replace(/^remote\s*·?\s*/i, '').trim()
+
+  const jobTypeKey = JOB_TYPE_KEY[job.job_type]
+  const jobTypeLabel = jobTypeKey ? t(jobTypeKey) : job.job_type
+  const categoryKey = CATEGORY_KEY[job.category]
+  const categoryLabel = categoryKey ? t(categoryKey) : job.category
 
   async function handleShare() {
     const url = `${window.location.origin}/jobs?job=${job.id}`
@@ -71,10 +91,10 @@ export default function JobCard({
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2 mb-0.5">
               <h2 className="font-semibold text-slate-900 dark:text-white">{job.title}</h2>
-              {job.is_featured && <Badge variant="primary">⭐ Featured</Badge>}
+              {job.is_featured && <Badge variant="primary">{t('featured')}</Badge>}
               {job.matchPercent != null && (
                 <Badge variant="success" className="flex items-center gap-1">
-                  <Sparkles className="w-3 h-3" strokeWidth={2} /> {job.matchPercent}% Match
+                  <Sparkles className="w-3 h-3" strokeWidth={2} /> {t('matchPercent', { percent: job.matchPercent })}
                 </Badge>
               )}
             </div>
@@ -92,7 +112,7 @@ export default function JobCard({
                   <span className="text-slate-400 dark:text-slate-600">·</span>
                   <span className="flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-green-500 dark:bg-green-400 inline-block" />
-                    <span className="text-green-700 dark:text-green-400 text-xs font-medium">Remote</span>
+                    <span className="text-green-700 dark:text-green-400 text-xs font-medium">{tc('remote')}</span>
                   </span>
                 </>
               )}
@@ -103,12 +123,12 @@ export default function JobCard({
                 </>
               )}
               <span className="text-slate-400 dark:text-slate-600">·</span>
-              <span className="text-slate-600 dark:text-slate-400 text-xs">{timeAgo(job.created_at)}</span>
+              <span className="text-slate-600 dark:text-slate-400 text-xs">{localizedTimeAgo(job.created_at, t)}</span>
             </div>
 
             <div className="flex flex-wrap gap-1.5 mb-1">
-              <Badge variant={TYPE_VARIANT[job.job_type] ?? 'default'}>{job.job_type}</Badge>
-              <Badge>{job.category}</Badge>
+              <Badge variant={TYPE_VARIANT[job.job_type] ?? 'default'}>{jobTypeLabel}</Badge>
+              <Badge>{categoryLabel}</Badge>
               {job.tags.map((tag) => (
                 <Badge key={tag}>{tag}</Badge>
               ))}
@@ -125,20 +145,20 @@ export default function JobCard({
                 : 'text-slate-400 dark:text-slate-600 text-xs whitespace-nowrap'
             }
           >
-            {job.salary_label || 'Salary not disclosed'}
+            {job.salary_label || t('salaryNotDisclosed')}
           </span>
 
           <div className="flex items-center gap-1.5">
             <Button
               variant="ghost"
               size="sm"
-              aria-label={isSaved ? 'Unsave job' : 'Save job'}
+              aria-label={isSaved ? t('unsaveJob') : t('saveJob')}
               onClick={() => onToggleSave(job.id)}
               className="!px-2"
             >
               <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-current text-primary' : ''}`} strokeWidth={1.75} />
             </Button>
-            <Button variant="ghost" size="sm" aria-label="Share job" onClick={handleShare} className="!px-2">
+            <Button variant="ghost" size="sm" aria-label={t('shareJob')} onClick={handleShare} className="!px-2">
               {shareStatus === 'copied' ? <Check className="w-4 h-4 text-green-700 dark:text-green-400" /> : <Share2 className="w-4 h-4" strokeWidth={1.75} />}
             </Button>
           </div>
@@ -155,7 +175,7 @@ export default function JobCard({
       {shareStatus === 'manual' && (
         <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/50">
           <p className="text-xs text-slate-600 dark:text-slate-400 mb-1.5">
-            Your browser blocked automatic copying — select the link below and press Cmd/Ctrl+C.
+            {t('shareBlocked')}
           </p>
           <input
             readOnly
