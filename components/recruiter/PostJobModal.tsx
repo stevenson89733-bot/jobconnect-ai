@@ -104,10 +104,10 @@ export default function PostJobModal({
 
       {open && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
           onClick={(e) => { if (e.target === e.currentTarget) setOpen(false) }}
         >
-          <div className="bg-white dark:bg-card border border-slate-200 dark:border-slate-700 rounded-2xl w-full max-w-lg shadow-2xl my-8">
+          <div className="bg-white dark:bg-card border border-slate-200 dark:border-slate-700 rounded-2xl w-full max-w-md shadow-2xl max-h-[85vh] overflow-y-auto">
             <div className="flex items-start justify-between p-6 pb-4 border-b border-slate-200 dark:border-slate-800">
               <h2 className="text-slate-900 dark:text-white font-bold text-lg">Post a Job</h2>
               <button
