@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { Plus, Trash2, ExternalLink } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import EditableSection from './EditableSection'
 import { saveProjects } from '@/app/actions/profileSections'
@@ -10,6 +11,7 @@ const inputClass =
   'w-full bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary'
 
 export default function ProjectsSection({ initial }: { initial: Project[] }) {
+  const t = useTranslations('profile')
   const [saved, setSaved] = useState(initial)
   const [draft, setDraft] = useState(initial)
   const [editing, setEditing] = useState(false)
@@ -26,7 +28,7 @@ export default function ProjectsSection({ initial }: { initial: Project[] }) {
 
   return (
     <EditableSection
-      title="Projects"
+      title={t('sectionProjects')}
       editing={editing}
       onEdit={() => { setDraft(saved); setEditing(true) }}
       onCancel={() => { setDraft(saved); setEditing(false) }}
@@ -38,7 +40,7 @@ export default function ProjectsSection({ initial }: { initial: Project[] }) {
       }}
       renderView={() =>
         saved.length === 0 ? (
-          <p className="text-sm text-slate-600 dark:text-slate-400">No projects added yet.</p>
+          <p className="text-sm text-slate-600 dark:text-slate-400">{t('noProjectsYet')}</p>
         ) : (
           <div className="space-y-4">
             {saved.map((p) => (
@@ -66,13 +68,13 @@ export default function ProjectsSection({ initial }: { initial: Project[] }) {
                 <input
                   value={p.title}
                   onChange={(e) => updateItem(p.id, { title: e.target.value })}
-                  placeholder="Project title"
+                  placeholder={t('projectTitlePlaceholder')}
                   className={inputClass}
                 />
                 <button
                   type="button"
                   onClick={() => removeItem(p.id)}
-                  aria-label="Remove project"
+                  aria-label={t('removeProject')}
                   className="text-slate-400 hover:text-red-600 dark:hover:text-red-400 shrink-0"
                 >
                   <Trash2 className="w-4 h-4" />
@@ -81,27 +83,27 @@ export default function ProjectsSection({ initial }: { initial: Project[] }) {
               <input
                 value={p.dates}
                 onChange={(e) => updateItem(p.id, { dates: e.target.value })}
-                placeholder="Dates (optional) — e.g. 2023–2024"
+                placeholder={t('projectDatesPlaceholder')}
                 className={inputClass}
               />
               <input
                 value={p.link}
                 onChange={(e) => updateItem(p.id, { link: e.target.value })}
-                placeholder="Link (optional)"
+                placeholder={t('projectLinkPlaceholder')}
                 type="url"
                 className={inputClass}
               />
               <textarea
                 value={p.description}
                 onChange={(e) => updateItem(p.id, { description: e.target.value })}
-                placeholder="Description"
+                placeholder={t('projectDescriptionPlaceholder')}
                 rows={2}
                 className={`${inputClass} resize-none`}
               />
             </div>
           ))}
           <Button variant="outline" size="sm" type="button" onClick={addItem}>
-            <Plus className="w-3.5 h-3.5" /> Add Project
+            <Plus className="w-3.5 h-3.5" /> {t('addProject')}
           </Button>
         </div>
       )}

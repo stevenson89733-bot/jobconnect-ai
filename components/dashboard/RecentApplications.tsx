@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Inbox } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { APPLICATION_STATUS_VARIANT, type ApplicationStatus } from '@/lib/applicationStatus'
@@ -19,23 +20,26 @@ function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
 }
 
-export default function RecentApplications({ applications }: { applications: ApplicationRow[] }) {
+export default async function RecentApplications({ applications }: { applications: ApplicationRow[] }) {
+  const t = await getTranslations('candidate')
+  const tStatus = await getTranslations('applicationStatus')
+
   return (
     <FadeIn className="h-full">
       <Card className="h-full">
         <CardHeader className="flex-row items-center justify-between space-y-0">
-          <CardTitle>Recent Applications</CardTitle>
+          <CardTitle>{t('recentApplications')}</CardTitle>
           <Link href="/jobs" className="text-xs text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">
-            Browse jobs →
+            {t('seeAllJobs')}
           </Link>
         </CardHeader>
         <CardContent>
           {applications.length === 0 ? (
             <div className="text-center py-10 text-slate-600 dark:text-slate-400">
               <Inbox className="w-8 h-8 mx-auto mb-3 opacity-60" strokeWidth={1.5} />
-              <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">You haven&apos;t applied to any jobs yet.</p>
+              <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">{t('noApplicationsYet')}</p>
               <Link href="/jobs" className="text-xs text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">
-                Browse jobs →
+                {t('seeAllJobs')}
               </Link>
             </div>
           ) : (
@@ -43,10 +47,10 @@ export default function RecentApplications({ applications }: { applications: App
               <table className="w-full text-sm">
                 <thead>
                   <tr className="text-xs text-slate-600 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
-                    <th className="text-left pb-3 font-medium">Company</th>
-                    <th className="text-left pb-3 font-medium">Role</th>
-                    <th className="text-left pb-3 font-medium">Status</th>
-                    <th className="text-left pb-3 font-medium">Date</th>
+                    <th className="text-left pb-3 font-medium">{t('tableCompany')}</th>
+                    <th className="text-left pb-3 font-medium">{t('tableRole')}</th>
+                    <th className="text-left pb-3 font-medium">{t('tableStatus')}</th>
+                    <th className="text-left pb-3 font-medium">{t('tableDate')}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
@@ -55,7 +59,9 @@ export default function RecentApplications({ applications }: { applications: App
                       <td className="py-3 font-medium text-slate-800 dark:text-slate-200">{app.company_name}</td>
                       <td className="py-3 text-slate-600 dark:text-slate-400">{app.title}</td>
                       <td className="py-3">
-                        <Badge variant={APPLICATION_STATUS_VARIANT[app.status as ApplicationStatus] ?? 'default'}>{app.status}</Badge>
+                        <Badge variant={APPLICATION_STATUS_VARIANT[app.status as ApplicationStatus] ?? 'default'}>
+                          {tStatus(app.status as ApplicationStatus)}
+                        </Badge>
                         {app.status !== 'submitted' && app.status_updated_at && (
                           <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">
                             {timeAgo(app.status_updated_at, 'verbose')}

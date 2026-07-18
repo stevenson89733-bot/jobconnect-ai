@@ -1,5 +1,6 @@
 'use client'
 import { useRef, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { createClient } from '@/lib/supabase/client'
 
 const MAX_SIZE = 5 * 1024 * 1024 // 5MB
@@ -27,6 +28,7 @@ export default function AvatarUpload({
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
+  const t = useTranslations('profile')
 
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
@@ -34,12 +36,12 @@ export default function AvatarUpload({
     setError('')
 
     if (!ALLOWED_TYPES.includes(file.type)) {
-      setError('Please upload a JPG, PNG, or WEBP image.')
+      setError(t('photoInvalidType'))
       if (inputRef.current) inputRef.current.value = ''
       return
     }
     if (file.size > MAX_SIZE) {
-      setError('Image must be smaller than 5MB.')
+      setError(t('photoTooLarge'))
       if (inputRef.current) inputRef.current.value = ''
       return
     }
@@ -49,7 +51,7 @@ export default function AvatarUpload({
       const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) {
-        setError('You must be signed in to upload a photo.')
+        setError(t('photoMustBeSignedIn'))
         return
       }
 
@@ -78,7 +80,7 @@ export default function AvatarUpload({
 
       setAvatarUrl(publicUrlData.publicUrl)
     } catch {
-      setError('Upload failed — please try again.')
+      setError(t('photoUploadFailed'))
     } finally {
       setUploading(false)
       if (inputRef.current) inputRef.current.value = ''
@@ -97,7 +99,7 @@ export default function AvatarUpload({
       </div>
       <div>
         <label className="btn-outline text-xs px-4 py-2 cursor-pointer inline-block">
-          {uploading ? 'Uploading…' : 'Change photo'}
+          {uploading ? t('uploadingPhoto') : t('changePhoto')}
           <input
             ref={inputRef}
             type="file"
@@ -107,7 +109,7 @@ export default function AvatarUpload({
             disabled={uploading}
           />
         </label>
-        <p className="text-xs text-slate-600 dark:text-slate-400 mt-1.5">JPG, PNG or WEBP. Max 5MB.</p>
+        <p className="text-xs text-slate-600 dark:text-slate-400 mt-1.5">{t('photoHint')}</p>
         {error && <p className="text-xs text-red-600 dark:text-red-400 mt-1">{error}</p>}
       </div>
     </div>

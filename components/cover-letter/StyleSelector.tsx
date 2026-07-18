@@ -1,10 +1,6 @@
-export type CoverLetterStyle = 'Formal' | 'Conversational' | 'Concise'
+import { useTranslations } from 'next-intl'
 
-const STYLES: { id: CoverLetterStyle; label: string }[] = [
-  { id: 'Formal', label: 'Formal' },
-  { id: 'Conversational', label: 'Conversational' },
-  { id: 'Concise', label: 'Concise' },
-]
+export type CoverLetterStyle = 'Formal' | 'Conversational' | 'Concise'
 
 export default function StyleSelector({
   value,
@@ -13,6 +9,13 @@ export default function StyleSelector({
   value: CoverLetterStyle
   onChange: (style: CoverLetterStyle) => void
 }) {
+  const t = useTranslations('coverLetter')
+  const STYLES: { id: CoverLetterStyle; label: string }[] = [
+    { id: 'Formal', label: t('styleFormal') },
+    { id: 'Conversational', label: t('styleConversational') },
+    { id: 'Concise', label: t('styleConcise') },
+  ]
+
   return (
     <div className="inline-flex rounded-lg border border-slate-300 dark:border-slate-700 p-0.5">
       {STYLES.map((s) => (

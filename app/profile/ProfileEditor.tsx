@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { FileText } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { updateProfile, type ProfileFields } from '@/app/actions/profile'
 import { Button } from '@/components/ui/button'
 import EditableSection from '@/components/profile/EditableSection'
@@ -36,8 +37,16 @@ const inputClass =
   'w-full bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors'
 const labelClass = 'block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5'
 
+// Values stay in English (stored as-is in the DB) — only their displayed
+// labels are translated, same pattern as job type/category on /jobs.
 const AVAILABILITY_OPTIONS = ['Immediate', 'Within 1 month', 'Within 3 months']
 const WORK_PREFERENCE_OPTIONS = ['Remote', 'Hybrid', 'On-site']
+const AVAILABILITY_KEYS: Record<string, string> = {
+  Immediate: 'availabilityImmediate', 'Within 1 month': 'availabilityWithin1Month', 'Within 3 months': 'availabilityWithin3Months',
+}
+const WORK_PREFERENCE_KEYS: Record<string, string> = {
+  Remote: 'workPreferenceRemote', Hybrid: 'workPreferenceHybrid', 'On-site': 'workPreferenceOnSite',
+}
 
 export default function ProfileEditor({
   initial,
@@ -62,6 +71,15 @@ export default function ProfileEditor({
   initialCertificates: Certificate[]
   initialLanguages: Language[]
 }) {
+  const t = useTranslations('profile')
+
+  function availabilityLabel(value: string) {
+    return AVAILABILITY_KEYS[value] ? t(AVAILABILITY_KEYS[value]) : value
+  }
+  function workPreferenceLabel(value: string) {
+    return WORK_PREFERENCE_KEYS[value] ? t(WORK_PREFERENCE_KEYS[value]) : value
+  }
+
   // Each section keeps its own draft + editing state, independent of the
   // others — editing Bio doesn't touch Experience's draft, and each saves
   // via a partial updateProfile() call for just its own field(s).
@@ -104,17 +122,17 @@ export default function ProfileEditor({
       {/* Header */}
       <div className="mb-2">
         <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-3">
-          <Link href="/candidate" className="hover:text-slate-900 dark:hover:text-white transition-colors">Dashboard</Link>
+          <Link href="/candidate" className="hover:text-slate-900 dark:hover:text-white transition-colors">{t('breadcrumbDashboard')}</Link>
           <span>/</span>
-          <span className="text-slate-700 dark:text-slate-300">Profile</span>
+          <span className="text-slate-700 dark:text-slate-300">{t('breadcrumbProfile')}</span>
         </div>
-        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">Your Profile</h1>
-        <p className="text-slate-600 dark:text-slate-400">The real information candidates and AI tools across the app use.</p>
+        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">{t('title')}</h1>
+        <p className="text-slate-600 dark:text-slate-400">{t('subtitle')}</p>
       </div>
 
       {/* Photo + Basics */}
       <EditableSection
-        title="Basics"
+        title={t('sectionBasics')}
         editing={basicsEditing}
         onEdit={() => { setBasicsDraft(basics); setBasicsEditing(true) }}
         onCancel={() => { setBasicsDraft(basics); setBasicsEditing(false) }}
@@ -127,14 +145,14 @@ export default function ProfileEditor({
           <div className="flex flex-col sm:flex-row sm:items-center gap-5">
             <AvatarUpload initialAvatarUrl={avatarUrl} fullName={basics.full_name} />
             <div className="space-y-1">
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white">{basics.full_name || 'Add your name'}</h2>
-              <p className="text-slate-600 dark:text-slate-400 text-sm">{basics.title || 'Add a professional title'}</p>
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white">{basics.full_name || t('addYourName')}</h2>
+              <p className="text-slate-600 dark:text-slate-400 text-sm">{basics.title || t('addProfessionalTitle')}</p>
               <p className="text-slate-600 dark:text-slate-400 text-xs">{email}</p>
               <div className="flex flex-wrap gap-1.5 pt-1 text-xs text-slate-600 dark:text-slate-400">
                 {basics.location && <span className="badge bg-slate-100 dark:bg-slate-700/60">{basics.location}</span>}
-                {basics.years_experience && <span className="badge bg-slate-100 dark:bg-slate-700/60">{basics.years_experience} yrs experience</span>}
-                {basics.work_preference && <span className="badge bg-slate-100 dark:bg-slate-700/60">{basics.work_preference}</span>}
-                {basics.availability && <span className="badge bg-slate-100 dark:bg-slate-700/60">Available: {basics.availability}</span>}
+                {basics.years_experience && <span className="badge bg-slate-100 dark:bg-slate-700/60">{basics.years_experience} {t('yearsSuffix')}</span>}
+                {basics.work_preference && <span className="badge bg-slate-100 dark:bg-slate-700/60">{workPreferenceLabel(basics.work_preference)}</span>}
+                {basics.availability && <span className="badge bg-slate-100 dark:bg-slate-700/60">{t('availableLabel', { value: availabilityLabel(basics.availability) })}</span>}
               </div>
             </div>
           </div>
@@ -142,22 +160,22 @@ export default function ProfileEditor({
         renderEdit={() => (
           <div className="space-y-4">
             <div>
-              <label className={labelClass}>Full Name</label>
+              <label className={labelClass}>{t('fullName')}</label>
               <input value={basicsDraft.full_name} onChange={(e) => setBasicsDraft((d) => ({ ...d, full_name: e.target.value }))} className={inputClass} />
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
-                <label className={labelClass}>Professional Title</label>
+                <label className={labelClass}>{t('professionalTitle')}</label>
                 <input value={basicsDraft.title} onChange={(e) => setBasicsDraft((d) => ({ ...d, title: e.target.value }))} className={inputClass} />
               </div>
               <div>
-                <label className={labelClass}>Location</label>
+                <label className={labelClass}>{t('location')}</label>
                 <input value={basicsDraft.location} onChange={(e) => setBasicsDraft((d) => ({ ...d, location: e.target.value }))} className={inputClass} />
               </div>
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
-                <label className={labelClass}>Years of Experience</label>
+                <label className={labelClass}>{t('yearsOfExperience')}</label>
                 <input
                   value={basicsDraft.years_experience}
                   onChange={(e) => setBasicsDraft((d) => ({ ...d, years_experience: e.target.value }))}
@@ -166,23 +184,23 @@ export default function ProfileEditor({
                 />
               </div>
               <div>
-                <label className={labelClass}>Availability</label>
+                <label className={labelClass}>{t('availability')}</label>
                 <select value={basicsDraft.availability} onChange={(e) => setBasicsDraft((d) => ({ ...d, availability: e.target.value }))} className={inputClass}>
-                  <option value="">Not specified</option>
-                  {AVAILABILITY_OPTIONS.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
+                  <option value="">{t('notSpecified')}</option>
+                  {AVAILABILITY_OPTIONS.map((opt) => <option key={opt} value={opt}>{availabilityLabel(opt)}</option>)}
                 </select>
               </div>
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
-                <label className={labelClass}>Work Preference</label>
+                <label className={labelClass}>{t('workPreference')}</label>
                 <select value={basicsDraft.work_preference} onChange={(e) => setBasicsDraft((d) => ({ ...d, work_preference: e.target.value }))} className={inputClass}>
-                  <option value="">Not specified</option>
-                  {WORK_PREFERENCE_OPTIONS.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
+                  <option value="">{t('notSpecified')}</option>
+                  {WORK_PREFERENCE_OPTIONS.map((opt) => <option key={opt} value={opt}>{workPreferenceLabel(opt)}</option>)}
                 </select>
               </div>
               <div>
-                <label className={labelClass}>Phone <span className="text-slate-600 font-normal">— private</span></label>
+                <label className={labelClass}>{t('phone')} <span className="text-slate-600 font-normal">{t('phonePrivateNote')}</span></label>
                 <input value={basicsDraft.phone} onChange={(e) => setBasicsDraft((d) => ({ ...d, phone: e.target.value }))} type="tel" className={inputClass} />
               </div>
             </div>
@@ -198,7 +216,7 @@ export default function ProfileEditor({
       />
 
       <EditableSection
-        title="Summary"
+        title={t('sectionSummary')}
         editing={bioEditing}
         onEdit={() => { setBioDraft(bio); setBioEditing(true) }}
         onCancel={() => { setBioDraft(bio); setBioEditing(false) }}
@@ -209,7 +227,7 @@ export default function ProfileEditor({
         }}
         renderView={() => (
           <p className="text-sm text-slate-700 dark:text-slate-300 whitespace-pre-wrap">
-            {bio || <span className="text-slate-600 dark:text-slate-400">Add a short summary about you and what you&rsquo;re looking for.</span>}
+            {bio || <span className="text-slate-600 dark:text-slate-400">{t('addSummaryPrompt')}</span>}
           </p>
         )}
         renderEdit={() => (
@@ -218,7 +236,7 @@ export default function ProfileEditor({
       />
 
       <EditableSection
-        title="Experience"
+        title={t('sectionExperience')}
         editing={experienceEditing}
         onEdit={() => { setExperienceDraft(experience); setExperienceEditing(true) }}
         onCancel={() => { setExperienceDraft(experience); setExperienceEditing(false) }}
@@ -231,7 +249,7 @@ export default function ProfileEditor({
           experience.trim() ? (
             <Timeline text={experience} />
           ) : (
-            <p className="text-sm text-slate-600 dark:text-slate-400">Add your roles, companies, dates, and key achievements.</p>
+            <p className="text-sm text-slate-600 dark:text-slate-400">{t('addExperiencePrompt')}</p>
           )
         }
         renderEdit={() => (
@@ -240,7 +258,7 @@ export default function ProfileEditor({
       />
 
       <EditableSection
-        title="Education"
+        title={t('sectionEducation')}
         editing={educationEditing}
         onEdit={() => { setEducationDraft(education); setEducationEditing(true) }}
         onCancel={() => { setEducationDraft(education); setEducationEditing(false) }}
@@ -253,7 +271,7 @@ export default function ProfileEditor({
           education.trim() ? (
             <Timeline text={education} />
           ) : (
-            <p className="text-sm text-slate-600 dark:text-slate-400">Add your degrees, schools, and dates.</p>
+            <p className="text-sm text-slate-600 dark:text-slate-400">{t('addEducationPrompt')}</p>
           )
         }
         renderEdit={() => (
@@ -262,7 +280,7 @@ export default function ProfileEditor({
       />
 
       <EditableSection
-        title="Skills"
+        title={t('sectionSkills')}
         editing={skillsEditing}
         onEdit={() => { setSkillsDraft(skills); setSkillsEditing(true) }}
         onCancel={() => { setSkillsDraft(skills); setSkillsEditing(false) }}
@@ -277,11 +295,11 @@ export default function ProfileEditor({
               {skillTags.map((s) => <span key={s} className="badge bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300">{s}</span>)}
             </div>
           ) : (
-            <p className="text-sm text-slate-600 dark:text-slate-400">Add your skills, comma-separated.</p>
+            <p className="text-sm text-slate-600 dark:text-slate-400">{t('addSkillsPrompt')}</p>
           )
         }
         renderEdit={() => (
-          <textarea value={skillsDraft} onChange={(e) => setSkillsDraft(e.target.value)} rows={2} placeholder="TypeScript, React, Node.js…" className={`${inputClass} resize-none`} />
+          <textarea value={skillsDraft} onChange={(e) => setSkillsDraft(e.target.value)} rows={2} placeholder={t('skillsPlaceholder')} className={`${inputClass} resize-none`} />
         )}
       />
 
@@ -290,7 +308,7 @@ export default function ProfileEditor({
       <LanguagesSection initial={initialLanguages} />
 
       <EditableSection
-        title="Links"
+        title={t('sectionLinks')}
         editing={linksEditing}
         onEdit={() => { setLinksDraft(links); setLinksEditing(true) }}
         onCancel={() => { setLinksDraft(links); setLinksEditing(false) }}
@@ -305,15 +323,15 @@ export default function ProfileEditor({
             {links.github_url && <a href={links.github_url} target="_blank" rel="noopener noreferrer" className="block text-primary hover:underline break-all">{links.github_url}</a>}
             {links.portfolio_url && <a href={links.portfolio_url} target="_blank" rel="noopener noreferrer" className="block text-primary hover:underline break-all">{links.portfolio_url}</a>}
             {!links.linkedin_url && !links.github_url && !links.portfolio_url && (
-              <p className="text-slate-600 dark:text-slate-400">Add your LinkedIn, GitHub, or portfolio URL.</p>
+              <p className="text-slate-600 dark:text-slate-400">{t('addLinksPrompt')}</p>
             )}
           </div>
         )}
         renderEdit={() => (
           <div className="space-y-3">
-            <input value={linksDraft.linkedin_url} onChange={(e) => setLinksDraft((d) => ({ ...d, linkedin_url: e.target.value }))} type="url" placeholder="LinkedIn URL" className={inputClass} />
-            <input value={linksDraft.github_url} onChange={(e) => setLinksDraft((d) => ({ ...d, github_url: e.target.value }))} type="url" placeholder="GitHub URL" className={inputClass} />
-            <input value={linksDraft.portfolio_url} onChange={(e) => setLinksDraft((d) => ({ ...d, portfolio_url: e.target.value }))} type="url" placeholder="Portfolio / Website URL" className={inputClass} />
+            <input value={linksDraft.linkedin_url} onChange={(e) => setLinksDraft((d) => ({ ...d, linkedin_url: e.target.value }))} type="url" placeholder={t('linkedinPlaceholder')} className={inputClass} />
+            <input value={linksDraft.github_url} onChange={(e) => setLinksDraft((d) => ({ ...d, github_url: e.target.value }))} type="url" placeholder={t('githubPlaceholder')} className={inputClass} />
+            <input value={linksDraft.portfolio_url} onChange={(e) => setLinksDraft((d) => ({ ...d, portfolio_url: e.target.value }))} type="url" placeholder={t('portfolioPlaceholder')} className={inputClass} />
           </div>
         )}
       />
@@ -323,11 +341,11 @@ export default function ProfileEditor({
         <div className="flex items-center gap-3">
           <FileText className="w-5 h-5 text-primary shrink-0" strokeWidth={1.75} />
           <div>
-            <h2 className="font-semibold text-slate-900 dark:text-white">Resume</h2>
-            <p className="text-xs text-slate-600 dark:text-slate-400">Generate and export your resume from this same profile data.</p>
+            <h2 className="font-semibold text-slate-900 dark:text-white">{t('sectionResume')}</h2>
+            <p className="text-xs text-slate-600 dark:text-slate-400">{t('resumeDesc')}</p>
           </div>
         </div>
-        <Link href="/ai-tools/resume-builder"><Button variant="primary" size="sm">Open Resume Builder</Button></Link>
+        <Link href="/ai-tools/resume-builder"><Button variant="primary" size="sm">{t('openResumeBuilder')}</Button></Link>
       </div>
     </div>
   )

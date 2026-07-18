@@ -1,6 +1,7 @@
 'use client'
 import { motion } from 'framer-motion'
 import { TrendingUp } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { Card, CardContent } from '@/components/ui/card'
 import FadeIn from '@/components/dashboard/FadeIn'
 import type { CareerProgressPoint } from '@/lib/careerProgress'
@@ -19,6 +20,7 @@ function formatDate(iso: string) {
 // elapsed time) — this is a real trend across real runs, not a
 // continuous-time series, so even spacing is the honest representation.
 export default function CareerProgressChart({ points }: { points: CareerProgressPoint[] }) {
+  const t = useTranslations('analytics')
   const xFor = (i: number) => PAD.left + (points.length <= 1 ? INNER_W / 2 : (i / (points.length - 1)) * INNER_W)
   const yFor = (score: number) => PAD.top + INNER_H - (score / 100) * INNER_H
 
@@ -32,28 +34,27 @@ export default function CareerProgressChart({ points }: { points: CareerProgress
           <div className="flex items-center justify-between mb-1">
             <h2 className="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-primary" strokeWidth={1.75} />
-              Career Progress
+              {t('careerProgress')}
             </h2>
             {points.length > 0 && (
               <div className="flex items-center gap-3 text-xs text-slate-600 dark:text-slate-400">
-                <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-primary" /> ATS Score</span>
-                <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-accent" /> Profile Strength</span>
+                <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-primary" /> {t('legendAtsScore')}</span>
+                <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-accent" /> {t('legendProfileStrength')}</span>
               </div>
             )}
           </div>
-          <p className="text-xs text-slate-600 dark:text-slate-400 mb-5">From your real AI Career Coach runs</p>
+          <p className="text-xs text-slate-600 dark:text-slate-400 mb-5">{t('careerProgressSubtitle')}</p>
 
           {points.length < 2 ? (
             <div className="text-center py-8">
               <div className="text-3xl mb-2">📈</div>
               {points.length === 1 ? (
                 <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Current: ATS {points[0].atsScore}/100, Profile Strength {points[0].profileStrength}/100
-                  {' '}(recorded {formatDate(points[0].generatedAt)}). Run Career Coach Analysis again in the future to see your progress here.
+                  {t('careerProgressSinglePoint', { ats: points[0].atsScore, strength: points[0].profileStrength, date: formatDate(points[0].generatedAt) })}
                 </p>
               ) : (
                 <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Run Career Coach Analysis to start tracking your progress here.
+                  {t('careerProgressNoPoints')}
                 </p>
               )}
             </div>

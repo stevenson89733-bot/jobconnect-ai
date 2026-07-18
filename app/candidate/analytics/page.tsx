@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Lock, Send } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { getCandidateProfile } from '@/lib/profile'
 import { buildWeeklyActivity } from '@/lib/weeklyActivity'
@@ -18,17 +19,18 @@ import type { CareerAnalysis } from '@/lib/ai/careerCoach'
 
 export const dynamic = 'force-dynamic'
 
-function UpsellGate() {
+async function UpsellGate() {
+  const t = await getTranslations('analytics')
   return (
     <div className="max-w-2xl mx-auto px-6 py-16">
       <Card>
         <CardContent className="p-10 text-center">
           <Lock className="w-8 h-8 mx-auto mb-3 text-primary" strokeWidth={1.5} />
-          <h1 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Analytics Dashboard is a Premium feature</h1>
+          <h1 className="text-xl font-bold text-slate-900 dark:text-white mb-1">{t('upsellTitle')}</h1>
           <p className="text-sm text-slate-600 dark:text-slate-400 mb-6 max-w-md mx-auto">
-            Upgrade to Premium to track your real application activity and see your AI Career Coach insights in one place.
+            {t('upsellDesc')}
           </p>
-          <Link href="/pricing"><Button variant="primary">View Premium Plans</Button></Link>
+          <Link href="/pricing"><Button variant="primary">{t('viewPremiumPlans')}</Button></Link>
         </CardContent>
       </Card>
     </div>
@@ -36,6 +38,7 @@ function UpsellGate() {
 }
 
 export default async function AnalyticsPage() {
+  const t = await getTranslations('analytics')
   const supabase = createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
@@ -68,14 +71,14 @@ export default async function AnalyticsPage() {
   return (
     <div className="max-w-5xl mx-auto px-6 py-10 space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-1">Analytics Dashboard</h1>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-1">{t('pageTitle')}</h1>
         <p className="text-slate-600 dark:text-slate-400 text-sm">
-          Your real application activity and AI Career Coach insights, in one place.
+          {t('pageSubtitle')}
         </p>
       </div>
 
       <div className="max-w-xs">
-        <StatCard label="Applications Sent" value={applicationsCount} icon={Send} delay={0} />
+        <StatCard label={t('statApplicationsSent')} value={applicationsCount} icon={Send} delay={0} />
       </div>
 
       <WeeklyActivityChart weeks={weeklyActivity} />

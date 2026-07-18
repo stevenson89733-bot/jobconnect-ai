@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Sparkles } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import type { MatchedJob } from '@/lib/jobMatching'
@@ -9,8 +10,9 @@ import FadeIn from './FadeIn'
 // candidate's own listed skills. No score/percentage is invented — only the
 // actual matched tags are shown, and the section only renders when there's
 // at least one genuine match.
-export default function JobRecommendations({ jobs }: { jobs: MatchedJob[] }) {
+export default async function JobRecommendations({ jobs }: { jobs: MatchedJob[] }) {
   if (jobs.length === 0) return null
+  const t = await getTranslations('candidate')
 
   return (
     <FadeIn>
@@ -19,12 +21,12 @@ export default function JobRecommendations({ jobs }: { jobs: MatchedJob[] }) {
           <div>
             <CardTitle className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-orange-600 dark:text-accent" strokeWidth={1.75} />
-              Recommended for You
+              {t('recommendedForYou')}
             </CardTitle>
-            <CardDescription className="mt-0.5">Based on the skills in your profile</CardDescription>
+            <CardDescription className="mt-0.5">{t('basedOnSkills')}</CardDescription>
           </div>
           <Link href="/jobs" className="text-xs text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 shrink-0">
-            See all jobs →
+            {t('seeAllJobs')}
           </Link>
         </CardHeader>
         <CardContent className="grid sm:grid-cols-2 gap-4">

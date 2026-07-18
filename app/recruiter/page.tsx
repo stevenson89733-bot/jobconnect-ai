@@ -1,9 +1,10 @@
 import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import ApplicationStatusControl from '@/components/recruiter/ApplicationStatusControl'
 import PostJobModal from '@/components/recruiter/PostJobModal'
 import { companyInitials } from '@/lib/companyDisplay'
-import { APPLICATION_STATUSES, APPLICATION_STATUS_LABEL, APPLICATION_STATUS_BAR_COLOR, type ApplicationStatus } from '@/lib/applicationStatus'
+import { APPLICATION_STATUSES, APPLICATION_STATUS_BAR_COLOR, type ApplicationStatus } from '@/lib/applicationStatus'
 import { timeAgo } from '@/lib/timeAgo'
 
 type Application = {
@@ -26,6 +27,9 @@ type JobRow = {
 }
 
 export default async function EmployerDashboard() {
+  const t = await getTranslations('recruiter')
+  const tStatus = await getTranslations('applicationStatus')
+
   let companyName = ''
   let jobs: JobRow[] = []
   let applications: Application[] = []
@@ -118,15 +122,15 @@ export default async function EmployerDashboard() {
             {companyInitials(companyName || 'Employer')}
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Employer Dashboard</h1>
+            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">{t('dashboardTitle')}</h1>
             <p className="text-slate-600 dark:text-slate-400 text-sm">
-              {companyName || 'Add your company name in your profile'}
+              {companyName || t('addCompanyNamePrompt')}
             </p>
           </div>
         </div>
         <div className="flex gap-3">
-          <Link href="/jobs" className="btn-outline text-sm">View All Jobs</Link>
-          <PostJobModal companyName={companyName} triggerClassName="btn-primary text-sm" triggerLabel="+ Post a Job" />
+          <Link href="/jobs" className="btn-outline text-sm">{t('viewAllJobs')}</Link>
+          <PostJobModal companyName={companyName} triggerClassName="btn-primary text-sm" triggerLabel={t('postAJob')} />
         </div>
       </div>
 
@@ -137,21 +141,21 @@ export default async function EmployerDashboard() {
             <span className="text-2xl">📋</span>
           </div>
           <div className="text-3xl font-extrabold text-primary dark:text-blue-400 mb-1">{activeJobsCount}</div>
-          <div className="text-xs text-slate-600 dark:text-slate-400">Active Job Posts</div>
+          <div className="text-xs text-slate-600 dark:text-slate-400">{t('statActiveJobPosts')}</div>
         </div>
         <div className="card">
           <div className="flex items-start justify-between mb-3">
             <span className="text-2xl">👥</span>
           </div>
           <div className="text-3xl font-extrabold text-green-600 dark:text-green-400 mb-1">{totalApplicants}</div>
-          <div className="text-xs text-slate-600 dark:text-slate-400">Total Applicants</div>
+          <div className="text-xs text-slate-600 dark:text-slate-400">{t('statTotalApplicants')}</div>
         </div>
         <div className="card">
           <div className="flex items-start justify-between mb-3">
             <span className="text-2xl">📅</span>
           </div>
           <div className="text-3xl font-extrabold text-orange-600 dark:text-accent mb-1">{interviewingCount}</div>
-          <div className="text-xs text-slate-600 dark:text-slate-400">Currently in Interview</div>
+          <div className="text-xs text-slate-600 dark:text-slate-400">{t('statCurrentlyInInterview')}</div>
         </div>
       </div>
 
@@ -159,12 +163,12 @@ export default async function EmployerDashboard() {
       <div className="card mb-6">
         <div className="flex items-center justify-between mb-5">
           <div>
-            <h2 className="font-semibold text-slate-900 dark:text-white">Applications Received</h2>
-            <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">Real candidates who applied to your job postings</p>
+            <h2 className="font-semibold text-slate-900 dark:text-white">{t('applicationsReceived')}</h2>
+            <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">{t('realCandidatesSubtitle')}</p>
           </div>
           {hasApplications && (
             <span className="badge bg-accent/10 dark:bg-accent/20 text-orange-700 dark:text-accent text-xs">
-              {totalApplicants} total
+              {t('totalBadge', { count: totalApplicants })}
             </span>
           )}
         </div>
@@ -172,9 +176,9 @@ export default async function EmployerDashboard() {
         {!hasApplications ? (
           <div className="text-center py-10 text-slate-600 dark:text-slate-400">
             <div className="text-3xl mb-2">📭</div>
-            <p className="text-sm text-slate-600 dark:text-slate-400">No applications yet.</p>
+            <p className="text-sm text-slate-600 dark:text-slate-400">{t('noApplicationsYet')}</p>
             <p className="text-xs mt-1">
-              Make sure you&apos;ve run <code className="bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-700 dark:text-slate-300">supabase/applications.sql</code> in your Supabase SQL Editor.
+              {t.rich('sqlHint', { file: (chunks) => <code className="bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-700 dark:text-slate-300">{chunks}</code> })}
             </p>
           </div>
         ) : (
@@ -196,7 +200,7 @@ export default async function EmployerDashboard() {
                         {(() => { const p = app.profiles; return (
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="text-sm font-medium text-slate-900 dark:text-white">
-                            {p?.full_name ?? 'Candidate'}
+                            {p?.full_name ?? t('candidateFallback')}
                           </span>
                           <span className="text-xs text-slate-600 dark:text-slate-400">{p?.email}</span>
                           <span className="text-xs text-slate-600 dark:text-slate-400 ml-auto">{timeAgo(app.created_at)}</span>
@@ -206,7 +210,7 @@ export default async function EmployerDashboard() {
                           <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 line-clamp-2">{app.message}</p>
                         )}
                         {!app.message && (
-                          <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 italic">No message provided</p>
+                          <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 italic">{t('noMessageProvided')}</p>
                         )}
                       </div>
                       <ApplicationStatusControl
@@ -227,13 +231,13 @@ export default async function EmployerDashboard() {
         {/* Real Job Postings */}
         <div className="xl:col-span-2 card">
           <div className="flex items-center justify-between mb-5">
-            <h2 className="font-semibold text-slate-900 dark:text-white">Your Job Postings</h2>
-            <PostJobModal companyName={companyName} triggerClassName="text-xs text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300" triggerLabel="+ Post new job" />
+            <h2 className="font-semibold text-slate-900 dark:text-white">{t('yourJobPostings')}</h2>
+            <PostJobModal companyName={companyName} triggerClassName="text-xs text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300" triggerLabel={t('postNewJob')} />
           </div>
           {jobs.length === 0 ? (
             <div className="text-center py-10 text-slate-600 dark:text-slate-400">
               <div className="text-3xl mb-2">📭</div>
-              <p className="text-sm">You haven&apos;t posted any jobs yet.</p>
+              <p className="text-sm">{t('noJobsPostedYet')}</p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -246,14 +250,14 @@ export default async function EmployerDashboard() {
                       <div className="flex items-center gap-2 mb-0.5">
                         <span className="font-medium text-sm text-slate-900 dark:text-white truncate">{job.title}</span>
                         <span className={`badge ${job.is_active ? 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400' : 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-400'}`}>
-                          {job.is_active ? 'Active' : 'Inactive'}
+                          {job.is_active ? t('active') : t('inactive')}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-600 dark:text-slate-400">{timeAgo(job.created_at)} · {applicantCount} applicant{applicantCount === 1 ? '' : 's'}</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">{timeAgo(job.created_at)} · {t('applicantCount', { count: applicantCount })}</p>
                     </div>
                     <div className="flex items-center gap-3 ml-4">
                       {newCount > 0 && (
-                        <span className="badge bg-accent/10 dark:bg-accent/20 text-orange-700 dark:text-accent">{newCount} new</span>
+                        <span className="badge bg-accent/10 dark:bg-accent/20 text-orange-700 dark:text-accent">{t('newBadge', { count: newCount })}</span>
                       )}
                     </div>
                   </div>
@@ -267,15 +271,15 @@ export default async function EmployerDashboard() {
             invented pipeline with stages that don't exist (e.g. "Screening",
             "Hired") */}
         <div className="card">
-          <h2 className="font-semibold text-slate-900 dark:text-white mb-5">Applications by Status</h2>
+          <h2 className="font-semibold text-slate-900 dark:text-white mb-5">{t('applicationsByStatus')}</h2>
           {!hasApplications ? (
-            <p className="text-sm text-slate-600 dark:text-slate-400 text-center py-6">No applications yet.</p>
+            <p className="text-sm text-slate-600 dark:text-slate-400 text-center py-6">{t('noApplicationsYet')}</p>
           ) : (
             <div className="space-y-3">
               {statusCounts.map(({ status, count }) => (
                 <div key={status}>
                   <div className="flex justify-between text-sm mb-1.5">
-                    <span className="text-slate-700 dark:text-slate-300">{APPLICATION_STATUS_LABEL[status]}</span>
+                    <span className="text-slate-700 dark:text-slate-300">{tStatus(status)}</span>
                     <span className="text-slate-600 dark:text-slate-400 font-medium">{count}</span>
                   </div>
                   <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
@@ -294,10 +298,10 @@ export default async function EmployerDashboard() {
       {/* Browse Candidates */}
       <div className="card flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h2 className="font-semibold text-slate-900 dark:text-white">Browse Candidates</h2>
-          <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">View candidate profiles on JobConnect AI</p>
+          <h2 className="font-semibold text-slate-900 dark:text-white">{t('browseCandidates')}</h2>
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">{t('browseCandidatesSubtitle')}</p>
         </div>
-        <Link href="/candidates" className="btn-primary text-sm px-6 py-2.5">View all →</Link>
+        <Link href="/candidates" className="btn-primary text-sm px-6 py-2.5">{t('viewAll')}</Link>
       </div>
     </div>
   )

@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import { Gauge, FileCheck2, KeyRound, SpellCheck2, TrendingUp, Wand2, AlertTriangle, RefreshCw } from 'lucide-react'
 import InsightCard from '@/components/career-coach/InsightCard'
 import SkillTag from '@/components/career-coach/SkillTag'
@@ -29,7 +30,7 @@ type ResumeData = {
   }
 }
 
-function ScoreRing({ score }: { score: number }) {
+function ScoreRing({ score, label }: { score: number; label: string }) {
   const color = score >= 80 ? '#22c55e' : score >= 60 ? '#f97316' : '#ef4444'
   const r = 52
   const circ = 2 * Math.PI * r
@@ -46,7 +47,7 @@ function ScoreRing({ score }: { score: number }) {
       </svg>
       <div className="text-center">
         <div className="text-3xl font-extrabold text-slate-900 dark:text-white">{score}</div>
-        <div className="text-xs text-slate-600 dark:text-slate-400">ATS Score</div>
+        <div className="text-xs text-slate-600 dark:text-slate-400">{label}</div>
       </div>
     </div>
   )
@@ -57,7 +58,7 @@ function ScoreRing({ score }: { score: number }) {
 // in the preview — including any accepted rewrite suggestions — for
 // whichever template is currently selected. Never reconstructs a separate
 // version of the resume.
-async function downloadResumeFile(content: ResumeContent, template: ResumeTemplateId, format: 'pdf' | 'docx') {
+async function downloadResumeFile(content: ResumeContent, template: ResumeTemplateId, format: 'pdf' | 'docx', exportFailedMsg: string) {
   const res = await fetch('/api/resume/export', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -65,7 +66,7 @@ async function downloadResumeFile(content: ResumeContent, template: ResumeTempla
   })
   if (!res.ok) {
     const data = await res.json().catch(() => ({}))
-    throw new Error(data.error || 'Export failed')
+    throw new Error(data.error || exportFailedMsg)
   }
   const disposition = res.headers.get('Content-Disposition') ?? ''
   const match = disposition.match(/filename="([^"]+)"/)
@@ -124,6 +125,7 @@ export default function ResumeBuilderClient({
   initialName?: string
   initialContact?: string
 }) {
+  const t = useTranslations('resumeBuilder')
   const [mounted, setMounted] = useState(false)
   // Pre-filled from the candidate's real saved profile (see page.tsx) —
   // still fully editable, this is a starting point, not a lockdown.
@@ -174,7 +176,7 @@ export default function ResumeBuilderClient({
     e.preventDefault()
     if (!isPremium) return
     if (!hasEnoughExperience(experience)) {
-      setError('Add a bit more detail to Work Experience — a few words isn\'t enough for a real resume, and we won\'t invent one for you.')
+      setError(t('notEnoughExperienceError'))
       return
     }
     const cleanTargetRole = sanitizeTargetRole(targetRole)
@@ -193,10 +195,10 @@ export default function ResumeBuilderClient({
         body: JSON.stringify({ targetRole: cleanTargetRole, experience, skills, education, summary }),
       })
       const data = await res.json()
-      if (!res.ok) throw new Error(data.error || 'Generation failed')
+      if (!res.ok) throw new Error(data.error || t('generationFailed'))
       setResult(data)
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Something went wrong')
+      setError(err instanceof Error ? err.message : t('somethingWentWrong'))
     } finally {
       setLoading(false)
     }
@@ -233,9 +235,9 @@ export default function ResumeBuilderClient({
     setExportError('')
     setExportingFormat(format)
     try {
-      await downloadResumeFile(previewContent, template, format)
+      await downloadResumeFile(previewContent, template, format, t('exportFailed'))
     } catch (err) {
-      setExportError(err instanceof Error ? err.message : 'Export failed')
+      setExportError(err instanceof Error ? err.message : t('exportFailed'))
     } finally {
       setExportingFormat(null)
     }
@@ -246,19 +248,19 @@ export default function ResumeBuilderClient({
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-3">
-          <Link href="/candidate" className="hover:text-slate-900 dark:hover:text-white transition-colors">Dashboard</Link>
+          <Link href="/candidate" className="hover:text-slate-900 dark:hover:text-white transition-colors">{t('breadcrumbDashboard')}</Link>
           <span>/</span>
-          <span className="text-slate-700 dark:text-slate-300">AI Resume Builder</span>
+          <span className="text-slate-700 dark:text-slate-300">{t('breadcrumbCurrent')}</span>
         </div>
         <div className="flex items-start justify-between flex-wrap gap-4">
           <div>
             <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">
-              AI Resume Builder <span className="text-orange-600 dark:text-accent">✦</span>
+              {t('title')} <span className="text-orange-600 dark:text-accent">✦</span>
             </h1>
-            <p className="text-slate-600 dark:text-slate-400">Generate an ATS-optimized resume tailored to your target role using GPT-4o.</p>
+            <p className="text-slate-600 dark:text-slate-400">{t('subtitle')}</p>
           </div>
           <span className="inline-flex items-center gap-1.5 bg-accent/10 text-orange-700 dark:text-accent border border-accent/30 rounded-full px-3 py-1 text-xs font-semibold">
-            ✦ Premium Feature
+            {t('premiumFeature')}
           </span>
         </div>
       </div>
@@ -268,19 +270,19 @@ export default function ResumeBuilderClient({
         <div className="relative mb-8">
           <div className="card border-accent/40 bg-gradient-to-br from-accent/5 to-white dark:to-card text-center py-12 px-6">
             <div className="text-5xl mb-4">🔒</div>
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Unlock AI Resume Builder</h2>
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{t('unlockTitle')}</h2>
             <p className="text-slate-600 dark:text-slate-400 mb-6 max-w-md mx-auto">
-              Generate unlimited ATS-optimized resumes, get your Resume Score, and download as PDF — all powered by GPT-4o.
+              {t('unlockDesc')}
             </p>
             <div className="flex flex-wrap gap-3 justify-center mb-8 text-sm text-slate-700 dark:text-slate-300">
-              {['Unlimited AI resumes', 'ATS Score (0–100)', 'PDF download', 'Tailored to any job title', 'Improvement tips'].map(f => (
+              {[t('featureUnlimitedResumes'), t('featureAtsScore'), t('featurePdfDownload'), t('featureTailored'), t('featureImprovementTips')].map(f => (
                 <span key={f} className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 rounded-full px-3 py-1">
                   <span className="text-green-600 dark:text-green-400">✓</span> {f}
                 </span>
               ))}
             </div>
             <Link href="/pricing" className="btn-primary px-8 py-3 text-base">
-              Upgrade to Premium — $19/mo
+              {t('upgradeCta')}
             </Link>
           </div>
 
@@ -310,54 +312,54 @@ export default function ResumeBuilderClient({
         <div className="grid md:grid-cols-2 gap-6">
           {/* Input form */}
           <form onSubmit={handleGenerate} className="card space-y-5">
-            <h2 className="font-semibold text-slate-900 dark:text-white text-lg">Your Information</h2>
+            <h2 className="font-semibold text-slate-900 dark:text-white text-lg">{t('yourInformation')}</h2>
 
             <div>
-              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Target Job Title <span className="text-red-500 dark:text-red-400">*</span></label>
+              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">{t('targetJobTitle')} <span className="text-red-500 dark:text-red-400">*</span></label>
               <input
                 value={targetRole} onChange={e => setTargetRole(stripTargetRoleNewlines(e.target.value))}
-                required maxLength={MAX_TARGET_ROLE_LENGTH} placeholder="e.g. Senior Frontend Engineer"
+                required maxLength={MAX_TARGET_ROLE_LENGTH} placeholder={t('targetJobTitlePlaceholder')}
                 className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary"
               />
             </div>
 
             <div>
-              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Work Experience <span className="text-red-500 dark:text-red-400">*</span></label>
+              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">{t('workExperience')} <span className="text-red-500 dark:text-red-400">*</span></label>
               <textarea
                 value={experience} onChange={e => setExperience(e.target.value)}
-                required rows={5} placeholder="List your roles, companies, dates, and key achievements..."
+                required rows={5} placeholder={t('workExperiencePlaceholder')}
                 className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary resize-none"
               />
               {experience.trim().length > 0 && !hasEnoughExperience(experience) && (
                 <p className="text-xs text-yellow-700 dark:text-yellow-500 mt-1.5">
-                  A bit more detail will give you a real, non-fabricated resume instead of a generic one.
+                  {t('notEnoughExperienceWarning')}
                 </p>
               )}
             </div>
 
             <div>
-              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Skills</label>
+              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">{t('skills')}</label>
               <input
                 value={skills} onChange={e => setSkills(e.target.value)}
-                placeholder="TypeScript, React, Node.js, PostgreSQL, AWS..."
+                placeholder={t('skillsPlaceholder')}
                 className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary"
               />
             </div>
 
             <div>
-              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Education</label>
+              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">{t('education')}</label>
               <input
                 value={education} onChange={e => setEducation(e.target.value)}
-                placeholder="B.S. Computer Science, MIT, 2018"
+                placeholder={t('educationPlaceholder')}
                 className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary"
               />
             </div>
 
             <div>
-              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Professional Summary (optional)</label>
+              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">{t('professionalSummary')}</label>
               <textarea
                 value={summary} onChange={e => setSummary(e.target.value)}
-                rows={2} placeholder="Any specific angle or positioning you want emphasized..."
+                rows={2} placeholder={t('professionalSummaryPlaceholder')}
                 className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary resize-none"
               />
             </div>
@@ -371,9 +373,9 @@ export default function ResumeBuilderClient({
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
                   </svg>
-                  Generating with GPT-4o…
+                  {t('generatingButton')}
                 </span>
-              ) : '✦ Generate AI Resume'}
+              ) : t('generateButton')}
             </button>
           </form>
 
@@ -383,13 +385,11 @@ export default function ResumeBuilderClient({
                 the AI output once generated, the raw form content until then. */}
             <div className="card">
               <div className="flex items-center justify-between mb-1">
-                <h2 className="font-semibold text-slate-900 dark:text-white">{result ? 'Generated Resume' : 'Live Preview'}</h2>
+                <h2 className="font-semibold text-slate-900 dark:text-white">{result ? t('generatedResume') : t('livePreview')}</h2>
                 <TemplateSelector value={template} onChange={setTemplate} />
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">
-                {result
-                  ? 'AI-polished with GPT-4o. Switching templates never changes this content.'
-                  : 'Updates instantly as you type — click Generate for an AI-polished, ATS-optimized version.'}
+                {result ? t('generatedResumeSubtitle') : t('livePreviewSubtitle')}
               </p>
               <ResumePreview content={previewContent} template={template} />
 
@@ -398,10 +398,10 @@ export default function ResumeBuilderClient({
                   {exportError && <p className="text-red-600 dark:text-red-400 text-xs mt-3">{exportError}</p>}
                   <div className="flex gap-2 mt-4">
                     <Button variant="primary" size="sm" onClick={() => handleExport('pdf')} disabled={exportingFormat !== null}>
-                      {exportingFormat === 'pdf' ? 'Preparing PDF…' : '⬇ Download PDF'}
+                      {exportingFormat === 'pdf' ? t('preparingPdf') : t('downloadPdf')}
                     </Button>
                     <Button variant="outline" size="sm" onClick={() => handleExport('docx')} disabled={exportingFormat !== null}>
-                      {exportingFormat === 'docx' ? 'Preparing DOCX…' : '⬇ Download DOCX'}
+                      {exportingFormat === 'docx' ? t('preparingDocx') : t('downloadDocx')}
                     </Button>
                   </div>
                 </>
@@ -414,7 +414,7 @@ export default function ResumeBuilderClient({
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
                 </svg>
-                <p className="text-sm text-slate-600 dark:text-slate-400">GPT-4o is crafting your resume…</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">{t('craftingResume')}</p>
               </div>
             )}
 
@@ -422,10 +422,13 @@ export default function ResumeBuilderClient({
               <>
                 {/* Score card */}
                 <div className="card">
-                  <h2 className="font-semibold text-slate-900 dark:text-white mb-4">Resume Score</h2>
+                  <h2 className="font-semibold text-slate-900 dark:text-white mb-4">{t('resumeScore')}</h2>
                   <div className="flex items-center gap-6">
-                    <ScoreRing score={result.score} />
+                    <ScoreRing score={result.score} label={t('resumeScore')} />
                     <div className="flex-1 space-y-2.5">
+                      {/* Score breakdown categories (keywords/formatting/experience/skills)
+                          are the AI response's fixed schema field names — left untranslated,
+                          same reasoning as not translating other AI-generated output. */}
                       {Object.entries(result.scoreBreakdown).map(([key, val]) => (
                         <div key={key}>
                           <div className="flex justify-between text-xs mb-1">
@@ -441,9 +444,9 @@ export default function ResumeBuilderClient({
                   </div>
                 </div>
 
-                {/* Improvements */}
+                {/* Improvements — result.improvements is real AI-generated content, never translated */}
                 <div className="card">
-                  <h2 className="font-semibold text-slate-900 dark:text-white mb-3">How to Improve</h2>
+                  <h2 className="font-semibold text-slate-900 dark:text-white mb-3">{t('howToImprove')}</h2>
                   <ul className="space-y-2">
                     {result.improvements.map((tip, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm text-slate-700 dark:text-slate-300">
@@ -456,19 +459,19 @@ export default function ResumeBuilderClient({
                 {/* Deep analysis — explicit action, not automatic */}
                 <div className="card">
                   <div className="flex items-center justify-between mb-1">
-                    <h2 className="font-semibold text-slate-900 dark:text-white">Deep Analysis</h2>
+                    <h2 className="font-semibold text-slate-900 dark:text-white">{t('deepAnalysis')}</h2>
                     <Button variant="primary" size="sm" onClick={handleAnalyze} disabled={analysisLoading}>
                       <RefreshCw className={`w-3.5 h-3.5 ${analysisLoading ? 'animate-spin' : ''}`} />
-                      {analysisLoading ? 'Analyzing…' : analysis ? 'Re-analyze' : 'Analyze Resume'}
+                      {analysisLoading ? t('analyzingButton') : analysis ? t('reanalyzeButton') : t('analyzeButton')}
                     </Button>
                   </div>
                   <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">
-                    Score, keywords, grammar, achievements, and rewrite suggestions for this exact resume.
+                    {t('deepAnalysisSubtitle')}
                   </p>
                   {isAnalysisStale && (
                     <p className="text-xs text-yellow-700 dark:text-yellow-500 mb-4 flex items-center gap-1.5">
                       <AlertTriangle className="w-3.5 h-3.5 shrink-0" strokeWidth={1.75} />
-                      Analysis may be outdated — the resume changed since this was generated. Click Re-analyze to refresh.
+                      {t('staleAnalysisWarning')}
                     </p>
                   )}
 
@@ -484,26 +487,30 @@ export default function ResumeBuilderClient({
                   {analysisLoading && !analysis && (
                     <div className="flex flex-col items-center justify-center py-10 text-center gap-3 text-slate-600 dark:text-slate-400">
                       <RefreshCw className="w-6 h-6 animate-spin text-primary" strokeWidth={1.75} />
-                      <p className="text-sm">GPT-4o is analyzing your resume — this can take up to a minute.</p>
+                      <p className="text-sm">{t('analyzingLong')}</p>
                     </div>
                   )}
 
+                  {/* All `analysis.*` content below (explanation, keywordOptimization,
+                      grammarSuggestions, achievementSuggestions, aiRewrite.suggestion)
+                      is real AI-generated output — only the InsightCard section titles
+                      and the "nothing found" fallback strings are translated chrome. */}
                   {analysis && (
                     <div className="space-y-5">
                       <div className="grid sm:grid-cols-2 gap-4">
-                        <InsightCard icon={Gauge} title="Resume Score"
+                        <InsightCard icon={Gauge} title={t('resumeScore')}
                           badge={<span className="text-xl font-extrabold text-primary dark:text-blue-400 tabular-nums">{analysis.resumeScore.score}</span>}>
                           {analysis.resumeScore.explanation}
                         </InsightCard>
-                        <InsightCard icon={FileCheck2} title="ATS Score"
+                        <InsightCard icon={FileCheck2} title={t('insightAtsScore')}
                           badge={<span className="text-xl font-extrabold text-primary dark:text-blue-400 tabular-nums">{analysis.atsScore.score}</span>}>
                           {analysis.atsScore.explanation}
                         </InsightCard>
                       </div>
 
-                      <InsightCard icon={KeyRound} title="Keyword Optimization">
+                      <InsightCard icon={KeyRound} title={t('insightKeywordOptimization')}>
                         {analysis.keywordOptimization.length === 0 ? (
-                          <p className="text-slate-600 dark:text-slate-400">No significant gaps found.</p>
+                          <p className="text-slate-600 dark:text-slate-400">{t('noGapsFound')}</p>
                         ) : (
                           <div className="flex flex-wrap gap-1.5">
                             {analysis.keywordOptimization.map((k) => <SkillTag key={k} label={k} />)}
@@ -511,9 +518,9 @@ export default function ResumeBuilderClient({
                         )}
                       </InsightCard>
 
-                      <InsightCard icon={SpellCheck2} title="Grammar Suggestions">
+                      <InsightCard icon={SpellCheck2} title={t('insightGrammarSuggestions')}>
                         {analysis.grammarSuggestions.length === 0 ? (
-                          <p className="text-slate-600 dark:text-slate-400">No issues found.</p>
+                          <p className="text-slate-600 dark:text-slate-400">{t('noIssuesFound')}</p>
                         ) : (
                           <ul className="space-y-1.5 list-disc list-inside">
                             {analysis.grammarSuggestions.map((s, i) => <li key={i}>{s}</li>)}
@@ -521,9 +528,9 @@ export default function ResumeBuilderClient({
                         )}
                       </InsightCard>
 
-                      <InsightCard icon={TrendingUp} title="Achievement Suggestions">
+                      <InsightCard icon={TrendingUp} title={t('insightAchievementSuggestions')}>
                         {analysis.achievementSuggestions.length === 0 ? (
-                          <p className="text-slate-600 dark:text-slate-400">Nothing significant flagged.</p>
+                          <p className="text-slate-600 dark:text-slate-400">{t('nothingSignificantFlagged')}</p>
                         ) : (
                           <ul className="space-y-1.5 list-disc list-inside">
                             {analysis.achievementSuggestions.map((s, i) => <li key={i}>{s}</li>)}
@@ -532,9 +539,9 @@ export default function ResumeBuilderClient({
                       </InsightCard>
 
                       {analysis.aiRewrite.length > 0 && (
-                        <InsightCard icon={Wand2} title="AI Rewrite Suggestions">
+                        <InsightCard icon={Wand2} title={t('insightAiRewriteSuggestions')}>
                           <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">
-                            Review each suggestion — accepting updates the resume above, rejecting leaves it unchanged.
+                            {t('rewriteReviewHint')}
                           </p>
                           <div className="space-y-3">
                             {analysis.aiRewrite.map((r, i) => (

@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { Plus, Trash2, ExternalLink, BadgeCheck } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import EditableSection from './EditableSection'
 import { saveCertificates } from '@/app/actions/profileSections'
@@ -10,6 +11,7 @@ const inputClass =
   'w-full bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary'
 
 export default function CertificatesSection({ initial }: { initial: Certificate[] }) {
+  const t = useTranslations('profile')
   const [saved, setSaved] = useState(initial)
   const [draft, setDraft] = useState(initial)
   const [editing, setEditing] = useState(false)
@@ -26,7 +28,7 @@ export default function CertificatesSection({ initial }: { initial: Certificate[
 
   return (
     <EditableSection
-      title="Certificates"
+      title={t('sectionCertificates')}
       editing={editing}
       onEdit={() => { setDraft(saved); setEditing(true) }}
       onCancel={() => { setDraft(saved); setEditing(false) }}
@@ -38,7 +40,7 @@ export default function CertificatesSection({ initial }: { initial: Certificate[
       }}
       renderView={() =>
         saved.length === 0 ? (
-          <p className="text-sm text-slate-600 dark:text-slate-400">No certificates added yet.</p>
+          <p className="text-sm text-slate-600 dark:text-slate-400">{t('noCertificatesYet')}</p>
         ) : (
           <div className="space-y-3">
             {saved.map((c) => (
@@ -70,13 +72,13 @@ export default function CertificatesSection({ initial }: { initial: Certificate[
                 <input
                   value={c.name}
                   onChange={(e) => updateItem(c.id, { name: e.target.value })}
-                  placeholder="Certificate name"
+                  placeholder={t('certificateNamePlaceholder')}
                   className={inputClass}
                 />
                 <button
                   type="button"
                   onClick={() => removeItem(c.id)}
-                  aria-label="Remove certificate"
+                  aria-label={t('removeCertificate')}
                   className="text-slate-400 hover:text-red-600 dark:hover:text-red-400 shrink-0"
                 >
                   <Trash2 className="w-4 h-4" />
@@ -86,27 +88,27 @@ export default function CertificatesSection({ initial }: { initial: Certificate[
                 <input
                   value={c.issuer}
                   onChange={(e) => updateItem(c.id, { issuer: e.target.value })}
-                  placeholder="Issuer"
+                  placeholder={t('certificateIssuerPlaceholder')}
                   className={inputClass}
                 />
                 <input
                   value={c.date}
                   onChange={(e) => updateItem(c.id, { date: e.target.value })}
-                  placeholder="Date"
+                  placeholder={t('certificateDatePlaceholder')}
                   className={inputClass}
                 />
               </div>
               <input
                 value={c.credentialUrl}
                 onChange={(e) => updateItem(c.id, { credentialUrl: e.target.value })}
-                placeholder="Credential URL (optional)"
+                placeholder={t('certificateUrlPlaceholder')}
                 type="url"
                 className={inputClass}
               />
             </div>
           ))}
           <Button variant="outline" size="sm" type="button" onClick={addItem}>
-            <Plus className="w-3.5 h-3.5" /> Add Certificate
+            <Plus className="w-3.5 h-3.5" /> {t('addCertificate')}
           </Button>
         </div>
       )}

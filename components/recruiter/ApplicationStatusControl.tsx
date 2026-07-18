@@ -1,7 +1,8 @@
 'use client'
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { updateApplicationStatus } from '@/app/actions/applications'
-import { APPLICATION_STATUSES, APPLICATION_STATUS_LABEL, APPLICATION_STATUS_VARIANT, type ApplicationStatus } from '@/lib/applicationStatus'
+import { APPLICATION_STATUSES, APPLICATION_STATUS_VARIANT, type ApplicationStatus } from '@/lib/applicationStatus'
 import { timeAgo } from '@/lib/timeAgo'
 import { Badge } from '@/components/ui/badge'
 
@@ -21,6 +22,8 @@ export default function ApplicationStatusControl({
   const [statusUpdatedAt, setStatusUpdatedAt] = useState(initialStatusUpdatedAt)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+  const t = useTranslations('applicationStatus')
+  const tr = useTranslations('recruiter')
 
   async function handleChange(next: ApplicationStatus) {
     if (next === status) return
@@ -41,22 +44,22 @@ export default function ApplicationStatusControl({
   return (
     <div className="flex flex-col items-end gap-1 shrink-0">
       <div className="flex items-center gap-2">
-        <Badge variant={APPLICATION_STATUS_VARIANT[status]}>{APPLICATION_STATUS_LABEL[status]}</Badge>
+        <Badge variant={APPLICATION_STATUS_VARIANT[status]}>{t(status)}</Badge>
         <select
           value={status}
           disabled={saving}
           onChange={(e) => handleChange(e.target.value as ApplicationStatus)}
-          aria-label="Update application status"
+          aria-label={tr('updateStatusAriaLabel')}
           className="text-xs bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-md px-1.5 py-1 text-slate-700 dark:text-slate-300 focus:outline-none focus:border-primary disabled:opacity-50"
         >
           {APPLICATION_STATUSES.map((s) => (
-            <option key={s} value={s}>{APPLICATION_STATUS_LABEL[s]}</option>
+            <option key={s} value={s}>{t(s)}</option>
           ))}
         </select>
       </div>
       {statusUpdatedAt && status !== 'submitted' && (
         <span className="text-[11px] text-slate-600 dark:text-slate-400">
-          {APPLICATION_STATUS_LABEL[status]} {timeAgo(statusUpdatedAt, 'verbose')}
+          {t(status)} {timeAgo(statusUpdatedAt, 'verbose')}
         </span>
       )}
       {error && <span className="text-[11px] text-red-600 dark:text-red-400">{error}</span>}

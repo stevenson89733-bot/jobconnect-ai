@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { Plus, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useTranslations } from 'next-intl'
 import { Badge } from '@/components/ui/badge'
 import EditableSection from './EditableSection'
 import { saveLanguages } from '@/app/actions/profileSections'
@@ -10,7 +11,15 @@ import { PROFICIENCY_LEVELS, type Language } from '@/lib/profileSections'
 const inputClass =
   'w-full bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary'
 
+const PROFICIENCY_KEYS: Record<string, string> = {
+  Basic: 'proficiencyBasic', Conversational: 'proficiencyConversational', Fluent: 'proficiencyFluent', Native: 'proficiencyNative',
+}
+
 export default function LanguagesSection({ initial }: { initial: Language[] }) {
+  const t = useTranslations('profile')
+  function proficiencyLabel(value: string) {
+    return PROFICIENCY_KEYS[value] ? t(PROFICIENCY_KEYS[value]) : value
+  }
   const [saved, setSaved] = useState(initial)
   const [draft, setDraft] = useState(initial)
   const [editing, setEditing] = useState(false)
@@ -27,7 +36,7 @@ export default function LanguagesSection({ initial }: { initial: Language[] }) {
 
   return (
     <EditableSection
-      title="Languages"
+      title={t('sectionLanguages')}
       editing={editing}
       onEdit={() => { setDraft(saved); setEditing(true) }}
       onCancel={() => { setDraft(saved); setEditing(false) }}
@@ -39,11 +48,11 @@ export default function LanguagesSection({ initial }: { initial: Language[] }) {
       }}
       renderView={() =>
         saved.length === 0 ? (
-          <p className="text-sm text-slate-600 dark:text-slate-400">No languages added yet.</p>
+          <p className="text-sm text-slate-600 dark:text-slate-400">{t('noLanguagesYet')}</p>
         ) : (
           <div className="flex flex-wrap gap-2">
             {saved.map((l) => (
-              <Badge key={l.id}>{l.name} — {l.proficiency}</Badge>
+              <Badge key={l.id}>{l.name} — {proficiencyLabel(l.proficiency)}</Badge>
             ))}
           </div>
         )
@@ -55,7 +64,7 @@ export default function LanguagesSection({ initial }: { initial: Language[] }) {
               <input
                 value={l.name}
                 onChange={(e) => updateItem(l.id, { name: e.target.value })}
-                placeholder="Language"
+                placeholder={t('languageNamePlaceholder')}
                 className={inputClass}
               />
               <select
@@ -63,12 +72,12 @@ export default function LanguagesSection({ initial }: { initial: Language[] }) {
                 onChange={(e) => updateItem(l.id, { proficiency: e.target.value as Language['proficiency'] })}
                 className={inputClass}
               >
-                {PROFICIENCY_LEVELS.map((level) => <option key={level} value={level}>{level}</option>)}
+                {PROFICIENCY_LEVELS.map((level) => <option key={level} value={level}>{proficiencyLabel(level)}</option>)}
               </select>
               <button
                 type="button"
                 onClick={() => removeItem(l.id)}
-                aria-label="Remove language"
+                aria-label={t('removeLanguage')}
                 className="text-slate-400 hover:text-red-600 dark:hover:text-red-400 shrink-0"
               >
                 <Trash2 className="w-4 h-4" />
@@ -76,7 +85,7 @@ export default function LanguagesSection({ initial }: { initial: Language[] }) {
             </div>
           ))}
           <Button variant="outline" size="sm" type="button" onClick={addItem}>
-            <Plus className="w-3.5 h-3.5" /> Add Language
+            <Plus className="w-3.5 h-3.5" /> {t('addLanguage')}
           </Button>
         </div>
       )}

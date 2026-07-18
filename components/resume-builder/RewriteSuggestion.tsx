@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { Check, X } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 
 // Accept/reject UI for one AI rewrite suggestion — never applied
@@ -16,11 +17,12 @@ export default function RewriteSuggestion({
   onAccept: (text: string) => void
 }) {
   const [status, setStatus] = useState<'pending' | 'accepted' | 'rejected'>('pending')
+  const t = useTranslations('resumeBuilder')
 
   if (status === 'accepted') {
     return (
       <div className="rounded-lg border border-green-300 dark:border-green-800/50 bg-green-50 dark:bg-green-900/20 p-3 text-xs text-green-700 dark:text-green-400">
-        Applied to {label}.
+        {t('appliedTo', { section: label })}
       </div>
     )
   }
@@ -36,10 +38,10 @@ export default function RewriteSuggestion({
           size="sm"
           onClick={() => { onAccept(suggestion); setStatus('accepted') }}
         >
-          <Check className="w-3.5 h-3.5" /> Accept
+          <Check className="w-3.5 h-3.5" /> {t('accept')}
         </Button>
         <Button variant="outline" size="sm" onClick={() => setStatus('rejected')}>
-          <X className="w-3.5 h-3.5" /> Reject
+          <X className="w-3.5 h-3.5" /> {t('reject')}
         </Button>
       </div>
     </div>

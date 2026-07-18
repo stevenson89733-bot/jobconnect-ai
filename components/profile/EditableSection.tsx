@@ -2,6 +2,7 @@
 import { useState, type ReactNode } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Pencil, Check, X } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 
@@ -32,6 +33,7 @@ export default function EditableSection({
 }) {
   const [saving, setSaving] = useState(false)
   const [status, setStatus] = useState<{ type: 'ok' | 'error'; msg: string } | null>(null)
+  const t = useTranslations('profile')
 
   async function handleSave() {
     setSaving(true)
@@ -39,13 +41,13 @@ export default function EditableSection({
     try {
       const res = await onSave()
       if (res.ok) {
-        setStatus({ type: 'ok', msg: 'Saved.' })
+        setStatus({ type: 'ok', msg: t('saved') })
         setTimeout(() => setStatus(null), 2000)
       } else {
-        setStatus({ type: 'error', msg: res.error ?? 'Save failed.' })
+        setStatus({ type: 'error', msg: res.error ?? t('saveFailed') })
       }
     } catch {
-      setStatus({ type: 'error', msg: 'Save failed — please try again.' })
+      setStatus({ type: 'error', msg: t('saveFailedRetry') })
     } finally {
       setSaving(false)
     }
@@ -60,8 +62,8 @@ export default function EditableSection({
             {description && <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">{description}</p>}
           </div>
           {!editing && (
-            <Button variant="ghost" size="sm" onClick={onEdit} aria-label={`Edit ${title}`}>
-              <Pencil className="w-3.5 h-3.5" strokeWidth={1.75} /> Edit
+            <Button variant="ghost" size="sm" onClick={onEdit} aria-label={t('editAria', { section: title })}>
+              <Pencil className="w-3.5 h-3.5" strokeWidth={1.75} /> {t('edit')}
             </Button>
           )}
         </div>
@@ -87,10 +89,10 @@ export default function EditableSection({
 
                 <div className="flex items-center gap-2 pt-1">
                   <Button variant="primary" size="sm" onClick={handleSave} disabled={saving}>
-                    {saving ? 'Saving…' : <><Check className="w-3.5 h-3.5" /> Save</>}
+                    {saving ? t('saving') : <><Check className="w-3.5 h-3.5" /> {t('save')}</>}
                   </Button>
                   <Button variant="outline" size="sm" onClick={onCancel} disabled={saving}>
-                    <X className="w-3.5 h-3.5" /> Cancel
+                    <X className="w-3.5 h-3.5" /> {t('cancel')}
                   </Button>
                 </div>
               </div>

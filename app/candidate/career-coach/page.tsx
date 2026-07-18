@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Lock } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { matchJobsToSkills } from '@/lib/jobMatching'
 import { getCandidateProfile } from '@/lib/profile'
@@ -10,18 +11,18 @@ import type { CareerAnalysis } from '@/lib/ai/careerCoach'
 
 export const dynamic = 'force-dynamic'
 
-function UpsellGate() {
+async function UpsellGate() {
+  const t = await getTranslations('careerCoach')
   return (
     <div className="max-w-2xl mx-auto px-6 py-16">
       <Card>
         <CardContent className="p-10 text-center">
           <Lock className="w-8 h-8 mx-auto mb-3 text-primary" strokeWidth={1.5} />
-          <h1 className="text-xl font-bold text-slate-900 dark:text-white mb-1">AI Career Coach is a Premium feature</h1>
+          <h1 className="text-xl font-bold text-slate-900 dark:text-white mb-1">{t('upsellTitle')}</h1>
           <p className="text-sm text-slate-600 dark:text-slate-400 mb-6 max-w-md mx-auto">
-            Upgrade to Premium to get a full AI-generated career assessment — ATS score, missing skills,
-            resume and interview suggestions, a career roadmap, and more.
+            {t('upsellDesc')}
           </p>
-          <Link href="/pricing"><Button variant="primary">View Premium Plans</Button></Link>
+          <Link href="/pricing"><Button variant="primary">{t('viewPremiumPlans')}</Button></Link>
         </CardContent>
       </Card>
     </div>
@@ -29,6 +30,7 @@ function UpsellGate() {
 }
 
 export default async function CareerCoachPage() {
+  const t = await getTranslations('careerCoach')
   const supabase = createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
@@ -54,9 +56,9 @@ export default async function CareerCoachPage() {
   return (
     <div className="max-w-5xl mx-auto px-6 py-10">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-1">AI Career Coach</h1>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-1">{t('pageTitle')}</h1>
         <p className="text-slate-600 dark:text-slate-400 text-sm">
-          An AI-generated assessment of your profile — refresh anytime to regenerate it.
+          {t('pageSubtitle')}
         </p>
       </div>
 

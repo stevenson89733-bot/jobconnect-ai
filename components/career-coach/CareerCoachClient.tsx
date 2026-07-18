@@ -1,5 +1,6 @@
 'use client'
 import { useState, useTransition } from 'react'
+import { useTranslations } from 'next-intl'
 import {
   Gauge, FileCheck2, ListChecks, KeyRound, FileEdit, MessagesSquare,
   Map, GraduationCap, DollarSign, RefreshCw, AlertTriangle, Sparkles,
@@ -30,8 +31,8 @@ function RoadmapColumn({ title, items }: { title: string; items: string[] }) {
   )
 }
 
-function BulletList({ items }: { items: string[] }) {
-  if (items.length === 0) return <p className="text-slate-600 dark:text-slate-400">Nothing to show.</p>
+function BulletList({ items, emptyLabel }: { items: string[]; emptyLabel: string }) {
+  if (items.length === 0) return <p className="text-slate-600 dark:text-slate-400">{emptyLabel}</p>
   return (
     <ul className="space-y-1.5 list-disc list-inside">
       {items.map((item, i) => <li key={i}>{item}</li>)}
@@ -50,6 +51,7 @@ export default function CareerCoachClient({
   hasSkills: boolean
   matchedJobs: MatchedJob[]
 }) {
+  const t = useTranslations('careerCoach')
   const [analysis, setAnalysis] = useState(initialAnalysis)
   const [generatedAt, setGeneratedAt] = useState(initialGeneratedAt)
   const [error, setError] = useState<string | null>(null)
@@ -74,12 +76,12 @@ export default function CareerCoachClient({
         <Card>
           <CardContent className="p-10 text-center">
             <Sparkles className="w-8 h-8 mx-auto mb-3 text-primary" strokeWidth={1.5} />
-            <h2 className="font-semibold text-slate-900 dark:text-white mb-1">Complete your profile first</h2>
+            <h2 className="font-semibold text-slate-900 dark:text-white mb-1">{t('completeProfileTitle')}</h2>
             <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 max-w-md mx-auto">
-              Add at least a few skills to your profile so the AI Career Coach has something real to analyze.
+              {t('completeProfileDesc')}
             </p>
             <a href="/profile" className="inline-block">
-              <Button variant="primary">Complete Profile</Button>
+              <Button variant="primary">{t('completeProfileCta')}</Button>
             </a>
           </CardContent>
         </Card>
@@ -92,11 +94,11 @@ export default function CareerCoachClient({
       {/* Header / refresh */}
       <FadeIn className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <p className="text-sm text-slate-600 dark:text-slate-400">
-          {generatedAt ? `Last updated: ${formatDate(generatedAt)}` : 'No analysis generated yet.'}
+          {generatedAt ? t('lastUpdated', { date: formatDate(generatedAt) }) : t('noAnalysisGenerated')}
         </p>
         <Button variant="primary" onClick={handleRefresh} disabled={isPending}>
           <RefreshCw className={`w-4 h-4 ${isPending ? 'animate-spin' : ''}`} strokeWidth={2} />
-          {isPending ? 'Analyzing your profile…' : 'Refresh Analysis'}
+          {isPending ? t('analyzingProfile') : t('refreshAnalysis')}
         </Button>
       </FadeIn>
 
@@ -108,7 +110,7 @@ export default function CareerCoachClient({
               <div className="flex-1">
                 <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
               </div>
-              <Button variant="outline" size="sm" onClick={handleRefresh} disabled={isPending}>Retry</Button>
+              <Button variant="outline" size="sm" onClick={handleRefresh} disabled={isPending}>{t('retry')}</Button>
             </CardContent>
           </Card>
         </FadeIn>
@@ -119,7 +121,7 @@ export default function CareerCoachClient({
           <Card>
             <CardContent className="p-10 text-center text-slate-600 dark:text-slate-400">
               <RefreshCw className="w-6 h-6 mx-auto mb-3 animate-spin text-primary" strokeWidth={1.75} />
-              <p className="text-sm">Generating your first analysis — this can take up to a minute.</p>
+              <p className="text-sm">{t('generatingFirst')}</p>
             </CardContent>
           </Card>
         </FadeIn>
@@ -130,41 +132,44 @@ export default function CareerCoachClient({
           <Card>
             <CardContent className="p-10 text-center">
               <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                Click &quot;Refresh Analysis&quot; to generate your first AI career assessment.
+                {t('clickRefreshPrompt')}
               </p>
             </CardContent>
           </Card>
         </FadeIn>
       )}
 
+      {/* All `analysis.*` content below is real AI-generated output — only
+          InsightCard titles, column labels, and "nothing found" fallback
+          strings are translated chrome. */}
       {analysis && (
         <>
           <div className="grid sm:grid-cols-2 gap-6">
-            <InsightCard icon={Gauge} title="ATS Score" delay={0}
+            <InsightCard icon={Gauge} title={t('insightAtsScore')} delay={0}
               badge={<span className="text-2xl font-extrabold text-primary dark:text-blue-400 tabular-nums">{analysis.atsScore.score}</span>}>
               {analysis.atsScore.explanation}
             </InsightCard>
-            <InsightCard icon={FileCheck2} title="Profile Strength" delay={0.05}
+            <InsightCard icon={FileCheck2} title={t('insightProfileStrength')} delay={0.05}
               badge={<span className="text-2xl font-extrabold text-primary dark:text-blue-400 tabular-nums">{analysis.profileStrength.score}</span>}>
               {analysis.profileStrength.explanation}
             </InsightCard>
           </div>
 
           <div className="grid sm:grid-cols-2 gap-6">
-            <InsightCard icon={ListChecks} title="Missing Skills" delay={0.1}>
-              <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">Based on your profile</p>
+            <InsightCard icon={ListChecks} title={t('insightMissingSkills')} delay={0.1}>
+              <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('basedOnProfile')}</p>
               {analysis.missingSkills.length === 0 ? (
-                <p className="text-slate-600 dark:text-slate-400">Nothing significant flagged.</p>
+                <p className="text-slate-600 dark:text-slate-400">{t('nothingSignificantFlagged')}</p>
               ) : (
                 <div className="flex flex-wrap gap-1.5">
                   {analysis.missingSkills.map((s) => <SkillTag key={s} label={s} />)}
                 </div>
               )}
             </InsightCard>
-            <InsightCard icon={KeyRound} title="Missing Keywords" delay={0.15}>
-              <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">For resume/ATS optimization</p>
+            <InsightCard icon={KeyRound} title={t('insightMissingKeywords')} delay={0.15}>
+              <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('forAtsOptimization')}</p>
               {analysis.missingKeywords.length === 0 ? (
-                <p className="text-slate-600 dark:text-slate-400">Nothing significant flagged.</p>
+                <p className="text-slate-600 dark:text-slate-400">{t('nothingSignificantFlagged')}</p>
               ) : (
                 <div className="flex flex-wrap gap-1.5">
                   {analysis.missingKeywords.map((s) => <SkillTag key={s} label={s} />)}
@@ -174,25 +179,25 @@ export default function CareerCoachClient({
           </div>
 
           <div className="grid sm:grid-cols-2 gap-6">
-            <InsightCard icon={FileEdit} title="Resume Suggestions" delay={0.2}>
-              <BulletList items={analysis.resumeSuggestions} />
+            <InsightCard icon={FileEdit} title={t('insightResumeSuggestions')} delay={0.2}>
+              <BulletList items={analysis.resumeSuggestions} emptyLabel={t('nothingToShow')} />
             </InsightCard>
-            <InsightCard icon={MessagesSquare} title="Interview Suggestions" delay={0.25}>
-              <BulletList items={analysis.interviewSuggestions} />
+            <InsightCard icon={MessagesSquare} title={t('insightInterviewSuggestions')} delay={0.25}>
+              <BulletList items={analysis.interviewSuggestions} emptyLabel={t('nothingToShow')} />
             </InsightCard>
           </div>
 
-          <InsightCard icon={Map} title="Career Roadmap" delay={0.3}>
+          <InsightCard icon={Map} title={t('insightCareerRoadmap')} delay={0.3}>
             <div className="grid sm:grid-cols-3 gap-4">
-              <RoadmapColumn title="Short term" items={analysis.careerRoadmap.shortTerm} />
-              <RoadmapColumn title="Mid term" items={analysis.careerRoadmap.midTerm} />
-              <RoadmapColumn title="Long term" items={analysis.careerRoadmap.longTerm} />
+              <RoadmapColumn title={t('roadmapShortTerm')} items={analysis.careerRoadmap.shortTerm} />
+              <RoadmapColumn title={t('roadmapMidTerm')} items={analysis.careerRoadmap.midTerm} />
+              <RoadmapColumn title={t('roadmapLongTerm')} items={analysis.careerRoadmap.longTerm} />
             </div>
           </InsightCard>
 
-          <InsightCard icon={GraduationCap} title="Recommended Certifications" delay={0.35}>
+          <InsightCard icon={GraduationCap} title={t('insightRecommendedCertifications')} delay={0.35}>
             {analysis.recommendedCertifications.length === 0 ? (
-              <p className="text-slate-600 dark:text-slate-400">Nothing significant flagged.</p>
+              <p className="text-slate-600 dark:text-slate-400">{t('nothingSignificantFlagged')}</p>
             ) : (
               <ul className="space-y-2">
                 {analysis.recommendedCertifications.map((c) => (
@@ -205,16 +210,15 @@ export default function CareerCoachClient({
             )}
           </InsightCard>
 
-          <InsightCard icon={DollarSign} title="Salary Prediction" delay={0.4}>
+          <InsightCard icon={DollarSign} title={t('insightSalaryPrediction')} delay={0.4}>
             <p className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
-              {analysis.salaryPrediction.range || 'Not enough data to estimate.'}
+              {analysis.salaryPrediction.range || t('notEnoughDataToEstimate')}
             </p>
             <p className="mb-3">{analysis.salaryPrediction.explanation}</p>
             <div className="flex items-start gap-2 rounded-lg bg-yellow-100 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-800/50 p-3">
               <AlertTriangle className="w-4 h-4 text-yellow-700 dark:text-yellow-400 shrink-0 mt-0.5" strokeWidth={1.75} />
               <p className="text-xs text-yellow-800 dark:text-yellow-400">
-                This is an AI-generated estimate based on your profile, not real-time market data. Use it as a
-                rough starting point, not a guaranteed figure.
+                {t('aiEstimateDisclaimer')}
               </p>
             </div>
           </InsightCard>
@@ -225,11 +229,11 @@ export default function CareerCoachClient({
       <FadeIn delay={0.45}>
         <Card>
           <CardContent className="p-6">
-            <h2 className="font-semibold text-slate-900 dark:text-white mb-1">Recommended Jobs</h2>
-            <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">Real open roles matching your skills</p>
+            <h2 className="font-semibold text-slate-900 dark:text-white mb-1">{t('recommendedJobs')}</h2>
+            <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">{t('recommendedJobsSubtitle')}</p>
             {matchedJobs.length === 0 ? (
               <p className="text-sm text-slate-600 dark:text-slate-400 text-center py-6">
-                No matching roles yet — check back soon.
+                {t('noMatchingRoles')}
               </p>
             ) : (
               <div className="grid sm:grid-cols-2 gap-4">

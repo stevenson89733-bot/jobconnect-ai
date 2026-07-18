@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import { Markdown } from '@/lib/docExport'
 import RewriteSuggestion from '@/components/resume-builder/RewriteSuggestion'
 import StyleSelector, { type CoverLetterStyle } from '@/components/cover-letter/StyleSelector'
@@ -27,13 +28,7 @@ type CoverLetterData = {
   companyResearch?: { used: boolean; sources?: { title: string; url: string }[] }
 }
 
-const SECTION_LABELS: Record<LetterSection, string> = {
-  opening: 'Opening Paragraph',
-  body: 'Body',
-  closing: 'Closing Paragraph',
-}
-
-function ScoreRing({ score }: { score: number }) {
+function ScoreRing({ score, label }: { score: number; label: string }) {
   const color = score >= 80 ? '#22c55e' : score >= 60 ? '#f97316' : '#ef4444'
   const r = 52
   const circ = 2 * Math.PI * r
@@ -50,7 +45,7 @@ function ScoreRing({ score }: { score: number }) {
       </svg>
       <div className="text-center">
         <div className="text-3xl font-extrabold text-slate-900 dark:text-white">{score}</div>
-        <div className="text-xs text-slate-600 dark:text-slate-400">Quality Score</div>
+        <div className="text-xs text-slate-600 dark:text-slate-400">{label}</div>
       </div>
     </div>
   )
@@ -64,7 +59,8 @@ async function downloadCoverLetterFile(
   letter: CoverLetterData['letter'],
   dateLine: string,
   companyName: string,
-  format: 'pdf' | 'docx'
+  format: 'pdf' | 'docx',
+  exportFailedMsg: string
 ) {
   const res = await fetch('/api/cover-letter/export', {
     method: 'POST',
@@ -77,7 +73,7 @@ async function downloadCoverLetterFile(
   })
   if (!res.ok) {
     const data = await res.json().catch(() => ({}))
-    throw new Error(data.error || 'Export failed')
+    throw new Error(data.error || exportFailedMsg)
   }
   const disposition = res.headers.get('Content-Disposition') ?? ''
   const match = disposition.match(/filename="([^"]+)"/)
@@ -129,6 +125,13 @@ export default function CoverLetterClient({
   initialJobDescription?: string
   initialStrengths?: string
 }) {
+  const t = useTranslations('coverLetter')
+  const SECTION_LABELS: Record<LetterSection, string> = {
+    opening: t('sectionOpening'),
+    body: t('sectionBody'),
+    closing: t('sectionClosing'),
+  }
+
   const [mounted, setMounted] = useState(false)
   const [targetRole, setTargetRole] = useState(initialTargetRole)
   const [company, setCompany] = useState(initialCompany)
@@ -163,14 +166,14 @@ export default function CoverLetterClient({
         body: JSON.stringify({ targetRole, company, jobDescription, strengths, style }),
       })
       const data = await res.json()
-      if (!res.ok) throw new Error(data.error || 'Generation failed')
+      if (!res.ok) throw new Error(data.error || t('generationFailed'))
       // Real current date at generation time — never model-generated, never
       // a placeholder. Captured once here so it doesn't drift if the result
       // stays on screen across a day boundary.
       setDateLine(new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }))
       setResult(data)
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Something went wrong')
+      setError(err instanceof Error ? err.message : t('somethingWentWrong'))
     } finally {
       setLoading(false)
     }
@@ -230,9 +233,9 @@ export default function CoverLetterClient({
     setExportingFormat(format)
     setExportError('')
     try {
-      await downloadCoverLetterFile(result.letter, dateLine, company, format)
+      await downloadCoverLetterFile(result.letter, dateLine, company, format, t('exportFailed'))
     } catch (err) {
-      setExportError(err instanceof Error ? err.message : 'Export failed')
+      setExportError(err instanceof Error ? err.message : t('exportFailed'))
     } finally {
       setExportingFormat(null)
     }
@@ -243,25 +246,25 @@ export default function CoverLetterClient({
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-3">
-          <Link href="/candidate" className="hover:text-slate-900 dark:hover:text-white transition-colors">Dashboard</Link>
+          <Link href="/candidate" className="hover:text-slate-900 dark:hover:text-white transition-colors">{t('breadcrumbDashboard')}</Link>
           <span>/</span>
-          <span className="text-slate-700 dark:text-slate-300">AI Cover Letter Generator</span>
+          <span className="text-slate-700 dark:text-slate-300">{t('breadcrumbCurrent')}</span>
         </div>
         <div className="flex items-start justify-between flex-wrap gap-4">
           <div>
             <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">
-              AI Cover Letter Generator <span className="text-orange-600 dark:text-accent">✦</span>
+              {t('title')} <span className="text-orange-600 dark:text-accent">✦</span>
             </h1>
-            <p className="text-slate-600 dark:text-slate-400">Generate a personalized, compelling cover letter for any role using GPT-4o.</p>
+            <p className="text-slate-600 dark:text-slate-400">{t('subtitle')}</p>
           </div>
           <div className="flex items-center gap-3">
             {isPremium && (
               <Link href="/ai-tools/cover-letter/history" className="text-sm text-primary hover:underline">
-                View History
+                {t('viewHistory')}
               </Link>
             )}
             <span className="inline-flex items-center gap-1.5 bg-accent/10 text-orange-700 dark:text-accent border border-accent/30 rounded-full px-3 py-1 text-xs font-semibold">
-              ✦ Premium Feature
+              {t('premiumFeature')}
             </span>
           </div>
         </div>
@@ -272,19 +275,19 @@ export default function CoverLetterClient({
         <div className="relative mb-8">
           <div className="card border-accent/40 bg-gradient-to-br from-accent/5 to-white dark:to-card text-center py-12 px-6">
             <div className="text-5xl mb-4">🔒</div>
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Unlock AI Cover Letter Generator</h2>
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{t('unlockTitle')}</h2>
             <p className="text-slate-600 dark:text-slate-400 mb-6 max-w-md mx-auto">
-              Generate personalized cover letters for any job in seconds — tailored to the company and role, powered by GPT-4o.
+              {t('unlockDesc')}
             </p>
             <div className="flex flex-wrap gap-3 justify-center mb-8 text-sm text-slate-700 dark:text-slate-300">
-              {['Unlimited cover letters', 'Quality Score (0–100)', 'PDF download', 'Company-specific tone', 'Improvement tips'].map(f => (
+              {[t('featureUnlimitedLetters'), t('featureQualityScore'), t('featurePdfDownload'), t('featureCompanyTone'), t('featureImprovementTips')].map(f => (
                 <span key={f} className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 rounded-full px-3 py-1">
                   <span className="text-green-600 dark:text-green-400">✓</span> {f}
                 </span>
               ))}
             </div>
             <Link href="/pricing" className="btn-primary px-8 py-3 text-base">
-              Upgrade to Premium — $19/mo
+              {t('upgradeCta')}
             </Link>
           </div>
 
@@ -316,49 +319,49 @@ export default function CoverLetterClient({
         <div className="grid md:grid-cols-2 gap-6">
           {/* Input form */}
           <form onSubmit={handleGenerate} className="card space-y-5">
-            <h2 className="font-semibold text-slate-900 dark:text-white text-lg">Job Details</h2>
+            <h2 className="font-semibold text-slate-900 dark:text-white text-lg">{t('jobDetails')}</h2>
 
             <div>
-              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Target Job Title <span className="text-red-500 dark:text-red-400">*</span></label>
+              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">{t('targetJobTitle')} <span className="text-red-500 dark:text-red-400">*</span></label>
               <input
                 value={targetRole}
                 onChange={e => setTargetRole(stripTargetRoleNewlines(e.target.value))}
                 onBlur={e => setTargetRole(sanitizeTargetRole(e.target.value))}
                 maxLength={MAX_TARGET_ROLE_LENGTH}
-                required placeholder="e.g. Senior Product Designer"
+                required placeholder={t('targetJobTitlePlaceholder')}
                 className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary"
               />
             </div>
 
             <div>
-              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Company Name <span className="text-red-500 dark:text-red-400">*</span></label>
+              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">{t('companyName')} <span className="text-red-500 dark:text-red-400">*</span></label>
               <input
                 value={company} onChange={e => setCompany(e.target.value)}
-                required placeholder="e.g. Figma"
+                required placeholder={t('companyNamePlaceholder')}
                 className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary"
               />
             </div>
 
             <div>
-              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Job Description <span className="text-slate-400 dark:text-slate-400">(optional, recommended)</span></label>
+              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">{t('jobDescription')} <span className="text-slate-400 dark:text-slate-400">{t('jobDescriptionHint')}</span></label>
               <textarea
                 value={jobDescription} onChange={e => setJobDescription(e.target.value)}
-                rows={6} placeholder="Paste the job listing text here — the letter will reference real requirements mentioned in it, never invented ones."
+                rows={6} placeholder={t('jobDescriptionPlaceholder')}
                 className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary resize-none"
               />
             </div>
 
             <div>
-              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Your Key Strengths & Highlights</label>
+              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">{t('yourStrengths')}</label>
               <textarea
                 value={strengths} onChange={e => setStrengths(e.target.value)}
-                rows={5} placeholder="e.g. 5 years of product design at B2B SaaS companies, led redesign that increased conversions by 40%, strong Figma and design systems experience..."
+                rows={5} placeholder={t('yourStrengthsPlaceholder')}
                 className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary resize-none"
               />
             </div>
 
             <div>
-              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">Writing Style</label>
+              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">{t('writingStyle')}</label>
               <StyleSelector value={style} onChange={setStyle} />
             </div>
 
@@ -371,9 +374,9 @@ export default function CoverLetterClient({
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
                   </svg>
-                  Generating with GPT-4o…
+                  {t('generatingButton')}
                 </span>
-              ) : '✦ Generate Cover Letter'}
+              ) : t('generateButton')}
             </button>
           </form>
 
@@ -382,7 +385,7 @@ export default function CoverLetterClient({
             {!result && !loading && (
               <div className="card flex flex-col items-center justify-center py-16 text-center text-slate-600 dark:text-slate-400">
                 <div className="text-4xl mb-3">✉️</div>
-                <p className="text-sm">Fill in the job details and click Generate to get your personalized cover letter.</p>
+                <p className="text-sm">{t('emptyStatePrompt')}</p>
               </div>
             )}
 
@@ -392,7 +395,7 @@ export default function CoverLetterClient({
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
                 </svg>
-                <p className="text-sm text-slate-600 dark:text-slate-400">GPT-4o is writing your cover letter…</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">{t('writingLetter')}</p>
               </div>
             )}
 
@@ -401,34 +404,34 @@ export default function CoverLetterClient({
                 {/* Score card */}
                 <div className="card">
                   <div className="flex items-center justify-between mb-4">
-                    <h2 className="font-semibold text-slate-900 dark:text-white">Quality Score</h2>
+                    <h2 className="font-semibold text-slate-900 dark:text-white">{t('qualityScore')}</h2>
                     <div className="flex items-center gap-2">
                       <button
                         onClick={handleCopy}
                         className="btn-outline text-xs py-2 px-4 flex items-center gap-1.5"
                       >
-                        {copyStatus === 'copied' ? '✓ Copied' : '📋 Copy'}
+                        {copyStatus === 'copied' ? t('copied') : t('copy')}
                       </button>
                       <button
                         onClick={handleSaveDraft}
                         disabled={saveStatus === 'saving'}
                         className="btn-outline text-xs py-2 px-4 flex items-center gap-1.5 disabled:opacity-50"
                       >
-                        {saveStatus === 'saving' ? 'Saving…' : saveStatus === 'saved' ? '✓ Saved' : '💾 Save Draft'}
+                        {saveStatus === 'saving' ? t('saving') : saveStatus === 'saved' ? t('saved') : t('saveDraft')}
                       </button>
                       <button
                         onClick={() => handleExport('pdf')}
                         disabled={exportingFormat !== null}
                         className="btn-outline text-xs py-2 px-4 flex items-center gap-1.5 disabled:opacity-50"
                       >
-                        {exportingFormat === 'pdf' ? 'Preparing PDF…' : '⬇ Download PDF'}
+                        {exportingFormat === 'pdf' ? t('preparingPdf') : t('downloadPdf')}
                       </button>
                       <button
                         onClick={() => handleExport('docx')}
                         disabled={exportingFormat !== null}
                         className="btn-primary text-xs py-2 px-4 flex items-center gap-1.5 disabled:opacity-50"
                       >
-                        {exportingFormat === 'docx' ? 'Preparing DOCX…' : '⬇ Download DOCX'}
+                        {exportingFormat === 'docx' ? t('preparingDocx') : t('downloadDocx')}
                       </button>
                     </div>
                   </div>
@@ -441,7 +444,7 @@ export default function CoverLetterClient({
                   {copyStatus === 'manual' && (
                     <div className="mb-3">
                       <p className="text-xs text-slate-600 dark:text-slate-400 mb-1.5">
-                        Your browser blocked automatic copying — select the text below and press Cmd/Ctrl+C.
+                        {t('shareBlocked')}
                       </p>
                       <textarea
                         readOnly
@@ -454,8 +457,10 @@ export default function CoverLetterClient({
                     </div>
                   )}
                   <div className="flex items-center gap-6">
-                    <ScoreRing score={result.score} />
+                    <ScoreRing score={result.score} label={t('qualityScore')} />
                     <div className="flex-1 space-y-2.5">
+                      {/* Score breakdown categories are the AI response's fixed
+                          schema field names — left untranslated, same as Resume Builder. */}
                       {Object.entries(result.scoreBreakdown).map(([key, val]) => (
                         <div key={key}>
                           <div className="flex justify-between text-xs mb-1">
@@ -471,9 +476,9 @@ export default function CoverLetterClient({
                   </div>
                 </div>
 
-                {/* Improvements */}
+                {/* Improvements — result.improvements is real AI-generated content */}
                 <div className="card">
-                  <h2 className="font-semibold text-slate-900 dark:text-white mb-3">How to Improve</h2>
+                  <h2 className="font-semibold text-slate-900 dark:text-white mb-3">{t('howToImprove')}</h2>
                   <ul className="space-y-2">
                     {result.improvements.map((tip, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm text-slate-700 dark:text-slate-300">
@@ -489,7 +494,7 @@ export default function CoverLetterClient({
                   result.companyResearch.used ? (
                     <div className="card border-green-500/30 bg-green-50 dark:bg-green-500/5">
                       <p className="text-sm text-green-700 dark:text-green-400 flex items-center gap-1.5 font-medium">
-                        ✓ Company research used — sourced via web search
+                        {t('companyResearchUsed')}
                       </p>
                       {!!result.companyResearch.sources?.length && (
                         <ul className="mt-2 space-y-1">
@@ -506,15 +511,15 @@ export default function CoverLetterClient({
                   ) : (
                     <div className="card">
                       <p className="text-sm text-slate-600 dark:text-slate-400">
-                        No verified company info found — proceeding with a general letter.
+                        {t('companyResearchNotUsed')}
                       </p>
                     </div>
                   )
                 )}
 
-                {/* Letter preview */}
+                {/* Letter preview — result.letter.* is real AI-generated content, never translated */}
                 <div className="card">
-                  <h2 className="font-semibold text-slate-900 dark:text-white mb-4">Generated Cover Letter</h2>
+                  <h2 className="font-semibold text-slate-900 dark:text-white mb-4">{t('generatedCoverLetter')}</h2>
                   <div className="bg-slate-50 dark:bg-slate-900 rounded-xl p-5 text-sm space-y-4">
                     <p className="text-slate-600 dark:text-slate-400 text-xs">{result.letter.subject}</p>
                     <p className="text-slate-600 dark:text-slate-400 text-xs">{dateLine}</p>
@@ -533,7 +538,7 @@ export default function CoverLetterClient({
                 {/* AI suggestions — same accept/reject pattern as Resume Builder */}
                 {result.suggestions.length > 0 && (
                   <div className="card">
-                    <h2 className="font-semibold text-slate-900 dark:text-white mb-3">Suggestions</h2>
+                    <h2 className="font-semibold text-slate-900 dark:text-white mb-3">{t('suggestions')}</h2>
                     <div className="space-y-3">
                       {result.suggestions.map((s, i) => (
                         <RewriteSuggestion

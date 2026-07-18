@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { getTranslations } from 'next-intl/server'
 import { Send, CheckCircle2, Layers } from 'lucide-react'
 import { matchJobsToSkills } from '@/lib/jobMatching'
 import WelcomeHeader from '@/components/dashboard/WelcomeHeader'
@@ -45,6 +46,7 @@ function jobInfo(row: RawApplicationRow): JobRef {
 }
 
 export default async function CandidateDashboard() {
+  const t = await getTranslations('candidate')
   const supabase = createClient()
 
   let email = ''
@@ -128,10 +130,10 @@ export default async function CandidateDashboard() {
       <ProfileSnapshot title={profile?.title ?? null} />
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <StatCard label="Applications Sent" value={applicationsCount} icon={Send} delay={0} />
-        <StatCard label="Profile Completion" value={`${completion}%`} icon={CheckCircle2} accent="text-primary" delay={0.05} />
+        <StatCard label={t('statApplicationsSent')} value={applicationsCount} icon={Send} delay={0} />
+        <StatCard label={t('statProfileCompletion')} value={`${completion}%`} icon={CheckCircle2} accent="text-primary" delay={0.05} />
         <StatCard
-          label={`Skill${skillTags.length === 1 ? '' : 's'} Listed`}
+          label={t('statSkillsListed', { count: skillTags.length })}
           value={skillTags.length}
           icon={Layers}
           delay={0.1}
