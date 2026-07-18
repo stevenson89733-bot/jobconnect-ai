@@ -1,5 +1,6 @@
 'use server'
 import { createClient } from '@/lib/supabase/server'
+import { getTranslations } from 'next-intl/server'
 import type { CoverLetterDraft, CoverLetterStyleValue, SavedLetterContent } from '@/lib/coverLetters'
 
 const VALID_STYLES: CoverLetterStyleValue[] = ['Formal', 'Conversational', 'Concise']
@@ -19,17 +20,18 @@ export type SaveDraftResult = { ok: true; id: string } | { ok: false; error: str
 // reasoning as skipping it on other simple authenticated writes elsewhere
 // in the app).
 export async function saveCoverLetterDraft(input: SaveDraftInput): Promise<SaveDraftResult> {
+  const t = await getTranslations('errors')
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { ok: false, error: 'You must be signed in.' }
+  if (!user) return { ok: false, error: t('mustBeSignedIn') }
 
   const companyName = input.companyName.trim()
   const targetRole = input.targetRole.trim()
   if (!companyName || !targetRole) {
-    return { ok: false, error: 'Missing company or role — generate a letter first.' }
+    return { ok: false, error: t('missingCompanyOrRole') }
   }
   if (!input.letterContent?.opening?.trim()) {
-    return { ok: false, error: 'Nothing to save yet — generate a letter first.' }
+    return { ok: false, error: t('nothingToSaveYet') }
   }
 
   const style = VALID_STYLES.includes(input.style as CoverLetterStyleValue) ? input.style : 'Formal'
@@ -49,7 +51,7 @@ export async function saveCoverLetterDraft(input: SaveDraftInput): Promise<SaveD
 
   if (error) {
     console.error('[cover-letters/save]', error.message)
-    return { ok: false, error: 'Could not save this draft — please try again.' }
+    return { ok: false, error: t('couldNotSaveDraft') }
   }
 
   return { ok: true, id: data.id }
@@ -58,9 +60,10 @@ export async function saveCoverLetterDraft(input: SaveDraftInput): Promise<SaveD
 export type ListDraftsResult = { ok: true; drafts: CoverLetterDraft[] } | { ok: false; error: string }
 
 export async function listCoverLetterDrafts(): Promise<ListDraftsResult> {
+  const t = await getTranslations('errors')
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { ok: false, error: 'You must be signed in.' }
+  if (!user) return { ok: false, error: t('mustBeSignedIn') }
 
   const { data, error } = await supabase
     .from('cover_letters')
@@ -70,7 +73,7 @@ export async function listCoverLetterDrafts(): Promise<ListDraftsResult> {
 
   if (error) {
     console.error('[cover-letters/list]', error.message)
-    return { ok: false, error: 'Could not load your saved letters.' }
+    return { ok: false, error: t('couldNotLoadSavedLetters') }
   }
 
   return { ok: true, drafts: data as CoverLetterDraft[] }
@@ -79,9 +82,10 @@ export async function listCoverLetterDrafts(): Promise<ListDraftsResult> {
 export type DeleteDraftResult = { ok: true } | { ok: false; error: string }
 
 export async function deleteCoverLetterDraft(id: string): Promise<DeleteDraftResult> {
+  const t = await getTranslations('errors')
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { ok: false, error: 'You must be signed in.' }
+  if (!user) return { ok: false, error: t('mustBeSignedIn') }
 
   // RLS also scopes this to the caller's own rows — the .eq() here is
   // belt-and-suspenders, not the only guard.
@@ -93,7 +97,7 @@ export async function deleteCoverLetterDraft(id: string): Promise<DeleteDraftRes
 
   if (error) {
     console.error('[cover-letters/delete]', error.message)
-    return { ok: false, error: 'Could not delete this letter.' }
+    return { ok: false, error: t('couldNotDeleteLetter') }
   }
 
   return { ok: true }

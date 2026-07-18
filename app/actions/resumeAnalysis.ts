@@ -1,5 +1,6 @@
 'use server'
 import { createClient } from '@/lib/supabase/server'
+import { getTranslations } from 'next-intl/server'
 import { rateLimit } from '@/lib/rateLimit'
 import { generateResumeAnalysis, ResumeAnalysisError, type ResumeAnalysis, type ResumeDocumentInput } from '@/lib/ai/resumeAnalysis'
 
@@ -11,12 +12,13 @@ export type ResumeAnalysisResult =
 // A resume gets iterated on more than a career analysis, so the limit is a
 // bit more generous (5/hour vs 3/hour) while still blocking a button-mash.
 export async function analyzeResume(doc: ResumeDocumentInput): Promise<ResumeAnalysisResult> {
+  const t = await getTranslations('errors')
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { ok: false, error: 'You must be signed in.' }
+  if (!user) return { ok: false, error: t('mustBeSignedIn') }
 
   const { ok: withinLimit } = rateLimit(`resume-analysis:${user.id}`, 5, 60 * 60 * 1000)
-  if (!withinLimit) return { ok: false, error: 'Too many analyses. Please try again in a bit.' }
+  if (!withinLimit) return { ok: false, error: t('tooManyAnalyses') }
 
   const { data: profileRow } = await supabase
     .from('profiles')
@@ -25,19 +27,21 @@ export async function analyzeResume(doc: ResumeDocumentInput): Promise<ResumeAna
     .single()
 
   if (!profileRow?.is_premium) {
-    return { ok: false, error: 'Resume analysis is a Premium feature.' }
+    return { ok: false, error: t('resumeAnalysisPremiumOnly') }
   }
 
   const hasContent = !!(doc.summary?.trim() || doc.experience?.trim())
   if (!hasContent) {
-    return { ok: false, error: 'Generate a resume first — there\'s nothing to analyze yet.' }
+    return { ok: false, error: t('generateResumeFirstAnalyze') }
   }
 
   try {
     const analysis = await generateResumeAnalysis(doc)
     return { ok: true, analysis }
   } catch (err) {
-    const message = err instanceof ResumeAnalysisError ? err.message : 'Something went wrong analyzing your resume.'
+    // ResumeAnalysisError wraps a dynamic underlying AI-provider/config
+    // error — left untranslated, same as other third-party passthroughs.
+    const message = err instanceof ResumeAnalysisError ? err.message : t('somethingWentWrongAnalyzingResume')
     return { ok: false, error: message }
   }
 }

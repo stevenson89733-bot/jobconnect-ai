@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 export default function ApplyModal({
   jobId,
@@ -19,6 +20,9 @@ export default function ApplyModal({
   const [applied, setApplied] = useState(alreadyApplied)
   const [error, setError] = useState('')
   const router = useRouter()
+  const t = useTranslations('jobs')
+  const tc = useTranslations('common')
+  const te = useTranslations('errors')
 
   async function handleApply(e: React.FormEvent) {
     e.preventDefault()
@@ -45,7 +49,7 @@ export default function ApplyModal({
 
     if (!res.ok) {
       const data = await res.json()
-      setError(data.error || 'Something went wrong')
+      setError(data.error || te('somethingWentWrong'))
       setLoading(false)
       return
     }
@@ -59,7 +63,7 @@ export default function ApplyModal({
   if (applied) {
     return (
       <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-900/30 border border-green-300 dark:border-green-800/50 rounded-lg px-3 py-1.5 whitespace-nowrap">
-        ✓ Applied
+        {t('applied')}
       </span>
     )
   }
@@ -70,7 +74,7 @@ export default function ApplyModal({
         onClick={() => setOpen(true)}
         className="btn-primary text-xs py-1.5 px-4 whitespace-nowrap"
       >
-        Apply Now
+        {t('applyNow')}
       </button>
 
       {open && (
@@ -81,7 +85,7 @@ export default function ApplyModal({
           <div className="bg-white dark:bg-card border border-slate-200 dark:border-slate-700 rounded-2xl w-full max-w-md shadow-2xl">
             <div className="flex items-start justify-between p-6 pb-4 border-b border-slate-200 dark:border-slate-800">
               <div>
-                <h2 className="text-slate-900 dark:text-white font-bold text-lg">Apply for this role</h2>
+                <h2 className="text-slate-900 dark:text-white font-bold text-lg">{t('applyForRole')}</h2>
                 <p className="text-slate-600 dark:text-slate-400 text-sm mt-0.5">
                   {jobTitle} · <span className="text-slate-700 dark:text-slate-300">{company}</span>
                 </p>
@@ -97,13 +101,13 @@ export default function ApplyModal({
             <form onSubmit={handleApply} className="p-6 space-y-4">
               <div>
                 <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">
-                  Message to the hiring team <span className="text-slate-600 dark:text-slate-400">(optional)</span>
+                  {t('messageToHiringTeam')} <span className="text-slate-600 dark:text-slate-400">{t('optional')}</span>
                 </label>
                 <textarea
                   value={message}
                   onChange={e => setMessage(e.target.value)}
                   rows={4}
-                  placeholder="Briefly explain why you're a great fit, or share anything relevant…"
+                  placeholder={t('messagePlaceholder')}
                   className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary resize-none"
                 />
               </div>
@@ -116,7 +120,7 @@ export default function ApplyModal({
                   onClick={() => setOpen(false)}
                   className="flex-1 btn-outline py-2.5 text-sm"
                 >
-                  Cancel
+                  {tc('cancel')}
                 </button>
                 <button
                   type="submit"
@@ -129,9 +133,9 @@ export default function ApplyModal({
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
                       </svg>
-                      Submitting…
+                      {t('submitting')}
                     </span>
-                  ) : 'Submit Application'}
+                  ) : t('submitApplication')}
                 </button>
               </div>
             </form>

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { getTranslations } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { rateLimit } from '@/lib/rateLimit'
 import { renderResumePdf } from '@/lib/resumeExport/pdf'
@@ -15,25 +16,26 @@ function isResumeContent(value: unknown): value is ResumeContent {
 }
 
 export async function POST(req: Request) {
+  const t = await getTranslations('errors')
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return NextResponse.json({ error: 'You must be signed in.' }, { status: 401 })
+  if (!user) return NextResponse.json({ error: t('mustBeSignedIn') }, { status: 401 })
 
   // No LLM call here, but rendering a document is real server work — a
   // light limit is enough to stop a scripted loop without getting in a real
   // candidate's way (they're exporting one resume a handful of times, not
   // hundreds).
   const { ok: withinLimit } = rateLimit(`resume-export:${user.id}`, 20, 60 * 60 * 1000)
-  if (!withinLimit) return NextResponse.json({ error: 'Too many exports. Please try again in a bit.' }, { status: 429 })
+  if (!withinLimit) return NextResponse.json({ error: t('tooManyExports') }, { status: 429 })
 
   const { data: profile } = await supabase.from('profiles').select('is_premium').eq('user_id', user.id).single()
   if (!profile?.is_premium) {
-    return NextResponse.json({ error: 'Resume export is a Premium feature.' }, { status: 403 })
+    return NextResponse.json({ error: t('resumeExportPremiumOnly') }, { status: 403 })
   }
 
   const body = await req.json().catch(() => null) as { resume?: unknown; template?: ResumeTemplateId; format?: ExportFormat } | null
   if (!body || !isResumeContent(body.resume)) {
-    return NextResponse.json({ error: 'Missing or invalid resume content.' }, { status: 400 })
+    return NextResponse.json({ error: t('missingOrInvalidResumeContent') }, { status: 400 })
   }
   const resume = body.resume
   const template: ResumeTemplateId = body.template === 'modern' ? 'modern' : 'classic'
@@ -41,7 +43,7 @@ export async function POST(req: Request) {
 
   const hasContent = !!(resume.summary.trim() || resume.experience.trim() || resume.skills.trim() || resume.education.trim())
   if (!resume.name.trim() || !hasContent) {
-    return NextResponse.json({ error: 'Generate a resume first — there\'s nothing to export yet.' }, { status: 400 })
+    return NextResponse.json({ error: t('generateResumeFirstExport') }, { status: 400 })
   }
 
   const filenameBase = `${sanitizeFilenamePart(resume.name, 'Resume')}_Resume`
@@ -69,6 +71,6 @@ export async function POST(req: Request) {
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Export failed'
     console.error('[resume/export]', message)
-    return NextResponse.json({ error: 'Something went wrong generating your file.' }, { status: 500 })
+    return NextResponse.json({ error: t('somethingWentWrongGeneratingFile') }, { status: 500 })
   }
 }

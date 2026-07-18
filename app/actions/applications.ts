@@ -1,6 +1,7 @@
 'use server'
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
+import { getTranslations } from 'next-intl/server'
 import { APPLICATION_STATUSES, type ApplicationStatus } from '@/lib/applicationStatus'
 
 export type UpdateApplicationStatusResult = { ok: true } | { ok: false; error: string }
@@ -14,12 +15,13 @@ export async function updateApplicationStatus(
   applicationId: string,
   status: ApplicationStatus
 ): Promise<UpdateApplicationStatusResult> {
+  const t = await getTranslations('errors')
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { ok: false, error: 'You must be signed in.' }
+  if (!user) return { ok: false, error: t('mustBeSignedIn') }
 
   if (!APPLICATION_STATUSES.includes(status)) {
-    return { ok: false, error: 'Invalid status.' }
+    return { ok: false, error: t('invalidApplicationStatus') }
   }
 
   const { data, error } = await supabase
@@ -31,14 +33,14 @@ export async function updateApplicationStatus(
 
   if (error) {
     console.error('[applications/status]', error.message)
-    return { ok: false, error: 'Could not update this application.' }
+    return { ok: false, error: t('couldNotUpdateApplication') }
   }
 
   // RLS silently returns 0 rows (not an error) when the caller isn't the
   // owning employer — this is what tells us that actually happened, rather
   // than a false "success" with nothing changed.
   if (!data) {
-    return { ok: false, error: 'You can only update applications to jobs you posted.' }
+    return { ok: false, error: t('onlyUpdateOwnJobApplications') }
   }
 
   revalidatePath('/recruiter')

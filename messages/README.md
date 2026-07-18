@@ -28,13 +28,35 @@ labels, error messages. They deliberately do **not** cover:
   them (or to an employer) in a machine-translated form would misrepresent what they actually
   wrote.
 
-## Coverage (as of this lot)
+## Coverage (as of the 3rd i18n lot)
 
-This is a phased rollout. Namespaces currently wired: `common`, `nav`, `footer`, `auth` (login +
-register), `home`, `jobs` (listing page + job cards). Remaining app sections (dashboard,
-recruiter, AI tool pages, profile, legal/marketing pages, error messages) are planned for
-follow-up lots — see project history for the phasing plan. Any string not yet extracted still
-renders in hardcoded English, which is expected and not a bug.
+This was a phased rollout across three lots; all originally-scoped UI-string work is now done:
+
+- **Lot 1**: infrastructure (cookie-based locale, English-fallback merge, language switcher,
+  browser-language detection) + `common`, `nav`, `footer`, `auth`, `home`, `jobs`.
+- **Lot 2**: `candidate` (dashboard), `recruiter` (dashboard, Post a Job modal, application
+  status), `resumeBuilder`, `coverLetter`, `careerCoach`, `analytics`, `profile`, and full
+  translations of `legal.privacy` / `legal.terms`.
+- **Lot 3**: `errors` — server action and API route error messages (signup/signin, contact form,
+  Career Coach/Resume Analysis/Cover Letter rate limits and premium gates, profile/review
+  validation, resume/cover-letter export) — plus `ApplyModal`, a component missed by the first
+  two lots.
+
+`en.json` currently has ~605 keys across 15 namespaces, mirrored exactly in all 6 translations
+(key parity is checked after every lot).
+
+**Deliberately still English** (not gaps, permanent scope boundaries):
+- AI-generated content and user-generated content (see above).
+- Score-breakdown category labels in the Resume Builder / Cover Letter score cards (`keywords`,
+  `formatting`, etc.) — these are the AI response's own fixed schema field names.
+- Dynamic third-party error messages (raw Stripe SDK errors, Supabase auth error text, AI-provider
+  config errors) — translating a string we don't author and that varies per failure isn't
+  reliable in the way a literal we control is.
+- No custom 404/500 page exists in this app (Next.js defaults are used), so there was nothing to
+  extract there.
+
+If a hardcoded English string is ever found outside these categories, it's a real gap — add it
+following the steps below, it isn't an intentional exception.
 
 ## Adding a new key
 

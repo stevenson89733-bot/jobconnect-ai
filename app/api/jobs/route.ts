@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 import { revalidateTag } from 'next/cache'
+import { getTranslations } from 'next-intl/server'
 import { getCandidateProfile } from '@/lib/profile'
 import { parseSkillSet, calculateMatchPercent } from '@/lib/jobMatching'
 import { applyJobFilters, normalizeJobCompany, parseSort, JOB_SELECT_FIELDS } from '@/lib/jobsQuery'
@@ -61,13 +62,16 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
+  const t = await getTranslations('errors')
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
+  // Never rendered — PostJobModal redirects to /login on a 401 rather than
+  // displaying this text, so it's left untranslated intentionally.
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const { data: profile } = await supabase.from('profiles').select('role').eq('user_id', user.id).single()
   if (profile?.role !== 'employer') {
-    return NextResponse.json({ error: 'Only employer accounts can post jobs' }, { status: 403 })
+    return NextResponse.json({ error: t('onlyEmployerAccountsCanPostJobs') }, { status: 403 })
   }
 
   const body = await req.json()

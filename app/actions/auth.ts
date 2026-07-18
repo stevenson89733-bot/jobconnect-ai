@@ -1,12 +1,14 @@
 'use server'
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
 import { rateLimit, getClientIp } from '@/lib/rateLimit'
 
 // ── Step 6: Save user to Supabase on signup with role ─────────────────────────
 export async function signUp(formData: FormData) {
+  const t = await getTranslations('errors')
   const { ok } = rateLimit(`signup:${getClientIp()}`, 5, 10 * 60 * 1000)
-  if (!ok) redirect(`/register?error=${encodeURIComponent('Too many signup attempts. Please try again in a few minutes.')}`)
+  if (!ok) redirect(`/register?error=${encodeURIComponent(t('tooManySignupAttempts'))}`)
 
   const supabase = createClient()
 
@@ -31,7 +33,7 @@ export async function signUp(formData: FormData) {
   })
 
   if (error || !data.user) {
-    redirect(`/register?error=${encodeURIComponent(error?.message ?? 'Signup failed')}`)
+    redirect(`/register?error=${encodeURIComponent(error?.message ?? t('signupFailed'))}`)
   }
 
   // handle_new_user() (supabase/schema.sql) already inserts a baseline
@@ -60,8 +62,9 @@ export async function signUp(formData: FormData) {
 
 // ── Step 7: Authenticate via Supabase, Step 8: redirect by role ───────────────
 export async function signIn(formData: FormData) {
+  const t = await getTranslations('errors')
   const { ok } = rateLimit(`signin:${getClientIp()}`, 8, 5 * 60 * 1000)
-  if (!ok) redirect(`/login?error=${encodeURIComponent('Too many sign-in attempts. Please try again in a few minutes.')}`)
+  if (!ok) redirect(`/login?error=${encodeURIComponent(t('tooManySigninAttempts'))}`)
 
   const supabase = createClient()
 

@@ -1,5 +1,6 @@
 'use server'
 import { createClient } from '@/lib/supabase/server'
+import { getTranslations } from 'next-intl/server'
 import { rateLimit } from '@/lib/rateLimit'
 import { generateCareerAnalysis, CareerCoachError, type CareerAnalysis } from '@/lib/ai/careerCoach'
 
@@ -11,12 +12,13 @@ export type CareerAnalysisResult =
 // behind auth. 3 refreshes per hour is generous for a real user clicking
 // "Refresh Analysis" but blocks a scripted hammer on the button.
 export async function refreshCareerAnalysis(): Promise<CareerAnalysisResult> {
+  const t = await getTranslations('errors')
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { ok: false, error: 'You must be signed in.' }
+  if (!user) return { ok: false, error: t('mustBeSignedIn') }
 
   const { ok: withinLimit } = rateLimit(`career-coach:${user.id}`, 3, 60 * 60 * 1000)
-  if (!withinLimit) return { ok: false, error: 'Too many refreshes. Please try again in a bit.' }
+  if (!withinLimit) return { ok: false, error: t('tooManyRefreshes') }
 
   const { data: profileRow } = await supabase
     .from('profiles')
@@ -25,12 +27,12 @@ export async function refreshCareerAnalysis(): Promise<CareerAnalysisResult> {
     .single()
 
   if (!profileRow?.is_premium) {
-    return { ok: false, error: 'AI Career Coach is a Premium feature. Upgrade to generate your analysis.' }
+    return { ok: false, error: t('careerCoachPremiumOnly') }
   }
 
   const skills = (profileRow.skills ?? '').trim()
   if (!skills) {
-    return { ok: false, error: 'Add some skills to your profile first — there\'s not enough to analyze yet.' }
+    return { ok: false, error: t('careerCoachNeedSkills') }
   }
 
   let analysis: CareerAnalysis
@@ -46,7 +48,9 @@ export async function refreshCareerAnalysis(): Promise<CareerAnalysisResult> {
       workPreference: profileRow.work_preference,
     })
   } catch (err) {
-    const message = err instanceof CareerCoachError ? err.message : 'Something went wrong generating your analysis.'
+    // CareerCoachError wraps a dynamic underlying AI-provider/config error —
+    // left untranslated, same as other third-party error passthroughs.
+    const message = err instanceof CareerCoachError ? err.message : t('somethingWentWrongGeneratingAnalysis')
     return { ok: false, error: message }
   }
 

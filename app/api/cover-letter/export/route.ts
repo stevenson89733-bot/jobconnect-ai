@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { getTranslations } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { rateLimit } from '@/lib/rateLimit'
 import { renderCoverLetterPdf, type CoverLetterExportContent } from '@/lib/resumeExport/coverLetterPdf'
@@ -15,15 +16,16 @@ function isCoverLetterContent(value: unknown): value is CoverLetterExportContent
 }
 
 export async function POST(req: Request) {
+  const t = await getTranslations('errors')
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return NextResponse.json({ error: 'You must be signed in.' }, { status: 401 })
+  if (!user) return NextResponse.json({ error: t('mustBeSignedIn') }, { status: 401 })
 
   // Same reasoning as resume export: no LLM call here, but rendering a
   // document is real server work — light limit stops a scripted loop
   // without getting in a real candidate's way.
   const { ok: withinLimit } = rateLimit(`cover-letter-export:${user.id}`, 20, 60 * 60 * 1000)
-  if (!withinLimit) return NextResponse.json({ error: 'Too many exports. Please try again in a bit.' }, { status: 429 })
+  if (!withinLimit) return NextResponse.json({ error: t('tooManyExports') }, { status: 429 })
 
   const { data: profile } = await supabase
     .from('profiles')
@@ -31,19 +33,19 @@ export async function POST(req: Request) {
     .eq('user_id', user.id)
     .single()
   if (!profile?.is_premium) {
-    return NextResponse.json({ error: 'Cover letter export is a Premium feature.' }, { status: 403 })
+    return NextResponse.json({ error: t('coverLetterExportPremiumOnly') }, { status: 403 })
   }
 
   const body = await req.json().catch(() => null) as { letter?: unknown; companyName?: string; format?: ExportFormat } | null
   if (!body || !isCoverLetterContent(body.letter)) {
-    return NextResponse.json({ error: 'Missing or invalid cover letter content.' }, { status: 400 })
+    return NextResponse.json({ error: t('missingOrInvalidCoverLetterContent') }, { status: 400 })
   }
   const letter = body.letter
   const format: ExportFormat = body.format === 'docx' ? 'docx' : 'pdf'
 
   const hasContent = !!(letter.opening.trim() || letter.body.trim() || letter.closing.trim())
   if (!hasContent) {
-    return NextResponse.json({ error: 'Generate a cover letter first — there\'s nothing to export yet.' }, { status: 400 })
+    return NextResponse.json({ error: t('generateCoverLetterFirstExport') }, { status: 400 })
   }
 
   // Real candidate name pulled fresh from the profile server-side (same
@@ -76,6 +78,6 @@ export async function POST(req: Request) {
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Export failed'
     console.error('[cover-letter/export]', message)
-    return NextResponse.json({ error: 'Something went wrong generating your file.' }, { status: 500 })
+    return NextResponse.json({ error: t('somethingWentWrongGeneratingFile') }, { status: 500 })
   }
 }
