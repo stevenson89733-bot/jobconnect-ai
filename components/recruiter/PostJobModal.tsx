@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 
@@ -36,6 +37,7 @@ export default function PostJobModal({
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [planLimitReached, setPlanLimitReached] = useState(false)
   const router = useRouter()
   const t = useTranslations('postJobModal')
   // Reuses the same translated labels as the /jobs filters (typeFullTime,
@@ -74,6 +76,7 @@ export default function PostJobModal({
     e.preventDefault()
     setLoading(true)
     setError('')
+    setPlanLimitReached(false)
 
     const min = salaryMin.trim() ? parseInt(salaryMin, 10) : null
     const max = salaryMax.trim() ? parseInt(salaryMax, 10) : null
@@ -106,6 +109,7 @@ export default function PostJobModal({
     if (!res.ok) {
       const data = await res.json().catch(() => ({}))
       setError(data.error || t('genericError'))
+      setPlanLimitReached(data.code === 'PLAN_LIMIT_REACHED')
       setLoading(false)
       return
     }
@@ -209,7 +213,16 @@ export default function PostJobModal({
                 {t('markAsFeatured')}
               </label>
 
-              {error && <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>}
+              {error && (
+                <div className="text-sm">
+                  <p className="text-red-600 dark:text-red-400">{error}</p>
+                  {planLimitReached && (
+                    <Link href="/pricing?for=employers" className="text-primary dark:text-blue-400 hover:underline font-medium">
+                      {t('viewPlans')}
+                    </Link>
+                  )}
+                </div>
+              )}
 
               <div className="flex gap-3 pt-1">
                 <button type="button" onClick={() => setOpen(false)} className="flex-1 btn-outline py-2.5 text-sm">

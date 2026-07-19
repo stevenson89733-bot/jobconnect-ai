@@ -5,6 +5,7 @@ import { getTranslations } from 'next-intl/server'
 import { getCandidateProfile } from '@/lib/profile'
 import { parseSkillSet, calculateMatchPercent } from '@/lib/jobMatching'
 import { applyJobFilters, normalizeJobCompany, parseSort, JOB_SELECT_FIELDS } from '@/lib/jobsQuery'
+import { employerPlanLimit } from '@/lib/employerPlan'
 
 const PAGE_SIZE = 20
 
@@ -69,9 +70,25 @@ export async function POST(req: Request) {
   // displaying this text, so it's left untranslated intentionally.
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const { data: profile } = await supabase.from('profiles').select('role').eq('user_id', user.id).single()
+  const { data: profile } = await supabase.from('profiles').select('role, employer_plan').eq('user_id', user.id).single()
   if (profile?.role !== 'employer') {
     return NextResponse.json({ error: t('onlyEmployerAccountsCanPostJobs') }, { status: 403 })
+  }
+
+  // Real, enforced free-tier limit — counts this employer's own currently
+  // active postings (not a lifetime cap), so deactivating an old listing
+  // frees up a real slot rather than permanently using up their one shot.
+  const { count: activeCount } = await supabase
+    .from('jobs')
+    .select('*', { count: 'exact', head: true })
+    .eq('posted_by', user.id)
+    .eq('is_active', true)
+  const limit = employerPlanLimit(profile.employer_plan)
+  if ((activeCount ?? 0) >= limit) {
+    return NextResponse.json(
+      { error: t('employerPlanLimitReached', { limit }), code: 'PLAN_LIMIT_REACHED' },
+      { status: 403 }
+    )
   }
 
   const body = await req.json()
