@@ -9,6 +9,7 @@ import Footer from '../components/Footer'
 import { ThemeProvider } from '../components/ThemeProvider'
 import { createClient } from '@/lib/supabase/server'
 import CopilotWidget from '@/components/copilot/CopilotWidget'
+import CrispChat from '@/components/CrispChat'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -67,6 +68,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <main>{children}</main>
             <Footer />
             {isCandidate && <CopilotWidget />}
+            <CrispChat />
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>
