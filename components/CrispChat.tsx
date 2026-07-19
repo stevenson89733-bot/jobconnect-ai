@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import Script from 'next/script'
 import { usePathname } from 'next/navigation'
+import { useLocale } from 'next-intl'
 import { createClient } from '@/lib/supabase/client'
 
 // Official Crisp snippet, loaded via next/script (strategy="afterInteractive"
@@ -19,6 +20,7 @@ declare global {
 
 export default function CrispChat() {
   const pathname = usePathname()
+  const locale = useLocale()
   const websiteId = process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID
   const hidden = !websiteId || HIDDEN_PATHS.includes(pathname)
 
@@ -50,13 +52,31 @@ export default function CrispChat() {
     window.$crisp?.push(['set', 'user:nickname', [crispUser.nickname]])
   }, [crispLoaded, crispUser])
 
+  // Locale sync — Crisp's own documented runtime config command (verified
+  // against docs.crisp.chat, not assumed): $crisp.push(["config", "locale",
+  // <ISO 639-1 code>]), async-safe so it can run any time after the widget
+  // has loaded, including a later change. The app's own locale codes (en,
+  // fr, es, ht, de, pt, vi) are already ISO 639-1 so no remapping is
+  // needed. Re-runs whenever `locale` changes — e.g. LanguageSwitcher's
+  // router.refresh() re-renders this component with the new locale from
+  // NextIntlClientProvider, no full page reload required. If Crisp doesn't
+  // actually have translations for a given code (confirmed by real-browser
+  // testing per language, not assumed), it falls back to its own default
+  // (English) rather than erroring — verified empirically since Crisp
+  // publishes no official supported-language list.
+  useEffect(() => {
+    if (!crispLoaded) return
+    window.$crisp?.push(['config', 'locale', [locale]])
+  }, [crispLoaded, locale])
+
   if (hidden) return null
 
   return (
     <>
       <Script id="crisp-init" strategy="afterInteractive">
         {`window.$crisp = [];
-window.CRISP_WEBSITE_ID = "${websiteId}";`}
+window.CRISP_WEBSITE_ID = "${websiteId}";
+window.CRISP_RUNTIME_CONFIG = { locale: "${locale}" };`}
       </Script>
       <Script src="https://client.crisp.chat/l.js" strategy="afterInteractive" async onLoad={() => setCrispLoaded(true)} />
     </>
