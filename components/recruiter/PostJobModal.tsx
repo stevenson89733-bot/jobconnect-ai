@@ -217,7 +217,7 @@ export default function PostJobModal({
                 <div className="text-sm">
                   <p className="text-red-600 dark:text-red-400">{error}</p>
                   {planLimitReached && (
-                    <Link href="/pricing?for=employers" className="text-primary dark:text-blue-400 hover:underline font-medium">
+                    <Link href="/pricing#employers" className="text-primary dark:text-blue-400 hover:underline font-medium">
                       {t('viewPlans')}
                     </Link>
                   )}

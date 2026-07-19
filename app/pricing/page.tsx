@@ -12,11 +12,6 @@ export default function PricingPage() {
   const [error, setError] = useState('')
   const success  = searchParams.get('success')  === 'true'
   const canceled = searchParams.get('canceled') === 'true'
-  // Real, shareable deep link — PostJobModal's "View plans" link on a
-  // blocked 2nd posting sends employers straight to this tab.
-  const [tab, setTab] = useState<'candidates' | 'employers'>(
-    searchParams.get('for') === 'employers' ? 'employers' : 'candidates'
-  )
 
   useEffect(() => {
     if (canceled) setError(t('paymentCanceled'))
@@ -50,48 +45,48 @@ export default function PricingPage() {
         <p className="text-slate-600 dark:text-slate-400 text-lg">{t('pageSubtitle')}</p>
       </div>
 
-      {/* Candidate / Employer tabs — clearly separates the two real pricing
-          models rather than mixing them into one grid. */}
-      <div className="flex justify-center gap-2 mb-10">
-        <button
-          onClick={() => setTab('candidates')}
-          className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-            tab === 'candidates'
-              ? 'bg-primary text-white'
-              : 'border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600'
-          }`}
+      {/* Plain in-page anchor links, not JS tab state — both pricing
+          sections below are always in the DOM, so "For Employers" is
+          reachable by a normal same-page scroll/jump even before hydration
+          runs, not gated behind a click that only works once React has
+          mounted. */}
+      <div className="flex justify-center gap-2 mb-14">
+        <a
+          href="#candidates"
+          className="px-5 py-2.5 rounded-xl text-sm font-medium border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600 transition-colors"
         >
           {t('forCandidates')}
-        </button>
-        <button
-          onClick={() => setTab('employers')}
-          className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-            tab === 'employers'
-              ? 'bg-primary text-white'
-              : 'border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600'
-          }`}
+        </a>
+        <a
+          href="#employers"
+          className="px-5 py-2.5 rounded-xl text-sm font-medium border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600 transition-colors"
         >
           {t('forEmployers')}
-        </button>
+        </a>
       </div>
 
-      {success && tab === 'candidates' && (
-        <div className="mb-8 p-5 bg-green-50 dark:bg-green-900/30 border border-green-300 dark:border-green-700 rounded-xl text-center">
-          <p className="text-green-700 dark:text-green-400 font-semibold mb-3">{t('successTitle')}</p>
-          <div className="flex flex-wrap gap-3 justify-center">
-            <a href="/ai-tools/resume-builder" className="btn-primary text-sm py-2 px-5">{t('goToResumeBuilder')}</a>
-            <a href="/ai-tools/cover-letter" className="btn-outline text-sm py-2 px-5">{t('goToCoverLetter')}</a>
+      {/* ── For Candidates ─────────────────────────────────────── */}
+      <section id="candidates" className="scroll-mt-24 mb-20">
+        <h2 className="text-sm font-semibold text-primary dark:text-blue-400 uppercase tracking-widest text-center mb-6">
+          {t('forCandidates')}
+        </h2>
+
+        {success && (
+          <div className="mb-8 p-5 bg-green-50 dark:bg-green-900/30 border border-green-300 dark:border-green-700 rounded-xl text-center">
+            <p className="text-green-700 dark:text-green-400 font-semibold mb-3">{t('successTitle')}</p>
+            <div className="flex flex-wrap gap-3 justify-center">
+              <a href="/ai-tools/resume-builder" className="btn-primary text-sm py-2 px-5">{t('goToResumeBuilder')}</a>
+              <a href="/ai-tools/cover-letter" className="btn-outline text-sm py-2 px-5">{t('goToCoverLetter')}</a>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {error && (
-        <div className="mb-8 p-4 bg-red-50 dark:bg-red-900/30 border border-red-300 dark:border-red-700 rounded-xl text-red-700 dark:text-red-400 text-sm text-center">
-          {error}
-        </div>
-      )}
+        {error && (
+          <div className="mb-8 p-4 bg-red-50 dark:bg-red-900/30 border border-red-300 dark:border-red-700 rounded-xl text-red-700 dark:text-red-400 text-sm text-center">
+            {error}
+          </div>
+        )}
 
-      {tab === 'candidates' ? (
         <div className="grid md:grid-cols-2 gap-6">
           {/* Free plan */}
           <div className="card flex flex-col">
@@ -151,53 +146,58 @@ export default function PricingPage() {
             <p className="text-xs text-slate-600 dark:text-slate-400 text-center mt-3">{t('stripeNote')}</p>
           </div>
         </div>
-      ) : (
-        <div>
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Employer Free plan */}
-            <div className="card flex flex-col">
-              <div className="mb-6">
-                <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">{t('employerFreeLabel')}</div>
-                <div className="text-4xl font-extrabold text-slate-900 dark:text-white">$0</div>
-                <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('employerFreeDesc')}</div>
-              </div>
-              <ul className="space-y-3 mb-8 flex-1">
-                {[t('employerFreeFeature1'), t('employerFreeFeature2'), t('employerFreeFeature3')].map((f) => (
-                  <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
-                    <span className="text-green-600 dark:text-green-400 shrink-0">✓</span> {f}
-                  </li>
-                ))}
-              </ul>
-              <Link href="/register?role=employer" className="btn-outline text-sm py-3 text-center block">{t('postAJob')}</Link>
-            </div>
+      </section>
 
-            {/* Employer Growth plan — real price, no live checkout yet */}
-            <div className="card border-primary/50 bg-gradient-to-br from-primary/5 to-white dark:to-card flex flex-col relative overflow-hidden">
-              <div className="mb-6">
-                <div className="text-sm font-semibold text-primary dark:text-blue-400 uppercase tracking-wider mb-1">{t('employerGrowthLabel')}</div>
-                <div className="flex items-end gap-1">
-                  <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$49</span>
-                  <span className="text-slate-600 dark:text-slate-400 mb-1">{t('employerGrowthPeriod')}</span>
-                </div>
-                <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('employerGrowthDesc')}</div>
-              </div>
-              <ul className="space-y-3 mb-8 flex-1">
-                {[t('employerGrowthFeature1'), t('employerGrowthFeature2'), t('employerGrowthFeature3'), t('employerGrowthFeature4')].map((f) => (
-                  <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
-                    <span className="text-orange-600 dark:text-accent shrink-0">✦</span> {f}
-                  </li>
-                ))}
-              </ul>
-              {/* No real Stripe checkout for employer plans yet — honest
-                  disabled state rather than a fake/broken payment flow. */}
-              <button disabled className="btn-primary py-3 text-sm font-semibold opacity-50 w-full cursor-not-allowed">
-                {t('comingSoon')}
-              </button>
+      {/* ── For Employers ──────────────────────────────────────── */}
+      <section id="employers" className="scroll-mt-24">
+        <h2 className="text-sm font-semibold text-primary dark:text-blue-400 uppercase tracking-widest text-center mb-6">
+          {t('forEmployers')}
+        </h2>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Employer Free plan */}
+          <div className="card flex flex-col">
+            <div className="mb-6">
+              <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">{t('employerFreeLabel')}</div>
+              <div className="text-4xl font-extrabold text-slate-900 dark:text-white">$0</div>
+              <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('employerFreeDesc')}</div>
             </div>
+            <ul className="space-y-3 mb-8 flex-1">
+              {[t('employerFreeFeature1'), t('employerFreeFeature2'), t('employerFreeFeature3')].map((f) => (
+                <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+                  <span className="text-green-600 dark:text-green-400 shrink-0">✓</span> {f}
+                </li>
+              ))}
+            </ul>
+            <Link href="/register?role=employer" className="btn-outline text-sm py-3 text-center block">{t('postAJob')}</Link>
           </div>
-          <p className="text-xs text-slate-600 dark:text-slate-400 text-center mt-6">{t('employerPlanLimitNote')}</p>
+
+          {/* Employer Growth plan — real price, no live checkout yet */}
+          <div className="card border-primary/50 bg-gradient-to-br from-primary/5 to-white dark:to-card flex flex-col relative overflow-hidden">
+            <div className="mb-6">
+              <div className="text-sm font-semibold text-primary dark:text-blue-400 uppercase tracking-wider mb-1">{t('employerGrowthLabel')}</div>
+              <div className="flex items-end gap-1">
+                <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$49</span>
+                <span className="text-slate-600 dark:text-slate-400 mb-1">{t('employerGrowthPeriod')}</span>
+              </div>
+              <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('employerGrowthDesc')}</div>
+            </div>
+            <ul className="space-y-3 mb-8 flex-1">
+              {[t('employerGrowthFeature1'), t('employerGrowthFeature2'), t('employerGrowthFeature3'), t('employerGrowthFeature4')].map((f) => (
+                <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+                  <span className="text-orange-600 dark:text-accent shrink-0">✦</span> {f}
+                </li>
+              ))}
+            </ul>
+            {/* No real Stripe checkout for employer plans yet — honest
+                disabled state rather than a fake/broken payment flow. */}
+            <button disabled className="btn-primary py-3 text-sm font-semibold opacity-50 w-full cursor-not-allowed">
+              {t('comingSoon')}
+            </button>
+          </div>
         </div>
-      )}
+        <p className="text-xs text-slate-600 dark:text-slate-400 text-center mt-6">{t('employerPlanLimitNote')}</p>
+      </section>
     </div>
   )
 }
