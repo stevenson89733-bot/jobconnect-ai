@@ -28,14 +28,15 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts')
 //     via a server-created session, so no stripe.com script/frame allowance
 //     is needed either.
 //   - Crisp Live Chat (components/CrispChat.tsx) needs script-src for its
-//     loader (client.crisp.chat) and connect-src for both that same origin
+//     loader (client.crisp.chat), style-src for its injected widget
+//     stylesheet (same origin), and connect-src for both that same origin
 //     (its own XHR calls) and its realtime relay (client.relay.crisp.chat,
 //     wss:// for the websocket + https:// fallback) — scoped to exactly
 //     these two Crisp domains, nothing broader.
 const csp = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' https://client.crisp.chat",
-  "style-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline' https://client.crisp.chat",
   "img-src 'self' data: https:",
   "font-src 'self' data:",
   "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://client.crisp.chat wss://client.relay.crisp.chat https://client.relay.crisp.chat",
