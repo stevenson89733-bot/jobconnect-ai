@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import { Send, CheckCircle2, Layers } from 'lucide-react'
 import { matchJobsToSkills } from '@/lib/jobMatching'
 import { computeProfileCompletion } from '@/lib/profileCompletion'
+import { computeApplicationRates, computeAvgResponseTime, type ApplicationRates, type AvgResponseTime } from '@/lib/applicationRates'
 import WelcomeHeader from '@/components/dashboard/WelcomeHeader'
 import ProfileCompletionCard from '@/components/dashboard/ProfileCompletionCard'
 import ProfileSnapshot from '@/components/dashboard/ProfileSnapshot'
@@ -61,28 +62,37 @@ export default async function CandidateDashboard() {
   let atsScore: number | null = null
   let profileStrength: number | null = null
   let analysisGeneratedAt: string | null = null
+  // Real aggregate over EVERY application (not just the 5 shown in the
+  // table below) — same computeApplicationRates/computeAvgResponseTime
+  // used by the (Premium) Analytics page, just surfaced here for free too
+  // since this is plain arithmetic on the candidate's own data, not an AI
+  // feature.
+  let applicationRates: ApplicationRates = { total: 0, responded: 0, responseRate: null, interviewRate: null, offerRate: null, anyResponseYet: false }
+  let avgResponseTime: AvgResponseTime = { avgDays: null, sampleSize: 0 }
 
   try {
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
       email = user.email ?? ''
 
-      const [{ data: profileData }, { count }, { data: appsData }, { data: appliedJobIds }, { data: analysisRow }] = await Promise.all([
+      const [{ data: profileData }, { data: allApplications }, { data: appsData }, { data: analysisRow }] = await Promise.all([
         supabase.from('profiles')
           .select('full_name, title, location, bio, experience, skills, avatar_url, years_experience, portfolio_url, availability, work_preference, is_premium')
           .eq('user_id', user.id).single(),
-        supabase.from('applications').select('*', { count: 'exact', head: true }).eq('candidate_id', user.id),
+        // Full (unjoined, lightweight) set — feeds the count, the response
+        // rates, and the avg response time, all from one query rather than
+        // three.
+        supabase.from('applications').select('job_id, status, status_updated_at, created_at').eq('candidate_id', user.id),
         supabase.from('applications')
           .select('id, status, status_updated_at, created_at, jobs!job_id(title, company_name)')
           .eq('candidate_id', user.id)
           .order('created_at', { ascending: false })
           .limit(5),
-        supabase.from('applications').select('job_id').eq('candidate_id', user.id),
         supabase.from('career_analysis').select('analysis_json, generated_at').eq('candidate_id', user.id).order('generated_at', { ascending: false }).limit(1).maybeSingle(),
       ])
 
       profile = (profileData as Profile | null) ?? null
-      applicationsCount = count ?? 0
+      applicationsCount = allApplications?.length ?? 0
       applications = ((appsData as unknown as RawApplicationRow[] | null) ?? []).map((row) => ({
         id: row.id,
         status: row.status,
@@ -91,7 +101,16 @@ export default async function CandidateDashboard() {
         ...jobInfo(row),
       }))
 
-      const appliedIds = new Set((appliedJobIds ?? []).map((r) => r.job_id as string))
+      applicationRates = computeApplicationRates((allApplications ?? []).map((a) => a.status as string))
+      avgResponseTime = computeAvgResponseTime(
+        (allApplications ?? []).map((a) => ({
+          created_at: a.created_at as string,
+          status: a.status as string,
+          status_updated_at: a.status_updated_at as string | null,
+        }))
+      )
+
+      const appliedIds = new Set((allApplications ?? []).map((r) => r.job_id as string))
       recommendedJobs = await matchJobsToSkills(profile?.skills, appliedIds)
 
       const analysisJson = analysisRow?.analysis_json as { atsScore?: { score?: number }; profileStrength?: { score?: number } } | undefined
@@ -148,7 +167,7 @@ export default async function CandidateDashboard() {
 
       <div className="grid xl:grid-cols-3 gap-6">
         <div className="xl:col-span-2">
-          <RecentApplications applications={applications} />
+          <RecentApplications applications={applications} rates={applicationRates} avgResponseTime={avgResponseTime} />
         </div>
         <SkillsCard skills={skillTags} />
       </div>

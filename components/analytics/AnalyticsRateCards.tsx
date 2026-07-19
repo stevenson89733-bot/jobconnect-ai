@@ -1,12 +1,18 @@
-import { Reply, CalendarCheck2, Award } from 'lucide-react'
+import { Reply, CalendarCheck2, Award, Clock } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import StatCard from '@/components/dashboard/StatCard'
 import FadeIn from '@/components/dashboard/FadeIn'
-import type { ApplicationRates } from '@/lib/applicationRates'
+import type { ApplicationRates, AvgResponseTime } from '@/lib/applicationRates'
 
 // Reuses StatCard as-is (same shape as lot 1's Applications Sent card) —
 // the only new thing here is the empty/sparse-state handling around it.
-export default async function AnalyticsRateCards({ rates }: { rates: ApplicationRates }) {
+export default async function AnalyticsRateCards({
+  rates,
+  avgResponseTime,
+}: {
+  rates: ApplicationRates
+  avgResponseTime?: AvgResponseTime
+}) {
   const t = await getTranslations('analytics')
 
   if (rates.total === 0) {
@@ -33,6 +39,19 @@ export default async function AnalyticsRateCards({ rates }: { rates: Application
             {t('ratesUpdateNote')}
           </p>
         </FadeIn>
+      )}
+      {avgResponseTime && avgResponseTime.avgDays != null && (
+        <div className="max-w-xs pt-2">
+          <StatCard
+            label={t('avgResponseTime')}
+            value={t('avgResponseTimeDays', { days: avgResponseTime.avgDays })}
+            icon={Clock}
+            delay={0.2}
+          />
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">
+            {t('avgResponseTimeSampleNote', { count: avgResponseTime.sampleSize })}
+          </p>
+        </div>
       )}
     </div>
   )

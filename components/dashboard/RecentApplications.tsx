@@ -5,6 +5,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { APPLICATION_STATUS_VARIANT, type ApplicationStatus } from '@/lib/applicationStatus'
 import { timeAgo } from '@/lib/timeAgo'
+import type { ApplicationRates, AvgResponseTime } from '@/lib/applicationRates'
 import FadeIn from './FadeIn'
 
 export type ApplicationRow = {
@@ -20,7 +21,15 @@ function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
 }
 
-export default async function RecentApplications({ applications }: { applications: ApplicationRow[] }) {
+export default async function RecentApplications({
+  applications,
+  rates,
+  avgResponseTime,
+}: {
+  applications: ApplicationRow[]
+  rates?: ApplicationRates
+  avgResponseTime?: AvgResponseTime
+}) {
   const t = await getTranslations('candidate')
   const tStatus = await getTranslations('applicationStatus')
 
@@ -33,6 +42,20 @@ export default async function RecentApplications({ applications }: { application
             {t('seeAllJobs')}
           </Link>
         </CardHeader>
+        {rates && rates.total > 0 && (
+          <div className="px-6 pb-1 -mt-2">
+            {rates.anyResponseYet ? (
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                {t('applicationsReviewedCount', { responded: rates.responded, total: rates.total })}
+                {avgResponseTime?.avgDays != null && (
+                  <> · {t('avgResponseTimeInline', { days: avgResponseTime.avgDays })}</>
+                )}
+              </p>
+            ) : (
+              <p className="text-xs text-slate-600 dark:text-slate-400">{t('noResponsesYet')}</p>
+            )}
+          </div>
+        )}
         <CardContent>
           {applications.length === 0 ? (
             <div className="text-center py-10 text-slate-600 dark:text-slate-400">

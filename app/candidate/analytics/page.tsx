@@ -4,7 +4,7 @@ import { getTranslations } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { getCandidateProfile } from '@/lib/profile'
 import { buildWeeklyActivity } from '@/lib/weeklyActivity'
-import { computeApplicationRates } from '@/lib/applicationRates'
+import { computeApplicationRates, computeAvgResponseTime } from '@/lib/applicationRates'
 import { buildCareerProgressPoints } from '@/lib/careerProgress'
 import { computeSalaryBenchmark } from '@/lib/salaryBenchmark'
 import { Button } from '@/components/ui/button'
@@ -48,7 +48,7 @@ export default async function AnalyticsPage() {
   if (!profileRow?.is_premium) return <UpsellGate />
 
   const [{ data: applications }, { data: savedJobs }, { data: analysisHistory }] = await Promise.all([
-    supabase.from('applications').select('created_at, status').eq('candidate_id', user.id),
+    supabase.from('applications').select('created_at, status, status_updated_at').eq('candidate_id', user.id),
     supabase.from('saved_jobs').select('created_at').eq('candidate_id', user.id),
     // Full history, oldest first — feeds both Career Progress (the whole
     // list) and AI Insights (just the most recent row) from one query,
@@ -62,6 +62,13 @@ export default async function AnalyticsPage() {
     (savedJobs ?? []).map((s) => s.created_at as string)
   )
   const rates = computeApplicationRates((applications ?? []).map((a) => a.status as string))
+  const avgResponseTime = computeAvgResponseTime(
+    (applications ?? []).map((a) => ({
+      created_at: a.created_at as string,
+      status: a.status as string,
+      status_updated_at: a.status_updated_at as string | null,
+    }))
+  )
 
   const careerProgressPoints = buildCareerProgressPoints(analysisHistory ?? [])
   const analysisRow = analysisHistory && analysisHistory.length > 0 ? analysisHistory[analysisHistory.length - 1] : null
@@ -83,7 +90,7 @@ export default async function AnalyticsPage() {
 
       <WeeklyActivityChart weeks={weeklyActivity} />
 
-      <AnalyticsRateCards rates={rates} />
+      <AnalyticsRateCards rates={rates} avgResponseTime={avgResponseTime} />
 
       <CareerProgressChart points={careerProgressPoints} />
 
