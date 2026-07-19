@@ -8,6 +8,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { ThemeProvider } from '../components/ThemeProvider'
 import { createClient } from '@/lib/supabase/server'
+import CopilotWidget from '@/components/copilot/CopilotWidget'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -24,6 +25,7 @@ export const metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   let user = null
   let isAdmin = false
+  let isCandidate = false
   const supabaseConfigured =
     process.env.NEXT_PUBLIC_SUPABASE_URL?.startsWith('https://') &&
     !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY &&
@@ -39,8 +41,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         // itself — the Header never receives this for a non-admin user, so
         // there's no "Admin" link in the rendered HTML to find, not just one
         // hidden by CSS/client-side.
-        const { data: profile } = await supabase.from('profiles').select('is_admin').eq('user_id', user.id).single()
+        const { data: profile } = await supabase.from('profiles').select('is_admin, role').eq('user_id', user.id).single()
         isAdmin = profile?.is_admin ?? false
+        isCandidate = profile?.role === 'candidate'
       }
     } catch {
       // silently ignore — session unavailable
@@ -63,6 +66,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <Header userEmail={user?.email} isAdmin={isAdmin} />
             <main>{children}</main>
             <Footer />
+            {isCandidate && <CopilotWidget />}
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

@@ -687,5 +687,22 @@
     "couldNotUpdateReview": "Pa t kapab mete ajou kòmantè sa a.",
     "somethingWentWrongAnalyzingResume": "Gen yon bagay ki mal pase pandan y ap analize CV ou a.",
     "mustBeSignedInToUpdateProfile": "Ou dwe konekte pou mete ajou pwofil ou."
+  },
+  "copilot": {
+    "openLabel": "Ouvri Copilòt Karyè",
+    "closeLabel": "Kite li",
+    "title": "Copilòt Karyè",
+    "idleTitle": "Ou ajou nèt",
+    "idleDesc": "Pa gen nouvo bagay kounye a — tounen vin gade pita.",
+    "appStatus": "Aplikasyon ou nan {company} pase nan \"{status}\".",
+    "atsDelta": "Nòt ATS ou pase soti {from} rive {to} depi dènye tès ou.",
+    "newMatches": "{count, plural, =1 {# nouvo travay matche} other {# nouvo travay matche}} {threshold}%+ ak pwofil ou.",
+    "profileGapTitle": "Ajoute pòs ou vize a pou pi bon match travay.",
+    "profileGapSkills": "Ajoute konpetans ou pou pi bon match travay.",
+    "profileGapGeneric": "Konplete pwofil ou pou pi bon match travay.",
+    "viewApplications": "Gade aplikasyon yo",
+    "viewProgress": "Gade pwogrè a",
+    "viewMatches": "Gade match yo",
+    "completeProfile": "Konplete pwofil"
   }
 }

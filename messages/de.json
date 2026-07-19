@@ -687,5 +687,22 @@
     "couldNotUpdateReview": "Diese Bewertung konnte nicht aktualisiert werden.",
     "somethingWentWrongAnalyzingResume": "Bei der Analyse deines Lebenslaufs ist etwas schiefgelaufen.",
     "mustBeSignedInToUpdateProfile": "Du musst angemeldet sein, um dein Profil zu aktualisieren."
+  },
+  "copilot": {
+    "openLabel": "Karriere-Copilot öffnen",
+    "closeLabel": "Verwerfen",
+    "title": "Karriere-Copilot",
+    "idleTitle": "Du bist auf dem neuesten Stand",
+    "idleDesc": "Gerade keine neuen Updates — schau später wieder vorbei.",
+    "appStatus": "Deine Bewerbung bei {company} wurde auf „{status}“ geändert.",
+    "atsDelta": "Dein ATS-Score ist seit deiner letzten Prüfung von {from} auf {to} gestiegen.",
+    "newMatches": "{count, plural, =1 {# neuer Job passt} other {# neue Jobs passen}} zu {threshold}%+ deines Profils.",
+    "profileGapTitle": "Füge deine Zielposition hinzu, für bessere Job-Matches.",
+    "profileGapSkills": "Füge deine Fähigkeiten hinzu, für bessere Job-Matches.",
+    "profileGapGeneric": "Vervollständige dein Profil, für bessere Job-Matches.",
+    "viewApplications": "Bewerbungen ansehen",
+    "viewProgress": "Fortschritt ansehen",
+    "viewMatches": "Matches ansehen",
+    "completeProfile": "Profil vervollständigen"
   }
 }

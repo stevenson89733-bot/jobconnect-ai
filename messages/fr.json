@@ -687,5 +687,22 @@
     "couldNotUpdateReview": "Impossible de mettre à jour cet avis.",
     "somethingWentWrongAnalyzingResume": "Une erreur est survenue lors de l'analyse de votre CV.",
     "mustBeSignedInToUpdateProfile": "Vous devez être connecté(e) pour mettre à jour votre profil."
+  },
+  "copilot": {
+    "openLabel": "Ouvrir le Copilote de Carrière",
+    "closeLabel": "Ignorer",
+    "title": "Copilote de Carrière",
+    "idleTitle": "Vous êtes à jour",
+    "idleDesc": "Aucune nouveauté pour le moment — revenez plus tard.",
+    "appStatus": "Votre candidature chez {company} est passée à « {status} ».",
+    "atsDelta": "Votre score ATS est passé de {from} à {to} depuis votre dernier bilan.",
+    "newMatches": "{count, plural, =1 {# nouvelle offre correspond} other {# nouvelles offres correspondent}} à {threshold} %+ de votre profil.",
+    "profileGapTitle": "Ajoutez votre poste cible pour de meilleures correspondances.",
+    "profileGapSkills": "Ajoutez vos compétences pour de meilleures correspondances.",
+    "profileGapGeneric": "Complétez votre profil pour de meilleures correspondances.",
+    "viewApplications": "Voir les candidatures",
+    "viewProgress": "Voir la progression",
+    "viewMatches": "Voir les correspondances",
+    "completeProfile": "Compléter le profil"
   }
 }

@@ -687,5 +687,22 @@
     "couldNotUpdateReview": "Não foi possível atualizar esta avaliação.",
     "somethingWentWrongAnalyzingResume": "Algo deu errado ao analisar seu currículo.",
     "mustBeSignedInToUpdateProfile": "Você precisa estar conectado(a) para atualizar seu perfil."
+  },
+  "copilot": {
+    "openLabel": "Abrir Copiloto de Carreira",
+    "closeLabel": "Dispensar",
+    "title": "Copiloto de Carreira",
+    "idleTitle": "Você está em dia",
+    "idleDesc": "Nenhuma novidade no momento — volte mais tarde.",
+    "appStatus": "Sua candidatura na {company} mudou para \"{status}\".",
+    "atsDelta": "Sua pontuação ATS foi de {from} para {to} desde sua última verificação.",
+    "newMatches": "{count, plural, =1 {# nova vaga combina} other {# novas vagas combinam}} em {threshold}%+ com seu perfil.",
+    "profileGapTitle": "Adicione seu cargo-alvo para vagas mais compatíveis.",
+    "profileGapSkills": "Adicione suas habilidades para vagas mais compatíveis.",
+    "profileGapGeneric": "Complete seu perfil para vagas mais compatíveis.",
+    "viewApplications": "Ver candidaturas",
+    "viewProgress": "Ver progresso",
+    "viewMatches": "Ver compatibilidades",
+    "completeProfile": "Completar perfil"
   }
 }

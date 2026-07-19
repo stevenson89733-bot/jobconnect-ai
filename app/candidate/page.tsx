@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { getTranslations } from 'next-intl/server'
 import { Send, CheckCircle2, Layers } from 'lucide-react'
 import { matchJobsToSkills } from '@/lib/jobMatching'
+import { computeProfileCompletion } from '@/lib/profileCompletion'
 import WelcomeHeader from '@/components/dashboard/WelcomeHeader'
 import ProfileCompletionCard from '@/components/dashboard/ProfileCompletionCard'
 import ProfileSnapshot from '@/components/dashboard/ProfileSnapshot'
@@ -108,16 +109,7 @@ export default async function CandidateDashboard() {
     ? fullName.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]?.toUpperCase()).join('')
     : (email[0] ?? '?').toUpperCase()
 
-  // Profile completion — text fields + years_experience (numeric) + avatar.
-  // phone is intentionally excluded: optional and private, not a signal of
-  // "profile completeness" for employers to see.
-  const textCompletionFields = [
-    profile?.full_name, profile?.title, profile?.location, profile?.bio,
-    profile?.skills, profile?.experience, profile?.avatar_url,
-    profile?.portfolio_url, profile?.availability, profile?.work_preference,
-  ]
-  const filledCount = textCompletionFields.filter(f => !!f?.trim()).length + (profile?.years_experience != null ? 1 : 0)
-  const completion = Math.round((filledCount / (textCompletionFields.length + 1)) * 100)
+  const completion = computeProfileCompletion(profile)
 
   const skillTags = (profile?.skills ?? '').split(',').map(s => s.trim()).filter(Boolean)
 

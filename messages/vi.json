@@ -687,5 +687,22 @@
     "couldNotUpdateReview": "Không thể cập nhật đánh giá này.",
     "somethingWentWrongAnalyzingResume": "Đã xảy ra lỗi khi phân tích CV của bạn.",
     "mustBeSignedInToUpdateProfile": "Bạn phải đăng nhập để cập nhật hồ sơ."
+  },
+  "copilot": {
+    "openLabel": "Mở Trợ Lý Sự Nghiệp",
+    "closeLabel": "Bỏ qua",
+    "title": "Trợ Lý Sự Nghiệp",
+    "idleTitle": "Bạn đã cập nhật đầy đủ",
+    "idleDesc": "Hiện chưa có cập nhật mới — hãy quay lại sau.",
+    "appStatus": "Đơn ứng tuyển của bạn tại {company} đã chuyển sang \"{status}\".",
+    "atsDelta": "Điểm ATS của bạn đã tăng từ {from} lên {to} kể từ lần kiểm tra trước.",
+    "newMatches": "{count, plural, =1 {# việc làm mới phù hợp} other {# việc làm mới phù hợp}} {threshold}%+ với hồ sơ của bạn.",
+    "profileGapTitle": "Thêm vị trí mục tiêu để có kết quả phù hợp tốt hơn.",
+    "profileGapSkills": "Thêm kỹ năng của bạn để có kết quả phù hợp tốt hơn.",
+    "profileGapGeneric": "Hoàn thiện hồ sơ để có kết quả phù hợp tốt hơn.",
+    "viewApplications": "Xem đơn ứng tuyển",
+    "viewProgress": "Xem tiến trình",
+    "viewMatches": "Xem việc làm phù hợp",
+    "completeProfile": "Hoàn thiện hồ sơ"
   }
 }

@@ -687,5 +687,22 @@
     "couldNotUpdateReview": "Could not update this review.",
     "somethingWentWrongAnalyzingResume": "Something went wrong analyzing your resume.",
     "mustBeSignedInToUpdateProfile": "You must be signed in to update your profile."
+  },
+  "copilot": {
+    "openLabel": "Open Career Copilot",
+    "closeLabel": "Dismiss",
+    "title": "Career Copilot",
+    "idleTitle": "You're all caught up",
+    "idleDesc": "No new updates right now — check back later.",
+    "appStatus": "Your application to {company} moved to {status}.",
+    "atsDelta": "Your ATS Score went from {from} to {to} since your last check-in.",
+    "newMatches": "{count, plural, =1 {# new job matches} other {# new jobs match}} {threshold}%+ of your profile.",
+    "profileGapTitle": "Add your target role to get better job matches.",
+    "profileGapSkills": "Add your skills to get better job matches.",
+    "profileGapGeneric": "Complete your profile to get better job matches.",
+    "viewApplications": "View applications",
+    "viewProgress": "View progress",
+    "viewMatches": "View matches",
+    "completeProfile": "Complete profile"
   }
 }
