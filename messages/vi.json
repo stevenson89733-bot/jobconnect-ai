@@ -25,7 +25,8 @@
     "getStarted": "Bắt đầu",
     "openMenu": "Mở menu",
     "closeMenu": "Đóng menu",
-    "language": "Ngôn ngữ"
+    "language": "Ngôn ngữ",
+    "country": "Quốc gia"
   },
   "footer": {
     "tagline": "Nền tảng việc làm từ xa ứng dụng AI, kết nối những ứng viên hàng đầu với các công ty uy tín trên toàn thế giới.",
@@ -170,6 +171,7 @@
     "clearAllFilters": "Xóa tất cả bộ lọc",
     "reachedEnd": "Bạn đã xem hết — tổng cộng {count} vị trí.",
     "salaryNotDisclosed": "Không tiết lộ mức lương",
+    "approxUsd": "≈ {amount} USD",
     "saveJob": "Lưu việc làm",
     "unsaveJob": "Bỏ lưu việc làm",
     "shareJob": "Chia sẻ việc làm",
@@ -758,5 +760,25 @@
     "employerGrowthFeature4": "Hỗ trợ ưu tiên",
     "comingSoon": "Sắp ra mắt",
     "employerPlanLimitNote": "Gói miễn phí của bạn bao gồm 1 tin tuyển dụng đang hoạt động cùng lúc — hãy tắt một tin cũ để đăng tin mới, hoặc nâng cấp để có nhiều hơn."
+  },
+  "countries": {
+    "US": "Hoa Kỳ",
+    "CA": "Canada",
+    "GB": "Vương quốc Anh",
+    "FR": "Pháp",
+    "DE": "Đức",
+    "ES": "Tây Ban Nha",
+    "PT": "Bồ Đào Nha",
+    "NL": "Hà Lan",
+    "IT": "Ý",
+    "BR": "Brazil",
+    "MX": "Mexico",
+    "AR": "Argentina",
+    "VN": "Việt Nam",
+    "IN": "Ấn Độ",
+    "JP": "Nhật Bản",
+    "SG": "Singapore",
+    "AU": "Úc",
+    "HT": "Haiti"
   }
 }

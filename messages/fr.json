@@ -25,7 +25,8 @@
     "getStarted": "Commencer",
     "openMenu": "Ouvrir le menu",
     "closeMenu": "Fermer le menu",
-    "language": "Langue"
+    "language": "Langue",
+    "country": "Pays"
   },
   "footer": {
     "tagline": "Plateforme d'emploi à distance propulsée par l'IA, mettant en relation les meilleurs candidats avec des entreprises de premier plan dans le monde entier.",
@@ -170,6 +171,7 @@
     "clearAllFilters": "Effacer tous les filtres",
     "reachedEnd": "Vous avez atteint la fin — {count, plural, =1 {# poste} other {# postes}} au total.",
     "salaryNotDisclosed": "Salaire non communiqué",
+    "approxUsd": "≈ {amount} USD",
     "saveJob": "Enregistrer l'offre",
     "unsaveJob": "Retirer l'offre enregistrée",
     "shareJob": "Partager l'offre",
@@ -758,5 +760,25 @@
     "employerGrowthFeature4": "Support prioritaire",
     "comingSoon": "Bientôt disponible",
     "employerPlanLimitNote": "Votre plan gratuit inclut 1 offre d'emploi active à la fois — désactivez-en une ancienne pour en publier une nouvelle, ou passez à l'offre supérieure pour en avoir plus."
+  },
+  "countries": {
+    "US": "États-Unis",
+    "CA": "Canada",
+    "GB": "Royaume-Uni",
+    "FR": "France",
+    "DE": "Allemagne",
+    "ES": "Espagne",
+    "PT": "Portugal",
+    "NL": "Pays-Bas",
+    "IT": "Italie",
+    "BR": "Brésil",
+    "MX": "Mexique",
+    "AR": "Argentine",
+    "VN": "Viêt Nam",
+    "IN": "Inde",
+    "JP": "Japon",
+    "SG": "Singapour",
+    "AU": "Australie",
+    "HT": "Haïti"
   }
 }

@@ -12,6 +12,7 @@ import { companyInitials } from '@/lib/companyDisplay'
 import { JOB_TYPE_KEY, CATEGORY_KEY, WORK_TYPE_KEY } from '@/lib/i18n/jobLabels'
 import Link from 'next/link'
 import type { Job } from '@/app/jobs/JobsClient'
+import ConvertedSalary from '@/components/jobs/ConvertedSalary'
 
 const TYPE_VARIANT: Record<string, 'success' | 'accent' | 'primary' | 'default'> = {
   'Full-time': 'success',
@@ -158,7 +159,11 @@ export default function JobCard({
                 : 'text-slate-400 dark:text-slate-600 text-xs whitespace-nowrap'
             }
           >
-            {job.salary_label || t('salaryNotDisclosed')}
+            {job.salary_label ? (
+              <ConvertedSalary salaryMin={job.salary_min} salaryMax={job.salary_max} salaryLabel={job.salary_label} />
+            ) : (
+              t('salaryNotDisclosed')
+            )}
           </span>
 
           <div className="flex items-center gap-1.5">

@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { signOut } from '@/app/actions/auth'
 import ThemeToggle from './ThemeToggle'
 import LanguageSwitcher from './LanguageSwitcher'
+import CountrySelector from './country/CountrySelector'
 
 export default function Header({ userEmail, isAdmin }: { userEmail?: string | null; isAdmin?: boolean }) {
   const [open, setOpen] = useState(false)
@@ -51,6 +52,7 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
 
         <div className="hidden md:flex items-center gap-3">
           <LanguageSwitcher />
+          <CountrySelector />
           <ThemeToggle />
           {userEmail ? (
             <>
@@ -85,6 +87,7 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
 
         <div className="md:hidden flex items-center gap-2">
           <LanguageSwitcher />
+          <CountrySelector />
           <ThemeToggle />
           <button
             className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"

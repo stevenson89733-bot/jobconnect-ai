@@ -25,7 +25,8 @@
     "getStarted": "Kòmanse",
     "openMenu": "Ouvri meni",
     "closeMenu": "Fèmen meni",
-    "language": "Lang"
+    "language": "Lang",
+    "country": "Peyi"
   },
   "footer": {
     "tagline": "Platfòm travay adistans ki itilize AI pou konekte pi bon kandida yo ak gwo konpayi toupatou nan mond lan.",
@@ -170,6 +171,7 @@
     "clearAllFilters": "Efase tout filtè",
     "reachedEnd": "Ou rive nan fen an — {count, plural, =1 {# pòs} other {# pòs}} antou.",
     "salaryNotDisclosed": "Salè pa devwale",
+    "approxUsd": "≈ {amount} USD",
     "saveJob": "Anrejistre travay la",
     "unsaveJob": "Retire travay anrejistre a",
     "shareJob": "Pataje travay la",
@@ -758,5 +760,25 @@
     "employerGrowthFeature4": "Sipò priyorite",
     "comingSoon": "Byento disponib",
     "employerPlanLimitNote": "Plan gratis ou a gen ladan 1 travay aktif alafwa — dezaktive yon ansyen pou ou ka poste yon nouvo, oswa amelyore plan ou pou plis."
+  },
+  "countries": {
+    "US": "Etazini",
+    "CA": "Kanada",
+    "GB": "Wayòm Ini",
+    "FR": "Frans",
+    "DE": "Almay",
+    "ES": "Espay",
+    "PT": "Pòtigal",
+    "NL": "Peyi Ba",
+    "IT": "Itali",
+    "BR": "Brezil",
+    "MX": "Meksik",
+    "AR": "Ajantin",
+    "VN": "Vyetnam",
+    "IN": "End",
+    "JP": "Japon",
+    "SG": "Singapou",
+    "AU": "Ostrali",
+    "HT": "Ayiti"
   }
 }

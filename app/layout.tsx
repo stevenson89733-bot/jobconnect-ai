@@ -10,6 +10,8 @@ import { ThemeProvider } from '../components/ThemeProvider'
 import { createClient } from '@/lib/supabase/server'
 import CopilotWidget from '@/components/copilot/CopilotWidget'
 import CrispChat from '@/components/CrispChat'
+import { CountryProvider } from '@/components/country/CountryProvider'
+import { COUNTRY_COOKIE, DEFAULT_COUNTRY, isCountryCode } from '@/lib/countries'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -59,16 +61,21 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const locale = await getLocale()
   const messages = await getMessages()
 
+  const countryCookie = cookies().get(COUNTRY_COOKIE)?.value
+  const initialCountry = isCountryCode(countryCookie) ? countryCookie : DEFAULT_COUNTRY
+
   return (
     <html lang={locale} className={`${htmlClass ?? ''} ${inter.variable}`.trim()} suppressHydrationWarning>
       <body className="bg-white text-slate-900 dark:bg-background dark:text-slate-100 antialiased font-sans">
         <NextIntlClientProvider messages={messages} locale={locale}>
           <ThemeProvider>
-            <Header userEmail={user?.email} isAdmin={isAdmin} />
-            <main>{children}</main>
-            <Footer />
-            {isCandidate && <CopilotWidget />}
-            <CrispChat />
+            <CountryProvider initialCountry={initialCountry}>
+              <Header userEmail={user?.email} isAdmin={isAdmin} />
+              <main>{children}</main>
+              <Footer />
+              {isCandidate && <CopilotWidget />}
+              <CrispChat />
+            </CountryProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

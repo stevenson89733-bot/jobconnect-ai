@@ -25,7 +25,8 @@
     "getStarted": "Get Started",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
-    "language": "Language"
+    "language": "Language",
+    "country": "Country"
   },
   "footer": {
     "tagline": "AI-powered remote job platform connecting top candidates with leading companies worldwide.",
@@ -170,6 +171,7 @@
     "clearAllFilters": "Clear all filters",
     "reachedEnd": "You've reached the end — {count, plural, =1 {# position} other {# positions}} total.",
     "salaryNotDisclosed": "Salary not disclosed",
+    "approxUsd": "≈ {amount} USD",
     "saveJob": "Save job",
     "unsaveJob": "Unsave job",
     "shareJob": "Share job",
@@ -758,5 +760,25 @@
     "employerGrowthFeature4": "Priority support",
     "comingSoon": "Coming soon",
     "employerPlanLimitNote": "Your free plan includes 1 active job posting at a time — deactivate an old one to post a new one, or upgrade for more."
+  },
+  "countries": {
+    "US": "United States",
+    "CA": "Canada",
+    "GB": "United Kingdom",
+    "FR": "France",
+    "DE": "Germany",
+    "ES": "Spain",
+    "PT": "Portugal",
+    "NL": "Netherlands",
+    "IT": "Italy",
+    "BR": "Brazil",
+    "MX": "Mexico",
+    "AR": "Argentina",
+    "VN": "Vietnam",
+    "IN": "India",
+    "JP": "Japan",
+    "SG": "Singapore",
+    "AU": "Australia",
+    "HT": "Haiti"
   }
 }

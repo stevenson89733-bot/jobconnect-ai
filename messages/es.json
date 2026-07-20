@@ -25,7 +25,8 @@
     "getStarted": "Empezar",
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú",
-    "language": "Idioma"
+    "language": "Idioma",
+    "country": "País"
   },
   "footer": {
     "tagline": "Plataforma de empleo remoto impulsada por IA que conecta a los mejores candidatos con empresas líderes en todo el mundo.",
@@ -170,6 +171,7 @@
     "clearAllFilters": "Borrar todos los filtros",
     "reachedEnd": "Has llegado al final — {count, plural, =1 {# puesto} other {# puestos}} en total.",
     "salaryNotDisclosed": "Salario no revelado",
+    "approxUsd": "≈ {amount} USD",
     "saveJob": "Guardar empleo",
     "unsaveJob": "Quitar de guardados",
     "shareJob": "Compartir empleo",
@@ -758,5 +760,25 @@
     "employerGrowthFeature4": "Soporte prioritario",
     "comingSoon": "Próximamente",
     "employerPlanLimitNote": "Tu plan gratuito incluye 1 vacante activa a la vez — desactiva una antigua para publicar una nueva, o mejora tu plan para tener más."
+  },
+  "countries": {
+    "US": "Estados Unidos",
+    "CA": "Canadá",
+    "GB": "Reino Unido",
+    "FR": "Francia",
+    "DE": "Alemania",
+    "ES": "España",
+    "PT": "Portugal",
+    "NL": "Países Bajos",
+    "IT": "Italia",
+    "BR": "Brasil",
+    "MX": "México",
+    "AR": "Argentina",
+    "VN": "Vietnam",
+    "IN": "India",
+    "JP": "Japón",
+    "SG": "Singapur",
+    "AU": "Australia",
+    "HT": "Haití"
   }
 }

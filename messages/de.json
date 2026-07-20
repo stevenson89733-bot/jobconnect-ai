@@ -25,7 +25,8 @@
     "getStarted": "Loslegen",
     "openMenu": "Menü öffnen",
     "closeMenu": "Menü schließen",
-    "language": "Sprache"
+    "language": "Sprache",
+    "country": "Land"
   },
   "footer": {
     "tagline": "KI-gestützte Remote-Jobplattform, die Top-Kandidaten mit führenden Unternehmen weltweit verbindet.",
@@ -170,6 +171,7 @@
     "clearAllFilters": "Alle Filter zurücksetzen",
     "reachedEnd": "Du hast das Ende erreicht — {count, plural, =1 {# Stelle} other {# Stellen}} insgesamt.",
     "salaryNotDisclosed": "Gehalt nicht angegeben",
+    "approxUsd": "≈ {amount} USD",
     "saveJob": "Job speichern",
     "unsaveJob": "Job nicht mehr speichern",
     "shareJob": "Job teilen",
@@ -758,5 +760,25 @@
     "employerGrowthFeature4": "Prioritäts-Support",
     "comingSoon": "Demnächst verfügbar",
     "employerPlanLimitNote": "Dein kostenloser Plan umfasst 1 aktive Stellenanzeige gleichzeitig — deaktiviere eine alte, um eine neue zu veröffentlichen, oder upgrade für mehr."
+  },
+  "countries": {
+    "US": "USA",
+    "CA": "Kanada",
+    "GB": "Vereinigtes Königreich",
+    "FR": "Frankreich",
+    "DE": "Deutschland",
+    "ES": "Spanien",
+    "PT": "Portugal",
+    "NL": "Niederlande",
+    "IT": "Italien",
+    "BR": "Brasilien",
+    "MX": "Mexiko",
+    "AR": "Argentinien",
+    "VN": "Vietnam",
+    "IN": "Indien",
+    "JP": "Japan",
+    "SG": "Singapur",
+    "AU": "Australien",
+    "HT": "Haiti"
   }
 }
