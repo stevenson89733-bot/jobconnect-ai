@@ -758,7 +758,9 @@
     "employerGrowthFeature2": "5 vagas ativas",
     "employerGrowthFeature3": "Elegibilidade para vagas em destaque",
     "employerGrowthFeature4": "Suporte prioritário",
-    "comingSoon": "Em breve",
+    "employerUpgradeButton": "Fazer upgrade para Crescimento — US$ 49/mês",
+    "employerSuccessTitle": "🎉 Bem-vindo ao Crescimento! Agora você pode publicar até 5 vagas ativas.",
+    "goToRecruiterDashboard": "Ir para o Painel do Empregador →",
     "employerPlanLimitNote": "Seu plano gratuito inclui 1 vaga ativa por vez — desative uma antiga para publicar uma nova, ou faça upgrade para ter mais."
   },
   "countries": {

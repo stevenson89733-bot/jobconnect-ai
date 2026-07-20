@@ -758,7 +758,9 @@
     "employerGrowthFeature2": "5 offres d'emploi actives",
     "employerGrowthFeature3": "Éligibilité aux offres en vedette",
     "employerGrowthFeature4": "Support prioritaire",
-    "comingSoon": "Bientôt disponible",
+    "employerUpgradeButton": "Passer à Croissance — 49 $/mois",
+    "employerSuccessTitle": "🎉 Bienvenue dans Croissance ! Vous pouvez désormais publier jusqu'à 5 offres actives.",
+    "goToRecruiterDashboard": "Aller au tableau de bord employeur →",
     "employerPlanLimitNote": "Votre plan gratuit inclut 1 offre d'emploi active à la fois — désactivez-en une ancienne pour en publier une nouvelle, ou passez à l'offre supérieure pour en avoir plus."
   },
   "countries": {

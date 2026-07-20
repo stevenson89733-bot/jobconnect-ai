@@ -758,7 +758,9 @@
     "employerGrowthFeature2": "5 active job postings",
     "employerGrowthFeature3": "Featured listing eligibility",
     "employerGrowthFeature4": "Priority support",
-    "comingSoon": "Coming soon",
+    "employerUpgradeButton": "Upgrade to Growth — $49/mo",
+    "employerSuccessTitle": "🎉 Welcome to Growth! You can now post up to 5 active jobs.",
+    "goToRecruiterDashboard": "Go to Employer Dashboard →",
     "employerPlanLimitNote": "Your free plan includes 1 active job posting at a time — deactivate an old one to post a new one, or upgrade for more."
   },
   "countries": {

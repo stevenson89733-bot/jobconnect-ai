@@ -758,7 +758,9 @@
     "employerGrowthFeature2": "5 vacantes activas",
     "employerGrowthFeature3": "Elegibilidad para vacantes destacadas",
     "employerGrowthFeature4": "Soporte prioritario",
-    "comingSoon": "Próximamente",
+    "employerUpgradeButton": "Mejorar a Crecimiento — $49/mes",
+    "employerSuccessTitle": "🎉 ¡Bienvenido a Crecimiento! Ahora puedes publicar hasta 5 vacantes activas.",
+    "goToRecruiterDashboard": "Ir al panel de empleador →",
     "employerPlanLimitNote": "Tu plan gratuito incluye 1 vacante activa a la vez — desactiva una antigua para publicar una nueva, o mejora tu plan para tener más."
   },
   "countries": {

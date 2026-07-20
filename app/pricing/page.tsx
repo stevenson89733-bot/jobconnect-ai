@@ -10,16 +10,25 @@ export default function PricingPage() {
   const t = useTranslations('pricing')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const success  = searchParams.get('success')  === 'true'
-  const canceled = searchParams.get('canceled') === 'true'
+  const [employerLoading, setEmployerLoading] = useState(false)
+  const [employerError, setEmployerError] = useState('')
+  const isEmployerRedirect = searchParams.get('plan') === 'employer'
+  const success  = searchParams.get('success')  === 'true' && !isEmployerRedirect
+  const canceled = searchParams.get('canceled') === 'true' && !isEmployerRedirect
+  const employerSuccess  = searchParams.get('success')  === 'true' && isEmployerRedirect
+  const employerCanceled = searchParams.get('canceled') === 'true' && isEmployerRedirect
 
   useEffect(() => {
     if (canceled) setError(t('paymentCanceled'))
   }, [canceled, t])
 
   useEffect(() => {
-    if (success) router.refresh()
-  }, [success, router])
+    if (employerCanceled) setEmployerError(t('paymentCanceled'))
+  }, [employerCanceled, t])
+
+  useEffect(() => {
+    if (success || employerSuccess) router.refresh()
+  }, [success, employerSuccess, router])
 
   async function handleUpgrade() {
     setLoading(true)
@@ -33,6 +42,23 @@ export default function PricingPage() {
     if (data.error) {
       setError(data.error)
       setLoading(false)
+      return
+    }
+    window.location.href = data.url
+  }
+
+  async function handleEmployerUpgrade() {
+    setEmployerLoading(true)
+    setEmployerError('')
+    const res = await fetch('/api/stripe/checkout/employer', { method: 'POST' })
+    if (res.status === 401) {
+      window.location.href = '/login?redirectTo=/pricing'
+      return
+    }
+    const data = await res.json()
+    if (data.error) {
+      setEmployerError(data.error)
+      setEmployerLoading(false)
       return
     }
     window.location.href = data.url
@@ -154,6 +180,19 @@ export default function PricingPage() {
           {t('forEmployers')}
         </h2>
 
+        {employerSuccess && (
+          <div className="mb-8 p-5 bg-green-50 dark:bg-green-900/30 border border-green-300 dark:border-green-700 rounded-xl text-center">
+            <p className="text-green-700 dark:text-green-400 font-semibold mb-3">{t('employerSuccessTitle')}</p>
+            <a href="/recruiter" className="btn-primary text-sm py-2 px-5">{t('goToRecruiterDashboard')}</a>
+          </div>
+        )}
+
+        {employerError && (
+          <div className="mb-8 p-4 bg-red-50 dark:bg-red-900/30 border border-red-300 dark:border-red-700 rounded-xl text-red-700 dark:text-red-400 text-sm text-center">
+            {employerError}
+          </div>
+        )}
+
         <div className="grid md:grid-cols-2 gap-6">
           {/* Employer Free plan */}
           <div className="card flex flex-col">
@@ -189,11 +228,22 @@ export default function PricingPage() {
                 </li>
               ))}
             </ul>
-            {/* No real Stripe checkout for employer plans yet — honest
-                disabled state rather than a fake/broken payment flow. */}
-            <button disabled className="btn-primary py-3 text-sm font-semibold opacity-50 w-full cursor-not-allowed">
-              {t('comingSoon')}
+            <button
+              onClick={handleEmployerUpgrade}
+              disabled={employerLoading}
+              className="btn-primary py-3 text-sm font-semibold disabled:opacity-50 w-full"
+            >
+              {employerLoading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
+                  </svg>
+                  {t('redirectingToStripe')}
+                </span>
+              ) : t('employerUpgradeButton')}
             </button>
+            <p className="text-xs text-slate-600 dark:text-slate-400 text-center mt-3">{t('stripeNote')}</p>
           </div>
         </div>
         <p className="text-xs text-slate-600 dark:text-slate-400 text-center mt-6">{t('employerPlanLimitNote')}</p>
