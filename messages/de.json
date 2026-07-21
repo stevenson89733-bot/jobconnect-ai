@@ -782,5 +782,9 @@
     "SG": "Singapur",
     "AU": "Australien",
     "HT": "Haiti"
+  },
+  "contactPage": {
+    "standbyTitle": "Weitere Kontaktmöglichkeiten",
+    "standbyNote": "Dies sind Standby-Kanäle — nicht rund um die Uhr überwacht, daher können die Antwortzeiten variieren."
   }
 }

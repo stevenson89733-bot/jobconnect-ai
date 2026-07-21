@@ -782,5 +782,9 @@
     "SG": "Singapore",
     "AU": "Australia",
     "HT": "Haiti"
+  },
+  "contactPage": {
+    "standbyTitle": "Other ways to reach us",
+    "standbyNote": "These are standby channels — not monitored 24/7, so response times may vary."
   }
 }

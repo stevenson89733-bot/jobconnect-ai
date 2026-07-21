@@ -782,5 +782,9 @@
     "SG": "Singapou",
     "AU": "Ostrali",
     "HT": "Ayiti"
+  },
+  "contactPage": {
+    "standbyTitle": "Lòt fason pou kontakte nou",
+    "standbyNote": "Sa yo se kanal an atant — yo pa siveye 24/24, kidonk tan repons yo ka varye."
   }
 }

@@ -782,5 +782,9 @@
     "SG": "Singapour",
     "AU": "Australie",
     "HT": "Haïti"
+  },
+  "contactPage": {
+    "standbyTitle": "Autres moyens de nous joindre",
+    "standbyNote": "Ce sont des canaux de secours — pas surveillés 24h/24, les délais de réponse peuvent donc varier."
   }
 }

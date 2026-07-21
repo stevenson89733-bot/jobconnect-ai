@@ -782,5 +782,9 @@
     "SG": "Singapura",
     "AU": "Austrália",
     "HT": "Haiti"
+  },
+  "contactPage": {
+    "standbyTitle": "Outras formas de nos contatar",
+    "standbyNote": "Estes são canais de espera — não monitorados 24 horas por dia, então os tempos de resposta podem variar."
   }
 }

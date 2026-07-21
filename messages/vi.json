@@ -782,5 +782,9 @@
     "SG": "Singapore",
     "AU": "Úc",
     "HT": "Haiti"
+  },
+  "contactPage": {
+    "standbyTitle": "Các cách khác để liên hệ",
+    "standbyNote": "Đây là các kênh dự phòng — không được giám sát 24/7, vì vậy thời gian phản hồi có thể thay đổi."
   }
 }
