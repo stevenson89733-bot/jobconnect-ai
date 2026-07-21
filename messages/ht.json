@@ -257,7 +257,7 @@
     "realCandidatesSubtitle": "Vrè kandida ki aplike pou travay ou pibliye yo",
     "totalBadge": "{count} antou",
     "noApplicationsYet": "Poko gen aplikasyon.",
-    "sqlHint": "Asire w ou egzekite <file>supabase/applications.sql</file> nan Editè SQL Supabase ou.",
+    "noApplicationsYetHint": "Kandida ki aplike pou òf travay ou yo ap parèt isit la.",
     "candidateFallback": "Kandida",
     "noMessageProvided": "Pa gen mesaj bay",
     "yourJobPostings": "Travay ou pibliye yo",

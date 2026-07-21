@@ -257,7 +257,7 @@
     "realCandidatesSubtitle": "Real candidates who applied to your job postings",
     "totalBadge": "{count} total",
     "noApplicationsYet": "No applications yet.",
-    "sqlHint": "Make sure you've run <file>supabase/applications.sql</file> in your Supabase SQL Editor.",
+    "noApplicationsYetHint": "Candidates who apply to your job postings will show up here.",
     "candidateFallback": "Candidate",
     "noMessageProvided": "No message provided",
     "yourJobPostings": "Your Job Postings",

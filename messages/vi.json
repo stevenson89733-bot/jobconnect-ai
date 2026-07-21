@@ -257,7 +257,7 @@
     "realCandidatesSubtitle": "Ứng viên thực sự đã ứng tuyển vào tin tuyển dụng của bạn",
     "totalBadge": "Tổng cộng {count}",
     "noApplicationsYet": "Chưa có đơn ứng tuyển nào.",
-    "sqlHint": "Hãy đảm bảo bạn đã chạy <file>supabase/applications.sql</file> trong Supabase SQL Editor.",
+    "noApplicationsYetHint": "Các ứng viên ứng tuyển vào tin tuyển dụng của bạn sẽ hiển thị ở đây.",
     "candidateFallback": "Ứng viên",
     "noMessageProvided": "Không có tin nhắn kèm theo",
     "yourJobPostings": "Tin tuyển dụng của bạn",

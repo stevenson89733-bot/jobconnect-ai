@@ -257,7 +257,7 @@
     "realCandidatesSubtitle": "Candidatos reales que postularon a tus vacantes",
     "totalBadge": "{count} en total",
     "noApplicationsYet": "Aún no hay candidaturas.",
-    "sqlHint": "Asegúrate de haber ejecutado <file>supabase/applications.sql</file> en tu Editor SQL de Supabase.",
+    "noApplicationsYetHint": "Los candidatos que postulen a tus vacantes aparecerán aquí.",
     "candidateFallback": "Candidato",
     "noMessageProvided": "No se proporcionó ningún mensaje",
     "yourJobPostings": "Tus vacantes publicadas",

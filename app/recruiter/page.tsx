@@ -177,9 +177,7 @@ export default async function EmployerDashboard() {
           <div className="text-center py-10 text-slate-600 dark:text-slate-400">
             <div className="text-3xl mb-2">📭</div>
             <p className="text-sm text-slate-600 dark:text-slate-400">{t('noApplicationsYet')}</p>
-            <p className="text-xs mt-1">
-              {t.rich('sqlHint', { file: (chunks) => <code className="bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-700 dark:text-slate-300">{chunks}</code> })}
-            </p>
+            <p className="text-xs mt-1 text-slate-500 dark:text-slate-500">{t('noApplicationsYetHint')}</p>
           </div>
         ) : (
           <div className="space-y-6">

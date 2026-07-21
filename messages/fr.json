@@ -257,7 +257,7 @@
     "realCandidatesSubtitle": "Vrais candidats ayant postulé à vos offres",
     "totalBadge": "{count} au total",
     "noApplicationsYet": "Aucune candidature pour le moment.",
-    "sqlHint": "Assurez-vous d'avoir exécuté <file>supabase/applications.sql</file> dans votre éditeur SQL Supabase.",
+    "noApplicationsYetHint": "Les candidats qui postulent à vos offres apparaîtront ici.",
     "candidateFallback": "Candidat",
     "noMessageProvided": "Aucun message fourni",
     "yourJobPostings": "Vos offres publiées",
