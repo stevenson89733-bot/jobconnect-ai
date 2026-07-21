@@ -14,7 +14,7 @@ export default async function CandidatesPage({ searchParams }: { searchParams: {
   // Must be signed in as an employer — redirect() throws, so this call stays
   // outside any try/catch (see requireEmployer for details).
   const isEmployer = await requireEmployer('/candidates')
-  if (!isEmployer) return <EmployerOnlyGate message="Candidate profiles are visible to employer accounts only." />
+  if (!isEmployer) return <EmployerOnlyGate />
 
   const page = Math.max(1, parseInt(searchParams.page ?? '1', 10) || 1)
   const from = (page - 1) * PAGE_SIZE

@@ -2,12 +2,17 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
+// Real search terms only — kept in English regardless of UI language, same
+// convention as job tags/skills elsewhere (lib/i18n/jobLabels.ts's README):
+// these are literal query strings sent to /jobs?q=, not display labels.
 const POPULAR = ['AI Engineer', 'Product Designer', 'Full Stack Dev', 'Data Scientist']
 
 export default function HeroSearch() {
   const [query, setQuery] = useState('')
   const router = useRouter()
+  const t = useTranslations('home')
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -28,7 +33,7 @@ export default function HeroSearch() {
             type="text"
             value={query}
             onChange={e => setQuery(e.target.value)}
-            placeholder="Job title, skills, or company…"
+            placeholder={t('heroSearchPlaceholder')}
             className="w-full bg-white dark:bg-card border border-slate-300 dark:border-slate-700 rounded-xl pl-11 pr-4 py-4
                        text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500
                        focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
@@ -38,12 +43,12 @@ export default function HeroSearch() {
           type="submit"
           className="bg-primary hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl transition-colors whitespace-nowrap"
         >
-          Search Jobs
+          {t('heroSearchButton')}
         </button>
       </form>
 
       <p className="text-sm text-slate-600 dark:text-slate-400">
-        Popular:{' '}
+        {t('popularLabel')}{' '}
         {POPULAR.map(t => (
           <Link
             key={t}

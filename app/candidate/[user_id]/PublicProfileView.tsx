@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 
 type Profile = Record<string, string | number | null>
 
@@ -13,10 +14,11 @@ function Section({ title, value }: { title: string; value: string | number | nul
   )
 }
 
-export default function PublicProfileView({ profile }: { profile: Profile }) {
+export default async function PublicProfileView({ profile }: { profile: Profile }) {
+  const t = await getTranslations('publicProfile')
   const str = (key: string) => (typeof profile[key] === 'string' ? (profile[key] as string).trim() : '')
 
-  const name = str('full_name') || 'Candidate'
+  const name = str('full_name') || t('candidateFallback')
   const initial = name.charAt(0).toUpperCase()
   const title = str('title')
   const location = str('location')
@@ -35,9 +37,9 @@ export default function PublicProfileView({ profile }: { profile: Profile }) {
     <div className="max-w-3xl mx-auto px-6 py-10">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-6">
-        <Link href="/recruiter" className="hover:text-slate-900 dark:hover:text-white transition-colors">Employer Dashboard</Link>
+        <Link href="/recruiter" className="hover:text-slate-900 dark:hover:text-white transition-colors">{t('employerDashboard')}</Link>
         <span>/</span>
-        <span className="text-slate-700 dark:text-slate-300">Candidate Profile</span>
+        <span className="text-slate-700 dark:text-slate-300">{t('candidateProfile')}</span>
       </div>
 
       {/* Header card */}
@@ -70,7 +72,7 @@ export default function PublicProfileView({ profile }: { profile: Profile }) {
           <div className="flex flex-wrap gap-2 mb-6">
             {yearsExperience != null && (
               <span className="badge bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300 text-xs">
-                {yearsExperience} yr{yearsExperience === 1 ? '' : 's'} experience
+                {t('yearsExperience', { count: yearsExperience })}
               </span>
             )}
             {workPreference && (
@@ -80,21 +82,21 @@ export default function PublicProfileView({ profile }: { profile: Profile }) {
             )}
             {availability && (
               <span className="badge bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs">
-                Available: {availability}
+                {t('available', { availability })}
               </span>
             )}
           </div>
         )}
 
         <div className="space-y-6">
-          <Section title="Bio" value={profile.bio} />
-          <Section title="Experience" value={profile.experience} />
-          <Section title="Skills" value={profile.skills} />
-          <Section title="Education" value={profile.education} />
+          <Section title={t('bio')} value={profile.bio} />
+          <Section title={t('experience')} value={profile.experience} />
+          <Section title={t('skills')} value={profile.skills} />
+          <Section title={t('education')} value={profile.education} />
 
           {hasLinks && (
             <div>
-              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-2">Links</h2>
+              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-2">{t('links')}</h2>
               <div className="flex flex-wrap gap-3">
                 {linkedinUrl && (
                   <a href={linkedinUrl} target="_blank" rel="noopener noreferrer"

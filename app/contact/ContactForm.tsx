@@ -1,8 +1,10 @@
 'use client'
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { submitContactMessage } from '@/app/actions/contact'
 
 export default function ContactForm() {
+  const t = useTranslations('contactPage')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
@@ -21,16 +23,15 @@ export default function ContactForm() {
       setMessage('')
     } else {
       setStatus('error')
-      setError(result.error || 'Something went wrong. Please try again.')
+      setError(result.error || t('genericError'))
     }
   }
 
   if (status === 'sent') {
     return (
       <div className="card text-sm text-slate-700 dark:text-slate-300">
-        <p className="font-semibold text-slate-900 dark:text-white mb-1">Message sent — thank you.</p>
-        <p>It goes straight to the founder&apos;s inbox. It&apos;s a solo project, so replies are personal
-        but not instant — expect to hear back within a few days.</p>
+        <p className="font-semibold text-slate-900 dark:text-white mb-1">{t('messageSentTitle')}</p>
+        <p>{t('messageSentBody')}</p>
       </div>
     )
   }
@@ -38,7 +39,7 @@ export default function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="card space-y-4">
       <div>
-        <label htmlFor="contact-name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Name</label>
+        <label htmlFor="contact-name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{t('formName')}</label>
         <input
           id="contact-name"
           type="text"
@@ -49,7 +50,7 @@ export default function ContactForm() {
         />
       </div>
       <div>
-        <label htmlFor="contact-email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email</label>
+        <label htmlFor="contact-email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{t('formEmail')}</label>
         <input
           id="contact-email"
           type="email"
@@ -60,7 +61,7 @@ export default function ContactForm() {
         />
       </div>
       <div>
-        <label htmlFor="contact-message" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Message</label>
+        <label htmlFor="contact-message" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{t('formMessage')}</label>
         <textarea
           id="contact-message"
           required
@@ -80,7 +81,7 @@ export default function ContactForm() {
         disabled={status === 'saving'}
         className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-blue-600 transition-colors disabled:opacity-60"
       >
-        {status === 'saving' ? 'Sending...' : 'Send message'}
+        {status === 'saving' ? t('sending') : t('sendMessage')}
       </button>
     </form>
   )

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 
 export type CandidateCard = {
   user_id: string
@@ -28,8 +29,8 @@ function initialsOf(name: string) {
     .join('') || '?'
 }
 
-function CandidateCardItem({ candidate }: { candidate: CandidateCard }) {
-  const name = candidate.full_name?.trim() || 'Candidate'
+function CandidateCardItem({ candidate, t }: { candidate: CandidateCard; t: Awaited<ReturnType<typeof getTranslations<'candidatesPage'>>> }) {
+  const name = candidate.full_name?.trim() || t('candidateFallback')
   const title = candidate.title?.trim()
   const location = candidate.location?.trim()
   const bio = candidate.bio?.trim()
@@ -68,7 +69,7 @@ function CandidateCardItem({ candidate }: { candidate: CandidateCard }) {
         <div className="flex flex-wrap gap-1.5 mb-3">
           {candidate.years_experience != null && (
             <span className="badge bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 text-xs">
-              {candidate.years_experience} yr{candidate.years_experience === 1 ? '' : 's'}
+              {t('yearsShort', { count: candidate.years_experience })}
             </span>
           )}
           {candidate.work_preference?.trim() && (
@@ -96,19 +97,19 @@ function CandidateCardItem({ candidate }: { candidate: CandidateCard }) {
             </span>
           ))}
           {hiddenCount > 0 && (
-            <span className="text-xs text-slate-600 dark:text-slate-400 self-center">+{hiddenCount} more</span>
+            <span className="text-xs text-slate-600 dark:text-slate-400 self-center">{t('moreCount', { count: hiddenCount })}</span>
           )}
         </div>
       )}
 
       <Link href={`/candidate/${candidate.user_id}`} className="btn-outline text-xs py-2 text-center mt-auto">
-        View Profile
+        {t('viewProfile')}
       </Link>
     </div>
   )
 }
 
-export default function CandidatesListView({
+export default async function CandidatesListView({
   candidates,
   page,
   totalPages,
@@ -119,29 +120,29 @@ export default function CandidatesListView({
   totalPages: number
   total: number
 }) {
+  const t = await getTranslations('candidatesPage')
+
   return (
     <div className="max-w-7xl mx-auto px-6 py-10">
       <div className="mb-8">
         <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-3">
-          <Link href="/recruiter" className="hover:text-slate-900 dark:hover:text-white transition-colors">Employer Dashboard</Link>
+          <Link href="/recruiter" className="hover:text-slate-900 dark:hover:text-white transition-colors">{t('employerDashboard')}</Link>
           <span>/</span>
-          <span className="text-slate-700 dark:text-slate-300">Candidates</span>
+          <span className="text-slate-700 dark:text-slate-300">{t('candidates')}</span>
         </div>
-        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">Candidates</h1>
-        <p className="text-slate-600 dark:text-slate-400">
-          {total} candidate{total === 1 ? '' : 's'} on JobConnect AI
-        </p>
+        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">{t('candidates')}</h1>
+        <p className="text-slate-600 dark:text-slate-400">{t('candidateCount', { count: total })}</p>
       </div>
 
       {candidates.length === 0 ? (
         <div className="card text-center py-16 text-slate-600 dark:text-slate-400">
           <div className="text-4xl mb-3">🧑‍💻</div>
-          <p className="text-sm">No candidates yet.</p>
+          <p className="text-sm">{t('noCandidatesYet')}</p>
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
           {candidates.map((c) => (
-            <CandidateCardItem key={c.user_id} candidate={c} />
+            <CandidateCardItem key={c.user_id} candidate={c} t={t} />
           ))}
         </div>
       )}
@@ -153,15 +154,15 @@ export default function CandidatesListView({
             aria-disabled={page <= 1}
             className={`btn-outline text-sm px-4 py-2 ${page <= 1 ? 'pointer-events-none opacity-40' : ''}`}
           >
-            ← Previous
+            {t('previous')}
           </Link>
-          <span className="text-sm text-slate-600 dark:text-slate-400">Page {page} of {totalPages}</span>
+          <span className="text-sm text-slate-600 dark:text-slate-400">{t('pageOf', { page, totalPages })}</span>
           <Link
             href={`/candidates?page=${page + 1}`}
             aria-disabled={page >= totalPages}
             className={`btn-outline text-sm px-4 py-2 ${page >= totalPages ? 'pointer-events-none opacity-40' : ''}`}
           >
-            Next →
+            {t('next')}
           </Link>
         </div>
       )}

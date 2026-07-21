@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import JobCard from '@/components/jobs/JobCard'
@@ -34,11 +35,12 @@ export default function CompanyClient({
 }) {
   const { appliedIds, savedIds, toggleSave } = useJobInteractions(`/companies/${encodeURIComponent(name)}`)
   const isHiring = jobs.length > 0
+  const t = useTranslations('companyProfile')
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-10">
       <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-6">
-        <Link href="/jobs" className="hover:text-slate-900 dark:hover:text-white transition-colors">Jobs</Link>
+        <Link href="/jobs" className="hover:text-slate-900 dark:hover:text-white transition-colors">{t('jobsBreadcrumb')}</Link>
         <span>/</span>
         <span className="text-slate-700 dark:text-slate-300">{name}</span>
       </div>
@@ -57,7 +59,7 @@ export default function CompanyClient({
               {/* Real computed signal from actual open position count — not
                   a separate fabricated "hiring status" field. */}
               <Badge variant={isHiring ? 'success' : 'default'}>
-                {isHiring ? '● Actively hiring' : 'Not currently hiring'}
+                {isHiring ? `● ${t('activelyHiring')}` : t('notCurrentlyHiring')}
               </Badge>
             </div>
             {website && (
@@ -80,12 +82,12 @@ export default function CompanyClient({
           postings only, never market-wide data ─────────────── */}
       {salaryInsights && (
         <div className="card mb-6">
-          <h2 className="font-semibold text-slate-900 dark:text-white mb-1">Salary Insights</h2>
+          <h2 className="font-semibold text-slate-900 dark:text-white mb-1">{t('salaryInsights')}</h2>
           <p className="text-2xl font-bold text-orange-700 dark:text-accent mb-1">
             ${Math.round(salaryInsights.min / 1000)}k – ${Math.round(salaryInsights.max / 1000)}k
           </p>
           <p className="text-xs text-slate-600 dark:text-slate-400">
-            Based on {salaryInsights.count} open position{salaryInsights.count === 1 ? '' : 's'} at {name} — not a market-wide estimate.
+            {t('salaryInsightsNote', { count: salaryInsights.count, name })}
           </p>
         </div>
       )}
@@ -93,13 +95,13 @@ export default function CompanyClient({
       {/* ── Open Positions — same JobCard, same Save/Share/Apply/Match% ── */}
       <div>
         <h2 className="font-semibold text-slate-900 dark:text-white mb-3">
-          Open Positions {jobs.length > 0 ? `(${jobs.length})` : ''}
+          {jobs.length > 0 ? t('openPositionsCount', { count: jobs.length }) : t('openPositions')}
         </h2>
 
         {jobs.length === 0 ? (
           <div className="card text-center py-12 text-slate-600 dark:text-slate-400">
             <div className="text-3xl mb-2">📭</div>
-            <p className="text-sm">No open positions at {name} right now.</p>
+            <p className="text-sm">{t('noOpenPositions', { name })}</p>
           </div>
         ) : (
           <div className="space-y-3">

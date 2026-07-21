@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import { Markdown } from '@/lib/docExport'
 import { deleteCoverLetterDraft } from '@/app/actions/coverLetters'
 import type { CoverLetterDraft } from '@/lib/coverLetters'
@@ -22,6 +23,8 @@ export default function CoverLetterHistoryClient({
   initialDrafts: CoverLetterDraft[]
   loadError: string
 }) {
+  const t = useTranslations('coverLetterHistory')
+  const tc = useTranslations('coverLetter')
   const [drafts, setDrafts] = useState(initialDrafts)
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const [deletingId, setDeletingId] = useState<string | null>(null)
@@ -43,16 +46,16 @@ export default function CoverLetterHistoryClient({
   return (
     <div className="max-w-4xl mx-auto px-6 py-10">
       <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-3">
-        <Link href="/candidate" className="hover:text-slate-900 dark:hover:text-white transition-colors">Dashboard</Link>
+        <Link href="/candidate" className="hover:text-slate-900 dark:hover:text-white transition-colors">{tc('breadcrumbDashboard')}</Link>
         <span>/</span>
-        <Link href="/ai-tools/cover-letter" className="hover:text-slate-900 dark:hover:text-white transition-colors">AI Cover Letter Generator</Link>
+        <Link href="/ai-tools/cover-letter" className="hover:text-slate-900 dark:hover:text-white transition-colors">{tc('breadcrumbCurrent')}</Link>
         <span>/</span>
-        <span className="text-slate-700 dark:text-slate-300">History</span>
+        <span className="text-slate-700 dark:text-slate-300">{t('history')}</span>
       </div>
 
       <div className="mb-8">
-        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">Saved Cover Letters</h1>
-        <p className="text-slate-600 dark:text-slate-400">Your previously saved drafts.</p>
+        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">{t('title')}</h1>
+        <p className="text-slate-600 dark:text-slate-400">{t('subtitle')}</p>
       </div>
 
       {error && <p className="text-red-600 dark:text-red-400 text-sm mb-4">{error}</p>}
@@ -60,9 +63,9 @@ export default function CoverLetterHistoryClient({
       {drafts.length === 0 && !error && (
         <div className="card flex flex-col items-center justify-center py-16 text-center text-slate-600 dark:text-slate-400">
           <div className="text-4xl mb-3">📄</div>
-          <p className="text-sm mb-4">No saved letters yet.</p>
+          <p className="text-sm mb-4">{t('noSavedLettersYet')}</p>
           <Link href="/ai-tools/cover-letter" className="btn-primary text-sm py-2 px-4">
-            Generate a Cover Letter
+            {t('generateOne')}
           </Link>
         </div>
       )}
@@ -97,7 +100,7 @@ export default function CoverLetterHistoryClient({
                   disabled={deletingId === draft.id}
                   className="text-xs text-red-600 dark:text-red-400 hover:underline disabled:opacity-50 whitespace-nowrap"
                 >
-                  {deletingId === draft.id ? 'Deleting…' : 'Delete'}
+                  {deletingId === draft.id ? t('deleting') : t('delete')}
                 </button>
               </div>
 

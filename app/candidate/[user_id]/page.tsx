@@ -15,7 +15,7 @@ export default async function PublicCandidateProfile({ params }: { params: { use
   // Must be signed in as an employer — redirect() throws, so this call stays
   // outside any try/catch (see requireEmployer for details).
   const isEmployer = await requireEmployer(`/candidate/${targetId}`)
-  if (!isEmployer) return <EmployerOnlyGate message="Candidate profiles are visible to employer accounts only." />
+  if (!isEmployer) return <EmployerOnlyGate />
 
   // Load the target profile via the normal RLS-respecting client. The
   // "Employers can view candidate profiles" policy (supabase/
