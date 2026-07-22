@@ -4,6 +4,7 @@ import { Suspense } from 'react'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { getTranslations } from 'next-intl/server'
+import PasswordInput from '@/components/PasswordInput'
 
 export const dynamic = 'force-dynamic'
 
@@ -53,10 +54,9 @@ async function LoginForm({ error }: { error?: string }) {
                 <label htmlFor="password" className="text-sm font-medium text-slate-700 dark:text-slate-300">{t('password')}</label>
                 <Link href="/forgot-password" className="text-xs text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">{t('forgotPassword')}</Link>
               </div>
-              <input
+              <PasswordInput
                 id="password"
                 name="password"
-                type="password"
                 required
                 placeholder="••••••••"
                 className="w-full bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"

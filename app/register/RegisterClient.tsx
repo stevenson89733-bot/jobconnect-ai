@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { signUp } from '@/app/actions/auth'
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
+import PasswordInput from '@/components/PasswordInput'
 
 
 function RegisterForm() {
@@ -127,9 +128,8 @@ function RegisterForm() {
 
             <div>
               <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">{t('password')}</label>
-              <input
+              <PasswordInput
                 name="password"
-                type="password"
                 required
                 minLength={6}
                 placeholder="6+ characters"

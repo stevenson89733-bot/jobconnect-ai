@@ -6,7 +6,9 @@
     "save": "Salvar",
     "loading": "Carregando…",
     "remote": "Remoto",
-    "viewAll": "Ver tudo"
+    "viewAll": "Ver tudo",
+    "showPassword": "Mostrar senha",
+    "hidePassword": "Ocultar senha"
   },
   "nav": {
     "browseJobs": "Ver vagas",

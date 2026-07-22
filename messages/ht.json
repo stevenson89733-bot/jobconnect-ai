@@ -6,7 +6,9 @@
     "save": "Anrejistre",
     "loading": "Ap chaje…",
     "remote": "Adistans",
-    "viewAll": "Wè tout"
+    "viewAll": "Wè tout",
+    "showPassword": "Montre modpas",
+    "hidePassword": "Kache modpas"
   },
   "nav": {
     "browseJobs": "Chèche travay",

@@ -6,7 +6,9 @@
     "save": "Lưu",
     "loading": "Đang tải…",
     "remote": "Từ xa",
-    "viewAll": "Xem tất cả"
+    "viewAll": "Xem tất cả",
+    "showPassword": "Hiện mật khẩu",
+    "hidePassword": "Ẩn mật khẩu"
   },
   "nav": {
     "browseJobs": "Tìm việc làm",
