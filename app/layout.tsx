@@ -4,6 +4,7 @@ import { cookies } from 'next/headers'
 import { Inter } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
+import { Analytics } from '@vercel/analytics/react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { ThemeProvider } from '../components/ThemeProvider'
@@ -78,6 +79,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </CountryProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
+        <Analytics />
       </body>
     </html>
   )
