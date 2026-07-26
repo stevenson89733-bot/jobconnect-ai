@@ -5,6 +5,8 @@ import { MIN_EXPERIENCE_LENGTH, hasEnoughExperience, sanitizeTargetRole } from '
 import { type ContactInfo, EMPTY_CONTACT, buildContactInfo, formatContactLine } from '@/lib/resumeContact'
 import { researchCompany, type CompanySource } from './companyResearch'
 import { rateLimit, getClientIp } from '@/lib/rateLimit'
+import { getPromptLanguageName, getPromptLocale, LETTER_CLOSING } from './promptLocale'
+import type { Locale } from '@/lib/i18n/config'
 
 // Rate limit for the primary GPT-4o/Mistral generation call itself — the
 // most expensive, most exposed calls in the app, previously unlimited
@@ -130,8 +132,10 @@ async function completeJson(
   return { data: JSON.parse(raw), contact }
 }
 
-function buildResumePrompt({ targetRole, experience, skills, education, summary }: ResumeInput): string {
+function buildResumePrompt({ targetRole, experience, skills, education, summary }: ResumeInput, languageName: string): string {
   return `You are an expert resume writer and ATS optimization specialist. Your job is to REFORMAT and POLISH the candidate's real information below — improving wording, structure, and clarity. You must NOT invent, embellish, or add anything not present in the source text.
+
+LANGUAGE: Write every string value below (summary, experience, skills, education, improvements) entirely in ${languageName}. This applies regardless of what language the candidate's input text is written in — always output in ${languageName}, never default to English unless ${languageName} IS English.
 
 STRICT RULES — read carefully:
 - Use ONLY the employers, job titles, dates, responsibilities, and achievements explicitly present in "Work Experience" below. Do NOT invent a different job title, employer, or date range, even if it would seem more relevant to the target role.
@@ -176,11 +180,14 @@ const STYLE_GUIDANCE: Record<CoverLetterStyle, string> = {
 
 function buildCoverLetterPrompt(
   { targetRole, company, jobDescription, strengths, style }: CoverLetterInput,
-  research: CompanyResearchContext
+  research: CompanyResearchContext,
+  languageName: string
 ): string {
   const resolvedStyle = (COVER_LETTER_STYLES as string[]).includes(style ?? '') ? (style as CoverLetterStyle) : 'Formal'
 
   return `You are an expert career coach and professional cover letter writer. Your job is to WRITE a cover letter using ONLY the candidate's real, provided strengths and the real job description below — you must NOT invent employers, job titles, achievements, metrics, or company facts that are not explicitly present in the input.
+
+LANGUAGE: Write every string value below (subject, greeting, opening, body, closing, suggestions) entirely in ${languageName}. This applies regardless of what language the job description or candidate's input is written in — always output in ${languageName}, never default to English unless ${languageName} IS English.
 
 STRICT RULES — read carefully:
 - Use ONLY the achievements, experience, and skills explicitly present in "Candidate Strengths / Key Points" below. Do NOT invent a prior job title, employer, metric, or accomplishment (e.g. "increased sales by 20%") that isn't stated there — even if it would sound more persuasive.
@@ -207,8 +214,8 @@ Return a JSON object with this exact structure:
   },
   "improvements": [<string>, <string>, <string>],
   "letter": {
-    "subject": "Application for ${targetRole}",
-    "greeting": "Dear Hiring Manager,",
+    "subject": "<a short application-subject line for the ${targetRole} role, written in ${languageName} — e.g. the ${languageName} equivalent of 'Application for ${targetRole}', not the English words themselves unless ${languageName} IS English>",
+    "greeting": "<a formal greeting to the hiring manager, written in ${languageName} — e.g. the ${languageName} equivalent of 'Dear Hiring Manager,', not the English words themselves unless ${languageName} IS English>",
     "opening": "<2-3 sentence opening paragraph that hooks the reader and states the role, in the ${resolvedStyle} style>",
     "body": "<2 paragraphs: first highlights the candidate's REAL strengths/achievements from the input relevant to ${targetRole}; second connects to concrete details from the Job Description if provided, or the role in general if not — never invented company facts>",
     "closing": "<strong closing paragraph with clear call to action, in the ${resolvedStyle} style>"
@@ -272,14 +279,14 @@ function normalizeResume(data: unknown, contact: ContactInfo): unknown {
 // formatContactLine, same helper as the resume) is filled in here instead.
 const LETTER_SECTIONS = ['opening', 'body', 'closing'] as const
 
-function normalizeLetter(data: unknown, contact: ContactInfo, strengths: string | undefined): unknown {
+function normalizeLetter(data: unknown, contact: ContactInfo, strengths: string | undefined, locale: Locale): unknown {
   if (data && typeof data === 'object' && 'letter' in data) {
     const letter = (data as { letter: unknown }).letter
     coerceFields(letter, ['subject', 'greeting', 'opening', 'body', 'closing'])
     if (letter && typeof letter === 'object') {
       const obj = letter as Record<string, unknown>
       const contactLine = formatContactLine(contact)
-      obj.signature = `Sincerely,\n${contact.name}${contactLine ? `\n${contactLine}` : ''}`
+      obj.signature = `${LETTER_CLOSING[locale]}\n${contact.name}${contactLine ? `\n${contactLine}` : ''}`
     }
   }
   // Defensive validation, same reasoning as coerceFields — never trust the
@@ -341,7 +348,7 @@ export async function generateResume(rawInput: ResumeInput): Promise<NextRespons
       )
     }
 
-    const { data: raw, contact } = await completeJson(buildResumePrompt(input), 2000, provider)
+    const { data: raw, contact } = await completeJson(buildResumePrompt(input, getPromptLanguageName()), 2000, provider)
     const data = normalizeResume(raw, contact)
     return NextResponse.json(data)
   } catch (err) {
@@ -408,8 +415,9 @@ export async function generateCoverLetter(rawInput: CoverLetterInput): Promise<N
       }
     }
 
-    const { data: raw, contact } = await completeJson(buildCoverLetterPrompt(input, research), 2000, provider)
-    const data = normalizeLetter(raw, contact, input.strengths)
+    const locale = getPromptLocale()
+    const { data: raw, contact } = await completeJson(buildCoverLetterPrompt(input, research, getPromptLanguageName()), 2000, provider)
+    const data = normalizeLetter(raw, contact, input.strengths, locale)
     if (data && typeof data === 'object' && companyResearch) {
       ;(data as Record<string, unknown>).companyResearch = companyResearch
     }

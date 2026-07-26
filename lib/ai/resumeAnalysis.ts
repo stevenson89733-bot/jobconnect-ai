@@ -1,4 +1,5 @@
 import { createPremiumOpenAIClient, AiConfigError } from './openaiClient'
+import { getPromptLanguageName } from './promptLocale'
 
 /**
  * AI Resume Builder — analysis engine (lot 1 of 3).
@@ -38,8 +39,10 @@ export type ResumeDocumentInput = {
   education: string
 }
 
-function buildPrompt(doc: ResumeDocumentInput): string {
+function buildPrompt(doc: ResumeDocumentInput, languageName: string): string {
   return `You are an expert resume writer, ATS specialist, and technical recruiter. Critically analyze this SPECIFIC resume document (not the candidate in the abstract) for the target role below. Be specific to the actual text given.
+
+LANGUAGE: Write every string value below (explanations, suggestions, rewrites) entirely in ${languageName}, regardless of what language the resume text is written in — always output in ${languageName}, never default to English unless ${languageName} IS English.
 
 Target role: ${doc.targetRole || 'Not specified'}
 
@@ -122,7 +125,7 @@ export async function generateResumeAnalysis(doc: ResumeDocumentInput): Promise<
   try {
     const res = await client.chat.completions.create({
       model: 'gpt-4o',
-      messages: [{ role: 'user', content: buildPrompt(doc) }],
+      messages: [{ role: 'user', content: buildPrompt(doc, getPromptLanguageName()) }],
       max_tokens: 2000,
       response_format: { type: 'json_object' },
     })

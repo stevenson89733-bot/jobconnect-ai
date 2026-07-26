@@ -1,4 +1,5 @@
 import { createPremiumOpenAIClient, AiConfigError } from './openaiClient'
+import { getPromptLanguageName } from './promptLocale'
 
 /**
  * AI Career Coach — single structured GPT-4o call per analysis.
@@ -39,8 +40,10 @@ export type CandidateProfileInput = {
   workPreference: string | null
 }
 
-function buildPrompt(profile: CandidateProfileInput): string {
+function buildPrompt(profile: CandidateProfileInput, languageName: string): string {
   return `You are an expert career coach, resume/ATS specialist, and technical recruiter. Analyze this candidate's profile and produce an honest, specific career assessment. Do not invent facts about the candidate — base everything on what's given. If the candidate hasn't stated a target role, infer the most likely one from their experience/bio and make that assumption explicit in your explanations.
+
+LANGUAGE: Write every string value below (all explanations and suggestion strings) entirely in ${languageName}, regardless of what language the candidate's profile text is written in — always output in ${languageName}, never default to English unless ${languageName} IS English.
 
 Candidate profile:
 - Current/desired title: ${profile.title || 'Not specified — infer from experience/bio'}
@@ -137,7 +140,7 @@ export async function generateCareerAnalysis(profile: CandidateProfileInput): Pr
   try {
     const res = await client.chat.completions.create({
       model: 'gpt-4o',
-      messages: [{ role: 'user', content: buildPrompt(profile) }],
+      messages: [{ role: 'user', content: buildPrompt(profile, getPromptLanguageName()) }],
       max_tokens: 2200,
       response_format: { type: 'json_object' },
     })
