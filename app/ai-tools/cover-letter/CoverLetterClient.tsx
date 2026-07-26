@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { Markdown } from '@/lib/docExport'
 import RewriteSuggestion from '@/components/resume-builder/RewriteSuggestion'
 import StyleSelector, { type CoverLetterStyle } from '@/components/cover-letter/StyleSelector'
@@ -126,6 +126,7 @@ export default function CoverLetterClient({
   initialStrengths?: string
 }) {
   const t = useTranslations('coverLetter')
+  const locale = useLocale()
   const SECTION_LABELS: Record<LetterSection, string> = {
     opening: t('sectionOpening'),
     body: t('sectionBody'),
@@ -170,7 +171,7 @@ export default function CoverLetterClient({
       // Real current date at generation time — never model-generated, never
       // a placeholder. Captured once here so it doesn't drift if the result
       // stays on screen across a day boundary.
-      setDateLine(new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }))
+      setDateLine(new Date().toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' }))
       setResult(data)
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : t('somethingWentWrong'))
