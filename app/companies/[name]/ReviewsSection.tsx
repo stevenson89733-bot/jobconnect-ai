@@ -87,7 +87,7 @@ function WriteReviewForm({ companyName, onSubmitted }: { companyName: string; on
             <button
               type="button"
               onClick={() => setInterviewDifficulty(null)}
-              className="text-xs text-slate-600 dark:text-slate-400 hover:underline ml-1"
+              className="text-xs text-slate-600 dark:text-slate-400 hover:underline ms-1"
             >
               {t('clear')}
             </button>

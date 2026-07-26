@@ -187,7 +187,7 @@ export default function JobsClient({
         <div className="flex flex-col sm:flex-row gap-3 mb-4">
           <div className="relative flex-1">
             <svg
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-400"
+              className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -200,14 +200,14 @@ export default function JobsClient({
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && navigate({ q: query })}
-              className="w-full bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-4 py-2.5
+              className="w-full bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-xl ps-9 pe-4 py-2.5
                          text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500
                          focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
             />
             {query && (
               <button
                 onClick={() => { setQuery(''); navigate({ q: '' }) }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
+                className="absolute end-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
               >
                 ✕
               </button>

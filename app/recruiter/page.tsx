@@ -201,7 +201,7 @@ export default async function EmployerDashboard() {
                             {p?.full_name ?? t('candidateFallback')}
                           </span>
                           <span className="text-xs text-slate-600 dark:text-slate-400">{p?.email}</span>
-                          <span className="text-xs text-slate-600 dark:text-slate-400 ml-auto">{timeAgo(app.created_at)}</span>
+                          <span className="text-xs text-slate-600 dark:text-slate-400 ms-auto">{timeAgo(app.created_at)}</span>
                         </div>
                         ) })()}
                         {app.message && (
@@ -253,7 +253,7 @@ export default async function EmployerDashboard() {
                       </div>
                       <p className="text-xs text-slate-600 dark:text-slate-400">{timeAgo(job.created_at)} · {t('applicantCount', { count: applicantCount })}</p>
                     </div>
-                    <div className="flex items-center gap-3 ml-4">
+                    <div className="flex items-center gap-3 ms-4">
                       {newCount > 0 && (
                         <span className="badge bg-accent/10 dark:bg-accent/20 text-orange-700 dark:text-accent">{t('newBadge', { count: newCount })}</span>
                       )}

@@ -45,12 +45,12 @@ export default function LanguageSwitcher() {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full mt-2 w-48 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-card shadow-lg dark:shadow-black/40 p-1.5 z-50">
+        <div className="absolute end-0 top-full mt-2 w-48 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-card shadow-lg dark:shadow-black/40 p-1.5 z-50">
           {SUPPORTED_LOCALES.map((code) => (
             <button
               key={code}
               onClick={() => selectLocale(code)}
-              className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+              className={`w-full text-start px-3 py-2 rounded-lg text-sm transition-colors ${
                 code === locale
                   ? 'bg-primary/10 dark:bg-primary/20 text-primary dark:text-blue-400 font-medium'
                   : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'

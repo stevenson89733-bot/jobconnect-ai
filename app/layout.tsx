@@ -1,7 +1,7 @@
 import './globals.css'
 import React from 'react'
 import { cookies } from 'next/headers'
-import { Inter } from 'next/font/google'
+import { Inter, Noto_Sans_Arabic } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
 import { Analytics } from '@vercel/analytics/react'
@@ -13,11 +13,21 @@ import CopilotWidget from '@/components/copilot/CopilotWidget'
 import CrispChat from '@/components/CrispChat'
 import { CountryProvider } from '@/components/country/CountryProvider'
 import { COUNTRY_COOKIE, DEFAULT_COUNTRY, isCountryCode } from '@/lib/countries'
+import { isRtlLocale, type Locale } from '@/lib/i18n/config'
 
 const inter = Inter({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700', '800', '900'],
   variable: '--font-inter',
+  display: 'swap',
+})
+
+// Fallback-only (see tailwind.config.js) — Inter has no Arabic glyphs, this
+// covers the "ar" locale without a per-locale className branch.
+const notoSansArabic = Noto_Sans_Arabic({
+  subsets: ['arabic'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-noto-arabic',
   display: 'swap',
 })
 
@@ -59,14 +69,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const themeCookie = cookies().get('theme')?.value
   const htmlClass = themeCookie === 'dark' ? 'dark' : themeCookie === 'light' ? 'light' : undefined
 
-  const locale = await getLocale()
+  const locale = (await getLocale()) as Locale
   const messages = await getMessages()
 
   const countryCookie = cookies().get(COUNTRY_COOKIE)?.value
   const initialCountry = isCountryCode(countryCookie) ? countryCookie : DEFAULT_COUNTRY
 
   return (
-    <html lang={locale} className={`${htmlClass ?? ''} ${inter.variable}`.trim()} suppressHydrationWarning>
+    <html
+      lang={locale}
+      dir={isRtlLocale(locale) ? 'rtl' : 'ltr'}
+      className={`${htmlClass ?? ''} ${inter.variable} ${notoSansArabic.variable}`.trim()}
+      suppressHydrationWarning
+    >
       <body className="bg-white text-slate-900 dark:bg-background dark:text-slate-100 antialiased font-sans">
         <NextIntlClientProvider messages={messages} locale={locale}>
           <ThemeProvider>

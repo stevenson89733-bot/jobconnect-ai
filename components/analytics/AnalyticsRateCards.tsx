@@ -35,7 +35,7 @@ export default async function AnalyticsRateCards({
       </div>
       {!rates.anyResponseYet && (
         <FadeIn delay={0.2}>
-          <p className="text-xs text-slate-600 dark:text-slate-400 text-center sm:text-left">
+          <p className="text-xs text-slate-600 dark:text-slate-400 text-center sm:text-start">
             {t('ratesUpdateNote')}
           </p>
         </FadeIn>

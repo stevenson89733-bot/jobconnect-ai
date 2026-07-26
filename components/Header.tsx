@@ -126,7 +126,7 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
               {isAdmin && (
                 <Link href="/admin/reviews" className="text-orange-700 dark:text-accent hover:text-orange-800 dark:hover:text-accent/80" onClick={() => setOpen(false)}>🛡️ {t('admin')}</Link>
               )}
-              <form action={signOut}><button type="submit" className="text-left text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">{t('signOut')}</button></form>
+              <form action={signOut}><button type="submit" className="text-start text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">{t('signOut')}</button></form>
             </>
           ) : (
             <>

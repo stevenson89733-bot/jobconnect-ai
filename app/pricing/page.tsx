@@ -133,7 +133,7 @@ export default function PricingPage() {
 
           {/* Premium plan */}
           <div className="card border-primary/50 bg-gradient-to-br from-primary/5 to-white dark:to-card flex flex-col relative overflow-hidden">
-            <div className="absolute top-4 right-4">
+            <div className="absolute top-4 end-4">
               <span className="text-xs font-semibold bg-orange-700 text-white px-2.5 py-1 rounded-full">{t('mostPopular')}</span>
             </div>
             <div className="mb-6">

@@ -78,7 +78,7 @@ export default function CoverLetterHistoryClient({
               <div className="flex items-start justify-between gap-4">
                 <button
                   onClick={() => setExpandedId(isExpanded ? null : draft.id)}
-                  className="flex-1 text-left"
+                  className="flex-1 text-start"
                 >
                   <div className="flex items-center gap-2 flex-wrap mb-1">
                     <h2 className="font-semibold text-slate-900 dark:text-white">{draft.target_role}</h2>

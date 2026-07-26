@@ -231,7 +231,7 @@ export default async function Home() {
           </div>
           <div className="grid md:grid-cols-4 gap-6">
             {JOURNEY_STEPS.map((item, i) => (
-              <FadeIn key={item.step} delay={i * 0.05} className="relative text-center md:text-left">
+              <FadeIn key={item.step} delay={i * 0.05} className="relative text-center md:text-start">
                 <div className="text-5xl mb-4">{item.icon}</div>
                 <div className="text-xs font-mono text-primary dark:text-blue-400 mb-2">{item.step}</div>
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">{item.title}</h3>

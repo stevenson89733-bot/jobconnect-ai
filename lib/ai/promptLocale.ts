@@ -31,4 +31,5 @@ export const LETTER_CLOSING: Record<Locale, string> = {
   zh: '此致敬礼，',
   ja: '敬具',
   ko: '감사합니다,',
+  ar: 'مع خالص التقدير،',
 }

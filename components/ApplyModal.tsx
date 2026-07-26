@@ -92,7 +92,7 @@ export default function ApplyModal({
               </div>
               <button
                 onClick={() => setOpen(false)}
-                className="text-slate-400 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors text-xl leading-none ml-4"
+                className="text-slate-400 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors text-xl leading-none ms-4"
               >
                 ✕
               </button>

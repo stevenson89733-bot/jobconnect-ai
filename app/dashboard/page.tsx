@@ -12,7 +12,7 @@ export default async function Dashboard() {
       <div className="grid sm:grid-cols-2 gap-6 max-w-xl mx-auto">
         <Link
           href="/candidate"
-          className="bg-white dark:bg-card rounded-xl border border-slate-200 dark:border-slate-700/50 p-6 hover:border-primary/50 transition-all group text-left"
+          className="bg-white dark:bg-card rounded-xl border border-slate-200 dark:border-slate-700/50 p-6 hover:border-primary/50 transition-all group text-start"
         >
           <div className="text-4xl mb-3">👤</div>
           <h2 className="font-semibold text-slate-900 dark:text-white group-hover:text-primary transition-colors mb-1">{t('candidateDashboard')}</h2>
@@ -20,7 +20,7 @@ export default async function Dashboard() {
         </Link>
         <Link
           href="/recruiter"
-          className="bg-white dark:bg-card rounded-xl border border-slate-200 dark:border-slate-700/50 p-6 hover:border-accent/50 transition-all group text-left"
+          className="bg-white dark:bg-card rounded-xl border border-slate-200 dark:border-slate-700/50 p-6 hover:border-accent/50 transition-all group text-start"
         >
           <div className="text-4xl mb-3">🏢</div>
           <h2 className="font-semibold text-slate-900 dark:text-white group-hover:text-accent transition-colors mb-1">{t('employerDashboard')}</h2>

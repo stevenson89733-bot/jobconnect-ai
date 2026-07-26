@@ -14,7 +14,7 @@ export default function FAQAccordion({ items }: { items: { q: string; a: string 
             <button
               onClick={() => setOpenIndex(open ? null : i)}
               aria-expanded={open}
-              className="w-full flex items-center justify-between gap-4 text-left px-6 py-5 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
+              className="w-full flex items-center justify-between gap-4 text-start px-6 py-5 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
             >
               <span className="font-semibold text-slate-900 dark:text-white">{item.q}</span>
               <motion.span

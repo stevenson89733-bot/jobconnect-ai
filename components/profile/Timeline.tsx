@@ -10,7 +10,7 @@ export default function Timeline({ text }: { text: string | null | undefined }) 
   if (entries.length === 0) return null
 
   return (
-    <ol className="relative border-l-2 border-slate-200 dark:border-slate-700 ml-1.5 pl-5 space-y-5">
+    <ol className="relative border-s-2 border-slate-200 dark:border-slate-700 ms-1.5 ps-5 space-y-5">
       {entries.map((entry, i) => (
         <li key={i} className="relative">
           <span className="absolute -left-[26px] top-1.5 w-2.5 h-2.5 rounded-full bg-primary" />

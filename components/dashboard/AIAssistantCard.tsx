@@ -1,7 +1,8 @@
 import Link from 'next/link'
-import { FileText, Mail, ArrowRight } from 'lucide-react'
-import { getTranslations } from 'next-intl/server'
+import { FileText, Mail, ArrowRight, ArrowLeft } from 'lucide-react'
+import { getTranslations, getLocale } from 'next-intl/server'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
+import { isRtlLocale, type Locale } from '@/lib/i18n/config'
 import FadeIn from './FadeIn'
 
 // Intentionally just an entry point to the two AI tools that actually exist
@@ -9,6 +10,11 @@ import FadeIn from './FadeIn'
 // profile analysis, since no such pipeline exists yet.
 export default async function AIAssistantCard() {
   const t = await getTranslations('candidate')
+  const rtl = isRtlLocale((await getLocale()) as Locale)
+  // "Points toward reading-end" — ArrowRight in LTR, ArrowLeft in RTL — same
+  // for the hover nudge, which otherwise animates toward the wrong edge.
+  const ForwardArrow = rtl ? ArrowLeft : ArrowRight
+  const hoverNudgeClass = rtl ? 'group-hover:-translate-x-0.5' : 'group-hover:translate-x-0.5'
 
   return (
     <FadeIn>
@@ -33,7 +39,7 @@ export default async function AIAssistantCard() {
                 {t('resumeBuilderCardDesc')}
               </p>
             </div>
-            <ArrowRight className="w-4 h-4 text-slate-400 dark:text-slate-400 shrink-0 ml-auto mt-0.5 group-hover:translate-x-0.5 transition-transform" />
+            <ForwardArrow className={`w-4 h-4 text-slate-400 dark:text-slate-400 shrink-0 ms-auto mt-0.5 ${hoverNudgeClass} transition-transform`} />
           </Link>
           <Link
             href="/ai-tools/cover-letter"
@@ -48,7 +54,7 @@ export default async function AIAssistantCard() {
                 {t('coverLetterCardDesc')}
               </p>
             </div>
-            <ArrowRight className="w-4 h-4 text-slate-400 dark:text-slate-400 shrink-0 ml-auto mt-0.5 group-hover:translate-x-0.5 transition-transform" />
+            <ForwardArrow className={`w-4 h-4 text-slate-400 dark:text-slate-400 shrink-0 ms-auto mt-0.5 ${hoverNudgeClass} transition-transform`} />
           </Link>
         </CardContent>
       </Card>

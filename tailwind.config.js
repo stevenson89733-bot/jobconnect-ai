@@ -16,7 +16,11 @@ module.exports = {
         }
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui'],
+        // Noto Sans Arabic as a fallback, not a swap — Inter has no Arabic
+        // glyphs, so the browser transparently falls through to it per
+        // character for Arabic text while every other script keeps using
+        // Inter, with no per-locale className branching needed.
+        sans: ['var(--font-inter)', 'var(--font-noto-arabic)', 'ui-sans-serif', 'system-ui'],
       },
     }
   },

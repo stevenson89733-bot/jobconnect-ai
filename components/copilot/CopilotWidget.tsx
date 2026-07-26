@@ -114,7 +114,7 @@ export default function CopilotWidget() {
   const hasRealUpdate = signals.some((s) => s.type !== 'idle')
 
   return (
-    <div className="fixed bottom-5 right-5 z-40">
+    <div className="fixed bottom-5 end-5 z-40">
       <AnimatePresence>
         {open && (
           <motion.div
@@ -122,7 +122,7 @@ export default function CopilotWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.97 }}
             transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute bottom-16 right-0 w-80 max-w-[calc(100vw-2.5rem)] rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white/95 dark:bg-card/95 backdrop-blur-md shadow-2xl dark:shadow-black/40 overflow-hidden"
+            className="absolute bottom-16 end-0 w-80 max-w-[calc(100vw-2.5rem)] rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white/95 dark:bg-card/95 backdrop-blur-md shadow-2xl dark:shadow-black/40 overflow-hidden"
           >
             <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-2">
@@ -155,7 +155,7 @@ export default function CopilotWidget() {
       >
         <Sparkles className="w-6 h-6" strokeWidth={1.75} />
         {hasRealUpdate && !open && (
-          <span className="absolute top-1 right-1 w-3 h-3 rounded-full bg-accent border-2 border-white dark:border-background" />
+          <span className="absolute top-1 end-1 w-3 h-3 rounded-full bg-accent border-2 border-white dark:border-background" />
         )}
       </motion.button>
     </div>

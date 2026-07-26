@@ -70,10 +70,10 @@ export default async function RecentApplications({
               <table className="w-full text-sm">
                 <thead>
                   <tr className="text-xs text-slate-600 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
-                    <th className="text-left pb-3 font-medium">{t('tableCompany')}</th>
-                    <th className="text-left pb-3 font-medium">{t('tableRole')}</th>
-                    <th className="text-left pb-3 font-medium">{t('tableStatus')}</th>
-                    <th className="text-left pb-3 font-medium">{t('tableDate')}</th>
+                    <th className="text-start pb-3 font-medium">{t('tableCompany')}</th>
+                    <th className="text-start pb-3 font-medium">{t('tableRole')}</th>
+                    <th className="text-start pb-3 font-medium">{t('tableStatus')}</th>
+                    <th className="text-start pb-3 font-medium">{t('tableDate')}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
