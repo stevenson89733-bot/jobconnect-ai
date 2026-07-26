@@ -706,7 +706,10 @@
     "adminsOnly": "Admins only.",
     "couldNotUpdateReview": "Could not update this review.",
     "somethingWentWrongAnalyzingResume": "Something went wrong analyzing your resume.",
-    "mustBeSignedInToUpdateProfile": "You must be signed in to update your profile."
+    "mustBeSignedInToUpdateProfile": "You must be signed in to update your profile.",
+    "copilotCandidateOnly": "The Career Copilot is only available to candidate accounts.",
+    "tooManyCopilotMessages": "Too many messages. Please try again in a bit.",
+    "copilotEmptyMessage": "Type a message first."
   },
   "copilot": {
     "openLabel": "Open Career Copilot",
@@ -723,7 +726,20 @@
     "viewApplications": "View applications",
     "viewProgress": "View progress",
     "viewMatches": "View matches",
-    "completeProfile": "Complete profile"
+    "completeProfile": "Complete profile",
+    "signalsTab": "Updates",
+    "chatTab": "Chat",
+    "chatPlaceholder": "Ask me anything...",
+    "sendLabel": "Send",
+    "thinking": "Thinking…",
+    "loadingHistory": "Loading…",
+    "chatIntro": "Ask me to improve your resume, write a cover letter, find jobs, or check your career analysis.",
+    "chatFailed": "Something went wrong — please try again.",
+    "redirectImproveResume": "Open Resume Builder",
+    "redirectCoverLetter": "Open Cover Letter Generator",
+    "redirectFindJobs": "Search jobs",
+    "redirectCareerAnalysis": "View Career Coach",
+    "redirectViewApplications": "View applications"
   },
   "pricing": {
     "pageTitle": "Simple, honest pricing",

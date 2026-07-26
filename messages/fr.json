@@ -706,7 +706,10 @@
     "adminsOnly": "Réservé aux administrateurs.",
     "couldNotUpdateReview": "Impossible de mettre à jour cet avis.",
     "somethingWentWrongAnalyzingResume": "Une erreur est survenue lors de l'analyse de votre CV.",
-    "mustBeSignedInToUpdateProfile": "Vous devez être connecté(e) pour mettre à jour votre profil."
+    "mustBeSignedInToUpdateProfile": "Vous devez être connecté(e) pour mettre à jour votre profil.",
+    "copilotCandidateOnly": "Le Career Copilot est réservé aux comptes candidats.",
+    "tooManyCopilotMessages": "Trop de messages. Veuillez réessayer dans un instant.",
+    "copilotEmptyMessage": "Tapez d'abord un message."
   },
   "copilot": {
     "openLabel": "Ouvrir le Copilote de Carrière",
@@ -723,7 +726,20 @@
     "viewApplications": "Voir les candidatures",
     "viewProgress": "Voir la progression",
     "viewMatches": "Voir les correspondances",
-    "completeProfile": "Compléter le profil"
+    "completeProfile": "Compléter le profil",
+    "signalsTab": "Mises à jour",
+    "chatTab": "Discussion",
+    "chatPlaceholder": "Posez-moi une question...",
+    "sendLabel": "Envoyer",
+    "thinking": "Réflexion…",
+    "loadingHistory": "Chargement…",
+    "chatIntro": "Demandez-moi d'améliorer votre CV, de rédiger une lettre de motivation, de trouver des offres d'emploi, ou de consulter votre analyse de carrière.",
+    "chatFailed": "Une erreur s'est produite — veuillez réessayer.",
+    "redirectImproveResume": "Ouvrir le générateur de CV",
+    "redirectCoverLetter": "Ouvrir le générateur de lettre",
+    "redirectFindJobs": "Rechercher des emplois",
+    "redirectCareerAnalysis": "Voir Career Coach",
+    "redirectViewApplications": "Voir mes candidatures"
   },
   "pricing": {
     "pageTitle": "Une tarification simple et honnête",

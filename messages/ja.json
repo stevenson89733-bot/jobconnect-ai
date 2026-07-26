@@ -706,7 +706,10 @@
     "adminsOnly": "管理者のみ利用可能です。",
     "couldNotUpdateReview": "このレビューを更新できませんでした。",
     "somethingWentWrongAnalyzingResume": "レジュメの分析中に問題が発生しました。",
-    "mustBeSignedInToUpdateProfile": "プロフィールを更新するにはサインインが必要です。"
+    "mustBeSignedInToUpdateProfile": "プロフィールを更新するにはサインインが必要です。",
+    "copilotCandidateOnly": "Career Copilotは求職者アカウントのみご利用いただけます。",
+    "tooManyCopilotMessages": "メッセージが多すぎます。しばらくしてからもう一度お試しください。",
+    "copilotEmptyMessage": "先にメッセージを入力してください。"
   },
   "copilot": {
     "openLabel": "キャリアコパイロットを開く",
@@ -723,7 +726,20 @@
     "viewApplications": "応募状況を見る",
     "viewProgress": "進捗を見る",
     "viewMatches": "マッチを見る",
-    "completeProfile": "プロフィールを完成させる"
+    "completeProfile": "プロフィールを完成させる",
+    "signalsTab": "更新",
+    "chatTab": "チャット",
+    "chatPlaceholder": "何でも聞いてください…",
+    "sendLabel": "送信",
+    "thinking": "考え中…",
+    "loadingHistory": "読み込み中…",
+    "chatIntro": "履歴書の改善、カバーレターの作成、求人検索、キャリア分析の確認などをお手伝いします。",
+    "chatFailed": "エラーが発生しました — もう一度お試しください。",
+    "redirectImproveResume": "レジュメビルダーを開く",
+    "redirectCoverLetter": "カバーレター作成ツールを開く",
+    "redirectFindJobs": "求人を検索",
+    "redirectCareerAnalysis": "キャリアコーチを見る",
+    "redirectViewApplications": "応募状況を見る"
   },
   "pricing": {
     "pageTitle": "シンプルで誠実な料金体系",

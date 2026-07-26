@@ -706,7 +706,10 @@
     "adminsOnly": "仅限管理员。",
     "couldNotUpdateReview": "无法更新此评价。",
     "somethingWentWrongAnalyzingResume": "分析您的简历时出了点问题。",
-    "mustBeSignedInToUpdateProfile": "您必须登录后才能更新资料。"
+    "mustBeSignedInToUpdateProfile": "您必须登录后才能更新资料。",
+    "copilotCandidateOnly": "职业助手仅对求职者账户开放。",
+    "tooManyCopilotMessages": "消息太多，请稍后再试。",
+    "copilotEmptyMessage": "请先输入消息。"
   },
   "copilot": {
     "openLabel": "打开职业副驾",
@@ -723,7 +726,20 @@
     "viewApplications": "查看申请",
     "viewProgress": "查看进度",
     "viewMatches": "查看匹配职位",
-    "completeProfile": "完善资料"
+    "completeProfile": "完善资料",
+    "signalsTab": "动态",
+    "chatTab": "聊天",
+    "chatPlaceholder": "问我任何问题…",
+    "sendLabel": "发送",
+    "thinking": "思考中…",
+    "loadingHistory": "加载中…",
+    "chatIntro": "让我帮你改进简历、撰写求职信、查找职位，或查看你的职业分析。",
+    "chatFailed": "出错了——请重试。",
+    "redirectImproveResume": "打开简历生成器",
+    "redirectCoverLetter": "打开求职信生成器",
+    "redirectFindJobs": "搜索职位",
+    "redirectCareerAnalysis": "查看职业教练",
+    "redirectViewApplications": "查看我的申请"
   },
   "pricing": {
     "pageTitle": "简单、透明的定价",

@@ -706,7 +706,10 @@
     "adminsOnly": "Sèlman pou administratè.",
     "couldNotUpdateReview": "Pa t kapab mete ajou kòmantè sa a.",
     "somethingWentWrongAnalyzingResume": "Gen yon bagay ki mal pase pandan y ap analize CV ou a.",
-    "mustBeSignedInToUpdateProfile": "Ou dwe konekte pou mete ajou pwofil ou."
+    "mustBeSignedInToUpdateProfile": "Ou dwe konekte pou mete ajou pwofil ou.",
+    "copilotCandidateOnly": "Career Copilot la disponib sèlman pou kont kandida.",
+    "tooManyCopilotMessages": "Twòp mesaj. Tanpri eseye ankò nan yon ti moman.",
+    "copilotEmptyMessage": "Tape yon mesaj dabò."
   },
   "copilot": {
     "openLabel": "Ouvri Copilòt Karyè",
@@ -723,7 +726,20 @@
     "viewApplications": "Gade aplikasyon yo",
     "viewProgress": "Gade pwogrè a",
     "viewMatches": "Gade match yo",
-    "completeProfile": "Konplete pwofil"
+    "completeProfile": "Konplete pwofil",
+    "signalsTab": "Nouvo",
+    "chatTab": "Chat",
+    "chatPlaceholder": "Mande m nenpòt bagay...",
+    "sendLabel": "Voye",
+    "thinking": "M ap reflechi…",
+    "loadingHistory": "Chajman…",
+    "chatIntro": "Mande m amelyore CV ou, ekri yon lèt motivasyon, chèche travay, oswa gade analiz karyè ou.",
+    "chatFailed": "Gen yon pwoblèm — tanpri eseye ankò.",
+    "redirectImproveResume": "Louvri Rezime Bilder",
+    "redirectCoverLetter": "Louvri Jenerat Lèt Motivasyon",
+    "redirectFindJobs": "Chèche travay",
+    "redirectCareerAnalysis": "Gade Career Coach",
+    "redirectViewApplications": "Gade aplikasyon mwen yo"
   },
   "pricing": {
     "pageTitle": "Pri senp ak onèt",

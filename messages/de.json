@@ -706,7 +706,10 @@
     "adminsOnly": "Nur für Administratoren.",
     "couldNotUpdateReview": "Diese Bewertung konnte nicht aktualisiert werden.",
     "somethingWentWrongAnalyzingResume": "Bei der Analyse deines Lebenslaufs ist etwas schiefgelaufen.",
-    "mustBeSignedInToUpdateProfile": "Du musst angemeldet sein, um dein Profil zu aktualisieren."
+    "mustBeSignedInToUpdateProfile": "Du musst angemeldet sein, um dein Profil zu aktualisieren.",
+    "copilotCandidateOnly": "Der Career Copilot steht nur Kandidatenkonten zur Verfügung.",
+    "tooManyCopilotMessages": "Zu viele Nachrichten. Bitte versuche es gleich noch einmal.",
+    "copilotEmptyMessage": "Gib zuerst eine Nachricht ein."
   },
   "copilot": {
     "openLabel": "Karriere-Copilot öffnen",
@@ -723,7 +726,20 @@
     "viewApplications": "Bewerbungen ansehen",
     "viewProgress": "Fortschritt ansehen",
     "viewMatches": "Matches ansehen",
-    "completeProfile": "Profil vervollständigen"
+    "completeProfile": "Profil vervollständigen",
+    "signalsTab": "Updates",
+    "chatTab": "Chat",
+    "chatPlaceholder": "Frag mich etwas...",
+    "sendLabel": "Senden",
+    "thinking": "Denkt nach…",
+    "loadingHistory": "Wird geladen…",
+    "chatIntro": "Frag mich, deinen Lebenslauf zu verbessern, ein Anschreiben zu schreiben, Jobs zu finden oder deine Karriereanalyse anzusehen.",
+    "chatFailed": "Etwas ist schiefgelaufen — bitte versuche es erneut.",
+    "redirectImproveResume": "Lebenslauf-Generator öffnen",
+    "redirectCoverLetter": "Anschreiben-Generator öffnen",
+    "redirectFindJobs": "Jobs suchen",
+    "redirectCareerAnalysis": "Career Coach ansehen",
+    "redirectViewApplications": "Bewerbungen ansehen"
   },
   "pricing": {
     "pageTitle": "Einfache, ehrliche Preise",

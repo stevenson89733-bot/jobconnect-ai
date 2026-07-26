@@ -706,7 +706,10 @@
     "adminsOnly": "للمسؤولين فقط.",
     "couldNotUpdateReview": "تعذّر تحديث هذا التقييم.",
     "somethingWentWrongAnalyzingResume": "حدث خطأ ما أثناء تحليل سيرتك الذاتية.",
-    "mustBeSignedInToUpdateProfile": "يجب تسجيل الدخول لتحديث ملفك الشخصي."
+    "mustBeSignedInToUpdateProfile": "يجب تسجيل الدخول لتحديث ملفك الشخصي.",
+    "copilotCandidateOnly": "Career Copilot متاح فقط لحسابات المرشحين.",
+    "tooManyCopilotMessages": "عدد كبير جدًا من الرسائل. يرجى المحاولة مرة أخرى بعد قليل.",
+    "copilotEmptyMessage": "يرجى كتابة رسالة أولاً."
   },
   "copilot": {
     "openLabel": "فتح المساعد الوظيفي",
@@ -723,7 +726,20 @@
     "viewApplications": "عرض الطلبات",
     "viewProgress": "عرض التقدم",
     "viewMatches": "عرض التطابقات",
-    "completeProfile": "إكمال الملف الشخصي"
+    "completeProfile": "إكمال الملف الشخصي",
+    "signalsTab": "التحديثات",
+    "chatTab": "محادثة",
+    "chatPlaceholder": "اسألني أي شيء...",
+    "sendLabel": "إرسال",
+    "thinking": "جارٍ التفكير…",
+    "loadingHistory": "جارٍ التحميل…",
+    "chatIntro": "اطلب مني تحسين سيرتك الذاتية، كتابة خطاب تقديم، البحث عن وظائف، أو الاطلاع على تحليل مسارك المهني.",
+    "chatFailed": "حدث خطأ ما — يرجى المحاولة مرة أخرى.",
+    "redirectImproveResume": "فتح منشئ السيرة الذاتية",
+    "redirectCoverLetter": "فتح منشئ خطاب التقديم",
+    "redirectFindJobs": "البحث عن وظائف",
+    "redirectCareerAnalysis": "عرض المدرب المهني",
+    "redirectViewApplications": "عرض طلباتي"
   },
   "pricing": {
     "pageTitle": "تسعير بسيط وصادق",

@@ -706,7 +706,10 @@
     "adminsOnly": "관리자 전용입니다.",
     "couldNotUpdateReview": "이 리뷰를 업데이트할 수 없습니다.",
     "somethingWentWrongAnalyzingResume": "이력서를 분석하는 중 문제가 발생했습니다.",
-    "mustBeSignedInToUpdateProfile": "프로필을 업데이트하려면 로그인해야 합니다."
+    "mustBeSignedInToUpdateProfile": "프로필을 업데이트하려면 로그인해야 합니다.",
+    "copilotCandidateOnly": "Career Copilot은 구직자 계정에서만 이용할 수 있습니다.",
+    "tooManyCopilotMessages": "메시지가 너무 많습니다. 잠시 후 다시 시도해 주세요.",
+    "copilotEmptyMessage": "먼저 메시지를 입력해 주세요."
   },
   "copilot": {
     "openLabel": "커리어 코파일럿 열기",
@@ -723,7 +726,20 @@
     "viewApplications": "지원 내역 보기",
     "viewProgress": "진행 상황 보기",
     "viewMatches": "매치 결과 보기",
-    "completeProfile": "프로필 완성하기"
+    "completeProfile": "프로필 완성하기",
+    "signalsTab": "업데이트",
+    "chatTab": "채팅",
+    "chatPlaceholder": "무엇이든 물어보세요...",
+    "sendLabel": "보내기",
+    "thinking": "생각 중…",
+    "loadingHistory": "불러오는 중…",
+    "chatIntro": "이력서 개선, 자기소개서 작성, 채용 공고 검색, 커리어 분석 확인 등을 도와드릴 수 있어요.",
+    "chatFailed": "문제가 발생했습니다 — 다시 시도해 주세요.",
+    "redirectImproveResume": "이력서 작성 도구 열기",
+    "redirectCoverLetter": "자기소개서 작성 도구 열기",
+    "redirectFindJobs": "채용 공고 검색",
+    "redirectCareerAnalysis": "커리어 코치 보기",
+    "redirectViewApplications": "지원 현황 보기"
   },
   "pricing": {
     "pageTitle": "간단하고 투명한 요금제",

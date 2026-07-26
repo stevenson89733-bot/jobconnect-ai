@@ -24,7 +24,11 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function ResumeBuilderPage() {
+export default async function ResumeBuilderPage({
+  searchParams,
+}: {
+  searchParams: { targetRole?: string }
+}) {
   let isPremium = false
   // Pre-fill values — same real profile source as Career Coach. If the
   // profile has no experience, these stay empty, which is the correct
@@ -56,6 +60,13 @@ export default async function ResumeBuilderPage() {
       const contact = buildContactInfo(profile, user.email)
       initialName = contact.name
       initialContact = formatContactLine(contact)
+    }
+
+    // Copilot hand-off (?targetRole=...) — a real value the candidate just
+    // typed into the chat, more timely than a possibly-stale saved profile
+    // title, so it takes priority when present.
+    if (searchParams.targetRole?.trim()) {
+      initialTargetRole = searchParams.targetRole.trim()
     }
   } catch {}
 

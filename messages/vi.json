@@ -706,7 +706,10 @@
     "adminsOnly": "Chỉ dành cho quản trị viên.",
     "couldNotUpdateReview": "Không thể cập nhật đánh giá này.",
     "somethingWentWrongAnalyzingResume": "Đã xảy ra lỗi khi phân tích CV của bạn.",
-    "mustBeSignedInToUpdateProfile": "Bạn phải đăng nhập để cập nhật hồ sơ."
+    "mustBeSignedInToUpdateProfile": "Bạn phải đăng nhập để cập nhật hồ sơ.",
+    "copilotCandidateOnly": "Career Copilot chỉ dành cho tài khoản ứng viên.",
+    "tooManyCopilotMessages": "Quá nhiều tin nhắn. Vui lòng thử lại sau ít phút.",
+    "copilotEmptyMessage": "Vui lòng nhập tin nhắn trước."
   },
   "copilot": {
     "openLabel": "Mở Trợ Lý Sự Nghiệp",
@@ -723,7 +726,20 @@
     "viewApplications": "Xem đơn ứng tuyển",
     "viewProgress": "Xem tiến trình",
     "viewMatches": "Xem việc làm phù hợp",
-    "completeProfile": "Hoàn thiện hồ sơ"
+    "completeProfile": "Hoàn thiện hồ sơ",
+    "signalsTab": "Cập nhật",
+    "chatTab": "Trò chuyện",
+    "chatPlaceholder": "Hỏi tôi bất cứ điều gì...",
+    "sendLabel": "Gửi",
+    "thinking": "Đang suy nghĩ…",
+    "loadingHistory": "Đang tải…",
+    "chatIntro": "Hãy nhờ tôi cải thiện sơ yếu lý lịch, viết thư xin việc, tìm việc làm, hoặc xem phân tích sự nghiệp của bạn.",
+    "chatFailed": "Đã xảy ra lỗi — vui lòng thử lại.",
+    "redirectImproveResume": "Mở Trình tạo Sơ yếu lý lịch",
+    "redirectCoverLetter": "Mở Trình tạo Thư xin việc",
+    "redirectFindJobs": "Tìm việc làm",
+    "redirectCareerAnalysis": "Xem Career Coach",
+    "redirectViewApplications": "Xem đơn ứng tuyển"
   },
   "pricing": {
     "pageTitle": "Bảng giá đơn giản, minh bạch",

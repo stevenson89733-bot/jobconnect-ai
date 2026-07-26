@@ -706,7 +706,10 @@
     "adminsOnly": "Somente administradores.",
     "couldNotUpdateReview": "Não foi possível atualizar esta avaliação.",
     "somethingWentWrongAnalyzingResume": "Algo deu errado ao analisar seu currículo.",
-    "mustBeSignedInToUpdateProfile": "Você precisa estar conectado(a) para atualizar seu perfil."
+    "mustBeSignedInToUpdateProfile": "Você precisa estar conectado(a) para atualizar seu perfil.",
+    "copilotCandidateOnly": "O Career Copilot está disponível apenas para contas de candidatos.",
+    "tooManyCopilotMessages": "Muitas mensagens. Tente novamente em instantes.",
+    "copilotEmptyMessage": "Digite uma mensagem primeiro."
   },
   "copilot": {
     "openLabel": "Abrir Copiloto de Carreira",
@@ -723,7 +726,20 @@
     "viewApplications": "Ver candidaturas",
     "viewProgress": "Ver progresso",
     "viewMatches": "Ver compatibilidades",
-    "completeProfile": "Completar perfil"
+    "completeProfile": "Completar perfil",
+    "signalsTab": "Atualizações",
+    "chatTab": "Chat",
+    "chatPlaceholder": "Pergunte-me qualquer coisa...",
+    "sendLabel": "Enviar",
+    "thinking": "Pensando…",
+    "loadingHistory": "Carregando…",
+    "chatIntro": "Peça-me para melhorar seu currículo, escrever uma carta de apresentação, buscar vagas ou ver sua análise de carreira.",
+    "chatFailed": "Algo deu errado — tente novamente.",
+    "redirectImproveResume": "Abrir o Gerador de Currículo",
+    "redirectCoverLetter": "Abrir o Gerador de Carta",
+    "redirectFindJobs": "Buscar vagas",
+    "redirectCareerAnalysis": "Ver Career Coach",
+    "redirectViewApplications": "Ver minhas candidaturas"
   },
   "pricing": {
     "pageTitle": "Preços simples e honestos",
