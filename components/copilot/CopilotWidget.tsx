@@ -248,8 +248,15 @@ export default function CopilotWidget() {
 
   const hasRealUpdate = signals.some((s) => s.type !== 'idle')
 
+  // start-5 (not end-5) deliberately — Crisp's own chat launcher (loaded
+  // independently, see components/CrispChat.tsx) sits at its default
+  // bottom-end corner too, and visually overlapped/covered this button
+  // there, capturing clicks meant for it (confirmed via
+  // document.elementFromPoint in production). Keeping this on the opposite
+  // corner is fully within our own control, rather than depending on
+  // Crisp's own (less predictable) runtime repositioning API.
   return (
-    <div className="fixed bottom-5 end-5 z-40">
+    <div className="fixed bottom-5 start-5 z-40">
       <AnimatePresence>
         {open && (
           <motion.div
@@ -257,7 +264,7 @@ export default function CopilotWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.97 }}
             transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute bottom-16 end-0 w-80 max-w-[calc(100vw-2.5rem)] rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white/95 dark:bg-card/95 backdrop-blur-md shadow-2xl dark:shadow-black/40 overflow-hidden"
+            className="absolute bottom-16 start-0 w-80 max-w-[calc(100vw-2.5rem)] rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white/95 dark:bg-card/95 backdrop-blur-md shadow-2xl dark:shadow-black/40 overflow-hidden"
           >
             <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-2">
