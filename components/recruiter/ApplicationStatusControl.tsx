@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { updateApplicationStatus } from '@/app/actions/applications'
 import { APPLICATION_STATUSES, APPLICATION_STATUS_VARIANT, type ApplicationStatus } from '@/lib/applicationStatus'
 import { timeAgo } from '@/lib/timeAgo'
@@ -23,6 +23,7 @@ export default function ApplicationStatusControl({
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const t = useTranslations('applicationStatus')
+  const locale = useLocale()
   const tr = useTranslations('recruiter')
 
   async function handleChange(next: ApplicationStatus) {
@@ -59,7 +60,7 @@ export default function ApplicationStatusControl({
       </div>
       {statusUpdatedAt && status !== 'submitted' && (
         <span className="text-[11px] text-slate-600 dark:text-slate-400">
-          {t(status)} {timeAgo(statusUpdatedAt, 'verbose')}
+          {t(status)} {timeAgo(statusUpdatedAt, locale, 'verbose')}
         </span>
       )}
       {error && <span className="text-[11px] text-red-600 dark:text-red-400">{error}</span>}

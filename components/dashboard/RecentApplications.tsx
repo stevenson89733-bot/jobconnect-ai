@@ -88,7 +88,7 @@ export default async function RecentApplications({
                         </Badge>
                         {app.status !== 'submitted' && app.status_updated_at && (
                           <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">
-                            {timeAgo(app.status_updated_at, 'verbose')}
+                            {timeAgo(app.status_updated_at, locale, 'verbose')}
                           </div>
                         )}
                       </td>

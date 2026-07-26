@@ -47,15 +47,17 @@ export async function candidateHasApplicationAt(
   })
 }
 
-export function timeAgo(dateStr: string): string {
+// Same Intl.RelativeTimeFormat approach as lib/timeAgo.ts — kept as a
+// separate function since reviews can be much older (needs month/year
+// buckets that the day/week-only job-posting version doesn't).
+export function timeAgo(dateStr: string, locale: string): string {
   const diff = Date.now() - new Date(dateStr).getTime()
   const days = Math.floor(diff / 86400000)
-  if (days === 0) return 'Today'
-  if (days === 1) return '1d ago'
-  if (days < 7) return `${days}d ago`
-  if (days < 14) return '1w ago'
-  if (days < 30) return `${Math.floor(days / 7)}w ago`
+  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto', style: 'short' })
+
+  if (days < 7) return rtf.format(-days, 'day')
+  if (days < 30) return rtf.format(-Math.floor(days / 7), 'week')
   const months = Math.floor(days / 30)
-  if (months < 12) return `${months}mo ago`
-  return `${Math.floor(months / 12)}y ago`
+  if (months < 12) return rtf.format(-months, 'month')
+  return rtf.format(-Math.floor(months / 12), 'year')
 }

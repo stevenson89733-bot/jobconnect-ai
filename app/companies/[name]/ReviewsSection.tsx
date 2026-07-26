@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { submitCompanyReview } from '@/app/actions/reviews'
 import { timeAgo, type OwnReview, type PublicReview } from '@/lib/reviews'
 
@@ -127,6 +127,7 @@ export default function ReviewsSection({
   ownReview: OwnReview | null
 }) {
   const t = useTranslations('companyProfile')
+  const locale = useLocale()
   const [ownReview, setOwnReview] = useState(initialOwnReview)
 
   const average = reviews.length > 0
@@ -178,7 +179,7 @@ export default function ReviewsSection({
             <div key={r.id} className="card">
               <div className="flex items-center justify-between mb-2">
                 <Stars rating={r.rating} label={t('starsOutOf5', { count: r.rating })} />
-                <span className="text-xs text-slate-600 dark:text-slate-400">{timeAgo(r.created_at)}</span>
+                <span className="text-xs text-slate-600 dark:text-slate-400">{timeAgo(r.created_at, locale)}</span>
               </div>
               <p className="text-sm text-slate-700 dark:text-slate-300 whitespace-pre-wrap mb-2">{r.review_text}</p>
               <div className="flex items-center justify-between">

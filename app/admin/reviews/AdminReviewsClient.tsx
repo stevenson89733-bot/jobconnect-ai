@@ -45,7 +45,11 @@ function ReviewRowCard({ review, onDecide }: { review: ReviewRow; onDecide: (id:
             {review.status}
           </span>
         </div>
-        <span className="text-xs text-slate-600 dark:text-slate-400">{timeAgo(review.created_at)}</span>
+        {/* This admin moderation panel is entirely English-only by design
+            (see "Interview difficulty:"/"Approve"/"Reject" below, none of
+            which go through next-intl) — 'en' here matches that, rather
+            than localizing just this one date and nothing else. */}
+        <span className="text-xs text-slate-600 dark:text-slate-400">{timeAgo(review.created_at, 'en')}</span>
       </div>
       <p className="text-sm text-amber-500 dark:text-amber-400 mb-2">{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}</p>
       {review.interview_difficulty != null && (

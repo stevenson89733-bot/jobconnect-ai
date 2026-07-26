@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, getLocale } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import ApplicationStatusControl from '@/components/recruiter/ApplicationStatusControl'
 import PostJobModal from '@/components/recruiter/PostJobModal'
@@ -29,6 +29,7 @@ type JobRow = {
 export default async function EmployerDashboard() {
   const t = await getTranslations('recruiter')
   const tStatus = await getTranslations('applicationStatus')
+  const locale = await getLocale()
 
   let companyName = ''
   let jobs: JobRow[] = []
@@ -201,7 +202,7 @@ export default async function EmployerDashboard() {
                             {p?.full_name ?? t('candidateFallback')}
                           </span>
                           <span className="text-xs text-slate-600 dark:text-slate-400">{p?.email}</span>
-                          <span className="text-xs text-slate-600 dark:text-slate-400 ms-auto">{timeAgo(app.created_at)}</span>
+                          <span className="text-xs text-slate-600 dark:text-slate-400 ms-auto">{timeAgo(app.created_at, locale)}</span>
                         </div>
                         ) })()}
                         {app.message && (
@@ -251,7 +252,7 @@ export default async function EmployerDashboard() {
                           {job.is_active ? t('active') : t('inactive')}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-600 dark:text-slate-400">{timeAgo(job.created_at)} · {t('applicantCount', { count: applicantCount })}</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">{timeAgo(job.created_at, locale)} · {t('applicantCount', { count: applicantCount })}</p>
                     </div>
                     <div className="flex items-center gap-3 ms-4">
                       {newCount > 0 && (
