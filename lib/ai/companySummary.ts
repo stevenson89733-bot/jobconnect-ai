@@ -12,6 +12,7 @@
 
 import OpenAI from 'openai'
 import { researchCompany, type CompanySource } from './companyResearch'
+import { getPromptLanguageName } from './promptLocale'
 
 export type CompanySummaryResult =
   | { found: true; summary: string; sources: CompanySource[] }
@@ -21,7 +22,10 @@ async function synthesize(companyName: string, researchSummary: string): Promise
   const apiKey = process.env.MISTRAL_API_KEY
   if (!apiKey) return null
 
+  const languageName = getPromptLanguageName()
   const prompt = `You are writing a short, factual "Company Overview" for a job platform. You must use ONLY the real, sourced facts below — do not add, infer, or embellish anything beyond what is literally stated, even if it sounds plausible.
+
+LANGUAGE: Write the "summary" value entirely in ${languageName}, regardless of what language the research snippets below are written in — always output in ${languageName}, never default to English unless ${languageName} IS English.
 
 STRICT RULES:
 - Use ONLY the facts in "Real Research" below. Do not invent culture, values, awards, or news not present there.
