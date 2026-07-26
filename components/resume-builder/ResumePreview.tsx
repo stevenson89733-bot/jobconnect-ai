@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { Markdown } from '@/lib/docExport'
 
 // Templates render this SAME shape — never a separate data source. Switching
@@ -14,13 +15,6 @@ export type ResumeContent = {
 }
 
 export type ResumeTemplateId = 'classic' | 'modern'
-
-const SECTIONS: { key: 'summary' | 'experience' | 'skills' | 'education'; label: string }[] = [
-  { key: 'summary', label: 'Summary' },
-  { key: 'experience', label: 'Experience' },
-  { key: 'skills', label: 'Skills' },
-  { key: 'education', label: 'Education' },
-]
 
 function Section({
   label,
@@ -46,6 +40,13 @@ function Section({
 // the plain rendering the Resume Builder already used before templates
 // existed, kept as the safe default.
 function ClassicTemplate({ content }: { content: ResumeContent }) {
+  const t = useTranslations('resumeBuilder')
+  const sections: { key: 'summary' | 'experience' | 'skills' | 'education'; label: string }[] = [
+    { key: 'summary', label: t('sectionSummary') },
+    { key: 'experience', label: t('sectionExperience') },
+    { key: 'skills', label: t('sectionSkills') },
+    { key: 'education', label: t('sectionEducation') },
+  ]
   return (
     <div className="space-y-4 text-sm font-mono">
       <div>
@@ -53,7 +54,7 @@ function ClassicTemplate({ content }: { content: ResumeContent }) {
         {content.title && <div className="text-primary dark:text-blue-400 text-xs">{content.title}</div>}
         {content.contact && <div className="text-slate-600 dark:text-slate-400 text-xs">{content.contact}</div>}
       </div>
-      {SECTIONS.map(({ key, label }) => (
+      {sections.map(({ key, label }) => (
         <Section
           key={key}
           label={label}
@@ -70,6 +71,7 @@ function ClassicTemplate({ content }: { content: ResumeContent }) {
 // (summary + experience), subtle accent-colored headers. Still plain
 // text/divs only — no images, no tables — so it stays ATS-safe.
 function ModernTemplate({ content }: { content: ResumeContent }) {
+  const t = useTranslations('resumeBuilder')
   const sidebarLabel = 'text-primary dark:text-blue-400 text-xs font-bold uppercase tracking-wider mb-1'
   const mainLabel = 'text-slate-900 dark:text-white text-xs font-bold uppercase tracking-wider mb-1 border-b border-primary/30 pb-1'
   const bodyText = 'text-slate-700 dark:text-slate-300 leading-relaxed space-y-1'
@@ -84,18 +86,18 @@ function ModernTemplate({ content }: { content: ResumeContent }) {
         <div className="col-span-1 space-y-4">
           {content.contact && (
             <div>
-              <div className={sidebarLabel}>Contact</div>
+              <div className={sidebarLabel}>{t('sectionContact')}</div>
               <div className="text-slate-600 dark:text-slate-400 text-xs leading-relaxed break-words">
                 {content.contact.split(' | ').map((line) => <div key={line}>{line}</div>)}
               </div>
             </div>
           )}
-          <Section key="skills" label="Skills" text={content.skills} labelClassName={sidebarLabel} textClassName={bodyText} />
-          <Section key="education" label="Education" text={content.education} labelClassName={sidebarLabel} textClassName={bodyText} />
+          <Section key="skills" label={t('sectionSkills')} text={content.skills} labelClassName={sidebarLabel} textClassName={bodyText} />
+          <Section key="education" label={t('sectionEducation')} text={content.education} labelClassName={sidebarLabel} textClassName={bodyText} />
         </div>
         <div className="col-span-2 space-y-4">
-          <Section key="summary" label="Summary" text={content.summary} labelClassName={mainLabel} textClassName={bodyText} />
-          <Section key="experience" label="Experience" text={content.experience} labelClassName={mainLabel} textClassName={bodyText} />
+          <Section key="summary" label={t('sectionSummary')} text={content.summary} labelClassName={mainLabel} textClassName={bodyText} />
+          <Section key="experience" label={t('sectionExperience')} text={content.experience} labelClassName={mainLabel} textClassName={bodyText} />
         </div>
       </div>
     </div>

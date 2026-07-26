@@ -2,6 +2,7 @@ import { Document, Page, Text, View, StyleSheet, renderToBuffer } from '@react-p
 import type { Style } from '@react-pdf/types'
 import { parseMarkdown, type MarkdownBlock } from './markdown'
 import type { ResumeContent, ResumeTemplateId } from '@/components/resume-builder/ResumePreview'
+import type { ResumeLabels } from './labels'
 
 // Server-only module (imported by app/api/resume/export/route.ts). Never
 // import this from a client component — @react-pdf/renderer is a large
@@ -90,22 +91,22 @@ function Section({ label, text, divider = false }: { label: string; text: string
   )
 }
 
-function ClassicPdf({ content }: { content: ResumeContent }) {
+function ClassicPdf({ content, labels }: { content: ResumeContent; labels: ResumeLabels }) {
   return (
     <Page size="A4" style={styles.page}>
       <Text style={styles.name}>{content.name}</Text>
       {content.title ? <Text style={styles.title}>{content.title}</Text> : null}
       {content.contact ? <Text style={styles.contact}>{content.contact}</Text> : null}
       <View style={styles.headerDivider} />
-      <Section label="Summary" text={content.summary} />
-      <Section label="Experience" text={content.experience} divider={!!content.summary.trim()} />
-      <Section label="Skills" text={content.skills} divider={!!content.experience.trim()} />
-      <Section label="Education" text={content.education} divider={!!content.skills.trim()} />
+      <Section label={labels.summary} text={content.summary} />
+      <Section label={labels.experience} text={content.experience} divider={!!content.summary.trim()} />
+      <Section label={labels.skills} text={content.skills} divider={!!content.experience.trim()} />
+      <Section label={labels.education} text={content.education} divider={!!content.skills.trim()} />
     </Page>
   )
 }
 
-function ModernPdf({ content }: { content: ResumeContent }) {
+function ModernPdf({ content, labels }: { content: ResumeContent; labels: ResumeLabels }) {
   return (
     <Page size="A4" style={styles.page}>
       <View style={styles.modernHeader}>
@@ -116,23 +117,23 @@ function ModernPdf({ content }: { content: ResumeContent }) {
         <View style={styles.sidebar}>
           {content.contact ? (
             <View>
-              <Text style={styles.sidebarLabel}>Contact</Text>
+              <Text style={styles.sidebarLabel}>{labels.contact}</Text>
               {content.contact.split(' | ').map((line) => <Text key={line} style={styles.contactLine}>{line}</Text>)}
             </View>
           ) : null}
-          <Section label="Skills" text={content.skills} />
-          <Section label="Education" text={content.education} divider={!!content.skills.trim()} />
+          <Section label={labels.skills} text={content.skills} />
+          <Section label={labels.education} text={content.education} divider={!!content.skills.trim()} />
         </View>
         <View style={styles.main}>
-          <Section label="Summary" text={content.summary} />
-          <Section label="Experience" text={content.experience} divider={!!content.summary.trim()} />
+          <Section label={labels.summary} text={content.summary} />
+          <Section label={labels.experience} text={content.experience} divider={!!content.summary.trim()} />
         </View>
       </View>
     </Page>
   )
 }
 
-export async function renderResumePdf(content: ResumeContent, template: ResumeTemplateId): Promise<Buffer> {
-  const page = template === 'modern' ? <ModernPdf content={content} /> : <ClassicPdf content={content} />
+export async function renderResumePdf(content: ResumeContent, template: ResumeTemplateId, labels: ResumeLabels): Promise<Buffer> {
+  const page = template === 'modern' ? <ModernPdf content={content} labels={labels} /> : <ClassicPdf content={content} labels={labels} />
   return renderToBuffer(<Document>{page}</Document>)
 }

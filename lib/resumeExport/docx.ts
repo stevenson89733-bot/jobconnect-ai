@@ -4,6 +4,7 @@ import {
 } from 'docx'
 import { parseMarkdown, type MarkdownBlock } from './markdown'
 import type { ResumeContent, ResumeTemplateId } from '@/components/resume-builder/ResumePreview'
+import type { ResumeLabels } from './labels'
 
 // Server-only module (imported by app/api/resume/export/route.ts) — same
 // resume content and template choice as the PDF export and the on-screen
@@ -62,16 +63,16 @@ function headerParagraphs(content: ResumeContent): Paragraph[] {
   return paragraphs
 }
 
-function buildClassicDoc(content: ResumeContent): Document {
+function buildClassicDoc(content: ResumeContent, labels: ResumeLabels): Document {
   return new Document({
     sections: [{
       properties: { page: { margin: { top: PAGE_MARGIN, bottom: PAGE_MARGIN, left: PAGE_MARGIN, right: PAGE_MARGIN } } },
       children: [
         ...headerParagraphs(content),
-        ...sectionParagraphs('Summary', content.summary),
-        ...sectionParagraphs('Experience', content.experience, ACCENT, !!content.summary.trim()),
-        ...sectionParagraphs('Skills', content.skills, ACCENT, !!content.experience.trim()),
-        ...sectionParagraphs('Education', content.education, ACCENT, !!content.skills.trim()),
+        ...sectionParagraphs(labels.summary, content.summary),
+        ...sectionParagraphs(labels.experience, content.experience, ACCENT, !!content.summary.trim()),
+        ...sectionParagraphs(labels.skills, content.skills, ACCENT, !!content.experience.trim()),
+        ...sectionParagraphs(labels.education, content.education, ACCENT, !!content.skills.trim()),
       ],
     }],
   })
@@ -80,22 +81,22 @@ function buildClassicDoc(content: ResumeContent): Document {
 // Modern: a borderless two-column table (sidebar: contact/skills/education,
 // main: summary/experience) — the closest native-DOCX equivalent to the
 // on-screen two-column layout without embedding it as an image.
-function buildModernDoc(content: ResumeContent): Document {
+function buildModernDoc(content: ResumeContent, labels: ResumeLabels): Document {
   const contactParagraphs = content.contact
     ? [
-        new Paragraph({ children: [new TextRun({ text: 'CONTACT', bold: true, color: ACCENT, size: 18 })], spacing: { after: 100 } }),
+        new Paragraph({ children: [new TextRun({ text: labels.contact.toUpperCase(), bold: true, color: ACCENT, size: 18 })], spacing: { after: 100 } }),
         ...content.contact.split(' | ').map((line) => new Paragraph({ children: [new TextRun({ text: line, color: MUTED, size: 16 })], spacing: { after: 60 } })),
       ]
     : []
 
   const sidebar = [
     ...contactParagraphs,
-    ...sectionParagraphs('Skills', content.skills, ACCENT, contactParagraphs.length > 0),
-    ...sectionParagraphs('Education', content.education, ACCENT, !!content.skills.trim()),
+    ...sectionParagraphs(labels.skills, content.skills, ACCENT, contactParagraphs.length > 0),
+    ...sectionParagraphs(labels.education, content.education, ACCENT, !!content.skills.trim()),
   ]
   const main = [
-    ...sectionParagraphs('Summary', content.summary),
-    ...sectionParagraphs('Experience', content.experience, ACCENT, !!content.summary.trim()),
+    ...sectionParagraphs(labels.summary, content.summary),
+    ...sectionParagraphs(labels.experience, content.experience, ACCENT, !!content.summary.trim()),
   ]
 
   // The default page is 12240 twips wide (US Letter); with PAGE_MARGIN on
@@ -135,7 +136,7 @@ function buildModernDoc(content: ResumeContent): Document {
   })
 }
 
-export async function renderResumeDocx(content: ResumeContent, template: ResumeTemplateId): Promise<Buffer> {
-  const doc = template === 'modern' ? buildModernDoc(content) : buildClassicDoc(content)
+export async function renderResumeDocx(content: ResumeContent, template: ResumeTemplateId, labels: ResumeLabels): Promise<Buffer> {
+  const doc = template === 'modern' ? buildModernDoc(content, labels) : buildClassicDoc(content, labels)
   return Packer.toBuffer(doc)
 }

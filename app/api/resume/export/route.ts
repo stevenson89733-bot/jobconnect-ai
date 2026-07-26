@@ -6,6 +6,7 @@ import { renderResumePdf } from '@/lib/resumeExport/pdf'
 import { renderResumeDocx } from '@/lib/resumeExport/docx'
 import { sanitizeFilenamePart } from '@/lib/resumeExport/filename'
 import type { ResumeContent, ResumeTemplateId } from '@/components/resume-builder/ResumePreview'
+import type { ResumeLabels } from '@/lib/resumeExport/labels'
 
 type ExportFormat = 'pdf' | 'docx'
 
@@ -48,9 +49,21 @@ export async function POST(req: Request) {
 
   const filenameBase = `${sanitizeFilenamePart(resume.name, 'Resume')}_Resume`
 
+  // Section-header labels in the active locale — same resumeBuilder i18n
+  // keys the live preview uses, so the exported file's headings never fall
+  // back to hardcoded English regardless of what language the site is in.
+  const trb = await getTranslations('resumeBuilder')
+  const labels: ResumeLabels = {
+    summary: trb('sectionSummary'),
+    experience: trb('sectionExperience'),
+    skills: trb('sectionSkills'),
+    education: trb('sectionEducation'),
+    contact: trb('sectionContact'),
+  }
+
   try {
     if (format === 'docx') {
-      const buffer = await renderResumeDocx(resume, template)
+      const buffer = await renderResumeDocx(resume, template, labels)
       return new NextResponse(buffer, {
         status: 200,
         headers: {
@@ -60,7 +73,7 @@ export async function POST(req: Request) {
       })
     }
 
-    const buffer = await renderResumePdf(resume, template)
+    const buffer = await renderResumePdf(resume, template, labels)
     return new NextResponse(buffer, {
       status: 200,
       headers: {
