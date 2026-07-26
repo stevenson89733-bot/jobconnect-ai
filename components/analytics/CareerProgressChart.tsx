@@ -1,7 +1,7 @@
 'use client'
 import { motion } from 'framer-motion'
 import { TrendingUp } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { Card, CardContent } from '@/components/ui/card'
 import FadeIn from '@/components/dashboard/FadeIn'
 import type { CareerProgressPoint } from '@/lib/careerProgress'
@@ -12,8 +12,8 @@ const PAD = { top: 12, right: 12, bottom: 28, left: 12 }
 const INNER_W = WIDTH - PAD.left - PAD.right
 const INNER_H = HEIGHT - PAD.top - PAD.bottom
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+function formatDate(iso: string, locale: string) {
+  return new Date(iso).toLocaleDateString(locale, { month: 'short', day: 'numeric' })
 }
 
 // Points are real "Refresh Analysis" runs, evenly spaced by index (not by
@@ -21,6 +21,7 @@ function formatDate(iso: string) {
 // continuous-time series, so even spacing is the honest representation.
 export default function CareerProgressChart({ points }: { points: CareerProgressPoint[] }) {
   const t = useTranslations('analytics')
+  const locale = useLocale()
   const xFor = (i: number) => PAD.left + (points.length <= 1 ? INNER_W / 2 : (i / (points.length - 1)) * INNER_W)
   const yFor = (score: number) => PAD.top + INNER_H - (score / 100) * INNER_H
 
@@ -50,7 +51,7 @@ export default function CareerProgressChart({ points }: { points: CareerProgress
               <div className="text-3xl mb-2">📈</div>
               {points.length === 1 ? (
                 <p className="text-sm text-slate-600 dark:text-slate-400">
-                  {t('careerProgressSinglePoint', { ats: points[0].atsScore, strength: points[0].profileStrength, date: formatDate(points[0].generatedAt) })}
+                  {t('careerProgressSinglePoint', { ats: points[0].atsScore, strength: points[0].profileStrength, date: formatDate(points[0].generatedAt, locale) })}
                 </p>
               ) : (
                 <p className="text-sm text-slate-600 dark:text-slate-400">
@@ -83,7 +84,7 @@ export default function CareerProgressChart({ points }: { points: CareerProgress
                   <circle cx={xFor(i)} cy={yFor(p.atsScore)} r={3.5} className="fill-primary" />
                   <circle cx={xFor(i)} cy={yFor(p.profileStrength)} r={3.5} className="fill-accent" />
                   <text x={xFor(i)} y={HEIGHT - 8} textAnchor="middle" className="fill-slate-600 dark:fill-slate-400" fontSize={10}>
-                    {formatDate(p.generatedAt)}
+                    {formatDate(p.generatedAt, locale)}
                   </text>
                 </g>
               ))}

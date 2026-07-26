@@ -1,6 +1,6 @@
 'use client'
 import { useState, useTransition } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import {
   Gauge, FileCheck2, ListChecks, KeyRound, FileEdit, MessagesSquare,
   Map, GraduationCap, DollarSign, RefreshCw, AlertTriangle, Sparkles,
@@ -15,8 +15,8 @@ import { refreshCareerAnalysis } from '@/app/actions/careerCoach'
 import type { CareerAnalysis } from '@/lib/ai/careerCoach'
 import type { MatchedJob } from '@/lib/jobMatching'
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })
+function formatDate(iso: string, locale: string) {
+  return new Date(iso).toLocaleString(locale, { dateStyle: 'medium', timeStyle: 'short' })
 }
 
 function RoadmapColumn({ title, items }: { title: string; items: string[] }) {
@@ -52,6 +52,7 @@ export default function CareerCoachClient({
   matchedJobs: MatchedJob[]
 }) {
   const t = useTranslations('careerCoach')
+  const locale = useLocale()
   const [analysis, setAnalysis] = useState(initialAnalysis)
   const [generatedAt, setGeneratedAt] = useState(initialGeneratedAt)
   const [error, setError] = useState<string | null>(null)
@@ -94,7 +95,7 @@ export default function CareerCoachClient({
       {/* Header / refresh */}
       <FadeIn className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <p className="text-sm text-slate-600 dark:text-slate-400">
-          {generatedAt ? t('lastUpdated', { date: formatDate(generatedAt) }) : t('noAnalysisGenerated')}
+          {generatedAt ? t('lastUpdated', { date: formatDate(generatedAt, locale) }) : t('noAnalysisGenerated')}
         </p>
         <Button variant="primary" onClick={handleRefresh} disabled={isPending}>
           <RefreshCw className={`w-4 h-4 ${isPending ? 'animate-spin' : ''}`} strokeWidth={2} />

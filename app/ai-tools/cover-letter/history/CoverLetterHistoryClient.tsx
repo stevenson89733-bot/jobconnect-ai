@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { Markdown } from '@/lib/docExport'
 import { deleteCoverLetterDraft } from '@/app/actions/coverLetters'
 import type { CoverLetterDraft } from '@/lib/coverLetters'
@@ -24,6 +24,7 @@ export default function CoverLetterHistoryClient({
   loadError: string
 }) {
   const t = useTranslations('coverLetterHistory')
+  const locale = useLocale()
   const tc = useTranslations('coverLetter')
   const [drafts, setDrafts] = useState(initialDrafts)
   const [expandedId, setExpandedId] = useState<string | null>(null)
@@ -89,7 +90,7 @@ export default function CoverLetterHistoryClient({
                     </span>
                   </div>
                   <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">
-                    {new Date(draft.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    {new Date(draft.created_at).toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' })}
                   </p>
                   {!isExpanded && (
                     <p className="text-sm text-slate-600 dark:text-slate-400">{snippet(draft.letter_content.opening)}</p>

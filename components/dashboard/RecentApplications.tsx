@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Inbox } from 'lucide-react'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, getLocale } from 'next-intl/server'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { APPLICATION_STATUS_VARIANT, type ApplicationStatus } from '@/lib/applicationStatus'
@@ -17,8 +17,8 @@ export type ApplicationRow = {
   company_name: string
 }
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+function formatDate(iso: string, locale: string) {
+  return new Date(iso).toLocaleDateString(locale, { month: 'short', day: 'numeric' })
 }
 
 export default async function RecentApplications({
@@ -32,6 +32,7 @@ export default async function RecentApplications({
 }) {
   const t = await getTranslations('candidate')
   const tStatus = await getTranslations('applicationStatus')
+  const locale = await getLocale()
 
   return (
     <FadeIn className="h-full">
@@ -91,7 +92,7 @@ export default async function RecentApplications({
                           </div>
                         )}
                       </td>
-                      <td className="py-3 text-slate-600 dark:text-slate-400">{formatDate(app.created_at)}</td>
+                      <td className="py-3 text-slate-600 dark:text-slate-400">{formatDate(app.created_at, locale)}</td>
                     </tr>
                   ))}
                 </tbody>

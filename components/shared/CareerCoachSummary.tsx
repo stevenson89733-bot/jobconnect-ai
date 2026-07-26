@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { Sparkles } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 
@@ -33,6 +33,7 @@ export default function CareerCoachSummary({
 }) {
   const hasAnalysis = atsScore != null && profileStrength != null
   const t = useTranslations('candidate')
+  const locale = useLocale()
 
   return (
     <Card>
@@ -74,7 +75,7 @@ export default function CareerCoachSummary({
             </div>
             {!compact && generatedAt && (
               <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">
-                {t('lastGenerated', { date: new Date(generatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) })}
+                {t('lastGenerated', { date: new Date(generatedAt).toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' }) })}
               </p>
             )}
             <Link href="/candidate/career-coach"><Button variant="outline" size="sm">{t('viewFullAnalysis')}</Button></Link>
