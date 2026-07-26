@@ -713,7 +713,7 @@
   },
   "copilot": {
     "openLabel": "Ouvrir le Copilote de Carrière",
-    "closeLabel": "Ignorer",
+    "closeLabel": "Fermer",
     "title": "Copilote de Carrière",
     "idleTitle": "Vous êtes à jour",
     "idleDesc": "Aucune nouveauté pour le moment — revenez plus tard.",

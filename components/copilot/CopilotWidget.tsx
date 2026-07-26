@@ -10,7 +10,6 @@ import { Badge } from '@/components/ui/badge'
 import type { CopilotSignal } from '@/app/api/copilot/signals/route'
 
 const REFRESH_INTERVAL_MS = 5 * 60 * 1000
-const DISMISS_KEY = 'copilot-dismissed'
 const MAX_MESSAGE_LENGTH = 500
 
 // One line + one link per signal — reads real numbers/statuses already
@@ -213,7 +212,6 @@ export default function CopilotWidget() {
   const [signals, setSignals] = useState<CopilotSignal[] | null>(null)
   const [open, setOpen] = useState(false)
   const [tab, setTab] = useState<'signals' | 'chat'>('signals')
-  const [dismissed, setDismissed] = useState(true) // starts hidden until we know it's not dismissed this session
 
   const fetchSignals = useCallback(async () => {
     try {
@@ -227,24 +225,21 @@ export default function CopilotWidget() {
   }, [])
 
   useEffect(() => {
-    setDismissed(sessionStorage.getItem(DISMISS_KEY) === '1')
     fetchSignals()
     const id = setInterval(fetchSignals, REFRESH_INTERVAL_MS)
     return () => clearInterval(id)
   }, [fetchSignals])
 
-  function dismiss() {
-    sessionStorage.setItem(DISMISS_KEY, '1')
-    setDismissed(true)
-    setOpen(false)
-  }
-
   // Not on the public landing page, and nothing to show yet (still loading,
-  // dismissed this session, or the API said this isn't a candidate). The
-  // signals endpoint always returns at least an 'idle' entry for a real
-  // candidate, so this only actually hides the widget during the initial
-  // load flicker and for non-candidates/signed-out visitors.
-  if (pathname === '/' || dismissed || !signals || signals.length === 0) return null
+  // or the API said this isn't a candidate). The signals endpoint always
+  // returns at least an 'idle' entry for a real candidate, so this only
+  // actually hides the widget during the initial load flicker and for
+  // non-candidates/signed-out visitors. Deliberately no permanent
+  // "dismissed" state anymore (previously a sessionStorage flag) — it used
+  // to hide the whole widget, including the Chat tab, for the rest of the
+  // browser tab's life with no way to bring it back short of closing the
+  // tab. The header's close button now only closes the panel (see below).
+  if (pathname === '/' || !signals || signals.length === 0) return null
 
   const hasRealUpdate = signals.some((s) => s.type !== 'idle')
 
@@ -272,7 +267,7 @@ export default function CopilotWidget() {
                 <span className="font-semibold text-sm text-slate-900 dark:text-white">{t('title')}</span>
               </div>
               <button
-                onClick={dismiss}
+                onClick={() => setOpen(false)}
                 aria-label={t('closeLabel')}
                 className="text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
               >

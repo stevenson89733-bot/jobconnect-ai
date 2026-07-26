@@ -713,7 +713,7 @@
   },
   "copilot": {
     "openLabel": "Abrir Copiloto de Carreira",
-    "closeLabel": "Dispensar",
+    "closeLabel": "Fechar",
     "title": "Copiloto de Carreira",
     "idleTitle": "Você está em dia",
     "idleDesc": "Nenhuma novidade no momento — volte mais tarde.",

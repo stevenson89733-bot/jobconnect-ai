@@ -713,7 +713,7 @@
   },
   "copilot": {
     "openLabel": "Karriere-Copilot öffnen",
-    "closeLabel": "Verwerfen",
+    "closeLabel": "Schließen",
     "title": "Karriere-Copilot",
     "idleTitle": "Du bist auf dem neuesten Stand",
     "idleDesc": "Gerade keine neuen Updates — schau später wieder vorbei.",

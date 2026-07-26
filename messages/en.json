@@ -713,7 +713,7 @@
   },
   "copilot": {
     "openLabel": "Open Career Copilot",
-    "closeLabel": "Dismiss",
+    "closeLabel": "Close",
     "title": "Career Copilot",
     "idleTitle": "You're all caught up",
     "idleDesc": "No new updates right now — check back later.",

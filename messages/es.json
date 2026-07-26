@@ -713,7 +713,7 @@
   },
   "copilot": {
     "openLabel": "Abrir Copiloto de Carrera",
-    "closeLabel": "Descartar",
+    "closeLabel": "Cerrar",
     "title": "Copiloto de Carrera",
     "idleTitle": "Estás al día",
     "idleDesc": "No hay novedades por ahora — vuelve más tarde.",
