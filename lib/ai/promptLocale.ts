@@ -28,4 +28,7 @@ export const LETTER_CLOSING: Record<Locale, string> = {
   de: 'Mit freundlichen Grüßen,',
   pt: 'Atenciosamente,',
   vi: 'Trân trọng,',
+  zh: '此致敬礼，',
+  ja: '敬具',
+  ko: '감사합니다,',
 }

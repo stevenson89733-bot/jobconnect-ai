@@ -1,6 +1,6 @@
 // Single source of truth for supported locales — cookie-based (no locale-
 // prefixed routes, see messages/README.md for the tradeoff/reasoning).
-export const SUPPORTED_LOCALES = ['en', 'fr', 'es', 'ht', 'de', 'pt', 'vi'] as const
+export const SUPPORTED_LOCALES = ['en', 'fr', 'es', 'ht', 'de', 'pt', 'vi', 'zh', 'ja', 'ko'] as const
 export type Locale = (typeof SUPPORTED_LOCALES)[number]
 
 export const DEFAULT_LOCALE: Locale = 'en'
@@ -14,6 +14,9 @@ export const LOCALE_LABELS: Record<Locale, string> = {
   de: 'Deutsch',
   pt: 'Português',
   vi: 'Tiếng Việt',
+  zh: '简体中文',
+  ja: '日本語',
+  ko: '한국어',
 }
 
 export function isSupportedLocale(value: string | undefined | null): value is Locale {
