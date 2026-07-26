@@ -106,6 +106,7 @@ export default function JobCard({
             <div className="flex flex-wrap items-center gap-2 mb-0.5">
               <h2 className="font-semibold text-slate-900 dark:text-white">{job.title}</h2>
               {job.is_featured && <Badge variant="primary">{t('featured')}</Badge>}
+              {job.cross_border_status === 'yes' && <Badge variant="success">{t('crossBorderFriendly')}</Badge>}
               {job.matchPercent != null && (
                 <Badge variant="success" className="flex items-center gap-1">
                   <Sparkles className="w-3 h-3" strokeWidth={2} /> {t('matchPercent', { percent: job.matchPercent })}

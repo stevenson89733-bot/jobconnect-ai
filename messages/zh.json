@@ -182,6 +182,8 @@
     "shareJob": "分享职位",
     "shareBlocked": "您的浏览器阻止了自动复制——请选中下方链接并按 Cmd/Ctrl+C 复制。",
     "featured": "⭐ 精选",
+    "crossBorderFriendly": "🌐 全球开放",
+    "crossBorderFilterLabel": "全球开放",
     "matchPercent": "匹配度 {percent}%",
     "today": "今天",
     "daysAgo": "{count} 天前",

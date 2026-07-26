@@ -182,6 +182,8 @@
     "shareJob": "Job teilen",
     "shareBlocked": "Dein Browser hat das automatische Kopieren blockiert — wähle den Link unten aus und drücke Cmd/Strg+C.",
     "featured": "⭐ Empfohlen",
+    "crossBorderFriendly": "🌐 International offen",
+    "crossBorderFilterLabel": "International offen",
     "matchPercent": "{percent}% Übereinstimmung",
     "today": "Heute",
     "daysAgo": "vor {count} T",

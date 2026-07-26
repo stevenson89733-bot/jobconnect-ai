@@ -22,6 +22,10 @@ export type Job = {
   tags: string[]
   description: string | null
   is_featured: boolean
+  // Real Mistral classification (lib/ai/crossBorder.ts) of whether this
+  // remote posting is genuinely open worldwide — null/'unclear'/'no' all
+  // render identically (no badge), only 'yes' does. Never guessed client-side.
+  cross_border_status: 'yes' | 'no' | 'unclear' | null
   created_at: string
   company: { logo_url: string | null } | null
   // Real overlap between the signed-in candidate's real profile skills and
@@ -46,6 +50,7 @@ export default function JobsClient({
   initialJobType = 'All',
   initialCategory = 'All',
   initialSort = 'relevance',
+  initialCrossBorder = false,
   totalPages = 1,
   total,
 }: {
@@ -55,6 +60,7 @@ export default function JobsClient({
   initialJobType?: string
   initialCategory?: string
   initialSort?: SortOption
+  initialCrossBorder?: boolean
   totalPages?: number
   total?: number
 }) {
@@ -84,6 +90,7 @@ export default function JobsClient({
   const [jobType, setJobType] = useState(initialJobType)
   const [category, setCategory] = useState(initialCategory)
   const [sort, setSort] = useState<SortOption>(initialSort)
+  const [crossBorder, setCrossBorder] = useState(initialCrossBorder)
 
   // Infinite scroll state — the server always renders page 1 (via the
   // `jobs` prop); this accumulates pages 2+ fetched client-side from
@@ -106,19 +113,21 @@ export default function JobsClient({
     setHasMore(totalPages > 1)
   }, [jobs, totalPages])
 
-  function navigate(next: { q?: string; workType?: string; type?: string; category?: string; sort?: SortOption }) {
+  function navigate(next: { q?: string; workType?: string; type?: string; category?: string; sort?: SortOption; crossBorder?: boolean }) {
     const params = new URLSearchParams()
     const q = next.q ?? query
     const w = next.workType ?? workType
     const t = next.type ?? jobType
     const c = next.category ?? category
     const s = next.sort ?? sort
+    const cb = next.crossBorder ?? crossBorder
 
     if (q) params.set('q', q)
     if (w !== 'All') params.set('workType', w)
     if (t !== 'All') params.set('type', t)
     if (c !== 'All') params.set('category', c)
     if (s !== 'relevance') params.set('sort', s)
+    if (cb) params.set('crossBorder', '1')
 
     startTransition(() => {
       router.push(`${pathname}?${params.toString()}`)
@@ -135,6 +144,7 @@ export default function JobsClient({
       if (jobType !== 'All') params.set('type', jobType)
       if (category !== 'All') params.set('category', category)
       if (sort !== 'relevance') params.set('sort', sort)
+      if (crossBorder) params.set('crossBorder', '1')
       params.set('page', String(nextPage))
 
       const res = await fetch(`/api/jobs?${params.toString()}`)
@@ -149,7 +159,7 @@ export default function JobsClient({
     } finally {
       setLoadingMore(false)
     }
-  }, [loadingMore, hasMore, query, workType, jobType, category, sort, nextPage])
+  }, [loadingMore, hasMore, query, workType, jobType, category, sort, crossBorder, nextPage])
 
   useEffect(() => {
     const el = sentinelRef.current
@@ -169,7 +179,8 @@ export default function JobsClient({
     setWorkType('All')
     setJobType('All')
     setCategory('All')
-    navigate({ q: '', workType: 'All', type: 'All', category: 'All' })
+    setCrossBorder(false)
+    navigate({ q: '', workType: 'All', type: 'All', category: 'All', crossBorder: false })
   }
 
   return (
@@ -281,6 +292,18 @@ export default function JobsClient({
               </button>
             ))}
           </div>
+          <div className="w-px bg-slate-200 dark:bg-slate-700 mx-1 hidden sm:block" />
+          <button
+            onClick={() => { const next = !crossBorder; setCrossBorder(next); navigate({ crossBorder: next }) }}
+            aria-pressed={crossBorder}
+            className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${
+              crossBorder
+                ? 'bg-teal-100 dark:bg-teal-900/30 border-teal-300 dark:border-teal-800/50 text-teal-700 dark:text-teal-400'
+                : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-slate-300'
+            }`}
+          >
+            {t('crossBorderFilterLabel')}
+          </button>
         </div>
       </div>
 

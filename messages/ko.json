@@ -182,6 +182,8 @@
     "shareJob": "채용 공고 공유",
     "shareBlocked": "브라우저가 자동 복사를 차단했습니다 — 아래 링크를 선택한 후 Cmd/Ctrl+C를 눌러주세요.",
     "featured": "⭐ 추천",
+    "crossBorderFriendly": "🌐 해외 지원 가능",
+    "crossBorderFilterLabel": "해외 지원 가능",
     "matchPercent": "매치율 {percent}%",
     "today": "오늘",
     "daysAgo": "{count}일 전",

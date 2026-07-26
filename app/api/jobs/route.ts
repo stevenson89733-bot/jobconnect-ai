@@ -4,8 +4,9 @@ import { revalidateTag } from 'next/cache'
 import { getTranslations } from 'next-intl/server'
 import { getCandidateProfile } from '@/lib/profile'
 import { parseSkillSet, calculateMatchPercent } from '@/lib/jobMatching'
-import { applyJobFilters, normalizeJobCompany, parseSort, JOB_SELECT_FIELDS } from '@/lib/jobsQuery'
+import { applyJobFilters, normalizeJobCompany, parseSort, parseCrossBorder, JOB_SELECT_FIELDS } from '@/lib/jobsQuery'
 import { employerPlanLimit } from '@/lib/employerPlan'
+import { classifyCrossBorder } from '@/lib/ai/crossBorder'
 
 const PAGE_SIZE = 20
 
@@ -24,6 +25,7 @@ export async function GET(req: Request) {
   const jobType = searchParams.get('type') ?? 'All'
   const category = searchParams.get('category') ?? 'All'
   const sort = parseSort(searchParams.get('sort'))
+  const crossBorder = parseCrossBorder(searchParams.get('crossBorder'))
 
   const supabase = createClient()
   let query = supabase
@@ -31,7 +33,7 @@ export async function GET(req: Request) {
     .select(JOB_SELECT_FIELDS, { count: 'exact' })
     .eq('is_active', true)
 
-  query = applyJobFilters(query, { q, workType, jobType, category, sort })
+  query = applyJobFilters(query, { q, workType, jobType, category, sort, crossBorder })
 
   const { data: jobs, count, error } = await query.range(from, to)
 
@@ -99,6 +101,33 @@ export async function POST(req: Request) {
     .single()
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+  // Cross-border remote-friendly classification — only meaningful for
+  // work_type='remote' (a hybrid/onsite posting is location-bound by
+  // definition, so classifying it would waste a real Mistral call for no
+  // real answer). Synchronous: this project has no reliable background-
+  // task primitive (no waitUntil usage anywhere else), and posting volume
+  // is low enough that the extra ~1-2s latency here matches every other
+  // single-LLM-call flow in this app (company summary, Career Coach, etc.).
+  // A classification failure never blocks the actual job posting — the
+  // real row already exists; cross_border_status just stays null (same
+  // "not yet classified" state a pre-migration row would have) rather than
+  // erroring the whole request over a non-critical enrichment step.
+  if (job.work_type === 'remote') {
+    try {
+      const classification = await classifyCrossBorder(job.title, job.description ?? '')
+      const { data: updated, error: updateError } = await supabase
+        .from('jobs')
+        .update({ cross_border_status: classification.status, cross_border_reason: classification.reason })
+        .eq('id', job.id)
+        .select()
+        .single()
+      if (!updateError && updated) Object.assign(job, updated)
+      else if (updateError) console.error('[jobs/cross-border] update failed:', updateError.message)
+    } catch (err) {
+      console.error('[jobs/cross-border] classification failed:', err instanceof Error ? err.message : err)
+    }
+  }
 
   // New post — invalidate every cached /jobs page immediately rather than
   // waiting out the 60s revalidate window (see app/jobs/page.tsx).

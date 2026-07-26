@@ -182,6 +182,8 @@
     "shareJob": "Chia sẻ việc làm",
     "shareBlocked": "Trình duyệt của bạn đã chặn sao chép tự động — hãy chọn liên kết bên dưới và nhấn Cmd/Ctrl+C.",
     "featured": "⭐ Nổi bật",
+    "crossBorderFriendly": "🌐 Mở cho ứng viên quốc tế",
+    "crossBorderFilterLabel": "Mở cho ứng viên quốc tế",
     "matchPercent": "Phù hợp {percent}%",
     "today": "Hôm nay",
     "daysAgo": "{count} ngày trước",

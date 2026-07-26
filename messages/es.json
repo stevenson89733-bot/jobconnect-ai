@@ -182,6 +182,8 @@
     "shareJob": "Compartir empleo",
     "shareBlocked": "Tu navegador bloqueó la copia automática — selecciona el enlace de abajo y presiona Cmd/Ctrl+C.",
     "featured": "⭐ Destacado",
+    "crossBorderFriendly": "🌐 Abierto a nivel internacional",
+    "crossBorderFilterLabel": "Abierto a nivel internacional",
     "matchPercent": "{percent}% de coincidencia",
     "today": "Hoy",
     "daysAgo": "hace {count} d",

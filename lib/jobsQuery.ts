@@ -5,7 +5,7 @@
 export type SortOption = 'relevance' | 'date' | 'salary'
 
 export const JOB_SELECT_FIELDS =
-  'id, title, company_name, location, work_type, salary_label, salary_min, salary_max, job_type, category, tags, description, is_featured, created_at, company:companies(logo_url)'
+  'id, title, company_name, location, work_type, salary_label, salary_min, salary_max, job_type, category, tags, description, is_featured, cross_border_status, created_at, company:companies(logo_url)'
 
 export type JobFilters = {
   q: string
@@ -13,6 +13,7 @@ export type JobFilters = {
   jobType: string
   category: string
   sort: SortOption
+  crossBorder: boolean
 }
 
 export function parseSort(value: string | null | undefined): SortOption {
@@ -21,9 +22,13 @@ export function parseSort(value: string | null | undefined): SortOption {
     : 'relevance'
 }
 
+export function parseCrossBorder(value: string | null | undefined): boolean {
+  return value === '1' || value === 'true'
+}
+
 export function applyJobFilters<T extends { or: any; ilike: any; eq: any; order: any }>(
   query: T,
-  { q, workType, jobType, category, sort }: JobFilters
+  { q, workType, jobType, category, sort, crossBorder }: JobFilters
 ): T {
   if (q) {
     // Real keyword match across title/company/description only — no
@@ -34,6 +39,9 @@ export function applyJobFilters<T extends { or: any; ilike: any; eq: any; order:
   if (workType && workType !== 'All') query = query.eq('work_type', workType)
   if (jobType && jobType !== 'All') query = query.eq('job_type', jobType)
   if (category && category !== 'All') query = query.eq('category', category)
+  // Only real, classified-as-'yes' postings — never 'unclear'/'no'/null,
+  // same honesty rule as the badge itself.
+  if (crossBorder) query = query.eq('cross_border_status', 'yes')
 
   if (sort === 'salary') {
     // nullsFirst: false keeps jobs without a real salary_min at the end

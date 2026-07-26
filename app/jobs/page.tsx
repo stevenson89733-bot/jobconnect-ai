@@ -4,7 +4,7 @@ import { createPublicClient } from '@/lib/supabase/public'
 import { createClient } from '@/lib/supabase/server'
 import { getCandidateProfile } from '@/lib/profile'
 import { parseSkillSet, calculateMatchPercent } from '@/lib/jobMatching'
-import { applyJobFilters, normalizeJobCompany, parseSort, JOB_SELECT_FIELDS, type JobFilters } from '@/lib/jobsQuery'
+import { applyJobFilters, normalizeJobCompany, parseSort, parseCrossBorder, JOB_SELECT_FIELDS, type JobFilters } from '@/lib/jobsQuery'
 import { absoluteUrl } from '@/lib/seo'
 import JobsClient from './JobsClient'
 
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 // computed fresh per-request below, outside the cache, so it's never
 // leaked across different users.
 const getJobsPage = unstable_cache(
-  async ({ q, workType, jobType, category, sort, page }: JobFilters & { page: number }) => {
+  async ({ q, workType, jobType, category, sort, crossBorder, page }: JobFilters & { page: number }) => {
     const from = (page - 1) * PAGE_SIZE
     const to = from + PAGE_SIZE - 1
 
@@ -50,7 +50,7 @@ const getJobsPage = unstable_cache(
       .select(JOB_SELECT_FIELDS, { count: 'exact' })
       .eq('is_active', true)
 
-    query = applyJobFilters(query, { q, workType, jobType, category, sort })
+    query = applyJobFilters(query, { q, workType, jobType, category, sort, crossBorder })
 
     const { data: jobs, count, error } = await query.range(from, to)
 
@@ -67,15 +67,16 @@ const getJobsPage = unstable_cache(
 export default async function JobsPage({
   searchParams,
 }: {
-  searchParams: { q?: string; page?: string; workType?: string; type?: string; category?: string; sort?: string }
+  searchParams: { q?: string; page?: string; workType?: string; type?: string; category?: string; sort?: string; crossBorder?: string }
 }) {
   const q = (searchParams.q ?? '').trim()
   const workType = searchParams.workType ?? 'All'
   const jobType = searchParams.type ?? 'All'
   const category = searchParams.category ?? 'All'
   const sort = parseSort(searchParams.sort)
+  const crossBorder = parseCrossBorder(searchParams.crossBorder)
 
-  const { jobs, total } = await getJobsPage({ q, workType, jobType, category, sort, page: 1 })
+  const { jobs, total } = await getJobsPage({ q, workType, jobType, category, sort, crossBorder, page: 1 })
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE))
 
   // Real Match % — a plain array/set comparison against the candidate's own
@@ -107,6 +108,7 @@ export default async function JobsPage({
       initialJobType={jobType}
       initialCategory={category}
       initialSort={sort}
+      initialCrossBorder={crossBorder}
       totalPages={totalPages}
       total={total}
     />
