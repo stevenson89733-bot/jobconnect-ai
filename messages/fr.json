@@ -1042,7 +1042,8 @@
     "stopListening": "⏹ Arrêter",
     "startSpeaking": "🎤 Commencer à parler",
     "redoAnswer": "🔄 Refaire la réponse",
-    "voiceUnavailableError": "Le mode vocal n'est pas disponible dans votre navigateur en ce moment — retour au mode texte."
+    "voicePermissionDeniedError": "L'accès au microphone a été refusé — retour au mode texte. Vérifiez les autorisations du site dans votre navigateur et réessayez.",
+    "voiceLanguageUnsupportedError": "Le mode vocal ne prend pas en charge votre langue dans ce navigateur — retour au mode texte."
   },
   "applicationTracker": {
     "breadcrumbDashboard": "Tableau de bord",

@@ -1042,7 +1042,8 @@
     "stopListening": "⏹ إيقاف",
     "startSpeaking": "🎤 ابدأ الكلام",
     "redoAnswer": "🔄 إعادة الإجابة",
-    "voiceUnavailableError": "الوضع الصوتي غير متاح في متصفحك حاليًا — تم الرجوع إلى الوضع النصي."
+    "voicePermissionDeniedError": "تم رفض الوصول إلى الميكروفون — تم الرجوع إلى الوضع النصي. تحقق من أذونات الموقع في متصفحك وحاول مرة أخرى.",
+    "voiceLanguageUnsupportedError": "الوضع الصوتي لا يدعم لغتك في هذا المتصفح — تم الرجوع إلى الوضع النصي."
   },
   "applicationTracker": {
     "breadcrumbDashboard": "لوحة التحكم",

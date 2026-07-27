@@ -1042,7 +1042,8 @@
     "stopListening": "⏹ 停止",
     "startSpeaking": "🎤 开始说话",
     "redoAnswer": "🔄 重新回答",
-    "voiceUnavailableError": "您的浏览器目前不支持语音模式 — 已切换回文字模式。"
+    "voicePermissionDeniedError": "麦克风访问被拒绝 — 已切换回文字模式。请检查浏览器中的网站权限设置后重试。",
+    "voiceLanguageUnsupportedError": "此浏览器的语音模式不支持您的语言 — 已切换回文字模式。"
   },
   "applicationTracker": {
     "breadcrumbDashboard": "仪表盘",

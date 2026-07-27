@@ -160,15 +160,26 @@ export default function InterviewPrepClient({
     }
 
     recognition.onerror = (event: any) => {
-      const criticalErrors = ['language-not-supported', 'not-allowed', 'service-not-allowed']
-      if (criticalErrors.includes(event.error)) {
-        // Same reasoning as the initial feature-detection: a browser that
-        // claims support but fails at runtime is treated exactly like one
-        // with no support at all — fall back to text mode honestly rather
-        // than leaving a broken voice toggle visible.
+      // Same reasoning as the initial feature-detection: a browser that
+      // claims support but fails at runtime is treated exactly like one
+      // with no support at all — fall back to text mode honestly rather
+      // than leaving a broken voice toggle visible. Split into two distinct
+      // messages rather than one generic one: "permission denied" (user
+      // declined, or a Permissions-Policy header blocked the mic outright —
+      // see next.config.js) is a very different fix from "language/service
+      // not supported" (nothing to grant, this browser/language just can't
+      // do it), and conflating them made this exact class of bug hard to
+      // diagnose from a user report alone.
+      const permissionErrors = ['not-allowed', 'service-not-allowed']
+      const unsupportedErrors = ['language-not-supported']
+      if (permissionErrors.includes(event.error)) {
         setVoiceSupported(false)
         setMode('text')
-        setVoiceError(t('voiceUnavailableError'))
+        setVoiceError(t('voicePermissionDeniedError'))
+      } else if (unsupportedErrors.includes(event.error)) {
+        setVoiceSupported(false)
+        setMode('text')
+        setVoiceError(t('voiceLanguageUnsupportedError'))
       }
       setListeningIndex(null)
     }

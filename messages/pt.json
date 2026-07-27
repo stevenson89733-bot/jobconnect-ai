@@ -1042,7 +1042,8 @@
     "stopListening": "⏹ Parar",
     "startSpeaking": "🎤 Começar a falar",
     "redoAnswer": "🔄 Refazer resposta",
-    "voiceUnavailableError": "O modo voz não está disponível no seu navegador agora — voltamos ao modo texto."
+    "voicePermissionDeniedError": "O acesso ao microfone foi negado — voltamos ao modo texto. Verifique as permissões do site no seu navegador e tente novamente.",
+    "voiceLanguageUnsupportedError": "O modo voz não é compatível com o seu idioma neste navegador — voltamos ao modo texto."
   },
   "applicationTracker": {
     "breadcrumbDashboard": "Painel",

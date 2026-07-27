@@ -1042,7 +1042,8 @@
     "stopListening": "⏹ Sispann",
     "startSpeaking": "🎤 Kòmanse pale",
     "redoAnswer": "🔄 Refè repons lan",
-    "voiceUnavailableError": "Mòd vwa a pa disponib nan navigatè ou kounye a — nou retounen nan mòd tèks."
+    "voicePermissionDeniedError": "Aksè nan mikwofòn nan te refize — nou retounen nan mòd tèks. Verifye otorizasyon sit la nan navigatè ou epi eseye ankò.",
+    "voiceLanguageUnsupportedError": "Mòd vwa a pa sipòte lang ou nan navigatè sa a — nou retounen nan mòd tèks."
   },
   "applicationTracker": {
     "breadcrumbDashboard": "Tablo debò",

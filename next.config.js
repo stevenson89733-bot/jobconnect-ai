@@ -51,10 +51,17 @@ const securityHeaders = [
   { key: 'X-Content-Type-Options', value: 'nosniff' },
   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
   { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
-  // Geolocation confirmed unused anywhere in the app (grepped before writing
-  // this) — no "jobs near me" feature exists today, so it's blocked along
-  // with the other unused sensitive browser features.
-  { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+  // Geolocation and camera confirmed unused anywhere in the app (grepped
+  // before writing this) — no "jobs near me" or camera feature exists today,
+  // so both stay blocked. Microphone is different: Voice Interview Prep
+  // (app/ai-tools/interview-prep/InterviewPrepClient.tsx) genuinely uses
+  // SpeechRecognition, which needs getUserMedia audio access — a blanket
+  // microphone=() here silently blocked it with a browser-level
+  // "not-allowed" error on every browser, including ones with full Web
+  // Speech API support, before the user was ever asked for permission.
+  // "self" allows the mic for this origin only, same-origin iframes still
+  // excluded.
+  { key: 'Permissions-Policy', value: 'camera=(), microphone=(self), geolocation=()' },
 ]
 
 const nextConfig = {

@@ -1042,7 +1042,8 @@
     "stopListening": "⏹ Stopp",
     "startSpeaking": "🎤 Sprechen starten",
     "redoAnswer": "🔄 Antwort wiederholen",
-    "voiceUnavailableError": "Der Sprachmodus ist in deinem Browser gerade nicht verfügbar — zurück zum Textmodus."
+    "voicePermissionDeniedError": "Der Mikrofonzugriff wurde verweigert — zurück zum Textmodus. Überprüfe die Website-Berechtigungen deines Browsers und versuche es erneut.",
+    "voiceLanguageUnsupportedError": "Der Sprachmodus unterstützt deine Sprache in diesem Browser nicht — zurück zum Textmodus."
   },
   "applicationTracker": {
     "breadcrumbDashboard": "Dashboard",
