@@ -253,7 +253,8 @@
     "lastGenerated": "Tạo lần cuối {date}",
     "viewFullAnalysis": "Xem phân tích đầy đủ",
     "interviewPrepCardTitle": "Luyện Phỏng Vấn",
-    "interviewPrepCardDesc": "Luyện câu hỏi thực tế và nhận phản hồi bằng văn bản tức thì."
+    "interviewPrepCardDesc": "Luyện câu hỏi thực tế và nhận phản hồi bằng văn bản tức thì.",
+    "viewAllApplications": "Xem tất cả đơn ứng tuyển →"
   },
   "recruiter": {
     "dashboardTitle": "Bảng điều khiển Nhà tuyển dụng",
@@ -1017,5 +1018,13 @@
     "generationFailed": "Tạo thất bại",
     "feedbackFailed": "Lấy phản hồi thất bại",
     "somethingWentWrong": "Đã xảy ra lỗi"
+  },
+  "applicationTracker": {
+    "breadcrumbDashboard": "Bảng điều khiển",
+    "breadcrumbCurrent": "Đơn Ứng Tuyển Của Tôi",
+    "title": "Đơn Ứng Tuyển Của Tôi",
+    "subtitle": "Mọi công việc bạn đã ứng tuyển, cùng trạng thái hiện tại.",
+    "filterAll": "Tất cả",
+    "emptyFiltered": "Chưa có đơn ứng tuyển nào ở trạng thái này."
   }
 }

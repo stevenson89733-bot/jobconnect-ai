@@ -253,7 +253,8 @@
     "lastGenerated": "Última generación {date}",
     "viewFullAnalysis": "Ver análisis completo",
     "interviewPrepCardTitle": "Preparación de entrevista",
-    "interviewPrepCardDesc": "Practica preguntas reales y recibe comentarios escritos al instante."
+    "interviewPrepCardDesc": "Practica preguntas reales y recibe comentarios escritos al instante.",
+    "viewAllApplications": "Ver todas las postulaciones →"
   },
   "recruiter": {
     "dashboardTitle": "Panel del empleador",
@@ -1017,5 +1018,13 @@
     "generationFailed": "Error en la generación",
     "feedbackFailed": "Error al obtener comentarios",
     "somethingWentWrong": "Algo salió mal"
+  },
+  "applicationTracker": {
+    "breadcrumbDashboard": "Panel",
+    "breadcrumbCurrent": "Mis postulaciones",
+    "title": "Mis postulaciones",
+    "subtitle": "Todos los empleos a los que has postulado, con su estado actual.",
+    "filterAll": "Todas",
+    "emptyFiltered": "Aún no hay postulaciones con este estado."
   }
 }

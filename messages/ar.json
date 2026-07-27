@@ -253,7 +253,8 @@
     "lastGenerated": "آخر إنشاء {date}",
     "viewFullAnalysis": "عرض التحليل الكامل",
     "interviewPrepCardTitle": "التحضير للمقابلة",
-    "interviewPrepCardDesc": "تدرّب على أسئلة حقيقية واحصل على ملاحظات كتابية فورية."
+    "interviewPrepCardDesc": "تدرّب على أسئلة حقيقية واحصل على ملاحظات كتابية فورية.",
+    "viewAllApplications": "عرض جميع الطلبات ←"
   },
   "recruiter": {
     "dashboardTitle": "لوحة تحكم صاحب العمل",
@@ -1017,5 +1018,13 @@
     "generationFailed": "فشل التوليد",
     "feedbackFailed": "فشل الحصول على الملاحظات",
     "somethingWentWrong": "حدث خطأ ما"
+  },
+  "applicationTracker": {
+    "breadcrumbDashboard": "لوحة التحكم",
+    "breadcrumbCurrent": "طلباتي",
+    "title": "طلباتي",
+    "subtitle": "كل وظيفة تقدّمت لها، مع حالتها الحالية.",
+    "filterAll": "الكل",
+    "emptyFiltered": "لا توجد طلبات بهذه الحالة بعد."
   }
 }

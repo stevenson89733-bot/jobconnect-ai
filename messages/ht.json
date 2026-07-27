@@ -253,7 +253,8 @@
     "lastGenerated": "Dènye jenerasyon {date}",
     "viewFullAnalysis": "Gade analiz konplè a",
     "interviewPrepCardTitle": "Preparasyon Entèvyou",
-    "interviewPrepCardDesc": "Pratike vrè kesyon epi jwenn retou ekri imedyatman."
+    "interviewPrepCardDesc": "Pratike vrè kesyon epi jwenn retou ekri imedyatman.",
+    "viewAllApplications": "Gade tout aplikasyon yo →"
   },
   "recruiter": {
     "dashboardTitle": "Tablo Bò Anplwayè",
@@ -1017,5 +1018,13 @@
     "generationFailed": "Jenerasyon echwe",
     "feedbackFailed": "Retou echwe",
     "somethingWentWrong": "Gen yon bagay ki mal pase"
+  },
+  "applicationTracker": {
+    "breadcrumbDashboard": "Tablo debò",
+    "breadcrumbCurrent": "Aplikasyon Mwen Yo",
+    "title": "Aplikasyon Mwen Yo",
+    "subtitle": "Tout travay ou aplike pou yo, ak estati aktyèl yo.",
+    "filterAll": "Tout",
+    "emptyFiltered": "Poko gen aplikasyon ak estati sa a."
   }
 }

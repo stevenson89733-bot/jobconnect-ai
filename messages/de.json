@@ -253,7 +253,8 @@
     "lastGenerated": "Zuletzt erstellt am {date}",
     "viewFullAnalysis": "Vollständige Analyse ansehen",
     "interviewPrepCardTitle": "Interviewvorbereitung",
-    "interviewPrepCardDesc": "Übe echte Fragen und erhalte sofortiges schriftliches Feedback."
+    "interviewPrepCardDesc": "Übe echte Fragen und erhalte sofortiges schriftliches Feedback.",
+    "viewAllApplications": "Alle Bewerbungen ansehen →"
   },
   "recruiter": {
     "dashboardTitle": "Arbeitgeber-Dashboard",
@@ -1017,5 +1018,13 @@
     "generationFailed": "Generierung fehlgeschlagen",
     "feedbackFailed": "Feedback fehlgeschlagen",
     "somethingWentWrong": "Etwas ist schiefgelaufen"
+  },
+  "applicationTracker": {
+    "breadcrumbDashboard": "Dashboard",
+    "breadcrumbCurrent": "Meine Bewerbungen",
+    "title": "Meine Bewerbungen",
+    "subtitle": "Jeder Job, auf den du dich beworben hast, mit aktuellem Status.",
+    "filterAll": "Alle",
+    "emptyFiltered": "Noch keine Bewerbungen mit diesem Status."
   }
 }

@@ -39,8 +39,8 @@ export default async function RecentApplications({
       <Card className="h-full">
         <CardHeader className="flex-row items-center justify-between space-y-0">
           <CardTitle>{t('recentApplications')}</CardTitle>
-          <Link href="/jobs" className="text-xs text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">
-            {t('seeAllJobs')}
+          <Link href="/candidate/applications" className="text-xs text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">
+            {t('viewAllApplications')}
           </Link>
         </CardHeader>
         {rates && rates.total > 0 && (

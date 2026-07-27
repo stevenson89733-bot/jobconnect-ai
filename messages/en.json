@@ -253,7 +253,8 @@
     "lastGenerated": "Last generated {date}",
     "viewFullAnalysis": "View Full Analysis",
     "interviewPrepCardTitle": "Interview Prep",
-    "interviewPrepCardDesc": "Practice real questions and get instant written feedback."
+    "interviewPrepCardDesc": "Practice real questions and get instant written feedback.",
+    "viewAllApplications": "View all applications →"
   },
   "recruiter": {
     "dashboardTitle": "Employer Dashboard",
@@ -1017,5 +1018,13 @@
     "generationFailed": "Generation failed",
     "feedbackFailed": "Feedback failed",
     "somethingWentWrong": "Something went wrong"
+  },
+  "applicationTracker": {
+    "breadcrumbDashboard": "Dashboard",
+    "breadcrumbCurrent": "My Applications",
+    "title": "My Applications",
+    "subtitle": "Every job you've applied to, with its current status.",
+    "filterAll": "All",
+    "emptyFiltered": "No applications with this status yet."
   }
 }

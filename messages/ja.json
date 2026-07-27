@@ -253,7 +253,8 @@
     "lastGenerated": "最終生成日: {date}",
     "viewFullAnalysis": "詳細な分析を見る",
     "interviewPrepCardTitle": "面接対策",
-    "interviewPrepCardDesc": "実際の質問を練習し、即座に文章でフィードバックを受け取れます。"
+    "interviewPrepCardDesc": "実際の質問を練習し、即座に文章でフィードバックを受け取れます。",
+    "viewAllApplications": "すべての応募を見る →"
   },
   "recruiter": {
     "dashboardTitle": "採用担当者ダッシュボード",
@@ -1017,5 +1018,13 @@
     "generationFailed": "生成に失敗しました",
     "feedbackFailed": "フィードバックの取得に失敗しました",
     "somethingWentWrong": "問題が発生しました"
+  },
+  "applicationTracker": {
+    "breadcrumbDashboard": "ダッシュボード",
+    "breadcrumbCurrent": "応募状況",
+    "title": "応募状況",
+    "subtitle": "応募したすべての求人と、その現在のステータス。",
+    "filterAll": "すべて",
+    "emptyFiltered": "このステータスの応募はまだありません。"
   }
 }

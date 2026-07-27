@@ -253,7 +253,8 @@
     "lastGenerated": "Dernière génération {date}",
     "viewFullAnalysis": "Voir l'analyse complète",
     "interviewPrepCardTitle": "Préparation d'entretien",
-    "interviewPrepCardDesc": "Entraînez-vous sur de vraies questions et obtenez un retour écrit instantané."
+    "interviewPrepCardDesc": "Entraînez-vous sur de vraies questions et obtenez un retour écrit instantané.",
+    "viewAllApplications": "Voir toutes les candidatures →"
   },
   "recruiter": {
     "dashboardTitle": "Tableau de bord employeur",
@@ -1017,5 +1018,13 @@
     "generationFailed": "Échec de la génération",
     "feedbackFailed": "Échec du retour",
     "somethingWentWrong": "Une erreur s'est produite"
+  },
+  "applicationTracker": {
+    "breadcrumbDashboard": "Tableau de bord",
+    "breadcrumbCurrent": "Mes candidatures",
+    "title": "Mes candidatures",
+    "subtitle": "Toutes vos candidatures, avec leur statut actuel.",
+    "filterAll": "Toutes",
+    "emptyFiltered": "Aucune candidature avec ce statut pour le moment."
   }
 }

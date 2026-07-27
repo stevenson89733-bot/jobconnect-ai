@@ -253,7 +253,8 @@
     "lastGenerated": "上次生成时间 {date}",
     "viewFullAnalysis": "查看完整分析",
     "interviewPrepCardTitle": "面试准备",
-    "interviewPrepCardDesc": "练习真实问题，即时获得书面反馈。"
+    "interviewPrepCardDesc": "练习真实问题，即时获得书面反馈。",
+    "viewAllApplications": "查看所有申请 →"
   },
   "recruiter": {
     "dashboardTitle": "雇主控制台",
@@ -1017,5 +1018,13 @@
     "generationFailed": "生成失败",
     "feedbackFailed": "获取反馈失败",
     "somethingWentWrong": "出了点问题"
+  },
+  "applicationTracker": {
+    "breadcrumbDashboard": "仪表盘",
+    "breadcrumbCurrent": "我的申请",
+    "title": "我的申请",
+    "subtitle": "您申请过的每一个职位，及其当前状态。",
+    "filterAll": "全部",
+    "emptyFiltered": "此状态下暂无申请。"
   }
 }
