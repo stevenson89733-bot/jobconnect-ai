@@ -1,13 +1,14 @@
 import Link from 'next/link'
-import { FileText, Mail, HelpCircle, ArrowRight, ArrowLeft } from 'lucide-react'
+import { FileText, Mail, HelpCircle, IdCard, ArrowRight, ArrowLeft } from 'lucide-react'
 import { getTranslations, getLocale } from 'next-intl/server'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { isRtlLocale, type Locale } from '@/lib/i18n/config'
 import FadeIn from './FadeIn'
 
 // Intentionally just an entry point to the AI tools that actually exist
-// (Resume Builder, Cover Letter Generator, Interview Prep) — no fabricated
-// "AI insights" or profile analysis beyond what's real.
+// (Resume Builder, Cover Letter Generator, Interview Prep, LinkedIn
+// Optimizer) — no fabricated "AI insights" or profile analysis beyond
+// what's real.
 export default async function AIAssistantCard() {
   const t = await getTranslations('candidate')
   const rtl = isRtlLocale((await getLocale()) as Locale)
@@ -67,6 +68,21 @@ export default async function AIAssistantCard() {
               </h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
                 {t('interviewPrepCardDesc')}
+              </p>
+            </div>
+            <ForwardArrow className={`w-4 h-4 text-slate-400 dark:text-slate-400 shrink-0 ms-auto mt-0.5 ${hoverNudgeClass} transition-transform`} />
+          </Link>
+          <Link
+            href="/ai-tools/linkedin-optimizer"
+            className="group rounded-lg border border-slate-200 dark:border-slate-700/50 p-4 hover:border-accent/50 transition-colors flex items-start gap-3"
+          >
+            <IdCard className="w-5 h-5 text-orange-600 dark:text-accent shrink-0 mt-0.5" strokeWidth={1.75} />
+            <div>
+              <h3 className="font-semibold text-sm text-slate-900 dark:text-white group-hover:text-accent transition-colors">
+                {t('linkedinOptimizerCardTitle')}
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
+                {t('linkedinOptimizerCardDesc')}
               </p>
             </div>
             <ForwardArrow className={`w-4 h-4 text-slate-400 dark:text-slate-400 shrink-0 ms-auto mt-0.5 ${hoverNudgeClass} transition-transform`} />

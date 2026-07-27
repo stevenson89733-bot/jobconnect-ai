@@ -30,7 +30,9 @@
     "language": "Idioma",
     "country": "País",
     "interviewPrep": "Entrevista",
-    "interviewPrepDesc": "Practica preguntas reales con comentarios de la IA"
+    "interviewPrepDesc": "Practica preguntas reales con comentarios de la IA",
+    "linkedinOptimizer": "Optimizador de LinkedIn",
+    "linkedinOptimizerDesc": "Analiza o genera tu perfil de LinkedIn"
   },
   "footer": {
     "tagline": "Plataforma de empleo remoto impulsada por IA que conecta a los mejores candidatos con empresas líderes en todo el mundo.",
@@ -254,7 +256,9 @@
     "viewFullAnalysis": "Ver análisis completo",
     "interviewPrepCardTitle": "Preparación de entrevista",
     "interviewPrepCardDesc": "Practica preguntas reales y recibe comentarios escritos al instante.",
-    "viewAllApplications": "Ver todas las postulaciones →"
+    "viewAllApplications": "Ver todas las postulaciones →",
+    "linkedinOptimizerCardTitle": "Optimizador de LinkedIn",
+    "linkedinOptimizerCardDesc": "Recibe comentarios sobre tu perfil o genera uno desde cero."
   },
   "recruiter": {
     "dashboardTitle": "Panel del empleador",
@@ -721,7 +725,11 @@
     "tooManyInterviewPrepRequests": "Demasiadas solicitudes. Inténtalo de nuevo en un momento.",
     "interviewPrepMissingTargetRole": "Agrega primero un puesto objetivo.",
     "interviewPrepMissingQuestion": "Falta la pregunta.",
-    "interviewPrepAnswerTooShort": "Agrega una respuesta más completa para recibir comentarios reales — unas pocas palabras no son suficientes."
+    "interviewPrepAnswerTooShort": "Agrega una respuesta más completa para recibir comentarios reales — unas pocas palabras no son suficientes.",
+    "linkedinOptimizerPremiumOnly": "El Optimizador de LinkedIn es una función Premium.",
+    "tooManyLinkedinOptimizerRequests": "Demasiadas solicitudes. Inténtalo de nuevo en un momento.",
+    "linkedinOptimizerTextTooShort": "Agrega más de tu texto real de LinkedIn para recibir comentarios reales — unas pocas palabras no son suficientes.",
+    "linkedinOptimizerNotEnoughExperience": "Agrega un poco más de detalle a la experiencia de tu perfil — unas pocas palabras no son suficientes para un perfil real, no fabricado."
   },
   "copilot": {
     "openLabel": "Abrir Copiloto de Carrera",
@@ -1026,5 +1034,40 @@
     "subtitle": "Todos los empleos a los que has postulado, con su estado actual.",
     "filterAll": "Todas",
     "emptyFiltered": "Aún no hay postulaciones con este estado."
+  },
+  "linkedinOptimizer": {
+    "breadcrumbDashboard": "Panel",
+    "breadcrumbCurrent": "Optimizador de LinkedIn",
+    "title": "Optimizador de LinkedIn",
+    "subtitle": "Analiza tu perfil real de LinkedIn, o genera uno optimizado a partir de tu perfil real de JobConnect AI.",
+    "premiumFeature": "✦ Función Premium",
+    "unlockTitle": "Desbloquea el Optimizador de LinkedIn",
+    "unlockDesc": "Recibe comentarios de GPT-4o sobre tu perfil real de LinkedIn, o genera un titular, sección about y aspectos destacados de experiencia optimizados a partir de tu perfil real.",
+    "upgradeCta": "Pasar a Premium — $19/mes",
+    "modeAnalyze": "Analizar mi LinkedIn",
+    "modeGenerate": "Generar desde mi perfil",
+    "analyzeIntro": "Pega tu titular, sección about y experiencia actuales de LinkedIn para recibir comentarios reales y específicos.",
+    "headlineLabel": "Titular",
+    "headlinePlaceholder": "Pega tu titular actual de LinkedIn...",
+    "aboutLabel": "About",
+    "aboutPlaceholder": "Pega tu sección About / resumen actual...",
+    "experienceLabel": "Experiencia",
+    "experiencePlaceholder": "Pega cómo se describe actualmente tu experiencia...",
+    "analyzeButton": "✦ Analizar mi perfil",
+    "analyzingButton": "Analizando con GPT-4o…",
+    "profileScore": "Puntuación del perfil",
+    "keywordSuggestions": "Sugerencias de palabras clave",
+    "improvementSuggestions": "Sugerencias de mejora",
+    "generateIntro": "Genera un titular, sección about y aspectos destacados de experiencia a partir de tu perfil real de JobConnect AI.",
+    "targetJobTitle": "Puesto objetivo",
+    "targetJobTitlePlaceholder": "ej. Ingeniero Frontend Senior",
+    "notEnoughExperienceWarning": "Agrega primero tu experiencia en tu perfil — unas pocas palabras no son suficientes para un perfil real, no fabricado.",
+    "generateButton": "✦ Generar perfil optimizado",
+    "generatingButton": "Generando con GPT-4o…",
+    "resultHeadline": "Titular optimizado",
+    "resultAbout": "About optimizado",
+    "resultExperienceHighlights": "Aspectos destacados de experiencia",
+    "generationFailed": "Error en la generación",
+    "somethingWentWrong": "Algo salió mal"
   }
 }

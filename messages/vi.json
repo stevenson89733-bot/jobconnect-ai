@@ -30,7 +30,9 @@
     "language": "Ngôn ngữ",
     "country": "Quốc gia",
     "interviewPrep": "Phỏng vấn",
-    "interviewPrepDesc": "Luyện câu hỏi thực tế với phản hồi AI"
+    "interviewPrepDesc": "Luyện câu hỏi thực tế với phản hồi AI",
+    "linkedinOptimizer": "Tối Ưu LinkedIn",
+    "linkedinOptimizerDesc": "Phân tích hoặc tạo hồ sơ LinkedIn của bạn"
   },
   "footer": {
     "tagline": "Nền tảng việc làm từ xa ứng dụng AI, kết nối những ứng viên hàng đầu với các công ty uy tín trên toàn thế giới.",
@@ -254,7 +256,9 @@
     "viewFullAnalysis": "Xem phân tích đầy đủ",
     "interviewPrepCardTitle": "Luyện Phỏng Vấn",
     "interviewPrepCardDesc": "Luyện câu hỏi thực tế và nhận phản hồi bằng văn bản tức thì.",
-    "viewAllApplications": "Xem tất cả đơn ứng tuyển →"
+    "viewAllApplications": "Xem tất cả đơn ứng tuyển →",
+    "linkedinOptimizerCardTitle": "Tối Ưu LinkedIn",
+    "linkedinOptimizerCardDesc": "Nhận phản hồi về hồ sơ của bạn hoặc tạo một hồ sơ mới."
   },
   "recruiter": {
     "dashboardTitle": "Bảng điều khiển Nhà tuyển dụng",
@@ -721,7 +725,11 @@
     "tooManyInterviewPrepRequests": "Quá nhiều yêu cầu. Vui lòng thử lại sau ít phút.",
     "interviewPrepMissingTargetRole": "Hãy thêm chức danh mục tiêu trước.",
     "interviewPrepMissingQuestion": "Thiếu câu hỏi.",
-    "interviewPrepAnswerTooShort": "Hãy nhập câu trả lời đầy đủ hơn để nhận phản hồi thực sự — vài từ là không đủ."
+    "interviewPrepAnswerTooShort": "Hãy nhập câu trả lời đầy đủ hơn để nhận phản hồi thực sự — vài từ là không đủ.",
+    "linkedinOptimizerPremiumOnly": "Tối Ưu LinkedIn là tính năng Premium.",
+    "tooManyLinkedinOptimizerRequests": "Quá nhiều yêu cầu. Vui lòng thử lại sau ít phút.",
+    "linkedinOptimizerTextTooShort": "Hãy thêm nhiều nội dung LinkedIn thực tế hơn để nhận phản hồi thực sự — vài từ là không đủ.",
+    "linkedinOptimizerNotEnoughExperience": "Hãy thêm chi tiết hơn vào kinh nghiệm trong hồ sơ của bạn — vài từ là không đủ cho một hồ sơ thực tế, không bịa đặt."
   },
   "copilot": {
     "openLabel": "Mở Trợ Lý Sự Nghiệp",
@@ -1026,5 +1034,40 @@
     "subtitle": "Mọi công việc bạn đã ứng tuyển, cùng trạng thái hiện tại.",
     "filterAll": "Tất cả",
     "emptyFiltered": "Chưa có đơn ứng tuyển nào ở trạng thái này."
+  },
+  "linkedinOptimizer": {
+    "breadcrumbDashboard": "Bảng điều khiển",
+    "breadcrumbCurrent": "Tối Ưu LinkedIn",
+    "title": "Tối Ưu LinkedIn",
+    "subtitle": "Phân tích hồ sơ LinkedIn thực tế của bạn, hoặc tạo một hồ sơ được tối ưu từ hồ sơ JobConnect AI thực tế của bạn.",
+    "premiumFeature": "✦ Tính năng Premium",
+    "unlockTitle": "Mở khóa Tối Ưu LinkedIn",
+    "unlockDesc": "Nhận phản hồi GPT-4o về hồ sơ LinkedIn thực tế của bạn, hoặc tạo tiêu đề, phần giới thiệu và điểm nhấn kinh nghiệm được tối ưu từ hồ sơ thực tế của bạn.",
+    "upgradeCta": "Nâng cấp Premium — 19 USD/tháng",
+    "modeAnalyze": "Phân tích LinkedIn của tôi",
+    "modeGenerate": "Tạo từ hồ sơ của tôi",
+    "analyzeIntro": "Dán tiêu đề, phần giới thiệu và kinh nghiệm LinkedIn hiện tại của bạn bên dưới để nhận phản hồi thực tế, cụ thể.",
+    "headlineLabel": "Tiêu đề",
+    "headlinePlaceholder": "Dán tiêu đề LinkedIn hiện tại của bạn...",
+    "aboutLabel": "Giới thiệu",
+    "aboutPlaceholder": "Dán phần Giới thiệu / tóm tắt hiện tại của bạn...",
+    "experienceLabel": "Kinh nghiệm",
+    "experiencePlaceholder": "Dán cách kinh nghiệm của bạn hiện đang được mô tả...",
+    "analyzeButton": "✦ Phân Tích Hồ Sơ Của Tôi",
+    "analyzingButton": "Đang phân tích với GPT-4o…",
+    "profileScore": "Điểm Hồ Sơ",
+    "keywordSuggestions": "Gợi Ý Từ Khóa",
+    "improvementSuggestions": "Gợi Ý Cải Thiện",
+    "generateIntro": "Tạo tiêu đề, phần giới thiệu và điểm nhấn kinh nghiệm từ hồ sơ JobConnect AI thực tế của bạn.",
+    "targetJobTitle": "Chức danh Mục tiêu",
+    "targetJobTitlePlaceholder": "vd. Senior Frontend Engineer",
+    "notEnoughExperienceWarning": "Hãy thêm kinh nghiệm vào hồ sơ của bạn trước — vài từ là không đủ cho một hồ sơ thực tế, không bịa đặt.",
+    "generateButton": "✦ Tạo Hồ Sơ Tối Ưu",
+    "generatingButton": "Đang tạo với GPT-4o…",
+    "resultHeadline": "Tiêu Đề Đã Tối Ưu",
+    "resultAbout": "Giới Thiệu Đã Tối Ưu",
+    "resultExperienceHighlights": "Điểm Nhấn Kinh Nghiệm",
+    "generationFailed": "Tạo thất bại",
+    "somethingWentWrong": "Đã xảy ra lỗi"
   }
 }

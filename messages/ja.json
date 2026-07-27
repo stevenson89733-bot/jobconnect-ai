@@ -30,7 +30,9 @@
     "language": "言語",
     "country": "国",
     "interviewPrep": "面接対策",
-    "interviewPrepDesc": "実際の質問をAIフィードバックで練習"
+    "interviewPrepDesc": "実際の質問をAIフィードバックで練習",
+    "linkedinOptimizer": "LinkedIn オプティマイザー",
+    "linkedinOptimizerDesc": "LinkedInプロフィールを分析または生成"
   },
   "footer": {
     "tagline": "世界中の優秀な候補者と大手企業をつなぐ、AI搭載のリモート求人プラットフォーム。",
@@ -254,7 +256,9 @@
     "viewFullAnalysis": "詳細な分析を見る",
     "interviewPrepCardTitle": "面接対策",
     "interviewPrepCardDesc": "実際の質問を練習し、即座に文章でフィードバックを受け取れます。",
-    "viewAllApplications": "すべての応募を見る →"
+    "viewAllApplications": "すべての応募を見る →",
+    "linkedinOptimizerCardTitle": "LinkedIn オプティマイザー",
+    "linkedinOptimizerCardDesc": "プロフィールへのフィードバックを受けるか、ゼロから生成できます。"
   },
   "recruiter": {
     "dashboardTitle": "採用担当者ダッシュボード",
@@ -721,7 +725,11 @@
     "tooManyInterviewPrepRequests": "リクエストが多すぎます。しばらくしてから再度お試しください。",
     "interviewPrepMissingTargetRole": "まず希望職種を追加してください。",
     "interviewPrepMissingQuestion": "質問がありません。",
-    "interviewPrepAnswerTooShort": "実際のフィードバックを得るには、もう少し詳しい回答を入力してください — 数語では不十分です。"
+    "interviewPrepAnswerTooShort": "実際のフィードバックを得るには、もう少し詳しい回答を入力してください — 数語では不十分です。",
+    "linkedinOptimizerPremiumOnly": "LinkedIn オプティマイザーはプレミアム機能です。",
+    "tooManyLinkedinOptimizerRequests": "リクエストが多すぎます。しばらくしてから再度お試しください。",
+    "linkedinOptimizerTextTooShort": "実際のフィードバックを得るには、実際のLinkedInテキストをもっと追加してください — 数語では不十分です。",
+    "linkedinOptimizerNotEnoughExperience": "プロフィールの職務経歴にもう少し詳細を追加してください — 数語では実際の、捏造されていないプロフィールには不十分です。"
   },
   "copilot": {
     "openLabel": "キャリアコパイロットを開く",
@@ -1026,5 +1034,40 @@
     "subtitle": "応募したすべての求人と、その現在のステータス。",
     "filterAll": "すべて",
     "emptyFiltered": "このステータスの応募はまだありません。"
+  },
+  "linkedinOptimizer": {
+    "breadcrumbDashboard": "ダッシュボード",
+    "breadcrumbCurrent": "LinkedIn オプティマイザー",
+    "title": "LinkedIn オプティマイザー",
+    "subtitle": "実際のLinkedInプロフィールを分析するか、実際のJobConnect AIプロフィールから最適化されたものを生成します。",
+    "premiumFeature": "✦ プレミアム機能",
+    "unlockTitle": "LinkedIn オプティマイザーを解放する",
+    "unlockDesc": "実際のLinkedInプロフィールについてGPT-4oのフィードバックを受け取るか、実際のプロフィールから最適化されたヘッドライン、自己紹介、職務経歴のハイライトを生成します。",
+    "upgradeCta": "プレミアムにアップグレード — 月額19ドル",
+    "modeAnalyze": "自分のLinkedInを分析",
+    "modeGenerate": "自分のプロフィールから生成",
+    "analyzeIntro": "実際で具体的なフィードバックを得るために、現在のLinkedInヘッドライン、自己紹介、職務経歴を以下に貼り付けてください。",
+    "headlineLabel": "ヘッドライン",
+    "headlinePlaceholder": "現在のLinkedInヘッドラインを貼り付けてください...",
+    "aboutLabel": "自己紹介",
+    "aboutPlaceholder": "現在の自己紹介/概要セクションを貼り付けてください...",
+    "experienceLabel": "職務経歴",
+    "experiencePlaceholder": "現在どのように職務経歴が記載されているか貼り付けてください...",
+    "analyzeButton": "✦ 自分のプロフィールを分析",
+    "analyzingButton": "GPT-4oで分析中…",
+    "profileScore": "プロフィールスコア",
+    "keywordSuggestions": "キーワードの提案",
+    "improvementSuggestions": "改善の提案",
+    "generateIntro": "実際のJobConnect AIプロフィールからヘッドライン、自己紹介、職務経歴のハイライトを生成します。",
+    "targetJobTitle": "希望職種",
+    "targetJobTitlePlaceholder": "例：シニアフロントエンドエンジニア",
+    "notEnoughExperienceWarning": "まずプロフィールに職務経歴を追加してください — 数語では実際の、捏造されていないプロフィールには不十分です。",
+    "generateButton": "✦ 最適化されたプロフィールを生成",
+    "generatingButton": "GPT-4oで生成中…",
+    "resultHeadline": "最適化されたヘッドライン",
+    "resultAbout": "最適化された自己紹介",
+    "resultExperienceHighlights": "職務経歴のハイライト",
+    "generationFailed": "生成に失敗しました",
+    "somethingWentWrong": "問題が発生しました"
   }
 }

@@ -47,6 +47,10 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
                   <span className="font-medium text-slate-900 dark:text-white">🎤 {t('interviewPrep')}</span>
                   <span className="text-xs text-slate-600 dark:text-slate-400">{t('interviewPrepDesc')}</span>
                 </Link>
+                <Link href="/ai-tools/linkedin-optimizer" className="flex flex-col rounded-lg px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                  <span className="font-medium text-slate-900 dark:text-white">🔗 {t('linkedinOptimizer')}</span>
+                  <span className="text-xs text-slate-600 dark:text-slate-400">{t('linkedinOptimizerDesc')}</span>
+                </Link>
               </div>
             </div>
           </div>
@@ -122,7 +126,8 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
             </span>
             <Link href="/ai-tools/resume-builder" className="block text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white mb-2" onClick={() => setOpen(false)}>📄 {t('resumeBuilder')}</Link>
             <Link href="/ai-tools/cover-letter" className="block text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white mb-2" onClick={() => setOpen(false)}>✉️ {t('coverLetter')}</Link>
-            <Link href="/ai-tools/interview-prep" className="block text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>🎤 {t('interviewPrep')}</Link>
+            <Link href="/ai-tools/interview-prep" className="block text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white mb-2" onClick={() => setOpen(false)}>🎤 {t('interviewPrep')}</Link>
+            <Link href="/ai-tools/linkedin-optimizer" className="block text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>🔗 {t('linkedinOptimizer')}</Link>
           </div>
           {userEmail ? (
             <>

@@ -30,7 +30,9 @@
     "language": "Idioma",
     "country": "País",
     "interviewPrep": "Entrevista",
-    "interviewPrepDesc": "Pratique perguntas reais com feedback da IA"
+    "interviewPrepDesc": "Pratique perguntas reais com feedback da IA",
+    "linkedinOptimizer": "Otimizador de LinkedIn",
+    "linkedinOptimizerDesc": "Analise ou gere seu perfil do LinkedIn"
   },
   "footer": {
     "tagline": "Plataforma de empregos remotos com IA que conecta os melhores candidatos a empresas líderes em todo o mundo.",
@@ -254,7 +256,9 @@
     "viewFullAnalysis": "Ver análise completa",
     "interviewPrepCardTitle": "Preparação de Entrevista",
     "interviewPrepCardDesc": "Pratique perguntas reais e receba feedback escrito instantâneo.",
-    "viewAllApplications": "Ver todas as candidaturas →"
+    "viewAllApplications": "Ver todas as candidaturas →",
+    "linkedinOptimizerCardTitle": "Otimizador de LinkedIn",
+    "linkedinOptimizerCardDesc": "Receba feedback sobre seu perfil ou gere um do zero."
   },
   "recruiter": {
     "dashboardTitle": "Painel do Empregador",
@@ -721,7 +725,11 @@
     "tooManyInterviewPrepRequests": "Muitas solicitações. Tente novamente em instantes.",
     "interviewPrepMissingTargetRole": "Adicione primeiro um cargo desejado.",
     "interviewPrepMissingQuestion": "Pergunta ausente.",
-    "interviewPrepAnswerTooShort": "Adicione uma resposta mais completa para receber feedback real — algumas palavras não são suficientes."
+    "interviewPrepAnswerTooShort": "Adicione uma resposta mais completa para receber feedback real — algumas palavras não são suficientes.",
+    "linkedinOptimizerPremiumOnly": "O Otimizador de LinkedIn é um recurso Premium.",
+    "tooManyLinkedinOptimizerRequests": "Muitas solicitações. Tente novamente em instantes.",
+    "linkedinOptimizerTextTooShort": "Adicione mais do seu texto real do LinkedIn para receber feedback real — algumas palavras não são suficientes.",
+    "linkedinOptimizerNotEnoughExperience": "Adicione um pouco mais de detalhe à experiência do seu perfil — algumas palavras não são suficientes para um perfil real, não fabricado."
   },
   "copilot": {
     "openLabel": "Abrir Copiloto de Carreira",
@@ -1026,5 +1034,40 @@
     "subtitle": "Todas as vagas às quais você se candidatou, com o status atual.",
     "filterAll": "Todas",
     "emptyFiltered": "Ainda não há candidaturas com este status."
+  },
+  "linkedinOptimizer": {
+    "breadcrumbDashboard": "Painel",
+    "breadcrumbCurrent": "Otimizador de LinkedIn",
+    "title": "Otimizador de LinkedIn",
+    "subtitle": "Analise seu perfil real do LinkedIn, ou gere um otimizado a partir do seu perfil real do JobConnect AI.",
+    "premiumFeature": "✦ Recurso Premium",
+    "unlockTitle": "Desbloqueie o Otimizador de LinkedIn",
+    "unlockDesc": "Receba feedback do GPT-4o sobre seu perfil real do LinkedIn, ou gere um título, seção sobre e destaques de experiência otimizados a partir do seu perfil real.",
+    "upgradeCta": "Assinar Premium — US$ 19/mês",
+    "modeAnalyze": "Analisar meu LinkedIn",
+    "modeGenerate": "Gerar a partir do meu perfil",
+    "analyzeIntro": "Cole seu título, seção sobre e experiência atuais do LinkedIn abaixo para um feedback real e específico.",
+    "headlineLabel": "Título",
+    "headlinePlaceholder": "Cole seu título atual do LinkedIn...",
+    "aboutLabel": "Sobre",
+    "aboutPlaceholder": "Cole sua seção Sobre / resumo atual...",
+    "experienceLabel": "Experiência",
+    "experiencePlaceholder": "Cole como sua experiência está descrita atualmente...",
+    "analyzeButton": "✦ Analisar Meu Perfil",
+    "analyzingButton": "Analisando com GPT-4o…",
+    "profileScore": "Pontuação do Perfil",
+    "keywordSuggestions": "Sugestões de Palavras-chave",
+    "improvementSuggestions": "Sugestões de Melhoria",
+    "generateIntro": "Gera um título, seção sobre e destaques de experiência a partir do seu perfil real do JobConnect AI.",
+    "targetJobTitle": "Cargo Desejado",
+    "targetJobTitlePlaceholder": "ex. Engenheiro Frontend Sênior",
+    "notEnoughExperienceWarning": "Adicione primeiro sua experiência no seu perfil — algumas palavras não são suficientes para um perfil real, não fabricado.",
+    "generateButton": "✦ Gerar Perfil Otimizado",
+    "generatingButton": "Gerando com GPT-4o…",
+    "resultHeadline": "Título Otimizado",
+    "resultAbout": "Sobre Otimizado",
+    "resultExperienceHighlights": "Destaques de Experiência",
+    "generationFailed": "Falha na geração",
+    "somethingWentWrong": "Algo deu errado"
   }
 }

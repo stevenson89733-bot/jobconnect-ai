@@ -30,7 +30,9 @@
     "language": "语言",
     "country": "国家/地区",
     "interviewPrep": "面试准备",
-    "interviewPrepDesc": "练习真实问题并获得 AI 反馈"
+    "interviewPrepDesc": "练习真实问题并获得 AI 反馈",
+    "linkedinOptimizer": "LinkedIn 优化器",
+    "linkedinOptimizerDesc": "分析或生成您的 LinkedIn 档案"
   },
   "footer": {
     "tagline": "由 AI 驱动的远程招聘平台，连接全球优秀候选人与顶尖企业。",
@@ -254,7 +256,9 @@
     "viewFullAnalysis": "查看完整分析",
     "interviewPrepCardTitle": "面试准备",
     "interviewPrepCardDesc": "练习真实问题，即时获得书面反馈。",
-    "viewAllApplications": "查看所有申请 →"
+    "viewAllApplications": "查看所有申请 →",
+    "linkedinOptimizerCardTitle": "LinkedIn 优化器",
+    "linkedinOptimizerCardDesc": "获取档案反馈，或从零生成一份。"
   },
   "recruiter": {
     "dashboardTitle": "雇主控制台",
@@ -721,7 +725,11 @@
     "tooManyInterviewPrepRequests": "请求过多，请稍后再试。",
     "interviewPrepMissingTargetRole": "请先添加目标职位。",
     "interviewPrepMissingQuestion": "缺少问题。",
-    "interviewPrepAnswerTooShort": "请填写更完整的回答以获得真实反馈 — 几个字是不够的。"
+    "interviewPrepAnswerTooShort": "请填写更完整的回答以获得真实反馈 — 几个字是不够的。",
+    "linkedinOptimizerPremiumOnly": "LinkedIn 优化器是高级功能。",
+    "tooManyLinkedinOptimizerRequests": "请求过多，请稍后再试。",
+    "linkedinOptimizerTextTooShort": "请添加更多真实的 LinkedIn 文本以获得真实反馈 — 寥寥数语是不够的。",
+    "linkedinOptimizerNotEnoughExperience": "请为您档案中的经历添加更多细节 — 寥寥数语不足以生成真实、非虚构的档案。"
   },
   "copilot": {
     "openLabel": "打开职业副驾",
@@ -1026,5 +1034,40 @@
     "subtitle": "您申请过的每一个职位，及其当前状态。",
     "filterAll": "全部",
     "emptyFiltered": "此状态下暂无申请。"
+  },
+  "linkedinOptimizer": {
+    "breadcrumbDashboard": "仪表盘",
+    "breadcrumbCurrent": "LinkedIn 优化器",
+    "title": "LinkedIn 优化器",
+    "subtitle": "分析您真实的 LinkedIn 档案，或根据您在 JobConnect AI 的真实资料生成一份优化档案。",
+    "premiumFeature": "✦ 高级功能",
+    "unlockTitle": "解锁 LinkedIn 优化器",
+    "unlockDesc": "获取 GPT-4o 对您真实 LinkedIn 档案的反馈，或根据您的真实资料生成优化的标题、关于我和经历亮点。",
+    "upgradeCta": "升级至高级版 — $19/月",
+    "modeAnalyze": "分析我的 LinkedIn",
+    "modeGenerate": "从我的资料生成",
+    "analyzeIntro": "粘贴您当前的 LinkedIn 标题、关于我和经历，以获得真实、具体的反馈。",
+    "headlineLabel": "标题",
+    "headlinePlaceholder": "粘贴您当前的 LinkedIn 标题...",
+    "aboutLabel": "关于我",
+    "aboutPlaceholder": "粘贴您当前的关于我/简介部分...",
+    "experienceLabel": "经历",
+    "experiencePlaceholder": "粘贴您目前描述经历的方式...",
+    "analyzeButton": "✦ 分析我的档案",
+    "analyzingButton": "正在使用 GPT-4o 分析…",
+    "profileScore": "档案评分",
+    "keywordSuggestions": "关键词建议",
+    "improvementSuggestions": "改进建议",
+    "generateIntro": "根据您在 JobConnect AI 的真实资料生成标题、关于我和经历亮点。",
+    "targetJobTitle": "目标职位",
+    "targetJobTitlePlaceholder": "例如：高级前端工程师",
+    "notEnoughExperienceWarning": "请先在您的资料中添加经历 — 寥寥数语不足以生成真实、非虚构的档案。",
+    "generateButton": "✦ 生成优化档案",
+    "generatingButton": "正在使用 GPT-4o 生成…",
+    "resultHeadline": "优化后的标题",
+    "resultAbout": "优化后的关于我",
+    "resultExperienceHighlights": "经历亮点",
+    "generationFailed": "生成失败",
+    "somethingWentWrong": "出了点问题"
   }
 }

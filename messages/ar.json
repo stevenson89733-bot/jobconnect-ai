@@ -30,7 +30,9 @@
     "language": "اللغة",
     "country": "الدولة",
     "interviewPrep": "المقابلة",
-    "interviewPrepDesc": "تدرّب على أسئلة حقيقية مع ملاحظات الذكاء الاصطناعي"
+    "interviewPrepDesc": "تدرّب على أسئلة حقيقية مع ملاحظات الذكاء الاصطناعي",
+    "linkedinOptimizer": "محسّن LinkedIn",
+    "linkedinOptimizerDesc": "حلّل أو أنشئ ملفك الشخصي على LinkedIn"
   },
   "footer": {
     "tagline": "منصة وظائف عن بُعد مدعومة بالذكاء الاصطناعي تربط أفضل المرشحين بالشركات الرائدة حول العالم.",
@@ -254,7 +256,9 @@
     "viewFullAnalysis": "عرض التحليل الكامل",
     "interviewPrepCardTitle": "التحضير للمقابلة",
     "interviewPrepCardDesc": "تدرّب على أسئلة حقيقية واحصل على ملاحظات كتابية فورية.",
-    "viewAllApplications": "عرض جميع الطلبات ←"
+    "viewAllApplications": "عرض جميع الطلبات ←",
+    "linkedinOptimizerCardTitle": "محسّن LinkedIn",
+    "linkedinOptimizerCardDesc": "احصل على ملاحظات حول ملفك الشخصي أو أنشئ واحدًا من الصفر."
   },
   "recruiter": {
     "dashboardTitle": "لوحة تحكم صاحب العمل",
@@ -721,7 +725,11 @@
     "tooManyInterviewPrepRequests": "عدد كبير جدًا من الطلبات. يرجى المحاولة مرة أخرى بعد قليل.",
     "interviewPrepMissingTargetRole": "أضف المسمى الوظيفي المستهدف أولًا.",
     "interviewPrepMissingQuestion": "السؤال مفقود.",
-    "interviewPrepAnswerTooShort": "أضف إجابة أكثر اكتمالًا للحصول على ملاحظات حقيقية — بضع كلمات لا تكفي."
+    "interviewPrepAnswerTooShort": "أضف إجابة أكثر اكتمالًا للحصول على ملاحظات حقيقية — بضع كلمات لا تكفي.",
+    "linkedinOptimizerPremiumOnly": "محسّن LinkedIn ميزة بريميوم.",
+    "tooManyLinkedinOptimizerRequests": "عدد كبير جدًا من الطلبات. يرجى المحاولة مرة أخرى بعد قليل.",
+    "linkedinOptimizerTextTooShort": "أضف المزيد من نص LinkedIn الحقيقي للحصول على ملاحظات حقيقية — بضع كلمات لا تكفي.",
+    "linkedinOptimizerNotEnoughExperience": "أضف مزيدًا من التفاصيل إلى خبرة ملفك الشخصي — بضع كلمات لا تكفي لملف شخصي حقيقي وغير ملفّق."
   },
   "copilot": {
     "openLabel": "فتح المساعد الوظيفي",
@@ -1026,5 +1034,40 @@
     "subtitle": "كل وظيفة تقدّمت لها، مع حالتها الحالية.",
     "filterAll": "الكل",
     "emptyFiltered": "لا توجد طلبات بهذه الحالة بعد."
+  },
+  "linkedinOptimizer": {
+    "breadcrumbDashboard": "لوحة التحكم",
+    "breadcrumbCurrent": "محسّن LinkedIn",
+    "title": "محسّن LinkedIn",
+    "subtitle": "حلّل ملفك الشخصي الحقيقي على LinkedIn، أو أنشئ ملفًا محسّنًا من ملفك الشخصي الحقيقي على JobConnect AI.",
+    "premiumFeature": "✦ ميزة بريميوم",
+    "unlockTitle": "افتح محسّن LinkedIn",
+    "unlockDesc": "احصل على ملاحظات GPT-4o حول ملفك الشخصي الحقيقي على LinkedIn، أو أنشئ عنوانًا ونبذة تعريفية وأبرز نقاط الخبرة محسّنة من ملفك الشخصي الحقيقي.",
+    "upgradeCta": "الترقية إلى بريميوم — 19 دولارًا شهريًا",
+    "modeAnalyze": "تحليل LinkedIn الخاص بي",
+    "modeGenerate": "إنشاء من ملفي الشخصي",
+    "analyzeIntro": "الصق عنوانك ونبذتك التعريفية وخبرتك الحالية على LinkedIn أدناه للحصول على ملاحظات حقيقية ومحددة.",
+    "headlineLabel": "العنوان",
+    "headlinePlaceholder": "الصق عنوانك الحالي على LinkedIn...",
+    "aboutLabel": "نبذة عني",
+    "aboutPlaceholder": "الصق قسم النبذة/الملخص الحالي...",
+    "experienceLabel": "الخبرة",
+    "experiencePlaceholder": "الصق كيفية وصف خبرتك حاليًا...",
+    "analyzeButton": "✦ تحليل ملفي الشخصي",
+    "analyzingButton": "جارٍ التحليل باستخدام GPT-4o…",
+    "profileScore": "درجة الملف الشخصي",
+    "keywordSuggestions": "اقتراحات الكلمات المفتاحية",
+    "improvementSuggestions": "اقتراحات التحسين",
+    "generateIntro": "يُنشئ عنوانًا ونبذة تعريفية وأبرز نقاط الخبرة من ملفك الشخصي الحقيقي على JobConnect AI.",
+    "targetJobTitle": "المسمى الوظيفي المستهدف",
+    "targetJobTitlePlaceholder": "مثال: مهندس واجهات أمامية أول",
+    "notEnoughExperienceWarning": "أضف خبرتك في ملفك الشخصي أولًا — بضع كلمات لا تكفي لملف شخصي حقيقي وغير ملفّق.",
+    "generateButton": "✦ إنشاء ملف شخصي محسّن",
+    "generatingButton": "جارٍ التوليد باستخدام GPT-4o…",
+    "resultHeadline": "العنوان المحسّن",
+    "resultAbout": "النبذة المحسّنة",
+    "resultExperienceHighlights": "أبرز نقاط الخبرة",
+    "generationFailed": "فشل التوليد",
+    "somethingWentWrong": "حدث خطأ ما"
   }
 }

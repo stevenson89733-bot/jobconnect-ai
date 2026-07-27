@@ -30,7 +30,9 @@
     "language": "Language",
     "country": "Country",
     "interviewPrep": "Interview Prep",
-    "interviewPrepDesc": "Practice real questions with AI feedback"
+    "interviewPrepDesc": "Practice real questions with AI feedback",
+    "linkedinOptimizer": "LinkedIn Optimizer",
+    "linkedinOptimizerDesc": "Analyze or generate your LinkedIn profile"
   },
   "footer": {
     "tagline": "AI-powered remote job platform connecting top candidates with leading companies worldwide.",
@@ -254,7 +256,9 @@
     "viewFullAnalysis": "View Full Analysis",
     "interviewPrepCardTitle": "Interview Prep",
     "interviewPrepCardDesc": "Practice real questions and get instant written feedback.",
-    "viewAllApplications": "View all applications →"
+    "viewAllApplications": "View all applications →",
+    "linkedinOptimizerCardTitle": "LinkedIn Optimizer",
+    "linkedinOptimizerCardDesc": "Get feedback on your profile or generate one from scratch."
   },
   "recruiter": {
     "dashboardTitle": "Employer Dashboard",
@@ -721,7 +725,11 @@
     "tooManyInterviewPrepRequests": "Too many requests. Please try again in a bit.",
     "interviewPrepMissingTargetRole": "Add a target job title first.",
     "interviewPrepMissingQuestion": "Missing question.",
-    "interviewPrepAnswerTooShort": "Add a more complete answer to get real feedback — a few words isn't enough."
+    "interviewPrepAnswerTooShort": "Add a more complete answer to get real feedback — a few words isn't enough.",
+    "linkedinOptimizerPremiumOnly": "LinkedIn Optimizer is a Premium feature.",
+    "tooManyLinkedinOptimizerRequests": "Too many requests. Please try again in a bit.",
+    "linkedinOptimizerTextTooShort": "Add more of your real LinkedIn text to get real feedback — a few words isn't enough.",
+    "linkedinOptimizerNotEnoughExperience": "Add a bit more detail to your profile's experience — a few words isn't enough for a real, non-fabricated profile."
   },
   "copilot": {
     "openLabel": "Open Career Copilot",
@@ -1026,5 +1034,40 @@
     "subtitle": "Every job you've applied to, with its current status.",
     "filterAll": "All",
     "emptyFiltered": "No applications with this status yet."
+  },
+  "linkedinOptimizer": {
+    "breadcrumbDashboard": "Dashboard",
+    "breadcrumbCurrent": "LinkedIn Optimizer",
+    "title": "LinkedIn Optimizer",
+    "subtitle": "Analyze your real LinkedIn profile, or generate an optimized one from your real JobConnect AI profile.",
+    "premiumFeature": "✦ Premium Feature",
+    "unlockTitle": "Unlock LinkedIn Optimizer",
+    "unlockDesc": "Get GPT-4o feedback on your real LinkedIn profile, or generate an optimized headline, about section, and experience highlights from your real profile.",
+    "upgradeCta": "Upgrade to Premium — $19/mo",
+    "modeAnalyze": "Analyze my LinkedIn",
+    "modeGenerate": "Generate from my profile",
+    "analyzeIntro": "Paste your current LinkedIn headline, about section, and experience below for real, specific feedback.",
+    "headlineLabel": "Headline",
+    "headlinePlaceholder": "Paste your current LinkedIn headline...",
+    "aboutLabel": "About",
+    "aboutPlaceholder": "Paste your current About / Summary section...",
+    "experienceLabel": "Experience",
+    "experiencePlaceholder": "Paste how your experience is currently described...",
+    "analyzeButton": "✦ Analyze My Profile",
+    "analyzingButton": "Analyzing with GPT-4o…",
+    "profileScore": "Profile Score",
+    "keywordSuggestions": "Keyword Suggestions",
+    "improvementSuggestions": "Improvement Suggestions",
+    "generateIntro": "Generates a headline, about section, and experience highlights from your real JobConnect AI profile.",
+    "targetJobTitle": "Target Job Title",
+    "targetJobTitlePlaceholder": "e.g. Senior Frontend Engineer",
+    "notEnoughExperienceWarning": "Add your experience on your profile first — a few words isn't enough for a real, non-fabricated profile.",
+    "generateButton": "✦ Generate Optimized Profile",
+    "generatingButton": "Generating with GPT-4o…",
+    "resultHeadline": "Optimized Headline",
+    "resultAbout": "Optimized About",
+    "resultExperienceHighlights": "Experience Highlights",
+    "generationFailed": "Generation failed",
+    "somethingWentWrong": "Something went wrong"
   }
 }

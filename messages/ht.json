@@ -30,7 +30,9 @@
     "language": "Lang",
     "country": "Peyi",
     "interviewPrep": "Entèvyou",
-    "interviewPrepDesc": "Pratike vrè kesyon ak retou AI"
+    "interviewPrepDesc": "Pratike vrè kesyon ak retou AI",
+    "linkedinOptimizer": "Optimizatè LinkedIn",
+    "linkedinOptimizerDesc": "Analize oswa jenere pwofil LinkedIn ou"
   },
   "footer": {
     "tagline": "Platfòm travay adistans ki itilize AI pou konekte pi bon kandida yo ak gwo konpayi toupatou nan mond lan.",
@@ -254,7 +256,9 @@
     "viewFullAnalysis": "Gade analiz konplè a",
     "interviewPrepCardTitle": "Preparasyon Entèvyou",
     "interviewPrepCardDesc": "Pratike vrè kesyon epi jwenn retou ekri imedyatman.",
-    "viewAllApplications": "Gade tout aplikasyon yo →"
+    "viewAllApplications": "Gade tout aplikasyon yo →",
+    "linkedinOptimizerCardTitle": "Optimizatè LinkedIn",
+    "linkedinOptimizerCardDesc": "Resevwa retou sou pwofil ou oswa jenere youn nan zewo."
   },
   "recruiter": {
     "dashboardTitle": "Tablo Bò Anplwayè",
@@ -721,7 +725,11 @@
     "tooManyInterviewPrepRequests": "Twòp demann. Tanpri eseye ankò nan yon ti moman.",
     "interviewPrepMissingTargetRole": "Ajoute yon tit djòb vize dabò.",
     "interviewPrepMissingQuestion": "Kesyon an manke.",
-    "interviewPrepAnswerTooShort": "Ajoute yon repons pi konplè pou jwenn yon vrè retou — kèk mo pa ase."
+    "interviewPrepAnswerTooShort": "Ajoute yon repons pi konplè pou jwenn yon vrè retou — kèk mo pa ase.",
+    "linkedinOptimizerPremiumOnly": "Optimizatè LinkedIn se yon fonksyon Premium.",
+    "tooManyLinkedinOptimizerRequests": "Twòp demann. Tanpri eseye ankò nan yon ti moman.",
+    "linkedinOptimizerTextTooShort": "Ajoute plis nan vrè tèks LinkedIn ou pou jwenn yon vrè retou — kèk mo pa ase.",
+    "linkedinOptimizerNotEnoughExperience": "Ajoute yon ti kras plis detay nan eksperyans pwofil ou — kèk mo pa ase pou yon vrè pwofil, ki pa envante."
   },
   "copilot": {
     "openLabel": "Ouvri Copilòt Karyè",
@@ -1026,5 +1034,40 @@
     "subtitle": "Tout travay ou aplike pou yo, ak estati aktyèl yo.",
     "filterAll": "Tout",
     "emptyFiltered": "Poko gen aplikasyon ak estati sa a."
+  },
+  "linkedinOptimizer": {
+    "breadcrumbDashboard": "Tablo debò",
+    "breadcrumbCurrent": "Optimizatè LinkedIn",
+    "title": "Optimizatè LinkedIn",
+    "subtitle": "Analize vrè pwofil LinkedIn ou, oswa jenere yon pwofil optimize apati vrè pwofil JobConnect AI ou.",
+    "premiumFeature": "✦ Fonksyon Premium",
+    "unlockTitle": "Debloke Optimizatè LinkedIn",
+    "unlockDesc": "Resevwa yon retou GPT-4o sou vrè pwofil LinkedIn ou, oswa jenere yon headline, seksyon about, ak pwen fò eksperyans optimize apati vrè pwofil ou.",
+    "upgradeCta": "Pase Premium — $19/mwa",
+    "modeAnalyze": "Analize LinkedIn mwen",
+    "modeGenerate": "Jenere apati pwofil mwen",
+    "analyzeIntro": "Kole headline, seksyon About, ak eksperyans LinkedIn aktyèl ou pou yon retou reyèl ak espesifik.",
+    "headlineLabel": "Headline",
+    "headlinePlaceholder": "Kole headline LinkedIn aktyèl ou...",
+    "aboutLabel": "About",
+    "aboutPlaceholder": "Kole seksyon About / rezime aktyèl ou...",
+    "experienceLabel": "Eksperyans",
+    "experiencePlaceholder": "Kole jan eksperyans ou dekri kounye a...",
+    "analyzeButton": "✦ Analize Pwofil Mwen",
+    "analyzingButton": "Ap analize ak GPT-4o…",
+    "profileScore": "Nòt Pwofil la",
+    "keywordSuggestions": "Sijesyon Mo Kle",
+    "improvementSuggestions": "Sijesyon Amelyorasyon",
+    "generateIntro": "Jenere yon headline, seksyon About, ak pwen fò eksperyans apati vrè pwofil JobConnect AI ou.",
+    "targetJobTitle": "Tit Djòb Vize",
+    "targetJobTitlePlaceholder": "pa egzanp Senior Frontend Engineer",
+    "notEnoughExperienceWarning": "Ajoute eksperyans ou nan pwofil ou dabò — kèk mo pa ase pou yon vrè pwofil, ki pa envante.",
+    "generateButton": "✦ Jenere Pwofil Optimize",
+    "generatingButton": "Ap jenere ak GPT-4o…",
+    "resultHeadline": "Headline Optimize",
+    "resultAbout": "About Optimize",
+    "resultExperienceHighlights": "Pwen Fò Eksperyans",
+    "generationFailed": "Jenerasyon echwe",
+    "somethingWentWrong": "Gen yon bagay ki mal pase"
   }
 }
