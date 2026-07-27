@@ -32,7 +32,9 @@
     "interviewPrep": "المقابلة",
     "interviewPrepDesc": "تدرّب على أسئلة حقيقية مع ملاحظات الذكاء الاصطناعي",
     "linkedinOptimizer": "محسّن LinkedIn",
-    "linkedinOptimizerDesc": "حلّل أو أنشئ ملفك الشخصي على LinkedIn"
+    "linkedinOptimizerDesc": "حلّل أو أنشئ ملفك الشخصي على LinkedIn",
+    "skillGap": "فجوة المهارات",
+    "skillGapDesc": "قارن ملفك الشخصي بوظيفتك التالية"
   },
   "footer": {
     "tagline": "منصة وظائف عن بُعد مدعومة بالذكاء الاصطناعي تربط أفضل المرشحين بالشركات الرائدة حول العالم.",
@@ -258,7 +260,9 @@
     "interviewPrepCardDesc": "تدرّب على أسئلة حقيقية واحصل على ملاحظات كتابية فورية.",
     "viewAllApplications": "عرض جميع الطلبات ←",
     "linkedinOptimizerCardTitle": "محسّن LinkedIn",
-    "linkedinOptimizerCardDesc": "احصل على ملاحظات حول ملفك الشخصي أو أنشئ واحدًا من الصفر."
+    "linkedinOptimizerCardDesc": "احصل على ملاحظات حول ملفك الشخصي أو أنشئ واحدًا من الصفر.",
+    "skillGapCardTitle": "فجوة المهارات",
+    "skillGapCardDesc": "اطّلع على المهارات التي تملكها وتلك التي يجب تطويرها."
   },
   "recruiter": {
     "dashboardTitle": "لوحة تحكم صاحب العمل",
@@ -729,7 +733,12 @@
     "linkedinOptimizerPremiumOnly": "محسّن LinkedIn ميزة بريميوم.",
     "tooManyLinkedinOptimizerRequests": "عدد كبير جدًا من الطلبات. يرجى المحاولة مرة أخرى بعد قليل.",
     "linkedinOptimizerTextTooShort": "أضف المزيد من نص LinkedIn الحقيقي للحصول على ملاحظات حقيقية — بضع كلمات لا تكفي.",
-    "linkedinOptimizerNotEnoughExperience": "أضف مزيدًا من التفاصيل إلى خبرة ملفك الشخصي — بضع كلمات لا تكفي لملف شخصي حقيقي وغير ملفّق."
+    "linkedinOptimizerNotEnoughExperience": "أضف مزيدًا من التفاصيل إلى خبرة ملفك الشخصي — بضع كلمات لا تكفي لملف شخصي حقيقي وغير ملفّق.",
+    "skillGapPremiumOnly": "فجوة المهارات ميزة بريميوم.",
+    "tooManySkillGapRequests": "عدد كبير جدًا من الطلبات. يرجى المحاولة مرة أخرى بعد قليل.",
+    "skillGapNotEnoughExperience": "أضف مزيدًا من التفاصيل إلى خبرة ملفك الشخصي — بضع كلمات لا تكفي لمقارنة حقيقية وغير ملفّقة.",
+    "skillGapMissingTargetRole": "أضف وظيفة مستهدفة أولًا.",
+    "skillGapJobNotFound": "هذا الإعلان الوظيفي لم يعد متاحًا."
   },
   "copilot": {
     "openLabel": "فتح المساعد الوظيفي",
@@ -1067,6 +1076,31 @@
     "resultHeadline": "العنوان المحسّن",
     "resultAbout": "النبذة المحسّنة",
     "resultExperienceHighlights": "أبرز نقاط الخبرة",
+    "generationFailed": "فشل التوليد",
+    "somethingWentWrong": "حدث خطأ ما"
+  },
+  "skillGap": {
+    "breadcrumbDashboard": "لوحة التحكم",
+    "breadcrumbCurrent": "فجوة المهارات",
+    "title": "فجوة المهارات (التنقل الوظيفي)",
+    "subtitle": "قارن ملفك الشخصي الحقيقي بوظيفة مستهدفة أو إعلان وظيفي حقيقي — واطّلع على ما لديك بالفعل وما تحتاج إلى تطويره.",
+    "premiumFeature": "✦ ميزة بريميوم",
+    "unlockTitle": "افتح فجوة المهارات",
+    "unlockDesc": "قارن ملفك الشخصي الحقيقي بأي وظيفة أو إعلان وظيفي حقيقي، واحصل على رؤية واضحة للمهارات التي تملكها والمهارات التي تحتاج إلى تطويرها.",
+    "upgradeCta": "الترقية إلى بريميوم — 19 دولارًا شهريًا",
+    "destinationLabel": "الوظيفة المستهدفة",
+    "targetRolePlaceholder": "مثال: مدير منتج",
+    "realJobHint": "تتم المقارنة مع هذا الإعلان الوظيفي الحقيقي.",
+    "generalRoleHint": "لا يوجد إعلان وظيفي محدد — سيكون هذا تقديرًا عامًا لهذا النوع من الوظائف، وليس قائمة متطلبات موثقة.",
+    "notEnoughExperienceWarning": "أضف خبرتك في ملفك الشخصي أولًا — بضع كلمات لا تكفي لمقارنة حقيقية وغير ملفّقة.",
+    "analyzeButton": "✦ تحليل فجوة مهاراتي",
+    "analyzingButton": "جارٍ التحليل باستخدام GPT-4o…",
+    "basisRealJob": "استنادًا إلى هذا الإعلان الوظيفي الحقيقي",
+    "basisGeneralEstimate": "تقدير عام — لا يوجد مصدر محدد",
+    "matchScore": "درجة التطابق",
+    "skillsAlreadyHave": "المهارات التي تملكها بالفعل",
+    "skillsToDevelop": "المهارات التي يجب تطويرها",
+    "suggestedNextSteps": "الخطوات التالية المقترحة",
     "generationFailed": "فشل التوليد",
     "somethingWentWrong": "حدث خطأ ما"
   }

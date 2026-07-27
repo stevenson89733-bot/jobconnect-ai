@@ -32,7 +32,9 @@
     "interviewPrep": "Entretien",
     "interviewPrepDesc": "Entraînez-vous avec un retour de l'IA",
     "linkedinOptimizer": "Optimiseur LinkedIn",
-    "linkedinOptimizerDesc": "Analysez ou générez votre profil LinkedIn"
+    "linkedinOptimizerDesc": "Analysez ou générez votre profil LinkedIn",
+    "skillGap": "Écart de compétences",
+    "skillGapDesc": "Comparez votre profil à votre prochain poste"
   },
   "footer": {
     "tagline": "Plateforme d'emploi à distance propulsée par l'IA, mettant en relation les meilleurs candidats avec des entreprises de premier plan dans le monde entier.",
@@ -258,7 +260,9 @@
     "interviewPrepCardDesc": "Entraînez-vous sur de vraies questions et obtenez un retour écrit instantané.",
     "viewAllApplications": "Voir toutes les candidatures →",
     "linkedinOptimizerCardTitle": "Optimiseur LinkedIn",
-    "linkedinOptimizerCardDesc": "Recevez un retour sur votre profil ou générez-en un depuis zéro."
+    "linkedinOptimizerCardDesc": "Recevez un retour sur votre profil ou générez-en un depuis zéro.",
+    "skillGapCardTitle": "Écart de compétences",
+    "skillGapCardDesc": "Voyez vos compétences acquises et celles à développer."
   },
   "recruiter": {
     "dashboardTitle": "Tableau de bord employeur",
@@ -729,7 +733,12 @@
     "linkedinOptimizerPremiumOnly": "L'Optimiseur LinkedIn est une fonctionnalité Premium.",
     "tooManyLinkedinOptimizerRequests": "Trop de requêtes. Merci de réessayer dans un instant.",
     "linkedinOptimizerTextTooShort": "Ajoutez davantage de votre vrai texte LinkedIn pour obtenir un vrai retour — quelques mots ne suffisent pas.",
-    "linkedinOptimizerNotEnoughExperience": "Ajoutez un peu plus de détails à l'expérience de votre profil — quelques mots ne suffisent pas pour un profil réel, non fabriqué."
+    "linkedinOptimizerNotEnoughExperience": "Ajoutez un peu plus de détails à l'expérience de votre profil — quelques mots ne suffisent pas pour un profil réel, non fabriqué.",
+    "skillGapPremiumOnly": "L'Écart de compétences est une fonctionnalité Premium.",
+    "tooManySkillGapRequests": "Trop de requêtes. Merci de réessayer dans un instant.",
+    "skillGapNotEnoughExperience": "Ajoutez un peu plus de détails à l'expérience de votre profil — quelques mots ne suffisent pas pour une comparaison réelle, non fabriquée.",
+    "skillGapMissingTargetRole": "Ajoutez d'abord un poste de destination.",
+    "skillGapJobNotFound": "Cette offre n'est plus disponible."
   },
   "copilot": {
     "openLabel": "Ouvrir le Copilote de Carrière",
@@ -1067,6 +1076,31 @@
     "resultHeadline": "Headline optimisé",
     "resultAbout": "About optimisé",
     "resultExperienceHighlights": "Points forts de l'expérience",
+    "generationFailed": "Échec de la génération",
+    "somethingWentWrong": "Une erreur s'est produite"
+  },
+  "skillGap": {
+    "breadcrumbDashboard": "Tableau de bord",
+    "breadcrumbCurrent": "Écart de compétences",
+    "title": "Écart de compétences (mobilité)",
+    "subtitle": "Comparez votre vrai profil à un poste cible ou à une offre réelle — voyez ce que vous avez déjà et ce qu'il reste à développer.",
+    "premiumFeature": "✦ Fonctionnalité Premium",
+    "unlockTitle": "Débloquez l'Écart de compétences",
+    "unlockDesc": "Comparez votre vrai profil à n'importe quel poste ou à une offre réelle, et obtenez une vision claire des compétences déjà acquises et de celles à développer.",
+    "upgradeCta": "Passer à Premium — 19 $/mois",
+    "destinationLabel": "Poste de destination",
+    "targetRolePlaceholder": "ex. Product Manager",
+    "realJobHint": "Comparaison avec cette offre réelle.",
+    "generalRoleHint": "Aucune offre spécifique — ce sera une estimation générale pour ce type de poste, pas une liste d'exigences vérifiées.",
+    "notEnoughExperienceWarning": "Ajoutez d'abord votre expérience sur votre profil — quelques mots ne suffisent pas pour une comparaison réelle, non fabriquée.",
+    "analyzeButton": "✦ Analyser mon écart de compétences",
+    "analyzingButton": "Analyse avec GPT-4o…",
+    "basisRealJob": "Basé sur cette offre réelle",
+    "basisGeneralEstimate": "Estimation générale — aucune offre spécifique",
+    "matchScore": "Score de correspondance",
+    "skillsAlreadyHave": "Compétences déjà acquises",
+    "skillsToDevelop": "Compétences à développer",
+    "suggestedNextSteps": "Prochaines étapes suggérées",
     "generationFailed": "Échec de la génération",
     "somethingWentWrong": "Une erreur s'est produite"
   }

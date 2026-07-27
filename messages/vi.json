@@ -32,7 +32,9 @@
     "interviewPrep": "Phỏng vấn",
     "interviewPrepDesc": "Luyện câu hỏi thực tế với phản hồi AI",
     "linkedinOptimizer": "Tối Ưu LinkedIn",
-    "linkedinOptimizerDesc": "Phân tích hoặc tạo hồ sơ LinkedIn của bạn"
+    "linkedinOptimizerDesc": "Phân tích hoặc tạo hồ sơ LinkedIn của bạn",
+    "skillGap": "Khoảng Cách Kỹ Năng",
+    "skillGapDesc": "So sánh hồ sơ của bạn với vị trí tiếp theo"
   },
   "footer": {
     "tagline": "Nền tảng việc làm từ xa ứng dụng AI, kết nối những ứng viên hàng đầu với các công ty uy tín trên toàn thế giới.",
@@ -258,7 +260,9 @@
     "interviewPrepCardDesc": "Luyện câu hỏi thực tế và nhận phản hồi bằng văn bản tức thì.",
     "viewAllApplications": "Xem tất cả đơn ứng tuyển →",
     "linkedinOptimizerCardTitle": "Tối Ưu LinkedIn",
-    "linkedinOptimizerCardDesc": "Nhận phản hồi về hồ sơ của bạn hoặc tạo một hồ sơ mới."
+    "linkedinOptimizerCardDesc": "Nhận phản hồi về hồ sơ của bạn hoặc tạo một hồ sơ mới.",
+    "skillGapCardTitle": "Khoảng Cách Kỹ Năng",
+    "skillGapCardDesc": "Xem kỹ năng bạn có và kỹ năng cần phát triển."
   },
   "recruiter": {
     "dashboardTitle": "Bảng điều khiển Nhà tuyển dụng",
@@ -729,7 +733,12 @@
     "linkedinOptimizerPremiumOnly": "Tối Ưu LinkedIn là tính năng Premium.",
     "tooManyLinkedinOptimizerRequests": "Quá nhiều yêu cầu. Vui lòng thử lại sau ít phút.",
     "linkedinOptimizerTextTooShort": "Hãy thêm nhiều nội dung LinkedIn thực tế hơn để nhận phản hồi thực sự — vài từ là không đủ.",
-    "linkedinOptimizerNotEnoughExperience": "Hãy thêm chi tiết hơn vào kinh nghiệm trong hồ sơ của bạn — vài từ là không đủ cho một hồ sơ thực tế, không bịa đặt."
+    "linkedinOptimizerNotEnoughExperience": "Hãy thêm chi tiết hơn vào kinh nghiệm trong hồ sơ của bạn — vài từ là không đủ cho một hồ sơ thực tế, không bịa đặt.",
+    "skillGapPremiumOnly": "Khoảng Cách Kỹ Năng là tính năng Premium.",
+    "tooManySkillGapRequests": "Quá nhiều yêu cầu. Vui lòng thử lại sau ít phút.",
+    "skillGapNotEnoughExperience": "Hãy thêm chi tiết hơn vào kinh nghiệm trong hồ sơ của bạn — vài từ là không đủ cho một so sánh thực tế, không bịa đặt.",
+    "skillGapMissingTargetRole": "Hãy thêm vị trí mục tiêu trước.",
+    "skillGapJobNotFound": "Tin tuyển dụng này không còn khả dụng."
   },
   "copilot": {
     "openLabel": "Mở Trợ Lý Sự Nghiệp",
@@ -1067,6 +1076,31 @@
     "resultHeadline": "Tiêu Đề Đã Tối Ưu",
     "resultAbout": "Giới Thiệu Đã Tối Ưu",
     "resultExperienceHighlights": "Điểm Nhấn Kinh Nghiệm",
+    "generationFailed": "Tạo thất bại",
+    "somethingWentWrong": "Đã xảy ra lỗi"
+  },
+  "skillGap": {
+    "breadcrumbDashboard": "Bảng điều khiển",
+    "breadcrumbCurrent": "Khoảng Cách Kỹ Năng",
+    "title": "Khoảng Cách Kỹ Năng (Dịch Chuyển)",
+    "subtitle": "So sánh hồ sơ thực tế của bạn với vị trí mục tiêu hoặc tin tuyển dụng thực tế — xem bạn đã có gì và cần phát triển gì tiếp theo.",
+    "premiumFeature": "✦ Tính năng Premium",
+    "unlockTitle": "Mở khóa Khoảng Cách Kỹ Năng",
+    "unlockDesc": "So sánh hồ sơ thực tế của bạn với bất kỳ vị trí nào hoặc tin tuyển dụng thực tế, và có cái nhìn rõ ràng về các kỹ năng bạn đã có và cần phát triển.",
+    "upgradeCta": "Nâng cấp Premium — 19 USD/tháng",
+    "destinationLabel": "Vị trí mục tiêu",
+    "targetRolePlaceholder": "vd. Product Manager",
+    "realJobHint": "Đang so sánh với tin tuyển dụng thực tế này.",
+    "generalRoleHint": "Không có tin tuyển dụng cụ thể — đây sẽ là ước tính chung cho loại vị trí này, không phải danh sách yêu cầu đã được xác minh.",
+    "notEnoughExperienceWarning": "Hãy thêm kinh nghiệm vào hồ sơ của bạn trước — vài từ là không đủ cho một so sánh thực tế, không bịa đặt.",
+    "analyzeButton": "✦ Phân Tích Khoảng Cách Kỹ Năng Của Tôi",
+    "analyzingButton": "Đang phân tích với GPT-4o…",
+    "basisRealJob": "Dựa trên tin tuyển dụng thực tế này",
+    "basisGeneralEstimate": "Ước tính chung — không có nguồn cụ thể",
+    "matchScore": "Điểm Phù Hợp",
+    "skillsAlreadyHave": "Kỹ Năng Bạn Đã Có",
+    "skillsToDevelop": "Kỹ Năng Cần Phát Triển",
+    "suggestedNextSteps": "Các Bước Tiếp Theo Được Đề Xuất",
     "generationFailed": "Tạo thất bại",
     "somethingWentWrong": "Đã xảy ra lỗi"
   }

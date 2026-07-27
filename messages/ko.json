@@ -32,7 +32,9 @@
     "interviewPrep": "면접 준비",
     "interviewPrepDesc": "AI 피드백으로 실제 질문 연습",
     "linkedinOptimizer": "LinkedIn 최적화",
-    "linkedinOptimizerDesc": "LinkedIn 프로필을 분석하거나 생성하세요"
+    "linkedinOptimizerDesc": "LinkedIn 프로필을 분석하거나 생성하세요",
+    "skillGap": "역량 격차",
+    "skillGapDesc": "프로필을 다음 직무와 비교하세요"
   },
   "footer": {
     "tagline": "전 세계 우수 인재와 선도 기업을 연결하는 AI 기반 원격 채용 플랫폼입니다.",
@@ -258,7 +260,9 @@
     "interviewPrepCardDesc": "실제 질문을 연습하고 즉각적인 서면 피드백을 받아보세요.",
     "viewAllApplications": "모든 지원 내역 보기 →",
     "linkedinOptimizerCardTitle": "LinkedIn 최적화",
-    "linkedinOptimizerCardDesc": "프로필에 대한 피드백을 받거나 처음부터 생성하세요."
+    "linkedinOptimizerCardDesc": "프로필에 대한 피드백을 받거나 처음부터 생성하세요.",
+    "skillGapCardTitle": "역량 격차 분석",
+    "skillGapCardDesc": "보유한 역량과 개발해야 할 역량을 확인하세요."
   },
   "recruiter": {
     "dashboardTitle": "채용 담당자 대시보드",
@@ -729,7 +733,12 @@
     "linkedinOptimizerPremiumOnly": "LinkedIn 최적화는 프리미엄 기능입니다.",
     "tooManyLinkedinOptimizerRequests": "요청이 너무 많습니다. 잠시 후 다시 시도해 주세요.",
     "linkedinOptimizerTextTooShort": "실제 피드백을 받으려면 실제 LinkedIn 텍스트를 더 추가하세요 — 몇 단어로는 충분하지 않습니다.",
-    "linkedinOptimizerNotEnoughExperience": "프로필의 경력에 조금 더 세부 정보를 추가하세요 — 몇 단어로는 실제적이고 조작되지 않은 프로필에 충분하지 않습니다."
+    "linkedinOptimizerNotEnoughExperience": "프로필의 경력에 조금 더 세부 정보를 추가하세요 — 몇 단어로는 실제적이고 조작되지 않은 프로필에 충분하지 않습니다.",
+    "skillGapPremiumOnly": "역량 격차 분석은 프리미엄 기능입니다.",
+    "tooManySkillGapRequests": "요청이 너무 많습니다. 잠시 후 다시 시도해 주세요.",
+    "skillGapNotEnoughExperience": "프로필의 경력에 조금 더 세부 정보를 추가하세요 — 몇 단어로는 실제적이고 조작되지 않은 비교에 충분하지 않습니다.",
+    "skillGapMissingTargetRole": "먼저 목표 직무를 추가하세요.",
+    "skillGapJobNotFound": "이 채용 공고는 더 이상 이용할 수 없습니다."
   },
   "copilot": {
     "openLabel": "커리어 코파일럿 열기",
@@ -1067,6 +1076,31 @@
     "resultHeadline": "최적화된 헤드라인",
     "resultAbout": "최적화된 소개",
     "resultExperienceHighlights": "경력 하이라이트",
+    "generationFailed": "생성 실패",
+    "somethingWentWrong": "문제가 발생했습니다"
+  },
+  "skillGap": {
+    "breadcrumbDashboard": "대시보드",
+    "breadcrumbCurrent": "역량 격차 분석",
+    "title": "역량 격차 분석 (이직/전환)",
+    "subtitle": "실제 프로필을 목표 직무 또는 실제 채용 공고와 비교하여 이미 보유한 역량과 앞으로 개발해야 할 역량을 확인하세요.",
+    "premiumFeature": "✦ 프리미엄 기능",
+    "unlockTitle": "역량 격차 분석 잠금 해제",
+    "unlockDesc": "실제 프로필을 어떤 직무나 실제 채용 공고와도 비교하여 보유한 역량과 개발해야 할 역량을 명확히 파악하세요.",
+    "upgradeCta": "프리미엄으로 업그레이드 — 월 $19",
+    "destinationLabel": "목표 직무",
+    "targetRolePlaceholder": "예: 프로덕트 매니저",
+    "realJobHint": "이 실제 채용 공고와 비교 중입니다.",
+    "generalRoleHint": "특정 채용 공고가 없습니다 — 이는 이 직무 유형에 대한 일반적인 추정이며, 검증된 요구 사항 목록이 아닙니다.",
+    "notEnoughExperienceWarning": "먼저 프로필에 경력을 추가하세요 — 몇 단어로는 실제적이고 조작되지 않은 비교에 충분하지 않습니다.",
+    "analyzeButton": "✦ 내 역량 격차 분석",
+    "analyzingButton": "GPT-4o로 분석 중…",
+    "basisRealJob": "이 실제 채용 공고 기반",
+    "basisGeneralEstimate": "일반 추정 — 특정 출처 없음",
+    "matchScore": "매칭 점수",
+    "skillsAlreadyHave": "이미 보유한 역량",
+    "skillsToDevelop": "개발해야 할 역량",
+    "suggestedNextSteps": "제안된 다음 단계",
     "generationFailed": "생성 실패",
     "somethingWentWrong": "문제가 발생했습니다"
   }

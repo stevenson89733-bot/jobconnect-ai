@@ -32,7 +32,9 @@
     "interviewPrep": "Entèvyou",
     "interviewPrepDesc": "Pratike vrè kesyon ak retou AI",
     "linkedinOptimizer": "Optimizatè LinkedIn",
-    "linkedinOptimizerDesc": "Analize oswa jenere pwofil LinkedIn ou"
+    "linkedinOptimizerDesc": "Analize oswa jenere pwofil LinkedIn ou",
+    "skillGap": "Ekar Konpetans",
+    "skillGapDesc": "Konpare pwofil ou ak pwochèn pòs ou"
   },
   "footer": {
     "tagline": "Platfòm travay adistans ki itilize AI pou konekte pi bon kandida yo ak gwo konpayi toupatou nan mond lan.",
@@ -258,7 +260,9 @@
     "interviewPrepCardDesc": "Pratike vrè kesyon epi jwenn retou ekri imedyatman.",
     "viewAllApplications": "Gade tout aplikasyon yo →",
     "linkedinOptimizerCardTitle": "Optimizatè LinkedIn",
-    "linkedinOptimizerCardDesc": "Resevwa retou sou pwofil ou oswa jenere youn nan zewo."
+    "linkedinOptimizerCardDesc": "Resevwa retou sou pwofil ou oswa jenere youn nan zewo.",
+    "skillGapCardTitle": "Ekar Konpetans",
+    "skillGapCardDesc": "Gade konpetans ou genyen ak sa ou bezwen devlope."
   },
   "recruiter": {
     "dashboardTitle": "Tablo Bò Anplwayè",
@@ -729,7 +733,12 @@
     "linkedinOptimizerPremiumOnly": "Optimizatè LinkedIn se yon fonksyon Premium.",
     "tooManyLinkedinOptimizerRequests": "Twòp demann. Tanpri eseye ankò nan yon ti moman.",
     "linkedinOptimizerTextTooShort": "Ajoute plis nan vrè tèks LinkedIn ou pou jwenn yon vrè retou — kèk mo pa ase.",
-    "linkedinOptimizerNotEnoughExperience": "Ajoute yon ti kras plis detay nan eksperyans pwofil ou — kèk mo pa ase pou yon vrè pwofil, ki pa envante."
+    "linkedinOptimizerNotEnoughExperience": "Ajoute yon ti kras plis detay nan eksperyans pwofil ou — kèk mo pa ase pou yon vrè pwofil, ki pa envante.",
+    "skillGapPremiumOnly": "Ekar Konpetans se yon fonksyon Premium.",
+    "tooManySkillGapRequests": "Twòp demann. Tanpri eseye ankò nan yon ti moman.",
+    "skillGapNotEnoughExperience": "Ajoute yon ti kras plis detay nan eksperyans pwofil ou — kèk mo pa ase pou yon vrè konparezon, ki pa envante.",
+    "skillGapMissingTargetRole": "Ajoute yon pòs destinasyon dabò.",
+    "skillGapJobNotFound": "Ofrèdanplwa sa a pa disponib ankò."
   },
   "copilot": {
     "openLabel": "Ouvri Copilòt Karyè",
@@ -1067,6 +1076,31 @@
     "resultHeadline": "Headline Optimize",
     "resultAbout": "About Optimize",
     "resultExperienceHighlights": "Pwen Fò Eksperyans",
+    "generationFailed": "Jenerasyon echwe",
+    "somethingWentWrong": "Gen yon bagay ki mal pase"
+  },
+  "skillGap": {
+    "breadcrumbDashboard": "Tablo debò",
+    "breadcrumbCurrent": "Ekar Konpetans",
+    "title": "Ekar Konpetans (Mobilite)",
+    "subtitle": "Konpare vrè pwofil ou ak yon pòs vize oswa yon vrè ofrèdanplwa — gade sa ou gen deja ak sa ou bezwen devlope.",
+    "premiumFeature": "✦ Fonksyon Premium",
+    "unlockTitle": "Debloke Ekar Konpetans",
+    "unlockDesc": "Konpare vrè pwofil ou ak nenpòt pòs oswa yon vrè ofrèdanplwa, epi jwenn yon vizyon klè sou konpetans ou genyen deja ak sa ou bezwen devlope.",
+    "upgradeCta": "Pase Premium — $19/mwa",
+    "destinationLabel": "Pòs destinasyon",
+    "targetRolePlaceholder": "pa egzanp Product Manager",
+    "realJobHint": "N ap konpare ak vrè ofrèdanplwa sa a.",
+    "generalRoleHint": "Pa gen ofrèdanplwa espesifik — sa ap yon estimasyon jeneral pou kalite pòs sa a, pa yon lis egzijans verifye.",
+    "notEnoughExperienceWarning": "Ajoute eksperyans ou nan pwofil ou dabò — kèk mo pa ase pou yon vrè konparezon, ki pa envante.",
+    "analyzeButton": "✦ Analize Ekar Konpetans Mwen",
+    "analyzingButton": "Ap analize ak GPT-4o…",
+    "basisRealJob": "Baze sou vrè ofrèdanplwa sa a",
+    "basisGeneralEstimate": "Estimasyon jeneral — pa gen ofrèdanplwa espesifik",
+    "matchScore": "Nòt Korespondans",
+    "skillsAlreadyHave": "Konpetans Ou Genyen Deja",
+    "skillsToDevelop": "Konpetans Pou Devlope",
+    "suggestedNextSteps": "Pwochèn Etap Sijere",
     "generationFailed": "Jenerasyon echwe",
     "somethingWentWrong": "Gen yon bagay ki mal pase"
   }

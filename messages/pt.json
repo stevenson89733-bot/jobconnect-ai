@@ -32,7 +32,9 @@
     "interviewPrep": "Entrevista",
     "interviewPrepDesc": "Pratique perguntas reais com feedback da IA",
     "linkedinOptimizer": "Otimizador de LinkedIn",
-    "linkedinOptimizerDesc": "Analise ou gere seu perfil do LinkedIn"
+    "linkedinOptimizerDesc": "Analise ou gere seu perfil do LinkedIn",
+    "skillGap": "Lacuna de Habilidades",
+    "skillGapDesc": "Compare seu perfil com seu próximo cargo"
   },
   "footer": {
     "tagline": "Plataforma de empregos remotos com IA que conecta os melhores candidatos a empresas líderes em todo o mundo.",
@@ -258,7 +260,9 @@
     "interviewPrepCardDesc": "Pratique perguntas reais e receba feedback escrito instantâneo.",
     "viewAllApplications": "Ver todas as candidaturas →",
     "linkedinOptimizerCardTitle": "Otimizador de LinkedIn",
-    "linkedinOptimizerCardDesc": "Receba feedback sobre seu perfil ou gere um do zero."
+    "linkedinOptimizerCardDesc": "Receba feedback sobre seu perfil ou gere um do zero.",
+    "skillGapCardTitle": "Lacuna de Habilidades",
+    "skillGapCardDesc": "Veja as habilidades que você tem e as que precisa desenvolver."
   },
   "recruiter": {
     "dashboardTitle": "Painel do Empregador",
@@ -729,7 +733,12 @@
     "linkedinOptimizerPremiumOnly": "O Otimizador de LinkedIn é um recurso Premium.",
     "tooManyLinkedinOptimizerRequests": "Muitas solicitações. Tente novamente em instantes.",
     "linkedinOptimizerTextTooShort": "Adicione mais do seu texto real do LinkedIn para receber feedback real — algumas palavras não são suficientes.",
-    "linkedinOptimizerNotEnoughExperience": "Adicione um pouco mais de detalhe à experiência do seu perfil — algumas palavras não são suficientes para um perfil real, não fabricado."
+    "linkedinOptimizerNotEnoughExperience": "Adicione um pouco mais de detalhe à experiência do seu perfil — algumas palavras não são suficientes para um perfil real, não fabricado.",
+    "skillGapPremiumOnly": "A Lacuna de Habilidades é um recurso Premium.",
+    "tooManySkillGapRequests": "Muitas solicitações. Tente novamente em instantes.",
+    "skillGapNotEnoughExperience": "Adicione um pouco mais de detalhe à experiência do seu perfil — algumas palavras não são suficientes para uma comparação real, não fabricada.",
+    "skillGapMissingTargetRole": "Adicione primeiro um cargo de destino.",
+    "skillGapJobNotFound": "Esta vaga não está mais disponível."
   },
   "copilot": {
     "openLabel": "Abrir Copiloto de Carreira",
@@ -1067,6 +1076,31 @@
     "resultHeadline": "Título Otimizado",
     "resultAbout": "Sobre Otimizado",
     "resultExperienceHighlights": "Destaques de Experiência",
+    "generationFailed": "Falha na geração",
+    "somethingWentWrong": "Algo deu errado"
+  },
+  "skillGap": {
+    "breadcrumbDashboard": "Painel",
+    "breadcrumbCurrent": "Lacuna de Habilidades",
+    "title": "Lacuna de Habilidades (Mobilidade)",
+    "subtitle": "Compare seu perfil real com um cargo alvo ou uma vaga real — veja o que você já tem e o que falta desenvolver.",
+    "premiumFeature": "✦ Recurso Premium",
+    "unlockTitle": "Desbloqueie a Lacuna de Habilidades",
+    "unlockDesc": "Compare seu perfil real com qualquer cargo ou uma vaga real, e obtenha uma visão clara das habilidades que você já tem e das que precisa desenvolver.",
+    "upgradeCta": "Assinar Premium — US$ 19/mês",
+    "destinationLabel": "Cargo de destino",
+    "targetRolePlaceholder": "ex. Product Manager",
+    "realJobHint": "Comparando com esta vaga real.",
+    "generalRoleHint": "Nenhuma vaga específica — isso será uma estimativa geral para esse tipo de cargo, não uma lista de requisitos verificados.",
+    "notEnoughExperienceWarning": "Adicione primeiro sua experiência no seu perfil — algumas palavras não são suficientes para uma comparação real, não fabricada.",
+    "analyzeButton": "✦ Analisar Minha Lacuna de Habilidades",
+    "analyzingButton": "Analisando com GPT-4o…",
+    "basisRealJob": "Baseado nesta vaga real",
+    "basisGeneralEstimate": "Estimativa geral — nenhuma fonte específica",
+    "matchScore": "Pontuação de Compatibilidade",
+    "skillsAlreadyHave": "Habilidades que Você Já Tem",
+    "skillsToDevelop": "Habilidades a Desenvolver",
+    "suggestedNextSteps": "Próximos Passos Sugeridos",
     "generationFailed": "Falha na geração",
     "somethingWentWrong": "Algo deu errado"
   }

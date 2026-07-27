@@ -32,7 +32,9 @@
     "interviewPrep": "Interview",
     "interviewPrepDesc": "Echte Fragen mit KI-Feedback üben",
     "linkedinOptimizer": "LinkedIn-Optimierer",
-    "linkedinOptimizerDesc": "Analysiere oder erstelle dein LinkedIn-Profil"
+    "linkedinOptimizerDesc": "Analysiere oder erstelle dein LinkedIn-Profil",
+    "skillGap": "Skill-Gap",
+    "skillGapDesc": "Vergleiche dein Profil mit deiner nächsten Position"
   },
   "footer": {
     "tagline": "KI-gestützte Remote-Jobplattform, die Top-Kandidaten mit führenden Unternehmen weltweit verbindet.",
@@ -258,7 +260,9 @@
     "interviewPrepCardDesc": "Übe echte Fragen und erhalte sofortiges schriftliches Feedback.",
     "viewAllApplications": "Alle Bewerbungen ansehen →",
     "linkedinOptimizerCardTitle": "LinkedIn-Optimierer",
-    "linkedinOptimizerCardDesc": "Erhalte Feedback zu deinem Profil oder erstelle eines von Grund auf."
+    "linkedinOptimizerCardDesc": "Erhalte Feedback zu deinem Profil oder erstelle eines von Grund auf.",
+    "skillGapCardTitle": "Skill-Gap-Analyse",
+    "skillGapCardDesc": "Sieh, welche Fähigkeiten du hast und welche du entwickeln solltest."
   },
   "recruiter": {
     "dashboardTitle": "Arbeitgeber-Dashboard",
@@ -729,7 +733,12 @@
     "linkedinOptimizerPremiumOnly": "Der LinkedIn-Optimierer ist eine Premium-Funktion.",
     "tooManyLinkedinOptimizerRequests": "Zu viele Anfragen. Bitte versuche es gleich noch einmal.",
     "linkedinOptimizerTextTooShort": "Füge mehr von deinem echten LinkedIn-Text hinzu, um echtes Feedback zu erhalten — ein paar Wörter reichen nicht.",
-    "linkedinOptimizerNotEnoughExperience": "Füge der Erfahrung in deinem Profil etwas mehr Detail hinzu — ein paar Wörter reichen nicht für ein echtes, nicht erfundenes Profil."
+    "linkedinOptimizerNotEnoughExperience": "Füge der Erfahrung in deinem Profil etwas mehr Detail hinzu — ein paar Wörter reichen nicht für ein echtes, nicht erfundenes Profil.",
+    "skillGapPremiumOnly": "Die Skill-Gap-Analyse ist eine Premium-Funktion.",
+    "tooManySkillGapRequests": "Zu viele Anfragen. Bitte versuche es gleich noch einmal.",
+    "skillGapNotEnoughExperience": "Füge der Erfahrung in deinem Profil etwas mehr Detail hinzu — ein paar Wörter reichen nicht für einen echten, nicht erfundenen Vergleich.",
+    "skillGapMissingTargetRole": "Füge zuerst eine Zielposition hinzu.",
+    "skillGapJobNotFound": "Diese Stellenanzeige ist nicht mehr verfügbar."
   },
   "copilot": {
     "openLabel": "Karriere-Copilot öffnen",
@@ -1067,6 +1076,31 @@
     "resultHeadline": "Optimierte Headline",
     "resultAbout": "Optimiertes About",
     "resultExperienceHighlights": "Erfahrungshighlights",
+    "generationFailed": "Generierung fehlgeschlagen",
+    "somethingWentWrong": "Etwas ist schiefgelaufen"
+  },
+  "skillGap": {
+    "breadcrumbDashboard": "Dashboard",
+    "breadcrumbCurrent": "Skill-Gap-Analyse",
+    "title": "Skill-Gap-Analyse (Mobilität)",
+    "subtitle": "Vergleiche dein echtes Profil mit einer Zielposition oder einer echten Stellenanzeige — sieh, was du schon hast und was du noch entwickeln solltest.",
+    "premiumFeature": "✦ Premium-Funktion",
+    "unlockTitle": "Skill-Gap-Analyse freischalten",
+    "unlockDesc": "Vergleiche dein echtes Profil mit jeder Position oder einer echten Stellenanzeige und erhalte ein klares Bild deiner vorhandenen und noch zu entwickelnden Fähigkeiten.",
+    "upgradeCta": "Zu Premium wechseln — 19 $/Monat",
+    "destinationLabel": "Zielposition",
+    "targetRolePlaceholder": "z. B. Product Manager",
+    "realJobHint": "Vergleich mit dieser echten Stellenanzeige.",
+    "generalRoleHint": "Keine spezifische Stellenanzeige — dies wird eine allgemeine Einschätzung für diese Art von Position sein, keine verifizierte Anforderungsliste.",
+    "notEnoughExperienceWarning": "Füge zuerst deine Erfahrung in deinem Profil hinzu — ein paar Wörter reichen nicht für einen echten, nicht erfundenen Vergleich.",
+    "analyzeButton": "✦ Meine Skill-Gap analysieren",
+    "analyzingButton": "Analyse mit GPT-4o…",
+    "basisRealJob": "Basierend auf dieser echten Stellenanzeige",
+    "basisGeneralEstimate": "Allgemeine Einschätzung — keine spezifische Quelle",
+    "matchScore": "Übereinstimmungswert",
+    "skillsAlreadyHave": "Fähigkeiten, die du schon hast",
+    "skillsToDevelop": "Zu entwickelnde Fähigkeiten",
+    "suggestedNextSteps": "Empfohlene nächste Schritte",
     "generationFailed": "Generierung fehlgeschlagen",
     "somethingWentWrong": "Etwas ist schiefgelaufen"
   }

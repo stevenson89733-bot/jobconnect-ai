@@ -32,7 +32,9 @@
     "interviewPrep": "面试准备",
     "interviewPrepDesc": "练习真实问题并获得 AI 反馈",
     "linkedinOptimizer": "LinkedIn 优化器",
-    "linkedinOptimizerDesc": "分析或生成您的 LinkedIn 档案"
+    "linkedinOptimizerDesc": "分析或生成您的 LinkedIn 档案",
+    "skillGap": "技能差距",
+    "skillGapDesc": "将您的档案与下一个职位比较"
   },
   "footer": {
     "tagline": "由 AI 驱动的远程招聘平台，连接全球优秀候选人与顶尖企业。",
@@ -258,7 +260,9 @@
     "interviewPrepCardDesc": "练习真实问题，即时获得书面反馈。",
     "viewAllApplications": "查看所有申请 →",
     "linkedinOptimizerCardTitle": "LinkedIn 优化器",
-    "linkedinOptimizerCardDesc": "获取档案反馈，或从零生成一份。"
+    "linkedinOptimizerCardDesc": "获取档案反馈，或从零生成一份。",
+    "skillGapCardTitle": "技能差距分析",
+    "skillGapCardDesc": "查看您已具备的技能和需要发展的技能。"
   },
   "recruiter": {
     "dashboardTitle": "雇主控制台",
@@ -729,7 +733,12 @@
     "linkedinOptimizerPremiumOnly": "LinkedIn 优化器是高级功能。",
     "tooManyLinkedinOptimizerRequests": "请求过多，请稍后再试。",
     "linkedinOptimizerTextTooShort": "请添加更多真实的 LinkedIn 文本以获得真实反馈 — 寥寥数语是不够的。",
-    "linkedinOptimizerNotEnoughExperience": "请为您档案中的经历添加更多细节 — 寥寥数语不足以生成真实、非虚构的档案。"
+    "linkedinOptimizerNotEnoughExperience": "请为您档案中的经历添加更多细节 — 寥寥数语不足以生成真实、非虚构的档案。",
+    "skillGapPremiumOnly": "技能差距分析是高级功能。",
+    "tooManySkillGapRequests": "请求过多，请稍后再试。",
+    "skillGapNotEnoughExperience": "请为您档案中的经历添加更多细节 — 寥寥数语不足以进行真实、非虚构的比较。",
+    "skillGapMissingTargetRole": "请先添加目标职位。",
+    "skillGapJobNotFound": "此职位信息已不再可用。"
   },
   "copilot": {
     "openLabel": "打开职业副驾",
@@ -1067,6 +1076,31 @@
     "resultHeadline": "优化后的标题",
     "resultAbout": "优化后的关于我",
     "resultExperienceHighlights": "经历亮点",
+    "generationFailed": "生成失败",
+    "somethingWentWrong": "出了点问题"
+  },
+  "skillGap": {
+    "breadcrumbDashboard": "仪表盘",
+    "breadcrumbCurrent": "技能差距分析",
+    "title": "技能差距分析（职业转型）",
+    "subtitle": "将您的真实档案与目标职位或真实职位信息进行比较 — 查看您已具备的技能和接下来需要发展的技能。",
+    "premiumFeature": "✦ 高级功能",
+    "unlockTitle": "解锁技能差距分析",
+    "unlockDesc": "将您的真实档案与任何职位或真实职位信息进行比较，清楚了解您已具备的技能和需要发展的技能。",
+    "upgradeCta": "升级至高级版 — $19/月",
+    "destinationLabel": "目标职位",
+    "targetRolePlaceholder": "例如：产品经理",
+    "realJobHint": "正在与这份真实职位信息比较。",
+    "generalRoleHint": "没有具体的职位信息 — 这将是针对此类职位的一般性估计，而非经过验证的要求列表。",
+    "notEnoughExperienceWarning": "请先在您的资料中添加经历 — 寥寥数语不足以进行真实、非虚构的比较。",
+    "analyzeButton": "✦ 分析我的技能差距",
+    "analyzingButton": "正在使用 GPT-4o 分析…",
+    "basisRealJob": "基于这份真实职位信息",
+    "basisGeneralEstimate": "一般性估计 — 无具体来源",
+    "matchScore": "匹配度评分",
+    "skillsAlreadyHave": "您已具备的技能",
+    "skillsToDevelop": "待发展的技能",
+    "suggestedNextSteps": "建议的下一步行动",
     "generationFailed": "生成失败",
     "somethingWentWrong": "出了点问题"
   }

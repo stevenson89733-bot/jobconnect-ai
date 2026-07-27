@@ -32,7 +32,9 @@
     "interviewPrep": "面接対策",
     "interviewPrepDesc": "実際の質問をAIフィードバックで練習",
     "linkedinOptimizer": "LinkedIn オプティマイザー",
-    "linkedinOptimizerDesc": "LinkedInプロフィールを分析または生成"
+    "linkedinOptimizerDesc": "LinkedInプロフィールを分析または生成",
+    "skillGap": "スキルギャップ",
+    "skillGapDesc": "プロフィールを次の職種と比較"
   },
   "footer": {
     "tagline": "世界中の優秀な候補者と大手企業をつなぐ、AI搭載のリモート求人プラットフォーム。",
@@ -258,7 +260,9 @@
     "interviewPrepCardDesc": "実際の質問を練習し、即座に文章でフィードバックを受け取れます。",
     "viewAllApplications": "すべての応募を見る →",
     "linkedinOptimizerCardTitle": "LinkedIn オプティマイザー",
-    "linkedinOptimizerCardDesc": "プロフィールへのフィードバックを受けるか、ゼロから生成できます。"
+    "linkedinOptimizerCardDesc": "プロフィールへのフィードバックを受けるか、ゼロから生成できます。",
+    "skillGapCardTitle": "スキルギャップ分析",
+    "skillGapCardDesc": "持っているスキルと伸ばすべきスキルを確認できます。"
   },
   "recruiter": {
     "dashboardTitle": "採用担当者ダッシュボード",
@@ -729,7 +733,12 @@
     "linkedinOptimizerPremiumOnly": "LinkedIn オプティマイザーはプレミアム機能です。",
     "tooManyLinkedinOptimizerRequests": "リクエストが多すぎます。しばらくしてから再度お試しください。",
     "linkedinOptimizerTextTooShort": "実際のフィードバックを得るには、実際のLinkedInテキストをもっと追加してください — 数語では不十分です。",
-    "linkedinOptimizerNotEnoughExperience": "プロフィールの職務経歴にもう少し詳細を追加してください — 数語では実際の、捏造されていないプロフィールには不十分です。"
+    "linkedinOptimizerNotEnoughExperience": "プロフィールの職務経歴にもう少し詳細を追加してください — 数語では実際の、捏造されていないプロフィールには不十分です。",
+    "skillGapPremiumOnly": "スキルギャップ分析はプレミアム機能です。",
+    "tooManySkillGapRequests": "リクエストが多すぎます。しばらくしてから再度お試しください。",
+    "skillGapNotEnoughExperience": "プロフィールの職務経歴にもう少し詳細を追加してください — 数語では実際の、捏造されていない比較には不十分です。",
+    "skillGapMissingTargetRole": "まず目標職種を追加してください。",
+    "skillGapJobNotFound": "この求人情報は現在利用できません。"
   },
   "copilot": {
     "openLabel": "キャリアコパイロットを開く",
@@ -1067,6 +1076,31 @@
     "resultHeadline": "最適化されたヘッドライン",
     "resultAbout": "最適化された自己紹介",
     "resultExperienceHighlights": "職務経歴のハイライト",
+    "generationFailed": "生成に失敗しました",
+    "somethingWentWrong": "問題が発生しました"
+  },
+  "skillGap": {
+    "breadcrumbDashboard": "ダッシュボード",
+    "breadcrumbCurrent": "スキルギャップ分析",
+    "title": "スキルギャップ分析（キャリア移行）",
+    "subtitle": "実際のプロフィールを希望職種または実際の求人情報と比較し、すでに持っているスキルと今後伸ばすべきスキルを確認できます。",
+    "premiumFeature": "✦ プレミアム機能",
+    "unlockTitle": "スキルギャップ分析を解放する",
+    "unlockDesc": "実際のプロフィールをあらゆる職種または実際の求人情報と比較し、すでに持っているスキルと伸ばすべきスキルを明確に把握できます。",
+    "upgradeCta": "プレミアムにアップグレード — 月額19ドル",
+    "destinationLabel": "目標職種",
+    "targetRolePlaceholder": "例：プロダクトマネージャー",
+    "realJobHint": "この実際の求人情報と比較しています。",
+    "generalRoleHint": "特定の求人情報がありません — これはこの種の職種に対する一般的な推定であり、検証済みの要件リストではありません。",
+    "notEnoughExperienceWarning": "まずプロフィールに職務経歴を追加してください — 数語では実際の、捏造されていない比較には不十分です。",
+    "analyzeButton": "✦ 私のスキルギャップを分析",
+    "analyzingButton": "GPT-4oで分析中…",
+    "basisRealJob": "この実際の求人情報に基づく",
+    "basisGeneralEstimate": "一般的な推定 — 特定の情報源なし",
+    "matchScore": "マッチ度スコア",
+    "skillsAlreadyHave": "すでに持っているスキル",
+    "skillsToDevelop": "伸ばすべきスキル",
+    "suggestedNextSteps": "推奨される次のステップ",
     "generationFailed": "生成に失敗しました",
     "somethingWentWrong": "問題が発生しました"
   }

@@ -32,7 +32,9 @@
     "interviewPrep": "Interview Prep",
     "interviewPrepDesc": "Practice real questions with AI feedback",
     "linkedinOptimizer": "LinkedIn Optimizer",
-    "linkedinOptimizerDesc": "Analyze or generate your LinkedIn profile"
+    "linkedinOptimizerDesc": "Analyze or generate your LinkedIn profile",
+    "skillGap": "Skill-Gap",
+    "skillGapDesc": "Compare your profile to your next role"
   },
   "footer": {
     "tagline": "AI-powered remote job platform connecting top candidates with leading companies worldwide.",
@@ -258,7 +260,9 @@
     "interviewPrepCardDesc": "Practice real questions and get instant written feedback.",
     "viewAllApplications": "View all applications →",
     "linkedinOptimizerCardTitle": "LinkedIn Optimizer",
-    "linkedinOptimizerCardDesc": "Get feedback on your profile or generate one from scratch."
+    "linkedinOptimizerCardDesc": "Get feedback on your profile or generate one from scratch.",
+    "skillGapCardTitle": "Mobility Skill-Gap",
+    "skillGapCardDesc": "See what skills you have and what to develop for your next move."
   },
   "recruiter": {
     "dashboardTitle": "Employer Dashboard",
@@ -729,7 +733,12 @@
     "linkedinOptimizerPremiumOnly": "LinkedIn Optimizer is a Premium feature.",
     "tooManyLinkedinOptimizerRequests": "Too many requests. Please try again in a bit.",
     "linkedinOptimizerTextTooShort": "Add more of your real LinkedIn text to get real feedback — a few words isn't enough.",
-    "linkedinOptimizerNotEnoughExperience": "Add a bit more detail to your profile's experience — a few words isn't enough for a real, non-fabricated profile."
+    "linkedinOptimizerNotEnoughExperience": "Add a bit more detail to your profile's experience — a few words isn't enough for a real, non-fabricated profile.",
+    "skillGapPremiumOnly": "Mobility Skill-Gap is a Premium feature.",
+    "tooManySkillGapRequests": "Too many requests. Please try again in a bit.",
+    "skillGapNotEnoughExperience": "Add a bit more detail to your profile's experience — a few words isn't enough for a real, non-fabricated comparison.",
+    "skillGapMissingTargetRole": "Add a destination role first.",
+    "skillGapJobNotFound": "This job listing is no longer available."
   },
   "copilot": {
     "openLabel": "Open Career Copilot",
@@ -1067,6 +1076,31 @@
     "resultHeadline": "Optimized Headline",
     "resultAbout": "Optimized About",
     "resultExperienceHighlights": "Experience Highlights",
+    "generationFailed": "Generation failed",
+    "somethingWentWrong": "Something went wrong"
+  },
+  "skillGap": {
+    "breadcrumbDashboard": "Dashboard",
+    "breadcrumbCurrent": "Mobility Skill-Gap",
+    "title": "Mobility Skill-Gap",
+    "subtitle": "Compare your real profile against a target role or a real job listing — see what you already have and what to develop next.",
+    "premiumFeature": "✦ Premium Feature",
+    "unlockTitle": "Unlock Mobility Skill-Gap",
+    "unlockDesc": "Compare your real profile against any role or a real job listing, and get a clear picture of the skills you have and the ones to develop next.",
+    "upgradeCta": "Upgrade to Premium — $19/mo",
+    "destinationLabel": "Destination role",
+    "targetRolePlaceholder": "e.g. Product Manager",
+    "realJobHint": "Comparing against this real job listing.",
+    "generalRoleHint": "No specific job listing — this will be a general estimate for this kind of role, not a verified requirement list.",
+    "notEnoughExperienceWarning": "Add your experience on your profile first — a few words isn't enough for a real, non-fabricated comparison.",
+    "analyzeButton": "✦ Analyze My Skill Gap",
+    "analyzingButton": "Analyzing with GPT-4o…",
+    "basisRealJob": "Based on this real job listing",
+    "basisGeneralEstimate": "General estimate — no specific job source",
+    "matchScore": "Match Score",
+    "skillsAlreadyHave": "Skills You Already Have",
+    "skillsToDevelop": "Skills to Develop",
+    "suggestedNextSteps": "Suggested Next Steps",
     "generationFailed": "Generation failed",
     "somethingWentWrong": "Something went wrong"
   }

@@ -32,7 +32,9 @@
     "interviewPrep": "Entrevista",
     "interviewPrepDesc": "Practica preguntas reales con comentarios de la IA",
     "linkedinOptimizer": "Optimizador de LinkedIn",
-    "linkedinOptimizerDesc": "Analiza o genera tu perfil de LinkedIn"
+    "linkedinOptimizerDesc": "Analiza o genera tu perfil de LinkedIn",
+    "skillGap": "Brecha de habilidades",
+    "skillGapDesc": "Compara tu perfil con tu próximo puesto"
   },
   "footer": {
     "tagline": "Plataforma de empleo remoto impulsada por IA que conecta a los mejores candidatos con empresas líderes en todo el mundo.",
@@ -258,7 +260,9 @@
     "interviewPrepCardDesc": "Practica preguntas reales y recibe comentarios escritos al instante.",
     "viewAllApplications": "Ver todas las postulaciones →",
     "linkedinOptimizerCardTitle": "Optimizador de LinkedIn",
-    "linkedinOptimizerCardDesc": "Recibe comentarios sobre tu perfil o genera uno desde cero."
+    "linkedinOptimizerCardDesc": "Recibe comentarios sobre tu perfil o genera uno desde cero.",
+    "skillGapCardTitle": "Brecha de habilidades",
+    "skillGapCardDesc": "Mira las habilidades que tienes y las que debes desarrollar."
   },
   "recruiter": {
     "dashboardTitle": "Panel del empleador",
@@ -729,7 +733,12 @@
     "linkedinOptimizerPremiumOnly": "El Optimizador de LinkedIn es una función Premium.",
     "tooManyLinkedinOptimizerRequests": "Demasiadas solicitudes. Inténtalo de nuevo en un momento.",
     "linkedinOptimizerTextTooShort": "Agrega más de tu texto real de LinkedIn para recibir comentarios reales — unas pocas palabras no son suficientes.",
-    "linkedinOptimizerNotEnoughExperience": "Agrega un poco más de detalle a la experiencia de tu perfil — unas pocas palabras no son suficientes para un perfil real, no fabricado."
+    "linkedinOptimizerNotEnoughExperience": "Agrega un poco más de detalle a la experiencia de tu perfil — unas pocas palabras no son suficientes para un perfil real, no fabricado.",
+    "skillGapPremiumOnly": "La Brecha de habilidades es una función Premium.",
+    "tooManySkillGapRequests": "Demasiadas solicitudes. Inténtalo de nuevo en un momento.",
+    "skillGapNotEnoughExperience": "Agrega un poco más de detalle a la experiencia de tu perfil — unas pocas palabras no son suficientes para una comparación real, no fabricada.",
+    "skillGapMissingTargetRole": "Agrega primero un puesto de destino.",
+    "skillGapJobNotFound": "Esta oferta ya no está disponible."
   },
   "copilot": {
     "openLabel": "Abrir Copiloto de Carrera",
@@ -1067,6 +1076,31 @@
     "resultHeadline": "Titular optimizado",
     "resultAbout": "About optimizado",
     "resultExperienceHighlights": "Aspectos destacados de experiencia",
+    "generationFailed": "Error en la generación",
+    "somethingWentWrong": "Algo salió mal"
+  },
+  "skillGap": {
+    "breadcrumbDashboard": "Panel",
+    "breadcrumbCurrent": "Brecha de habilidades",
+    "title": "Brecha de habilidades (movilidad)",
+    "subtitle": "Compara tu perfil real con un puesto objetivo o una oferta real — mira lo que ya tienes y lo que falta por desarrollar.",
+    "premiumFeature": "✦ Función Premium",
+    "unlockTitle": "Desbloquea la Brecha de habilidades",
+    "unlockDesc": "Compara tu perfil real con cualquier puesto o una oferta real, y obtén una visión clara de las habilidades que ya tienes y las que debes desarrollar.",
+    "upgradeCta": "Pasar a Premium — $19/mes",
+    "destinationLabel": "Puesto de destino",
+    "targetRolePlaceholder": "ej. Product Manager",
+    "realJobHint": "Comparando con esta oferta real.",
+    "generalRoleHint": "Sin oferta específica — esto será una estimación general para este tipo de puesto, no una lista de requisitos verificados.",
+    "notEnoughExperienceWarning": "Agrega primero tu experiencia en tu perfil — unas pocas palabras no son suficientes para una comparación real, no fabricada.",
+    "analyzeButton": "✦ Analizar mi brecha de habilidades",
+    "analyzingButton": "Analizando con GPT-4o…",
+    "basisRealJob": "Basado en esta oferta real",
+    "basisGeneralEstimate": "Estimación general — sin oferta específica",
+    "matchScore": "Puntuación de coincidencia",
+    "skillsAlreadyHave": "Habilidades que ya tienes",
+    "skillsToDevelop": "Habilidades por desarrollar",
+    "suggestedNextSteps": "Próximos pasos sugeridos",
     "generationFailed": "Error en la generación",
     "somethingWentWrong": "Algo salió mal"
   }
