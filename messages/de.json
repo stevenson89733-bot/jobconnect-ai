@@ -28,7 +28,9 @@
     "openMenu": "Menü öffnen",
     "closeMenu": "Menü schließen",
     "language": "Sprache",
-    "country": "Land"
+    "country": "Land",
+    "interviewPrep": "Interview",
+    "interviewPrepDesc": "Echte Fragen mit KI-Feedback üben"
   },
   "footer": {
     "tagline": "KI-gestützte Remote-Jobplattform, die Top-Kandidaten mit führenden Unternehmen weltweit verbindet.",
@@ -249,7 +251,9 @@
     "atsScore": "ATS-Score",
     "profileStrength": "Profilstärke",
     "lastGenerated": "Zuletzt erstellt am {date}",
-    "viewFullAnalysis": "Vollständige Analyse ansehen"
+    "viewFullAnalysis": "Vollständige Analyse ansehen",
+    "interviewPrepCardTitle": "Interviewvorbereitung",
+    "interviewPrepCardDesc": "Übe echte Fragen und erhalte sofortiges schriftliches Feedback."
   },
   "recruiter": {
     "dashboardTitle": "Arbeitgeber-Dashboard",
@@ -711,7 +715,12 @@
     "mustBeSignedInToUpdateProfile": "Du musst angemeldet sein, um dein Profil zu aktualisieren.",
     "copilotCandidateOnly": "Der Career Copilot steht nur Kandidatenkonten zur Verfügung.",
     "tooManyCopilotMessages": "Zu viele Nachrichten. Bitte versuche es gleich noch einmal.",
-    "copilotEmptyMessage": "Gib zuerst eine Nachricht ein."
+    "copilotEmptyMessage": "Gib zuerst eine Nachricht ein.",
+    "interviewPrepPremiumOnly": "Die KI-Interviewvorbereitung ist eine Premium-Funktion.",
+    "tooManyInterviewPrepRequests": "Zu viele Anfragen. Bitte versuche es gleich noch einmal.",
+    "interviewPrepMissingTargetRole": "Füge zuerst eine Zielposition hinzu.",
+    "interviewPrepMissingQuestion": "Frage fehlt.",
+    "interviewPrepAnswerTooShort": "Gib eine vollständigere Antwort ein, um echtes Feedback zu erhalten — ein paar Wörter reichen nicht."
   },
   "copilot": {
     "openLabel": "Karriere-Copilot öffnen",
@@ -735,13 +744,14 @@
     "sendLabel": "Senden",
     "thinking": "Denkt nach…",
     "loadingHistory": "Wird geladen…",
-    "chatIntro": "Frag mich, deinen Lebenslauf zu verbessern, ein Anschreiben zu schreiben, Jobs zu finden oder deine Karriereanalyse anzusehen.",
+    "chatIntro": "Bitte mich, deinen Lebenslauf zu verbessern, ein Anschreiben zu schreiben, Jobs zu finden, dich auf ein Interview vorzubereiten oder deine Karriereanalyse zu prüfen.",
     "chatFailed": "Etwas ist schiefgelaufen — bitte versuche es erneut.",
     "redirectImproveResume": "Lebenslauf-Generator öffnen",
     "redirectCoverLetter": "Anschreiben-Generator öffnen",
     "redirectFindJobs": "Jobs suchen",
     "redirectCareerAnalysis": "Career Coach ansehen",
-    "redirectViewApplications": "Bewerbungen ansehen"
+    "redirectViewApplications": "Bewerbungen ansehen",
+    "redirectPrepareInterview": "Interviewfragen üben"
   },
   "pricing": {
     "pageTitle": "Einfache, ehrliche Preise",
@@ -979,5 +989,33 @@
     "generateOne": "Ein Anschreiben erstellen",
     "deleting": "Wird gelöscht…",
     "delete": "Löschen"
+  },
+  "interviewPrep": {
+    "breadcrumbDashboard": "Dashboard",
+    "breadcrumbCurrent": "KI-Interviewvorbereitung",
+    "title": "KI-Interviewvorbereitung",
+    "subtitle": "Übe echte Interviewfragen, zugeschnitten auf eine Stellenanzeige oder dein Profil, mit schriftlichem KI-Feedback zu jeder Antwort.",
+    "premiumFeature": "✦ Premium-Funktion",
+    "unlockTitle": "KI-Interviewvorbereitung freischalten",
+    "unlockDesc": "Übe echte Interviewfragen für jede Rolle und erhalte sofortiges schriftliches Feedback zu deinen Antworten — powered by GPT-4o.",
+    "upgradeCta": "Zu Premium wechseln — 19 $/Monat",
+    "roleDetails": "Stellendetails",
+    "targetJobTitle": "Zielposition",
+    "targetJobTitlePlaceholder": "z. B. Senior Frontend Engineer",
+    "companyName": "Unternehmen",
+    "optional": "(optional)",
+    "companyNamePlaceholder": "z. B. Acme Inc.",
+    "jobDescription": "Stellenbeschreibung",
+    "jobDescriptionHint": "(optional — leer lassen, um stattdessen dein Profil zu verwenden)",
+    "jobDescriptionPlaceholder": "Füge hier die echte Stellenbeschreibung ein...",
+    "generateButton": "✦ Fragen generieren",
+    "generatingButton": "Generierung mit GPT-4o…",
+    "answerPlaceholder": "Gib hier deine Antwort ein...",
+    "getFeedback": "Feedback erhalten",
+    "gettingFeedback": "Feedback wird abgerufen…",
+    "feedbackLabel": "Feedback",
+    "generationFailed": "Generierung fehlgeschlagen",
+    "feedbackFailed": "Feedback fehlgeschlagen",
+    "somethingWentWrong": "Etwas ist schiefgelaufen"
   }
 }

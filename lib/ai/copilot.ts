@@ -20,10 +20,11 @@ export type CopilotIntent =
   | 'find_jobs'
   | 'career_analysis'
   | 'view_applications'
+  | 'prepare_interview'
   | 'unclear'
 
 const VALID_INTENTS: CopilotIntent[] = [
-  'improve_resume', 'write_cover_letter', 'find_jobs', 'career_analysis', 'view_applications', 'unclear',
+  'improve_resume', 'write_cover_letter', 'find_jobs', 'career_analysis', 'view_applications', 'prepare_interview', 'unclear',
 ]
 
 export type CopilotExtracted = {
@@ -66,6 +67,7 @@ Classify into EXACTLY ONE of these intents:
 - "find_jobs" — wants to search/filter job listings (by role, remote/hybrid/onsite, category, or wants higher-paying roles surfaced).
 - "career_analysis" — wants a broader career/profile assessment, ATS score, or skill gaps (not a specific document).
 - "view_applications" — wants to check the status of jobs they've already applied to.
+- "prepare_interview" — wants to practice/prepare for an interview (e.g. practice answering questions, get feedback on how they'd answer).
 - "unclear" — the message doesn't clearly match any of the above, is off-topic, or is too vague to act on.
 
 STRICT RULES:
@@ -75,11 +77,12 @@ STRICT RULES:
 - Real job categories on this platform are only: ${REAL_CATEGORIES.filter((c) => c !== 'All').join(', ')}. Real job types are only: ${REAL_JOB_TYPES.filter((c) => c !== 'All').join(', ')}. Do not invent a category/type outside these lists.
 - There is NO minimum-salary filter on this platform — jobs can only be sorted by salary (highest first), not filtered to an exact threshold. If the candidate mentions any salary figure or "highest paying"/"best paying" type request, set "sortBySalary" to true and your reply must honestly say you've sorted by salary (highest first) rather than claiming an exact threshold filter was applied.
 - Keep "reply" to 1-2 short sentences — a brief acknowledgment, not the actual deliverable.
-- For "unclear", "reply" must briefly and honestly say you didn't understand and list in plain language the kinds of things you can help with (resume, cover letter, job search, career analysis, checking application status) — never pretend to understand something you didn't.
+- For "unclear", "reply" must briefly and honestly say you didn't understand and list in plain language the kinds of things you can help with (resume, cover letter, job search, career analysis, interview prep, checking application status) — never pretend to understand something you didn't.
+- For "prepare_interview", never claim to have found or looked up a specific job listing — this platform has no search/lookup capability available to you here. If the candidate mentioned a company or role, you may acknowledge it in your reply, but the actual practice questions are generated on the destination page from either a real job listing (if the candidate arrived from one) or their own profile — never claim more than that.
 
 Return a JSON object with this exact structure:
 {
-  "intent": "<one of: improve_resume, write_cover_letter, find_jobs, career_analysis, view_applications, unclear>",
+  "intent": "<one of: improve_resume, write_cover_letter, find_jobs, career_analysis, view_applications, prepare_interview, unclear>",
   "reply": "<1-2 sentence reply in ${languageName}>",
   "extracted": {
     "targetRole": "<the job title/role exactly as the candidate stated it, or null if only a company was mentioned>",
@@ -158,6 +161,14 @@ export function buildRedirect(intent: CopilotIntent, extracted: CopilotExtracted
       return { url: '/candidate/career-coach', labelKey: 'redirectCareerAnalysis' }
     case 'view_applications':
       return { url: '/candidate', labelKey: 'redirectViewApplications' }
+    case 'prepare_interview': {
+      // Same reasoning as improve_resume: no ad-hoc jobId resolution here
+      // (no lookup capability in this V1), only a real targetRole hand-off.
+      const params = new URLSearchParams()
+      if (extracted.targetRole) params.set('targetRole', extracted.targetRole)
+      const qs = params.toString()
+      return { url: qs ? `/ai-tools/interview-prep?${qs}` : '/ai-tools/interview-prep', labelKey: 'redirectPrepareInterview' }
+    }
     case 'unclear':
       return null
   }

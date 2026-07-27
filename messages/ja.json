@@ -28,7 +28,9 @@
     "openMenu": "メニューを開く",
     "closeMenu": "メニューを閉じる",
     "language": "言語",
-    "country": "国"
+    "country": "国",
+    "interviewPrep": "面接対策",
+    "interviewPrepDesc": "実際の質問をAIフィードバックで練習"
   },
   "footer": {
     "tagline": "世界中の優秀な候補者と大手企業をつなぐ、AI搭載のリモート求人プラットフォーム。",
@@ -249,7 +251,9 @@
     "atsScore": "ATSスコア",
     "profileStrength": "プロフィール強度",
     "lastGenerated": "最終生成日: {date}",
-    "viewFullAnalysis": "詳細な分析を見る"
+    "viewFullAnalysis": "詳細な分析を見る",
+    "interviewPrepCardTitle": "面接対策",
+    "interviewPrepCardDesc": "実際の質問を練習し、即座に文章でフィードバックを受け取れます。"
   },
   "recruiter": {
     "dashboardTitle": "採用担当者ダッシュボード",
@@ -711,7 +715,12 @@
     "mustBeSignedInToUpdateProfile": "プロフィールを更新するにはサインインが必要です。",
     "copilotCandidateOnly": "Career Copilotは求職者アカウントのみご利用いただけます。",
     "tooManyCopilotMessages": "メッセージが多すぎます。しばらくしてからもう一度お試しください。",
-    "copilotEmptyMessage": "先にメッセージを入力してください。"
+    "copilotEmptyMessage": "先にメッセージを入力してください。",
+    "interviewPrepPremiumOnly": "AI面接対策はプレミアム機能です。",
+    "tooManyInterviewPrepRequests": "リクエストが多すぎます。しばらくしてから再度お試しください。",
+    "interviewPrepMissingTargetRole": "まず希望職種を追加してください。",
+    "interviewPrepMissingQuestion": "質問がありません。",
+    "interviewPrepAnswerTooShort": "実際のフィードバックを得るには、もう少し詳しい回答を入力してください — 数語では不十分です。"
   },
   "copilot": {
     "openLabel": "キャリアコパイロットを開く",
@@ -735,13 +744,14 @@
     "sendLabel": "送信",
     "thinking": "考え中…",
     "loadingHistory": "読み込み中…",
-    "chatIntro": "履歴書の改善、カバーレターの作成、求人検索、キャリア分析の確認などをお手伝いします。",
+    "chatIntro": "履歴書の改善、カバーレターの作成、求人検索、面接対策、キャリア分析の確認など、お気軽にお聞きください。",
     "chatFailed": "エラーが発生しました — もう一度お試しください。",
     "redirectImproveResume": "レジュメビルダーを開く",
     "redirectCoverLetter": "カバーレター作成ツールを開く",
     "redirectFindJobs": "求人を検索",
     "redirectCareerAnalysis": "キャリアコーチを見る",
-    "redirectViewApplications": "応募状況を見る"
+    "redirectViewApplications": "応募状況を見る",
+    "redirectPrepareInterview": "面接質問を練習する"
   },
   "pricing": {
     "pageTitle": "シンプルで誠実な料金体系",
@@ -979,5 +989,33 @@
     "generateOne": "カバーレターを生成する",
     "deleting": "削除中…",
     "delete": "削除"
+  },
+  "interviewPrep": {
+    "breadcrumbDashboard": "ダッシュボード",
+    "breadcrumbCurrent": "AI面接対策",
+    "title": "AI面接対策",
+    "subtitle": "求人情報またはあなたのプロフィールに合わせた実際の面接質問を練習し、各回答についてAIから文章でフィードバックを受け取れます。",
+    "premiumFeature": "✦ プレミアム機能",
+    "unlockTitle": "AI面接対策を解放する",
+    "unlockDesc": "あらゆる職種の実際の面接質問を練習し、回答について即座に文章でフィードバックを受け取れます — GPT-4o搭載。",
+    "upgradeCta": "プレミアムにアップグレード — 月額19ドル",
+    "roleDetails": "職種の詳細",
+    "targetJobTitle": "希望職種",
+    "targetJobTitlePlaceholder": "例：シニアフロントエンドエンジニア",
+    "companyName": "会社名",
+    "optional": "（任意）",
+    "companyNamePlaceholder": "例：Acme Inc.",
+    "jobDescription": "職務内容",
+    "jobDescriptionHint": "（任意 — 空欄の場合はプロフィールを使用します）",
+    "jobDescriptionPlaceholder": "実際の求人内容をここに貼り付けてください...",
+    "generateButton": "✦ 質問を生成",
+    "generatingButton": "GPT-4oで生成中…",
+    "answerPlaceholder": "ここに回答を入力してください...",
+    "getFeedback": "フィードバックを受け取る",
+    "gettingFeedback": "フィードバックを取得中…",
+    "feedbackLabel": "フィードバック",
+    "generationFailed": "生成に失敗しました",
+    "feedbackFailed": "フィードバックの取得に失敗しました",
+    "somethingWentWrong": "問題が発生しました"
   }
 }

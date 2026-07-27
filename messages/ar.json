@@ -28,7 +28,9 @@
     "openMenu": "فتح القائمة",
     "closeMenu": "إغلاق القائمة",
     "language": "اللغة",
-    "country": "الدولة"
+    "country": "الدولة",
+    "interviewPrep": "المقابلة",
+    "interviewPrepDesc": "تدرّب على أسئلة حقيقية مع ملاحظات الذكاء الاصطناعي"
   },
   "footer": {
     "tagline": "منصة وظائف عن بُعد مدعومة بالذكاء الاصطناعي تربط أفضل المرشحين بالشركات الرائدة حول العالم.",
@@ -249,7 +251,9 @@
     "atsScore": "درجة ATS",
     "profileStrength": "قوة الملف الشخصي",
     "lastGenerated": "آخر إنشاء {date}",
-    "viewFullAnalysis": "عرض التحليل الكامل"
+    "viewFullAnalysis": "عرض التحليل الكامل",
+    "interviewPrepCardTitle": "التحضير للمقابلة",
+    "interviewPrepCardDesc": "تدرّب على أسئلة حقيقية واحصل على ملاحظات كتابية فورية."
   },
   "recruiter": {
     "dashboardTitle": "لوحة تحكم صاحب العمل",
@@ -711,7 +715,12 @@
     "mustBeSignedInToUpdateProfile": "يجب تسجيل الدخول لتحديث ملفك الشخصي.",
     "copilotCandidateOnly": "Career Copilot متاح فقط لحسابات المرشحين.",
     "tooManyCopilotMessages": "عدد كبير جدًا من الرسائل. يرجى المحاولة مرة أخرى بعد قليل.",
-    "copilotEmptyMessage": "يرجى كتابة رسالة أولاً."
+    "copilotEmptyMessage": "يرجى كتابة رسالة أولاً.",
+    "interviewPrepPremiumOnly": "التحضير للمقابلة بالذكاء الاصطناعي ميزة بريميوم.",
+    "tooManyInterviewPrepRequests": "عدد كبير جدًا من الطلبات. يرجى المحاولة مرة أخرى بعد قليل.",
+    "interviewPrepMissingTargetRole": "أضف المسمى الوظيفي المستهدف أولًا.",
+    "interviewPrepMissingQuestion": "السؤال مفقود.",
+    "interviewPrepAnswerTooShort": "أضف إجابة أكثر اكتمالًا للحصول على ملاحظات حقيقية — بضع كلمات لا تكفي."
   },
   "copilot": {
     "openLabel": "فتح المساعد الوظيفي",
@@ -735,13 +744,14 @@
     "sendLabel": "إرسال",
     "thinking": "جارٍ التفكير…",
     "loadingHistory": "جارٍ التحميل…",
-    "chatIntro": "اطلب مني تحسين سيرتك الذاتية، كتابة خطاب تقديم، البحث عن وظائف، أو الاطلاع على تحليل مسارك المهني.",
+    "chatIntro": "اطلب مني تحسين سيرتك الذاتية، أو كتابة خطاب تعريفي، أو البحث عن وظائف، أو التحضير لمقابلة، أو مراجعة تحليل مسارك المهني.",
     "chatFailed": "حدث خطأ ما — يرجى المحاولة مرة أخرى.",
     "redirectImproveResume": "فتح منشئ السيرة الذاتية",
     "redirectCoverLetter": "فتح منشئ خطاب التقديم",
     "redirectFindJobs": "البحث عن وظائف",
     "redirectCareerAnalysis": "عرض المدرب المهني",
-    "redirectViewApplications": "عرض طلباتي"
+    "redirectViewApplications": "عرض طلباتي",
+    "redirectPrepareInterview": "التدرّب على أسئلة المقابلة"
   },
   "pricing": {
     "pageTitle": "تسعير بسيط وصادق",
@@ -979,5 +989,33 @@
     "generateOne": "إنشاء خطاب تقديم",
     "deleting": "جارٍ الحذف…",
     "delete": "حذف"
+  },
+  "interviewPrep": {
+    "breadcrumbDashboard": "لوحة التحكم",
+    "breadcrumbCurrent": "التحضير للمقابلة بالذكاء الاصطناعي",
+    "title": "التحضير للمقابلة بالذكاء الاصطناعي",
+    "subtitle": "تدرّب على أسئلة مقابلة حقيقية مصممة وفق إعلان وظيفي أو ملفك الشخصي، مع ملاحظات كتابية من الذكاء الاصطناعي على كل إجابة.",
+    "premiumFeature": "✦ ميزة بريميوم",
+    "unlockTitle": "افتح التحضير للمقابلة بالذكاء الاصطناعي",
+    "unlockDesc": "تدرّب على أسئلة مقابلة حقيقية لأي وظيفة، واحصل على ملاحظات كتابية فورية حول إجاباتك — بواسطة GPT-4o.",
+    "upgradeCta": "الترقية إلى بريميوم — 19 دولارًا شهريًا",
+    "roleDetails": "تفاصيل الوظيفة",
+    "targetJobTitle": "المسمى الوظيفي المستهدف",
+    "targetJobTitlePlaceholder": "مثال: مهندس واجهات أمامية أول",
+    "companyName": "الشركة",
+    "optional": "(اختياري)",
+    "companyNamePlaceholder": "مثال: Acme Inc.",
+    "jobDescription": "الوصف الوظيفي",
+    "jobDescriptionHint": "(اختياري — اتركه فارغًا لاستخدام ملفك الشخصي بدلًا من ذلك)",
+    "jobDescriptionPlaceholder": "الصق الوصف الوظيفي الحقيقي هنا...",
+    "generateButton": "✦ توليد الأسئلة",
+    "generatingButton": "جارٍ التوليد باستخدام GPT-4o…",
+    "answerPlaceholder": "اكتب إجابتك هنا...",
+    "getFeedback": "الحصول على ملاحظات",
+    "gettingFeedback": "جارٍ الحصول على الملاحظات…",
+    "feedbackLabel": "الملاحظات",
+    "generationFailed": "فشل التوليد",
+    "feedbackFailed": "فشل الحصول على الملاحظات",
+    "somethingWentWrong": "حدث خطأ ما"
   }
 }

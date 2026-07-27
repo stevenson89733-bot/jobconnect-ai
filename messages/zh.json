@@ -28,7 +28,9 @@
     "openMenu": "打开菜单",
     "closeMenu": "关闭菜单",
     "language": "语言",
-    "country": "国家/地区"
+    "country": "国家/地区",
+    "interviewPrep": "面试准备",
+    "interviewPrepDesc": "练习真实问题并获得 AI 反馈"
   },
   "footer": {
     "tagline": "由 AI 驱动的远程招聘平台，连接全球优秀候选人与顶尖企业。",
@@ -249,7 +251,9 @@
     "atsScore": "ATS 评分",
     "profileStrength": "资料强度",
     "lastGenerated": "上次生成时间 {date}",
-    "viewFullAnalysis": "查看完整分析"
+    "viewFullAnalysis": "查看完整分析",
+    "interviewPrepCardTitle": "面试准备",
+    "interviewPrepCardDesc": "练习真实问题，即时获得书面反馈。"
   },
   "recruiter": {
     "dashboardTitle": "雇主控制台",
@@ -711,7 +715,12 @@
     "mustBeSignedInToUpdateProfile": "您必须登录后才能更新资料。",
     "copilotCandidateOnly": "职业助手仅对求职者账户开放。",
     "tooManyCopilotMessages": "消息太多，请稍后再试。",
-    "copilotEmptyMessage": "请先输入消息。"
+    "copilotEmptyMessage": "请先输入消息。",
+    "interviewPrepPremiumOnly": "AI 面试准备是高级功能。",
+    "tooManyInterviewPrepRequests": "请求过多，请稍后再试。",
+    "interviewPrepMissingTargetRole": "请先添加目标职位。",
+    "interviewPrepMissingQuestion": "缺少问题。",
+    "interviewPrepAnswerTooShort": "请填写更完整的回答以获得真实反馈 — 几个字是不够的。"
   },
   "copilot": {
     "openLabel": "打开职业副驾",
@@ -735,13 +744,14 @@
     "sendLabel": "发送",
     "thinking": "思考中…",
     "loadingHistory": "加载中…",
-    "chatIntro": "让我帮你改进简历、撰写求职信、查找职位，或查看你的职业分析。",
+    "chatIntro": "让我帮您改进简历、撰写求职信、寻找工作、准备面试，或查看您的职业分析。",
     "chatFailed": "出错了——请重试。",
     "redirectImproveResume": "打开简历生成器",
     "redirectCoverLetter": "打开求职信生成器",
     "redirectFindJobs": "搜索职位",
     "redirectCareerAnalysis": "查看职业教练",
-    "redirectViewApplications": "查看我的申请"
+    "redirectViewApplications": "查看我的申请",
+    "redirectPrepareInterview": "练习面试问题"
   },
   "pricing": {
     "pageTitle": "简单、透明的定价",
@@ -979,5 +989,33 @@
     "generateOne": "生成求职信",
     "deleting": "删除中…",
     "delete": "删除"
+  },
+  "interviewPrep": {
+    "breadcrumbDashboard": "仪表盘",
+    "breadcrumbCurrent": "AI 面试准备",
+    "title": "AI 面试准备",
+    "subtitle": "根据职位信息或您的个人资料练习真实的面试问题，并针对每个回答获得 AI 书面反馈。",
+    "premiumFeature": "✦ 高级功能",
+    "unlockTitle": "解锁 AI 面试准备",
+    "unlockDesc": "针对任何职位练习真实的面试问题，并即时获得书面反馈 — 由 GPT-4o 提供支持。",
+    "upgradeCta": "升级至高级版 — $19/月",
+    "roleDetails": "职位详情",
+    "targetJobTitle": "目标职位",
+    "targetJobTitlePlaceholder": "例如：高级前端工程师",
+    "companyName": "公司",
+    "optional": "（选填）",
+    "companyNamePlaceholder": "例如：Acme Inc.",
+    "jobDescription": "职位描述",
+    "jobDescriptionHint": "（选填 — 留空则使用您的个人资料）",
+    "jobDescriptionPlaceholder": "在此粘贴真实的职位描述...",
+    "generateButton": "✦ 生成问题",
+    "generatingButton": "正在使用 GPT-4o 生成…",
+    "answerPlaceholder": "在此输入您的回答...",
+    "getFeedback": "获取反馈",
+    "gettingFeedback": "正在获取反馈…",
+    "feedbackLabel": "反馈",
+    "generationFailed": "生成失败",
+    "feedbackFailed": "获取反馈失败",
+    "somethingWentWrong": "出了点问题"
   }
 }

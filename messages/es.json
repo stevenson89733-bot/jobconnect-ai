@@ -28,7 +28,9 @@
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú",
     "language": "Idioma",
-    "country": "País"
+    "country": "País",
+    "interviewPrep": "Entrevista",
+    "interviewPrepDesc": "Practica preguntas reales con comentarios de la IA"
   },
   "footer": {
     "tagline": "Plataforma de empleo remoto impulsada por IA que conecta a los mejores candidatos con empresas líderes en todo el mundo.",
@@ -249,7 +251,9 @@
     "atsScore": "Score ATS",
     "profileStrength": "Solidez del perfil",
     "lastGenerated": "Última generación {date}",
-    "viewFullAnalysis": "Ver análisis completo"
+    "viewFullAnalysis": "Ver análisis completo",
+    "interviewPrepCardTitle": "Preparación de entrevista",
+    "interviewPrepCardDesc": "Practica preguntas reales y recibe comentarios escritos al instante."
   },
   "recruiter": {
     "dashboardTitle": "Panel del empleador",
@@ -711,7 +715,12 @@
     "mustBeSignedInToUpdateProfile": "Debes iniciar sesión para actualizar tu perfil.",
     "copilotCandidateOnly": "El Career Copilot solo está disponible para cuentas de candidatos.",
     "tooManyCopilotMessages": "Demasiados mensajes. Inténtalo de nuevo en un momento.",
-    "copilotEmptyMessage": "Escribe un mensaje primero."
+    "copilotEmptyMessage": "Escribe un mensaje primero.",
+    "interviewPrepPremiumOnly": "La preparación de entrevista IA es una función Premium.",
+    "tooManyInterviewPrepRequests": "Demasiadas solicitudes. Inténtalo de nuevo en un momento.",
+    "interviewPrepMissingTargetRole": "Agrega primero un puesto objetivo.",
+    "interviewPrepMissingQuestion": "Falta la pregunta.",
+    "interviewPrepAnswerTooShort": "Agrega una respuesta más completa para recibir comentarios reales — unas pocas palabras no son suficientes."
   },
   "copilot": {
     "openLabel": "Abrir Copiloto de Carrera",
@@ -735,13 +744,14 @@
     "sendLabel": "Enviar",
     "thinking": "Pensando…",
     "loadingHistory": "Cargando…",
-    "chatIntro": "Pídeme que mejore tu currículum, escriba una carta de presentación, busque empleos o revise tu análisis de carrera.",
+    "chatIntro": "Pídeme que mejore tu currículum, escriba una carta de presentación, busque empleos, prepare una entrevista o revise tu análisis de carrera.",
     "chatFailed": "Algo salió mal — inténtalo de nuevo.",
     "redirectImproveResume": "Abrir el Generador de CV",
     "redirectCoverLetter": "Abrir el Generador de Carta",
     "redirectFindJobs": "Buscar empleos",
     "redirectCareerAnalysis": "Ver Career Coach",
-    "redirectViewApplications": "Ver mis postulaciones"
+    "redirectViewApplications": "Ver mis postulaciones",
+    "redirectPrepareInterview": "Practicar preguntas de entrevista"
   },
   "pricing": {
     "pageTitle": "Precios simples y honestos",
@@ -979,5 +989,33 @@
     "generateOne": "Generar una Carta de Presentación",
     "deleting": "Eliminando…",
     "delete": "Eliminar"
+  },
+  "interviewPrep": {
+    "breadcrumbDashboard": "Panel",
+    "breadcrumbCurrent": "Preparación de entrevista IA",
+    "title": "Preparación de entrevista IA",
+    "subtitle": "Practica preguntas reales de entrevista adaptadas a una oferta o a tu perfil, con comentarios escritos de la IA sobre cada respuesta.",
+    "premiumFeature": "✦ Función Premium",
+    "unlockTitle": "Desbloquea la Preparación de entrevista IA",
+    "unlockDesc": "Practica preguntas reales de entrevista adaptadas a cualquier puesto y recibe comentarios escritos al instante sobre tus respuestas — todo con GPT-4o.",
+    "upgradeCta": "Pasar a Premium — $19/mes",
+    "roleDetails": "Detalles del puesto",
+    "targetJobTitle": "Puesto objetivo",
+    "targetJobTitlePlaceholder": "ej. Ingeniero Frontend Senior",
+    "companyName": "Empresa",
+    "optional": "(opcional)",
+    "companyNamePlaceholder": "ej. Acme Inc.",
+    "jobDescription": "Descripción del puesto",
+    "jobDescriptionHint": "(opcional — déjalo en blanco para usar tu perfil en su lugar)",
+    "jobDescriptionPlaceholder": "Pega aquí la descripción real del puesto...",
+    "generateButton": "✦ Generar preguntas",
+    "generatingButton": "Generando con GPT-4o…",
+    "answerPlaceholder": "Escribe tu respuesta aquí...",
+    "getFeedback": "Obtener comentarios",
+    "gettingFeedback": "Obteniendo comentarios…",
+    "feedbackLabel": "Comentarios",
+    "generationFailed": "Error en la generación",
+    "feedbackFailed": "Error al obtener comentarios",
+    "somethingWentWrong": "Algo salió mal"
   }
 }

@@ -28,7 +28,9 @@
     "openMenu": "Mở menu",
     "closeMenu": "Đóng menu",
     "language": "Ngôn ngữ",
-    "country": "Quốc gia"
+    "country": "Quốc gia",
+    "interviewPrep": "Phỏng vấn",
+    "interviewPrepDesc": "Luyện câu hỏi thực tế với phản hồi AI"
   },
   "footer": {
     "tagline": "Nền tảng việc làm từ xa ứng dụng AI, kết nối những ứng viên hàng đầu với các công ty uy tín trên toàn thế giới.",
@@ -249,7 +251,9 @@
     "atsScore": "Điểm ATS",
     "profileStrength": "Độ hoàn thiện hồ sơ",
     "lastGenerated": "Tạo lần cuối {date}",
-    "viewFullAnalysis": "Xem phân tích đầy đủ"
+    "viewFullAnalysis": "Xem phân tích đầy đủ",
+    "interviewPrepCardTitle": "Luyện Phỏng Vấn",
+    "interviewPrepCardDesc": "Luyện câu hỏi thực tế và nhận phản hồi bằng văn bản tức thì."
   },
   "recruiter": {
     "dashboardTitle": "Bảng điều khiển Nhà tuyển dụng",
@@ -711,7 +715,12 @@
     "mustBeSignedInToUpdateProfile": "Bạn phải đăng nhập để cập nhật hồ sơ.",
     "copilotCandidateOnly": "Career Copilot chỉ dành cho tài khoản ứng viên.",
     "tooManyCopilotMessages": "Quá nhiều tin nhắn. Vui lòng thử lại sau ít phút.",
-    "copilotEmptyMessage": "Vui lòng nhập tin nhắn trước."
+    "copilotEmptyMessage": "Vui lòng nhập tin nhắn trước.",
+    "interviewPrepPremiumOnly": "Luyện Phỏng Vấn AI là tính năng Premium.",
+    "tooManyInterviewPrepRequests": "Quá nhiều yêu cầu. Vui lòng thử lại sau ít phút.",
+    "interviewPrepMissingTargetRole": "Hãy thêm chức danh mục tiêu trước.",
+    "interviewPrepMissingQuestion": "Thiếu câu hỏi.",
+    "interviewPrepAnswerTooShort": "Hãy nhập câu trả lời đầy đủ hơn để nhận phản hồi thực sự — vài từ là không đủ."
   },
   "copilot": {
     "openLabel": "Mở Trợ Lý Sự Nghiệp",
@@ -735,13 +744,14 @@
     "sendLabel": "Gửi",
     "thinking": "Đang suy nghĩ…",
     "loadingHistory": "Đang tải…",
-    "chatIntro": "Hãy nhờ tôi cải thiện sơ yếu lý lịch, viết thư xin việc, tìm việc làm, hoặc xem phân tích sự nghiệp của bạn.",
+    "chatIntro": "Hãy nhờ tôi cải thiện sơ yếu lý lịch, viết thư xin việc, tìm việc làm, luyện phỏng vấn, hoặc kiểm tra phân tích sự nghiệp của bạn.",
     "chatFailed": "Đã xảy ra lỗi — vui lòng thử lại.",
     "redirectImproveResume": "Mở Trình tạo Sơ yếu lý lịch",
     "redirectCoverLetter": "Mở Trình tạo Thư xin việc",
     "redirectFindJobs": "Tìm việc làm",
     "redirectCareerAnalysis": "Xem Career Coach",
-    "redirectViewApplications": "Xem đơn ứng tuyển"
+    "redirectViewApplications": "Xem đơn ứng tuyển",
+    "redirectPrepareInterview": "Luyện câu hỏi phỏng vấn"
   },
   "pricing": {
     "pageTitle": "Bảng giá đơn giản, minh bạch",
@@ -979,5 +989,33 @@
     "generateOne": "Tạo Thư xin việc",
     "deleting": "Đang xóa…",
     "delete": "Xóa"
+  },
+  "interviewPrep": {
+    "breadcrumbDashboard": "Bảng điều khiển",
+    "breadcrumbCurrent": "Luyện Phỏng Vấn AI",
+    "title": "Luyện Phỏng Vấn AI",
+    "subtitle": "Luyện tập các câu hỏi phỏng vấn thực tế phù hợp với tin tuyển dụng hoặc hồ sơ của bạn, kèm phản hồi bằng văn bản từ AI cho mỗi câu trả lời.",
+    "premiumFeature": "✦ Tính năng Premium",
+    "unlockTitle": "Mở khóa Luyện Phỏng Vấn AI",
+    "unlockDesc": "Luyện tập các câu hỏi phỏng vấn thực tế cho bất kỳ vị trí nào và nhận phản hồi bằng văn bản tức thì cho câu trả lời của bạn — tất cả được vận hành bởi GPT-4o.",
+    "upgradeCta": "Nâng cấp Premium — 19 USD/tháng",
+    "roleDetails": "Chi tiết Vị trí",
+    "targetJobTitle": "Chức danh Mục tiêu",
+    "targetJobTitlePlaceholder": "vd. Senior Frontend Engineer",
+    "companyName": "Công ty",
+    "optional": "(tùy chọn)",
+    "companyNamePlaceholder": "vd. Acme Inc.",
+    "jobDescription": "Mô tả Công việc",
+    "jobDescriptionHint": "(tùy chọn — để trống để dùng hồ sơ của bạn thay thế)",
+    "jobDescriptionPlaceholder": "Dán mô tả công việc thực tế vào đây...",
+    "generateButton": "✦ Tạo Câu hỏi",
+    "generatingButton": "Đang tạo với GPT-4o…",
+    "answerPlaceholder": "Nhập câu trả lời của bạn vào đây...",
+    "getFeedback": "Nhận Phản hồi",
+    "gettingFeedback": "Đang lấy phản hồi…",
+    "feedbackLabel": "Phản hồi",
+    "generationFailed": "Tạo thất bại",
+    "feedbackFailed": "Lấy phản hồi thất bại",
+    "somethingWentWrong": "Đã xảy ra lỗi"
   }
 }

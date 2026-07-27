@@ -28,7 +28,9 @@
     "openMenu": "Ouvri meni",
     "closeMenu": "Fèmen meni",
     "language": "Lang",
-    "country": "Peyi"
+    "country": "Peyi",
+    "interviewPrep": "Entèvyou",
+    "interviewPrepDesc": "Pratike vrè kesyon ak retou AI"
   },
   "footer": {
     "tagline": "Platfòm travay adistans ki itilize AI pou konekte pi bon kandida yo ak gwo konpayi toupatou nan mond lan.",
@@ -249,7 +251,9 @@
     "atsScore": "Score ATS",
     "profileStrength": "Fòs Pwofil",
     "lastGenerated": "Dènye jenerasyon {date}",
-    "viewFullAnalysis": "Gade analiz konplè a"
+    "viewFullAnalysis": "Gade analiz konplè a",
+    "interviewPrepCardTitle": "Preparasyon Entèvyou",
+    "interviewPrepCardDesc": "Pratike vrè kesyon epi jwenn retou ekri imedyatman."
   },
   "recruiter": {
     "dashboardTitle": "Tablo Bò Anplwayè",
@@ -711,7 +715,12 @@
     "mustBeSignedInToUpdateProfile": "Ou dwe konekte pou mete ajou pwofil ou.",
     "copilotCandidateOnly": "Career Copilot la disponib sèlman pou kont kandida.",
     "tooManyCopilotMessages": "Twòp mesaj. Tanpri eseye ankò nan yon ti moman.",
-    "copilotEmptyMessage": "Tape yon mesaj dabò."
+    "copilotEmptyMessage": "Tape yon mesaj dabò.",
+    "interviewPrepPremiumOnly": "Preparasyon Entèvyou AI se yon fonksyon Premium.",
+    "tooManyInterviewPrepRequests": "Twòp demann. Tanpri eseye ankò nan yon ti moman.",
+    "interviewPrepMissingTargetRole": "Ajoute yon tit djòb vize dabò.",
+    "interviewPrepMissingQuestion": "Kesyon an manke.",
+    "interviewPrepAnswerTooShort": "Ajoute yon repons pi konplè pou jwenn yon vrè retou — kèk mo pa ase."
   },
   "copilot": {
     "openLabel": "Ouvri Copilòt Karyè",
@@ -735,13 +744,14 @@
     "sendLabel": "Voye",
     "thinking": "M ap reflechi…",
     "loadingHistory": "Chajman…",
-    "chatIntro": "Mande m amelyore CV ou, ekri yon lèt motivasyon, chèche travay, oswa gade analiz karyè ou.",
+    "chatIntro": "Mande m amelyore CV ou, ekri yon lèt motivasyon, chèche djòb, prepare pou yon entèvyou, oswa verifye analiz karyè ou.",
     "chatFailed": "Gen yon pwoblèm — tanpri eseye ankò.",
     "redirectImproveResume": "Louvri Rezime Bilder",
     "redirectCoverLetter": "Louvri Jenerat Lèt Motivasyon",
     "redirectFindJobs": "Chèche travay",
     "redirectCareerAnalysis": "Gade Career Coach",
-    "redirectViewApplications": "Gade aplikasyon mwen yo"
+    "redirectViewApplications": "Gade aplikasyon mwen yo",
+    "redirectPrepareInterview": "Pratike kesyon entèvyou"
   },
   "pricing": {
     "pageTitle": "Pri senp ak onèt",
@@ -979,5 +989,33 @@
     "generateOne": "Jenere yon Lèt Motivasyon",
     "deleting": "K ap efase…",
     "delete": "Efase"
+  },
+  "interviewPrep": {
+    "breadcrumbDashboard": "Tablo debò",
+    "breadcrumbCurrent": "Preparasyon Entèvyou AI",
+    "title": "Preparasyon Entèvyou AI",
+    "subtitle": "Pratike kesyon entèvyou reyèl ki adapte ak yon ofrèdanplwa oswa ak pwofil ou, ak yon retou ekri AI pou chak repons.",
+    "premiumFeature": "✦ Fonksyon Premium",
+    "unlockTitle": "Debloke Preparasyon Entèvyou AI",
+    "unlockDesc": "Pratike kesyon entèvyou reyèl ki adapte ak nenpòt pòs, epi jwenn yon retou ekri imedyatman sou repons ou yo — tout bagay ak GPT-4o.",
+    "upgradeCta": "Pase Premium — $19/mwa",
+    "roleDetails": "Detay Pòs la",
+    "targetJobTitle": "Tit Djòb Vize",
+    "targetJobTitlePlaceholder": "pa egzanp Senior Frontend Engineer",
+    "companyName": "Antrepriz",
+    "optional": "(opsyonèl)",
+    "companyNamePlaceholder": "pa egzanp Acme Inc.",
+    "jobDescription": "Deskripsyon Djòb la",
+    "jobDescriptionHint": "(opsyonèl — kite l vid pou itilize pwofil ou pito)",
+    "jobDescriptionPlaceholder": "Kole vrè deskripsyon djòb la isit la...",
+    "generateButton": "✦ Jenere Kesyon yo",
+    "generatingButton": "Ap jenere ak GPT-4o…",
+    "answerPlaceholder": "Ekri repons ou isit la...",
+    "getFeedback": "Jwenn Retou",
+    "gettingFeedback": "Ap resevwa retou…",
+    "feedbackLabel": "Retou",
+    "generationFailed": "Jenerasyon echwe",
+    "feedbackFailed": "Retou echwe",
+    "somethingWentWrong": "Gen yon bagay ki mal pase"
   }
 }

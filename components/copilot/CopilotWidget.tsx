@@ -93,6 +93,7 @@ const INTENT_LABEL_KEY: Record<string, string> = {
   find_jobs: 'redirectFindJobs',
   career_analysis: 'redirectCareerAnalysis',
   view_applications: 'redirectViewApplications',
+  prepare_interview: 'redirectPrepareInterview',
 }
 
 function ChatBubble({ msg }: { msg: ChatMessage }) {

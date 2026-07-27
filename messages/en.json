@@ -28,7 +28,9 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "language": "Language",
-    "country": "Country"
+    "country": "Country",
+    "interviewPrep": "Interview Prep",
+    "interviewPrepDesc": "Practice real questions with AI feedback"
   },
   "footer": {
     "tagline": "AI-powered remote job platform connecting top candidates with leading companies worldwide.",
@@ -249,7 +251,9 @@
     "atsScore": "ATS Score",
     "profileStrength": "Profile Strength",
     "lastGenerated": "Last generated {date}",
-    "viewFullAnalysis": "View Full Analysis"
+    "viewFullAnalysis": "View Full Analysis",
+    "interviewPrepCardTitle": "Interview Prep",
+    "interviewPrepCardDesc": "Practice real questions and get instant written feedback."
   },
   "recruiter": {
     "dashboardTitle": "Employer Dashboard",
@@ -711,7 +715,12 @@
     "mustBeSignedInToUpdateProfile": "You must be signed in to update your profile.",
     "copilotCandidateOnly": "The Career Copilot is only available to candidate accounts.",
     "tooManyCopilotMessages": "Too many messages. Please try again in a bit.",
-    "copilotEmptyMessage": "Type a message first."
+    "copilotEmptyMessage": "Type a message first.",
+    "interviewPrepPremiumOnly": "AI Interview Prep is a Premium feature.",
+    "tooManyInterviewPrepRequests": "Too many requests. Please try again in a bit.",
+    "interviewPrepMissingTargetRole": "Add a target job title first.",
+    "interviewPrepMissingQuestion": "Missing question.",
+    "interviewPrepAnswerTooShort": "Add a more complete answer to get real feedback — a few words isn't enough."
   },
   "copilot": {
     "openLabel": "Open Career Copilot",
@@ -735,13 +744,14 @@
     "sendLabel": "Send",
     "thinking": "Thinking…",
     "loadingHistory": "Loading…",
-    "chatIntro": "Ask me to improve your resume, write a cover letter, find jobs, or check your career analysis.",
+    "chatIntro": "Ask me to improve your resume, write a cover letter, find jobs, prepare for an interview, or check your career analysis.",
     "chatFailed": "Something went wrong — please try again.",
     "redirectImproveResume": "Open Resume Builder",
     "redirectCoverLetter": "Open Cover Letter Generator",
     "redirectFindJobs": "Search jobs",
     "redirectCareerAnalysis": "View Career Coach",
-    "redirectViewApplications": "View applications"
+    "redirectViewApplications": "View applications",
+    "redirectPrepareInterview": "Practice interview questions"
   },
   "pricing": {
     "pageTitle": "Simple, honest pricing",
@@ -979,5 +989,33 @@
     "generateOne": "Generate a Cover Letter",
     "deleting": "Deleting…",
     "delete": "Delete"
+  },
+  "interviewPrep": {
+    "breadcrumbDashboard": "Dashboard",
+    "breadcrumbCurrent": "AI Interview Prep",
+    "title": "AI Interview Prep",
+    "subtitle": "Practice real interview questions tailored to a job posting or your profile, with written AI feedback on each answer.",
+    "premiumFeature": "✦ Premium Feature",
+    "unlockTitle": "Unlock AI Interview Prep",
+    "unlockDesc": "Practice real interview questions tailored to any role, and get instant written feedback on your answers — all powered by GPT-4o.",
+    "upgradeCta": "Upgrade to Premium — $19/mo",
+    "roleDetails": "Role Details",
+    "targetJobTitle": "Target Job Title",
+    "targetJobTitlePlaceholder": "e.g. Senior Frontend Engineer",
+    "companyName": "Company",
+    "optional": "(optional)",
+    "companyNamePlaceholder": "e.g. Acme Inc.",
+    "jobDescription": "Job Description",
+    "jobDescriptionHint": "(optional — leave blank to use your profile instead)",
+    "jobDescriptionPlaceholder": "Paste the real job description here...",
+    "generateButton": "✦ Generate Questions",
+    "generatingButton": "Generating with GPT-4o…",
+    "answerPlaceholder": "Type your answer here...",
+    "getFeedback": "Get Feedback",
+    "gettingFeedback": "Getting feedback…",
+    "feedbackLabel": "Feedback",
+    "generationFailed": "Generation failed",
+    "feedbackFailed": "Feedback failed",
+    "somethingWentWrong": "Something went wrong"
   }
 }

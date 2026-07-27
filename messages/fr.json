@@ -28,7 +28,9 @@
     "openMenu": "Ouvrir le menu",
     "closeMenu": "Fermer le menu",
     "language": "Langue",
-    "country": "Pays"
+    "country": "Pays",
+    "interviewPrep": "Entretien",
+    "interviewPrepDesc": "Entraînez-vous avec un retour de l'IA"
   },
   "footer": {
     "tagline": "Plateforme d'emploi à distance propulsée par l'IA, mettant en relation les meilleurs candidats avec des entreprises de premier plan dans le monde entier.",
@@ -249,7 +251,9 @@
     "atsScore": "Score ATS",
     "profileStrength": "Solidité du profil",
     "lastGenerated": "Dernière génération {date}",
-    "viewFullAnalysis": "Voir l'analyse complète"
+    "viewFullAnalysis": "Voir l'analyse complète",
+    "interviewPrepCardTitle": "Préparation d'entretien",
+    "interviewPrepCardDesc": "Entraînez-vous sur de vraies questions et obtenez un retour écrit instantané."
   },
   "recruiter": {
     "dashboardTitle": "Tableau de bord employeur",
@@ -711,7 +715,12 @@
     "mustBeSignedInToUpdateProfile": "Vous devez être connecté(e) pour mettre à jour votre profil.",
     "copilotCandidateOnly": "Le Career Copilot est réservé aux comptes candidats.",
     "tooManyCopilotMessages": "Trop de messages. Veuillez réessayer dans un instant.",
-    "copilotEmptyMessage": "Tapez d'abord un message."
+    "copilotEmptyMessage": "Tapez d'abord un message.",
+    "interviewPrepPremiumOnly": "La préparation d'entretien IA est une fonctionnalité Premium.",
+    "tooManyInterviewPrepRequests": "Trop de requêtes. Merci de réessayer dans un instant.",
+    "interviewPrepMissingTargetRole": "Ajoutez d'abord un intitulé de poste visé.",
+    "interviewPrepMissingQuestion": "Question manquante.",
+    "interviewPrepAnswerTooShort": "Ajoutez une réponse plus complète pour obtenir un vrai retour — quelques mots ne suffisent pas."
   },
   "copilot": {
     "openLabel": "Ouvrir le Copilote de Carrière",
@@ -735,13 +744,14 @@
     "sendLabel": "Envoyer",
     "thinking": "Réflexion…",
     "loadingHistory": "Chargement…",
-    "chatIntro": "Demandez-moi d'améliorer votre CV, de rédiger une lettre de motivation, de trouver des offres d'emploi, ou de consulter votre analyse de carrière.",
+    "chatIntro": "Demandez-moi d'améliorer votre CV, d'écrire une lettre de motivation, de trouver des emplois, de préparer un entretien, ou de vérifier votre analyse de carrière.",
     "chatFailed": "Une erreur s'est produite — veuillez réessayer.",
     "redirectImproveResume": "Ouvrir le générateur de CV",
     "redirectCoverLetter": "Ouvrir le générateur de lettre",
     "redirectFindJobs": "Rechercher des emplois",
     "redirectCareerAnalysis": "Voir Career Coach",
-    "redirectViewApplications": "Voir mes candidatures"
+    "redirectViewApplications": "Voir mes candidatures",
+    "redirectPrepareInterview": "S'entraîner aux questions d'entretien"
   },
   "pricing": {
     "pageTitle": "Une tarification simple et honnête",
@@ -979,5 +989,33 @@
     "generateOne": "Générer une lettre de motivation",
     "deleting": "Suppression…",
     "delete": "Supprimer"
+  },
+  "interviewPrep": {
+    "breadcrumbDashboard": "Tableau de bord",
+    "breadcrumbCurrent": "Préparation d'entretien IA",
+    "title": "Préparation d'entretien IA",
+    "subtitle": "Entraînez-vous sur de vraies questions d'entretien adaptées à une offre ou à votre profil, avec un retour écrit de l'IA sur chaque réponse.",
+    "premiumFeature": "✦ Fonctionnalité Premium",
+    "unlockTitle": "Débloquez la préparation d'entretien IA",
+    "unlockDesc": "Entraînez-vous sur de vraies questions d'entretien adaptées à n'importe quel poste, et recevez un retour écrit instantané sur vos réponses — propulsé par GPT-4o.",
+    "upgradeCta": "Passer à Premium — 19 $/mois",
+    "roleDetails": "Détails du poste",
+    "targetJobTitle": "Intitulé du poste visé",
+    "targetJobTitlePlaceholder": "ex. Développeur Frontend Senior",
+    "companyName": "Entreprise",
+    "optional": "(facultatif)",
+    "companyNamePlaceholder": "ex. Acme Inc.",
+    "jobDescription": "Description du poste",
+    "jobDescriptionHint": "(facultatif — laissez vide pour utiliser votre profil à la place)",
+    "jobDescriptionPlaceholder": "Collez ici la vraie description du poste...",
+    "generateButton": "✦ Générer les questions",
+    "generatingButton": "Génération avec GPT-4o…",
+    "answerPlaceholder": "Tapez votre réponse ici...",
+    "getFeedback": "Obtenir un retour",
+    "gettingFeedback": "Récupération du retour…",
+    "feedbackLabel": "Retour",
+    "generationFailed": "Échec de la génération",
+    "feedbackFailed": "Échec du retour",
+    "somethingWentWrong": "Une erreur s'est produite"
   }
 }

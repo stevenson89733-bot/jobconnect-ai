@@ -28,7 +28,9 @@
     "openMenu": "메뉴 열기",
     "closeMenu": "메뉴 닫기",
     "language": "언어",
-    "country": "국가"
+    "country": "국가",
+    "interviewPrep": "면접 준비",
+    "interviewPrepDesc": "AI 피드백으로 실제 질문 연습"
   },
   "footer": {
     "tagline": "전 세계 우수 인재와 선도 기업을 연결하는 AI 기반 원격 채용 플랫폼입니다.",
@@ -249,7 +251,9 @@
     "atsScore": "ATS 점수",
     "profileStrength": "프로필 강도",
     "lastGenerated": "마지막 생성일 {date}",
-    "viewFullAnalysis": "전체 분석 보기"
+    "viewFullAnalysis": "전체 분석 보기",
+    "interviewPrepCardTitle": "면접 준비",
+    "interviewPrepCardDesc": "실제 질문을 연습하고 즉각적인 서면 피드백을 받아보세요."
   },
   "recruiter": {
     "dashboardTitle": "채용 담당자 대시보드",
@@ -711,7 +715,12 @@
     "mustBeSignedInToUpdateProfile": "프로필을 업데이트하려면 로그인해야 합니다.",
     "copilotCandidateOnly": "Career Copilot은 구직자 계정에서만 이용할 수 있습니다.",
     "tooManyCopilotMessages": "메시지가 너무 많습니다. 잠시 후 다시 시도해 주세요.",
-    "copilotEmptyMessage": "먼저 메시지를 입력해 주세요."
+    "copilotEmptyMessage": "먼저 메시지를 입력해 주세요.",
+    "interviewPrepPremiumOnly": "AI 면접 준비는 프리미엄 기능입니다.",
+    "tooManyInterviewPrepRequests": "요청이 너무 많습니다. 잠시 후 다시 시도해 주세요.",
+    "interviewPrepMissingTargetRole": "먼저 목표 직무를 추가하세요.",
+    "interviewPrepMissingQuestion": "질문이 없습니다.",
+    "interviewPrepAnswerTooShort": "실제 피드백을 받으려면 더 완전한 답변을 입력하세요 — 몇 단어로는 충분하지 않습니다."
   },
   "copilot": {
     "openLabel": "커리어 코파일럿 열기",
@@ -735,13 +744,14 @@
     "sendLabel": "보내기",
     "thinking": "생각 중…",
     "loadingHistory": "불러오는 중…",
-    "chatIntro": "이력서 개선, 자기소개서 작성, 채용 공고 검색, 커리어 분석 확인 등을 도와드릴 수 있어요.",
+    "chatIntro": "이력서 개선, 자기소개서 작성, 채용 검색, 면접 준비, 커리어 분석 확인 등 무엇이든 요청해 보세요.",
     "chatFailed": "문제가 발생했습니다 — 다시 시도해 주세요.",
     "redirectImproveResume": "이력서 작성 도구 열기",
     "redirectCoverLetter": "자기소개서 작성 도구 열기",
     "redirectFindJobs": "채용 공고 검색",
     "redirectCareerAnalysis": "커리어 코치 보기",
-    "redirectViewApplications": "지원 현황 보기"
+    "redirectViewApplications": "지원 현황 보기",
+    "redirectPrepareInterview": "면접 질문 연습하기"
   },
   "pricing": {
     "pageTitle": "간단하고 투명한 요금제",
@@ -979,5 +989,33 @@
     "generateOne": "자기소개서 생성하기",
     "deleting": "삭제 중…",
     "delete": "삭제"
+  },
+  "interviewPrep": {
+    "breadcrumbDashboard": "대시보드",
+    "breadcrumbCurrent": "AI 면접 준비",
+    "title": "AI 면접 준비",
+    "subtitle": "채용 공고 또는 프로필에 맞춘 실제 면접 질문을 연습하고, 각 답변에 대한 AI 서면 피드백을 받아보세요.",
+    "premiumFeature": "✦ 프리미엄 기능",
+    "unlockTitle": "AI 면접 준비 잠금 해제",
+    "unlockDesc": "어떤 직무든 실제 면접 질문을 연습하고 답변에 대한 즉각적인 서면 피드백을 받아보세요 — GPT-4o 기반.",
+    "upgradeCta": "프리미엄으로 업그레이드 — 월 $19",
+    "roleDetails": "직무 상세정보",
+    "targetJobTitle": "목표 직무",
+    "targetJobTitlePlaceholder": "예: 시니어 프론트엔드 엔지니어",
+    "companyName": "회사명",
+    "optional": "(선택 사항)",
+    "companyNamePlaceholder": "예: Acme Inc.",
+    "jobDescription": "직무 설명",
+    "jobDescriptionHint": "(선택 사항 — 비워두면 프로필을 대신 사용합니다)",
+    "jobDescriptionPlaceholder": "실제 채용 공고 내용을 여기에 붙여넣으세요...",
+    "generateButton": "✦ 질문 생성",
+    "generatingButton": "GPT-4o로 생성 중…",
+    "answerPlaceholder": "여기에 답변을 입력하세요...",
+    "getFeedback": "피드백 받기",
+    "gettingFeedback": "피드백을 받는 중…",
+    "feedbackLabel": "피드백",
+    "generationFailed": "생성 실패",
+    "feedbackFailed": "피드백 실패",
+    "somethingWentWrong": "문제가 발생했습니다"
   }
 }
