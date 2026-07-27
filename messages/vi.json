@@ -1034,7 +1034,15 @@
     "feedbackLabel": "Phản hồi",
     "generationFailed": "Tạo thất bại",
     "feedbackFailed": "Lấy phản hồi thất bại",
-    "somethingWentWrong": "Đã xảy ra lỗi"
+    "somethingWentWrong": "Đã xảy ra lỗi",
+    "modeText": "Chế độ văn bản",
+    "modeVoice": "Chế độ giọng nói",
+    "speaking": "Đang đọc…",
+    "replayQuestion": "🔊 Đọc lại câu hỏi",
+    "stopListening": "⏹ Dừng",
+    "startSpeaking": "🎤 Bắt đầu nói",
+    "redoAnswer": "🔄 Làm lại câu trả lời",
+    "voiceUnavailableError": "Chế độ giọng nói hiện không khả dụng trên trình duyệt của bạn — đã chuyển về chế độ văn bản."
   },
   "applicationTracker": {
     "breadcrumbDashboard": "Bảng điều khiển",

@@ -1034,7 +1034,15 @@
     "feedbackLabel": "Retour",
     "generationFailed": "Échec de la génération",
     "feedbackFailed": "Échec du retour",
-    "somethingWentWrong": "Une erreur s'est produite"
+    "somethingWentWrong": "Une erreur s'est produite",
+    "modeText": "Mode texte",
+    "modeVoice": "Mode vocal",
+    "speaking": "Lecture en cours…",
+    "replayQuestion": "🔊 Réécouter la question",
+    "stopListening": "⏹ Arrêter",
+    "startSpeaking": "🎤 Commencer à parler",
+    "redoAnswer": "🔄 Refaire la réponse",
+    "voiceUnavailableError": "Le mode vocal n'est pas disponible dans votre navigateur en ce moment — retour au mode texte."
   },
   "applicationTracker": {
     "breadcrumbDashboard": "Tableau de bord",

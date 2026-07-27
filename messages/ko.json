@@ -1034,7 +1034,15 @@
     "feedbackLabel": "피드백",
     "generationFailed": "생성 실패",
     "feedbackFailed": "피드백 실패",
-    "somethingWentWrong": "문제가 발생했습니다"
+    "somethingWentWrong": "문제가 발생했습니다",
+    "modeText": "텍스트 모드",
+    "modeVoice": "음성 모드",
+    "speaking": "재생 중…",
+    "replayQuestion": "🔊 질문 다시 듣기",
+    "stopListening": "⏹ 중지",
+    "startSpeaking": "🎤 말하기 시작",
+    "redoAnswer": "🔄 답변 다시 하기",
+    "voiceUnavailableError": "현재 브라우저에서 음성 모드를 사용할 수 없습니다 — 텍스트 모드로 전환되었습니다."
   },
   "applicationTracker": {
     "breadcrumbDashboard": "대시보드",

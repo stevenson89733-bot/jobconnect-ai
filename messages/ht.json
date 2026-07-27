@@ -1034,7 +1034,15 @@
     "feedbackLabel": "Retou",
     "generationFailed": "Jenerasyon echwe",
     "feedbackFailed": "Retou echwe",
-    "somethingWentWrong": "Gen yon bagay ki mal pase"
+    "somethingWentWrong": "Gen yon bagay ki mal pase",
+    "modeText": "Mòd tèks",
+    "modeVoice": "Mòd vwa",
+    "speaking": "Ap li…",
+    "replayQuestion": "🔊 Repase kesyon an",
+    "stopListening": "⏹ Sispann",
+    "startSpeaking": "🎤 Kòmanse pale",
+    "redoAnswer": "🔄 Refè repons lan",
+    "voiceUnavailableError": "Mòd vwa a pa disponib nan navigatè ou kounye a — nou retounen nan mòd tèks."
   },
   "applicationTracker": {
     "breadcrumbDashboard": "Tablo debò",

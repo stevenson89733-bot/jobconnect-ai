@@ -1034,7 +1034,15 @@
     "feedbackLabel": "フィードバック",
     "generationFailed": "生成に失敗しました",
     "feedbackFailed": "フィードバックの取得に失敗しました",
-    "somethingWentWrong": "問題が発生しました"
+    "somethingWentWrong": "問題が発生しました",
+    "modeText": "テキストモード",
+    "modeVoice": "音声モード",
+    "speaking": "読み上げ中…",
+    "replayQuestion": "🔊 質問をもう一度聞く",
+    "stopListening": "⏹ 停止",
+    "startSpeaking": "🎤 話し始める",
+    "redoAnswer": "🔄 回答をやり直す",
+    "voiceUnavailableError": "現在お使いのブラウザでは音声モードを利用できません — テキストモードに戻りました。"
   },
   "applicationTracker": {
     "breadcrumbDashboard": "ダッシュボード",

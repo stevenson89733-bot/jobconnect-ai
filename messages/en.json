@@ -1034,7 +1034,15 @@
     "feedbackLabel": "Feedback",
     "generationFailed": "Generation failed",
     "feedbackFailed": "Feedback failed",
-    "somethingWentWrong": "Something went wrong"
+    "somethingWentWrong": "Something went wrong",
+    "modeText": "Text mode",
+    "modeVoice": "Voice mode",
+    "speaking": "Speaking…",
+    "replayQuestion": "🔊 Replay question",
+    "stopListening": "⏹ Stop",
+    "startSpeaking": "🎤 Start speaking",
+    "redoAnswer": "🔄 Redo answer",
+    "voiceUnavailableError": "Voice mode isn't available in your browser right now — switched back to text mode."
   },
   "applicationTracker": {
     "breadcrumbDashboard": "Dashboard",

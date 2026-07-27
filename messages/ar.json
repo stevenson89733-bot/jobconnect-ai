@@ -1034,7 +1034,15 @@
     "feedbackLabel": "الملاحظات",
     "generationFailed": "فشل التوليد",
     "feedbackFailed": "فشل الحصول على الملاحظات",
-    "somethingWentWrong": "حدث خطأ ما"
+    "somethingWentWrong": "حدث خطأ ما",
+    "modeText": "الوضع النصي",
+    "modeVoice": "الوضع الصوتي",
+    "speaking": "جارٍ القراءة…",
+    "replayQuestion": "🔊 إعادة تشغيل السؤال",
+    "stopListening": "⏹ إيقاف",
+    "startSpeaking": "🎤 ابدأ الكلام",
+    "redoAnswer": "🔄 إعادة الإجابة",
+    "voiceUnavailableError": "الوضع الصوتي غير متاح في متصفحك حاليًا — تم الرجوع إلى الوضع النصي."
   },
   "applicationTracker": {
     "breadcrumbDashboard": "لوحة التحكم",

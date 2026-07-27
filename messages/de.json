@@ -1034,7 +1034,15 @@
     "feedbackLabel": "Feedback",
     "generationFailed": "Generierung fehlgeschlagen",
     "feedbackFailed": "Feedback fehlgeschlagen",
-    "somethingWentWrong": "Etwas ist schiefgelaufen"
+    "somethingWentWrong": "Etwas ist schiefgelaufen",
+    "modeText": "Textmodus",
+    "modeVoice": "Sprachmodus",
+    "speaking": "Wird vorgelesen…",
+    "replayQuestion": "🔊 Frage erneut abspielen",
+    "stopListening": "⏹ Stopp",
+    "startSpeaking": "🎤 Sprechen starten",
+    "redoAnswer": "🔄 Antwort wiederholen",
+    "voiceUnavailableError": "Der Sprachmodus ist in deinem Browser gerade nicht verfügbar — zurück zum Textmodus."
   },
   "applicationTracker": {
     "breadcrumbDashboard": "Dashboard",

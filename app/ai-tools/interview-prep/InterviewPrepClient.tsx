@@ -1,8 +1,10 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { sanitizeTargetRole, stripTargetRoleNewlines, MAX_TARGET_ROLE_LENGTH } from '@/lib/ai/resumeGuard'
+import { getSpeechLang } from '@/lib/speechLocale'
+import type { Locale } from '@/lib/i18n/config'
 
 type QaState = {
   question: string
@@ -11,6 +13,8 @@ type QaState = {
   feedbackError: string
   loadingFeedback: boolean
 }
+
+type Mode = 'text' | 'voice'
 
 function PremiumSkeleton() {
   return <div className="max-w-5xl mx-auto px-6 py-10 animate-pulse h-96" />
@@ -32,6 +36,9 @@ export default function InterviewPrepClient({
   initialSkills?: string
 }) {
   const t = useTranslations('interviewPrep')
+  const locale = useLocale() as Locale
+  const speechLang = getSpeechLang(locale)
+
   const [mounted, setMounted] = useState(false)
   const [targetRole, setTargetRole] = useState(initialTargetRole)
   const [company, setCompany] = useState(initialCompany)
@@ -47,7 +54,32 @@ export default function InterviewPrepClient({
   const [generateError, setGenerateError] = useState('')
   const [qas, setQas] = useState<QaState[] | null>(null)
 
-  useEffect(() => setMounted(true), [])
+  // Voice mode — only ever offered if the browser's Web Speech API is
+  // actually present AND the active locale has a real BCP-47 mapping (see
+  // lib/speechLocale.ts — deliberately no mapping for 'ht'). Feature-detected
+  // on mount rather than assumed, so Firefox/older Safari silently keep only
+  // the text mode that already works, instead of a half-broken voice toggle.
+  const [voiceSupported, setVoiceSupported] = useState(false)
+  const [mode, setMode] = useState<Mode>('text')
+  const [voiceError, setVoiceError] = useState('')
+  const [listeningIndex, setListeningIndex] = useState<number | null>(null)
+  const [speakingIndex, setSpeakingIndex] = useState<number | null>(null)
+  const recognitionRef = useRef<any>(null)
+
+  useEffect(() => {
+    setMounted(true)
+    const hasRecognition = typeof window !== 'undefined' && !!((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition)
+    const hasSynthesis = typeof window !== 'undefined' && 'speechSynthesis' in window
+    setVoiceSupported(hasRecognition && hasSynthesis && !!speechLang)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      recognitionRef.current?.stop?.()
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) window.speechSynthesis.cancel()
+    }
+  }, [])
 
   if (!mounted) return <PremiumSkeleton />
 
@@ -96,6 +128,60 @@ export default function InterviewPrepClient({
       const message = err instanceof Error ? err.message : t('feedbackFailed')
       setQas((prev) => prev && prev.map((q, i) => (i === index ? { ...q, feedbackError: message, loadingFeedback: false } : q)))
     }
+  }
+
+  function speakQuestion(index: number, text: string) {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return
+    window.speechSynthesis.cancel()
+    const utterance = new SpeechSynthesisUtterance(text)
+    if (speechLang) utterance.lang = speechLang
+    utterance.onstart = () => setSpeakingIndex(index)
+    utterance.onend = () => setSpeakingIndex(null)
+    utterance.onerror = () => setSpeakingIndex(null)
+    window.speechSynthesis.speak(utterance)
+  }
+
+  function startListening(index: number) {
+    const SpeechRecognitionCtor = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+    if (!SpeechRecognitionCtor || !speechLang) return
+
+    setVoiceError('')
+    const recognition = new SpeechRecognitionCtor()
+    recognition.lang = speechLang
+    recognition.continuous = false
+    recognition.interimResults = true
+
+    recognition.onresult = (event: any) => {
+      let transcript = ''
+      for (let i = 0; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript
+      }
+      setAnswer(index, transcript)
+    }
+
+    recognition.onerror = (event: any) => {
+      const criticalErrors = ['language-not-supported', 'not-allowed', 'service-not-allowed']
+      if (criticalErrors.includes(event.error)) {
+        // Same reasoning as the initial feature-detection: a browser that
+        // claims support but fails at runtime is treated exactly like one
+        // with no support at all — fall back to text mode honestly rather
+        // than leaving a broken voice toggle visible.
+        setVoiceSupported(false)
+        setMode('text')
+        setVoiceError(t('voiceUnavailableError'))
+      }
+      setListeningIndex(null)
+    }
+
+    recognition.onend = () => setListeningIndex(null)
+
+    recognitionRef.current = recognition
+    setListeningIndex(index)
+    recognition.start()
+  }
+
+  function stopListening() {
+    recognitionRef.current?.stop?.()
   }
 
   return (
@@ -182,18 +268,89 @@ export default function InterviewPrepClient({
 
           {qas && (
             <div className="space-y-5">
+              {voiceSupported && (
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setMode('text')}
+                    className={`flex-1 px-4 py-2 rounded-lg text-sm font-semibold border transition-colors ${
+                      mode === 'text'
+                        ? 'bg-primary text-white border-primary'
+                        : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-300 dark:border-slate-700 hover:border-primary/50'
+                    }`}
+                  >
+                    {t('modeText')}
+                  </button>
+                  <button
+                    onClick={() => setMode('voice')}
+                    className={`flex-1 px-4 py-2 rounded-lg text-sm font-semibold border transition-colors ${
+                      mode === 'voice'
+                        ? 'bg-primary text-white border-primary'
+                        : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-300 dark:border-slate-700 hover:border-primary/50'
+                    }`}
+                  >
+                    {t('modeVoice')}
+                  </button>
+                </div>
+              )}
+
+              {voiceError && <p className="text-amber-600 dark:text-amber-400 text-sm">{voiceError}</p>}
+
               {qas.map((qa, i) => (
                 <div key={i} className="card space-y-3">
-                  <p className="font-medium text-slate-900 dark:text-white">
-                    <span className="text-primary dark:text-blue-400">{i + 1}.</span> {qa.question}
-                  </p>
-                  <textarea
-                    value={qa.answer}
-                    onChange={(e) => setAnswer(i, e.target.value)}
-                    rows={4}
-                    placeholder={t('answerPlaceholder')}
-                    className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary resize-none"
-                  />
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="font-medium text-slate-900 dark:text-white">
+                      <span className="text-primary dark:text-blue-400">{i + 1}.</span> {qa.question}
+                    </p>
+                    {mode === 'voice' && (
+                      <button
+                        type="button"
+                        onClick={() => speakQuestion(i, qa.question)}
+                        disabled={speakingIndex === i}
+                        className="shrink-0 text-xs text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 disabled:opacity-50"
+                      >
+                        {speakingIndex === i ? t('speaking') : t('replayQuestion')}
+                      </button>
+                    )}
+                  </div>
+
+                  {mode === 'voice' ? (
+                    <div className="space-y-2">
+                      {qa.answer && (
+                        <p className="text-sm text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 whitespace-pre-line">
+                          {qa.answer}
+                        </p>
+                      )}
+                      <div className="flex flex-wrap gap-2">
+                        {listeningIndex === i ? (
+                          <button
+                            type="button"
+                            onClick={stopListening}
+                            className="btn-outline text-sm px-4 py-2 border-red-400 text-red-600 dark:text-red-400"
+                          >
+                            {t('stopListening')}
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => startListening(i)}
+                            disabled={listeningIndex !== null}
+                            className="btn-outline text-sm px-4 py-2 disabled:opacity-50"
+                          >
+                            {qa.answer ? t('redoAnswer') : t('startSpeaking')}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <textarea
+                      value={qa.answer}
+                      onChange={(e) => setAnswer(i, e.target.value)}
+                      rows={4}
+                      placeholder={t('answerPlaceholder')}
+                      className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary resize-none"
+                    />
+                  )}
+
                   <button
                     onClick={() => handleGetFeedback(i)}
                     disabled={qa.loadingFeedback || !qa.answer.trim()}

@@ -1034,7 +1034,15 @@
     "feedbackLabel": "Feedback",
     "generationFailed": "Falha na geração",
     "feedbackFailed": "Falha ao obter feedback",
-    "somethingWentWrong": "Algo deu errado"
+    "somethingWentWrong": "Algo deu errado",
+    "modeText": "Modo texto",
+    "modeVoice": "Modo voz",
+    "speaking": "Reproduzindo…",
+    "replayQuestion": "🔊 Repetir pergunta",
+    "stopListening": "⏹ Parar",
+    "startSpeaking": "🎤 Começar a falar",
+    "redoAnswer": "🔄 Refazer resposta",
+    "voiceUnavailableError": "O modo voz não está disponível no seu navegador agora — voltamos ao modo texto."
   },
   "applicationTracker": {
     "breadcrumbDashboard": "Painel",

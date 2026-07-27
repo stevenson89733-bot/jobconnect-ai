@@ -1034,7 +1034,15 @@
     "feedbackLabel": "反馈",
     "generationFailed": "生成失败",
     "feedbackFailed": "获取反馈失败",
-    "somethingWentWrong": "出了点问题"
+    "somethingWentWrong": "出了点问题",
+    "modeText": "文字模式",
+    "modeVoice": "语音模式",
+    "speaking": "正在朗读…",
+    "replayQuestion": "🔊 重听问题",
+    "stopListening": "⏹ 停止",
+    "startSpeaking": "🎤 开始说话",
+    "redoAnswer": "🔄 重新回答",
+    "voiceUnavailableError": "您的浏览器目前不支持语音模式 — 已切换回文字模式。"
   },
   "applicationTracker": {
     "breadcrumbDashboard": "仪表盘",
