@@ -6,13 +6,30 @@ module.exports = {
       colors: {
         background: '#0F172A',
         card: '#1E293B',
-        primary: '#2563EB',
-        accent: '#F97316',
+        // Brand palette (landing-page redesign) — primary/accent were
+        // already used site-wide (buttons, badges, premium-feature
+        // accents), so these are a values realignment, not new tokens.
+        // primaryDark/primarySoft/accentSoft/mint/mintSoft are net-new
+        // additions, no prior usage anywhere to conflict with.
+        primary: '#2E5CF6',
+        primaryDark: '#1E3FCC',
+        primarySoft: '#EAEFFF',
+        accent: '#F0663A',
+        accentSoft: '#FFEEE7',
+        // Status/success only — not a general-purpose color, see Badge's
+        // "success" variant and any real status indicator (e.g. remote-
+        // friendly, offer received).
+        mint: '#17A673',
+        mintSoft: '#E4F7EE',
+        // New landing-only body-copy tone — deliberately not retrofitted
+        // onto the existing text-slate-600 used everywhere else in the
+        // app (out of scope for this lot).
+        body: '#55627A',
         brand: {
           50: '#eff6ff',
           100: '#dbeafe',
-          500: '#2563EB',
-          600: '#1d4ed8',
+          500: '#2E5CF6',
+          600: '#1E3FCC',
         }
       },
       fontFamily: {
