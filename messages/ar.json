@@ -282,7 +282,8 @@
     "linkedinOptimizerCardTitle": "محسّن LinkedIn",
     "linkedinOptimizerCardDesc": "احصل على ملاحظات حول ملفك الشخصي أو أنشئ واحدًا من الصفر.",
     "skillGapCardTitle": "فجوة المهارات",
-    "skillGapCardDesc": "اطّلع على المهارات التي تملكها وتلك التي يجب تطويرها."
+    "skillGapCardDesc": "اطّلع على المهارات التي تملكها وتلك التي يجب تطويرها.",
+    "invitedByEmployer": "تمت الدعوة من قبل صاحب العمل"
   },
   "recruiter": {
     "dashboardTitle": "لوحة تحكم صاحب العمل",
@@ -758,7 +759,8 @@
     "tooManySkillGapRequests": "عدد كبير جدًا من الطلبات. يرجى المحاولة مرة أخرى بعد قليل.",
     "skillGapNotEnoughExperience": "أضف مزيدًا من التفاصيل إلى خبرة ملفك الشخصي — بضع كلمات لا تكفي لمقارنة حقيقية وغير ملفّقة.",
     "skillGapMissingTargetRole": "أضف وظيفة مستهدفة أولًا.",
-    "skillGapJobNotFound": "هذا الإعلان الوظيفي لم يعد متاحًا."
+    "skillGapJobNotFound": "هذا الإعلان الوظيفي لم يعد متاحًا.",
+    "onlyInviteForOwnJob": "يمكنك فعل هذا فقط لوظائفك الخاصة."
   },
   "copilot": {
     "openLabel": "فتح المساعد الوظيفي",
@@ -946,7 +948,14 @@
     "noCandidatesYet": "لا يوجد مرشحون بعد.",
     "previous": "→ السابق",
     "pageOf": "صفحة {page} من {totalPages}",
-    "next": "التالي ←"
+    "next": "التالي ←",
+    "markAsInterview": "وضع علامة مقابلة",
+    "selectJobPrompt": "لأي وظيفة؟",
+    "noActiveJobsWarning": "انشر وظيفة نشطة أولًا لدعوة المرشحين لمقابلة.",
+    "confirmInterviewInvite": "تأكيد",
+    "interviewInviteSaving": "جارٍ الحفظ…",
+    "interviewInviteSuccess": "تم وضع علامة مقابلة ✓",
+    "cancel": "إلغاء"
   },
   "dashboardHub": {
     "title": "مرحبًا بك في JobConnect AI",

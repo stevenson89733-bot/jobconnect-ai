@@ -282,7 +282,8 @@
     "linkedinOptimizerCardTitle": "LinkedIn 优化器",
     "linkedinOptimizerCardDesc": "获取档案反馈，或从零生成一份。",
     "skillGapCardTitle": "技能差距分析",
-    "skillGapCardDesc": "查看您已具备的技能和需要发展的技能。"
+    "skillGapCardDesc": "查看您已具备的技能和需要发展的技能。",
+    "invitedByEmployer": "由雇主邀请"
   },
   "recruiter": {
     "dashboardTitle": "雇主控制台",
@@ -758,7 +759,8 @@
     "tooManySkillGapRequests": "请求过多，请稍后再试。",
     "skillGapNotEnoughExperience": "请为您档案中的经历添加更多细节 — 寥寥数语不足以进行真实、非虚构的比较。",
     "skillGapMissingTargetRole": "请先添加目标职位。",
-    "skillGapJobNotFound": "此职位信息已不再可用。"
+    "skillGapJobNotFound": "此职位信息已不再可用。",
+    "onlyInviteForOwnJob": "您只能对自己发布的职位执行此操作。"
   },
   "copilot": {
     "openLabel": "打开职业副驾",
@@ -946,7 +948,14 @@
     "noCandidatesYet": "暂无候选人。",
     "previous": "← 上一页",
     "pageOf": "第 {page} / {totalPages} 页",
-    "next": "下一页 →"
+    "next": "下一页 →",
+    "markAsInterview": "标记为面试",
+    "selectJobPrompt": "针对哪个职位？",
+    "noActiveJobsWarning": "请先发布一个有效职位，才能邀请候选人面试。",
+    "confirmInterviewInvite": "确认",
+    "interviewInviteSaving": "保存中…",
+    "interviewInviteSuccess": "已标记为面试 ✓",
+    "cancel": "取消"
   },
   "dashboardHub": {
     "title": "欢迎使用 JobConnect AI",

@@ -282,7 +282,8 @@
     "linkedinOptimizerCardTitle": "Optimizatè LinkedIn",
     "linkedinOptimizerCardDesc": "Resevwa retou sou pwofil ou oswa jenere youn nan zewo.",
     "skillGapCardTitle": "Ekar Konpetans",
-    "skillGapCardDesc": "Gade konpetans ou genyen ak sa ou bezwen devlope."
+    "skillGapCardDesc": "Gade konpetans ou genyen ak sa ou bezwen devlope.",
+    "invitedByEmployer": "Envite pa anplwayè a"
   },
   "recruiter": {
     "dashboardTitle": "Tablo Bò Anplwayè",
@@ -758,7 +759,8 @@
     "tooManySkillGapRequests": "Twòp demann. Tanpri eseye ankò nan yon ti moman.",
     "skillGapNotEnoughExperience": "Ajoute yon ti kras plis detay nan eksperyans pwofil ou — kèk mo pa ase pou yon vrè konparezon, ki pa envante.",
     "skillGapMissingTargetRole": "Ajoute yon pòs destinasyon dabò.",
-    "skillGapJobNotFound": "Ofrèdanplwa sa a pa disponib ankò."
+    "skillGapJobNotFound": "Ofrèdanplwa sa a pa disponib ankò.",
+    "onlyInviteForOwnJob": "Ou ka fè sa sèlman pou pwòp ofrèdanplwa ou yo."
   },
   "copilot": {
     "openLabel": "Ouvri Copilòt Karyè",
@@ -946,7 +948,14 @@
     "noCandidatesYet": "Pa gen kandida pou kounye a.",
     "previous": "← Anvan",
     "pageOf": "Paj {page} sou {totalPages}",
-    "next": "Apre →"
+    "next": "Apre →",
+    "markAsInterview": "Make antrevyou",
+    "selectJobPrompt": "Pou ki djòb?",
+    "noActiveJobsWarning": "Pibliye yon ofrèdanplwa aktif dabò pou envite kandida nan entèvyou.",
+    "confirmInterviewInvite": "Konfime",
+    "interviewInviteSaving": "Ap anrejistre…",
+    "interviewInviteSuccess": "Make antrevyou ✓",
+    "cancel": "Anile"
   },
   "dashboardHub": {
     "title": "Byenveni nan JobConnect AI",

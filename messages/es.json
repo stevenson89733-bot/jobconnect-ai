@@ -282,7 +282,8 @@
     "linkedinOptimizerCardTitle": "Optimizador de LinkedIn",
     "linkedinOptimizerCardDesc": "Recibe comentarios sobre tu perfil o genera uno desde cero.",
     "skillGapCardTitle": "Brecha de habilidades",
-    "skillGapCardDesc": "Mira las habilidades que tienes y las que debes desarrollar."
+    "skillGapCardDesc": "Mira las habilidades que tienes y las que debes desarrollar.",
+    "invitedByEmployer": "Invitado por el empleador"
   },
   "recruiter": {
     "dashboardTitle": "Panel del empleador",
@@ -758,7 +759,8 @@
     "tooManySkillGapRequests": "Demasiadas solicitudes. Inténtalo de nuevo en un momento.",
     "skillGapNotEnoughExperience": "Agrega un poco más de detalle a la experiencia de tu perfil — unas pocas palabras no son suficientes para una comparación real, no fabricada.",
     "skillGapMissingTargetRole": "Agrega primero un puesto de destino.",
-    "skillGapJobNotFound": "Esta oferta ya no está disponible."
+    "skillGapJobNotFound": "Esta oferta ya no está disponible.",
+    "onlyInviteForOwnJob": "Solo puedes hacer esto para tus propias ofertas."
   },
   "copilot": {
     "openLabel": "Abrir Copiloto de Carrera",
@@ -946,7 +948,14 @@
     "noCandidatesYet": "Aún no hay candidatos.",
     "previous": "← Anterior",
     "pageOf": "Página {page} de {totalPages}",
-    "next": "Siguiente →"
+    "next": "Siguiente →",
+    "markAsInterview": "Marcar como entrevista",
+    "selectJobPrompt": "¿Para qué puesto?",
+    "noActiveJobsWarning": "Publica una oferta activa para poder invitar a candidatos a una entrevista.",
+    "confirmInterviewInvite": "Confirmar",
+    "interviewInviteSaving": "Guardando…",
+    "interviewInviteSuccess": "Marcado como entrevista ✓",
+    "cancel": "Cancelar"
   },
   "dashboardHub": {
     "title": "Bienvenido a JobConnect AI",

@@ -282,7 +282,8 @@
     "linkedinOptimizerCardTitle": "LinkedIn Optimizer",
     "linkedinOptimizerCardDesc": "Get feedback on your profile or generate one from scratch.",
     "skillGapCardTitle": "Mobility Skill-Gap",
-    "skillGapCardDesc": "See what skills you have and what to develop for your next move."
+    "skillGapCardDesc": "See what skills you have and what to develop for your next move.",
+    "invitedByEmployer": "Invited by employer"
   },
   "recruiter": {
     "dashboardTitle": "Employer Dashboard",
@@ -758,7 +759,8 @@
     "tooManySkillGapRequests": "Too many requests. Please try again in a bit.",
     "skillGapNotEnoughExperience": "Add a bit more detail to your profile's experience — a few words isn't enough for a real, non-fabricated comparison.",
     "skillGapMissingTargetRole": "Add a destination role first.",
-    "skillGapJobNotFound": "This job listing is no longer available."
+    "skillGapJobNotFound": "This job listing is no longer available.",
+    "onlyInviteForOwnJob": "You can only do this for your own job postings."
   },
   "copilot": {
     "openLabel": "Open Career Copilot",
@@ -946,7 +948,14 @@
     "noCandidatesYet": "No candidates yet.",
     "previous": "← Previous",
     "pageOf": "Page {page} of {totalPages}",
-    "next": "Next →"
+    "next": "Next →",
+    "markAsInterview": "Mark as interview",
+    "selectJobPrompt": "Which job is this for?",
+    "noActiveJobsWarning": "Post an active job first to invite candidates to interview.",
+    "confirmInterviewInvite": "Confirm",
+    "interviewInviteSaving": "Saving…",
+    "interviewInviteSuccess": "Marked as interview ✓",
+    "cancel": "Cancel"
   },
   "dashboardHub": {
     "title": "Welcome to JobConnect AI",

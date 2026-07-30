@@ -13,6 +13,7 @@ export type TrackerRow = {
   status: string
   status_updated_at: string | null
   created_at: string
+  initiated_by_employer: boolean
   title: string
   company_name: string
 }
@@ -107,6 +108,9 @@ export default function ApplicationsTrackerClient({ applications }: { applicatio
                         <Badge variant={APPLICATION_STATUS_VARIANT[app.status as ApplicationStatus] ?? 'default'}>
                           {tStatus(app.status as ApplicationStatus)}
                         </Badge>
+                        {app.initiated_by_employer && (
+                          <div className="text-[11px] text-primary dark:text-blue-400 mt-1">{tCandidate('invitedByEmployer')}</div>
+                        )}
                         {app.status !== 'submitted' && app.status_updated_at && (
                           <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">
                             {timeAgo(app.status_updated_at, locale, 'verbose')}

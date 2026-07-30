@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
+import InterviewInviteButton, { type EmployerJobOption } from '@/components/candidates/InterviewInviteButton'
 
 export type CandidateCard = {
   user_id: string
@@ -29,7 +30,15 @@ function initialsOf(name: string) {
     .join('') || '?'
 }
 
-function CandidateCardItem({ candidate, t }: { candidate: CandidateCard; t: Awaited<ReturnType<typeof getTranslations<'candidatesPage'>>> }) {
+function CandidateCardItem({
+  candidate,
+  t,
+  employerJobs,
+}: {
+  candidate: CandidateCard
+  t: Awaited<ReturnType<typeof getTranslations<'candidatesPage'>>>
+  employerJobs: EmployerJobOption[]
+}) {
   const name = candidate.full_name?.trim() || t('candidateFallback')
   const title = candidate.title?.trim()
   const location = candidate.location?.trim()
@@ -102,9 +111,12 @@ function CandidateCardItem({ candidate, t }: { candidate: CandidateCard; t: Awai
         </div>
       )}
 
-      <Link href={`/candidate/${candidate.user_id}`} className="btn-outline text-xs py-2 text-center mt-auto">
-        {t('viewProfile')}
-      </Link>
+      <div className="flex flex-col gap-2 mt-auto">
+        <Link href={`/candidate/${candidate.user_id}`} className="btn-outline text-xs py-2 text-center">
+          {t('viewProfile')}
+        </Link>
+        <InterviewInviteButton candidateId={candidate.user_id} jobs={employerJobs} />
+      </div>
     </div>
   )
 }
@@ -114,11 +126,13 @@ export default async function CandidatesListView({
   page,
   totalPages,
   total,
+  employerJobs,
 }: {
   candidates: CandidateCard[]
   page: number
   totalPages: number
   total: number
+  employerJobs: EmployerJobOption[]
 }) {
   const t = await getTranslations('candidatesPage')
 
@@ -142,7 +156,7 @@ export default async function CandidatesListView({
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
           {candidates.map((c) => (
-            <CandidateCardItem key={c.user_id} candidate={c} t={t} />
+            <CandidateCardItem key={c.user_id} candidate={c} t={t} employerJobs={employerJobs} />
           ))}
         </div>
       )}

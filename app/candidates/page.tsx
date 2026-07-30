@@ -22,25 +22,37 @@ export default async function CandidatesPage({ searchParams }: { searchParams: {
 
   let candidates: CandidateCard[] = []
   let total = 0
+  // Real, active job postings for this employer — the "mark as interview"
+  // picker can only ever attach to one of these (applications.job_id is
+  // NOT NULL with a real FK, so there's no job-less "interview" concept).
+  let employerJobs: { id: string; title: string }[] = []
 
   try {
     // Normal RLS-respecting client — the "Employers can view candidate
     // profiles" policy enforces the employer check at the database level.
     const supabase = createClient()
-    const { data, count } = await supabase
-      .from('profiles')
-      .select(DISPLAY_FIELDS, { count: 'exact' })
-      .eq('role', 'candidate')
-      .order('created_at', { ascending: false })
-      .range(from, to)
+    const { data: { user } } = await supabase.auth.getUser()
+
+    const [{ data, count }, { data: jobsData }] = await Promise.all([
+      supabase
+        .from('profiles')
+        .select(DISPLAY_FIELDS, { count: 'exact' })
+        .eq('role', 'candidate')
+        .order('created_at', { ascending: false })
+        .range(from, to),
+      user
+        ? supabase.from('jobs').select('id, title').eq('posted_by', user.id).eq('is_active', true).order('created_at', { ascending: false })
+        : Promise.resolve({ data: null }),
+    ])
 
     candidates = (data as unknown as CandidateCard[] | null) ?? []
     total = count ?? 0
+    employerJobs = jobsData ?? []
   } catch {
     // Supabase unavailable — render an empty list rather than a 500
   }
 
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE))
 
-  return <CandidatesListView candidates={candidates} page={page} totalPages={totalPages} total={total} />
+  return <CandidatesListView candidates={candidates} page={page} totalPages={totalPages} total={total} employerJobs={employerJobs} />
 }

@@ -282,7 +282,8 @@
     "linkedinOptimizerCardTitle": "LinkedIn オプティマイザー",
     "linkedinOptimizerCardDesc": "プロフィールへのフィードバックを受けるか、ゼロから生成できます。",
     "skillGapCardTitle": "スキルギャップ分析",
-    "skillGapCardDesc": "持っているスキルと伸ばすべきスキルを確認できます。"
+    "skillGapCardDesc": "持っているスキルと伸ばすべきスキルを確認できます。",
+    "invitedByEmployer": "採用担当者からの招待"
   },
   "recruiter": {
     "dashboardTitle": "採用担当者ダッシュボード",
@@ -758,7 +759,8 @@
     "tooManySkillGapRequests": "リクエストが多すぎます。しばらくしてから再度お試しください。",
     "skillGapNotEnoughExperience": "プロフィールの職務経歴にもう少し詳細を追加してください — 数語では実際の、捏造されていない比較には不十分です。",
     "skillGapMissingTargetRole": "まず目標職種を追加してください。",
-    "skillGapJobNotFound": "この求人情報は現在利用できません。"
+    "skillGapJobNotFound": "この求人情報は現在利用できません。",
+    "onlyInviteForOwnJob": "これは自分の求人に対してのみ行えます。"
   },
   "copilot": {
     "openLabel": "キャリアコパイロットを開く",
@@ -946,7 +948,14 @@
     "noCandidatesYet": "まだ候補者がいません。",
     "previous": "← 前へ",
     "pageOf": "{totalPages}ページ中{page}ページ目",
-    "next": "次へ →"
+    "next": "次へ →",
+    "markAsInterview": "面接としてマーク",
+    "selectJobPrompt": "どの求人についてですか？",
+    "noActiveJobsWarning": "候補者を面接に招待するには、まず有効な求人を掲載してください。",
+    "confirmInterviewInvite": "確定",
+    "interviewInviteSaving": "保存中…",
+    "interviewInviteSuccess": "面接としてマークしました ✓",
+    "cancel": "キャンセル"
   },
   "dashboardHub": {
     "title": "JobConnect AIへようこそ",

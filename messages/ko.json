@@ -282,7 +282,8 @@
     "linkedinOptimizerCardTitle": "LinkedIn 최적화",
     "linkedinOptimizerCardDesc": "프로필에 대한 피드백을 받거나 처음부터 생성하세요.",
     "skillGapCardTitle": "역량 격차 분석",
-    "skillGapCardDesc": "보유한 역량과 개발해야 할 역량을 확인하세요."
+    "skillGapCardDesc": "보유한 역량과 개발해야 할 역량을 확인하세요.",
+    "invitedByEmployer": "고용주가 초대함"
   },
   "recruiter": {
     "dashboardTitle": "채용 담당자 대시보드",
@@ -758,7 +759,8 @@
     "tooManySkillGapRequests": "요청이 너무 많습니다. 잠시 후 다시 시도해 주세요.",
     "skillGapNotEnoughExperience": "프로필의 경력에 조금 더 세부 정보를 추가하세요 — 몇 단어로는 실제적이고 조작되지 않은 비교에 충분하지 않습니다.",
     "skillGapMissingTargetRole": "먼저 목표 직무를 추가하세요.",
-    "skillGapJobNotFound": "이 채용 공고는 더 이상 이용할 수 없습니다."
+    "skillGapJobNotFound": "이 채용 공고는 더 이상 이용할 수 없습니다.",
+    "onlyInviteForOwnJob": "본인의 채용 공고에 대해서만 이 작업을 할 수 있습니다."
   },
   "copilot": {
     "openLabel": "커리어 코파일럿 열기",
@@ -946,7 +948,14 @@
     "noCandidatesYet": "아직 등록된 구직자가 없습니다.",
     "previous": "← 이전",
     "pageOf": "{totalPages}페이지 중 {page}페이지",
-    "next": "다음 →"
+    "next": "다음 →",
+    "markAsInterview": "면접으로 표시",
+    "selectJobPrompt": "어떤 채용 공고인가요?",
+    "noActiveJobsWarning": "후보자를 면접에 초대하려면 먼저 활성 채용 공고를 게시하세요.",
+    "confirmInterviewInvite": "확인",
+    "interviewInviteSaving": "저장 중…",
+    "interviewInviteSuccess": "면접으로 표시됨 ✓",
+    "cancel": "취소"
   },
   "dashboardHub": {
     "title": "JobConnect AI에 오신 것을 환영합니다",

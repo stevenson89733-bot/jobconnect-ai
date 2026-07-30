@@ -39,6 +39,7 @@ type RawApplicationRow = {
   status: string
   status_updated_at: string | null
   created_at: string
+  initiated_by_employer: boolean | null
   jobs: JobRef[] | JobRef | null
 }
 
@@ -84,7 +85,7 @@ export default async function CandidateDashboard() {
         // three.
         supabase.from('applications').select('job_id, status, status_updated_at, created_at').eq('candidate_id', user.id),
         supabase.from('applications')
-          .select('id, status, status_updated_at, created_at, jobs!job_id(title, company_name)')
+          .select('id, status, status_updated_at, created_at, initiated_by_employer, jobs!job_id(title, company_name)')
           .eq('candidate_id', user.id)
           .order('created_at', { ascending: false })
           .limit(5),
@@ -98,6 +99,7 @@ export default async function CandidateDashboard() {
         status: row.status,
         status_updated_at: row.status_updated_at,
         created_at: row.created_at,
+        initiated_by_employer: row.initiated_by_employer ?? false,
         ...jobInfo(row),
       }))
 

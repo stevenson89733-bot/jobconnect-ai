@@ -282,7 +282,8 @@
     "linkedinOptimizerCardTitle": "Tối Ưu LinkedIn",
     "linkedinOptimizerCardDesc": "Nhận phản hồi về hồ sơ của bạn hoặc tạo một hồ sơ mới.",
     "skillGapCardTitle": "Khoảng Cách Kỹ Năng",
-    "skillGapCardDesc": "Xem kỹ năng bạn có và kỹ năng cần phát triển."
+    "skillGapCardDesc": "Xem kỹ năng bạn có và kỹ năng cần phát triển.",
+    "invitedByEmployer": "Được nhà tuyển dụng mời"
   },
   "recruiter": {
     "dashboardTitle": "Bảng điều khiển Nhà tuyển dụng",
@@ -758,7 +759,8 @@
     "tooManySkillGapRequests": "Quá nhiều yêu cầu. Vui lòng thử lại sau ít phút.",
     "skillGapNotEnoughExperience": "Hãy thêm chi tiết hơn vào kinh nghiệm trong hồ sơ của bạn — vài từ là không đủ cho một so sánh thực tế, không bịa đặt.",
     "skillGapMissingTargetRole": "Hãy thêm vị trí mục tiêu trước.",
-    "skillGapJobNotFound": "Tin tuyển dụng này không còn khả dụng."
+    "skillGapJobNotFound": "Tin tuyển dụng này không còn khả dụng.",
+    "onlyInviteForOwnJob": "Bạn chỉ có thể làm điều này cho tin tuyển dụng của chính mình."
   },
   "copilot": {
     "openLabel": "Mở Trợ Lý Sự Nghiệp",
@@ -946,7 +948,14 @@
     "noCandidatesYet": "Chưa có ứng viên nào.",
     "previous": "← Trước",
     "pageOf": "Trang {page} / {totalPages}",
-    "next": "Tiếp →"
+    "next": "Tiếp →",
+    "markAsInterview": "Đánh dấu phỏng vấn",
+    "selectJobPrompt": "Cho vị trí nào?",
+    "noActiveJobsWarning": "Hãy đăng một tin tuyển dụng đang hoạt động trước để mời ứng viên phỏng vấn.",
+    "confirmInterviewInvite": "Xác nhận",
+    "interviewInviteSaving": "Đang lưu…",
+    "interviewInviteSuccess": "Đã đánh dấu phỏng vấn ✓",
+    "cancel": "Hủy"
   },
   "dashboardHub": {
     "title": "Chào mừng đến với JobConnect AI",
