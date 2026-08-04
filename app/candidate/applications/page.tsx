@@ -10,6 +10,8 @@ type RawRow = {
   status_updated_at: string | null
   created_at: string
   initiated_by_employer: boolean | null
+  scheduled_at: string | null
+  scheduled_timezone: string | null
   jobs: JobRef[] | JobRef | null
 }
 
@@ -27,7 +29,7 @@ export default async function ApplicationsTrackerPage() {
     if (user) {
       const { data } = await supabase
         .from('applications')
-        .select('id, status, status_updated_at, created_at, initiated_by_employer, jobs!job_id(title, company_name)')
+        .select('id, status, status_updated_at, created_at, initiated_by_employer, scheduled_at, scheduled_timezone, jobs!job_id(title, company_name)')
         .eq('candidate_id', user.id)
         .order('created_at', { ascending: false })
 
@@ -37,6 +39,8 @@ export default async function ApplicationsTrackerPage() {
         status_updated_at: row.status_updated_at,
         created_at: row.created_at,
         initiated_by_employer: row.initiated_by_employer ?? false,
+        scheduled_at: row.scheduled_at,
+        scheduled_timezone: row.scheduled_timezone,
         ...jobInfo(row),
       }))
     }

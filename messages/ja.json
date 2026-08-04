@@ -229,7 +229,9 @@
     "viewed": "閲覧済み",
     "interview": "面接",
     "offer": "内定",
-    "rejected": "不採用"
+    "rejected": "不採用",
+    "slotToBeConfirmed": "日時は未定",
+    "slotEmployerTime": "{time}（採用担当者の時間 {zone}）"
   },
   "candidate": {
     "welcomeBack": "おかえりなさい、{name}さん 👋",
@@ -769,7 +771,8 @@
     "skillGapJobNotFound": "この求人情報は現在利用できません。",
     "onlyInviteForOwnJob": "これは自分の求人に対してのみ行えます。",
     "tooManyExtractJobRequests": "リクエストが多すぎます。しばらくしてから再度お試しください。",
-    "extractJobTextTooShort": "求人内容をもう少し貼り付けてください — 数語では実際の項目を抽出するには不十分です。"
+    "extractJobTextTooShort": "求人内容をもう少し貼り付けてください — 数語では実際の項目を抽出するには不十分です。",
+    "invalidInterviewDate": "この面接日時は無効です。もう一度選択してください。"
   },
   "copilot": {
     "openLabel": "キャリアコパイロットを開く",
@@ -964,7 +967,10 @@
     "confirmInterviewInvite": "確定",
     "interviewInviteSaving": "保存中…",
     "interviewInviteSuccess": "面接としてマークしました ✓",
-    "cancel": "キャンセル"
+    "cancel": "キャンセル",
+    "interviewSlotLabel": "面接の日時",
+    "interviewSlotOptionalHint": "空欄のままにすると、日時は後で設定できます。",
+    "interviewTimezoneLabel": "タイムゾーン"
   },
   "dashboardHub": {
     "title": "JobConnect AIへようこそ",

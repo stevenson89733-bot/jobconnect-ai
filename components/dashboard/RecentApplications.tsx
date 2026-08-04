@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { APPLICATION_STATUS_VARIANT, type ApplicationStatus } from '@/lib/applicationStatus'
 import { timeAgo } from '@/lib/timeAgo'
 import type { ApplicationRates, AvgResponseTime } from '@/lib/applicationRates'
+import ScheduledSlot from '@/components/shared/ScheduledSlot'
 import FadeIn from './FadeIn'
 
 export type ApplicationRow = {
@@ -14,6 +15,8 @@ export type ApplicationRow = {
   status_updated_at: string | null
   created_at: string
   initiated_by_employer: boolean
+  scheduled_at: string | null
+  scheduled_timezone: string | null
   title: string
   company_name: string
 }
@@ -89,6 +92,13 @@ export default async function RecentApplications({
                         </Badge>
                         {app.initiated_by_employer && (
                           <div className="text-[11px] text-primary dark:text-blue-400 mt-1">{t('invitedByEmployer')}</div>
+                        )}
+                        {app.status === 'interview' && (
+                          <ScheduledSlot
+                            scheduledAt={app.scheduled_at}
+                            scheduledTimezone={app.scheduled_timezone}
+                            className="block text-[11px] mt-1"
+                          />
                         )}
                         {app.status !== 'submitted' && app.status_updated_at && (
                           <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">

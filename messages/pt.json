@@ -229,7 +229,9 @@
     "viewed": "Visualizada",
     "interview": "Entrevista",
     "offer": "Oferta",
-    "rejected": "Rejeitada"
+    "rejected": "Rejeitada",
+    "slotToBeConfirmed": "Data a confirmar",
+    "slotEmployerTime": "{time} horário do empregador ({zone})"
   },
   "candidate": {
     "welcomeBack": "Bem-vindo(a) de volta, {name} 👋",
@@ -769,7 +771,8 @@
     "skillGapJobNotFound": "Esta vaga não está mais disponível.",
     "onlyInviteForOwnJob": "Você só pode fazer isso para suas próprias vagas.",
     "tooManyExtractJobRequests": "Muitas solicitações. Tente novamente em instantes.",
-    "extractJobTextTooShort": "Cole mais da descrição da vaga — algumas palavras não são suficientes para extrair campos reais."
+    "extractJobTextTooShort": "Cole mais da descrição da vaga — algumas palavras não são suficientes para extrair campos reais.",
+    "invalidInterviewDate": "Essa data de entrevista não é válida. Escolha novamente."
   },
   "copilot": {
     "openLabel": "Abrir Copiloto de Carreira",
@@ -964,7 +967,10 @@
     "confirmInterviewInvite": "Confirmar",
     "interviewInviteSaving": "Salvando…",
     "interviewInviteSuccess": "Marcado como entrevista ✓",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "interviewSlotLabel": "Data e hora da entrevista",
+    "interviewSlotOptionalHint": "Deixe em branco para definir a data depois.",
+    "interviewTimezoneLabel": "Fuso horário"
   },
   "dashboardHub": {
     "title": "Bem-vindo ao JobConnect AI",

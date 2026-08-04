@@ -229,7 +229,9 @@
     "viewed": "تمت المشاهدة",
     "interview": "مقابلة",
     "offer": "عرض عمل",
-    "rejected": "مرفوض"
+    "rejected": "مرفوض",
+    "slotToBeConfirmed": "التاريخ لم يُحدَّد بعد",
+    "slotEmployerTime": "{time} بتوقيت صاحب العمل ({zone})"
   },
   "candidate": {
     "welcomeBack": "مرحبًا بعودتك، {name} 👋",
@@ -769,7 +771,8 @@
     "skillGapJobNotFound": "هذا الإعلان الوظيفي لم يعد متاحًا.",
     "onlyInviteForOwnJob": "يمكنك فعل هذا فقط لوظائفك الخاصة.",
     "tooManyExtractJobRequests": "عدد كبير جدًا من الطلبات. يرجى المحاولة مرة أخرى بعد قليل.",
-    "extractJobTextTooShort": "الصق المزيد من وصف الوظيفة — بضع كلمات لا تكفي لاستخراج حقول حقيقية."
+    "extractJobTextTooShort": "الصق المزيد من وصف الوظيفة — بضع كلمات لا تكفي لاستخراج حقول حقيقية.",
+    "invalidInterviewDate": "تاريخ المقابلة هذا غير صالح. يرجى اختياره مرة أخرى."
   },
   "copilot": {
     "openLabel": "فتح المساعد الوظيفي",
@@ -964,7 +967,10 @@
     "confirmInterviewInvite": "تأكيد",
     "interviewInviteSaving": "جارٍ الحفظ…",
     "interviewInviteSuccess": "تم وضع علامة مقابلة ✓",
-    "cancel": "إلغاء"
+    "cancel": "إلغاء",
+    "interviewSlotLabel": "تاريخ ووقت المقابلة",
+    "interviewSlotOptionalHint": "اتركه فارغًا لتحديد التاريخ لاحقًا.",
+    "interviewTimezoneLabel": "المنطقة الزمنية"
   },
   "dashboardHub": {
     "title": "مرحبًا بك في JobConnect AI",

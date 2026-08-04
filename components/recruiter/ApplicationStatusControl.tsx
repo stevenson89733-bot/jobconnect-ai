@@ -5,6 +5,7 @@ import { updateApplicationStatus } from '@/app/actions/applications'
 import { APPLICATION_STATUSES, APPLICATION_STATUS_VARIANT, type ApplicationStatus } from '@/lib/applicationStatus'
 import { timeAgo } from '@/lib/timeAgo'
 import { Badge } from '@/components/ui/badge'
+import ScheduledSlot from '@/components/shared/ScheduledSlot'
 
 // Real employer-facing status control — ownership is enforced by the RLS
 // policy the server action relies on (an employer can only ever affect
@@ -13,10 +14,14 @@ export default function ApplicationStatusControl({
   applicationId,
   initialStatus,
   initialStatusUpdatedAt,
+  scheduledAt = null,
+  scheduledTimezone = null,
 }: {
   applicationId: string
   initialStatus: ApplicationStatus
   initialStatusUpdatedAt: string | null
+  scheduledAt?: string | null
+  scheduledTimezone?: string | null
 }) {
   const [status, setStatus] = useState(initialStatus)
   const [statusUpdatedAt, setStatusUpdatedAt] = useState(initialStatusUpdatedAt)
@@ -58,6 +63,9 @@ export default function ApplicationStatusControl({
           ))}
         </select>
       </div>
+      {status === 'interview' && (
+        <ScheduledSlot scheduledAt={scheduledAt} scheduledTimezone={scheduledTimezone} className="text-[11px] text-end" />
+      )}
       {statusUpdatedAt && status !== 'submitted' && (
         <span className="text-[11px] text-slate-600 dark:text-slate-400">
           {t(status)} {timeAgo(statusUpdatedAt, locale, 'verbose')}

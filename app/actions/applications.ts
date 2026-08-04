@@ -61,9 +61,17 @@ export type InviteToInterviewResult = { ok: true } | { ok: false; error: string 
 // (update) and "employer_insert_interview_invite" (insert) — both scoped to
 // jobs.posted_by = auth.uid(); the checks here just produce a specific error
 // message instead of a silent no-op.
+// The optional slot: scheduledAt is a real absolute instant (ISO/UTC, built
+// client-side from the employer's chosen local date-time + zone), and
+// scheduledTimezone is the IANA zone they picked it in — kept so both sides
+// can be shown the same meeting labeled unambiguously (no per-user timezone
+// exists anywhere in this project to infer it from). Both null = "invited,
+// date to be confirmed", which is a real state, not missing data.
 export async function inviteCandidateToInterview(
   candidateId: string,
-  jobId: string
+  jobId: string,
+  scheduledAt?: string | null,
+  scheduledTimezone?: string | null
 ): Promise<InviteToInterviewResult> {
   const t = await getTranslations('errors')
   const supabase = createClient()
@@ -81,6 +89,19 @@ export async function inviteCandidateToInterview(
     return { ok: false, error: t('onlyInviteForOwnJob') }
   }
 
+  // Validated server-side rather than trusted from the client — an
+  // unparseable instant would otherwise land in the DB and render as
+  // "Invalid Date" for both parties.
+  let scheduled: string | null = null
+  if (scheduledAt) {
+    const parsed = new Date(scheduledAt)
+    if (Number.isNaN(parsed.getTime())) {
+      return { ok: false, error: t('invalidInterviewDate') }
+    }
+    scheduled = parsed.toISOString()
+  }
+  const zone = scheduled ? (scheduledTimezone?.trim() || null) : null
+
   const { data: existing } = await supabase
     .from('applications')
     .select('id')
@@ -89,9 +110,18 @@ export async function inviteCandidateToInterview(
     .maybeSingle()
 
   if (existing) {
+    // Only overwrite the slot when a new one was actually provided —
+    // re-marking an already-scheduled interview without picking a date
+    // must not silently erase the existing one.
+    const update: Record<string, unknown> = { status: 'interview' }
+    if (scheduled) {
+      update.scheduled_at = scheduled
+      update.scheduled_timezone = zone
+    }
+
     const { error } = await supabase
       .from('applications')
-      .update({ status: 'interview' })
+      .update(update)
       .eq('id', existing.id)
 
     if (error) {
@@ -101,7 +131,14 @@ export async function inviteCandidateToInterview(
   } else {
     const { error } = await supabase
       .from('applications')
-      .insert({ job_id: jobId, candidate_id: candidateId, status: 'interview', initiated_by_employer: true })
+      .insert({
+        job_id: jobId,
+        candidate_id: candidateId,
+        status: 'interview',
+        initiated_by_employer: true,
+        scheduled_at: scheduled,
+        scheduled_timezone: zone,
+      })
 
     if (error) {
       console.error('[applications/invite]', error.message)

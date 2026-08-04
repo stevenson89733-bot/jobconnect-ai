@@ -229,7 +229,9 @@
     "viewed": "Angesehen",
     "interview": "Vorstellungsgespräch",
     "offer": "Angebot",
-    "rejected": "Abgelehnt"
+    "rejected": "Abgelehnt",
+    "slotToBeConfirmed": "Termin noch offen",
+    "slotEmployerTime": "{time} Zeit des Arbeitgebers ({zone})"
   },
   "candidate": {
     "welcomeBack": "Willkommen zurück, {name} 👋",
@@ -769,7 +771,8 @@
     "skillGapJobNotFound": "Diese Stellenanzeige ist nicht mehr verfügbar.",
     "onlyInviteForOwnJob": "Das kannst du nur für deine eigenen Stellenanzeigen tun.",
     "tooManyExtractJobRequests": "Zu viele Anfragen. Bitte versuche es gleich noch einmal.",
-    "extractJobTextTooShort": "Füge mehr von der Stellenbeschreibung ein — ein paar Wörter reichen nicht, um echte Felder zu extrahieren."
+    "extractJobTextTooShort": "Füge mehr von der Stellenbeschreibung ein — ein paar Wörter reichen nicht, um echte Felder zu extrahieren.",
+    "invalidInterviewDate": "Dieser Gesprächstermin ist ungültig. Bitte wähle ihn erneut."
   },
   "copilot": {
     "openLabel": "Karriere-Copilot öffnen",
@@ -964,7 +967,10 @@
     "confirmInterviewInvite": "Bestätigen",
     "interviewInviteSaving": "Wird gespeichert…",
     "interviewInviteSuccess": "Als Vorstellungsgespräch markiert ✓",
-    "cancel": "Abbrechen"
+    "cancel": "Abbrechen",
+    "interviewSlotLabel": "Datum & Uhrzeit des Gesprächs",
+    "interviewSlotOptionalHint": "Leer lassen, um den Termin später festzulegen.",
+    "interviewTimezoneLabel": "Zeitzone"
   },
   "dashboardHub": {
     "title": "Willkommen bei JobConnect AI",

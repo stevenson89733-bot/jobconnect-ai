@@ -229,7 +229,9 @@
     "viewed": "Đã xem",
     "interview": "Phỏng vấn",
     "offer": "Đề nghị",
-    "rejected": "Từ chối"
+    "rejected": "Từ chối",
+    "slotToBeConfirmed": "Chưa xác định ngày",
+    "slotEmployerTime": "{time} giờ nhà tuyển dụng ({zone})"
   },
   "candidate": {
     "welcomeBack": "Chào mừng trở lại, {name} 👋",
@@ -769,7 +771,8 @@
     "skillGapJobNotFound": "Tin tuyển dụng này không còn khả dụng.",
     "onlyInviteForOwnJob": "Bạn chỉ có thể làm điều này cho tin tuyển dụng của chính mình.",
     "tooManyExtractJobRequests": "Quá nhiều yêu cầu. Vui lòng thử lại sau ít phút.",
-    "extractJobTextTooShort": "Hãy dán thêm nội dung mô tả công việc — vài từ là không đủ để trích xuất thông tin thực sự."
+    "extractJobTextTooShort": "Hãy dán thêm nội dung mô tả công việc — vài từ là không đủ để trích xuất thông tin thực sự.",
+    "invalidInterviewDate": "Ngày phỏng vấn này không hợp lệ. Vui lòng chọn lại."
   },
   "copilot": {
     "openLabel": "Mở Trợ Lý Sự Nghiệp",
@@ -964,7 +967,10 @@
     "confirmInterviewInvite": "Xác nhận",
     "interviewInviteSaving": "Đang lưu…",
     "interviewInviteSuccess": "Đã đánh dấu phỏng vấn ✓",
-    "cancel": "Hủy"
+    "cancel": "Hủy",
+    "interviewSlotLabel": "Ngày và giờ phỏng vấn",
+    "interviewSlotOptionalHint": "Để trống để xác định ngày sau.",
+    "interviewTimezoneLabel": "Múi giờ"
   },
   "dashboardHub": {
     "title": "Chào mừng đến với JobConnect AI",

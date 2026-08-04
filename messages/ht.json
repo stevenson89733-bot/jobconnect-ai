@@ -229,7 +229,9 @@
     "viewed": "Wè",
     "interview": "Antretyen",
     "offer": "Òf",
-    "rejected": "Rejte"
+    "rejected": "Rejte",
+    "slotToBeConfirmed": "Dat pou konfime",
+    "slotEmployerTime": "{time} lè anplwayè a ({zone})"
   },
   "candidate": {
     "welcomeBack": "Kontan wè w ankò, {name} 👋",
@@ -769,7 +771,8 @@
     "skillGapJobNotFound": "Ofrèdanplwa sa a pa disponib ankò.",
     "onlyInviteForOwnJob": "Ou ka fè sa sèlman pou pwòp ofrèdanplwa ou yo.",
     "tooManyExtractJobRequests": "Twòp demann. Tanpri eseye ankò nan yon ti moman.",
-    "extractJobTextTooShort": "Kole plis nan deskripsyon djòb la — kèk mo pa ase pou ekstrè vrè chan."
+    "extractJobTextTooShort": "Kole plis nan deskripsyon djòb la — kèk mo pa ase pou ekstrè vrè chan.",
+    "invalidInterviewDate": "Dat entèvyou sa a pa valab. Tanpri chwazi l ankò."
   },
   "copilot": {
     "openLabel": "Ouvri Copilòt Karyè",
@@ -964,7 +967,10 @@
     "confirmInterviewInvite": "Konfime",
     "interviewInviteSaving": "Ap anrejistre…",
     "interviewInviteSuccess": "Make antrevyou ✓",
-    "cancel": "Anile"
+    "cancel": "Anile",
+    "interviewSlotLabel": "Dat ak lè entèvyou a",
+    "interviewSlotOptionalHint": "Kite l vid pou defini dat la pita.",
+    "interviewTimezoneLabel": "Zòn orè"
   },
   "dashboardHub": {
     "title": "Byenveni nan JobConnect AI",

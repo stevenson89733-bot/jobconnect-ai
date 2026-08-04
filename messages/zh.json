@@ -229,7 +229,9 @@
     "viewed": "已查看",
     "interview": "面试中",
     "offer": "已录用",
-    "rejected": "未录用"
+    "rejected": "未录用",
+    "slotToBeConfirmed": "日期待定",
+    "slotEmployerTime": "{time}（雇主时间 {zone}）"
   },
   "candidate": {
     "welcomeBack": "欢迎回来，{name} 👋",
@@ -769,7 +771,8 @@
     "skillGapJobNotFound": "此职位信息已不再可用。",
     "onlyInviteForOwnJob": "您只能对自己发布的职位执行此操作。",
     "tooManyExtractJobRequests": "请求过多，请稍后再试。",
-    "extractJobTextTooShort": "请粘贴更多职位描述内容 — 寥寥数语不足以提取真实字段。"
+    "extractJobTextTooShort": "请粘贴更多职位描述内容 — 寥寥数语不足以提取真实字段。",
+    "invalidInterviewDate": "该面试日期无效，请重新选择。"
   },
   "copilot": {
     "openLabel": "打开职业副驾",
@@ -964,7 +967,10 @@
     "confirmInterviewInvite": "确认",
     "interviewInviteSaving": "保存中…",
     "interviewInviteSuccess": "已标记为面试 ✓",
-    "cancel": "取消"
+    "cancel": "取消",
+    "interviewSlotLabel": "面试日期和时间",
+    "interviewSlotOptionalHint": "留空可稍后确定日期。",
+    "interviewTimezoneLabel": "时区"
   },
   "dashboardHub": {
     "title": "欢迎使用 JobConnect AI",

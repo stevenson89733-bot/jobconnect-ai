@@ -15,6 +15,8 @@ type Application = {
   created_at: string
   candidate_id: string
   job_id: string
+  scheduled_at: string | null
+  scheduled_timezone: string | null
   profiles: { full_name: string | null; email: string } | null
   jobs: { id: string; title: string }[] | null
 }
@@ -64,6 +66,7 @@ export default async function EmployerDashboard() {
         .from('applications')
         .select(`
           id, message, status, status_updated_at, created_at, candidate_id, job_id,
+          scheduled_at, scheduled_timezone,
           jobs!job_id ( id, title )
         `)
         .order('created_at', { ascending: false })
@@ -221,6 +224,8 @@ export default async function EmployerDashboard() {
                         applicationId={app.id}
                         initialStatus={app.status}
                         initialStatusUpdatedAt={app.status_updated_at}
+                        scheduledAt={app.scheduled_at}
+                        scheduledTimezone={app.scheduled_timezone}
                       />
                     </div>
                   ))}
