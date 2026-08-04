@@ -311,7 +311,8 @@
     "browseCandidates": "구직자 둘러보기",
     "browseCandidatesSubtitle": "JobConnect AI에 등록된 구직자 프로필 보기",
     "viewAll": "전체 보기 →",
-    "updateStatusAriaLabel": "지원 상태 업데이트"
+    "updateStatusAriaLabel": "지원 상태 업데이트",
+    "editCompanyProfile": "회사 프로필 수정"
   },
   "postJobModal": {
     "title": "채용 공고 등록",
@@ -1149,5 +1150,22 @@
     "suggestedNextSteps": "제안된 다음 단계",
     "generationFailed": "생성 실패",
     "somethingWentWrong": "문제가 발생했습니다"
+  },
+  "employerProfile": {
+    "breadcrumbDashboard": "대시보드",
+    "breadcrumbProfile": "회사 프로필",
+    "title": "회사 프로필",
+    "subtitle": "이 정보는 새 채용 공고에 자동으로 채워집니다 — 이미 게시된 공고는 절대 변경되지 않습니다.",
+    "sectionCompany": "회사",
+    "sectionCompanyDesc": "지원자에게 채용 공고와 회사 페이지에 표시됩니다.",
+    "addCompanyNamePrompt": "회사명을 추가하세요",
+    "addCompanyDescriptionPrompt": "회사에 대한 간단한 설명을 추가하세요.",
+    "companyName": "회사명",
+    "companyNamePlaceholder": "회사 이름",
+    "companyWebsite": "웹사이트",
+    "companyWebsitePlaceholder": "https://yourcompany.com",
+    "companyDescription": "설명",
+    "companyDescriptionPlaceholder": "회사가 하는 일, 미션, 근무하기 좋은 이유 등…",
+    "optional": "(선택 사항)"
   }
 }

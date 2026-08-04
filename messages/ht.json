@@ -311,7 +311,8 @@
     "browseCandidates": "Chèche kandida",
     "browseCandidatesSubtitle": "Gade pwofil kandida yo sou JobConnect AI",
     "viewAll": "Gade tout →",
-    "updateStatusAriaLabel": "Mete ajou estati aplikasyon an"
+    "updateStatusAriaLabel": "Mete ajou estati aplikasyon an",
+    "editCompanyProfile": "Modifye pwofil antrepriz"
   },
   "postJobModal": {
     "title": "Poste yon Travay",
@@ -1149,5 +1150,22 @@
     "suggestedNextSteps": "Pwochèn Etap Sijere",
     "generationFailed": "Jenerasyon echwe",
     "somethingWentWrong": "Gen yon bagay ki mal pase"
+  },
+  "employerProfile": {
+    "breadcrumbDashboard": "Tablo debò",
+    "breadcrumbProfile": "Pwofil Antrepriz",
+    "title": "Pwofil Antrepriz",
+    "subtitle": "Sa a ranpli davans nouvo ofrèdanplwa yo — li pa janm chanje ofrèdanplwa ou deja pibliye.",
+    "sectionCompany": "Antrepriz",
+    "sectionCompanyDesc": "Vizib pou kandida yo sou ofrèdanplwa ou yo ak paj antrepriz ou.",
+    "addCompanyNamePrompt": "Ajoute non antrepriz ou",
+    "addCompanyDescriptionPrompt": "Ajoute yon ti deskripsyon antrepriz ou.",
+    "companyName": "Non antrepriz",
+    "companyNamePlaceholder": "Antrepriz ou",
+    "companyWebsite": "Sitwèb",
+    "companyWebsitePlaceholder": "https://antrepriz-ou.com",
+    "companyDescription": "Deskripsyon",
+    "companyDescriptionPlaceholder": "Sa antrepriz ou fè, misyon li, sa ki fè l yon bon kote pou travay…",
+    "optional": "(opsyonèl)"
   }
 }

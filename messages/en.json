@@ -311,7 +311,8 @@
     "browseCandidates": "Browse Candidates",
     "browseCandidatesSubtitle": "View candidate profiles on JobConnect AI",
     "viewAll": "View all →",
-    "updateStatusAriaLabel": "Update application status"
+    "updateStatusAriaLabel": "Update application status",
+    "editCompanyProfile": "Edit company profile"
   },
   "postJobModal": {
     "title": "Post a Job",
@@ -1149,5 +1150,22 @@
     "suggestedNextSteps": "Suggested Next Steps",
     "generationFailed": "Generation failed",
     "somethingWentWrong": "Something went wrong"
+  },
+  "employerProfile": {
+    "breadcrumbDashboard": "Dashboard",
+    "breadcrumbProfile": "Company Profile",
+    "title": "Company Profile",
+    "subtitle": "This pre-fills new job postings — it never changes jobs you've already posted.",
+    "sectionCompany": "Company",
+    "sectionCompanyDesc": "Shown to candidates on your job postings and company page.",
+    "addCompanyNamePrompt": "Add your company name",
+    "addCompanyDescriptionPrompt": "Add a short description of your company.",
+    "companyName": "Company name",
+    "companyNamePlaceholder": "Your company",
+    "companyWebsite": "Website",
+    "companyWebsitePlaceholder": "https://yourcompany.com",
+    "companyDescription": "Description",
+    "companyDescriptionPlaceholder": "What your company does, your mission, what makes it a great place to work…",
+    "optional": "(optional)"
   }
 }

@@ -311,7 +311,8 @@
     "browseCandidates": "候補者を探す",
     "browseCandidatesSubtitle": "JobConnect AI上の候補者プロフィールを見る",
     "viewAll": "すべて見る →",
-    "updateStatusAriaLabel": "応募ステータスを更新"
+    "updateStatusAriaLabel": "応募ステータスを更新",
+    "editCompanyProfile": "会社プロフィールを編集"
   },
   "postJobModal": {
     "title": "求人を掲載する",
@@ -1149,5 +1150,22 @@
     "suggestedNextSteps": "推奨される次のステップ",
     "generationFailed": "生成に失敗しました",
     "somethingWentWrong": "問題が発生しました"
+  },
+  "employerProfile": {
+    "breadcrumbDashboard": "ダッシュボード",
+    "breadcrumbProfile": "会社プロフィール",
+    "title": "会社プロフィール",
+    "subtitle": "これは新しい求人にあらかじめ入力されます — すでに掲載した求人が変更されることはありません。",
+    "sectionCompany": "会社情報",
+    "sectionCompanyDesc": "求人と会社ページで候補者に表示されます。",
+    "addCompanyNamePrompt": "会社名を追加してください",
+    "addCompanyDescriptionPrompt": "会社の簡単な説明を追加してください。",
+    "companyName": "会社名",
+    "companyNamePlaceholder": "あなたの会社",
+    "companyWebsite": "ウェブサイト",
+    "companyWebsitePlaceholder": "https://yourcompany.com",
+    "companyDescription": "説明",
+    "companyDescriptionPlaceholder": "会社の事業内容、使命、働く上での魅力など…",
+    "optional": "（任意）"
   }
 }

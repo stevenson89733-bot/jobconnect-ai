@@ -311,7 +311,8 @@
     "browseCandidates": "Explorar candidatos",
     "browseCandidatesSubtitle": "Consulta los perfiles de candidatos en JobConnect AI",
     "viewAll": "Ver todos →",
-    "updateStatusAriaLabel": "Actualizar el estado de la candidatura"
+    "updateStatusAriaLabel": "Actualizar el estado de la candidatura",
+    "editCompanyProfile": "Editar perfil de la empresa"
   },
   "postJobModal": {
     "title": "Publicar un empleo",
@@ -1149,5 +1150,22 @@
     "suggestedNextSteps": "Próximos pasos sugeridos",
     "generationFailed": "Error en la generación",
     "somethingWentWrong": "Algo salió mal"
+  },
+  "employerProfile": {
+    "breadcrumbDashboard": "Panel",
+    "breadcrumbProfile": "Perfil de la empresa",
+    "title": "Perfil de la empresa",
+    "subtitle": "Esto pre-rellena las nuevas ofertas — nunca cambia las ofertas que ya publicaste.",
+    "sectionCompany": "Empresa",
+    "sectionCompanyDesc": "Visible para los candidatos en tus ofertas y tu página de empresa.",
+    "addCompanyNamePrompt": "Agrega el nombre de tu empresa",
+    "addCompanyDescriptionPrompt": "Agrega una breve descripción de tu empresa.",
+    "companyName": "Nombre de la empresa",
+    "companyNamePlaceholder": "Tu empresa",
+    "companyWebsite": "Sitio web",
+    "companyWebsitePlaceholder": "https://tuempresa.com",
+    "companyDescription": "Descripción",
+    "companyDescriptionPlaceholder": "Qué hace tu empresa, tu misión, qué la hace un gran lugar para trabajar…",
+    "optional": "(opcional)"
   }
 }

@@ -17,6 +17,13 @@ export type ProfileFields = {
   portfolio_url: string
   availability: string
   work_preference: string
+  // Employer-only fields — company_name existed but had no edit path before
+  // this; company_website/company_description are net-new (see
+  // supabase/profile_employer_fields.sql). Same generic update() below, no
+  // special-casing needed.
+  company_name: string
+  company_website: string
+  company_description: string
 }
 
 // Updates the current user's own profile row. The user id is read SERVER-SIDE

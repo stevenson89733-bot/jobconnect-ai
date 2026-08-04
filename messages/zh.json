@@ -311,7 +311,8 @@
     "browseCandidates": "浏览候选人",
     "browseCandidatesSubtitle": "查看 JobConnect AI 上的候选人资料",
     "viewAll": "查看全部 →",
-    "updateStatusAriaLabel": "更新申请状态"
+    "updateStatusAriaLabel": "更新申请状态",
+    "editCompanyProfile": "编辑公司资料"
   },
   "postJobModal": {
     "title": "发布职位",
@@ -1149,5 +1150,22 @@
     "suggestedNextSteps": "建议的下一步行动",
     "generationFailed": "生成失败",
     "somethingWentWrong": "出了点问题"
+  },
+  "employerProfile": {
+    "breadcrumbDashboard": "仪表盘",
+    "breadcrumbProfile": "公司资料",
+    "title": "公司资料",
+    "subtitle": "此信息会预填新的职位发布 —— 不会更改您已发布的职位。",
+    "sectionCompany": "公司",
+    "sectionCompanyDesc": "候选人会在您的职位发布和公司页面上看到此信息。",
+    "addCompanyNamePrompt": "添加您的公司名称",
+    "addCompanyDescriptionPrompt": "添加一段公司简介。",
+    "companyName": "公司名称",
+    "companyNamePlaceholder": "您的公司",
+    "companyWebsite": "网站",
+    "companyWebsitePlaceholder": "https://yourcompany.com",
+    "companyDescription": "简介",
+    "companyDescriptionPlaceholder": "您的公司做什么、使命是什么、为何值得加入…",
+    "optional": "（选填）"
   }
 }

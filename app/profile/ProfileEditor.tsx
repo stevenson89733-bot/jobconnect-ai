@@ -60,7 +60,10 @@ export default function ProfileEditor({
   initialCertificates,
   initialLanguages,
 }: {
-  initial: ProfileFields
+  // Candidate-only subset — company_name/company_website/company_description
+  // are employer-only fields (see app/recruiter/profile/EmployerProfileEditor.tsx),
+  // never rendered on this, the candidate profile page.
+  initial: Omit<ProfileFields, 'company_name' | 'company_website' | 'company_description'>
   email: string
   avatarUrl: string | null
   isPremium: boolean

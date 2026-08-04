@@ -311,7 +311,8 @@
     "browseCandidates": "Kandidaten durchsuchen",
     "browseCandidatesSubtitle": "Sieh dir Kandidatenprofile auf JobConnect AI an",
     "viewAll": "Alle ansehen →",
-    "updateStatusAriaLabel": "Bewerbungsstatus aktualisieren"
+    "updateStatusAriaLabel": "Bewerbungsstatus aktualisieren",
+    "editCompanyProfile": "Unternehmensprofil bearbeiten"
   },
   "postJobModal": {
     "title": "Job ausschreiben",
@@ -1149,5 +1150,22 @@
     "suggestedNextSteps": "Empfohlene nächste Schritte",
     "generationFailed": "Generierung fehlgeschlagen",
     "somethingWentWrong": "Etwas ist schiefgelaufen"
+  },
+  "employerProfile": {
+    "breadcrumbDashboard": "Dashboard",
+    "breadcrumbProfile": "Unternehmensprofil",
+    "title": "Unternehmensprofil",
+    "subtitle": "Das füllt neue Stellenanzeigen vorab aus — es ändert nie bereits veröffentlichte Anzeigen.",
+    "sectionCompany": "Unternehmen",
+    "sectionCompanyDesc": "Für Kandidaten auf deinen Stellenanzeigen und deiner Unternehmensseite sichtbar.",
+    "addCompanyNamePrompt": "Füge deinen Firmennamen hinzu",
+    "addCompanyDescriptionPrompt": "Füge eine kurze Beschreibung deines Unternehmens hinzu.",
+    "companyName": "Firmenname",
+    "companyNamePlaceholder": "Dein Unternehmen",
+    "companyWebsite": "Webseite",
+    "companyWebsitePlaceholder": "https://deinunternehmen.com",
+    "companyDescription": "Beschreibung",
+    "companyDescriptionPlaceholder": "Was dein Unternehmen macht, deine Mission, was es zu einem großartigen Arbeitsplatz macht…",
+    "optional": "(optional)"
   }
 }

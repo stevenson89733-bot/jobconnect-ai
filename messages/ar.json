@@ -311,7 +311,8 @@
     "browseCandidates": "تصفح المرشحين",
     "browseCandidatesSubtitle": "اطّلع على ملفات المرشحين على JobConnect AI",
     "viewAll": "عرض الكل ←",
-    "updateStatusAriaLabel": "تحديث حالة الطلب"
+    "updateStatusAriaLabel": "تحديث حالة الطلب",
+    "editCompanyProfile": "تعديل ملف الشركة"
   },
   "postJobModal": {
     "title": "انشر وظيفة",
@@ -1149,5 +1150,22 @@
     "suggestedNextSteps": "الخطوات التالية المقترحة",
     "generationFailed": "فشل التوليد",
     "somethingWentWrong": "حدث خطأ ما"
+  },
+  "employerProfile": {
+    "breadcrumbDashboard": "لوحة التحكم",
+    "breadcrumbProfile": "ملف الشركة",
+    "title": "ملف الشركة",
+    "subtitle": "هذا يعبئ الوظائف الجديدة مسبقًا — ولا يغيّر أبدًا الوظائف التي نشرتها من قبل.",
+    "sectionCompany": "الشركة",
+    "sectionCompanyDesc": "يظهر للمرشحين في إعلاناتك الوظيفية وصفحة شركتك.",
+    "addCompanyNamePrompt": "أضف اسم شركتك",
+    "addCompanyDescriptionPrompt": "أضف وصفًا قصيرًا لشركتك.",
+    "companyName": "اسم الشركة",
+    "companyNamePlaceholder": "شركتك",
+    "companyWebsite": "الموقع الإلكتروني",
+    "companyWebsitePlaceholder": "https://yourcompany.com",
+    "companyDescription": "الوصف",
+    "companyDescriptionPlaceholder": "ما تفعله شركتك، ورسالتها، وما يجعلها مكانًا رائعًا للعمل…",
+    "optional": "(اختياري)"
   }
 }

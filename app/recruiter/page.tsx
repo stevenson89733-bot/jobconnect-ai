@@ -124,12 +124,17 @@ export default async function EmployerDashboard() {
           </div>
           <div>
             <h1 className="text-2xl font-bold text-slate-900 dark:text-white">{t('dashboardTitle')}</h1>
-            <p className="text-slate-600 dark:text-slate-400 text-sm">
-              {companyName || t('addCompanyNamePrompt')}
-            </p>
+            {companyName ? (
+              <p className="text-slate-600 dark:text-slate-400 text-sm">{companyName}</p>
+            ) : (
+              <Link href="/recruiter/profile" className="text-primary dark:text-blue-400 hover:underline text-sm">
+                {t('addCompanyNamePrompt')}
+              </Link>
+            )}
           </div>
         </div>
         <div className="flex gap-3">
+          <Link href="/recruiter/profile" className="btn-outline text-sm">{t('editCompanyProfile')}</Link>
           <Link href="/jobs" className="btn-outline text-sm">{t('viewAllJobs')}</Link>
           <PostJobModal companyName={companyName} triggerClassName="btn-primary text-sm" triggerLabel={t('postAJob')} />
         </div>

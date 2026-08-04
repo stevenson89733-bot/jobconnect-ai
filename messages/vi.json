@@ -311,7 +311,8 @@
     "browseCandidates": "Duyệt ứng viên",
     "browseCandidatesSubtitle": "Xem hồ sơ ứng viên trên JobConnect AI",
     "viewAll": "Xem tất cả →",
-    "updateStatusAriaLabel": "Cập nhật trạng thái đơn ứng tuyển"
+    "updateStatusAriaLabel": "Cập nhật trạng thái đơn ứng tuyển",
+    "editCompanyProfile": "Chỉnh sửa hồ sơ công ty"
   },
   "postJobModal": {
     "title": "Đăng tin tuyển dụng",
@@ -1149,5 +1150,22 @@
     "suggestedNextSteps": "Các Bước Tiếp Theo Được Đề Xuất",
     "generationFailed": "Tạo thất bại",
     "somethingWentWrong": "Đã xảy ra lỗi"
+  },
+  "employerProfile": {
+    "breadcrumbDashboard": "Bảng điều khiển",
+    "breadcrumbProfile": "Hồ Sơ Công Ty",
+    "title": "Hồ Sơ Công Ty",
+    "subtitle": "Thông tin này sẽ tự động điền vào tin tuyển dụng mới — không bao giờ thay đổi các tin đã đăng.",
+    "sectionCompany": "Công ty",
+    "sectionCompanyDesc": "Hiển thị cho ứng viên trên tin tuyển dụng và trang công ty của bạn.",
+    "addCompanyNamePrompt": "Thêm tên công ty của bạn",
+    "addCompanyDescriptionPrompt": "Thêm mô tả ngắn về công ty của bạn.",
+    "companyName": "Tên công ty",
+    "companyNamePlaceholder": "Công ty của bạn",
+    "companyWebsite": "Trang web",
+    "companyWebsitePlaceholder": "https://congtycuaban.com",
+    "companyDescription": "Mô tả",
+    "companyDescriptionPlaceholder": "Công ty bạn làm gì, sứ mệnh của công ty, điều gì khiến nơi này đáng để làm việc…",
+    "optional": "(tùy chọn)"
   }
 }
