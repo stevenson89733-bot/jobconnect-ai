@@ -337,7 +337,13 @@
     "postJob": "Post Job",
     "posting": "Posting…",
     "genericError": "Something went wrong — please try again.",
-    "viewPlans": "View plans →"
+    "viewPlans": "View plans →",
+    "pasteToFillButton": "✦ Paste a job description to fill this in",
+    "pasteLabel": "Paste the job description",
+    "pastePlaceholder": "Paste the full job posting text here…",
+    "extractButton": "✦ Extract fields",
+    "extractingButton": "Extracting…",
+    "extractGenericError": "Extraction failed — please try again or fill in the fields manually."
   },
   "resumeBuilder": {
     "breadcrumbDashboard": "Dashboard",
@@ -760,7 +766,9 @@
     "skillGapNotEnoughExperience": "Add a bit more detail to your profile's experience — a few words isn't enough for a real, non-fabricated comparison.",
     "skillGapMissingTargetRole": "Add a destination role first.",
     "skillGapJobNotFound": "This job listing is no longer available.",
-    "onlyInviteForOwnJob": "You can only do this for your own job postings."
+    "onlyInviteForOwnJob": "You can only do this for your own job postings.",
+    "tooManyExtractJobRequests": "Too many requests. Please try again in a bit.",
+    "extractJobTextTooShort": "Paste more of the job description — a few words isn't enough to extract real fields."
   },
   "copilot": {
     "openLabel": "Open Career Copilot",

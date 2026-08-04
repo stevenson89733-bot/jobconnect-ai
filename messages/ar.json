@@ -337,7 +337,13 @@
     "postJob": "نشر الوظيفة",
     "posting": "جارٍ النشر…",
     "genericError": "حدث خطأ ما — يرجى المحاولة مرة أخرى.",
-    "viewPlans": "عرض الباقات ←"
+    "viewPlans": "عرض الباقات ←",
+    "pasteToFillButton": "✦ الصق وصف وظيفة لتعبئة هذا",
+    "pasteLabel": "الصق وصف الوظيفة",
+    "pastePlaceholder": "الصق نص الإعلان الوظيفي الكامل هنا…",
+    "extractButton": "✦ استخراج الحقول",
+    "extractingButton": "جارٍ الاستخراج…",
+    "extractGenericError": "فشل الاستخراج — يرجى المحاولة مرة أخرى أو تعبئة الحقول يدويًا."
   },
   "resumeBuilder": {
     "breadcrumbDashboard": "لوحة التحكم",
@@ -760,7 +766,9 @@
     "skillGapNotEnoughExperience": "أضف مزيدًا من التفاصيل إلى خبرة ملفك الشخصي — بضع كلمات لا تكفي لمقارنة حقيقية وغير ملفّقة.",
     "skillGapMissingTargetRole": "أضف وظيفة مستهدفة أولًا.",
     "skillGapJobNotFound": "هذا الإعلان الوظيفي لم يعد متاحًا.",
-    "onlyInviteForOwnJob": "يمكنك فعل هذا فقط لوظائفك الخاصة."
+    "onlyInviteForOwnJob": "يمكنك فعل هذا فقط لوظائفك الخاصة.",
+    "tooManyExtractJobRequests": "عدد كبير جدًا من الطلبات. يرجى المحاولة مرة أخرى بعد قليل.",
+    "extractJobTextTooShort": "الصق المزيد من وصف الوظيفة — بضع كلمات لا تكفي لاستخراج حقول حقيقية."
   },
   "copilot": {
     "openLabel": "فتح المساعد الوظيفي",

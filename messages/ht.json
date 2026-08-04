@@ -337,7 +337,13 @@
     "postJob": "Poste travay la",
     "posting": "K ap poste…",
     "genericError": "Gen yon erè ki fèt — tanpri eseye ankò.",
-    "viewPlans": "Gade plan yo →"
+    "viewPlans": "Gade plan yo →",
+    "pasteToFillButton": "✦ Kole yon deskripsyon djòb pou ranpli sa a",
+    "pasteLabel": "Kole deskripsyon djòb la",
+    "pastePlaceholder": "Kole tout tèks ofrèdanplwa a isit la…",
+    "extractButton": "✦ Ekstrè chan yo",
+    "extractingButton": "Ap ekstrè…",
+    "extractGenericError": "Ekstraksyon echwe — eseye ankò oswa ranpli chan yo manyèlman."
   },
   "resumeBuilder": {
     "breadcrumbDashboard": "Tablo Bò",
@@ -760,7 +766,9 @@
     "skillGapNotEnoughExperience": "Ajoute yon ti kras plis detay nan eksperyans pwofil ou — kèk mo pa ase pou yon vrè konparezon, ki pa envante.",
     "skillGapMissingTargetRole": "Ajoute yon pòs destinasyon dabò.",
     "skillGapJobNotFound": "Ofrèdanplwa sa a pa disponib ankò.",
-    "onlyInviteForOwnJob": "Ou ka fè sa sèlman pou pwòp ofrèdanplwa ou yo."
+    "onlyInviteForOwnJob": "Ou ka fè sa sèlman pou pwòp ofrèdanplwa ou yo.",
+    "tooManyExtractJobRequests": "Twòp demann. Tanpri eseye ankò nan yon ti moman.",
+    "extractJobTextTooShort": "Kole plis nan deskripsyon djòb la — kèk mo pa ase pou ekstrè vrè chan."
   },
   "copilot": {
     "openLabel": "Ouvri Copilòt Karyè",

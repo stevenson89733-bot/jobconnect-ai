@@ -7,6 +7,9 @@ import { useTranslations } from 'next-intl'
 const JOB_TYPES = ['Full-time', 'Part-time', 'Contract', 'Internship']
 const CATEGORIES = ['Engineering', 'Design', 'Data', 'Research', 'Developer Relations', 'Content']
 const WORK_TYPES = ['remote', 'hybrid', 'onsite']
+const VALID_JOB_TYPES = new Set(JOB_TYPES)
+const VALID_CATEGORIES = new Set(CATEGORIES)
+const VALID_WORK_TYPES = new Set(WORK_TYPES)
 const JOB_TYPE_KEYS: Record<string, string> = {
   'Full-time': 'typeFullTime', 'Part-time': 'typePartTime', Contract: 'typeContract', Internship: 'typeInternship',
 }
@@ -57,6 +60,48 @@ export default function PostJobModal({
   const [tags, setTags] = useState('')
   const [isFeatured, setIsFeatured] = useState(false)
 
+  // Paste-and-extract — prefills the fields above from a pasted job
+  // description via Mistral (lib/ai/jobExtract.ts). Never posts anything
+  // itself; the employer still reviews/edits every field before the real
+  // submit below, which is unchanged.
+  const [pasteText, setPasteText] = useState('')
+  const [extracting, setExtracting] = useState(false)
+  const [extractError, setExtractError] = useState('')
+  const [showPaste, setShowPaste] = useState(false)
+
+  async function handleExtract() {
+    setExtracting(true)
+    setExtractError('')
+    try {
+      const res = await fetch('/api/ai/extract-job', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: pasteText }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || t('extractGenericError'))
+
+      const extracted = data.extracted
+      if (extracted.title) setTitle(extracted.title)
+      if (extracted.company_name) setCompany(extracted.company_name)
+      if (extracted.location) setLocation(extracted.location)
+      if (extracted.work_type && VALID_WORK_TYPES.has(extracted.work_type)) setWorkType(extracted.work_type)
+      if (extracted.job_type && VALID_JOB_TYPES.has(extracted.job_type)) setJobType(extracted.job_type)
+      if (extracted.category && VALID_CATEGORIES.has(extracted.category)) setCategory(extracted.category)
+      if (extracted.description) setDescription(extracted.description)
+      if (extracted.salary_min != null) setSalaryMin(String(extracted.salary_min))
+      if (extracted.salary_max != null) setSalaryMax(String(extracted.salary_max))
+      if (extracted.tags?.length) setTags(extracted.tags.join(', '))
+
+      setShowPaste(false)
+      setPasteText('')
+    } catch (err) {
+      setExtractError(err instanceof Error ? err.message : t('extractGenericError'))
+    } finally {
+      setExtracting(false)
+    }
+  }
+
   function resetForm() {
     setTitle('')
     setCompany(companyName)
@@ -70,6 +115,9 @@ export default function PostJobModal({
     setTags('')
     setIsFeatured(false)
     setError('')
+    setPasteText('')
+    setExtractError('')
+    setShowPaste(false)
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -143,6 +191,45 @@ export default function PostJobModal({
             </div>
 
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
+              {!showPaste ? (
+                <button
+                  type="button"
+                  onClick={() => setShowPaste(true)}
+                  className="w-full text-sm text-primary dark:text-blue-400 border border-dashed border-primary/40 rounded-lg py-2.5 hover:bg-primary/5 transition-colors"
+                >
+                  {t('pasteToFillButton')}
+                </button>
+              ) : (
+                <div className="border border-primary/30 rounded-lg p-3.5 space-y-2 bg-primary/5 dark:bg-primary/10">
+                  <label className={labelClass}>{t('pasteLabel')}</label>
+                  <textarea
+                    value={pasteText}
+                    onChange={(e) => setPasteText(e.target.value)}
+                    rows={5}
+                    placeholder={t('pastePlaceholder')}
+                    className={`${inputClass} resize-none`}
+                  />
+                  {extractError && <p className="text-sm text-red-600 dark:text-red-400">{extractError}</p>}
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={handleExtract}
+                      disabled={extracting || pasteText.trim().length < 50}
+                      className="flex-1 btn-primary py-2 text-sm disabled:opacity-50"
+                    >
+                      {extracting ? t('extractingButton') : t('extractButton')}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setShowPaste(false); setExtractError('') }}
+                      className="btn-outline py-2 px-4 text-sm"
+                    >
+                      {t('cancel')}
+                    </button>
+                  </div>
+                </div>
+              )}
+
               <div>
                 <label className={labelClass}>{t('jobTitle')}</label>
                 <input required value={title} onChange={(e) => setTitle(e.target.value)} placeholder={t('jobTitlePlaceholder')} className={inputClass} />

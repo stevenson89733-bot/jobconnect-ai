@@ -337,7 +337,13 @@
     "postJob": "发布职位",
     "posting": "发布中…",
     "genericError": "出了点问题——请重试。",
-    "viewPlans": "查看套餐 →"
+    "viewPlans": "查看套餐 →",
+    "pasteToFillButton": "✦ 粘贴职位描述以自动填写",
+    "pasteLabel": "粘贴职位描述",
+    "pastePlaceholder": "在此粘贴完整的职位发布文本…",
+    "extractButton": "✦ 提取字段",
+    "extractingButton": "正在提取…",
+    "extractGenericError": "提取失败 — 请重试或手动填写字段。"
   },
   "resumeBuilder": {
     "breadcrumbDashboard": "控制台",
@@ -760,7 +766,9 @@
     "skillGapNotEnoughExperience": "请为您档案中的经历添加更多细节 — 寥寥数语不足以进行真实、非虚构的比较。",
     "skillGapMissingTargetRole": "请先添加目标职位。",
     "skillGapJobNotFound": "此职位信息已不再可用。",
-    "onlyInviteForOwnJob": "您只能对自己发布的职位执行此操作。"
+    "onlyInviteForOwnJob": "您只能对自己发布的职位执行此操作。",
+    "tooManyExtractJobRequests": "请求过多，请稍后再试。",
+    "extractJobTextTooShort": "请粘贴更多职位描述内容 — 寥寥数语不足以提取真实字段。"
   },
   "copilot": {
     "openLabel": "打开职业副驾",

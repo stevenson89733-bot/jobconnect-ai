@@ -337,7 +337,13 @@
     "postJob": "Publicar empleo",
     "posting": "Publicando…",
     "genericError": "Algo salió mal — inténtalo de nuevo.",
-    "viewPlans": "Ver planes →"
+    "viewPlans": "Ver planes →",
+    "pasteToFillButton": "✦ Pega una descripción del puesto para rellenar esto",
+    "pasteLabel": "Pega la descripción del puesto",
+    "pastePlaceholder": "Pega aquí el texto completo de la oferta…",
+    "extractButton": "✦ Extraer campos",
+    "extractingButton": "Extrayendo…",
+    "extractGenericError": "La extracción falló — inténtalo de nuevo o completa los campos manualmente."
   },
   "resumeBuilder": {
     "breadcrumbDashboard": "Panel",
@@ -760,7 +766,9 @@
     "skillGapNotEnoughExperience": "Agrega un poco más de detalle a la experiencia de tu perfil — unas pocas palabras no son suficientes para una comparación real, no fabricada.",
     "skillGapMissingTargetRole": "Agrega primero un puesto de destino.",
     "skillGapJobNotFound": "Esta oferta ya no está disponible.",
-    "onlyInviteForOwnJob": "Solo puedes hacer esto para tus propias ofertas."
+    "onlyInviteForOwnJob": "Solo puedes hacer esto para tus propias ofertas.",
+    "tooManyExtractJobRequests": "Demasiadas solicitudes. Inténtalo de nuevo en un momento.",
+    "extractJobTextTooShort": "Pega más de la descripción del puesto — unas pocas palabras no son suficientes para extraer campos reales."
   },
   "copilot": {
     "openLabel": "Abrir Copiloto de Carrera",

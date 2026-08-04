@@ -337,7 +337,13 @@
     "postJob": "채용 공고 등록",
     "posting": "등록 중…",
     "genericError": "문제가 발생했습니다 — 다시 시도해 주세요.",
-    "viewPlans": "요금제 보기 →"
+    "viewPlans": "요금제 보기 →",
+    "pasteToFillButton": "✦ 채용 공고를 붙여넣어 자동으로 채우기",
+    "pasteLabel": "채용 공고 내용을 붙여넣으세요",
+    "pastePlaceholder": "채용 공고 전체 텍스트를 여기에 붙여넣으세요…",
+    "extractButton": "✦ 항목 추출",
+    "extractingButton": "추출 중…",
+    "extractGenericError": "추출에 실패했습니다 — 다시 시도하거나 직접 입력해 주세요."
   },
   "resumeBuilder": {
     "breadcrumbDashboard": "대시보드",
@@ -760,7 +766,9 @@
     "skillGapNotEnoughExperience": "프로필의 경력에 조금 더 세부 정보를 추가하세요 — 몇 단어로는 실제적이고 조작되지 않은 비교에 충분하지 않습니다.",
     "skillGapMissingTargetRole": "먼저 목표 직무를 추가하세요.",
     "skillGapJobNotFound": "이 채용 공고는 더 이상 이용할 수 없습니다.",
-    "onlyInviteForOwnJob": "본인의 채용 공고에 대해서만 이 작업을 할 수 있습니다."
+    "onlyInviteForOwnJob": "본인의 채용 공고에 대해서만 이 작업을 할 수 있습니다.",
+    "tooManyExtractJobRequests": "요청이 너무 많습니다. 잠시 후 다시 시도해 주세요.",
+    "extractJobTextTooShort": "채용 공고 내용을 더 붙여넣어 주세요 — 몇 단어로는 실제 항목을 추출하기에 충분하지 않습니다."
   },
   "copilot": {
     "openLabel": "커리어 코파일럿 열기",

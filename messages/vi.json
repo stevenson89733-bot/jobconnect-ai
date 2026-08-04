@@ -337,7 +337,13 @@
     "postJob": "Đăng tin",
     "posting": "Đang đăng…",
     "genericError": "Đã xảy ra lỗi — vui lòng thử lại.",
-    "viewPlans": "Xem các gói →"
+    "viewPlans": "Xem các gói →",
+    "pasteToFillButton": "✦ Dán mô tả công việc để tự động điền",
+    "pasteLabel": "Dán mô tả công việc",
+    "pastePlaceholder": "Dán toàn bộ nội dung tin tuyển dụng vào đây…",
+    "extractButton": "✦ Trích xuất thông tin",
+    "extractingButton": "Đang trích xuất…",
+    "extractGenericError": "Trích xuất thất bại — vui lòng thử lại hoặc điền thông tin thủ công."
   },
   "resumeBuilder": {
     "breadcrumbDashboard": "Bảng điều khiển",
@@ -760,7 +766,9 @@
     "skillGapNotEnoughExperience": "Hãy thêm chi tiết hơn vào kinh nghiệm trong hồ sơ của bạn — vài từ là không đủ cho một so sánh thực tế, không bịa đặt.",
     "skillGapMissingTargetRole": "Hãy thêm vị trí mục tiêu trước.",
     "skillGapJobNotFound": "Tin tuyển dụng này không còn khả dụng.",
-    "onlyInviteForOwnJob": "Bạn chỉ có thể làm điều này cho tin tuyển dụng của chính mình."
+    "onlyInviteForOwnJob": "Bạn chỉ có thể làm điều này cho tin tuyển dụng của chính mình.",
+    "tooManyExtractJobRequests": "Quá nhiều yêu cầu. Vui lòng thử lại sau ít phút.",
+    "extractJobTextTooShort": "Hãy dán thêm nội dung mô tả công việc — vài từ là không đủ để trích xuất thông tin thực sự."
   },
   "copilot": {
     "openLabel": "Mở Trợ Lý Sự Nghiệp",

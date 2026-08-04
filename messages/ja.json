@@ -337,7 +337,13 @@
     "postJob": "求人を掲載",
     "posting": "掲載中…",
     "genericError": "問題が発生しました — もう一度お試しください。",
-    "viewPlans": "プランを見る →"
+    "viewPlans": "プランを見る →",
+    "pasteToFillButton": "✦ 求人内容を貼り付けて自動入力",
+    "pasteLabel": "求人内容を貼り付けてください",
+    "pastePlaceholder": "求人情報の全文をここに貼り付けてください…",
+    "extractButton": "✦ 項目を抽出",
+    "extractingButton": "抽出中…",
+    "extractGenericError": "抽出に失敗しました — 再試行するか、手動で入力してください。"
   },
   "resumeBuilder": {
     "breadcrumbDashboard": "ダッシュボード",
@@ -760,7 +766,9 @@
     "skillGapNotEnoughExperience": "プロフィールの職務経歴にもう少し詳細を追加してください — 数語では実際の、捏造されていない比較には不十分です。",
     "skillGapMissingTargetRole": "まず目標職種を追加してください。",
     "skillGapJobNotFound": "この求人情報は現在利用できません。",
-    "onlyInviteForOwnJob": "これは自分の求人に対してのみ行えます。"
+    "onlyInviteForOwnJob": "これは自分の求人に対してのみ行えます。",
+    "tooManyExtractJobRequests": "リクエストが多すぎます。しばらくしてから再度お試しください。",
+    "extractJobTextTooShort": "求人内容をもう少し貼り付けてください — 数語では実際の項目を抽出するには不十分です。"
   },
   "copilot": {
     "openLabel": "キャリアコパイロットを開く",
