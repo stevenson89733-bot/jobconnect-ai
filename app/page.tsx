@@ -11,7 +11,6 @@ import HeroSearch from '@/components/HeroSearch'
 import FadeIn from '@/components/dashboard/FadeIn'
 import FAQAccordion from '@/components/landing/FAQAccordion'
 import HowItWorks from '@/components/landing/HowItWorks'
-import StatsBlock from '@/components/landing/StatsBlock'
 import { AnimatedCTA } from '@/components/landing/AnimatedCTA'
 import { CountUpStat } from '@/components/landing/CountUpStat'
 import HeroNetwork from '@/components/landing/HeroNetwork'
@@ -287,10 +286,6 @@ export default async function Home() {
       </FadeIn>
 
       <HowItWorks />
-
-      <FadeIn>
-        <StatsBlock />
-      </FadeIn>
 
       {/* Pricing teaser — real numbers, mirrors /pricing exactly */}
       <FadeIn>
