@@ -14,6 +14,7 @@ import HowItWorks from '@/components/landing/HowItWorks'
 import StatsBlock from '@/components/landing/StatsBlock'
 import { AnimatedCTA } from '@/components/landing/AnimatedCTA'
 import { CountUpStat } from '@/components/landing/CountUpStat'
+import HeroNetwork from '@/components/landing/HeroNetwork'
 
 export const metadata: Metadata = {
   title: 'JobConnect AI — The career copilot for the cross-border generation',
@@ -104,9 +105,10 @@ export default async function Home() {
 
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-primarySoft dark:bg-primary/20 rounded-full blur-[120px]" />
-          <div className="absolute top-[100px] right-[-100px] w-[400px] h-[400px] bg-accentSoft dark:bg-accent/10 rounded-full blur-[100px]" />
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <HeroNetwork />
+          {/* Subtle center glow for legibility behind heading text */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[380px] bg-primarySoft/50 dark:bg-primary/10 rounded-full blur-[100px]" />
         </div>
 
         <div className="relative max-w-5xl mx-auto px-6 pt-24 pb-16 text-center">
