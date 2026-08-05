@@ -10,6 +10,8 @@ import { Badge } from '@/components/ui/badge'
 import HeroSearch from '@/components/HeroSearch'
 import FadeIn from '@/components/dashboard/FadeIn'
 import FAQAccordion from '@/components/landing/FAQAccordion'
+import HowItWorks from '@/components/landing/HowItWorks'
+import StatsBlock from '@/components/landing/StatsBlock'
 
 export const metadata: Metadata = {
   title: 'JobConnect AI — The career copilot for the cross-border generation',
@@ -86,27 +88,6 @@ export default async function Home() {
 
   const { featuredJobs, trustedCompanies } = await getHomeJobs()
 
-  // The 8 real, shipped AI/product capabilities — every one of these is a
-  // live route or a real, working mechanism (checked against the actual
-  // codebase before writing this list, not aspirational/roadmap items).
-  const TOOLS = [
-    { icon: '✎', color: 'blue', title: t('tool1Title'), desc: t('tool1Desc') },
-    { icon: '✉', color: 'blue', title: t('tool2Title'), desc: t('tool2Desc') },
-    { icon: '◎', color: 'coral', title: t('tool3Title'), desc: t('tool3Desc'), tag: t('tool3Tag') },
-    { icon: 'in', color: 'blue', title: t('tool4Title'), desc: t('tool4Desc') },
-    { icon: '⇄', color: 'coral', title: t('tool5Title'), desc: t('tool5Desc') },
-    { icon: '✓', color: 'mint', title: t('tool6Title'), desc: t('tool6Desc') },
-    { icon: '$', color: 'blue', title: t('tool7Title'), desc: t('tool7Desc') },
-    { icon: '▤', color: 'coral', title: t('tool8Title'), desc: t('tool8Desc') },
-  ]
-
-  const JOURNEY_STEPS = [
-    { step: '01', icon: '🧭', title: t('step1Title'), desc: t('step1Desc') },
-    { step: '02', icon: '📄', title: t('step2Title'), desc: t('step2Desc') },
-    { step: '03', icon: '✉️', title: t('step3Title'), desc: t('step3Desc') },
-    { step: '04', icon: '📨', title: t('step4Title'), desc: t('step4Desc') },
-  ]
-
   const FAQ_ITEMS = [
     { q: t('faqQ1'), a: t('faqA1') },
     { q: t('faqQ2'), a: t('faqA2') },
@@ -114,12 +95,6 @@ export default async function Home() {
     { q: t('faqQ4'), a: t('faqA4') },
     { q: t('faqQ5'), a: t('faqA5') },
   ]
-
-  const iconBg: Record<string, string> = {
-    blue: 'bg-primarySoft dark:bg-primary/20 text-primary dark:text-blue-400',
-    coral: 'bg-accentSoft dark:bg-accent/20 text-accent dark:text-orange-400',
-    mint: 'bg-mintSoft dark:bg-mint/20 text-mint dark:text-mint',
-  }
 
   return (
     <>
@@ -139,9 +114,7 @@ export default async function Home() {
           </div>
 
           <h1 className="text-5xl md:text-6xl font-extrabold text-slate-900 dark:text-white leading-tight tracking-tight mb-6">
-            {t.rich('heroTitle', {
-              accent: (chunks) => <span className="text-primary">{chunks}</span>,
-            })}
+            {t('heroTitle')}
           </h1>
 
           <p className="text-lg md:text-xl text-body dark:text-slate-400 max-w-2xl mx-auto mb-9 leading-relaxed">
@@ -149,12 +122,9 @@ export default async function Home() {
           </p>
 
           <div className="flex flex-wrap justify-center gap-3 mb-12">
-            <Link href="/register?role=candidate" className="inline-flex items-center gap-2 bg-primary hover:bg-primaryDark text-white font-bold rounded-full px-7 py-3.5 text-[15px] shadow-lg shadow-primary/25 transition-colors">
+            <Link href="/jobs" className="inline-flex items-center gap-2 bg-primary hover:bg-primaryDark text-white font-bold rounded-full px-7 py-3.5 text-[15px] shadow-lg shadow-primary/25 transition-colors">
               {t('heroCtaTalk')}
             </Link>
-            <a href="#toolkit" className="inline-flex items-center gap-2 bg-white dark:bg-card border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold rounded-full px-7 py-3.5 text-[15px] hover:border-primary/50 transition-colors">
-              {t('heroCtaHow')}
-            </a>
           </div>
 
           {/* Chat mock — showing the copilot experience, not describing it */}
@@ -312,110 +282,10 @@ export default async function Home() {
         </section>
       </FadeIn>
 
-      {/* The toolkit — the 8 real, shipped AI/product capabilities */}
-      <FadeIn>
-        <section id="toolkit" className="bg-slate-50 dark:bg-card border-y border-slate-200 dark:border-slate-800 py-20">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-14">
-              <div className="text-xs font-bold tracking-widest uppercase text-primary mb-3">{t('toolsKicker')}</div>
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3 max-w-2xl mx-auto">{t('toolsTitle')}</h2>
-              <p className="text-body dark:text-slate-400 max-w-xl mx-auto">{t('toolsSubtitle')}</p>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {TOOLS.map((tool, i) => (
-                <FadeIn key={tool.title} delay={i * 0.04}>
-                  <div className="bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 h-full shadow-sm">
-                    <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-lg font-bold mb-4 ${iconBg[tool.color]}`}>
-                      {tool.icon}
-                    </div>
-                    <h3 className="font-bold text-[15.5px] text-slate-900 dark:text-white mb-1.5">{tool.title}</h3>
-                    <p className="text-sm text-body dark:text-slate-400 leading-relaxed">{tool.desc}</p>
-                    {tool.tag && (
-                      <span className="inline-block mt-3 text-[11px] font-bold uppercase tracking-wide text-mint bg-mintSoft dark:bg-mint/20 px-2.5 py-1 rounded-full">
-                        {tool.tag}
-                      </span>
-                    )}
-                  </div>
-                </FadeIn>
-              ))}
-            </div>
-          </div>
-        </section>
-      </FadeIn>
+      <HowItWorks />
 
-      {/* Global by design */}
       <FadeIn>
-        <section id="global" className="py-20">
-          <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center gap-12">
-            <div className="flex-1">
-              <div className="text-xs font-bold tracking-widest uppercase text-primary mb-3">{t('globalKicker')}</div>
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4 max-w-md">{t('globalTitle')}</h2>
-              <p className="text-body dark:text-slate-400 mb-7 max-w-md">{t('globalDesc')}</p>
-              <div className="flex flex-col gap-3.5">
-                {[t('globalFact1'), t('globalFact2'), t('globalFact3')].map((fact) => (
-                  <div key={fact} className="flex items-center gap-3 text-[14.5px] text-slate-900 dark:text-white">
-                    <span className="w-5 h-5 rounded-md bg-mintSoft dark:bg-mint/20 text-mint flex items-center justify-center font-extrabold text-xs shrink-0">✓</span>
-                    {fact}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="flex-1 w-full aspect-[1/0.72] rounded-[22px] bg-gradient-to-br from-primary to-primaryDark flex items-center justify-center overflow-hidden">
-              <div className="grid grid-cols-4 gap-3.5 p-7 text-white text-sm font-bold">
-                {['EN', 'FR', 'ES', 'DE', 'PT', 'VI', 'ZH', 'JA', 'KO', 'AR', 'HT', '+63'].map((code) => (
-                  <div key={code} className="bg-white/10 rounded-lg py-2.5 text-center">{code}</div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-      </FadeIn>
-
-      {/* Career Journey — the real tool flow: Coach → Resume → Cover Letter → Apply */}
-      <FadeIn>
-        <section className="max-w-7xl mx-auto px-6 py-20">
-          <div className="text-center mb-14">
-            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">{t('howItWorksTitle')}</h2>
-            <p className="text-body dark:text-slate-400 max-w-xl mx-auto">{t('howItWorksSubtitle')}</p>
-          </div>
-          <div className="grid md:grid-cols-4 gap-6">
-            {JOURNEY_STEPS.map((item, i) => (
-              <FadeIn key={item.step} delay={i * 0.05} className="relative text-center md:text-start">
-                <div className="text-5xl mb-4">{item.icon}</div>
-                <div className="text-xs font-mono text-primary mb-2">{item.step}</div>
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">{item.title}</h3>
-                <p className="text-body dark:text-slate-400 text-sm leading-relaxed">{item.desc}</p>
-                {i < JOURNEY_STEPS.length - 1 && (
-                  <div className="hidden md:block absolute top-7 left-[calc(100%-0.5rem)] w-6 h-px bg-slate-300 dark:bg-slate-700" />
-                )}
-              </FadeIn>
-            ))}
-          </div>
-        </section>
-      </FadeIn>
-
-      {/* Testimonials — deliberately a placeholder, not fabricated quotes.
-          Real user base is tiny right now (3 profiles as of the last audit),
-          so this section is honestly marked "coming soon" rather than
-          inventing names/quotes/photos. Revisit once real candidates or
-          employers have given permission to be featured. */}
-      <FadeIn>
-        <section className="bg-slate-50 dark:bg-card border-y border-slate-200 dark:border-slate-800 py-20">
-          <div className="max-w-7xl mx-auto px-6 text-center">
-            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">{t('testimonialsTitle')}</h2>
-            <p className="text-body dark:text-slate-400 max-w-xl mx-auto mb-12">{t('testimonialsSubtitle')}</p>
-            <div className="grid sm:grid-cols-3 gap-5 max-w-4xl mx-auto">
-              {[0, 1, 2].map((i) => (
-                <div key={i} className="card border-dashed flex flex-col items-center justify-center py-10 text-slate-400 dark:text-slate-600">
-                  <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 mb-4" />
-                  <div className="w-3/4 h-2.5 rounded bg-slate-100 dark:bg-slate-800 mb-2" />
-                  <div className="w-1/2 h-2.5 rounded bg-slate-100 dark:bg-slate-800 mb-4" />
-                  <p className="text-xs">{t('testimonialsPlaceholder')}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <StatsBlock />
       </FadeIn>
 
       {/* Pricing teaser — real numbers, mirrors /pricing exactly */}
