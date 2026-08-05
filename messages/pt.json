@@ -180,8 +180,7 @@
     "featureAtsBody": "Obtenha uma pontuação de compatibilidade ATS de 0 a 100 com correções concretas, não dicas genéricas.",
     "platformInNumbersTitle": "JobConnect AI, em números",
     "platformStatAiScored": "CVs Pontuados por IA",
-    "platformStatCrossBorder": "Construído para Carreiras Internacionais",
-    "atsProofAlt": "Construtor de CV JobConnect AI mostrando pontuação de CV e pontuação de compatibilidade ATS"
+    "platformStatCrossBorder": "Construído para Carreiras Internacionais"
   },
   "jobs": {
     "title": "Empregos Remotos",

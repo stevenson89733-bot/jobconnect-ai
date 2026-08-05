@@ -180,8 +180,7 @@
     "featureAtsBody": "具体的な修正提案付きで、0〜100のATS互換性スコアを取得できます。一般的なヒントではありません。",
     "platformInNumbersTitle": "JobConnect AI、数字で見る",
     "platformStatAiScored": "AI採点履歴書",
-    "platformStatCrossBorder": "越境キャリアのために作られた",
-    "atsProofAlt": "JobConnect AIの履歴書作成ツールに表示された履歴書スコアとATS互換性スコア"
+    "platformStatCrossBorder": "越境キャリアのために作られた"
   },
   "jobs": {
     "title": "リモート求人",

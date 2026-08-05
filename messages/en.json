@@ -180,8 +180,7 @@
     "featureAtsBody": "Get a 0–100 ATS compatibility score with concrete fixes, not generic tips.",
     "platformInNumbersTitle": "JobConnect AI, in numbers",
     "platformStatAiScored": "AI-Scored Resumes",
-    "platformStatCrossBorder": "Built for Cross-Border Careers",
-    "atsProofAlt": "JobConnect AI resume builder showing a resume score and ATS compatibility score"
+    "platformStatCrossBorder": "Built for Cross-Border Careers"
   },
   "jobs": {
     "title": "Remote Jobs",
