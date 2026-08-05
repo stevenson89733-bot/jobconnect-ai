@@ -1,7 +1,7 @@
 import './globals.css'
 import React from 'react'
 import { cookies } from 'next/headers'
-import { Inter, Noto_Sans_Arabic } from 'next/font/google'
+import { Inter, Noto_Sans_Arabic, Sora } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
 import { Analytics } from '@vercel/analytics/react'
@@ -19,6 +19,16 @@ const inter = Inter({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700', '800', '900'],
   variable: '--font-inter',
+  display: 'swap',
+})
+
+// Heading font — geometric, distinctive, strong at heavy weights.
+// Body stays Inter (legibility across 11 locales). Sora covers latin only;
+// Arabic headings fall back to Noto Sans Arabic already loaded below.
+const sora = Sora({
+  subsets: ['latin'],
+  weight: ['600', '700', '800'],
+  variable: '--font-sora',
   display: 'swap',
 })
 
@@ -79,7 +89,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html
       lang={locale}
       dir={isRtlLocale(locale) ? 'rtl' : 'ltr'}
-      className={`${htmlClass ?? ''} ${inter.variable} ${notoSansArabic.variable}`.trim()}
+      className={`${htmlClass ?? ''} ${inter.variable} ${notoSansArabic.variable} ${sora.variable}`.trim()}
       suppressHydrationWarning
     >
       <body className="bg-white text-slate-900 dark:bg-background dark:text-slate-100 antialiased font-sans">

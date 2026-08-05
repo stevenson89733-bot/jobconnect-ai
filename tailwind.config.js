@@ -38,6 +38,9 @@ module.exports = {
         // character for Arabic text while every other script keeps using
         // Inter, with no per-locale className branching needed.
         sans: ['var(--font-inter)', 'var(--font-noto-arabic)', 'ui-sans-serif', 'system-ui'],
+        // Sora for headings only — apply via font-display class.
+        // Arabic headings fall back to Noto Sans Arabic (no Sora Arabic subset).
+        display: ['var(--font-sora)', 'var(--font-inter)', 'ui-sans-serif', 'system-ui'],
       },
     }
   },

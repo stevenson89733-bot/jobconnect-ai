@@ -1,11 +1,11 @@
 import { getTranslations } from 'next-intl/server'
-import { Globe2, Languages, DollarSign, BarChart2 } from 'lucide-react'
+import { IconCrossBorder, IconLanguage, IconSalary, IconATS } from './HowItWorksIcons'
 
 const FEATURES = [
-  { id: 'crossBorder', Icon: Globe2 },
-  { id: 'language',    Icon: Languages },
-  { id: 'salary',      Icon: DollarSign },
-  { id: 'ats',         Icon: BarChart2 },
+  { id: 'crossBorder', Icon: IconCrossBorder },
+  { id: 'language',    Icon: IconLanguage },
+  { id: 'salary',      Icon: IconSalary },
+  { id: 'ats',         Icon: IconATS },
 ] as const
 
 type FeatureId = typeof FEATURES[number]['id']
@@ -31,7 +31,7 @@ export default async function HowItWorks() {
     <section id="how-it-works" className="bg-slate-50 dark:bg-card border-y border-slate-200 dark:border-slate-800 py-20">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-14">
-          <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">
+          <h2 className="font-display text-3xl font-bold text-slate-900 dark:text-white mb-3">
             {t('howItWorksTitle')}
           </h2>
           <p className="text-body dark:text-slate-400 max-w-xl mx-auto">

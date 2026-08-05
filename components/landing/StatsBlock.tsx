@@ -6,7 +6,7 @@ export default async function StatsBlock() {
   return (
     <section className="bg-slate-50 dark:bg-card border-y border-slate-200 dark:border-slate-800 py-20">
       <div className="max-w-4xl mx-auto px-6 text-center">
-        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-12">
+        <h2 className="font-display text-3xl font-bold text-slate-900 dark:text-white mb-12">
           {t('platformInNumbersTitle')}
         </h2>
 
