@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
 import { Globe2, Languages, DollarSign, BarChart2 } from 'lucide-react'
 
@@ -56,6 +57,16 @@ export default async function HowItWorks() {
               </p>
             </div>
           ))}
+        </div>
+
+        <div className="mt-16 flex justify-center">
+          <Image
+            src="/images/ats-score-ring.png"
+            alt={t('atsProofAlt')}
+            width={800}
+            height={500}
+            className="w-full max-w-2xl rounded-2xl shadow-lg ring-1 ring-slate-200 dark:ring-slate-700"
+          />
         </div>
       </div>
     </section>

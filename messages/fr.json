@@ -180,7 +180,8 @@
     "featureAtsBody": "Obtenez un score de compatibilité ATS de 0 à 100 avec des corrections concrètes, pas des conseils génériques.",
     "platformInNumbersTitle": "JobConnect AI, en chiffres",
     "platformStatAiScored": "CV Scorés par IA",
-    "platformStatCrossBorder": "Conçu pour les Carrières Cross-Border"
+    "platformStatCrossBorder": "Conçu pour les Carrières Cross-Border",
+    "atsProofAlt": "Constructeur de CV JobConnect AI affichant un score de CV et un score de compatibilité ATS"
   },
   "jobs": {
     "title": "Emplois à distance",

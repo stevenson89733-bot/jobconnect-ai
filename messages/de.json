@@ -180,7 +180,8 @@
     "featureAtsBody": "Erhalten Sie einen ATS-Kompatibilitätsscore von 0–100 mit konkreten Korrekturen, nicht allgemeinen Tipps.",
     "platformInNumbersTitle": "JobConnect AI, in Zahlen",
     "platformStatAiScored": "KI-bewertete Lebensläufe",
-    "platformStatCrossBorder": "Für internationale Karrieren entwickelt"
+    "platformStatCrossBorder": "Für internationale Karrieren entwickelt",
+    "atsProofAlt": "JobConnect AI Lebenslauf-Builder mit Resume-Score und ATS-Kompatibilitätsscore"
   },
   "jobs": {
     "title": "Remote-Jobs",

@@ -180,7 +180,8 @@
     "featureAtsBody": "获得0–100分的ATS兼容性评分，附带具体修改建议，而非通用技巧。",
     "platformInNumbersTitle": "JobConnect AI，用数字说话",
     "platformStatAiScored": "AI评分简历",
-    "platformStatCrossBorder": "专为跨境职业发展而生"
+    "platformStatCrossBorder": "专为跨境职业发展而生",
+    "atsProofAlt": "JobConnect AI简历生成器显示简历评分和ATS兼容性评分"
   },
   "jobs": {
     "title": "远程职位",
