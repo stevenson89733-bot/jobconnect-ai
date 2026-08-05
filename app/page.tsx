@@ -12,6 +12,8 @@ import FadeIn from '@/components/dashboard/FadeIn'
 import FAQAccordion from '@/components/landing/FAQAccordion'
 import HowItWorks from '@/components/landing/HowItWorks'
 import StatsBlock from '@/components/landing/StatsBlock'
+import { AnimatedCTA } from '@/components/landing/AnimatedCTA'
+import { CountUpStat } from '@/components/landing/CountUpStat'
 
 export const metadata: Metadata = {
   title: 'JobConnect AI — The career copilot for the cross-border generation',
@@ -122,9 +124,9 @@ export default async function Home() {
           </p>
 
           <div className="flex flex-wrap justify-center gap-3 mb-12">
-            <Link href="/jobs" className="inline-flex items-center gap-2 bg-primary hover:bg-primaryDark text-white font-bold rounded-full px-7 py-3.5 text-[15px] shadow-lg shadow-primary/25 transition-colors">
+            <AnimatedCTA href="/jobs" className="inline-flex items-center gap-2 bg-primary hover:bg-primaryDark text-white font-bold rounded-full px-7 py-3.5 text-[15px] shadow-lg shadow-primary/25 transition-colors">
               {t('heroCtaTalk')}
-            </Link>
+            </AnimatedCTA>
           </div>
 
           {/* Chat mock — showing the copilot experience, not describing it */}
@@ -174,15 +176,15 @@ export default async function Home() {
       <FadeIn>
         <div className="flex flex-wrap justify-center gap-10 md:gap-14 px-6 pb-16">
           <div className="text-center">
-            <b className="block text-3xl font-extrabold text-slate-900 dark:text-white">11</b>
+            <b className="block text-3xl font-extrabold text-slate-900 dark:text-white"><CountUpStat value={11} /></b>
             <span className="text-xs uppercase tracking-wide text-body dark:text-slate-400">{t('statLanguagesLabel')}</span>
           </div>
           <div className="text-center">
-            <b className="block text-3xl font-extrabold text-slate-900 dark:text-white">63</b>
+            <b className="block text-3xl font-extrabold text-slate-900 dark:text-white"><CountUpStat value={63} /></b>
             <span className="text-xs uppercase tracking-wide text-body dark:text-slate-400">{t('statCountriesLabel')}</span>
           </div>
           <div className="text-center">
-            <b className="block text-3xl font-extrabold text-slate-900 dark:text-white">8</b>
+            <b className="block text-3xl font-extrabold text-slate-900 dark:text-white"><CountUpStat value={8} /></b>
             <span className="text-xs uppercase tracking-wide text-body dark:text-slate-400">{t('statToolsLabel')}</span>
           </div>
           <div className="text-center">
