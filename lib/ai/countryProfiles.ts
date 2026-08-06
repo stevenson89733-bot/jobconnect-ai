@@ -103,7 +103,7 @@ export function buildCountryBlock(countryCode: string | undefined, includePhoto?
   }
 
   if (photoFlag) {
-    lines.push('- INCLUDE a photo placeholder: add the literal text "[PHOTO — top right]" at the very start of the personal data / contact section.')
+    lines.push('- PHOTO (MANDATORY): start the "summary" field value with the EXACT literal text "[PHOTO — top right]" followed by two newlines, then the professional summary. Do not omit or paraphrase this text.')
   } else if (profile.forbiddenFields.includes('photo')) {
     lines.push('- NO photo of any kind.')
   }
