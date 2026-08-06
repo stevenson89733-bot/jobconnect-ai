@@ -70,7 +70,7 @@ export async function signUp(formData: FormData) {
   )
 
   // Step 8: redirect by role
-  redirect(role === 'employer' ? '/recruiter' : '/candidate')
+  redirect(role === 'employer' ? '/recruiter' : '/candidate?registered=1')
 }
 
 // ── Step 7: Authenticate via Supabase, Step 8: redirect by role ───────────────
