@@ -427,7 +427,10 @@
     "templateModern": "Moderna",
     "generationFailed": "Error en la generación",
     "exportFailed": "Error en la exportación",
-    "somethingWentWrong": "Algo salió mal"
+    "somethingWentWrong": "Algo salió mal",
+    "targetCountry": "País objetivo",
+    "targetCountryDefault": "Sin país específico",
+    "includePhotoFR": "Incluir espacio para foto (opcional en Francia)"
   },
   "coverLetter": {
     "breadcrumbDashboard": "Panel",

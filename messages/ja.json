@@ -427,7 +427,10 @@
     "templateModern": "モダン",
     "generationFailed": "生成に失敗しました",
     "exportFailed": "エクスポートに失敗しました",
-    "somethingWentWrong": "問題が発生しました"
+    "somethingWentWrong": "問題が発生しました",
+    "targetCountry": "対象国",
+    "targetCountryDefault": "指定なし",
+    "includePhotoFR": "写真プレースホルダーを含める（フランスでは任意）"
   },
   "coverLetter": {
     "breadcrumbDashboard": "ダッシュボード",

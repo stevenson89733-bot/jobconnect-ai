@@ -427,7 +427,10 @@
     "templateModern": "Modern",
     "generationFailed": "Generierung fehlgeschlagen",
     "exportFailed": "Export fehlgeschlagen",
-    "somethingWentWrong": "Etwas ist schiefgelaufen"
+    "somethingWentWrong": "Etwas ist schiefgelaufen",
+    "targetCountry": "Zielland",
+    "targetCountryDefault": "Kein bestimmtes Land",
+    "includePhotoFR": "Foto-Platzhalter einschließen (optional in Frankreich)"
   },
   "coverLetter": {
     "breadcrumbDashboard": "Dashboard",

@@ -427,7 +427,10 @@
     "templateModern": "Hiện đại",
     "generationFailed": "Tạo thất bại",
     "exportFailed": "Xuất tệp thất bại",
-    "somethingWentWrong": "Đã xảy ra lỗi"
+    "somethingWentWrong": "Đã xảy ra lỗi",
+    "targetCountry": "Quốc gia mục tiêu",
+    "targetCountryDefault": "Không có quốc gia cụ thể",
+    "includePhotoFR": "Thêm chỗ cho ảnh (tùy chọn ở Pháp)"
   },
   "coverLetter": {
     "breadcrumbDashboard": "Bảng điều khiển",

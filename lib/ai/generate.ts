@@ -6,6 +6,7 @@ import { type ContactInfo, EMPTY_CONTACT, buildContactInfo, formatContactLine } 
 import { researchCompany, type CompanySource } from './companyResearch'
 import { rateLimit, getClientIp } from '@/lib/rateLimit'
 import { getPromptLanguageName, getPromptLocale, LETTER_CLOSING } from './promptLocale'
+import { buildCountryBlock } from './countryProfiles'
 import type { Locale } from '@/lib/i18n/config'
 
 // Rate limit for the primary GPT-4o/Mistral generation call itself — the
@@ -48,6 +49,8 @@ type ResumeInput = {
   skills?: string
   education?: string
   summary?: string
+  targetCountry?: string
+  includePhoto?: boolean
 }
 
 type CoverLetterStyle = 'Formal' | 'Conversational' | 'Concise'
@@ -132,7 +135,8 @@ async function completeJson(
   return { data: JSON.parse(raw), contact }
 }
 
-function buildResumePrompt({ targetRole, experience, skills, education, summary }: ResumeInput, languageName: string): string {
+function buildResumePrompt({ targetRole, experience, skills, education, summary, targetCountry, includePhoto }: ResumeInput, languageName: string): string {
+  const countryBlock = buildCountryBlock(targetCountry, includePhoto)
   return `You are an expert resume writer and ATS optimization specialist. Your job is to REFORMAT and POLISH the candidate's real information below — improving wording, structure, and clarity. You must NOT invent, embellish, or add anything not present in the source text.
 
 LANGUAGE: Write every string value below (summary, experience, skills, education, improvements) entirely in ${languageName}. This applies regardless of what language the candidate's input text is written in — always output in ${languageName}, never default to English unless ${languageName} IS English.
@@ -143,7 +147,7 @@ STRICT RULES — read carefully:
 - The "skills" output must list ONLY skills explicitly present in the "Skills" field or clearly stated in the "Work Experience"/"Professional Summary" text below. Do NOT add skills just because they're commonly associated with the target role — if the candidate didn't mention it, it doesn't go in.
 - If the provided information is thin, keep the corresponding resume section brief and general. A short, honest resume is correct behavior — a longer, fabricated one is not.
 - Reformatting, rewording, and reordering for clarity/impact is encouraged. Inventing new facts is not.
-
+${countryBlock ? `\n${countryBlock}\n` : ''}
 Target Job Title: ${targetRole}
 Work Experience: ${experience}
 Skills: ${skills || 'Not provided'}
@@ -328,7 +332,12 @@ export async function generateResume(rawInput: ResumeInput): Promise<NextRespons
     // real job title is one short line; this is echoed verbatim into
     // "title" and interpolated into the prompt, so a pasted paragraph here
     // would otherwise show up as a giant "title" in the generated resume.
-    const input: ResumeInput = { ...rawInput, targetRole: sanitizeTargetRole(rawInput.targetRole) }
+    const input: ResumeInput = {
+      ...rawInput,
+      targetRole: sanitizeTargetRole(rawInput.targetRole),
+      targetCountry: typeof rawInput.targetCountry === 'string' ? rawInput.targetCountry : undefined,
+      includePhoto: rawInput.includePhoto === true,
+    }
     // Server-side backstop for the same guard the client already shows —
     // never send the LLM so little real material that it has to invent the
     // rest to produce a "complete-looking" resume.
@@ -348,7 +357,7 @@ export async function generateResume(rawInput: ResumeInput): Promise<NextRespons
       )
     }
 
-    const { data: raw, contact } = await completeJson(buildResumePrompt(input, getPromptLanguageName()), 2000, provider)
+    const { data: raw, contact } = await completeJson(buildResumePrompt(input, getPromptLanguageName()), 2200, provider)
     const data = normalizeResume(raw, contact)
     return NextResponse.json(data)
   } catch (err) {

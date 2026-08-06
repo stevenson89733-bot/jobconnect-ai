@@ -427,7 +427,10 @@
     "templateModern": "现代款",
     "generationFailed": "生成失败",
     "exportFailed": "导出失败",
-    "somethingWentWrong": "出了点问题"
+    "somethingWentWrong": "出了点问题",
+    "targetCountry": "目标国家",
+    "targetCountryDefault": "不指定国家",
+    "includePhotoFR": "包含照片占位符（法国可选）"
   },
   "coverLetter": {
     "breadcrumbDashboard": "控制台",

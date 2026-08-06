@@ -427,7 +427,10 @@
     "templateModern": "Moderne",
     "generationFailed": "Échec de la génération",
     "exportFailed": "Échec de l'export",
-    "somethingWentWrong": "Une erreur est survenue"
+    "somethingWentWrong": "Une erreur est survenue",
+    "targetCountry": "Pays cible",
+    "targetCountryDefault": "Aucun pays spécifique",
+    "includePhotoFR": "Inclure un emplacement photo (optionnel en France)"
   },
   "coverLetter": {
     "breadcrumbDashboard": "Tableau de bord",

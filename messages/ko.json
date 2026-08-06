@@ -427,7 +427,10 @@
     "templateModern": "모던",
     "generationFailed": "생성 실패",
     "exportFailed": "내보내기 실패",
-    "somethingWentWrong": "문제가 발생했습니다"
+    "somethingWentWrong": "문제가 발생했습니다",
+    "targetCountry": "목표 국가",
+    "targetCountryDefault": "특정 국가 없음",
+    "includePhotoFR": "사진 자리 표시자 포함（프랑스에서는 선택 사항）"
   },
   "coverLetter": {
     "breadcrumbDashboard": "대시보드",

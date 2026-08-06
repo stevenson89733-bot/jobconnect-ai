@@ -427,7 +427,10 @@
     "templateModern": "عصري",
     "generationFailed": "فشل الإنشاء",
     "exportFailed": "فشل التصدير",
-    "somethingWentWrong": "حدث خطأ ما"
+    "somethingWentWrong": "حدث خطأ ما",
+    "targetCountry": "البلد المستهدف",
+    "targetCountryDefault": "لا يوجد بلد محدد",
+    "includePhotoFR": "تضمين مكان الصورة (اختياري في فرنسا)"
   },
   "coverLetter": {
     "breadcrumbDashboard": "لوحة التحكم",

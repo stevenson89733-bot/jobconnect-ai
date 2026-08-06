@@ -427,7 +427,10 @@
     "templateModern": "Modern",
     "generationFailed": "Generation failed",
     "exportFailed": "Export failed",
-    "somethingWentWrong": "Something went wrong"
+    "somethingWentWrong": "Something went wrong",
+    "targetCountry": "Target Country",
+    "targetCountryDefault": "No specific country",
+    "includePhotoFR": "Include photo placeholder (optional in France)"
   },
   "coverLetter": {
     "breadcrumbDashboard": "Dashboard",

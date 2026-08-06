@@ -427,7 +427,10 @@
     "templateModern": "Modèn",
     "generationFailed": "Jenerasyon echwe",
     "exportFailed": "Ekspòtasyon echwe",
-    "somethingWentWrong": "Gen yon bagay ki mal pase"
+    "somethingWentWrong": "Gen yon bagay ki mal pase",
+    "targetCountry": "Peyi sib",
+    "targetCountryDefault": "Pa gen peyi spesifik",
+    "includePhotoFR": "Mete plas foto (opsyonèl an Frans)"
   },
   "coverLetter": {
     "breadcrumbDashboard": "Tablo Bò",

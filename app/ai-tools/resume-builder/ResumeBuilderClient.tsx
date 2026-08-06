@@ -13,6 +13,7 @@ import TemplateSelector from '@/components/resume-builder/TemplateSelector'
 import { analyzeResume } from '@/app/actions/resumeAnalysis'
 import type { ResumeAnalysis, RewriteSection } from '@/lib/ai/resumeAnalysis'
 import { hasEnoughExperience, stripTargetRoleNewlines, sanitizeTargetRole, MAX_TARGET_ROLE_LENGTH } from '@/lib/ai/resumeGuard'
+import { COUNTRY_OPTIONS } from '@/lib/ai/countryProfiles'
 
 type ScoreBreakdown = { keywords: number; formatting: number; experience: number; skills: number }
 type ResumeData = {
@@ -146,6 +147,9 @@ export default function ResumeBuilderClient({
   // suggestion) — see isAnalysisStale below.
   const [analyzedSnapshot, setAnalyzedSnapshot] = useState<string | null>(null)
 
+  const [targetCountry, setTargetCountry] = useState('')
+  const [includePhoto, setIncludePhoto] = useState(false)
+
   const [template, setTemplate] = useState<ResumeTemplateId>('classic')
   const [exportingFormat, setExportingFormat] = useState<'pdf' | 'docx' | null>(null)
   const [exportError, setExportError] = useState('')
@@ -192,7 +196,7 @@ export default function ResumeBuilderClient({
       const res = await fetch('/api/ai/resume', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ targetRole: cleanTargetRole, experience, skills, education, summary }),
+        body: JSON.stringify({ targetRole: cleanTargetRole, experience, skills, education, summary, targetCountry: targetCountry || undefined, includePhoto: targetCountry === 'FR' ? includePhoto : undefined }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || t('generationFailed'))
@@ -321,6 +325,31 @@ export default function ResumeBuilderClient({
                 required maxLength={MAX_TARGET_ROLE_LENGTH} placeholder={t('targetJobTitlePlaceholder')}
                 className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary"
               />
+            </div>
+
+            <div>
+              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">{t('targetCountry')}</label>
+              <select
+                value={targetCountry}
+                onChange={e => { setTargetCountry(e.target.value); setIncludePhoto(false) }}
+                className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-primary"
+              >
+                <option value="">{t('targetCountryDefault')}</option>
+                {COUNTRY_OPTIONS.map(({ code, label }) => (
+                  <option key={code} value={code}>{label}</option>
+                ))}
+              </select>
+              {targetCountry === 'FR' && (
+                <label className="flex items-center gap-2 mt-2 text-sm text-slate-600 dark:text-slate-400 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={includePhoto}
+                    onChange={e => setIncludePhoto(e.target.checked)}
+                    className="rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary"
+                  />
+                  {t('includePhotoFR')}
+                </label>
+              )}
             </div>
 
             <div>
