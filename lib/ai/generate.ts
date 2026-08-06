@@ -137,6 +137,7 @@ async function completeJson(
 
 function buildResumePrompt({ targetRole, experience, skills, education, summary, targetCountry, includePhoto }: ResumeInput, languageName: string): string {
   const countryBlock = buildCountryBlock(targetCountry, includePhoto)
+  console.log('[resume:prompt] targetCountry=%s includePhoto=%s countryBlock=%s', targetCountry, includePhoto, countryBlock ? countryBlock.slice(0, 80) : 'NULL')
   return `You are an expert resume writer and ATS optimization specialist. Your job is to REFORMAT and POLISH the candidate's real information below — improving wording, structure, and clarity. You must NOT invent, embellish, or add anything not present in the source text.
 
 LANGUAGE: Write every string value below (summary, experience, skills, education, improvements) entirely in ${languageName}. This applies regardless of what language the candidate's input text is written in — always output in ${languageName}, never default to English unless ${languageName} IS English.
@@ -332,12 +333,14 @@ export async function generateResume(rawInput: ResumeInput): Promise<NextRespons
     // real job title is one short line; this is echoed verbatim into
     // "title" and interpolated into the prompt, so a pasted paragraph here
     // would otherwise show up as a giant "title" in the generated resume.
+    console.log('[resume:raw] targetCountry=%s includePhoto=%s', rawInput.targetCountry, rawInput.includePhoto)
     const input: ResumeInput = {
       ...rawInput,
       targetRole: sanitizeTargetRole(rawInput.targetRole),
       targetCountry: typeof rawInput.targetCountry === 'string' ? rawInput.targetCountry : undefined,
       includePhoto: rawInput.includePhoto === true,
     }
+    console.log('[resume:input] targetCountry=%s includePhoto=%s', input.targetCountry, input.includePhoto)
     // Server-side backstop for the same guard the client already shows —
     // never send the LLM so little real material that it has to invent the
     // rest to produce a "complete-looking" resume.
