@@ -49,9 +49,14 @@ async function updateSession(request: NextRequest) {
 
   // IMPORTANT: do not run code between createServerClient and getUser().
   // getUser() revalidates the token and triggers the cookie refresh above.
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  let user = null
+  try {
+    const { data } = await supabase.auth.getUser()
+    user = data.user
+  } catch {
+    // Network error or misconfigured env — treat as unauthenticated.
+    // Never crash the middleware; let the page-level auth handle it.
+  }
 
   const { pathname } = request.nextUrl
   const isProtected = PROTECTED_PREFIXES.some(
