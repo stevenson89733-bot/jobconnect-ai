@@ -420,7 +420,14 @@ export default function ResumeBuilderClient({
               <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">
                 {result ? t('generatedResumeSubtitle') : t('livePreviewSubtitle')}
               </p>
-              <ResumePreview content={previewContent} template={template} />
+              <ResumePreview
+                content={previewContent}
+                template={template}
+                showPhotoPlaceholder={
+                  targetCountry === 'DE' ||
+                  (targetCountry === 'FR' && includePhoto)
+                }
+              />
 
               {result && (
                 <>

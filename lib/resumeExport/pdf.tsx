@@ -91,14 +91,17 @@ function Section({ label, text, divider = false }: { label: string; text: string
   )
 }
 
+const PHOTO_MARKER = /^\[PHOTO[^\]]*\]\s*/
+
 function ClassicPdf({ content, labels }: { content: ResumeContent; labels: ResumeLabels }) {
+  const cleanSummary = content.summary.replace(PHOTO_MARKER, '')
   return (
     <Page size="A4" style={styles.page}>
       <Text style={styles.name}>{content.name}</Text>
       {content.title ? <Text style={styles.title}>{content.title}</Text> : null}
       {content.contact ? <Text style={styles.contact}>{content.contact}</Text> : null}
       <View style={styles.headerDivider} />
-      <Section label={labels.summary} text={content.summary} />
+      <Section label={labels.summary} text={cleanSummary} />
       <Section label={labels.experience} text={content.experience} divider={!!content.summary.trim()} />
       <Section label={labels.skills} text={content.skills} divider={!!content.experience.trim()} />
       <Section label={labels.education} text={content.education} divider={!!content.skills.trim()} />
@@ -107,6 +110,7 @@ function ClassicPdf({ content, labels }: { content: ResumeContent; labels: Resum
 }
 
 function ModernPdf({ content, labels }: { content: ResumeContent; labels: ResumeLabels }) {
+  const cleanSummary = content.summary.replace(PHOTO_MARKER, '')
   return (
     <Page size="A4" style={styles.page}>
       <View style={styles.modernHeader}>
@@ -125,7 +129,7 @@ function ModernPdf({ content, labels }: { content: ResumeContent; labels: Resume
           <Section label={labels.education} text={content.education} divider={!!content.skills.trim()} />
         </View>
         <View style={styles.main}>
-          <Section label={labels.summary} text={content.summary} />
+          <Section label={labels.summary} text={cleanSummary} />
           <Section label={labels.experience} text={content.experience} divider={!!content.summary.trim()} />
         </View>
       </View>
