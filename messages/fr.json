@@ -486,7 +486,9 @@
     "sectionClosing": "Paragraphe de conclusion",
     "generationFailed": "Échec de la génération",
     "exportFailed": "Échec de l'export",
-    "somethingWentWrong": "Une erreur est survenue"
+    "somethingWentWrong": "Une erreur est survenue",
+    "targetCountry": "Pays cible",
+    "targetCountryDefault": "Aucun pays spécifique"
   },
   "careerCoach": {
     "upsellTitle": "Le Coach de carrière IA est une fonctionnalité Premium",

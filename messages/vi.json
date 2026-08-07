@@ -486,7 +486,9 @@
     "sectionClosing": "Đoạn kết",
     "generationFailed": "Tạo thất bại",
     "exportFailed": "Xuất tệp thất bại",
-    "somethingWentWrong": "Đã xảy ra lỗi"
+    "somethingWentWrong": "Đã xảy ra lỗi",
+    "targetCountry": "Quốc gia mục tiêu",
+    "targetCountryDefault": "Không có quốc gia cụ thể"
   },
   "careerCoach": {
     "upsellTitle": "Huấn luyện viên Sự nghiệp AI là một tính năng Premium",

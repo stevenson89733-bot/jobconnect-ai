@@ -486,7 +486,9 @@
     "sectionClosing": "Schlussabsatz",
     "generationFailed": "Generierung fehlgeschlagen",
     "exportFailed": "Export fehlgeschlagen",
-    "somethingWentWrong": "Etwas ist schiefgelaufen"
+    "somethingWentWrong": "Etwas ist schiefgelaufen",
+    "targetCountry": "Zielland",
+    "targetCountryDefault": "Kein bestimmtes Land"
   },
   "careerCoach": {
     "upsellTitle": "KI-Karriere-Coach ist eine Premium-Funktion",

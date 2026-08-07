@@ -486,7 +486,9 @@
     "sectionClosing": "Párrafo de cierre",
     "generationFailed": "Error en la generación",
     "exportFailed": "Error en la exportación",
-    "somethingWentWrong": "Algo salió mal"
+    "somethingWentWrong": "Algo salió mal",
+    "targetCountry": "País objetivo",
+    "targetCountryDefault": "Sin país específico"
   },
   "careerCoach": {
     "upsellTitle": "El Coach de carrera IA es una función Premium",

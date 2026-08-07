@@ -486,7 +486,9 @@
     "sectionClosing": "فقرة الختام",
     "generationFailed": "فشل الإنشاء",
     "exportFailed": "فشل التصدير",
-    "somethingWentWrong": "حدث خطأ ما"
+    "somethingWentWrong": "حدث خطأ ما",
+    "targetCountry": "الدولة المستهدفة",
+    "targetCountryDefault": "لا يوجد بلد محدد"
   },
   "careerCoach": {
     "upsellTitle": "المدرّب الوظيفي بالذكاء الاصطناعي ميزة بريميوم",

@@ -486,7 +486,9 @@
     "sectionClosing": "結びの段落",
     "generationFailed": "生成に失敗しました",
     "exportFailed": "エクスポートに失敗しました",
-    "somethingWentWrong": "問題が発生しました"
+    "somethingWentWrong": "問題が発生しました",
+    "targetCountry": "対象国",
+    "targetCountryDefault": "特定の国なし"
   },
   "careerCoach": {
     "upsellTitle": "AIキャリアコーチはプレミアム機能です",

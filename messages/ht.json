@@ -486,7 +486,9 @@
     "sectionClosing": "Paragraf Konklizyon",
     "generationFailed": "Jenerasyon echwe",
     "exportFailed": "Ekspòtasyon echwe",
-    "somethingWentWrong": "Gen yon bagay ki mal pase"
+    "somethingWentWrong": "Gen yon bagay ki mal pase",
+    "targetCountry": "Peyi sib",
+    "targetCountryDefault": "Pa gen peyi espesifik"
   },
   "careerCoach": {
     "upsellTitle": "Antrenè Karyè AI se yon fonksyon Premium",

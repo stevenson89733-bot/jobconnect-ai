@@ -81,6 +81,71 @@ export type CountryCode = typeof COUNTRY_OPTIONS[number]['code']
 
 // Builds the country-specific instructions block injected into the resume prompt.
 // Returns null when countryCode is absent or unrecognised — no-op for existing behaviour.
+type CoverLetterCountryRules = {
+  salutation: string
+  tone: string
+  structure: string
+  extraRules: string[]
+}
+
+const COVER_LETTER_COUNTRY_RULES: Record<string, CoverLetterCountryRules> = {
+  US: {
+    salutation: '"Dear Hiring Manager," or the named recipient if known.',
+    tone: 'Confident and direct. Lead with value, not pleasantries. Action-oriented language.',
+    structure: '3 paragraphs: (1) hook + role, (2) real achievements relevant to the role, (3) call to action.',
+    extraRules: [],
+  },
+  UK: {
+    salutation: '"Dear Hiring Manager," or "Dear [Name]," if known. Close with "Yours sincerely" (named) or "Yours faithfully" (unnamed).',
+    tone: 'Measured and factual British register. Avoid US-style superlatives ("passionate about", "crushed targets"). Understated confidence.',
+    structure: '3–4 paragraphs: opening, relevant experience, fit for the role, closing.',
+    extraRules: [
+      'Use "CV" and "application" rather than "resume" or "candidacy".',
+    ],
+  },
+  CA: {
+    salutation: '"Dear Hiring Manager," or the named recipient if known.',
+    tone: 'Similar to US but slightly more measured. Confident without being boastful.',
+    structure: '3 paragraphs: (1) hook + role, (2) real achievements, (3) call to action.',
+    extraRules: [],
+  },
+  DE: {
+    salutation: '"Sehr geehrte Damen und Herren," if recipient unknown; "Sehr geehrte Frau [Name]," / "Sehr geehrter Herr [Name]," if known. Close with "Mit freundlichen Grüßen".',
+    tone: 'Very formal German register (Sie-form throughout). Factual and precise. No US-style storytelling or enthusiasm markers.',
+    structure: 'Structured 3-part letter: Einleitung (why you are writing + the role), Hauptteil (relevant experience and skills, 2 paragraphs), Schluss (motivation + call to action). Use exact month/year dates when citing experience.',
+    extraRules: [
+      'The subject line ("Betreff:") must appear before the salutation, e.g. "Bewerbung als [Rolle] — [Your Name]".',
+      'No contractions. Every sentence must be complete and formally structured.',
+    ],
+  },
+  FR: {
+    salutation: '"Madame, Monsieur," if recipient unknown; "Madame [Nom]," / "Monsieur [Nom]," if known. Close with the standard French formula: "Dans l\'attente de votre réponse, je vous adresse mes cordiales salutations."',
+    tone: 'Formal French register (vous-form). Avoid anglicisms and US-style boastfulness. Sober and structured.',
+    structure: 'Classic French lettre de motivation: accroche (why this company/role), développement (your relevant background, 2 paragraphs), conclusion (disponibilité + formule de politesse).',
+    extraRules: [
+      'The candidate\'s address and the company\'s address appear at the top of the letter (mention this in the structure description, not the text itself).',
+      'Avoid superlatives and generic enthusiasm phrases ("je suis passionné par", "je suis motivé").',
+    ],
+  },
+}
+
+export function buildCoverLetterCountryBlock(countryCode: string | undefined): string | null {
+  if (!countryCode) return null
+  const rules = COVER_LETTER_COUNTRY_RULES[countryCode]
+  if (!rules) return null
+
+  const lines: string[] = [
+    `COUNTRY-SPECIFIC RULES FOR COVER LETTER (Target Country: ${countryCode}):`,
+    `- Salutation / closing formula: ${rules.salutation}`,
+    `- Tone: ${rules.tone}`,
+    `- Structure: ${rules.structure}`,
+  ]
+  for (const rule of rules.extraRules) {
+    lines.push(`- ${rule}`)
+  }
+  return lines.join('\n')
+}
+
 export function buildCountryBlock(countryCode: string | undefined, includePhoto?: boolean): string | null {
   if (!countryCode) return null
   const profile = COUNTRY_PROFILES[countryCode]

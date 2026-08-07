@@ -486,7 +486,9 @@
     "sectionClosing": "Closing Paragraph",
     "generationFailed": "Generation failed",
     "exportFailed": "Export failed",
-    "somethingWentWrong": "Something went wrong"
+    "somethingWentWrong": "Something went wrong",
+    "targetCountry": "Target Country",
+    "targetCountryDefault": "No specific country"
   },
   "careerCoach": {
     "upsellTitle": "AI Career Coach is a Premium feature",

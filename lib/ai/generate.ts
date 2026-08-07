@@ -6,7 +6,7 @@ import { type ContactInfo, EMPTY_CONTACT, buildContactInfo, formatContactLine } 
 import { researchCompany, type CompanySource } from './companyResearch'
 import { rateLimit, getClientIp } from '@/lib/rateLimit'
 import { getPromptLanguageName, getPromptLocale, LETTER_CLOSING } from './promptLocale'
-import { buildCountryBlock } from './countryProfiles'
+import { buildCountryBlock, buildCoverLetterCountryBlock } from './countryProfiles'
 import type { Locale } from '@/lib/i18n/config'
 
 // Rate limit for the primary GPT-4o/Mistral generation call itself — the
@@ -62,6 +62,7 @@ type CoverLetterInput = {
   jobDescription?: string
   strengths?: string
   style?: string
+  targetCountry?: string
 }
 
 // company research is resolved server-side (real Tavily search) and passed
@@ -183,11 +184,12 @@ const STYLE_GUIDANCE: Record<CoverLetterStyle, string> = {
 }
 
 function buildCoverLetterPrompt(
-  { targetRole, company, jobDescription, strengths, style }: CoverLetterInput,
+  { targetRole, company, jobDescription, strengths, style, targetCountry }: CoverLetterInput,
   research: CompanyResearchContext,
   languageName: string
 ): string {
   const resolvedStyle = (COVER_LETTER_STYLES as string[]).includes(style ?? '') ? (style as CoverLetterStyle) : 'Formal'
+  const countryBlock = buildCoverLetterCountryBlock(targetCountry)
 
   return `You are an expert career coach and professional cover letter writer. Your job is to WRITE a cover letter using ONLY the candidate's real, provided strengths and the real job description below — you must NOT invent employers, job titles, achievements, metrics, or company facts that are not explicitly present in the input.
 
@@ -200,7 +202,7 @@ STRICT RULES — read carefully:
 - If a "Company Research" block is provided below, you MAY reference the real facts in it (mission, focus, recent news) to show genuine interest — but ONLY what is literally written there. Do NOT add, infer, or embellish beyond that text, even if it sounds plausible.
 - If no Job Description and no Company Research block is provided, keep the letter focused on the target role and the candidate's real strengths, without inventing company-specific claims.
 
-Target Job Title: ${targetRole}
+${countryBlock ? `\n${countryBlock}\n` : ''}Target Job Title: ${targetRole}
 Company: ${company}
 Job Description (if provided): ${jobDescription?.trim() || 'Not provided'}
 Company Research (real, sourced from web search — if provided): ${research?.summary || 'Not provided'}
@@ -399,6 +401,7 @@ export async function generateCoverLetter(rawInput: CoverLetterInput): Promise<N
       targetRole: sanitizeTargetRole(rawInput.targetRole),
       jobDescription: rawInput.jobDescription?.trim().slice(0, MAX_JOB_DESCRIPTION_LENGTH),
       style: (COVER_LETTER_STYLES as string[]).includes(rawInput.style ?? '') ? rawInput.style : 'Formal',
+      targetCountry: typeof rawInput.targetCountry === 'string' ? rawInput.targetCountry : undefined,
     }
 
     const provider = await resolveProvider()

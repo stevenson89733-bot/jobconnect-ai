@@ -486,7 +486,9 @@
     "sectionClosing": "마무리",
     "generationFailed": "생성 실패",
     "exportFailed": "내보내기 실패",
-    "somethingWentWrong": "문제가 발생했습니다"
+    "somethingWentWrong": "문제가 발생했습니다",
+    "targetCountry": "대상 국가",
+    "targetCountryDefault": "특정 국가 없음"
   },
   "careerCoach": {
     "upsellTitle": "AI 커리어 코치는 프리미엄 기능입니다",

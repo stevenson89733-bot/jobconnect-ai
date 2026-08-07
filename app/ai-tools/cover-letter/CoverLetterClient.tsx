@@ -6,6 +6,7 @@ import { Markdown } from '@/lib/docExport'
 import RewriteSuggestion from '@/components/resume-builder/RewriteSuggestion'
 import StyleSelector, { type CoverLetterStyle } from '@/components/cover-letter/StyleSelector'
 import { sanitizeTargetRole, stripTargetRoleNewlines, MAX_TARGET_ROLE_LENGTH } from '@/lib/ai/resumeGuard'
+import { COUNTRY_OPTIONS } from '@/lib/ai/countryProfiles'
 import { saveCoverLetterDraft } from '@/app/actions/coverLetters'
 import { copyToClipboard } from '@/lib/clipboard'
 
@@ -139,6 +140,7 @@ export default function CoverLetterClient({
   const [jobDescription, setJobDescription] = useState(initialJobDescription)
   const [strengths, setStrengths] = useState(initialStrengths)
   const [style, setStyle] = useState<CoverLetterStyle>('Formal')
+  const [targetCountry, setTargetCountry] = useState('')
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<CoverLetterData | null>(null)
   const [dateLine, setDateLine] = useState('')
@@ -164,7 +166,7 @@ export default function CoverLetterClient({
       const res = await fetch('/api/ai/cover-letter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ targetRole, company, jobDescription, strengths, style }),
+        body: JSON.stringify({ targetRole, company, jobDescription, strengths, style, targetCountry: targetCountry || undefined }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || t('generationFailed'))
@@ -359,6 +361,20 @@ export default function CoverLetterClient({
                 rows={5} placeholder={t('yourStrengthsPlaceholder')}
                 className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary resize-none"
               />
+            </div>
+
+            <div>
+              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">{t('targetCountry')}</label>
+              <select
+                value={targetCountry}
+                onChange={(e) => setTargetCountry(e.target.value)}
+                className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-primary"
+              >
+                <option value="">{t('targetCountryDefault')}</option>
+                {COUNTRY_OPTIONS.map(({ code, label }) => (
+                  <option key={code} value={code}>{label}</option>
+                ))}
+              </select>
             </div>
 
             <div>

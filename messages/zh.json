@@ -486,7 +486,9 @@
     "sectionClosing": "结尾段落",
     "generationFailed": "生成失败",
     "exportFailed": "导出失败",
-    "somethingWentWrong": "出了点问题"
+    "somethingWentWrong": "出了点问题",
+    "targetCountry": "目标国家",
+    "targetCountryDefault": "无特定国家"
   },
   "careerCoach": {
     "upsellTitle": "AI 职业教练是高级版功能",
