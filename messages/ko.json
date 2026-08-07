@@ -219,7 +219,6 @@
     "shareJob": "채용 공고 공유",
     "shareBlocked": "브라우저가 자동 복사를 차단했습니다 — 아래 링크를 선택한 후 Cmd/Ctrl+C를 눌러주세요.",
     "featured": "⭐ 추천",
-    "crossBorderFriendly": "🌐 해외 지원 가능",
     "crossBorderFilterLabel": "해외 지원 가능",
     "matchPercent": "매치율 {percent}%",
     "today": "오늘",
@@ -233,7 +232,10 @@
     "submitting": "제출 중…",
     "applied": "✓ 지원 완료",
     "applyNow": "지금 지원하기",
-    "optional": "(선택 사항)"
+    "optional": "(선택 사항)",
+    "crossBorderYes": "🌍 국제 채용 가능",
+    "crossBorderUnclear": "🌍 근무 범위 불명확",
+    "crossBorderNo": "🌍 로컬/지역 한정"
   },
   "applicationStatus": {
     "submitted": "제출됨",

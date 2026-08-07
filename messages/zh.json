@@ -219,7 +219,6 @@
     "shareJob": "分享职位",
     "shareBlocked": "您的浏览器阻止了自动复制——请选中下方链接并按 Cmd/Ctrl+C 复制。",
     "featured": "⭐ 精选",
-    "crossBorderFriendly": "🌐 全球开放",
     "crossBorderFilterLabel": "全球开放",
     "matchPercent": "匹配度 {percent}%",
     "today": "今天",
@@ -233,7 +232,10 @@
     "submitting": "提交中…",
     "applied": "✓ 已申请",
     "applyNow": "立即申请",
-    "optional": "（选填）"
+    "optional": "（选填）",
+    "crossBorderYes": "🌍 国际开放",
+    "crossBorderUnclear": "🌍 地理范围不明",
+    "crossBorderNo": "🌍 仅限本地/地区"
   },
   "applicationStatus": {
     "submitted": "已提交",

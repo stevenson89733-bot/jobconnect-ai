@@ -22,10 +22,12 @@ export type Job = {
   tags: string[]
   description: string | null
   is_featured: boolean
-  // Real Mistral classification (lib/ai/crossBorder.ts) of whether this
-  // remote posting is genuinely open worldwide — null/'unclear'/'no' all
-  // render identically (no badge), only 'yes' does. Never guessed client-side.
+  // Real GPT-4o-mini classification (lib/ai/crossBorder.ts) of whether this
+  // remote posting is genuinely open worldwide. All 3 statuses render a badge
+  // with distinct colours; null = not yet classified (non-remote or pre-migration).
   cross_border_status: 'yes' | 'no' | 'unclear' | null
+  // Candidate-facing signals explaining the classification — 2-3 short strings.
+  cross_border_signals: string[] | null
   created_at: string
   company: { logo_url: string | null } | null
   // Real overlap between the signed-in candidate's real profile skills and

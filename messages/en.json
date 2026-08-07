@@ -219,7 +219,6 @@
     "shareJob": "Share job",
     "shareBlocked": "Your browser blocked automatic copying — select the link below and press Cmd/Ctrl+C.",
     "featured": "⭐ Featured",
-    "crossBorderFriendly": "🌐 Cross-border friendly",
     "crossBorderFilterLabel": "Cross-border friendly",
     "matchPercent": "{percent}% Match",
     "today": "Today",
@@ -233,7 +232,10 @@
     "submitting": "Submitting…",
     "applied": "✓ Applied",
     "applyNow": "Apply Now",
-    "optional": "(optional)"
+    "optional": "(optional)",
+    "crossBorderYes": "🌍 International-Friendly",
+    "crossBorderUnclear": "🌍 Scope Unclear",
+    "crossBorderNo": "🌍 Local/Regional Only"
   },
   "applicationStatus": {
     "submitted": "Submitted",

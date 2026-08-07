@@ -118,7 +118,11 @@ export async function POST(req: Request) {
       const classification = await classifyCrossBorder(job.title, job.description ?? '')
       const { data: updated, error: updateError } = await supabase
         .from('jobs')
-        .update({ cross_border_status: classification.status, cross_border_reason: classification.reason })
+        .update({
+          cross_border_status: classification.status,
+          cross_border_reason: classification.reason,
+          cross_border_signals: classification.signals.length > 0 ? classification.signals : null,
+        })
         .eq('id', job.id)
         .select()
         .single()

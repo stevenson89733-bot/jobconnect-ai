@@ -219,7 +219,6 @@
     "shareJob": "求人を共有",
     "shareBlocked": "ブラウザが自動コピーをブロックしました — 下記のリンクを選択してCmd/Ctrl+Cを押してください。",
     "featured": "⭐ 注目",
-    "crossBorderFriendly": "🌐 海外からも応募可",
     "crossBorderFilterLabel": "海外からも応募可",
     "matchPercent": "マッチ率 {percent}%",
     "today": "今日",
@@ -233,7 +232,10 @@
     "submitting": "送信中…",
     "applied": "✓ 応募済み",
     "applyNow": "今すぐ応募",
-    "optional": "（任意）"
+    "optional": "（任意）",
+    "crossBorderYes": "🌍 国際対応",
+    "crossBorderUnclear": "🌍 勤務地の範囲が不明",
+    "crossBorderNo": "🌍 国内/地域限定"
   },
   "applicationStatus": {
     "submitted": "応募済み",

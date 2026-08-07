@@ -1,8 +1,8 @@
 'use client'
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
-import { Bookmark, Share2, Check, Sparkles } from 'lucide-react'
+import { Bookmark, Share2, Check, Sparkles, ChevronDown } from 'lucide-react'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -46,6 +46,72 @@ function localizedTimeAgo(dateStr: string, t: ReturnType<typeof useTranslations<
   return t('weeksAgo', { count: Math.floor(days / 7) })
 }
 
+const CB_CONFIG = {
+  yes: {
+    label: (t: ReturnType<typeof useTranslations<'jobs'>>) => t('crossBorderYes'),
+    badgeClass: 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800',
+  },
+  unclear: {
+    label: (t: ReturnType<typeof useTranslations<'jobs'>>) => t('crossBorderUnclear'),
+    badgeClass: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800',
+  },
+  no: {
+    label: (t: ReturnType<typeof useTranslations<'jobs'>>) => t('crossBorderNo'),
+    badgeClass: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700',
+  },
+} as const
+
+function CrossBorderBadge({
+  status,
+  signals,
+  open,
+  onToggle,
+  t,
+}: {
+  status: 'yes' | 'no' | 'unclear'
+  signals: string[] | null
+  open: boolean
+  onToggle: () => void
+  t: ReturnType<typeof useTranslations<'jobs'>>
+}) {
+  const cfg = CB_CONFIG[status]
+  const hasSignals = signals && signals.length > 0
+  return (
+    <span className="inline-flex flex-col items-start gap-0.5">
+      <button
+        type="button"
+        onClick={(e) => { e.stopPropagation(); if (hasSignals) onToggle() }}
+        className={`inline-flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-full whitespace-nowrap ${cfg.badgeClass} ${hasSignals ? 'cursor-pointer' : 'cursor-default'}`}
+        aria-expanded={open}
+      >
+        🌍 {cfg.label(t)}
+        {hasSignals && (
+          <ChevronDown className={`w-3 h-3 transition-transform ${open ? 'rotate-180' : ''}`} strokeWidth={2.5} />
+        )}
+      </button>
+      <AnimatePresence>
+        {open && hasSignals && (
+          <motion.ul
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.18, ease: 'easeOut' }}
+            className="overflow-hidden mt-0.5 ml-1 space-y-0.5"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {signals!.map((s, i) => (
+              <li key={i} className="text-[11px] text-slate-600 dark:text-slate-400 flex items-start gap-1">
+                <span className="mt-0.5 shrink-0 w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-slate-500 inline-block" />
+                {s}
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+    </span>
+  )
+}
+
 export default function JobCard({
   job,
   isSaved,
@@ -59,6 +125,7 @@ export default function JobCard({
 }) {
   const [shareStatus, setShareStatus] = useState<'idle' | 'copied' | 'manual'>('idle')
   const [shareUrl, setShareUrl] = useState('')
+  const [signalsOpen, setSignalsOpen] = useState(false)
   const t = useTranslations('jobs')
 
   // Real structured field set by the employer at posting time — no longer
@@ -106,7 +173,15 @@ export default function JobCard({
             <div className="flex flex-wrap items-center gap-2 mb-0.5">
               <h2 className="font-semibold text-slate-900 dark:text-white">{job.title}</h2>
               {job.is_featured && <Badge variant="primary">{t('featured')}</Badge>}
-              {job.cross_border_status === 'yes' && <Badge variant="success">{t('crossBorderFriendly')}</Badge>}
+              {job.cross_border_status != null && (
+                <CrossBorderBadge
+                  status={job.cross_border_status}
+                  signals={job.cross_border_signals}
+                  open={signalsOpen}
+                  onToggle={() => setSignalsOpen((o) => !o)}
+                  t={t}
+                />
+              )}
               {job.matchPercent != null && (
                 <Badge variant="success" className="flex items-center gap-1">
                   <Sparkles className="w-3 h-3" strokeWidth={2} /> {t('matchPercent', { percent: job.matchPercent })}

@@ -219,7 +219,6 @@
     "shareJob": "Partager l'offre",
     "shareBlocked": "Votre navigateur a bloqué la copie automatique — sélectionnez le lien ci-dessous et appuyez sur Cmd/Ctrl+C.",
     "featured": "⭐ En vedette",
-    "crossBorderFriendly": "🌐 Ouvert à l'international",
     "crossBorderFilterLabel": "Ouvert à l'international",
     "matchPercent": "{percent} % de correspondance",
     "today": "Aujourd'hui",
@@ -233,7 +232,10 @@
     "submitting": "Envoi en cours…",
     "applied": "✓ Candidature envoyée",
     "applyNow": "Postuler",
-    "optional": "(facultatif)"
+    "optional": "(facultatif)",
+    "crossBorderYes": "🌍 Ouvert à l'international",
+    "crossBorderUnclear": "🌍 Portée géographique floue",
+    "crossBorderNo": "🌍 Local/Régional uniquement"
   },
   "applicationStatus": {
     "submitted": "Envoyée",

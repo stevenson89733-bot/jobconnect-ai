@@ -219,7 +219,6 @@
     "shareJob": "مشاركة الوظيفة",
     "shareBlocked": "منع متصفحك النسخ التلقائي — حدّد الرابط أدناه واضغط Cmd/Ctrl+C.",
     "featured": "⭐ مميزة",
-    "crossBorderFriendly": "🌐 مفتوح دوليًا",
     "crossBorderFilterLabel": "مفتوح دوليًا",
     "matchPercent": "تطابق {percent}٪",
     "today": "اليوم",
@@ -233,7 +232,10 @@
     "submitting": "جارٍ الإرسال…",
     "applied": "✓ تم التقديم",
     "applyNow": "قدّم الآن",
-    "optional": "(اختياري)"
+    "optional": "(اختياري)",
+    "crossBorderYes": "🌍 مفتوح دولياً",
+    "crossBorderUnclear": "🌍 النطاق الجغرافي غير واضح",
+    "crossBorderNo": "🌍 محلي/إقليمي فقط"
   },
   "applicationStatus": {
     "submitted": "تم الإرسال",

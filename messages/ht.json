@@ -219,7 +219,6 @@
     "shareJob": "Pataje travay la",
     "shareBlocked": "Navigatè w bloke kopi otomatik la — chwazi lyen anba a epi peze Cmd/Ctrl+C.",
     "featured": "⭐ An Vedèt",
-    "crossBorderFriendly": "🌐 Ouvè pou entènasyonal",
     "crossBorderFilterLabel": "Ouvè pou entènasyonal",
     "matchPercent": "{percent}% Korespondans",
     "today": "Jodi a",
@@ -233,7 +232,10 @@
     "submitting": "K ap soumèt…",
     "applied": "✓ Aplike",
     "applyNow": "Aplike Kounye a",
-    "optional": "(fakiltatif)"
+    "optional": "(fakiltatif)",
+    "crossBorderYes": "🌍 Ouvè entènasyonalman",
+    "crossBorderUnclear": "🌍 Pòte jewografik pa klè",
+    "crossBorderNo": "🌍 Lokal/Rejyonal sèlman"
   },
   "applicationStatus": {
     "submitted": "Soumèt",

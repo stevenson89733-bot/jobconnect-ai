@@ -219,7 +219,6 @@
     "shareJob": "Chia sẻ việc làm",
     "shareBlocked": "Trình duyệt của bạn đã chặn sao chép tự động — hãy chọn liên kết bên dưới và nhấn Cmd/Ctrl+C.",
     "featured": "⭐ Nổi bật",
-    "crossBorderFriendly": "🌐 Mở cho ứng viên quốc tế",
     "crossBorderFilterLabel": "Mở cho ứng viên quốc tế",
     "matchPercent": "Phù hợp {percent}%",
     "today": "Hôm nay",
@@ -233,7 +232,10 @@
     "submitting": "Đang gửi…",
     "applied": "✓ Đã ứng tuyển",
     "applyNow": "Ứng tuyển ngay",
-    "optional": "(không bắt buộc)"
+    "optional": "(không bắt buộc)",
+    "crossBorderYes": "🌍 Mở rộng quốc tế",
+    "crossBorderUnclear": "🌍 Phạm vi địa lý chưa rõ",
+    "crossBorderNo": "🌍 Chỉ địa phương/khu vực"
   },
   "applicationStatus": {
     "submitted": "Đã nộp",
