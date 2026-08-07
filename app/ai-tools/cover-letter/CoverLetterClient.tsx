@@ -119,12 +119,14 @@ export default function CoverLetterClient({
   initialCompany = '',
   initialJobDescription = '',
   initialStrengths = '',
+  initialTargetCountry = '',
 }: {
   isPremium: boolean
   initialTargetRole?: string
   initialCompany?: string
   initialJobDescription?: string
   initialStrengths?: string
+  initialTargetCountry?: string
 }) {
   const t = useTranslations('coverLetter')
   const locale = useLocale()
@@ -140,7 +142,7 @@ export default function CoverLetterClient({
   const [jobDescription, setJobDescription] = useState(initialJobDescription)
   const [strengths, setStrengths] = useState(initialStrengths)
   const [style, setStyle] = useState<CoverLetterStyle>('Formal')
-  const [targetCountry, setTargetCountry] = useState('')
+  const [targetCountry, setTargetCountry] = useState(initialTargetCountry)
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<CoverLetterData | null>(null)
   const [dateLine, setDateLine] = useState('')

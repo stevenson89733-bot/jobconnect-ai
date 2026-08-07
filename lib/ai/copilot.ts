@@ -27,8 +27,27 @@ const VALID_INTENTS: CopilotIntent[] = [
   'improve_resume', 'write_cover_letter', 'find_jobs', 'career_analysis', 'view_applications', 'prepare_interview', 'unclear',
 ]
 
+const COUNTRY_MAP: Record<string, string> = {
+  'united states': 'US', 'usa': 'US', 'american': 'US',
+  'united kingdom': 'UK', 'britain': 'UK', 'british': 'UK', 'england': 'UK',
+  'canada': 'CA', 'canadian': 'CA',
+  'germany': 'DE', 'german': 'DE',
+  'france': 'FR', 'french': 'FR',
+  // French
+  'états-unis': 'US', 'etats-unis': 'US', 'américain': 'US',
+  'royaume-uni': 'UK', 'britannique': 'UK', 'anglais': 'UK',
+  'canadien': 'CA',
+  'allemagne': 'DE', 'allemand': 'DE',
+  'français': 'FR',
+  // Spanish / Portuguese
+  'estados unidos': 'US', 'alemania': 'DE', 'alemanha': 'DE', 'reino unido': 'UK',
+}
+const VALID_COUNTRY_CODES = ['US', 'UK', 'CA', 'DE', 'FR']
+
 export type CopilotExtracted = {
   targetRole: string | null
+  company: string | null
+  targetCountry: string | null
   searchQuery: string | null
   workType: string | null
   sortBySalary: boolean
@@ -71,22 +90,26 @@ Classify into EXACTLY ONE of these intents:
 - "unclear" — the message doesn't clearly match any of the above, is off-topic, or is too vague to act on.
 
 STRICT RULES:
-- Only extract "targetRole", "searchQuery", or "workType" if the candidate's message explicitly states them — never guess or infer a value they didn't actually say.
-- "targetRole" must be an actual job title/role only (e.g. "Software Engineer", "Product Manager") — NEVER a company name. If the candidate mentions only a company (e.g. "improve my resume for Amazon") without stating a specific role, leave "targetRole" null and instead acknowledge the company by name in your "reply" text.
+- Only extract fields if the candidate's message explicitly states them — never guess or infer a value they didn't actually say.
+- "targetRole" must be an actual job title/role only (e.g. "Software Engineer", "Product Manager") — NEVER a company name. If the candidate mentions only a company without stating a specific role, leave "targetRole" null and acknowledge the company in your "reply" text.
+- "company" must be an actual company/organization name if explicitly mentioned (e.g. "Amazon", "Siemens") — null otherwise. Never infer a company from a country or role.
+- "targetCountry" must be EXACTLY one of: US, UK, CA, DE, FR — mapped from whatever the candidate says (e.g. "en France"→"FR", "in Germany"→"DE", "for a US company"→"US", "au Canada"→"CA"). Null if no country is mentioned or if the country is not one of these five.
 - "workType" must be exactly one of: ${REAL_WORK_TYPES.join(', ')} (lowercase, as shown) — or null if not mentioned or not one of these.
 - Real job categories on this platform are only: ${REAL_CATEGORIES.filter((c) => c !== 'All').join(', ')}. Real job types are only: ${REAL_JOB_TYPES.filter((c) => c !== 'All').join(', ')}. Do not invent a category/type outside these lists.
 - There is NO minimum-salary filter on this platform — jobs can only be sorted by salary (highest first), not filtered to an exact threshold. If the candidate mentions any salary figure or "highest paying"/"best paying" type request, set "sortBySalary" to true and your reply must honestly say you've sorted by salary (highest first) rather than claiming an exact threshold filter was applied.
 - Keep "reply" to 1-2 short sentences — a brief acknowledgment, not the actual deliverable.
 - For "unclear", "reply" must briefly and honestly say you didn't understand and list in plain language the kinds of things you can help with (resume, cover letter, job search, career analysis, interview prep, checking application status) — never pretend to understand something you didn't.
-- For "prepare_interview", never claim to have found or looked up a specific job listing — this platform has no search/lookup capability available to you here. If the candidate mentioned a company or role, you may acknowledge it in your reply, but the actual practice questions are generated on the destination page from either a real job listing (if the candidate arrived from one) or their own profile — never claim more than that.
+- For "prepare_interview", never claim to have found or looked up a specific job listing — this platform has no search/lookup capability available to you here.
 
 Return a JSON object with this exact structure:
 {
   "intent": "<one of: improve_resume, write_cover_letter, find_jobs, career_analysis, view_applications, prepare_interview, unclear>",
   "reply": "<1-2 sentence reply in ${languageName}>",
   "extracted": {
-    "targetRole": "<the job title/role exactly as the candidate stated it, or null if only a company was mentioned>",
-    "searchQuery": "<a short real keyword/role phrase for a job search, exactly reflecting what the candidate said, or null>",
+    "targetRole": "<job title/role exactly as stated, or null>",
+    "company": "<company name exactly as stated, or null>",
+    "targetCountry": "<one of US/UK/CA/DE/FR, or null>",
+    "searchQuery": "<short keyword/role phrase for job search, or null>",
     "workType": "<one of ${REAL_WORK_TYPES.join('/')}, or null>",
     "sortBySalary": <true or false>
   }
@@ -96,11 +119,19 @@ Return a JSON object with this exact structure:
 function coerceExtracted(raw: unknown): CopilotExtracted {
   const obj = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>
   const targetRole = typeof obj.targetRole === 'string' && obj.targetRole.trim() ? obj.targetRole.trim() : null
+  const company = typeof obj.company === 'string' && obj.company.trim() ? obj.company.trim() : null
+  // Accept both the model's direct code output and natural-language fallback
+  const rawCountry = typeof obj.targetCountry === 'string' ? obj.targetCountry.trim() : null
+  const targetCountry = rawCountry
+    ? (VALID_COUNTRY_CODES.includes(rawCountry.toUpperCase())
+        ? rawCountry.toUpperCase()
+        : (COUNTRY_MAP[rawCountry.toLowerCase()] ?? null))
+    : null
   const searchQuery = typeof obj.searchQuery === 'string' && obj.searchQuery.trim() ? obj.searchQuery.trim() : null
   const rawWorkType = typeof obj.workType === 'string' ? obj.workType.trim().toLowerCase() : null
   const workType = rawWorkType && REAL_WORK_TYPES.includes(rawWorkType) ? rawWorkType : null
   const sortBySalary = obj.sortBySalary === true
-  return { targetRole, searchQuery, workType, sortBySalary }
+  return { targetRole, company, targetCountry, searchQuery, workType, sortBySalary }
 }
 
 function normalize(raw: unknown): CopilotClassification {
@@ -144,11 +175,18 @@ export function buildRedirect(intent: CopilotIntent, extracted: CopilotExtracted
     case 'improve_resume': {
       const params = new URLSearchParams()
       if (extracted.targetRole) params.set('targetRole', extracted.targetRole)
+      if (extracted.targetCountry) params.set('targetCountry', extracted.targetCountry)
       const qs = params.toString()
       return { url: qs ? `/ai-tools/resume-builder?${qs}` : '/ai-tools/resume-builder', labelKey: 'redirectImproveResume' }
     }
-    case 'write_cover_letter':
-      return { url: '/ai-tools/cover-letter', labelKey: 'redirectCoverLetter' }
+    case 'write_cover_letter': {
+      const params = new URLSearchParams()
+      if (extracted.targetRole) params.set('targetRole', extracted.targetRole)
+      if (extracted.company) params.set('company', extracted.company)
+      if (extracted.targetCountry) params.set('targetCountry', extracted.targetCountry)
+      const qs = params.toString()
+      return { url: qs ? `/ai-tools/cover-letter?${qs}` : '/ai-tools/cover-letter', labelKey: 'redirectCoverLetter' }
+    }
     case 'find_jobs': {
       const params = new URLSearchParams()
       if (extracted.searchQuery) params.set('q', extracted.searchQuery)

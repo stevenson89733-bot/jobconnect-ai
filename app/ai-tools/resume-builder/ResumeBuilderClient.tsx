@@ -116,6 +116,7 @@ export default function ResumeBuilderClient({
   initialSummary = '',
   initialName = '',
   initialContact = '',
+  initialTargetCountry = '',
 }: {
   isPremium: boolean
   initialTargetRole?: string
@@ -125,6 +126,7 @@ export default function ResumeBuilderClient({
   initialSummary?: string
   initialName?: string
   initialContact?: string
+  initialTargetCountry?: string
 }) {
   const t = useTranslations('resumeBuilder')
   const [mounted, setMounted] = useState(false)
@@ -147,7 +149,7 @@ export default function ResumeBuilderClient({
   // suggestion) — see isAnalysisStale below.
   const [analyzedSnapshot, setAnalyzedSnapshot] = useState<string | null>(null)
 
-  const [targetCountry, setTargetCountry] = useState('')
+  const [targetCountry, setTargetCountry] = useState(initialTargetCountry)
   const [includePhoto, setIncludePhoto] = useState(false)
 
   const [template, setTemplate] = useState<ResumeTemplateId>('classic')

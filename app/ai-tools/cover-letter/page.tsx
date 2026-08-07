@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 export default async function CoverLetterPage({
   searchParams,
 }: {
-  searchParams: { jobId?: string }
+  searchParams: { jobId?: string; targetRole?: string; company?: string; targetCountry?: string }
 }) {
   let isPremium = false
   // Auto Personalization (item 5 of the lot-1 spec): pull from the
@@ -67,8 +67,17 @@ export default async function CoverLetterPage({
         initialCompany = job.company_name ?? ''
         initialJobDescription = job.description ?? ''
       }
+    } else {
+      // Copilot hand-off — takes priority over profile prefill when present.
+      if (searchParams.targetRole?.trim()) initialTargetRole = searchParams.targetRole.trim()
+      if (searchParams.company?.trim()) initialCompany = searchParams.company.trim()
     }
   } catch {}
+
+  const VALID_COUNTRIES = ['US', 'UK', 'CA', 'DE', 'FR']
+  const initialTargetCountry = searchParams.targetCountry && VALID_COUNTRIES.includes(searchParams.targetCountry)
+    ? searchParams.targetCountry
+    : ''
 
   return (
     <CoverLetterClient
@@ -77,6 +86,7 @@ export default async function CoverLetterPage({
       initialCompany={initialCompany}
       initialJobDescription={initialJobDescription}
       initialStrengths={initialStrengths}
+      initialTargetCountry={initialTargetCountry}
     />
   )
 }

@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 export default async function ResumeBuilderPage({
   searchParams,
 }: {
-  searchParams: { targetRole?: string }
+  searchParams: { targetRole?: string; targetCountry?: string }
 }) {
   let isPremium = false
   // Pre-fill values — same real profile source as Career Coach. If the
@@ -70,6 +70,11 @@ export default async function ResumeBuilderPage({
     }
   } catch {}
 
+  const VALID_COUNTRIES = ['US', 'UK', 'CA', 'DE', 'FR']
+  const initialTargetCountry = searchParams.targetCountry && VALID_COUNTRIES.includes(searchParams.targetCountry)
+    ? searchParams.targetCountry
+    : ''
+
   return (
     <ResumeBuilderClient
       isPremium={isPremium}
@@ -80,6 +85,7 @@ export default async function ResumeBuilderPage({
       initialSummary={initialSummary}
       initialName={initialName}
       initialContact={initialContact}
+      initialTargetCountry={initialTargetCountry}
     />
   )
 }
