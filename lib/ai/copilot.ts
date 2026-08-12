@@ -198,7 +198,7 @@ export function buildRedirect(intent: CopilotIntent, extracted: CopilotExtracted
     case 'career_analysis':
       return { url: '/candidate/career-coach', labelKey: 'redirectCareerAnalysis' }
     case 'view_applications':
-      return { url: '/candidate', labelKey: 'redirectViewApplications' }
+      return { url: '/candidate/applications', labelKey: 'redirectViewApplications' }
     case 'prepare_interview': {
       // Same reasoning as improve_resume: no ad-hoc jobId resolution here
       // (no lookup capability in this V1), only a real targetRole hand-off.
