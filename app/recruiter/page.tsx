@@ -206,9 +206,12 @@ export default async function EmployerDashboard() {
                       <div className="flex-1 min-w-0">
                         {(() => { const p = app.profiles; return (
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-sm font-medium text-slate-900 dark:text-white">
+                          <Link
+                            href={`/candidate/${app.candidate_id}`}
+                            className="text-sm font-medium text-slate-900 dark:text-white hover:text-primary dark:hover:text-blue-400 transition-colors"
+                          >
                             {p?.full_name ?? t('candidateFallback')}
-                          </span>
+                          </Link>
                           <span className="text-xs text-slate-600 dark:text-slate-400">{p?.email}</span>
                           <span className="text-xs text-slate-600 dark:text-slate-400 ms-auto">{timeAgo(app.created_at, locale)}</span>
                         </div>
