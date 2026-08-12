@@ -19,12 +19,13 @@ export type CopilotIntent =
   | 'write_cover_letter'
   | 'find_jobs'
   | 'career_analysis'
+  | 'skill_gap'
   | 'view_applications'
   | 'prepare_interview'
   | 'unclear'
 
 const VALID_INTENTS: CopilotIntent[] = [
-  'improve_resume', 'write_cover_letter', 'find_jobs', 'career_analysis', 'view_applications', 'prepare_interview', 'unclear',
+  'improve_resume', 'write_cover_letter', 'find_jobs', 'career_analysis', 'skill_gap', 'view_applications', 'prepare_interview', 'unclear',
 ]
 
 const COUNTRY_MAP: Record<string, string> = {
@@ -84,7 +85,8 @@ Classify into EXACTLY ONE of these intents:
 - "improve_resume" — wants help writing/improving/tailoring their resume or CV for a role or company.
 - "write_cover_letter" — wants a cover letter written or improved.
 - "find_jobs" — wants to search/filter job listings (by role, remote/hybrid/onsite, category, or wants higher-paying roles surfaced).
-- "career_analysis" — wants a broader career/profile assessment, ATS score, or skill gaps (not a specific document).
+- "career_analysis" — wants a broader career/profile assessment, overall ATS score, profile strength rating, or a full career roadmap (not a specific document and not a targeted skill gap for a specific role/market).
+- "skill_gap" — wants to know specifically which skills they're missing for a given role or target job market (e.g. "what do I need to work in Germany?", "what skills am I missing for a Product Manager role?", "how close am I to this job?").
 - "view_applications" — wants to check the status of jobs they've already applied to.
 - "prepare_interview" — wants to practice/prepare for an interview (e.g. practice answering questions, get feedback on how they'd answer).
 - "unclear" — the message doesn't clearly match any of the above, is off-topic, or is too vague to act on.
@@ -103,7 +105,7 @@ STRICT RULES:
 
 Return a JSON object with this exact structure:
 {
-  "intent": "<one of: improve_resume, write_cover_letter, find_jobs, career_analysis, view_applications, prepare_interview, unclear>",
+  "intent": "<one of: improve_resume, write_cover_letter, find_jobs, career_analysis, skill_gap, view_applications, prepare_interview, unclear>",
   "reply": "<1-2 sentence reply in ${languageName}>",
   "extracted": {
     "targetRole": "<job title/role exactly as stated, or null>",
@@ -197,6 +199,13 @@ export function buildRedirect(intent: CopilotIntent, extracted: CopilotExtracted
     }
     case 'career_analysis':
       return { url: '/candidate/career-coach', labelKey: 'redirectCareerAnalysis' }
+    case 'skill_gap': {
+      const params = new URLSearchParams()
+      if (extracted.targetRole) params.set('targetRole', extracted.targetRole)
+      if (extracted.targetCountry) params.set('targetCountry', extracted.targetCountry)
+      const qs = params.toString()
+      return { url: qs ? `/ai-tools/skill-gap?${qs}` : '/ai-tools/skill-gap', labelKey: 'redirectSkillGap' }
+    }
     case 'view_applications':
       return { url: '/candidate/applications', labelKey: 'redirectViewApplications' }
     case 'prepare_interview': {

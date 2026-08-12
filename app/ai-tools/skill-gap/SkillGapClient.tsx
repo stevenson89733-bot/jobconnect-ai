@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { sanitizeTargetRole, stripTargetRoleNewlines, MAX_TARGET_ROLE_LENGTH } from '@/lib/ai/resumeGuard'
+import { COUNTRY_OPTIONS } from '@/lib/ai/countryProfiles'
+import { useAIToolsSession } from '@/lib/ai/aiToolsContext'
 import type { SkillGapAnalysis } from '@/lib/ai/skillGap'
 
 function PremiumSkeleton() {
@@ -13,7 +15,9 @@ export default function SkillGapClient({
   isPremium,
   initialSkills = '',
   initialExperience = '',
-  initialTargetRole = '',
+  initialTargetRoleFromParam = '',
+  initialTargetRoleFromProfile = '',
+  initialTargetCountryFromParam = '',
   jobId = null,
   jobTitle = null,
   jobCompany = null,
@@ -21,14 +25,19 @@ export default function SkillGapClient({
   isPremium: boolean
   initialSkills?: string
   initialExperience?: string
-  initialTargetRole?: string
+  initialTargetRoleFromParam?: string
+  initialTargetRoleFromProfile?: string
+  initialTargetCountryFromParam?: string
   jobId?: string | null
   jobTitle?: string | null
   jobCompany?: string | null
 }) {
   const t = useTranslations('skillGap')
+  const { lastTargetRole, lastTargetCountry, update } = useAIToolsSession()
   const [mounted, setMounted] = useState(false)
-  const [targetRole, setTargetRole] = useState(initialTargetRole)
+  // Priority: URL param (copilot/jobId) > AIToolsContext > Supabase profile
+  const [targetRole, setTargetRole] = useState(initialTargetRoleFromParam || lastTargetRole || initialTargetRoleFromProfile)
+  const [targetCountry, setTargetCountry] = useState(initialTargetCountryFromParam || lastTargetCountry)
   const [skills] = useState(initialSkills)
   const [experience] = useState(initialExperience)
   const [generating, setGenerating] = useState(false)
@@ -44,21 +53,33 @@ export default function SkillGapClient({
   async function handleAnalyze(e: React.FormEvent) {
     e.preventDefault()
     if (!isPremium) return
+    update(hasRealJob ? (jobTitle ?? '') : targetRole, targetCountry)
     setGenerating(true)
     setError('')
     setAnalysis(null)
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 30_000)
     try {
+      const body = hasRealJob
+        ? { jobId, skills, experience, targetCountry: targetCountry || undefined }
+        : { targetRole, skills, experience, targetCountry: targetCountry || undefined }
       const res = await fetch('/api/ai/skill-gap', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(hasRealJob ? { jobId, skills, experience } : { targetRole, skills, experience }),
+        body: JSON.stringify(body),
+        signal: controller.signal,
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || t('generationFailed'))
       setAnalysis(data.analysis)
     } catch (err) {
-      setError(err instanceof Error ? err.message : t('somethingWentWrong'))
+      if (err instanceof Error && err.name === 'AbortError') {
+        setError(t('timeoutError'))
+      } else {
+        setError(err instanceof Error ? err.message : t('somethingWentWrong'))
+      }
     } finally {
+      clearTimeout(timeoutId)
       setGenerating(false)
     }
   }
@@ -123,6 +144,20 @@ export default function SkillGapClient({
               </div>
             )}
 
+            <div>
+              <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">{t('targetCountry')}</label>
+              <select
+                value={targetCountry}
+                onChange={(e) => setTargetCountry(e.target.value)}
+                className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-primary"
+              >
+                <option value="">{t('targetCountryDefault')}</option>
+                {COUNTRY_OPTIONS.map((c) => (
+                  <option key={c.code} value={c.code}>{c.label}</option>
+                ))}
+              </select>
+            </div>
+
             {!experience.trim() && (
               <p className="text-xs text-amber-600 dark:text-amber-400">{t('notEnoughExperienceWarning')}</p>
             )}
@@ -134,17 +169,34 @@ export default function SkillGapClient({
             </button>
           </form>
 
+          {generating && (
+            <div className="card flex flex-col items-center justify-center py-16 text-center gap-3">
+              <svg className="animate-spin w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
+              </svg>
+              <p className="text-sm text-slate-600 dark:text-slate-400">{t('analyzingButton')}</p>
+            </div>
+          )}
+
           {analysis && (
             <div className="card space-y-5">
-              <span
-                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${
-                  analysis.basis === 'real_job'
-                    ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
-                    : 'bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300'
-                }`}
-              >
-                {analysis.basis === 'real_job' ? t('basisRealJob') : t('basisGeneralEstimate')}
-              </span>
+              <div className="flex flex-wrap gap-2">
+                <span
+                  className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${
+                    analysis.basis === 'real_job'
+                      ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
+                      : 'bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300'
+                  }`}
+                >
+                  {analysis.basis === 'real_job' ? t('basisRealJob') : t('basisGeneralEstimate')}
+                </span>
+                {targetCountry && (
+                  <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">
+                    🌍 {t('crossBorderNote', { country: targetCountry })}
+                  </span>
+                )}
+              </div>
 
               <div>
                 <div className="flex items-baseline gap-2 mb-1">

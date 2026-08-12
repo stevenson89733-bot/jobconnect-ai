@@ -824,7 +824,8 @@
     "redirectFindJobs": "Chèche travay",
     "redirectCareerAnalysis": "Gade Career Coach",
     "redirectViewApplications": "Gade aplikasyon mwen yo",
-    "redirectPrepareInterview": "Pratike kesyon entèvyou"
+    "redirectPrepareInterview": "Pratike kesyon entèvyou",
+    "redirectSkillGap": "Analize ecart konpetans mwen →"
   },
   "pricing": {
     "pageTitle": "Pri senp ak onèt",
@@ -1179,7 +1180,11 @@
     "skillsToDevelop": "Konpetans Pou Devlope",
     "suggestedNextSteps": "Pwochèn Etap Sijere",
     "generationFailed": "Jenerasyon echwe",
-    "somethingWentWrong": "Gen yon bagay ki mal pase"
+    "somethingWentWrong": "Gen yon bagay ki mal pase",
+    "targetCountry": "Mache sible",
+    "targetCountryDefault": "Nenpòt mache / Pa gen peyi espesifik",
+    "crossBorderNote": "Analiz mache {country}",
+    "timeoutError": "Analiz la pran plis tan pase prevwa, tanpri eseye ankò."
   },
   "employerProfile": {
     "breadcrumbDashboard": "Tablo debò",

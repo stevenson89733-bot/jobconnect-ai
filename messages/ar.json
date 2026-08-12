@@ -824,7 +824,8 @@
     "redirectFindJobs": "البحث عن وظائف",
     "redirectCareerAnalysis": "عرض المدرب المهني",
     "redirectViewApplications": "عرض طلباتي",
-    "redirectPrepareInterview": "التدرّب على أسئلة المقابلة"
+    "redirectPrepareInterview": "التدرّب على أسئلة المقابلة",
+    "redirectSkillGap": "تحليل الفجوة المهارية ←"
   },
   "pricing": {
     "pageTitle": "تسعير بسيط وصادق",
@@ -1179,7 +1180,11 @@
     "skillsToDevelop": "المهارات التي يجب تطويرها",
     "suggestedNextSteps": "الخطوات التالية المقترحة",
     "generationFailed": "فشل التوليد",
-    "somethingWentWrong": "حدث خطأ ما"
+    "somethingWentWrong": "حدث خطأ ما",
+    "targetCountry": "السوق المستهدف",
+    "targetCountryDefault": "أي سوق / بدون دولة محددة",
+    "crossBorderNote": "تحليل سوق {country}",
+    "timeoutError": "يستغرق التحليل وقتاً أطول من المتوقع، يرجى المحاولة مجدداً."
   },
   "employerProfile": {
     "breadcrumbDashboard": "لوحة التحكم",

@@ -824,7 +824,8 @@
     "redirectFindJobs": "搜索职位",
     "redirectCareerAnalysis": "查看职业教练",
     "redirectViewApplications": "查看我的申请",
-    "redirectPrepareInterview": "练习面试问题"
+    "redirectPrepareInterview": "练习面试问题",
+    "redirectSkillGap": "分析技能差距 →"
   },
   "pricing": {
     "pageTitle": "简单、透明的定价",
@@ -1179,7 +1180,11 @@
     "skillsToDevelop": "待发展的技能",
     "suggestedNextSteps": "建议的下一步行动",
     "generationFailed": "生成失败",
-    "somethingWentWrong": "出了点问题"
+    "somethingWentWrong": "出了点问题",
+    "targetCountry": "目标市场",
+    "targetCountryDefault": "任何市场 / 不限定国家",
+    "crossBorderNote": "{country}市场分析",
+    "timeoutError": "分析时间超出预期，请重试。"
   },
   "employerProfile": {
     "breadcrumbDashboard": "仪表盘",

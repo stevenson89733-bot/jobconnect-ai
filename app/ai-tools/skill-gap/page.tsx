@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 export default async function SkillGapPage({
   searchParams,
 }: {
-  searchParams: { jobId?: string; targetRole?: string }
+  searchParams: { jobId?: string; targetRole?: string; targetCountry?: string }
 }) {
   let isPremium = false
   let initialSkills = ''
@@ -61,17 +61,29 @@ export default async function SkillGapPage({
       }
     }
 
-    if (!jobId && searchParams.targetRole?.trim()) {
-      initialTargetRole = searchParams.targetRole.trim()
-    }
   } catch {}
+
+  // jobId takes precedence as the most specific real source.
+  // For non-jobId paths, param and profile are split so the client applies:
+  // param > AIToolsContext > profile.
+  const initialTargetRoleFromParam = jobId
+    ? initialTargetRole
+    : searchParams.targetRole?.trim() ?? ''
+  const initialTargetRoleFromProfile = jobId ? '' : initialTargetRole
+
+  const VALID_COUNTRIES = ['US', 'UK', 'CA', 'DE', 'FR']
+  const initialTargetCountryFromParam = searchParams.targetCountry && VALID_COUNTRIES.includes(searchParams.targetCountry)
+    ? searchParams.targetCountry
+    : ''
 
   return (
     <SkillGapClient
       isPremium={isPremium}
       initialSkills={initialSkills}
       initialExperience={initialExperience}
-      initialTargetRole={initialTargetRole}
+      initialTargetRoleFromParam={initialTargetRoleFromParam}
+      initialTargetRoleFromProfile={initialTargetRoleFromProfile}
+      initialTargetCountryFromParam={initialTargetCountryFromParam}
       jobId={jobId}
       jobTitle={jobTitle}
       jobCompany={jobCompany}

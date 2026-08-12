@@ -824,7 +824,8 @@
     "redirectFindJobs": "求人を検索",
     "redirectCareerAnalysis": "キャリアコーチを見る",
     "redirectViewApplications": "応募状況を見る",
-    "redirectPrepareInterview": "面接質問を練習する"
+    "redirectPrepareInterview": "面接質問を練習する",
+    "redirectSkillGap": "スキルギャップを分析 →"
   },
   "pricing": {
     "pageTitle": "シンプルで誠実な料金体系",
@@ -1179,7 +1180,11 @@
     "skillsToDevelop": "伸ばすべきスキル",
     "suggestedNextSteps": "推奨される次のステップ",
     "generationFailed": "生成に失敗しました",
-    "somethingWentWrong": "問題が発生しました"
+    "somethingWentWrong": "問題が発生しました",
+    "targetCountry": "ターゲット市場",
+    "targetCountryDefault": "市場を指定しない",
+    "crossBorderNote": "{country}市場分析",
+    "timeoutError": "分析に予想以上の時間がかかっています。もう一度お試しください。"
   },
   "employerProfile": {
     "breadcrumbDashboard": "ダッシュボード",

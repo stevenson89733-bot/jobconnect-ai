@@ -29,6 +29,7 @@ export type SkillGapInput = {
   candidateSkills: string
   candidateExperience: string
   context: GapContext
+  targetCountry?: string
 }
 
 export type SkillGapAnalysis = {
@@ -39,8 +40,36 @@ export type SkillGapAnalysis = {
   suggestedNextSteps: string[]
 }
 
+const COUNTRY_NAMES: Record<string, string> = {
+  US: 'United States', UK: 'United Kingdom', CA: 'Canada', DE: 'Germany', FR: 'France',
+}
+
+const COUNTRY_CERT_HINTS: Record<string, string> = {
+  US: 'e.g. PMP, CPA, AWS certifications, state bar/medical board licenses',
+  UK: 'e.g. ACCA, CIMA, CIPD, BCS, ICE charterships, SRA qualification',
+  CA: 'e.g. CPA (CPA Canada), PEng, CHRP, Red Seal trades, provincial bar',
+  DE: 'e.g. IHK Ausbildung/Meister, Certified SAP, VDE, statutory professional registrations',
+  FR: 'e.g. RNCP-certified titles, AFPA certifications relevant to this field, grandes écoles credentials',
+}
+
+function buildCrossBorderBlock(targetCountry: string): string {
+  const countryName = COUNTRY_NAMES[targetCountry]
+  const certHints = COUNTRY_CERT_HINTS[targetCountry]
+  if (!countryName) return ''
+  return `
+CROSS-BORDER MARKET CONTEXT (target market: ${countryName}):
+The candidate wants to be competitive specifically on the ${countryName} labor market, not just generically qualified for the role. Go beyond generic skill gaps and address what makes someone hireable in ${countryName} for this specific role:
+- Certifications or qualifications recognized/preferred in ${countryName} for THIS specific role — name real, role-relevant ones (${certHints} are examples of the kind to look for, but prioritize whatever is actually relevant to the target role, not these examples themselves)
+- Language expectations (e.g. ${targetCountry === 'DE' ? 'German fluency level required, English as a plus' : targetCountry === 'FR' ? 'French fluency required, English level expected' : 'English proficiency level and any local language advantage'})
+- Soft skills or workplace culture norms that matter for hiring in ${countryName} (e.g. ${targetCountry === 'DE' ? 'directness, precision, formal hierarchy' : targetCountry === 'FR' ? 'structured argumentation, grandes écoles culture, formality' : targetCountry === 'UK' ? 'understatement, politeness norms, UK workplace etiquette' : 'local professional norms'})
+- Any compliance, regulatory, or sector-specific knowledge relevant to this role in ${countryName}
+Frame all suggestedNextSteps with this ${countryName} market context — never give a generic step when a country-specific one exists.`
+}
+
 function buildPrompt(input: SkillGapInput, languageName: string): string {
   const { context } = input
+
+  const crossBorderBlock = input.targetCountry ? buildCrossBorderBlock(input.targetCountry) : ''
 
   const destinationBlock =
     context.kind === 'job'
@@ -70,12 +99,13 @@ Candidate's real experience:
 ${input.candidateExperience || 'Not provided'}
 
 ${destinationBlock}
+${crossBorderBlock}
 
 STRICT RULES:
 ${groundingRules}
 - "skillsAlreadyHave" must only list skills genuinely present in the candidate's real skills/experience above that are also relevant to the destination — never invent one they didn't state.
 - "skillsToDevelop" is the gap: relevant skills for the destination that are absent from the candidate's real skills/experience above.
-- "suggestedNextSteps" must be concrete and actionable, grounded only in the information above.
+- "suggestedNextSteps" must be concrete and actionable, grounded only in the information above${input.targetCountry ? ` and shaped by the ${COUNTRY_NAMES[input.targetCountry]} market context above` : ''}.
 
 Return a JSON object with EXACTLY this structure:
 {

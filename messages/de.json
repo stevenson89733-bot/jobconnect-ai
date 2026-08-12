@@ -824,7 +824,8 @@
     "redirectFindJobs": "Jobs suchen",
     "redirectCareerAnalysis": "Career Coach ansehen",
     "redirectViewApplications": "Bewerbungen ansehen",
-    "redirectPrepareInterview": "Interviewfragen üben"
+    "redirectPrepareInterview": "Interviewfragen üben",
+    "redirectSkillGap": "Skill-Gap analysieren →"
   },
   "pricing": {
     "pageTitle": "Einfache, ehrliche Preise",
@@ -1179,7 +1180,11 @@
     "skillsToDevelop": "Zu entwickelnde Fähigkeiten",
     "suggestedNextSteps": "Empfohlene nächste Schritte",
     "generationFailed": "Generierung fehlgeschlagen",
-    "somethingWentWrong": "Etwas ist schiefgelaufen"
+    "somethingWentWrong": "Etwas ist schiefgelaufen",
+    "targetCountry": "Zielmarkt",
+    "targetCountryDefault": "Beliebiger Markt / Kein spezifisches Land",
+    "crossBorderNote": "Analyse für {country}",
+    "timeoutError": "Die Analyse dauert länger als erwartet – bitte versuche es erneut."
   },
   "employerProfile": {
     "breadcrumbDashboard": "Dashboard",

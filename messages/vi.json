@@ -824,7 +824,8 @@
     "redirectFindJobs": "Tìm việc làm",
     "redirectCareerAnalysis": "Xem Career Coach",
     "redirectViewApplications": "Xem đơn ứng tuyển",
-    "redirectPrepareInterview": "Luyện câu hỏi phỏng vấn"
+    "redirectPrepareInterview": "Luyện câu hỏi phỏng vấn",
+    "redirectSkillGap": "Phân tích Skill Gap của tôi →"
   },
   "pricing": {
     "pageTitle": "Bảng giá đơn giản, minh bạch",
@@ -1179,7 +1180,11 @@
     "skillsToDevelop": "Kỹ Năng Cần Phát Triển",
     "suggestedNextSteps": "Các Bước Tiếp Theo Được Đề Xuất",
     "generationFailed": "Tạo thất bại",
-    "somethingWentWrong": "Đã xảy ra lỗi"
+    "somethingWentWrong": "Đã xảy ra lỗi",
+    "targetCountry": "Thị trường mục tiêu",
+    "targetCountryDefault": "Bất kỳ thị trường / Không có quốc gia cụ thể",
+    "crossBorderNote": "Phân tích thị trường {country}",
+    "timeoutError": "Việc phân tích đang mất nhiều thời gian hơn dự kiến, vui lòng thử lại."
   },
   "employerProfile": {
     "breadcrumbDashboard": "Bảng điều khiển",

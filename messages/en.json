@@ -824,7 +824,8 @@
     "redirectFindJobs": "Search jobs",
     "redirectCareerAnalysis": "View Career Coach",
     "redirectViewApplications": "View applications",
-    "redirectPrepareInterview": "Practice interview questions"
+    "redirectPrepareInterview": "Practice interview questions",
+    "redirectSkillGap": "Analyze My Skill Gap →"
   },
   "pricing": {
     "pageTitle": "Simple, honest pricing",
@@ -1179,7 +1180,11 @@
     "skillsToDevelop": "Skills to Develop",
     "suggestedNextSteps": "Suggested Next Steps",
     "generationFailed": "Generation failed",
-    "somethingWentWrong": "Something went wrong"
+    "somethingWentWrong": "Something went wrong",
+    "targetCountry": "Target Market",
+    "targetCountryDefault": "Any market / No specific country",
+    "crossBorderNote": "{country} market analysis",
+    "timeoutError": "Analysis is taking longer than expected — please try again."
   },
   "employerProfile": {
     "breadcrumbDashboard": "Dashboard",

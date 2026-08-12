@@ -824,7 +824,8 @@
     "redirectFindJobs": "채용 공고 검색",
     "redirectCareerAnalysis": "커리어 코치 보기",
     "redirectViewApplications": "지원 현황 보기",
-    "redirectPrepareInterview": "면접 질문 연습하기"
+    "redirectPrepareInterview": "면접 질문 연습하기",
+    "redirectSkillGap": "스킬 갭 분석 →"
   },
   "pricing": {
     "pageTitle": "간단하고 투명한 요금제",
@@ -1179,7 +1180,11 @@
     "skillsToDevelop": "개발해야 할 역량",
     "suggestedNextSteps": "제안된 다음 단계",
     "generationFailed": "생성 실패",
-    "somethingWentWrong": "문제가 발생했습니다"
+    "somethingWentWrong": "문제가 발생했습니다",
+    "targetCountry": "목표 시장",
+    "targetCountryDefault": "모든 시장 / 특정 국가 없음",
+    "crossBorderNote": "{country} 시장 분석",
+    "timeoutError": "분석이 예상보다 오래 걸리고 있습니다. 다시 시도해 주세요."
   },
   "employerProfile": {
     "breadcrumbDashboard": "대시보드",

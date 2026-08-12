@@ -9,11 +9,14 @@ const GENERATION_LIMIT = 10
 const GENERATION_WINDOW_MS = 60 * 60 * 1000
 const MAX_FIELD_LENGTH = 4000
 
+const VALID_COUNTRIES = ['US', 'UK', 'CA', 'DE', 'FR']
+
 type Body = {
   jobId?: string
   targetRole?: string
   skills?: string
   experience?: string
+  targetCountry?: string
 }
 
 export async function POST(req: Request) {
@@ -33,6 +36,9 @@ export async function POST(req: Request) {
   const body = (await req.json().catch(() => ({}))) as Body
   const skills = (body.skills ?? '').trim().slice(0, MAX_FIELD_LENGTH)
   const experience = (body.experience ?? '').trim().slice(0, MAX_FIELD_LENGTH)
+  const targetCountry = typeof body.targetCountry === 'string' && VALID_COUNTRIES.includes(body.targetCountry)
+    ? body.targetCountry
+    : undefined
 
   if (!hasEnoughExperience(experience)) {
     return NextResponse.json({ error: t('skillGapNotEnoughExperience') }, { status: 400 })
@@ -62,7 +68,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const analysis = await generateSkillGapAnalysis({ candidateSkills: skills, candidateExperience: experience, context })
+    const analysis = await generateSkillGapAnalysis({ candidateSkills: skills, candidateExperience: experience, context, targetCountry })
     return NextResponse.json({ analysis })
   } catch (err) {
     const status = err instanceof SkillGapError ? err.status : 500
