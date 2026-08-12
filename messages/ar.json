@@ -432,7 +432,8 @@
     "somethingWentWrong": "حدث خطأ ما",
     "targetCountry": "البلد المستهدف",
     "targetCountryDefault": "لا يوجد بلد محدد",
-    "includePhotoFR": "تضمين مكان الصورة (اختياري في فرنسا)"
+    "includePhotoFR": "تضمين مكان الصورة (اختياري في فرنسا)",
+    "timeoutError": "يستغرق التوليد وقتاً أطول من المتوقع، يرجى المحاولة مجدداً."
   },
   "coverLetter": {
     "breadcrumbDashboard": "لوحة التحكم",
@@ -490,7 +491,8 @@
     "exportFailed": "فشل التصدير",
     "somethingWentWrong": "حدث خطأ ما",
     "targetCountry": "الدولة المستهدفة",
-    "targetCountryDefault": "لا يوجد بلد محدد"
+    "targetCountryDefault": "لا يوجد بلد محدد",
+    "timeoutError": "يستغرق التوليد وقتاً أطول من المتوقع، يرجى المحاولة مجدداً."
   },
   "careerCoach": {
     "upsellTitle": "المدرّب الوظيفي بالذكاء الاصطناعي ميزة بريميوم",
@@ -528,7 +530,8 @@
     "aiEstimateDisclaimer": "هذا تقدير أنشأه الذكاء الاصطناعي بناءً على ملفك الشخصي، وليس بيانات سوقية فورية. استخدمه كنقطة انطلاق تقريبية، وليس رقمًا مضمونًا.",
     "recommendedJobs": "وظائف موصى بها",
     "recommendedJobsSubtitle": "وظائف شاغرة حقيقية مطابقة لمهاراتك",
-    "noMatchingRoles": "لا توجد وظائف مطابقة بعد — عاود التحقق قريبًا."
+    "noMatchingRoles": "لا توجد وظائف مطابقة بعد — عاود التحقق قريبًا.",
+    "timeoutError": "يستغرق التوليد وقتاً أطول من المتوقع، يرجى المحاولة مجدداً."
   },
   "analytics": {
     "upsellTitle": "لوحة التحليلات ميزة بريميوم",
@@ -1105,7 +1108,10 @@
     "startSpeaking": "🎤 ابدأ الكلام",
     "redoAnswer": "🔄 إعادة الإجابة",
     "voicePermissionDeniedError": "تم رفض الوصول إلى الميكروفون — تم الرجوع إلى الوضع النصي. تحقق من أذونات الموقع في متصفحك وحاول مرة أخرى.",
-    "voiceLanguageUnsupportedError": "الوضع الصوتي لا يدعم لغتك في هذا المتصفح — تم الرجوع إلى الوضع النصي."
+    "voiceLanguageUnsupportedError": "الوضع الصوتي لا يدعم لغتك في هذا المتصفح — تم الرجوع إلى الوضع النصي.",
+    "timeoutError": "يستغرق التوليد وقتاً أطول من المتوقع، يرجى المحاولة مجدداً.",
+    "generatingQuestions": "جارٍ توليد أسئلتك…",
+    "analyzingAnswer": "جارٍ تحليل إجابتك…"
   },
   "applicationTracker": {
     "breadcrumbDashboard": "لوحة التحكم",

@@ -54,6 +54,8 @@ export default function InterviewPrepClient({
   const [generateError, setGenerateError] = useState('')
   const [qas, setQas] = useState<QaState[] | null>(null)
 
+  const TIMEOUT_MS = 30_000
+
   // Voice mode — only ever offered if the browser's Web Speech API is
   // actually present AND the active locale has a real BCP-47 mapping (see
   // lib/speechLocale.ts — deliberately no mapping for 'ht'). Feature-detected
@@ -89,11 +91,14 @@ export default function InterviewPrepClient({
     setGenerating(true)
     setGenerateError('')
     setQas(null)
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS)
     try {
       const res = await fetch('/api/ai/interview-prep/questions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ targetRole, company, jobDescription, experience, skills }),
+        signal: controller.signal,
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || t('generationFailed'))
@@ -101,8 +106,13 @@ export default function InterviewPrepClient({
         question: q, answer: '', feedback: null, feedbackError: '', loadingFeedback: false,
       })))
     } catch (err) {
-      setGenerateError(err instanceof Error ? err.message : t('somethingWentWrong'))
+      if (err instanceof Error && err.name === 'AbortError') {
+        setGenerateError(t('timeoutError'))
+      } else {
+        setGenerateError(err instanceof Error ? err.message : t('somethingWentWrong'))
+      }
     } finally {
+      clearTimeout(timeoutId)
       setGenerating(false)
     }
   }
@@ -115,18 +125,25 @@ export default function InterviewPrepClient({
     const qa = qas?.[index]
     if (!qa) return
     setQas((prev) => prev && prev.map((q, i) => (i === index ? { ...q, loadingFeedback: true, feedbackError: '' } : q)))
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS)
     try {
       const res = await fetch('/api/ai/interview-prep/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: qa.question, answer: qa.answer }),
+        signal: controller.signal,
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || t('feedbackFailed'))
       setQas((prev) => prev && prev.map((q, i) => (i === index ? { ...q, feedback: data.feedback, loadingFeedback: false } : q)))
     } catch (err) {
-      const message = err instanceof Error ? err.message : t('feedbackFailed')
+      const message = err instanceof Error && err.name === 'AbortError'
+        ? t('timeoutError')
+        : err instanceof Error ? err.message : t('feedbackFailed')
       setQas((prev) => prev && prev.map((q, i) => (i === index ? { ...q, feedbackError: message, loadingFeedback: false } : q)))
+    } finally {
+      clearTimeout(timeoutId)
     }
   }
 
@@ -277,6 +294,16 @@ export default function InterviewPrepClient({
             </button>
           </form>
 
+          {generating && (
+            <div className="card flex flex-col items-center justify-center py-16 text-center gap-3">
+              <svg className="animate-spin w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
+              </svg>
+              <p className="text-sm text-slate-600 dark:text-slate-400">{t('generatingQuestions')}</p>
+            </div>
+          )}
+
           {qas && (
             <div className="space-y-5">
               {voiceSupported && (
@@ -369,6 +396,15 @@ export default function InterviewPrepClient({
                   >
                     {qa.loadingFeedback ? t('gettingFeedback') : t('getFeedback')}
                   </button>
+                  {qa.loadingFeedback && (
+                    <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+                      <svg className="animate-spin w-4 h-4 text-primary shrink-0" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
+                      </svg>
+                      {t('analyzingAnswer')}
+                    </div>
+                  )}
                   {qa.feedbackError && <p className="text-red-600 dark:text-red-400 text-sm">{qa.feedbackError}</p>}
                   {qa.feedback && (
                     <div className="bg-primary/5 dark:bg-primary/10 border border-primary/20 rounded-lg px-4 py-3">

@@ -432,7 +432,8 @@
     "somethingWentWrong": "Gen yon bagay ki mal pase",
     "targetCountry": "Peyi sib",
     "targetCountryDefault": "Pa gen peyi spesifik",
-    "includePhotoFR": "Mete plas foto (opsyonèl an Frans)"
+    "includePhotoFR": "Mete plas foto (opsyonèl an Frans)",
+    "timeoutError": "Jenerasyon an pran plis tan pase prevwa, tanpri eseye ankò."
   },
   "coverLetter": {
     "breadcrumbDashboard": "Tablo Bò",
@@ -490,7 +491,8 @@
     "exportFailed": "Ekspòtasyon echwe",
     "somethingWentWrong": "Gen yon bagay ki mal pase",
     "targetCountry": "Peyi sib",
-    "targetCountryDefault": "Pa gen peyi espesifik"
+    "targetCountryDefault": "Pa gen peyi espesifik",
+    "timeoutError": "Jenerasyon an pran plis tan pase prevwa, tanpri eseye ankò."
   },
   "careerCoach": {
     "upsellTitle": "Antrenè Karyè AI se yon fonksyon Premium",
@@ -528,7 +530,8 @@
     "aiEstimateDisclaimer": "Sa se yon estimasyon AI jenere baze sou pwofil ou, se pa done mache an tan reyèl. Itilize l kòm yon pwen depa, pa yon chif garanti.",
     "recommendedJobs": "Travay Rekòmande",
     "recommendedJobsSubtitle": "Vrè pòs ouvè ki koresponn ak konpetans ou",
-    "noMatchingRoles": "Poko gen pòs ki koresponn — tounen vin gade byento."
+    "noMatchingRoles": "Poko gen pòs ki koresponn — tounen vin gade byento.",
+    "timeoutError": "Jenerasyon an pran plis tan pase prevwa, tanpri eseye ankò."
   },
   "analytics": {
     "upsellTitle": "Tablo Bò Estatistik se yon fonksyon Premium",
@@ -1105,7 +1108,10 @@
     "startSpeaking": "🎤 Kòmanse pale",
     "redoAnswer": "🔄 Refè repons lan",
     "voicePermissionDeniedError": "Aksè nan mikwofòn nan te refize — nou retounen nan mòd tèks. Verifye otorizasyon sit la nan navigatè ou epi eseye ankò.",
-    "voiceLanguageUnsupportedError": "Mòd vwa a pa sipòte lang ou nan navigatè sa a — nou retounen nan mòd tèks."
+    "voiceLanguageUnsupportedError": "Mòd vwa a pa sipòte lang ou nan navigatè sa a — nou retounen nan mòd tèks.",
+    "timeoutError": "Jenerasyon an pran plis tan pase prevwa, tanpri eseye ankò.",
+    "generatingQuestions": "Ap jenere kesyon ou yo…",
+    "analyzingAnswer": "Ap analize repons ou…"
   },
   "applicationTracker": {
     "breadcrumbDashboard": "Tablo debò",

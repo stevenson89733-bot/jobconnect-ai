@@ -432,7 +432,8 @@
     "somethingWentWrong": "Đã xảy ra lỗi",
     "targetCountry": "Quốc gia mục tiêu",
     "targetCountryDefault": "Không có quốc gia cụ thể",
-    "includePhotoFR": "Thêm chỗ cho ảnh (tùy chọn ở Pháp)"
+    "includePhotoFR": "Thêm chỗ cho ảnh (tùy chọn ở Pháp)",
+    "timeoutError": "Việc tạo nội dung đang mất nhiều thời gian hơn dự kiến, vui lòng thử lại."
   },
   "coverLetter": {
     "breadcrumbDashboard": "Bảng điều khiển",
@@ -490,7 +491,8 @@
     "exportFailed": "Xuất tệp thất bại",
     "somethingWentWrong": "Đã xảy ra lỗi",
     "targetCountry": "Quốc gia mục tiêu",
-    "targetCountryDefault": "Không có quốc gia cụ thể"
+    "targetCountryDefault": "Không có quốc gia cụ thể",
+    "timeoutError": "Việc tạo nội dung đang mất nhiều thời gian hơn dự kiến, vui lòng thử lại."
   },
   "careerCoach": {
     "upsellTitle": "Huấn luyện viên Sự nghiệp AI là một tính năng Premium",
@@ -528,7 +530,8 @@
     "aiEstimateDisclaimer": "Đây là ước tính do AI tạo ra dựa trên hồ sơ của bạn, không phải dữ liệu thị trường theo thời gian thực. Hãy dùng nó như điểm khởi đầu, không phải con số được đảm bảo.",
     "recommendedJobs": "Việc làm được đề xuất",
     "recommendedJobsSubtitle": "Các vị trí đang tuyển thực sự phù hợp với kỹ năng của bạn",
-    "noMatchingRoles": "Chưa có vị trí phù hợp — hãy quay lại kiểm tra sớm."
+    "noMatchingRoles": "Chưa có vị trí phù hợp — hãy quay lại kiểm tra sớm.",
+    "timeoutError": "Việc tạo nội dung đang mất nhiều thời gian hơn dự kiến, vui lòng thử lại."
   },
   "analytics": {
     "upsellTitle": "Bảng điều khiển Thống kê là một tính năng Premium",
@@ -1105,7 +1108,10 @@
     "startSpeaking": "🎤 Bắt đầu nói",
     "redoAnswer": "🔄 Làm lại câu trả lời",
     "voicePermissionDeniedError": "Quyền truy cập micrô đã bị từ chối — đã chuyển về chế độ văn bản. Hãy kiểm tra quyền của trang web trong trình duyệt của bạn và thử lại.",
-    "voiceLanguageUnsupportedError": "Chế độ giọng nói không hỗ trợ ngôn ngữ của bạn trên trình duyệt này — đã chuyển về chế độ văn bản."
+    "voiceLanguageUnsupportedError": "Chế độ giọng nói không hỗ trợ ngôn ngữ của bạn trên trình duyệt này — đã chuyển về chế độ văn bản.",
+    "timeoutError": "Việc tạo nội dung đang mất nhiều thời gian hơn dự kiến, vui lòng thử lại.",
+    "generatingQuestions": "Đang tạo câu hỏi cho bạn…",
+    "analyzingAnswer": "Đang phân tích câu trả lời…"
   },
   "applicationTracker": {
     "breadcrumbDashboard": "Bảng điều khiển",

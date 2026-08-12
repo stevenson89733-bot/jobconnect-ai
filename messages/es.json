@@ -432,7 +432,8 @@
     "somethingWentWrong": "Algo salió mal",
     "targetCountry": "País objetivo",
     "targetCountryDefault": "Sin país específico",
-    "includePhotoFR": "Incluir espacio para foto (opcional en Francia)"
+    "includePhotoFR": "Incluir espacio para foto (opcional en Francia)",
+    "timeoutError": "La generación está tardando más de lo esperado — inténtalo de nuevo."
   },
   "coverLetter": {
     "breadcrumbDashboard": "Panel",
@@ -490,7 +491,8 @@
     "exportFailed": "Error en la exportación",
     "somethingWentWrong": "Algo salió mal",
     "targetCountry": "País objetivo",
-    "targetCountryDefault": "Sin país específico"
+    "targetCountryDefault": "Sin país específico",
+    "timeoutError": "La generación está tardando más de lo esperado — inténtalo de nuevo."
   },
   "careerCoach": {
     "upsellTitle": "El Coach de carrera IA es una función Premium",
@@ -528,7 +530,8 @@
     "aiEstimateDisclaimer": "Esta es una estimación generada por IA basada en tu perfil, no datos de mercado en tiempo real. Úsala como punto de partida, no como una cifra garantizada.",
     "recommendedJobs": "Empleos recomendados",
     "recommendedJobsSubtitle": "Puestos reales abiertos que coinciden con tus habilidades",
-    "noMatchingRoles": "Aún no hay puestos coincidentes — vuelve pronto."
+    "noMatchingRoles": "Aún no hay puestos coincidentes — vuelve pronto.",
+    "timeoutError": "La generación está tardando más de lo esperado — inténtalo de nuevo."
   },
   "analytics": {
     "upsellTitle": "El Panel de Estadísticas es una función Premium",
@@ -1105,7 +1108,10 @@
     "startSpeaking": "🎤 Empezar a hablar",
     "redoAnswer": "🔄 Rehacer la respuesta",
     "voicePermissionDeniedError": "Se denegó el acceso al micrófono — se volvió al modo texto. Revisa los permisos del sitio en tu navegador e inténtalo de nuevo.",
-    "voiceLanguageUnsupportedError": "El modo voz no admite tu idioma en este navegador — se volvió al modo texto."
+    "voiceLanguageUnsupportedError": "El modo voz no admite tu idioma en este navegador — se volvió al modo texto.",
+    "timeoutError": "La generación está tardando más de lo esperado — inténtalo de nuevo.",
+    "generatingQuestions": "Generando tus preguntas…",
+    "analyzingAnswer": "Analizando tu respuesta…"
   },
   "applicationTracker": {
     "breadcrumbDashboard": "Panel",

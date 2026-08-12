@@ -432,7 +432,8 @@
     "somethingWentWrong": "問題が発生しました",
     "targetCountry": "対象国",
     "targetCountryDefault": "指定なし",
-    "includePhotoFR": "写真プレースホルダーを含める（フランスでは任意）"
+    "includePhotoFR": "写真プレースホルダーを含める（フランスでは任意）",
+    "timeoutError": "生成に予想以上の時間がかかっています。もう一度お試しください。"
   },
   "coverLetter": {
     "breadcrumbDashboard": "ダッシュボード",
@@ -490,7 +491,8 @@
     "exportFailed": "エクスポートに失敗しました",
     "somethingWentWrong": "問題が発生しました",
     "targetCountry": "対象国",
-    "targetCountryDefault": "特定の国なし"
+    "targetCountryDefault": "特定の国なし",
+    "timeoutError": "生成に予想以上の時間がかかっています。もう一度お試しください。"
   },
   "careerCoach": {
     "upsellTitle": "AIキャリアコーチはプレミアム機能です",
@@ -528,7 +530,8 @@
     "aiEstimateDisclaimer": "これはあなたのプロフィールに基づくAIによる推定値であり、リアルタイムの市場データではありません。参考程度の目安としてご利用ください。保証された数値ではありません。",
     "recommendedJobs": "おすすめの求人",
     "recommendedJobsSubtitle": "あなたのスキルにマッチする実際の求人",
-    "noMatchingRoles": "まだマッチする求人はありません — また近いうちにご確認ください。"
+    "noMatchingRoles": "まだマッチする求人はありません — また近いうちにご確認ください。",
+    "timeoutError": "生成に予想以上の時間がかかっています。もう一度お試しください。"
   },
   "analytics": {
     "upsellTitle": "分析ダッシュボードはプレミアム機能です",
@@ -1105,7 +1108,10 @@
     "startSpeaking": "🎤 話し始める",
     "redoAnswer": "🔄 回答をやり直す",
     "voicePermissionDeniedError": "マイクへのアクセスが拒否されました — テキストモードに戻りました。ブラウザのサイト権限を確認して再度お試しください。",
-    "voiceLanguageUnsupportedError": "このブラウザの音声モードはお使いの言語に対応していません — テキストモードに戻りました。"
+    "voiceLanguageUnsupportedError": "このブラウザの音声モードはお使いの言語に対応していません — テキストモードに戻りました。",
+    "timeoutError": "生成に予想以上の時間がかかっています。もう一度お試しください。",
+    "generatingQuestions": "質問を生成しています…",
+    "analyzingAnswer": "回答を分析しています…"
   },
   "applicationTracker": {
     "breadcrumbDashboard": "ダッシュボード",

@@ -432,7 +432,8 @@
     "somethingWentWrong": "出了点问题",
     "targetCountry": "目标国家",
     "targetCountryDefault": "不指定国家",
-    "includePhotoFR": "包含照片占位符（法国可选）"
+    "includePhotoFR": "包含照片占位符（法国可选）",
+    "timeoutError": "生成时间超出预期，请重试。"
   },
   "coverLetter": {
     "breadcrumbDashboard": "控制台",
@@ -490,7 +491,8 @@
     "exportFailed": "导出失败",
     "somethingWentWrong": "出了点问题",
     "targetCountry": "目标国家",
-    "targetCountryDefault": "无特定国家"
+    "targetCountryDefault": "无特定国家",
+    "timeoutError": "生成时间超出预期，请重试。"
   },
   "careerCoach": {
     "upsellTitle": "AI 职业教练是高级版功能",
@@ -528,7 +530,8 @@
     "aiEstimateDisclaimer": "这是基于您资料生成的 AI 估算，并非实时市场数据。请将其作为粗略参考，而非确定数值。",
     "recommendedJobs": "推荐职位",
     "recommendedJobsSubtitle": "与您技能匹配的真实在招职位",
-    "noMatchingRoles": "暂无匹配职位——请稍后再来查看。"
+    "noMatchingRoles": "暂无匹配职位——请稍后再来查看。",
+    "timeoutError": "生成时间超出预期，请重试。"
   },
   "analytics": {
     "upsellTitle": "数据分析看板是高级版功能",
@@ -1105,7 +1108,10 @@
     "startSpeaking": "🎤 开始说话",
     "redoAnswer": "🔄 重新回答",
     "voicePermissionDeniedError": "麦克风访问被拒绝 — 已切换回文字模式。请检查浏览器中的网站权限设置后重试。",
-    "voiceLanguageUnsupportedError": "此浏览器的语音模式不支持您的语言 — 已切换回文字模式。"
+    "voiceLanguageUnsupportedError": "此浏览器的语音模式不支持您的语言 — 已切换回文字模式。",
+    "timeoutError": "生成时间超出预期，请重试。",
+    "generatingQuestions": "正在生成您的问题…",
+    "analyzingAnswer": "正在分析您的回答…"
   },
   "applicationTracker": {
     "breadcrumbDashboard": "仪表盘",

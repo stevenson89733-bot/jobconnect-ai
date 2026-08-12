@@ -164,11 +164,14 @@ export default function CoverLetterClient({
     setError('')
     setResult(null)
     setSaveStatus('idle')
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 30_000)
     try {
       const res = await fetch('/api/ai/cover-letter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ targetRole, company, jobDescription, strengths, style, targetCountry: targetCountry || undefined }),
+        signal: controller.signal,
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || t('generationFailed'))
@@ -178,8 +181,13 @@ export default function CoverLetterClient({
       setDateLine(new Date().toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' }))
       setResult(data)
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : t('somethingWentWrong'))
+      if (err instanceof Error && err.name === 'AbortError') {
+        setError(t('timeoutError'))
+      } else {
+        setError(err instanceof Error ? err.message : t('somethingWentWrong'))
+      }
     } finally {
+      clearTimeout(timeoutId)
       setLoading(false)
     }
   }

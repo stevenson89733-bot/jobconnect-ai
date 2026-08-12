@@ -432,7 +432,8 @@
     "somethingWentWrong": "Something went wrong",
     "targetCountry": "Target Country",
     "targetCountryDefault": "No specific country",
-    "includePhotoFR": "Include photo placeholder (optional in France)"
+    "includePhotoFR": "Include photo placeholder (optional in France)",
+    "timeoutError": "Generation is taking longer than expected — please try again."
   },
   "coverLetter": {
     "breadcrumbDashboard": "Dashboard",
@@ -490,7 +491,8 @@
     "exportFailed": "Export failed",
     "somethingWentWrong": "Something went wrong",
     "targetCountry": "Target Country",
-    "targetCountryDefault": "No specific country"
+    "targetCountryDefault": "No specific country",
+    "timeoutError": "Generation is taking longer than expected — please try again."
   },
   "careerCoach": {
     "upsellTitle": "AI Career Coach is a Premium feature",
@@ -528,7 +530,8 @@
     "aiEstimateDisclaimer": "This is an AI-generated estimate based on your profile, not real-time market data. Use it as a rough starting point, not a guaranteed figure.",
     "recommendedJobs": "Recommended Jobs",
     "recommendedJobsSubtitle": "Real open roles matching your skills",
-    "noMatchingRoles": "No matching roles yet — check back soon."
+    "noMatchingRoles": "No matching roles yet — check back soon.",
+    "timeoutError": "Generation is taking longer than expected — please try again."
   },
   "analytics": {
     "upsellTitle": "Analytics Dashboard is a Premium feature",
@@ -1105,7 +1108,10 @@
     "startSpeaking": "🎤 Start speaking",
     "redoAnswer": "🔄 Redo answer",
     "voicePermissionDeniedError": "Microphone access was denied — switched back to text mode. Check your browser's site permissions and try again.",
-    "voiceLanguageUnsupportedError": "Voice mode doesn't support your language in this browser — switched back to text mode."
+    "voiceLanguageUnsupportedError": "Voice mode doesn't support your language in this browser — switched back to text mode.",
+    "timeoutError": "Generation is taking longer than expected — please try again.",
+    "generatingQuestions": "Generating your questions…",
+    "analyzingAnswer": "Analyzing your answer…"
   },
   "applicationTracker": {
     "breadcrumbDashboard": "Dashboard",

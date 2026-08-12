@@ -1,5 +1,5 @@
 'use client'
-import { useState, useTransition } from 'react'
+import { useState, useTransition, useEffect, useRef } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import {
   Gauge, FileCheck2, ListChecks, KeyRound, FileEdit, MessagesSquare,
@@ -57,6 +57,20 @@ export default function CareerCoachClient({
   const [generatedAt, setGeneratedAt] = useState(initialGeneratedAt)
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    if (isPending) {
+      timeoutRef.current = setTimeout(() => {
+        setError(t('timeoutError'))
+      }, 30_000)
+    } else {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    }
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    }
+  }, [isPending, t])
 
   function handleRefresh() {
     setError(null)

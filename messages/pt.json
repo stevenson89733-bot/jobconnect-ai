@@ -432,7 +432,8 @@
     "somethingWentWrong": "Algo deu errado",
     "targetCountry": "País alvo",
     "targetCountryDefault": "Nenhum país específico",
-    "includePhotoFR": "Incluir espaço para foto (opcional na França)"
+    "includePhotoFR": "Incluir espaço para foto (opcional na França)",
+    "timeoutError": "A geração está a demorar mais do que o esperado, tente novamente."
   },
   "coverLetter": {
     "breadcrumbDashboard": "Painel",
@@ -490,7 +491,8 @@
     "exportFailed": "Falha na exportação",
     "somethingWentWrong": "Algo deu errado",
     "targetCountry": "País alvo",
-    "targetCountryDefault": "Nenhum país específico"
+    "targetCountryDefault": "Nenhum país específico",
+    "timeoutError": "A geração está a demorar mais do que o esperado, tente novamente."
   },
   "careerCoach": {
     "upsellTitle": "O Coach de Carreira IA é um recurso Premium",
@@ -528,7 +530,8 @@
     "aiEstimateDisclaimer": "Esta é uma estimativa gerada por IA com base no seu perfil, não dados de mercado em tempo real. Use-a como ponto de partida, não como um valor garantido.",
     "recommendedJobs": "Vagas recomendadas",
     "recommendedJobsSubtitle": "Vagas reais em aberto que correspondem às suas habilidades",
-    "noMatchingRoles": "Ainda não há vagas correspondentes — volte em breve."
+    "noMatchingRoles": "Ainda não há vagas correspondentes — volte em breve.",
+    "timeoutError": "A geração está a demorar mais do que o esperado, tente novamente."
   },
   "analytics": {
     "upsellTitle": "O Painel de Estatísticas é um recurso Premium",
@@ -1105,7 +1108,10 @@
     "startSpeaking": "🎤 Começar a falar",
     "redoAnswer": "🔄 Refazer resposta",
     "voicePermissionDeniedError": "O acesso ao microfone foi negado — voltamos ao modo texto. Verifique as permissões do site no seu navegador e tente novamente.",
-    "voiceLanguageUnsupportedError": "O modo voz não é compatível com o seu idioma neste navegador — voltamos ao modo texto."
+    "voiceLanguageUnsupportedError": "O modo voz não é compatível com o seu idioma neste navegador — voltamos ao modo texto.",
+    "timeoutError": "A geração está a demorar mais do que o esperado, tente novamente.",
+    "generatingQuestions": "A gerar as suas perguntas…",
+    "analyzingAnswer": "A analisar a sua resposta…"
   },
   "applicationTracker": {
     "breadcrumbDashboard": "Painel",

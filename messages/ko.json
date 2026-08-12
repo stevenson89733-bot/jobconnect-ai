@@ -432,7 +432,8 @@
     "somethingWentWrong": "문제가 발생했습니다",
     "targetCountry": "목표 국가",
     "targetCountryDefault": "특정 국가 없음",
-    "includePhotoFR": "사진 자리 표시자 포함（프랑스에서는 선택 사항）"
+    "includePhotoFR": "사진 자리 표시자 포함（프랑스에서는 선택 사항）",
+    "timeoutError": "생성이 예상보다 오래 걸리고 있습니다. 다시 시도해 주세요."
   },
   "coverLetter": {
     "breadcrumbDashboard": "대시보드",
@@ -490,7 +491,8 @@
     "exportFailed": "내보내기 실패",
     "somethingWentWrong": "문제가 발생했습니다",
     "targetCountry": "대상 국가",
-    "targetCountryDefault": "특정 국가 없음"
+    "targetCountryDefault": "특정 국가 없음",
+    "timeoutError": "생성이 예상보다 오래 걸리고 있습니다. 다시 시도해 주세요."
   },
   "careerCoach": {
     "upsellTitle": "AI 커리어 코치는 프리미엄 기능입니다",
@@ -528,7 +530,8 @@
     "aiEstimateDisclaimer": "이는 회원님의 프로필을 기반으로 한 AI 생성 추정치이며, 실시간 시장 데이터가 아닙니다. 확정된 수치가 아닌 대략적인 출발점으로 참고해 주세요.",
     "recommendedJobs": "추천 채용 공고",
     "recommendedJobsSubtitle": "회원님의 스킬에 맞는 실제 채용 중인 직무",
-    "noMatchingRoles": "아직 일치하는 직무가 없습니다 — 곧 다시 확인해 주세요."
+    "noMatchingRoles": "아직 일치하는 직무가 없습니다 — 곧 다시 확인해 주세요.",
+    "timeoutError": "생성이 예상보다 오래 걸리고 있습니다. 다시 시도해 주세요."
   },
   "analytics": {
     "upsellTitle": "분석 대시보드는 프리미엄 기능입니다",
@@ -1105,7 +1108,10 @@
     "startSpeaking": "🎤 말하기 시작",
     "redoAnswer": "🔄 답변 다시 하기",
     "voicePermissionDeniedError": "마이크 접근이 거부되었습니다 — 텍스트 모드로 전환되었습니다. 브라우저의 사이트 권한을 확인한 후 다시 시도해 주세요.",
-    "voiceLanguageUnsupportedError": "이 브라우저의 음성 모드는 사용자의 언어를 지원하지 않습니다 — 텍스트 모드로 전환되었습니다."
+    "voiceLanguageUnsupportedError": "이 브라우저의 음성 모드는 사용자의 언어를 지원하지 않습니다 — 텍스트 모드로 전환되었습니다.",
+    "timeoutError": "생성이 예상보다 오래 걸리고 있습니다. 다시 시도해 주세요.",
+    "generatingQuestions": "질문을 생성하는 중…",
+    "analyzingAnswer": "답변을 분석하는 중…"
   },
   "applicationTracker": {
     "breadcrumbDashboard": "대시보드",

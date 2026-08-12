@@ -432,7 +432,8 @@
     "somethingWentWrong": "Une erreur est survenue",
     "targetCountry": "Pays cible",
     "targetCountryDefault": "Aucun pays spécifique",
-    "includePhotoFR": "Inclure un emplacement photo (optionnel en France)"
+    "includePhotoFR": "Inclure un emplacement photo (optionnel en France)",
+    "timeoutError": "La génération prend plus de temps que prévu, réessaie."
   },
   "coverLetter": {
     "breadcrumbDashboard": "Tableau de bord",
@@ -490,7 +491,8 @@
     "exportFailed": "Échec de l'export",
     "somethingWentWrong": "Une erreur est survenue",
     "targetCountry": "Pays cible",
-    "targetCountryDefault": "Aucun pays spécifique"
+    "targetCountryDefault": "Aucun pays spécifique",
+    "timeoutError": "La génération prend plus de temps que prévu, réessaie."
   },
   "careerCoach": {
     "upsellTitle": "Le Coach de carrière IA est une fonctionnalité Premium",
@@ -528,7 +530,8 @@
     "aiEstimateDisclaimer": "Il s'agit d'une estimation générée par IA basée sur votre profil, pas de données de marché en temps réel. À utiliser comme point de départ, pas comme un chiffre garanti.",
     "recommendedJobs": "Offres recommandées",
     "recommendedJobsSubtitle": "Vrais postes ouverts correspondant à vos compétences",
-    "noMatchingRoles": "Aucun poste correspondant pour le moment — revenez bientôt."
+    "noMatchingRoles": "Aucun poste correspondant pour le moment — revenez bientôt.",
+    "timeoutError": "La génération prend plus de temps que prévu, réessaie."
   },
   "analytics": {
     "upsellTitle": "Le tableau de bord Statistiques est une fonctionnalité Premium",
@@ -1105,7 +1108,10 @@
     "startSpeaking": "🎤 Commencer à parler",
     "redoAnswer": "🔄 Refaire la réponse",
     "voicePermissionDeniedError": "L'accès au microphone a été refusé — retour au mode texte. Vérifiez les autorisations du site dans votre navigateur et réessayez.",
-    "voiceLanguageUnsupportedError": "Le mode vocal ne prend pas en charge votre langue dans ce navigateur — retour au mode texte."
+    "voiceLanguageUnsupportedError": "Le mode vocal ne prend pas en charge votre langue dans ce navigateur — retour au mode texte.",
+    "timeoutError": "La génération prend plus de temps que prévu, réessaie.",
+    "generatingQuestions": "Génération de vos questions…",
+    "analyzingAnswer": "Analyse de votre réponse…"
   },
   "applicationTracker": {
     "breadcrumbDashboard": "Tableau de bord",

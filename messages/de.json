@@ -432,7 +432,8 @@
     "somethingWentWrong": "Etwas ist schiefgelaufen",
     "targetCountry": "Zielland",
     "targetCountryDefault": "Kein bestimmtes Land",
-    "includePhotoFR": "Foto-Platzhalter einschließen (optional in Frankreich)"
+    "includePhotoFR": "Foto-Platzhalter einschließen (optional in Frankreich)",
+    "timeoutError": "Die Generierung dauert länger als erwartet – bitte versuche es erneut."
   },
   "coverLetter": {
     "breadcrumbDashboard": "Dashboard",
@@ -490,7 +491,8 @@
     "exportFailed": "Export fehlgeschlagen",
     "somethingWentWrong": "Etwas ist schiefgelaufen",
     "targetCountry": "Zielland",
-    "targetCountryDefault": "Kein bestimmtes Land"
+    "targetCountryDefault": "Kein bestimmtes Land",
+    "timeoutError": "Die Generierung dauert länger als erwartet – bitte versuche es erneut."
   },
   "careerCoach": {
     "upsellTitle": "KI-Karriere-Coach ist eine Premium-Funktion",
@@ -528,7 +530,8 @@
     "aiEstimateDisclaimer": "Dies ist eine KI-generierte Schätzung basierend auf deinem Profil, keine Echtzeit-Marktdaten. Nutze sie als groben Ausgangspunkt, nicht als garantierte Zahl.",
     "recommendedJobs": "Empfohlene Jobs",
     "recommendedJobsSubtitle": "Echte offene Stellen, die zu deinen Fähigkeiten passen",
-    "noMatchingRoles": "Noch keine passenden Stellen — schau bald wieder vorbei."
+    "noMatchingRoles": "Noch keine passenden Stellen — schau bald wieder vorbei.",
+    "timeoutError": "Die Generierung dauert länger als erwartet – bitte versuche es erneut."
   },
   "analytics": {
     "upsellTitle": "Das Statistik-Dashboard ist eine Premium-Funktion",
@@ -1105,7 +1108,10 @@
     "startSpeaking": "🎤 Sprechen starten",
     "redoAnswer": "🔄 Antwort wiederholen",
     "voicePermissionDeniedError": "Der Mikrofonzugriff wurde verweigert — zurück zum Textmodus. Überprüfe die Website-Berechtigungen deines Browsers und versuche es erneut.",
-    "voiceLanguageUnsupportedError": "Der Sprachmodus unterstützt deine Sprache in diesem Browser nicht — zurück zum Textmodus."
+    "voiceLanguageUnsupportedError": "Der Sprachmodus unterstützt deine Sprache in diesem Browser nicht — zurück zum Textmodus.",
+    "timeoutError": "Die Generierung dauert länger als erwartet – bitte versuche es erneut.",
+    "generatingQuestions": "Ihre Fragen werden generiert…",
+    "analyzingAnswer": "Ihre Antwort wird analysiert…"
   },
   "applicationTracker": {
     "breadcrumbDashboard": "Dashboard",
