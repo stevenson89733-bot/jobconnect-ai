@@ -14,6 +14,7 @@ import { analyzeResume } from '@/app/actions/resumeAnalysis'
 import type { ResumeAnalysis, RewriteSection } from '@/lib/ai/resumeAnalysis'
 import { hasEnoughExperience, stripTargetRoleNewlines, sanitizeTargetRole, MAX_TARGET_ROLE_LENGTH } from '@/lib/ai/resumeGuard'
 import { COUNTRY_OPTIONS } from '@/lib/ai/countryProfiles'
+import { useAIToolsSession } from '@/lib/ai/aiToolsContext'
 
 type ScoreBreakdown = { keywords: number; formatting: number; experience: number; skills: number }
 type ResumeData = {
@@ -109,30 +110,32 @@ function PremiumSkeleton() {
 
 export default function ResumeBuilderClient({
   isPremium,
-  initialTargetRole = '',
+  initialTargetRoleFromParam = '',
+  initialTargetRoleFromProfile = '',
   initialExperience = '',
   initialSkills = '',
   initialEducation = '',
   initialSummary = '',
   initialName = '',
   initialContact = '',
-  initialTargetCountry = '',
+  initialTargetCountryFromParam = '',
 }: {
   isPremium: boolean
-  initialTargetRole?: string
+  initialTargetRoleFromParam?: string
+  initialTargetRoleFromProfile?: string
   initialExperience?: string
   initialSkills?: string
   initialEducation?: string
   initialSummary?: string
   initialName?: string
   initialContact?: string
-  initialTargetCountry?: string
+  initialTargetCountryFromParam?: string
 }) {
   const t = useTranslations('resumeBuilder')
+  const { lastTargetRole, lastTargetCountry, update } = useAIToolsSession()
   const [mounted, setMounted] = useState(false)
-  // Pre-filled from the candidate's real saved profile (see page.tsx) —
-  // still fully editable, this is a starting point, not a lockdown.
-  const [targetRole, setTargetRole] = useState(initialTargetRole)
+  // Priority: URL param (copilot/jobId) > AIToolsContext (last used in session) > Supabase profile
+  const [targetRole, setTargetRole] = useState(initialTargetRoleFromParam || lastTargetRole || initialTargetRoleFromProfile)
   const [experience, setExperience] = useState(initialExperience)
   const [skills, setSkills] = useState(initialSkills)
   const [education, setEducation] = useState(initialEducation)
@@ -149,7 +152,7 @@ export default function ResumeBuilderClient({
   // suggestion) — see isAnalysisStale below.
   const [analyzedSnapshot, setAnalyzedSnapshot] = useState<string | null>(null)
 
-  const [targetCountry, setTargetCountry] = useState(initialTargetCountry)
+  const [targetCountry, setTargetCountry] = useState(initialTargetCountryFromParam || lastTargetCountry)
   const [includePhoto, setIncludePhoto] = useState(false)
 
   const [template, setTemplate] = useState<ResumeTemplateId>('classic')
@@ -187,6 +190,7 @@ export default function ResumeBuilderClient({
     }
     const cleanTargetRole = sanitizeTargetRole(targetRole)
     setTargetRole(cleanTargetRole)
+    update(cleanTargetRole, targetCountry)
     setLoading(true)
     setError('')
     setResult(null)

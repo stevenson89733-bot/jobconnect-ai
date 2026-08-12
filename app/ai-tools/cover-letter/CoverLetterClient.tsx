@@ -7,6 +7,7 @@ import RewriteSuggestion from '@/components/resume-builder/RewriteSuggestion'
 import StyleSelector, { type CoverLetterStyle } from '@/components/cover-letter/StyleSelector'
 import { sanitizeTargetRole, stripTargetRoleNewlines, MAX_TARGET_ROLE_LENGTH } from '@/lib/ai/resumeGuard'
 import { COUNTRY_OPTIONS } from '@/lib/ai/countryProfiles'
+import { useAIToolsSession } from '@/lib/ai/aiToolsContext'
 import { saveCoverLetterDraft } from '@/app/actions/coverLetters'
 import { copyToClipboard } from '@/lib/clipboard'
 
@@ -115,18 +116,20 @@ function PremiumSkeleton() {
 
 export default function CoverLetterClient({
   isPremium,
-  initialTargetRole = '',
+  initialTargetRoleFromParam = '',
+  initialTargetRoleFromProfile = '',
   initialCompany = '',
   initialJobDescription = '',
   initialStrengths = '',
-  initialTargetCountry = '',
+  initialTargetCountryFromParam = '',
 }: {
   isPremium: boolean
-  initialTargetRole?: string
+  initialTargetRoleFromParam?: string
+  initialTargetRoleFromProfile?: string
   initialCompany?: string
   initialJobDescription?: string
   initialStrengths?: string
-  initialTargetCountry?: string
+  initialTargetCountryFromParam?: string
 }) {
   const t = useTranslations('coverLetter')
   const locale = useLocale()
@@ -136,13 +139,15 @@ export default function CoverLetterClient({
     closing: t('sectionClosing'),
   }
 
+  const { lastTargetRole, lastTargetCountry, update } = useAIToolsSession()
   const [mounted, setMounted] = useState(false)
-  const [targetRole, setTargetRole] = useState(initialTargetRole)
+  // Priority: URL param (copilot/jobId) > AIToolsContext (last used in session) > Supabase profile
+  const [targetRole, setTargetRole] = useState(initialTargetRoleFromParam || lastTargetRole || initialTargetRoleFromProfile)
   const [company, setCompany] = useState(initialCompany)
   const [jobDescription, setJobDescription] = useState(initialJobDescription)
   const [strengths, setStrengths] = useState(initialStrengths)
   const [style, setStyle] = useState<CoverLetterStyle>('Formal')
-  const [targetCountry, setTargetCountry] = useState(initialTargetCountry)
+  const [targetCountry, setTargetCountry] = useState(initialTargetCountryFromParam || lastTargetCountry)
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<CoverLetterData | null>(null)
   const [dateLine, setDateLine] = useState('')
@@ -160,6 +165,7 @@ export default function CoverLetterClient({
   async function handleGenerate(e: React.FormEvent) {
     e.preventDefault()
     if (!isPremium) return
+    update(targetRole, targetCountry)
     setLoading(true)
     setError('')
     setResult(null)

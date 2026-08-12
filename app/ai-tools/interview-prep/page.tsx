@@ -65,21 +65,21 @@ export default async function InterviewPrepPage({
         initialJobDescription = job.description ?? ''
       }
     }
-
-    // Copilot hand-off (?targetRole=...) — same reasoning as the Resume
-    // Builder's identical param: a value the candidate just typed in the
-    // chat is more timely than a possibly-stale saved profile title. Only
-    // applies when there's no real job context above, which already takes
-    // priority as the more specific real source.
-    if (!searchParams.jobId && searchParams.targetRole?.trim()) {
-      initialTargetRole = searchParams.targetRole.trim()
-    }
   } catch {}
+
+  // jobId takes precedence as the most specific real source.
+  // For non-jobId paths, param and profile are split so the client applies:
+  // param > AIToolsContext > profile.
+  const initialTargetRoleFromParam = searchParams.jobId
+    ? initialTargetRole
+    : searchParams.targetRole?.trim() ?? ''
+  const initialTargetRoleFromProfile = searchParams.jobId ? '' : initialTargetRole
 
   return (
     <InterviewPrepClient
       isPremium={isPremium}
-      initialTargetRole={initialTargetRole}
+      initialTargetRoleFromParam={initialTargetRoleFromParam}
+      initialTargetRoleFromProfile={initialTargetRoleFromProfile}
       initialCompany={initialCompany}
       initialJobDescription={initialJobDescription}
       initialExperience={initialExperience}

@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useTranslations, useLocale } from 'next-intl'
 import { sanitizeTargetRole, stripTargetRoleNewlines, MAX_TARGET_ROLE_LENGTH } from '@/lib/ai/resumeGuard'
+import { useAIToolsSession } from '@/lib/ai/aiToolsContext'
 import { getSpeechLang } from '@/lib/speechLocale'
 import type { Locale } from '@/lib/i18n/config'
 
@@ -22,14 +23,16 @@ function PremiumSkeleton() {
 
 export default function InterviewPrepClient({
   isPremium,
-  initialTargetRole = '',
+  initialTargetRoleFromParam = '',
+  initialTargetRoleFromProfile = '',
   initialCompany = '',
   initialJobDescription = '',
   initialExperience = '',
   initialSkills = '',
 }: {
   isPremium: boolean
-  initialTargetRole?: string
+  initialTargetRoleFromParam?: string
+  initialTargetRoleFromProfile?: string
   initialCompany?: string
   initialJobDescription?: string
   initialExperience?: string
@@ -39,8 +42,10 @@ export default function InterviewPrepClient({
   const locale = useLocale() as Locale
   const speechLang = getSpeechLang(locale)
 
+  const { lastTargetRole, update } = useAIToolsSession()
   const [mounted, setMounted] = useState(false)
-  const [targetRole, setTargetRole] = useState(initialTargetRole)
+  // Priority: URL param (copilot/jobId) > AIToolsContext (last used in session) > Supabase profile
+  const [targetRole, setTargetRole] = useState(initialTargetRoleFromParam || lastTargetRole || initialTargetRoleFromProfile)
   const [company, setCompany] = useState(initialCompany)
   const [jobDescription, setJobDescription] = useState(initialJobDescription)
   // Silent fallback context — never rendered as an editable field, same real
@@ -88,6 +93,7 @@ export default function InterviewPrepClient({
   async function handleGenerate(e: React.FormEvent) {
     e.preventDefault()
     if (!isPremium) return
+    update(targetRole, '')
     setGenerating(true)
     setGenerateError('')
     setQas(null)

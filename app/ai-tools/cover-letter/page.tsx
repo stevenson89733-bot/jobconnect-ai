@@ -63,30 +63,40 @@ export default async function CoverLetterPage({
         .eq('is_active', true)
         .single()
       if (job) {
+        // jobId context takes precedence over everything — real listing data.
         initialTargetRole = job.title ?? initialTargetRole
         initialCompany = job.company_name ?? ''
         initialJobDescription = job.description ?? ''
       }
     } else {
-      // Copilot hand-off — takes priority over profile prefill when present.
-      if (searchParams.targetRole?.trim()) initialTargetRole = searchParams.targetRole.trim()
       if (searchParams.company?.trim()) initialCompany = searchParams.company.trim()
     }
   } catch {}
 
+  // jobId pre-fill already merged into initialTargetRole above when present.
+  // For the non-jobId path, param and profile are passed separately so the
+  // client applies: param > AIToolsContext > profile.
+  const initialTargetRoleFromParam = !searchParams.jobId && searchParams.targetRole?.trim()
+    ? searchParams.targetRole.trim()
+    : searchParams.jobId
+      ? initialTargetRole  // already the job title — treat as a "param-level" value
+      : ''
+  const initialTargetRoleFromProfile = searchParams.jobId ? '' : initialTargetRole
+
   const VALID_COUNTRIES = ['US', 'UK', 'CA', 'DE', 'FR']
-  const initialTargetCountry = searchParams.targetCountry && VALID_COUNTRIES.includes(searchParams.targetCountry)
+  const initialTargetCountryFromParam = searchParams.targetCountry && VALID_COUNTRIES.includes(searchParams.targetCountry)
     ? searchParams.targetCountry
     : ''
 
   return (
     <CoverLetterClient
       isPremium={isPremium}
-      initialTargetRole={initialTargetRole}
+      initialTargetRoleFromParam={initialTargetRoleFromParam}
+      initialTargetRoleFromProfile={initialTargetRoleFromProfile}
       initialCompany={initialCompany}
       initialJobDescription={initialJobDescription}
       initialStrengths={initialStrengths}
-      initialTargetCountry={initialTargetCountry}
+      initialTargetCountryFromParam={initialTargetCountryFromParam}
     />
   )
 }

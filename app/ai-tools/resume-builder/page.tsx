@@ -62,30 +62,29 @@ export default async function ResumeBuilderPage({
       initialContact = formatContactLine(contact)
     }
 
-    // Copilot hand-off (?targetRole=...) — a real value the candidate just
-    // typed into the chat, more timely than a possibly-stale saved profile
-    // title, so it takes priority when present.
-    if (searchParams.targetRole?.trim()) {
-      initialTargetRole = searchParams.targetRole.trim()
-    }
   } catch {}
 
+  // Copilot / URL param — more timely than profile, passed separately so the
+  // client can apply the priority chain: param > AIToolsContext > profile.
+  const initialTargetRoleFromParam = searchParams.targetRole?.trim() ?? ''
+
   const VALID_COUNTRIES = ['US', 'UK', 'CA', 'DE', 'FR']
-  const initialTargetCountry = searchParams.targetCountry && VALID_COUNTRIES.includes(searchParams.targetCountry)
+  const initialTargetCountryFromParam = searchParams.targetCountry && VALID_COUNTRIES.includes(searchParams.targetCountry)
     ? searchParams.targetCountry
     : ''
 
   return (
     <ResumeBuilderClient
       isPremium={isPremium}
-      initialTargetRole={initialTargetRole}
+      initialTargetRoleFromParam={initialTargetRoleFromParam}
+      initialTargetRoleFromProfile={initialTargetRole}
       initialExperience={initialExperience}
       initialSkills={initialSkills}
       initialEducation={initialEducation}
       initialSummary={initialSummary}
       initialName={initialName}
       initialContact={initialContact}
-      initialTargetCountry={initialTargetCountry}
+      initialTargetCountryFromParam={initialTargetCountryFromParam}
     />
   )
 }
