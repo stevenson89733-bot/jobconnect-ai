@@ -4,7 +4,7 @@ import { unstable_cache } from 'next/cache'
 import { getTranslations } from 'next-intl/server'
 import { createPublicClient } from '@/lib/supabase/public'
 import { JOB_TYPE_KEY } from '@/lib/i18n/jobLabels'
-import { companyInitials } from '@/lib/companyDisplay'
+import CompanyLogo from '@/components/jobs/CompanyLogo'
 import { absoluteUrl } from '@/lib/seo'
 import { Badge } from '@/components/ui/badge'
 import HeroSearch from '@/components/HeroSearch'
@@ -216,9 +216,7 @@ export default async function Home() {
             <div className="flex flex-wrap items-center justify-center gap-8 md:gap-14">
               {trustedCompanies.map((name) => (
                 <div key={name} className="flex items-center gap-2 text-body dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-300 transition-colors">
-                  <span className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-xs font-bold">
-                    {companyInitials(name)}
-                  </span>
+                  <CompanyLogo companyName={name} size="sm" shape="rounded-lg" />
                   <span className="font-semibold text-sm">{name}</span>
                 </div>
               ))}
@@ -257,9 +255,7 @@ export default async function Home() {
                     className="card hover:border-primary/50 hover:-translate-y-0.5 hover:shadow-lg dark:hover:shadow-black/20 transition-all group cursor-pointer"
                   >
                     <div className="flex items-start justify-between mb-3">
-                      <div className="w-10 h-10 rounded-lg bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-sm font-bold text-slate-700 dark:text-slate-300">
-                        {companyInitials(job.company_name)}
-                      </div>
+                        <CompanyLogo companyName={job.company_name} shape="rounded-lg" />
                       <Badge variant="success">{jobTypeLabel}</Badge>
                     </div>
                     <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-primary transition-colors mb-1">{job.title}</h3>

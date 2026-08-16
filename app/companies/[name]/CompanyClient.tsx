@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import JobCard from '@/components/jobs/JobCard'
-import { companyInitials } from '@/lib/companyDisplay'
+import { companyInitials, clearbitLogoUrl } from '@/lib/companyDisplay'
 import { useJobInteractions } from '@/lib/useJobInteractions'
 import type { Job } from '@/app/jobs/JobsClient'
 import ReviewsSection from './ReviewsSection'
@@ -49,7 +49,10 @@ export default function CompanyClient({
       <div className="card mb-6">
         <div className="flex flex-col sm:flex-row sm:items-center gap-5">
           <Avatar className="w-16 h-16 shrink-0">
-            {logoUrl && <AvatarImage src={logoUrl} alt={name} />}
+            <AvatarImage
+              src={logoUrl ?? clearbitLogoUrl(name) ?? undefined}
+              alt={name}
+            />
             <AvatarFallback className="text-xl">{companyInitials(name)}</AvatarFallback>
           </Avatar>
 

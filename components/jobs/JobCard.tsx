@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import ApplyModal from '@/components/ApplyModal'
 import { copyToClipboard } from '@/lib/clipboard'
-import { companyInitials } from '@/lib/companyDisplay'
+import { companyInitials, clearbitLogoUrl } from '@/lib/companyDisplay'
 import { JOB_TYPE_KEY, CATEGORY_KEY, WORK_TYPE_KEY } from '@/lib/i18n/jobLabels'
 import Link from 'next/link'
 import type { Job } from '@/app/jobs/JobsClient'
@@ -165,7 +165,10 @@ export default function JobCard({
         {/* Left: logo + info */}
         <div className="flex items-start gap-4 flex-1 min-w-0">
           <Avatar className="w-12 h-12 shrink-0">
-            {job.company?.logo_url && <AvatarImage src={job.company.logo_url} alt={job.company_name} />}
+            <AvatarImage
+              src={job.company?.logo_url ?? clearbitLogoUrl(job.company_name) ?? undefined}
+              alt={job.company_name}
+            />
             <AvatarFallback>{companyInitials(job.company_name)}</AvatarFallback>
           </Avatar>
 
