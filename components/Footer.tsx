@@ -82,7 +82,17 @@ export default async function Footer() {
           </div>
         </div>
         <div className="border-t border-slate-200 dark:border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-600 dark:text-slate-400">
-          <p>{t('copyright', { year: new Date().getFullYear() })}</p>
+          <div className="flex flex-wrap items-center gap-3">
+            <p>{t('copyright', { year: new Date().getFullYear() })}</p>
+            <a
+              href="https://logo.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-400 dark:text-slate-600 hover:text-slate-600 dark:hover:text-slate-400 transition-colors"
+            >
+              Company logos by Logo.dev
+            </a>
+          </div>
           <div className="flex items-center gap-4">
             <div className="flex gap-2">
               {SOCIAL_LINKS.map(({ name, url, Icon }) => (
