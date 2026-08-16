@@ -35,11 +35,11 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts')
 //     these two Crisp domains, nothing broader.
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://client.crisp.chat",
+  "script-src 'self' 'unsafe-inline' https://client.crisp.chat https://connect.facebook.net",
   "style-src 'self' 'unsafe-inline' https://client.crisp.chat",
   "img-src 'self' data: https:",
   "font-src 'self' data:",
-  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://client.crisp.chat wss://client.relay.crisp.chat https://client.relay.crisp.chat",
+  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://client.crisp.chat wss://client.relay.crisp.chat https://client.relay.crisp.chat https://connect.facebook.net https://www.facebook.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",
