@@ -359,7 +359,11 @@
     "pastePlaceholder": "채용 공고 전체 텍스트를 여기에 붙여넣으세요…",
     "extractButton": "✦ 항목 추출",
     "extractingButton": "추출 중…",
-    "extractGenericError": "추출에 실패했습니다 — 다시 시도하거나 직접 입력해 주세요."
+    "extractGenericError": "추출에 실패했습니다 — 다시 시도하거나 직접 입력해 주세요.",
+    "pasteMode": "텍스트",
+    "urlMode": "URL",
+    "urlPlaceholder": "https://jobs.example.com/...",
+    "urlFetchError": "이 페이지를 불러올 수 없습니다. 보호되어 있거나 JavaScript가 필요할 수 있습니다 — 채용 공고 텍스트를 붙여넣으세요."
   },
   "resumeBuilder": {
     "breadcrumbDashboard": "대시보드",
@@ -793,7 +797,8 @@
     "onlyInviteForOwnJob": "본인의 채용 공고에 대해서만 이 작업을 할 수 있습니다.",
     "tooManyExtractJobRequests": "요청이 너무 많습니다. 잠시 후 다시 시도해 주세요.",
     "extractJobTextTooShort": "채용 공고 내용을 더 붙여넣어 주세요 — 몇 단어로는 실제 항목을 추출하기에 충분하지 않습니다.",
-    "invalidInterviewDate": "해당 면접 날짜가 올바르지 않습니다. 다시 선택해 주세요."
+    "invalidInterviewDate": "해당 면접 날짜가 올바르지 않습니다. 다시 선택해 주세요.",
+    "extractJobInvalidUrl": "유효하지 않은 URL입니다. 유효한 http/https 주소를 입력하세요."
   },
   "copilot": {
     "openLabel": "커리어 코파일럿 열기",

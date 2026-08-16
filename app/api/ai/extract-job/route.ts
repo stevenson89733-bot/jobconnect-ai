@@ -3,12 +3,13 @@ import { createClient } from '@/lib/supabase/server'
 import { getTranslations } from 'next-intl/server'
 import { rateLimit, getClientIp } from '@/lib/rateLimit'
 import { extractJobFromText, hasEnoughText, JobExtractError } from '@/lib/ai/jobExtract'
+import { fetchJobUrl } from '@/lib/ai/fetchJobUrl'
 
 const EXTRACTION_LIMIT = 10
 const EXTRACTION_WINDOW_MS = 60 * 60 * 1000
 const MAX_TEXT_LENGTH = 8000
 
-type Body = { text?: string }
+type Body = { text?: string; url?: string }
 
 export async function POST(req: Request) {
   const t = await getTranslations('errors')
@@ -25,13 +26,24 @@ export async function POST(req: Request) {
   if (!ok) return NextResponse.json({ error: t('tooManyExtractJobRequests') }, { status: 429 })
 
   const body = (await req.json().catch(() => ({}))) as Body
-  const text = (body.text ?? '').trim().slice(0, MAX_TEXT_LENGTH)
-
-  if (!hasEnoughText(text)) {
-    return NextResponse.json({ error: t('extractJobTextTooShort') }, { status: 400 })
-  }
 
   try {
+    let text: string
+
+    if (body.url) {
+      // Validate URL structure before fetching.
+      try { new URL(body.url) } catch {
+        return NextResponse.json({ error: t('extractJobInvalidUrl') }, { status: 400 })
+      }
+      // fetchJobUrl throws JobExtractError (422) with a human-readable message on any fetch failure.
+      text = await fetchJobUrl(body.url)
+    } else {
+      text = (body.text ?? '').trim().slice(0, MAX_TEXT_LENGTH)
+      if (!hasEnoughText(text)) {
+        return NextResponse.json({ error: t('extractJobTextTooShort') }, { status: 400 })
+      }
+    }
+
     const extracted = await extractJobFromText(text)
     return NextResponse.json({ extracted })
   } catch (err) {

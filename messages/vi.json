@@ -359,7 +359,11 @@
     "pastePlaceholder": "Dán toàn bộ nội dung tin tuyển dụng vào đây…",
     "extractButton": "✦ Trích xuất thông tin",
     "extractingButton": "Đang trích xuất…",
-    "extractGenericError": "Trích xuất thất bại — vui lòng thử lại hoặc điền thông tin thủ công."
+    "extractGenericError": "Trích xuất thất bại — vui lòng thử lại hoặc điền thông tin thủ công.",
+    "pasteMode": "Văn bản",
+    "urlMode": "URL",
+    "urlPlaceholder": "https://jobs.example.com/...",
+    "urlFetchError": "Không thể tải trang này. Trang có thể được bảo vệ hoặc cần JavaScript — hãy dán văn bản mô tả công việc thay thế."
   },
   "resumeBuilder": {
     "breadcrumbDashboard": "Bảng điều khiển",
@@ -793,7 +797,8 @@
     "onlyInviteForOwnJob": "Bạn chỉ có thể làm điều này cho tin tuyển dụng của chính mình.",
     "tooManyExtractJobRequests": "Quá nhiều yêu cầu. Vui lòng thử lại sau ít phút.",
     "extractJobTextTooShort": "Hãy dán thêm nội dung mô tả công việc — vài từ là không đủ để trích xuất thông tin thực sự.",
-    "invalidInterviewDate": "Ngày phỏng vấn này không hợp lệ. Vui lòng chọn lại."
+    "invalidInterviewDate": "Ngày phỏng vấn này không hợp lệ. Vui lòng chọn lại.",
+    "extractJobInvalidUrl": "URL không hợp lệ. Vui lòng nhập địa chỉ http/https hợp lệ."
   },
   "copilot": {
     "openLabel": "Mở Trợ Lý Sự Nghiệp",

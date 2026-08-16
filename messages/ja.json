@@ -359,7 +359,11 @@
     "pastePlaceholder": "求人情報の全文をここに貼り付けてください…",
     "extractButton": "✦ 項目を抽出",
     "extractingButton": "抽出中…",
-    "extractGenericError": "抽出に失敗しました — 再試行するか、手動で入力してください。"
+    "extractGenericError": "抽出に失敗しました — 再試行するか、手動で入力してください。",
+    "pasteMode": "テキスト",
+    "urlMode": "URL",
+    "urlPlaceholder": "https://jobs.example.com/...",
+    "urlFetchError": "このページを読み込めませんでした。保護されているかJavaScriptが必要な場合があります — 求人テキストを貼り付けてください。"
   },
   "resumeBuilder": {
     "breadcrumbDashboard": "ダッシュボード",
@@ -793,7 +797,8 @@
     "onlyInviteForOwnJob": "これは自分の求人に対してのみ行えます。",
     "tooManyExtractJobRequests": "リクエストが多すぎます。しばらくしてから再度お試しください。",
     "extractJobTextTooShort": "求人内容をもう少し貼り付けてください — 数語では実際の項目を抽出するには不十分です。",
-    "invalidInterviewDate": "この面接日時は無効です。もう一度選択してください。"
+    "invalidInterviewDate": "この面接日時は無効です。もう一度選択してください。",
+    "extractJobInvalidUrl": "無効なURLです。有効なhttp/httpsアドレスを入力してください。"
   },
   "copilot": {
     "openLabel": "キャリアコパイロットを開く",

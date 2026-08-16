@@ -359,7 +359,11 @@
     "pastePlaceholder": "在此粘贴完整的职位发布文本…",
     "extractButton": "✦ 提取字段",
     "extractingButton": "正在提取…",
-    "extractGenericError": "提取失败 — 请重试或手动填写字段。"
+    "extractGenericError": "提取失败 — 请重试或手动填写字段。",
+    "pasteMode": "文本",
+    "urlMode": "链接",
+    "urlPlaceholder": "https://jobs.example.com/...",
+    "urlFetchError": "无法加载此页面。该页面可能受保护或需要 JavaScript — 请改为粘贴职位描述文本。"
   },
   "resumeBuilder": {
     "breadcrumbDashboard": "控制台",
@@ -793,7 +797,8 @@
     "onlyInviteForOwnJob": "您只能对自己发布的职位执行此操作。",
     "tooManyExtractJobRequests": "请求过多，请稍后再试。",
     "extractJobTextTooShort": "请粘贴更多职位描述内容 — 寥寥数语不足以提取真实字段。",
-    "invalidInterviewDate": "该面试日期无效，请重新选择。"
+    "invalidInterviewDate": "该面试日期无效，请重新选择。",
+    "extractJobInvalidUrl": "URL 无效。请输入有效的 http/https 地址。"
   },
   "copilot": {
     "openLabel": "打开职业副驾",

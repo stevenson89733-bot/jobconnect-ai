@@ -359,7 +359,11 @@
     "pastePlaceholder": "الصق نص الإعلان الوظيفي الكامل هنا…",
     "extractButton": "✦ استخراج الحقول",
     "extractingButton": "جارٍ الاستخراج…",
-    "extractGenericError": "فشل الاستخراج — يرجى المحاولة مرة أخرى أو تعبئة الحقول يدويًا."
+    "extractGenericError": "فشل الاستخراج — يرجى المحاولة مرة أخرى أو تعبئة الحقول يدويًا.",
+    "pasteMode": "نص",
+    "urlMode": "رابط",
+    "urlPlaceholder": "https://jobs.example.com/...",
+    "urlFetchError": "تعذّر تحميل هذه الصفحة. قد تكون محمية أو تتطلب JavaScript — الصق نص الوظيفة بدلاً من ذلك."
   },
   "resumeBuilder": {
     "breadcrumbDashboard": "لوحة التحكم",
@@ -793,7 +797,8 @@
     "onlyInviteForOwnJob": "يمكنك فعل هذا فقط لوظائفك الخاصة.",
     "tooManyExtractJobRequests": "عدد كبير جدًا من الطلبات. يرجى المحاولة مرة أخرى بعد قليل.",
     "extractJobTextTooShort": "الصق المزيد من وصف الوظيفة — بضع كلمات لا تكفي لاستخراج حقول حقيقية.",
-    "invalidInterviewDate": "تاريخ المقابلة هذا غير صالح. يرجى اختياره مرة أخرى."
+    "invalidInterviewDate": "تاريخ المقابلة هذا غير صالح. يرجى اختياره مرة أخرى.",
+    "extractJobInvalidUrl": "عنوان URL غير صالح. يرجى إدخال عنوان http/https صحيح."
   },
   "copilot": {
     "openLabel": "فتح المساعد الوظيفي",

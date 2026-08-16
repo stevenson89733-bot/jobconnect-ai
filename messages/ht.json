@@ -359,7 +359,11 @@
     "pastePlaceholder": "Kole tout tèks ofrèdanplwa a isit la…",
     "extractButton": "✦ Ekstrè chan yo",
     "extractingButton": "Ap ekstrè…",
-    "extractGenericError": "Ekstraksyon echwe — eseye ankò oswa ranpli chan yo manyèlman."
+    "extractGenericError": "Ekstraksyon echwe — eseye ankò oswa ranpli chan yo manyèlman.",
+    "pasteMode": "Tèks",
+    "urlMode": "URL",
+    "urlPlaceholder": "https://jobs.example.com/...",
+    "urlFetchError": "Pa kapab chaje paj sa a. Li ka pwoteje oswa li bezwen JavaScript — kole tèks travay la olye."
   },
   "resumeBuilder": {
     "breadcrumbDashboard": "Tablo Bò",
@@ -793,7 +797,8 @@
     "onlyInviteForOwnJob": "Ou ka fè sa sèlman pou pwòp ofrèdanplwa ou yo.",
     "tooManyExtractJobRequests": "Twòp demann. Tanpri eseye ankò nan yon ti moman.",
     "extractJobTextTooShort": "Kole plis nan deskripsyon djòb la — kèk mo pa ase pou ekstrè vrè chan.",
-    "invalidInterviewDate": "Dat entèvyou sa a pa valab. Tanpri chwazi l ankò."
+    "invalidInterviewDate": "Dat entèvyou sa a pa valab. Tanpri chwazi l ankò.",
+    "extractJobInvalidUrl": "URL a pa valid. Tanpri antre yon adrès http/https valid."
   },
   "copilot": {
     "openLabel": "Ouvri Copilòt Karyè",

@@ -359,7 +359,11 @@
     "pastePlaceholder": "Paste the full job posting text here…",
     "extractButton": "✦ Extract fields",
     "extractingButton": "Extracting…",
-    "extractGenericError": "Extraction failed — please try again or fill in the fields manually."
+    "extractGenericError": "Extraction failed — please try again or fill in the fields manually.",
+    "pasteMode": "Text",
+    "urlMode": "URL",
+    "urlPlaceholder": "https://jobs.example.com/...",
+    "urlFetchError": "Could not fetch this page. It may be protected or require JavaScript — paste the job description text instead."
   },
   "resumeBuilder": {
     "breadcrumbDashboard": "Dashboard",
@@ -793,7 +797,8 @@
     "onlyInviteForOwnJob": "You can only do this for your own job postings.",
     "tooManyExtractJobRequests": "Too many requests. Please try again in a bit.",
     "extractJobTextTooShort": "Paste more of the job description — a few words isn't enough to extract real fields.",
-    "invalidInterviewDate": "That interview date isn't valid. Please pick it again."
+    "invalidInterviewDate": "That interview date isn't valid. Please pick it again.",
+    "extractJobInvalidUrl": "Invalid URL. Please enter a valid http/https address."
   },
   "copilot": {
     "openLabel": "Open Career Copilot",

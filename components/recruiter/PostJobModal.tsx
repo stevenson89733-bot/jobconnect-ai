@@ -65,36 +65,42 @@ export default function PostJobModal({
   // itself; the employer still reviews/edits every field before the real
   // submit below, which is unchanged.
   const [pasteText, setPasteText] = useState('')
+  const [pasteUrl, setPasteUrl] = useState('')
+  const [pasteMode, setPasteMode] = useState<'text' | 'url'>('text')
   const [extracting, setExtracting] = useState(false)
   const [extractError, setExtractError] = useState('')
   const [showPaste, setShowPaste] = useState(false)
+
+  function applyExtracted(extracted: Record<string, unknown>) {
+    if (extracted.title) setTitle(extracted.title as string)
+    if (extracted.company_name) setCompany(extracted.company_name as string)
+    if (extracted.location) setLocation(extracted.location as string)
+    if (extracted.work_type && VALID_WORK_TYPES.has(extracted.work_type as string)) setWorkType(extracted.work_type as string)
+    if (extracted.job_type && VALID_JOB_TYPES.has(extracted.job_type as string)) setJobType(extracted.job_type as string)
+    if (extracted.category && VALID_CATEGORIES.has(extracted.category as string)) setCategory(extracted.category as string)
+    if (extracted.description) setDescription(extracted.description as string)
+    if (extracted.salary_min != null) setSalaryMin(String(extracted.salary_min))
+    if (extracted.salary_max != null) setSalaryMax(String(extracted.salary_max))
+    if (Array.isArray(extracted.tags) && extracted.tags.length) setTags((extracted.tags as string[]).join(', '))
+  }
 
   async function handleExtract() {
     setExtracting(true)
     setExtractError('')
     try {
+      const body = pasteMode === 'url' ? { url: pasteUrl.trim() } : { text: pasteText }
       const res = await fetch('/api/ai/extract-job', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: pasteText }),
+        body: JSON.stringify(body),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || t('extractGenericError'))
 
-      const extracted = data.extracted
-      if (extracted.title) setTitle(extracted.title)
-      if (extracted.company_name) setCompany(extracted.company_name)
-      if (extracted.location) setLocation(extracted.location)
-      if (extracted.work_type && VALID_WORK_TYPES.has(extracted.work_type)) setWorkType(extracted.work_type)
-      if (extracted.job_type && VALID_JOB_TYPES.has(extracted.job_type)) setJobType(extracted.job_type)
-      if (extracted.category && VALID_CATEGORIES.has(extracted.category)) setCategory(extracted.category)
-      if (extracted.description) setDescription(extracted.description)
-      if (extracted.salary_min != null) setSalaryMin(String(extracted.salary_min))
-      if (extracted.salary_max != null) setSalaryMax(String(extracted.salary_max))
-      if (extracted.tags?.length) setTags(extracted.tags.join(', '))
-
+      applyExtracted(data.extracted)
       setShowPaste(false)
       setPasteText('')
+      setPasteUrl('')
     } catch (err) {
       setExtractError(err instanceof Error ? err.message : t('extractGenericError'))
     } finally {
@@ -116,6 +122,8 @@ export default function PostJobModal({
     setIsFeatured(false)
     setError('')
     setPasteText('')
+    setPasteUrl('')
+    setPasteMode('text')
     setExtractError('')
     setShowPaste(false)
   }
@@ -200,21 +208,61 @@ export default function PostJobModal({
                   {t('pasteToFillButton')}
                 </button>
               ) : (
-                <div className="border border-primary/30 rounded-lg p-3.5 space-y-2 bg-primary/5 dark:bg-primary/10">
-                  <label className={labelClass}>{t('pasteLabel')}</label>
-                  <textarea
-                    value={pasteText}
-                    onChange={(e) => setPasteText(e.target.value)}
-                    rows={5}
-                    placeholder={t('pastePlaceholder')}
-                    className={`${inputClass} resize-none`}
-                  />
-                  {extractError && <p className="text-sm text-red-600 dark:text-red-400">{extractError}</p>}
+                <div className="border border-primary/30 rounded-lg p-3.5 space-y-3 bg-primary/5 dark:bg-primary/10">
+                  {/* Mode toggle: Text / URL */}
+                  <div className="flex gap-1 p-0.5 bg-slate-200 dark:bg-slate-700 rounded-lg w-fit">
+                    {(['text', 'url'] as const).map((mode) => (
+                      <button
+                        key={mode}
+                        type="button"
+                        onClick={() => { setPasteMode(mode); setExtractError('') }}
+                        className={`px-3 py-1 text-xs font-medium rounded-md transition-colors ${
+                          pasteMode === mode
+                            ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm'
+                            : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'
+                        }`}
+                      >
+                        {mode === 'text' ? t('pasteMode') : t('urlMode')}
+                      </button>
+                    ))}
+                  </div>
+
+                  {pasteMode === 'text' ? (
+                    <>
+                      <label className={labelClass}>{t('pasteLabel')}</label>
+                      <textarea
+                        value={pasteText}
+                        onChange={(e) => setPasteText(e.target.value)}
+                        rows={5}
+                        placeholder={t('pastePlaceholder')}
+                        className={`${inputClass} resize-none`}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <label className={labelClass}>{t('urlMode')}</label>
+                      <input
+                        type="url"
+                        value={pasteUrl}
+                        onChange={(e) => setPasteUrl(e.target.value)}
+                        placeholder={t('urlPlaceholder')}
+                        className={inputClass}
+                      />
+                    </>
+                  )}
+
+                  {extractError && (
+                    <p className="text-sm text-red-600 dark:text-red-400">{extractError}</p>
+                  )}
+
                   <div className="flex gap-2">
                     <button
                       type="button"
                       onClick={handleExtract}
-                      disabled={extracting || pasteText.trim().length < 50}
+                      disabled={
+                        extracting ||
+                        (pasteMode === 'text' ? pasteText.trim().length < 50 : pasteUrl.trim().length === 0)
+                      }
                       className="flex-1 btn-primary py-2 text-sm disabled:opacity-50"
                     >
                       {extracting ? t('extractingButton') : t('extractButton')}

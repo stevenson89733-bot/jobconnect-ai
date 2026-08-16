@@ -359,7 +359,11 @@
     "pastePlaceholder": "Pega aquí el texto completo de la oferta…",
     "extractButton": "✦ Extraer campos",
     "extractingButton": "Extrayendo…",
-    "extractGenericError": "La extracción falló — inténtalo de nuevo o completa los campos manualmente."
+    "extractGenericError": "La extracción falló — inténtalo de nuevo o completa los campos manualmente.",
+    "pasteMode": "Texto",
+    "urlMode": "URL",
+    "urlPlaceholder": "https://jobs.example.com/...",
+    "urlFetchError": "No se pudo cargar esta página. Puede estar protegida o requerir JavaScript — pega el texto de la oferta en su lugar."
   },
   "resumeBuilder": {
     "breadcrumbDashboard": "Panel",
@@ -793,7 +797,8 @@
     "onlyInviteForOwnJob": "Solo puedes hacer esto para tus propias ofertas.",
     "tooManyExtractJobRequests": "Demasiadas solicitudes. Inténtalo de nuevo en un momento.",
     "extractJobTextTooShort": "Pega más de la descripción del puesto — unas pocas palabras no son suficientes para extraer campos reales.",
-    "invalidInterviewDate": "Esa fecha de entrevista no es válida. Vuelve a elegirla."
+    "invalidInterviewDate": "Esa fecha de entrevista no es válida. Vuelve a elegirla.",
+    "extractJobInvalidUrl": "URL no válida. Por favor, introduce una dirección http/https válida."
   },
   "copilot": {
     "openLabel": "Abrir Copiloto de Carrera",

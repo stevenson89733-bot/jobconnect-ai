@@ -359,7 +359,11 @@
     "pastePlaceholder": "Füge hier den vollständigen Text der Stellenanzeige ein…",
     "extractButton": "✦ Felder extrahieren",
     "extractingButton": "Wird extrahiert…",
-    "extractGenericError": "Extraktion fehlgeschlagen — versuche es erneut oder fülle die Felder manuell aus."
+    "extractGenericError": "Extraktion fehlgeschlagen — versuche es erneut oder fülle die Felder manuell aus.",
+    "pasteMode": "Text",
+    "urlMode": "URL",
+    "urlPlaceholder": "https://jobs.example.com/...",
+    "urlFetchError": "Diese Seite konnte nicht geladen werden. Sie ist möglicherweise geschützt oder benötigt JavaScript — füge stattdessen den Stellenbeschreibungstext ein."
   },
   "resumeBuilder": {
     "breadcrumbDashboard": "Dashboard",
@@ -793,7 +797,8 @@
     "onlyInviteForOwnJob": "Das kannst du nur für deine eigenen Stellenanzeigen tun.",
     "tooManyExtractJobRequests": "Zu viele Anfragen. Bitte versuche es gleich noch einmal.",
     "extractJobTextTooShort": "Füge mehr von der Stellenbeschreibung ein — ein paar Wörter reichen nicht, um echte Felder zu extrahieren.",
-    "invalidInterviewDate": "Dieser Gesprächstermin ist ungültig. Bitte wähle ihn erneut."
+    "invalidInterviewDate": "Dieser Gesprächstermin ist ungültig. Bitte wähle ihn erneut.",
+    "extractJobInvalidUrl": "Ungültige URL. Bitte eine gültige http/https-Adresse eingeben."
   },
   "copilot": {
     "openLabel": "Karriere-Copilot öffnen",
