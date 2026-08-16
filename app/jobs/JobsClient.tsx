@@ -311,7 +311,7 @@ export default function JobsClient({
 
       {/* ── Job Cards ────────────────────────────────────── */}
       {isPending ? (
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
           {Array.from({ length: 6 }).map((_, i) => <JobCardSkeleton key={i} />)}
         </div>
       ) : allJobs.length === 0 ? (
@@ -325,7 +325,7 @@ export default function JobsClient({
         </div>
       ) : (
         <>
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
             {allJobs.map((job) => (
               <JobCard
                 key={job.id}
@@ -338,7 +338,7 @@ export default function JobsClient({
           </div>
 
           {loadingMore && (
-            <div className="space-y-3 mt-3">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 mt-3">
               {Array.from({ length: 3 }).map((_, i) => <JobCardSkeleton key={i} />)}
             </div>
           )}
