@@ -161,7 +161,7 @@ export default function JobCard({
           <AvatarFallback className="rounded-lg text-xs">{companyInitials(job.company_name)}</AvatarFallback>
         </Avatar>
 
-        <h2 className="font-bold text-[15px] text-slate-900 dark:text-white leading-snug flex-1 min-w-0 truncate">
+        <h2 className="font-bold text-[15px] text-slate-900 dark:text-white leading-snug flex-1 min-w-0">
           {job.title}
         </h2>
 
