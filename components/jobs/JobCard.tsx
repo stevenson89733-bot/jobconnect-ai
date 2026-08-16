@@ -51,15 +51,19 @@ const CB_CONFIG = {
     label: (t: ReturnType<typeof useTranslations<'jobs'>>) => t('crossBorderYes'),
     badgeClass: 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800',
   },
+  // Neutral slate — amber read as a warning which misled candidates into
+  // thinking the listing was problematic. "Unclear" is informational only.
   unclear: {
     label: (t: ReturnType<typeof useTranslations<'jobs'>>) => t('crossBorderUnclear'),
-    badgeClass: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800',
+    badgeClass: 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700',
   },
   no: {
     label: (t: ReturnType<typeof useTranslations<'jobs'>>) => t('crossBorderNo'),
     badgeClass: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700',
   },
 } as const
+
+const MAX_VISIBLE_TAGS = 4
 
 function CrossBorderBadge({
   status,
@@ -153,127 +157,134 @@ export default function JobCard({
     }
   }
 
+  const visibleTags = job.tags.slice(0, MAX_VISIBLE_TAGS)
+  const extraTagCount = job.tags.length - MAX_VISIBLE_TAGS
+
   return (
     <motion.div
       whileHover={{ y: -3 }}
       transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-      className={`card transition-shadow hover:shadow-lg dark:hover:shadow-black/20 ${
+      className={`card transition-shadow hover:shadow-md dark:hover:shadow-black/30 ${
         job.is_featured ? 'border-primary/30 bg-primary/5' : ''
       }`}
     >
-      <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-        {/* Left: logo + info */}
-        <div className="flex items-start gap-4 flex-1 min-w-0">
-          <Avatar className="w-12 h-12 shrink-0">
-            <AvatarImage
-              src={job.company?.logo_url ?? clearbitLogoUrl(job.company_name) ?? undefined}
-              alt={job.company_name}
-            />
-            <AvatarFallback>{companyInitials(job.company_name)}</AvatarFallback>
-          </Avatar>
-
-          <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-center gap-2 mb-0.5">
-              <h2 className="font-semibold text-slate-900 dark:text-white">{job.title}</h2>
-              {job.is_featured && <Badge variant="primary">{t('featured')}</Badge>}
-              {job.cross_border_status != null && (
-                <CrossBorderBadge
-                  status={job.cross_border_status}
-                  signals={job.cross_border_signals}
-                  open={signalsOpen}
-                  onToggle={() => setSignalsOpen((o) => !o)}
-                  t={t}
-                />
-              )}
-              {job.matchPercent != null && (
-                <Badge variant="success" className="flex items-center gap-1">
-                  <Sparkles className="w-3 h-3" strokeWidth={2} /> {t('matchPercent', { percent: job.matchPercent })}
-                </Badge>
-              )}
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-2">
-              <Link
-                href={`/companies/${encodeURIComponent(job.company_name)}`}
-                className="font-medium text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {job.company_name}
-              </Link>
-              {job.work_type && (
-                <>
-                  <span className="text-slate-400 dark:text-slate-600">·</span>
-                  <span className="flex items-center gap-1">
-                    <span className={`w-1.5 h-1.5 rounded-full inline-block ${WORK_TYPE_DOT[job.work_type] ?? WORK_TYPE_DOT.onsite}`} />
-                    <span className={`text-xs font-medium ${WORK_TYPE_TEXT[job.work_type] ?? WORK_TYPE_TEXT.onsite}`}>{workTypeLabel}</span>
-                  </span>
-                </>
-              )}
-              {locationDetail && (
-                <>
-                  <span className="text-slate-400 dark:text-slate-600">·</span>
-                  <span className="text-slate-600 dark:text-slate-400 text-xs">{locationDetail}</span>
-                </>
-              )}
-              <span className="text-slate-400 dark:text-slate-600">·</span>
-              <span className="text-slate-600 dark:text-slate-400 text-xs">{localizedTimeAgo(job.created_at, t)}</span>
-            </div>
-
-            <div className="flex flex-wrap gap-1.5 mb-1">
-              <Badge variant={TYPE_VARIANT[job.job_type] ?? 'default'}>{jobTypeLabel}</Badge>
-              <Badge>{categoryLabel}</Badge>
-              {job.tags.map((tag) => (
-                <Badge key={tag}>{tag}</Badge>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Right: salary + actions */}
-        <div className="flex sm:flex-col items-center sm:items-end gap-2 shrink-0 flex-wrap">
-          <span
-            className={
-              job.salary_label
-                ? 'font-semibold text-orange-700 dark:text-accent text-sm whitespace-nowrap'
-                : 'text-slate-400 dark:text-slate-600 text-xs whitespace-nowrap'
-            }
-          >
-            {job.salary_label ? (
-              <ConvertedSalary salaryMin={job.salary_min} salaryMax={job.salary_max} salaryLabel={job.salary_label} />
-            ) : (
-              t('salaryNotDisclosed')
-            )}
-          </span>
-
-          <div className="flex items-center gap-1.5">
-            <Button
-              variant="ghost"
-              size="sm"
-              aria-label={isSaved ? t('unsaveJob') : t('saveJob')}
-              onClick={() => onToggleSave(job.id)}
-              className="!px-2"
-            >
-              <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-current text-primary' : ''}`} strokeWidth={1.75} />
-            </Button>
-            <Button variant="ghost" size="sm" aria-label={t('shareJob')} onClick={handleShare} className="!px-2">
-              {shareStatus === 'copied' ? <Check className="w-4 h-4 text-green-700 dark:text-green-400" /> : <Share2 className="w-4 h-4" strokeWidth={1.75} />}
-            </Button>
-          </div>
-
-          <ApplyModal
-            jobId={job.id}
-            jobTitle={job.title}
-            company={job.company_name}
-            alreadyApplied={alreadyApplied}
+      {/* ── Top row: logo + title block + save/share ── */}
+      <div className="flex items-start gap-3">
+        <Avatar className="w-12 h-12 shrink-0 rounded-xl">
+          <AvatarImage
+            src={job.company?.logo_url ?? clearbitLogoUrl(job.company_name) ?? undefined}
+            alt={job.company_name}
           />
+          <AvatarFallback className="rounded-xl">{companyInitials(job.company_name)}</AvatarFallback>
+        </Avatar>
+
+        <div className="min-w-0 flex-1">
+          {/* Title — larger + bolder for stronger visual hierarchy */}
+          <div className="flex flex-wrap items-center gap-1.5 mb-0.5">
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white leading-snug">{job.title}</h2>
+            {job.is_featured && <Badge variant="primary">{t('featured')}</Badge>}
+            {job.matchPercent != null && (
+              <Badge variant="success" className="flex items-center gap-1">
+                <Sparkles className="w-3 h-3" strokeWidth={2} /> {t('matchPercent', { percent: job.matchPercent })}
+              </Badge>
+            )}
+          </div>
+
+          {/* Company + work type + location + time */}
+          <div className="flex flex-wrap items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+            <Link
+              href={`/companies/${encodeURIComponent(job.company_name)}`}
+              className="font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {job.company_name}
+            </Link>
+            {job.work_type && (
+              <>
+                <span className="text-slate-300 dark:text-slate-600">·</span>
+                <span className="flex items-center gap-1">
+                  <span className={`w-1.5 h-1.5 rounded-full inline-block shrink-0 ${WORK_TYPE_DOT[job.work_type] ?? WORK_TYPE_DOT.onsite}`} />
+                  <span className={`font-medium ${WORK_TYPE_TEXT[job.work_type] ?? WORK_TYPE_TEXT.onsite}`}>{workTypeLabel}</span>
+                </span>
+              </>
+            )}
+            {locationDetail && (
+              <>
+                <span className="text-slate-300 dark:text-slate-600">·</span>
+                <span>{locationDetail}</span>
+              </>
+            )}
+            <span className="text-slate-300 dark:text-slate-600">·</span>
+            <span>{localizedTimeAgo(job.created_at, t)}</span>
+          </div>
         </div>
+
+        {/* Save + share — top-right, compact */}
+        <div className="flex items-center gap-0.5 shrink-0 -mt-0.5">
+          <Button
+            variant="ghost"
+            size="sm"
+            aria-label={isSaved ? t('unsaveJob') : t('saveJob')}
+            onClick={() => onToggleSave(job.id)}
+            className="!px-2"
+          >
+            <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-current text-primary' : ''}`} strokeWidth={1.75} />
+          </Button>
+          <Button variant="ghost" size="sm" aria-label={t('shareJob')} onClick={handleShare} className="!px-2">
+            {shareStatus === 'copied' ? <Check className="w-4 h-4 text-green-700 dark:text-green-400" /> : <Share2 className="w-4 h-4" strokeWidth={1.75} />}
+          </Button>
+        </div>
+      </div>
+
+      {/* ── Salary chip + type/category/cross-border badges ── */}
+      <div className="flex flex-wrap items-center gap-1.5 mt-3">
+        {job.salary_label ? (
+          <span className="inline-flex items-center gap-1 bg-primarySoft dark:bg-primary/15 text-primary dark:text-blue-400 font-bold text-xs px-2.5 py-1 rounded-md whitespace-nowrap">
+            <ConvertedSalary salaryMin={job.salary_min} salaryMax={job.salary_max} salaryLabel={job.salary_label} />
+          </span>
+        ) : (
+          <span className="text-slate-400 dark:text-slate-600 text-xs">{t('salaryNotDisclosed')}</span>
+        )}
+        <Badge variant={TYPE_VARIANT[job.job_type] ?? 'default'}>{jobTypeLabel}</Badge>
+        <Badge>{categoryLabel}</Badge>
+        {job.cross_border_status != null && (
+          <CrossBorderBadge
+            status={job.cross_border_status}
+            signals={job.cross_border_signals}
+            open={signalsOpen}
+            onToggle={() => setSignalsOpen((o) => !o)}
+            t={t}
+          />
+        )}
+      </div>
+
+      {/* ── Tags: max 4 visible + overflow pill ── */}
+      {job.tags.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 mt-2">
+          {visibleTags.map((tag) => (
+            <Badge key={tag}>{tag}</Badge>
+          ))}
+          {extraTagCount > 0 && (
+            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium text-slate-400 dark:text-slate-500 border border-dashed border-slate-300 dark:border-slate-600">
+              +{extraTagCount}
+            </span>
+          )}
+        </div>
+      )}
+
+      {/* ── Footer: divider + Apply ── */}
+      <div className="mt-4 pt-3.5 border-t border-slate-100 dark:border-slate-700/50 flex items-center justify-end">
+        <ApplyModal
+          jobId={job.id}
+          jobTitle={job.title}
+          company={job.company_name}
+          alreadyApplied={alreadyApplied}
+        />
       </div>
 
       {shareStatus === 'manual' && (
         <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/50">
-          <p className="text-xs text-slate-600 dark:text-slate-400 mb-1.5">
-            {t('shareBlocked')}
-          </p>
+          <p className="text-xs text-slate-600 dark:text-slate-400 mb-1.5">{t('shareBlocked')}</p>
           <input
             readOnly
             value={shareUrl}
