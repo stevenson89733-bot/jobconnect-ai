@@ -10,15 +10,21 @@ const LEGAL_SUFFIXES = /\b(inc|llc|corp|ltd|limited|gmbh|s\.?a\.?s?|plc|ag|bv|oy
 // Characters that can't appear in a hostname.
 const NON_HOSTNAME = /[^a-z0-9-]/g
 
+const LOGO_DEV_TOKEN = 'pk_T79ZeqtWQXqeOUXhNc4-VA'
+
 /**
- * Returns a Clearbit Logo API URL for a company name, or null if the name
- * produces an obviously invalid domain (empty, too short). The caller is
- * responsible for handling 404s via an onError handler — the browser loads
- * the image natively so no server round-trip is needed.
+ * Returns a Logo.dev URL for a company name, or null if the name produces
+ * an obviously invalid domain (empty, too short). The caller is responsible
+ * for handling 404s via an onError handler — the browser loads the image
+ * natively so no server round-trip is needed.
  *
  * Heuristic: strip legal suffixes + punctuation, lowercase, join → guess
  * a .com domain. Works well for major tech companies; silently falls back
- * to the letter avatar for anything Clearbit doesn't recognise.
+ * to the letter avatar for anything Logo.dev doesn't recognise.
+ *
+ * Migration note: Clearbit Logo API shut down Dec 8 2025. Logo.dev is the
+ * drop-in replacement from the same team — same base URL structure, same
+ * params, plus a publishable token.
  */
 export function clearbitLogoUrl(companyName: string): string | null {
   const slug = companyName
@@ -28,5 +34,5 @@ export function clearbitLogoUrl(companyName: string): string | null {
     .toLowerCase()
     .replace(NON_HOSTNAME, '')
   if (slug.length < 2) return null
-  return `https://logo.clearbit.com/${slug}.com`
+  return `https://img.logo.dev/${slug}.com?token=${LOGO_DEV_TOKEN}`
 }
