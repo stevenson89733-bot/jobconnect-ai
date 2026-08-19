@@ -71,6 +71,12 @@ export default function PostJobModal({
   const [extractError, setExtractError] = useState('')
   const [showPaste, setShowPaste] = useState(false)
 
+  const [rssJobs, setRssJobs] = useState<Array<{ title: string | null; link: string | null; description: string | null; pubDate: string | null; guid: string | null }>>([])
+  const [rssLoading, setRssLoading] = useState(false)
+  const [rssError, setRssError] = useState('')
+  const [showRss, setShowRss] = useState(false)
+  const [selectedRssItem, setSelectedRssItem] = useState<typeof rssJobs[0] | null>(null)
+
   function applyExtracted(extracted: Record<string, unknown>) {
     if (extracted.title) setTitle(extracted.title as string)
     if (extracted.company_name) setCompany(extracted.company_name as string)
@@ -108,6 +114,48 @@ export default function PostJobModal({
     }
   }
 
+  async function fetchRssJobs() {
+    setRssLoading(true)
+    setRssError('')
+    try {
+      const res = await fetch('/api/ai/rss-jobs', { method: 'GET' })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || t('extractGenericError'))
+
+      setRssJobs(data.jobs || [])
+    } catch (err) {
+      setRssError(err instanceof Error ? err.message : t('extractGenericError'))
+    } finally {
+      setRssLoading(false)
+    }
+  }
+
+  async function handleRssItemSelect(item: typeof rssJobs[0]) {
+    setSelectedRssItem(item)
+    setExtracting(true)
+    setExtractError('')
+    try {
+      const res = await fetch('/api/ai/extract-job', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: item.description || '' }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || t('extractGenericError'))
+
+      applyExtracted(data.extracted)
+      setShowRss(false)
+      setRssJobs([])
+      setRssError('')
+      setSelectedRssItem(null)
+    } catch (err) {
+      setExtractError(err instanceof Error ? err.message : t('extractGenericError'))
+      setSelectedRssItem(null)
+    } finally {
+      setExtracting(false)
+    }
+  }
+
   function resetForm() {
     setTitle('')
     setCompany(companyName)
@@ -126,6 +174,10 @@ export default function PostJobModal({
     setPasteMode('text')
     setExtractError('')
     setShowPaste(false)
+    setRssJobs([])
+    setRssError('')
+    setShowRss(false)
+    setSelectedRssItem(null)
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -199,15 +251,24 @@ export default function PostJobModal({
             </div>
 
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              {!showPaste ? (
-                <button
-                  type="button"
-                  onClick={() => setShowPaste(true)}
-                  className="w-full text-sm text-primary dark:text-blue-400 border border-dashed border-primary/40 rounded-lg py-2.5 hover:bg-primary/5 transition-colors"
-                >
-                  {t('pasteToFillButton')}
-                </button>
-              ) : (
+              {!showPaste && !showRss ? (
+                <div className="space-y-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowPaste(true)}
+                    className="w-full text-sm text-primary dark:text-blue-400 border border-dashed border-primary/40 rounded-lg py-2.5 hover:bg-primary/5 transition-colors"
+                  >
+                    {t('pasteToFillButton')}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setShowRss(true); fetchRssJobs() }}
+                    className="w-full text-sm text-primary dark:text-blue-400 border border-dashed border-primary/40 rounded-lg py-2.5 hover:bg-primary/5 transition-colors"
+                  >
+                    Browse We Work Remotely
+                  </button>
+                </div>
+              ) : showPaste ? (
                 <div className="border border-primary/30 rounded-lg p-3.5 space-y-3 bg-primary/5 dark:bg-primary/10">
                   {/* Mode toggle: Text / URL */}
                   <div className="flex gap-1 p-0.5 bg-slate-200 dark:bg-slate-700 rounded-lg w-fit">
@@ -276,7 +337,46 @@ export default function PostJobModal({
                     </button>
                   </div>
                 </div>
-              )}
+              ) : showRss ? (
+                <div className="border border-primary/30 rounded-lg p-3.5 space-y-3 bg-primary/5 dark:bg-primary/10">
+                  <h3 className="font-semibold text-sm text-slate-900 dark:text-white">We Work Remotely - Remote Jobs</h3>
+
+                  {rssLoading && (
+                    <p className="text-sm text-slate-600 dark:text-slate-400">{t('extractingButton')}...</p>
+                  )}
+
+                  {rssError && (
+                    <p className="text-sm text-red-600 dark:text-red-400">{rssError}</p>
+                  )}
+
+                  {!rssLoading && !rssError && rssJobs.length > 0 && (
+                    <div className="space-y-2 max-h-[300px] overflow-y-auto">
+                      {rssJobs.map((job, idx) => (
+                        <button
+                          key={job.guid || idx}
+                          type="button"
+                          onClick={() => handleRssItemSelect(job)}
+                          disabled={selectedRssItem === job && extracting}
+                          className="w-full text-left p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-white/50 dark:hover:bg-slate-800/50 transition-colors text-sm disabled:opacity-50"
+                        >
+                          <div className="font-medium text-slate-900 dark:text-white truncate">{job.title}</div>
+                          <div className="text-xs text-slate-500 dark:text-slate-400 truncate mt-0.5">{job.description?.substring(0, 80)}...</div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => { setShowRss(false); setRssError(''); setRssJobs([]) }}
+                      className="btn-outline py-2 px-4 text-sm w-full"
+                    >
+                      {t('cancel')}
+                    </button>
+                  </div>
+                </div>
+              ) : null}
 
               <div>
                 <label className={labelClass}>{t('jobTitle')}</label>
