@@ -37,7 +37,7 @@ export default function FaqWidget() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-40 flex items-center justify-center w-14 h-14 rounded-full bg-primary dark:bg-blue-600 text-white shadow-lg hover:shadow-xl transition-shadow hover:scale-110 transform duration-200"
+          className="fixed bottom-24 right-6 z-40 flex items-center justify-center w-14 h-14 rounded-full bg-primary dark:bg-blue-600 text-white shadow-lg hover:shadow-xl transition-shadow hover:scale-110 transform duration-200"
           aria-label="Open FAQ chat"
         >
           <MessageCircle size={24} />
