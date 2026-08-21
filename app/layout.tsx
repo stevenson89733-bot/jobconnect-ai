@@ -12,6 +12,7 @@ import { ThemeProvider } from '../components/ThemeProvider'
 import { createClient } from '@/lib/supabase/server'
 import CopilotWidget from '@/components/copilot/CopilotWidget'
 import CrispChat from '@/components/CrispChat'
+import FaqWidget from '@/components/FaqWidget'
 import { CountryProvider } from '@/components/country/CountryProvider'
 import { COUNTRY_COOKIE, DEFAULT_COUNTRY, isCountryCode } from '@/lib/countries'
 import { isRtlLocale, type Locale } from '@/lib/i18n/config'
@@ -101,6 +102,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <main>{children}</main>
               <Footer />
               {isCandidate && <CopilotWidget />}
+              <FaqWidget />
               <CrispChat />
             </CountryProvider>
           </ThemeProvider>
