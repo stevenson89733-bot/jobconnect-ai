@@ -137,14 +137,16 @@ export default function FaqWidget() {
   const [showBadge, setShowBadge]     = useState(true)
   const [conversation, setConvo]      = useState<Message[]>(makeWelcome)
 
-  const bottomRef   = useRef<HTMLDivElement>(null)
+  // Separate scroll containers: messages scroll independently from chips
+  const msgsRef    = useRef<HTMLDivElement>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
-  // Scroll to bottom on new message
+  // Scroll messages to bottom after every new message
   useEffect(() => {
-    if (conversation.length > 2) {
-      setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 60)
-    }
+    const el = msgsRef.current
+    if (!el) return
+    // Use scrollTop = scrollHeight — reliable, always shows latest message at bottom
+    setTimeout(() => { el.scrollTop = el.scrollHeight }, 60)
   }, [conversation])
 
   // Close dropdown on outside click
@@ -237,7 +239,6 @@ export default function FaqWidget() {
             style={{ background: 'linear-gradient(135deg, #2E5CF6 0%, #1E3FCC 100%)' }}
             onClick={() => isCollapsed && setIsCollapsed(false)}
           >
-            {/* Left: logo + info */}
             <div className="flex items-center gap-3 min-w-0">
               <div className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center overflow-hidden flex-shrink-0 ring-2 ring-white/20">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -256,9 +257,7 @@ export default function FaqWidget() {
               </div>
             </div>
 
-            {/* Right: actions */}
             <div className="flex items-center gap-0.5 flex-shrink-0 ml-2">
-              {/* Collapse toggle */}
               <button
                 onClick={e => { e.stopPropagation(); setIsCollapsed(c => !c); setDropdown(false) }}
                 className="text-white/60 hover:text-white p-1.5 rounded-lg hover:bg-white/10 transition-colors"
@@ -267,7 +266,6 @@ export default function FaqWidget() {
                 {isCollapsed ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
               </button>
 
-              {/* Dropdown */}
               <div ref={dropdownRef} className="relative" onClick={e => e.stopPropagation()}>
                 <button
                   onClick={() => setDropdown(d => !d)}
@@ -314,7 +312,6 @@ export default function FaqWidget() {
                 )}
               </div>
 
-              {/* Close */}
               <button
                 onClick={e => { e.stopPropagation(); handleClose() }}
                 className="text-white/60 hover:text-white p-1.5 rounded-lg hover:bg-white/10 transition-colors"
@@ -328,15 +325,20 @@ export default function FaqWidget() {
           {/* ── Collapsible body ── */}
           <div
             className="flex flex-col overflow-hidden"
-            style={{
-              maxHeight: isCollapsed ? '0px' : '456px',
-              transition: 'max-height 0.3s ease-in-out',
-            }}
+            style={{ maxHeight: isCollapsed ? '0px' : '456px', transition: 'max-height 0.3s ease-in-out' }}
           >
-            {/* Messages + chips */}
-            <div className="overflow-y-auto" style={{ maxHeight: '416px' }}>
+            {/*
+             * MESSAGES — own scroll zone, grows to fill available space.
+             * New messages are always appended at the bottom.
+             * scrollTop = scrollHeight in useEffect keeps latest message visible.
+             * min-h-0 is required for flex-1 to shrink when chips section is tall.
+             */}
+            <div
+              ref={msgsRef}
+              className="flex-1 min-h-0 overflow-y-auto"
+              style={{ minHeight: '120px' }}
+            >
               <div className="p-4 space-y-3">
-
                 {conversation.map((msg, i) => (
                   <div key={i} className={`flex items-end gap-2 ${msg.type === 'user' ? 'flex-row-reverse' : ''}`}>
                     {msg.type === 'bot' && (
@@ -359,38 +361,42 @@ export default function FaqWidget() {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
 
-                {/* Suggestion chips — always visible */}
-                <div className="pt-2 space-y-3">
-                  {FAQ_THEMES.map(theme => (
-                    <div key={theme.label}>
-                      <div className="flex items-center gap-1.5 mb-2">
-                        <span className="text-xs">{theme.emoji}</span>
-                        <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
-                          {theme.label}
-                        </span>
-                      </div>
-                      <div className="flex flex-wrap gap-1.5">
-                        {theme.items.map(item => (
-                          <button
-                            key={item.q}
-                            onClick={() => handleQuestion(item.q, item.a)}
-                            className="text-left text-xs px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-primary dark:hover:border-blue-500 hover:text-primary dark:hover:text-blue-400 hover:bg-primary/5 dark:hover:bg-blue-500/10 text-slate-600 dark:text-slate-300 transition-colors leading-snug"
-                          >
-                            {item.q}
-                          </button>
-                        ))}
-                      </div>
+            {/*
+             * CHIPS — separate fixed-height zone below messages.
+             * Never shifts existing messages. User always sees latest message
+             * at bottom of the messages zone; chips are always reachable below.
+             */}
+            <div className="flex-shrink-0 border-t border-slate-100 dark:border-slate-800 overflow-y-auto" style={{ maxHeight: '200px' }}>
+              <div className="p-3 space-y-2.5">
+                {FAQ_THEMES.map(theme => (
+                  <div key={theme.label}>
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      <span className="text-xs">{theme.emoji}</span>
+                      <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
+                        {theme.label}
+                      </span>
                     </div>
-                  ))}
-                </div>
-
-                <div ref={bottomRef} />
+                    <div className="flex flex-wrap gap-1.5">
+                      {theme.items.map(item => (
+                        <button
+                          key={item.q}
+                          onClick={() => handleQuestion(item.q, item.a)}
+                          className="text-left text-xs px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-primary dark:hover:border-blue-500 hover:text-primary dark:hover:text-blue-400 hover:bg-primary/5 dark:hover:bg-blue-500/10 text-slate-600 dark:text-slate-300 transition-colors leading-snug"
+                        >
+                          {item.q}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
             {/* Footer */}
-            <div className="px-4 py-2.5 border-t border-slate-100 dark:border-slate-800 flex-shrink-0 text-center bg-white dark:bg-slate-900">
+            <div className="flex-shrink-0 px-4 py-2.5 border-t border-slate-100 dark:border-slate-800 text-center bg-white dark:bg-slate-900">
               <span className="text-[10px] text-slate-400 dark:text-slate-500 tracking-wide">
                 Powered by <span className="font-semibold text-slate-500 dark:text-slate-400">JobConnect AI</span>
               </span>
