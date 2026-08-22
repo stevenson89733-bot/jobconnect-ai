@@ -75,7 +75,7 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
                 {t('profile')}
               </Link>
               {isAdmin && (
-                <Link href="/admin/reviews" className="text-sm text-orange-700 dark:text-accent hover:text-orange-800 dark:hover:text-accent/80 transition-colors px-4 py-2">
+                <Link href="/admin" className="text-sm text-orange-700 dark:text-accent hover:text-orange-800 dark:hover:text-accent/80 transition-colors px-4 py-2">
                   🛡️ {t('admin')}
                 </Link>
               )}
@@ -139,7 +139,7 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
               <Link href="/dashboard" className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>{t('dashboard')}</Link>
               <Link href="/profile" className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>{t('profile')}</Link>
               {isAdmin && (
-                <Link href="/admin/reviews" className="text-orange-700 dark:text-accent hover:text-orange-800 dark:hover:text-accent/80" onClick={() => setOpen(false)}>🛡️ {t('admin')}</Link>
+                <Link href="/admin" className="text-orange-700 dark:text-accent hover:text-orange-800 dark:hover:text-accent/80" onClick={() => setOpen(false)}>🛡️ {t('admin')}</Link>
               )}
               <form action={signOut}><button type="submit" className="text-start text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">{t('signOut')}</button></form>
             </>

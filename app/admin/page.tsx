@@ -10,24 +10,34 @@ function db() {
   )
 }
 
+async function safeStat<T>(fn: () => Promise<T>, fallback: T): Promise<T> {
+  try { return await fn() } catch { return fallback }
+}
+
 async function fetchStats() {
   const supa = db()
-  const [users, premium, promos, outreach] = await Promise.all([
-    supa.from('profiles').select('*', { count: 'exact', head: true }),
-    supa.from('profiles').select('*', { count: 'exact', head: true }).eq('is_premium', true),
-    supa.from('promo_codes').select('used_count'),
-    supa.from('outreach_contacts').select('*', { count: 'exact', head: true })
-      .not('status', 'in', '(converted,not_interested)'),
+
+  const [totalUsers, premiumUsers, promos, activeOutreach] = await Promise.all([
+    safeStat(async () => {
+      const { count } = await supa.from('profiles').select('*', { count: 'exact', head: true })
+      return count ?? 0
+    }, 0),
+    safeStat(async () => {
+      const { count } = await supa.from('profiles').select('*', { count: 'exact', head: true }).eq('is_premium', true)
+      return count ?? 0
+    }, 0),
+    safeStat(async () => {
+      const { data } = await supa.from('promo_codes').select('used_count')
+      return (data ?? []).reduce((s, r) => s + (r.used_count ?? 0), 0)
+    }, 0),
+    safeStat(async () => {
+      const { count } = await supa.from('outreach_contacts').select('*', { count: 'exact', head: true })
+        .not('status', 'in', '(converted,not_interested)')
+      return count ?? 0
+    }, 0),
   ])
 
-  const promoUsed = (promos.data ?? []).reduce((s, r) => s + (r.used_count ?? 0), 0)
-
-  return {
-    totalUsers:     users.count    ?? 0,
-    premiumUsers:   premium.count  ?? 0,
-    promoUsed,
-    activeOutreach: outreach.count ?? 0,
-  }
+  return { totalUsers, premiumUsers, promoUsed: promos, activeOutreach }
 }
 
 const STATS = [
@@ -74,7 +84,7 @@ const CARDS = [
 ]
 
 export default async function AdminPage() {
-  const isAdmin = await requireAdmin('/login')
+  const isAdmin = await requireAdmin('/admin')
   if (!isAdmin) {
     return (
       <section className="py-16 text-center">
