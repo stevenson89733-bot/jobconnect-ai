@@ -128,6 +128,23 @@ export const BLOG_POSTS: BlogPost[] = [
     ],
   },
   {
+    slug:          'how-to-get-remote-job-usa-international',
+    title:         'How to Get a Remote Job in the USA as an International Candidate (2026)',
+    excerpt:       'The US is the largest remote job market — but most listings exclude non-US candidates by default. Learn W-2 vs 1099 vs Corp-to-Corp, how to detect genuinely international-open roles, and how to position yourself to win.',
+    date:          '2026-08-24',
+    readingTime:   10,
+    category:      'Country Guides',
+    categoryColor: 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300',
+    ctaHref:       '/remote-jobs-usa',
+    ctaText:       'Browse US remote jobs open to internationals →',
+    ctaSubtext:    'Pre-filtered for C2C, EOR-supported, and global-remote US roles.',
+    relatedPages: [
+      { label: '🇺🇸 Remote Jobs in the USA',              href: '/remote-jobs-usa' },
+      { label: '🎯 ATS Optimization for Internationals',  href: '/blog/ats-resume-international-candidates' },
+      { label: '🔍 Spot Roles That Actually Hire Globally', href: '/blog/how-to-spot-fake-remote-jobs' },
+    ],
+  },
+  {
     slug:          'remote-job-uk-international',
     title:         'How to Land a Remote Job in the UK as a Non-UK Resident (2026)',
     excerpt:       "Post-Brexit, right-to-work rules, British CV format, and which UK sectors genuinely hire international remote workers — everything you need to run a smart UK job search.",
