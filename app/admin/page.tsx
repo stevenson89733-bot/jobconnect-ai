@@ -40,6 +40,17 @@ export default async function AdminPage() {
             <div className="text-sm text-slate-600 dark:text-slate-400">Create and manage early-access promo codes</div>
           </div>
         </Link>
+
+        <Link
+          href="/admin/outreach"
+          className="card flex items-center gap-4 hover:border-primary/50 transition-colors"
+        >
+          <span className="text-3xl">📊</span>
+          <div>
+            <div className="font-semibold text-slate-900 dark:text-white">Outreach Tracker</div>
+            <div className="text-sm text-slate-600 dark:text-slate-400">Pipeline kanban for LinkedIn / WhatsApp early adopters</div>
+          </div>
+        </Link>
       </div>
     </section>
   )
