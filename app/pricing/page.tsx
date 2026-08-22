@@ -18,6 +18,7 @@ export default function PricingPage() {
   const [promoLoading, setPromoLoading] = useState(false)
   const [promoError, setPromoError] = useState('')
   const [promoSuccess, setPromoSuccess] = useState(false)
+  const [promoType, setPromoType] = useState<'candidate' | 'employer'>('candidate')
 
   async function handlePromoRedeem() {
     if (!promoCode.trim()) return
@@ -37,6 +38,7 @@ export default function PricingPage() {
     if (data.error) {
       setPromoError(data.error)
     } else {
+      setPromoType(data.type === 'employer' ? 'employer' : 'candidate')
       setPromoSuccess(true)
       router.refresh()
     }
@@ -185,7 +187,11 @@ export default function PricingPage() {
             </ul>
             {promoSuccess ? (
               <div className="p-4 bg-green-50 dark:bg-green-900/30 border border-green-300 dark:border-green-700 rounded-xl text-center">
-                <p className="text-green-700 dark:text-green-400 font-semibold text-sm">🎉 Premium activated! You have 3 months of free access.</p>
+                <p className="text-green-700 dark:text-green-400 font-semibold text-sm">
+                  {promoType === 'employer'
+                    ? '🎉 Employer access activated! Free job postings for 30 days.'
+                    : '🎉 Premium activated! You have 3 months of free access.'}
+                </p>
               </div>
             ) : (
               <>

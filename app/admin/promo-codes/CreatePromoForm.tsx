@@ -2,12 +2,14 @@
 import { useState } from 'react'
 
 export default function CreatePromoForm({ onCreated }: { onCreated: () => void }) {
-  const [code, setCode]         = useState('')
-  const [maxUses, setMaxUses]   = useState('10')
-  const [expiresAt, setExpires] = useState('')
-  const [loading, setLoading]   = useState(false)
-  const [error, setError]       = useState('')
-  const [success, setSuccess]   = useState('')
+  const [code, setCode]           = useState('')
+  const [type, setType]           = useState<'candidate' | 'employer'>('candidate')
+  const [description, setDesc]    = useState('')
+  const [maxUses, setMaxUses]     = useState('10')
+  const [expiresAt, setExpires]   = useState('')
+  const [loading, setLoading]     = useState(false)
+  const [error, setError]         = useState('')
+  const [success, setSuccess]     = useState('')
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -20,6 +22,8 @@ export default function CreatePromoForm({ onCreated }: { onCreated: () => void }
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         code: code.trim().toUpperCase(),
+        type,
+        description: description.trim() || null,
         max_uses: parseInt(maxUses, 10),
         expires_at: expiresAt || null,
       }),
@@ -32,6 +36,8 @@ export default function CreatePromoForm({ onCreated }: { onCreated: () => void }
     } else {
       setSuccess(`Code "${data.code.code}" created.`)
       setCode('')
+      setType('candidate')
+      setDesc('')
       setMaxUses('10')
       setExpires('')
       onCreated()
@@ -42,7 +48,7 @@ export default function CreatePromoForm({ onCreated }: { onCreated: () => void }
     <form onSubmit={handleSubmit} className="card space-y-4">
       <h3 className="font-semibold text-slate-900 dark:text-white">New Promo Code</h3>
 
-      <div className="grid sm:grid-cols-3 gap-3">
+      <div className="grid sm:grid-cols-4 gap-3">
         <div>
           <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Code *</label>
           <input
@@ -53,6 +59,17 @@ export default function CreatePromoForm({ onCreated }: { onCreated: () => void }
             placeholder="EARLY3MONTHS"
             className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-primary/40"
           />
+        </div>
+        <div>
+          <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Type</label>
+          <select
+            value={type}
+            onChange={e => setType(e.target.value as 'candidate' | 'employer')}
+            className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/40"
+          >
+            <option value="candidate">👤 Candidate</option>
+            <option value="employer">🏢 Employer</option>
+          </select>
         </div>
         <div>
           <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Max uses *</label>
@@ -74,6 +91,16 @@ export default function CreatePromoForm({ onCreated }: { onCreated: () => void }
             className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/40"
           />
         </div>
+      </div>
+      <div>
+        <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Description</label>
+        <input
+          type="text"
+          value={description}
+          onChange={e => setDesc(e.target.value)}
+          placeholder="Early adopter — 3 months free Premium"
+          className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/40"
+        />
       </div>
 
       {error   && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}

@@ -36,16 +36,18 @@ export async function POST(req: Request) {
   if (!await assertAdmin()) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const body = await req.json().catch(() => ({}))
-  const code      = (body.code as string | undefined)?.trim().toUpperCase()
-  const maxUses   = parseInt(body.max_uses ?? '10', 10)
-  const expiresAt = body.expires_at ? new Date(body.expires_at).toISOString() : null
+  const code        = (body.code as string | undefined)?.trim().toUpperCase()
+  const type        = body.type === 'employer' ? 'employer' : 'candidate'
+  const description = body.description?.trim() || null
+  const maxUses     = parseInt(body.max_uses ?? '10', 10)
+  const expiresAt   = body.expires_at ? new Date(body.expires_at).toISOString() : null
 
   if (!code) return NextResponse.json({ error: 'Code is required' }, { status: 400 })
   if (!maxUses || maxUses < 1) return NextResponse.json({ error: 'max_uses must be ≥ 1' }, { status: 400 })
 
   const { data, error } = await serviceDb()
     .from('promo_codes')
-    .insert({ code, max_uses: maxUses, expires_at: expiresAt })
+    .insert({ code, type, description, max_uses: maxUses, expires_at: expiresAt })
     .select()
     .single()
 

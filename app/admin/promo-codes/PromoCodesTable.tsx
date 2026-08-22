@@ -4,6 +4,8 @@ import { useState } from 'react'
 export type PromoCode = {
   id: string
   code: string
+  type: 'candidate' | 'employer'
+  description: string | null
   max_uses: number
   used_count: number
   expires_at: string | null
@@ -41,6 +43,7 @@ export default function PromoCodesTable({
         <thead>
           <tr className="border-b border-slate-200 dark:border-slate-700 text-left">
             <th className="py-2 pr-4 font-semibold text-slate-600 dark:text-slate-400 text-xs uppercase tracking-wider">Code</th>
+            <th className="py-2 pr-4 font-semibold text-slate-600 dark:text-slate-400 text-xs uppercase tracking-wider">Type</th>
             <th className="py-2 pr-4 font-semibold text-slate-600 dark:text-slate-400 text-xs uppercase tracking-wider">Uses</th>
             <th className="py-2 pr-4 font-semibold text-slate-600 dark:text-slate-400 text-xs uppercase tracking-wider">Code expires</th>
             <th className="py-2 pr-4 font-semibold text-slate-600 dark:text-slate-400 text-xs uppercase tracking-wider">Status</th>
@@ -57,7 +60,19 @@ export default function PromoCodesTable({
               : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
             return (
               <tr key={c.id}>
-                <td className="py-3 pr-4 font-mono font-semibold text-slate-900 dark:text-white tracking-wider">{c.code}</td>
+                <td className="py-3 pr-4">
+                  <div className="font-mono font-semibold text-slate-900 dark:text-white tracking-wider">{c.code}</div>
+                  {c.description && <div className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">{c.description}</div>}
+                </td>
+                <td className="py-3 pr-4">
+                  <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${
+                    c.type === 'employer'
+                      ? 'bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300'
+                      : 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300'
+                  }`}>
+                    {c.type === 'employer' ? '🏢 Employer' : '👤 Candidate'}
+                  </span>
+                </td>
                 <td className="py-3 pr-4 text-slate-700 dark:text-slate-300">
                   <span className={full ? 'text-red-600 dark:text-red-400' : ''}>{c.used_count}</span>
                   <span className="text-slate-400"> / {c.max_uses}</span>

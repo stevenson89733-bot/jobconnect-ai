@@ -21,7 +21,7 @@ export async function POST(req: Request) {
   // 1. Fetch the promo code
   const { data: promo, error: promoErr } = await db
     .from('promo_codes')
-    .select('id, code, max_uses, used_count, expires_at, is_active')
+    .select('id, code, max_uses, used_count, expires_at, is_active, type')
     .eq('code', code)
     .single()
 
@@ -40,6 +40,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Invalid or expired code.' }, { status: 400 })
   }
 
+  const promoType: string = promo.type ?? 'candidate'
+
   // 3. Check this user's current premium status
   const { data: profile } = await db
     .from('profiles')
@@ -48,26 +50,38 @@ export async function POST(req: Request) {
     .single()
 
   if (profile?.is_premium && !profile?.premium_expires_at) {
-    // Stripe subscriber — already has real premium
     return NextResponse.json({ error: 'You already have an active Premium subscription.' }, { status: 409 })
   }
   if (profile?.premium_expires_at) {
-    // Has or had a promo code
     return NextResponse.json({ error: 'You have already used a promo code.' }, { status: 409 })
   }
 
-  // 4. Activate premium for 90 days
+  // 4. Activate benefits based on promo type
   const expiresAt = new Date()
-  expiresAt.setDate(expiresAt.getDate() + 90)
-
-  const { error: updateErr } = await db
-    .from('profiles')
-    .update({ is_premium: true, premium_expires_at: expiresAt.toISOString() })
-    .eq('user_id', user.id)
-
-  if (updateErr) {
-    console.error('[promo/redeem] profile update failed:', updateErr.message)
-    return NextResponse.json({ error: 'Something went wrong. Please try again.' }, { status: 500 })
+  if (promoType === 'employer') {
+    expiresAt.setDate(expiresAt.getDate() + 30)
+    const { error: updateErr } = await db
+      .from('profiles')
+      .update({
+        is_premium: true,
+        is_unlimited_posting: true,
+        premium_expires_at: expiresAt.toISOString(),
+      })
+      .eq('user_id', user.id)
+    if (updateErr) {
+      console.error('[promo/redeem] employer profile update failed:', updateErr.message)
+      return NextResponse.json({ error: 'Something went wrong. Please try again.' }, { status: 500 })
+    }
+  } else {
+    expiresAt.setDate(expiresAt.getDate() + 90)
+    const { error: updateErr } = await db
+      .from('profiles')
+      .update({ is_premium: true, premium_expires_at: expiresAt.toISOString() })
+      .eq('user_id', user.id)
+    if (updateErr) {
+      console.error('[promo/redeem] candidate profile update failed:', updateErr.message)
+      return NextResponse.json({ error: 'Something went wrong. Please try again.' }, { status: 500 })
+    }
   }
 
   // 5. Increment used_count
@@ -76,5 +90,5 @@ export async function POST(req: Request) {
     .update({ used_count: promo.used_count + 1 })
     .eq('id', promo.id)
 
-  return NextResponse.json({ success: true })
+  return NextResponse.json({ success: true, type: promoType })
 }
