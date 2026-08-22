@@ -15,6 +15,8 @@ import CrossBorderArticle   from '../content/cross-border-remote-job-skills'
 import AtsArticle           from '../content/ats-resume-international-candidates'
 import UkArticle            from '../content/remote-job-uk-international'
 import UsaArticle           from '../content/how-to-get-remote-job-usa-international'
+import FranceIntlArticle    from '../content/how-to-get-remote-job-france-international'
+import SalaryArticle        from '../content/remote-job-salary-by-country'
 
 const CONTENT_MAP: Record<string, React.ComponentType> = {
   'how-to-get-remote-job-in-germany-as-foreigner': GermanyArticle,
@@ -26,6 +28,8 @@ const CONTENT_MAP: Record<string, React.ComponentType> = {
   'ats-resume-international-candidates':           AtsArticle,
   'remote-job-uk-international':                   UkArticle,
   'how-to-get-remote-job-usa-international':       UsaArticle,
+  'how-to-get-remote-job-france-international':    FranceIntlArticle,
+  'remote-job-salary-by-country':                  SalaryArticle,
 }
 
 export function generateStaticParams() {

@@ -14,6 +14,40 @@ export type BlogPost = {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug:          'how-to-get-remote-job-france-international',
+    title:         'How to Get a Remote Job in France as an International Candidate (2026)',
+    excerpt:       'France tech is international — but only in certain sectors and at certain company stages. Learn the legal structures, CV format, lettre de motivation rules, and which platforms French companies actually use to hire globally.',
+    date:          '2026-08-28',
+    readingTime:   9,
+    category:      'Country Guides',
+    categoryColor: 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300',
+    ctaHref:       '/remote-jobs-france',
+    ctaText:       'Browse French remote jobs →',
+    ctaSubtext:    'Roles at French tech companies genuinely open to international candidates.',
+    relatedPages: [
+      { label: '🇫🇷 Remote Jobs in France',              href: '/remote-jobs-france' },
+      { label: '📄 Resume Format by Country',            href: '/blog/resume-format-by-country' },
+      { label: '🌍 10 Skills for International Hire',    href: '/blog/cross-border-remote-job-skills' },
+    ],
+  },
+  {
+    slug:          'remote-job-salary-by-country',
+    title:         'Remote Job Salaries by Country: What International Candidates Can Realistically Expect (2026)',
+    excerpt:       'Why the $150K posted salary is not your salary as a contractor, how to benchmark correctly across US, UK, Germany, France and Canada, and the red flags that signal a company is underpaying international hires.',
+    date:          '2026-08-26',
+    readingTime:   9,
+    category:      'Career Advice',
+    categoryColor: 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300',
+    ctaHref:       '/jobs',
+    ctaText:       'Find roles with transparent pay ranges →',
+    ctaSubtext:    'JobConnect AI surfaces salary info and contractor vs employee status on every listing.',
+    relatedPages: [
+      { label: '🇺🇸 US Remote Jobs for Internationals',  href: '/blog/how-to-get-remote-job-usa-international' },
+      { label: '🌍 10 Skills for International Hire',    href: '/blog/cross-border-remote-job-skills' },
+      { label: '🎯 ATS Optimization Guide',              href: '/blog/ats-resume-international-candidates' },
+    ],
+  },
+  {
     slug:          'how-to-get-remote-job-in-germany-as-foreigner',
     title:         'How to Get a Remote Job in Germany as a Foreign National (2026 Guide)',
     excerpt:       'Everything you need to know about the Lebenslauf format, professional photos, cover letters, and which platforms actually hire internationally.',
