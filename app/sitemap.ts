@@ -1,10 +1,13 @@
 import type { MetadataRoute } from 'next'
 import { createPublicClient } from '@/lib/supabase/public'
 import { SITE_URL } from '@/lib/seo'
+import { LANDING_MARKETS } from '@/lib/seo/landing-data'
+import { BLOG_POSTS } from '@/lib/blog/posts'
 
 const STATIC_ROUTES: { path: string; priority: number }[] = [
   { path: '/', priority: 1 },
   { path: '/jobs', priority: 0.9 },
+  { path: '/blog', priority: 0.8 },
   { path: '/companies', priority: 0.8 },
   { path: '/pricing', priority: 0.6 },
   { path: '/ai-tools/resume-builder', priority: 0.7 },
@@ -46,5 +49,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // serves the static routes rather than failing entirely.
   }
 
-  return [...staticEntries, ...companyEntries]
+  const landingEntries: MetadataRoute.Sitemap = LANDING_MARKETS.map(m => ({
+    url:          `${SITE_URL}/${m.slug}`,
+    lastModified: new Date(),
+    priority:     0.8,
+  }))
+
+  const blogListEntry: MetadataRoute.Sitemap = [{
+    url:          `${SITE_URL}/blog`,
+    lastModified: new Date(),
+    priority:     0.8,
+  }]
+
+  const blogPostEntries: MetadataRoute.Sitemap = BLOG_POSTS.map(p => ({
+    url:          `${SITE_URL}/blog/${p.slug}`,
+    lastModified: new Date(p.date),
+    priority:     0.7,
+  }))
+
+  return [...staticEntries, ...landingEntries, ...blogListEntry, ...blogPostEntries, ...companyEntries]
 }
