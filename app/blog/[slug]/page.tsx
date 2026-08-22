@@ -9,11 +9,21 @@ import { SITE_URL } from '@/lib/seo'
 import GermanyArticle       from '../content/how-to-get-remote-job-in-germany-as-foreigner'
 import ResumeFormatArticle  from '../content/resume-format-by-country'
 import FakeJobsArticle      from '../content/how-to-spot-fake-remote-jobs'
+import CanadaArticle        from '../content/how-to-get-remote-job-canada-international'
+import FranceArticle        from '../content/remote-work-france-foreigner'
+import CrossBorderArticle   from '../content/cross-border-remote-job-skills'
+import AtsArticle           from '../content/ats-resume-international-candidates'
+import UkArticle            from '../content/remote-job-uk-international'
 
 const CONTENT_MAP: Record<string, React.ComponentType> = {
   'how-to-get-remote-job-in-germany-as-foreigner': GermanyArticle,
   'resume-format-by-country':                      ResumeFormatArticle,
   'how-to-spot-fake-remote-jobs':                  FakeJobsArticle,
+  'how-to-get-remote-job-canada-international':    CanadaArticle,
+  'remote-work-france-foreigner':                  FranceArticle,
+  'cross-border-remote-job-skills':                CrossBorderArticle,
+  'ats-resume-international-candidates':           AtsArticle,
+  'remote-job-uk-international':                   UkArticle,
 }
 
 export function generateStaticParams() {
@@ -123,18 +133,36 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             Ready to find your next remote role?
           </h3>
           <p className="text-slate-600 dark:text-slate-400 text-sm mb-6">
-            Search remote jobs filtered for international candidates — with AI-powered resume tools built for each country.
+            {post.ctaSubtext ?? 'Search remote jobs filtered for international candidates — with AI-powered resume tools built for each country.'}
           </p>
-          <Link href="/jobs" className="btn-primary px-8 py-3 text-base font-semibold inline-block">
-            Browse Remote Jobs →
+          <Link href={post.ctaHref ?? '/jobs'} className="btn-primary px-8 py-3 text-base font-semibold inline-block">
+            {post.ctaText ?? 'Browse Remote Jobs →'}
           </Link>
         </div>
 
+        {/* Related landing pages (country guides) */}
+        {post.relatedPages && post.relatedPages.length > 0 && (
+          <div className="mt-8">
+            <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Related guides</h3>
+            <div className="flex flex-wrap gap-2">
+              {post.relatedPages.map(rp => (
+                <Link
+                  key={rp.href}
+                  href={rp.href}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full text-sm font-medium text-slate-700 dark:text-slate-300 hover:border-primary/40 dark:hover:border-blue-500/40 hover:text-primary dark:hover:text-blue-400 transition-colors"
+                >
+                  {rp.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Related posts */}
-        <div className="mt-12">
+        <div className="mt-8">
           <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">More from the blog</h3>
           <div className="space-y-3">
-            {BLOG_POSTS.filter(p => p.slug !== post.slug).map(p => (
+            {BLOG_POSTS.filter(p => p.slug !== post.slug).slice(0, 4).map(p => (
               <Link
                 key={p.slug}
                 href={`/blog/${p.slug}`}
