@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Plus, Mail, MessageCircle, ChevronRight, Bell, Pencil, Check, Phone } from 'lucide-react'
 import OutreachModal from './OutreachModal'
 import CallScheduleModal from './CallScheduleModal'
-import { COLUMNS, NEXT_STATUS, TZ_OPTIONS, toHHMM, frenchDate, type Contact, type Status } from './types'
+import { COLUMNS, NEXT_STATUS, formatTimeInTZ, frenchDateInTZ, type Contact, type Status } from './types'
 
 // ── Time helpers ──────────────────────────────────────────────────────────────
 
@@ -24,25 +24,25 @@ function callBadgeProps(utcIso: string): { text: string; cls: string } {
   return { text: `In ${diffDays} days`, cls: 'bg-slate-100 dark:bg-slate-700/60 text-slate-500 dark:text-slate-400' }
 }
 
-function formatCallShort(utcIso: string, tzLabel: string): string {
-  const utc = new Date(utcIso)
-  const tz  = TZ_OPTIONS.find(t => t.label === tzLabel)
+function formatCallShort(utcIso: string, tz: string): string {
   if (!tz) return ''
-  const contactTime = toHHMM(utc, tz.offset)
-  if (tz.label === 'Vietnam') return `${contactTime} (Vietnam)`
-  const vnTime = toHHMM(utc, 7)
-  return `${contactTime} (${tz.label}) · ${vnTime} (VN)`
+  const utc  = new Date(utcIso)
+  const city = tz.includes('/') ? tz.split('/').pop()!.replace(/_/g, ' ') : tz
+  const contactTime = formatTimeInTZ(utc, tz)
+  const utcH = String(utc.getUTCHours()).padStart(2, '0')
+  const utcM = String(utc.getUTCMinutes()).padStart(2, '0')
+  if (tz === 'Asia/Ho_Chi_Minh') return `${contactTime} (${city})`
+  return `${contactTime} (${city}) · ${utcH}:${utcM} UTC`
 }
 
 function formatUpcomingCall(c: Contact): string {
-  if (!c.call_scheduled_at) return ''
-  const tz = TZ_OPTIONS.find(t => t.label === c.call_timezone) ?? TZ_OPTIONS[1]
-  const utc = new Date(c.call_scheduled_at)
-  const day = frenchDate(c.call_scheduled_at, tz.offset)
-  const contactTime = toHHMM(utc, tz.offset)
-  const vnTime      = toHHMM(utc, 7)
-  if (tz.label === 'Vietnam') return `${day} à ${vnTime} (Vietnam)`
-  return `${day} à ${contactTime} (${tz.label}) / ${vnTime} (Vietnam)`
+  if (!c.call_scheduled_at || !c.call_timezone) return ''
+  const utc  = new Date(c.call_scheduled_at)
+  const day  = frenchDateInTZ(c.call_scheduled_at, c.call_timezone)
+  const time = formatTimeInTZ(utc, c.call_timezone)
+  const utcH = String(utc.getUTCHours()).padStart(2, '0')
+  const utcM = String(utc.getUTCMinutes()).padStart(2, '0')
+  return `${day} — ${time} (${c.call_timezone}) · ${utcH}:${utcM} UTC`
 }
 
 // ── Sub-components ────────────────────────────────────────────────────────────

@@ -1,7 +1,10 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { X, Phone } from 'lucide-react'
-import { TZ_OPTIONS, utcToLocal, localToUtc, toHHMM, type Contact } from './types'
+import {
+  utcToLocal, localToUtc, formatTimeInTZ, getUtcOffsetStr,
+  getSupportedTimezones, REGION_ORDER, type Contact,
+} from './types'
 
 const CHANNELS = ['LinkedIn', 'WhatsApp', 'Email'] as const
 const STATUSES = [
@@ -32,10 +35,8 @@ export default function OutreachModal({ mode, contact, onClose, onSave, onDelete
   const [confirmDel, setConfirm]   = useState(false)
 
   // Call scheduling fields
-  const initTz = contact?.call_timezone ?? 'Montréal'
-  const initLocal = contact?.call_scheduled_at
-    ? utcToLocal(contact.call_scheduled_at, initTz, TZ_OPTIONS)
-    : null
+  const initTz    = contact?.call_timezone ?? (Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC')
+  const initLocal = contact?.call_scheduled_at ? utcToLocal(contact.call_scheduled_at, initTz) : null
   const [callDate, setCallDate] = useState(initLocal?.date ?? '')
   const [callTime, setCallTime] = useState(initLocal?.time ?? '09:00')
   const [callTz,   setCallTz]   = useState(initTz)
@@ -46,15 +47,32 @@ export default function OutreachModal({ mode, contact, onClose, onSave, onDelete
     return () => document.removeEventListener('keydown', onKey)
   }, [onClose])
 
+  // Grouped timezone list — computed once at mount
+  const { grouped, regions } = useMemo(() => {
+    const all = getSupportedTimezones()
+    const now = new Date()
+    const map: Record<string, Array<{ tz: string; label: string }>> = {}
+    for (const z of all) {
+      const region = z.includes('/') ? z.split('/')[0] : 'Other'
+      if (!map[region]) map[region] = []
+      map[region].push({ tz: z, label: `${z} (${getUtcOffsetStr(z, now)})` })
+    }
+    const ordered = [
+      ...REGION_ORDER.filter(r => map[r]),
+      ...Object.keys(map).filter(r => !REGION_ORDER.includes(r)),
+    ]
+    return { grouped: map, regions: ordered }
+  }, [])
+
   // Live call preview
-  const selectedTZ = TZ_OPTIONS.find(t => t.label === callTz) ?? TZ_OPTIONS[1]
-  let previewContact = '—', previewVN = '—'
+  let previewContact = '—', previewVN = '—', previewUTC = '—'
   if (status === 'call_scheduled' && callDate && callTime) {
     try {
-      const utcIso = localToUtc(callDate, callTime, callTz, TZ_OPTIONS)
-      const utc = new Date(utcIso)
-      previewContact = toHHMM(utc, selectedTZ.offset)
-      previewVN      = toHHMM(utc, 7)
+      const utcIso = localToUtc(callDate, callTime, callTz)
+      const utc    = new Date(utcIso)
+      previewContact = formatTimeInTZ(utc, callTz)
+      previewVN      = formatTimeInTZ(utc, 'Asia/Ho_Chi_Minh')
+      previewUTC     = `${String(utc.getUTCHours()).padStart(2,'0')}:${String(utc.getUTCMinutes()).padStart(2,'0')}`
     } catch { /* ignore */ }
   }
 
@@ -64,7 +82,7 @@ export default function OutreachModal({ mode, contact, onClose, onSave, onDelete
     let call_scheduled_at: string | null = null
     let call_timezone: string | null     = null
     if (status === 'call_scheduled' && callDate && callTime) {
-      call_scheduled_at = localToUtc(callDate, callTime, callTz, TZ_OPTIONS)
+      call_scheduled_at = localToUtc(callDate, callTime, callTz)
       call_timezone     = callTz
     }
     await onSave({
@@ -149,23 +167,31 @@ export default function OutreachModal({ mode, contact, onClose, onSave, onDelete
               <div>
                 <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Timezone</label>
                 <select value={callTz} onChange={e => setCallTz(e.target.value)} className={inputCls}>
-                  {TZ_OPTIONS.map(t => (
-                    <option key={t.label} value={t.label}>
-                      {t.flag} {t.label} (UTC{t.offset >= 0 ? '+' : ''}{t.offset})
-                    </option>
+                  {regions.map(region => (
+                    <optgroup key={region} label={region}>
+                      {(grouped[region] ?? []).map(({ tz: z, label }) => (
+                        <option key={z} value={z}>{label}</option>
+                      ))}
+                    </optgroup>
                   ))}
                 </select>
               </div>
 
               {callDate && callTime && (
-                <div className="flex gap-4 text-xs pt-1">
-                  {selectedTZ.label !== 'Vietnam' && (
-                    <div><span className="text-slate-400">{selectedTZ.flag} {selectedTZ.label}:</span>{' '}
-                      <span className="font-semibold text-slate-700 dark:text-slate-300">{previewContact}</span>
+                <div className="flex flex-col gap-1 text-xs pt-1">
+                  <div className="flex justify-between">
+                    <span className="text-slate-400 truncate max-w-[60%]">{callTz}</span>
+                    <span className="font-semibold text-slate-700 dark:text-slate-300">{previewContact}</span>
+                  </div>
+                  {callTz !== 'Asia/Ho_Chi_Minh' && (
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">🇻🇳 Asia/Ho_Chi_Minh</span>
+                      <span className="font-semibold text-slate-700 dark:text-slate-300">{previewVN}</span>
                     </div>
                   )}
-                  <div><span className="text-slate-400">🇻🇳 Vietnam:</span>{' '}
-                    <span className="font-semibold text-slate-700 dark:text-slate-300">{previewVN}</span>
+                  <div className="flex justify-between border-t border-violet-200 dark:border-violet-800/40 pt-1 mt-0.5">
+                    <span className="text-slate-400">UTC</span>
+                    <span className="font-mono text-slate-500 dark:text-slate-400">{previewUTC}</span>
                   </div>
                 </div>
               )}

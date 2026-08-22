@@ -1,7 +1,7 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { X, Phone } from 'lucide-react'
-import { TZ_OPTIONS, toHHMM, localToUtc } from './types'
+import { localToUtc, formatTimeInTZ, getUtcOffsetStr, getSupportedTimezones, REGION_ORDER } from './types'
 
 type Props = {
   contactName: string
@@ -10,12 +10,14 @@ type Props = {
 }
 
 export default function CallScheduleModal({ contactName, onConfirm, onCancel }: Props) {
-  const tomorrow = new Date(Date.now() + 86400000)
+  const tomorrow    = new Date(Date.now() + 86400000)
   const tomorrowStr = `${tomorrow.getUTCFullYear()}-${String(tomorrow.getUTCMonth()+1).padStart(2,'0')}-${String(tomorrow.getUTCDate()).padStart(2,'0')}`
+
+  const browserTz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC'
 
   const [date, setDate] = useState(tomorrowStr)
   const [time, setTime] = useState('09:00')
-  const [tz,   setTz]   = useState('Montréal')
+  const [tz,   setTz]   = useState(browserTz)
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onCancel() }
@@ -23,23 +25,38 @@ export default function CallScheduleModal({ contactName, onConfirm, onCancel }: 
     return () => document.removeEventListener('keydown', onKey)
   }, [onCancel])
 
+  // Grouped timezone list — computed once at mount
+  const { grouped, regions } = useMemo(() => {
+    const all = getSupportedTimezones()
+    const now = new Date()
+    const map: Record<string, Array<{ tz: string; label: string }>> = {}
+    for (const z of all) {
+      const region = z.includes('/') ? z.split('/')[0] : 'Other'
+      if (!map[region]) map[region] = []
+      map[region].push({ tz: z, label: `${z} (${getUtcOffsetStr(z, now)})` })
+    }
+    const ordered = [
+      ...REGION_ORDER.filter(r => map[r]),
+      ...Object.keys(map).filter(r => !REGION_ORDER.includes(r)),
+    ]
+    return { grouped: map, regions: ordered }
+  }, [])
+
   // Live preview
-  const selectedTZ = TZ_OPTIONS.find(t => t.label === tz) ?? TZ_OPTIONS[1]
-  let previewContact = '—'
-  let previewVN = '—'
+  let previewContact = '—', previewVN = '—', previewUTC = '—'
   if (date && time) {
     try {
-      const utcIso = localToUtc(date, time, tz, TZ_OPTIONS)
-      const utc = new Date(utcIso)
-      previewContact = toHHMM(utc, selectedTZ.offset)
-      previewVN      = toHHMM(utc, 7)
-    } catch { /* ignore invalid date */ }
+      const utcIso = localToUtc(date, time, tz)
+      const utc    = new Date(utcIso)
+      previewContact = formatTimeInTZ(utc, tz)
+      previewVN      = formatTimeInTZ(utc, 'Asia/Ho_Chi_Minh')
+      previewUTC     = `${String(utc.getUTCHours()).padStart(2,'0')}:${String(utc.getUTCMinutes()).padStart(2,'0')}`
+    } catch { /* ignore */ }
   }
 
   function handleConfirm() {
     if (!date || !time) return
-    const utcIso = localToUtc(date, time, tz, TZ_OPTIONS)
-    onConfirm(utcIso, tz)
+    onConfirm(localToUtc(date, time, tz), tz)
   }
 
   const inputCls = 'w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-400/40'
@@ -78,30 +95,38 @@ export default function CallScheduleModal({ contactName, onConfirm, onCancel }: 
             </div>
           </div>
 
-          {/* Timezone */}
+          {/* Timezone — full IANA list grouped by region */}
           <div>
-            <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Timezone</label>
+            <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">
+              Timezone <span className="text-slate-400 font-normal">(auto-detected)</span>
+            </label>
             <select value={tz} onChange={e => setTz(e.target.value)} className={inputCls}>
-              {TZ_OPTIONS.map(t => (
-                <option key={t.label} value={t.label}>
-                  {t.flag} {t.label} (UTC{t.offset >= 0 ? '+' : ''}{t.offset})
-                </option>
+              {regions.map(region => (
+                <optgroup key={region} label={region}>
+                  {(grouped[region] ?? []).map(({ tz: z, label }) => (
+                    <option key={z} value={z}>{label}</option>
+                  ))}
+                </optgroup>
               ))}
             </select>
           </div>
 
           {/* Preview */}
-          <div className="bg-violet-50 dark:bg-violet-900/20 border border-violet-200 dark:border-violet-800 rounded-xl px-4 py-3 space-y-1">
+          <div className="bg-violet-50 dark:bg-violet-900/20 border border-violet-200 dark:border-violet-800 rounded-xl px-4 py-3 space-y-1.5">
             <p className="text-xs font-semibold text-violet-700 dark:text-violet-300 mb-2">Preview</p>
-            {selectedTZ.label !== 'Vietnam' && (
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-slate-500 dark:text-slate-400 truncate max-w-[60%]">{tz}</span>
+              <span className="font-semibold text-slate-800 dark:text-slate-200">{previewContact}</span>
+            </div>
+            {tz !== 'Asia/Ho_Chi_Minh' && (
               <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-500 dark:text-slate-400">{selectedTZ.flag} {selectedTZ.label}</span>
-                <span className="font-semibold text-slate-800 dark:text-slate-200">{previewContact}</span>
+                <span className="text-slate-500 dark:text-slate-400">🇻🇳 Asia/Ho_Chi_Minh</span>
+                <span className="font-semibold text-slate-800 dark:text-slate-200">{previewVN}</span>
               </div>
             )}
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-slate-500 dark:text-slate-400">🇻🇳 Vietnam</span>
-              <span className="font-semibold text-slate-800 dark:text-slate-200">{previewVN}</span>
+            <div className="flex items-center justify-between text-xs border-t border-violet-200 dark:border-violet-700/40 pt-1.5 mt-1">
+              <span className="text-slate-400 dark:text-slate-500">UTC</span>
+              <span className="font-mono text-slate-500 dark:text-slate-400">{previewUTC}</span>
             </div>
           </div>
 
