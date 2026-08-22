@@ -29,6 +29,17 @@ export default async function AdminPage() {
             <div className="text-sm text-slate-600 dark:text-slate-400">Moderate and approve job postings</div>
           </div>
         </Link>
+
+        <Link
+          href="/admin/promo-codes"
+          className="card flex items-center gap-4 hover:border-primary/50 transition-colors"
+        >
+          <span className="text-3xl">🎟️</span>
+          <div>
+            <div className="font-semibold text-slate-900 dark:text-white">Promo Codes</div>
+            <div className="text-sm text-slate-600 dark:text-slate-400">Create and manage early-access promo codes</div>
+          </div>
+        </Link>
       </div>
     </section>
   )
