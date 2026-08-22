@@ -11,7 +11,7 @@ function db() {
 }
 
 export default async function OutreachPage() {
-  const isAdmin = await requireAdmin('/login')
+  const isAdmin = await requireAdmin('/admin/outreach')
   if (!isAdmin) {
     return (
       <section className="py-16 text-center">

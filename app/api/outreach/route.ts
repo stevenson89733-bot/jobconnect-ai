@@ -27,11 +27,18 @@ export async function GET() {
 export async function POST(req: Request) {
   if (!await assertAdmin()) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   const body = await req.json().catch(() => ({}))
-  const { name, channel, notes, follow_up_date } = body
+  const { name, channel, notes, follow_up_date, call_scheduled_at, call_timezone } = body
   if (!name?.trim()) return NextResponse.json({ error: 'Name is required' }, { status: 400 })
   const { data, error } = await db()
     .from('outreach_contacts')
-    .insert({ name: name.trim(), channel: channel ?? 'LinkedIn', notes: notes ?? null, follow_up_date: follow_up_date ?? null })
+    .insert({
+      name: name.trim(),
+      channel: channel ?? 'LinkedIn',
+      notes: notes ?? null,
+      follow_up_date: follow_up_date ?? null,
+      call_scheduled_at: call_scheduled_at ?? null,
+      call_timezone: call_timezone ?? null,
+    })
     .select()
     .single()
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })

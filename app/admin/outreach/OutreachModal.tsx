@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { X } from 'lucide-react'
-import type { Contact } from './types'
+import { X, Phone } from 'lucide-react'
+import { TZ_OPTIONS, utcToLocal, localToUtc, toHHMM, type Contact } from './types'
 
 const CHANNELS = ['LinkedIn', 'WhatsApp', 'Email'] as const
 const STATUSES = [
@@ -21,15 +21,24 @@ type Props = {
 }
 
 export default function OutreachModal({ mode, contact, onClose, onSave, onDelete }: Props) {
-  const [name, setName]           = useState(contact?.name ?? '')
-  const [channel, setChannel]     = useState<Contact['channel']>(contact?.channel ?? 'LinkedIn')
-  const [status, setStatus]       = useState<string>(contact?.status ?? 'contacted')
-  const [notes, setNotes]         = useState(contact?.notes ?? '')
-  const [followUp, setFollowUp]   = useState(contact?.follow_up_date ?? '')
-  const [promo, setPromo]         = useState(contact?.promo_code_given ?? false)
-  const [saving, setSaving]       = useState(false)
-  const [deleting, setDeleting]   = useState(false)
-  const [confirmDel, setConfirm]  = useState(false)
+  const [name,       setName]      = useState(contact?.name ?? '')
+  const [channel,    setChannel]   = useState<Contact['channel']>(contact?.channel ?? 'LinkedIn')
+  const [status,     setStatus]    = useState<string>(contact?.status ?? 'contacted')
+  const [notes,      setNotes]     = useState(contact?.notes ?? '')
+  const [followUp,   setFollowUp]  = useState(contact?.follow_up_date ?? '')
+  const [promo,      setPromo]     = useState(contact?.promo_code_given ?? false)
+  const [saving,     setSaving]    = useState(false)
+  const [deleting,   setDeleting]  = useState(false)
+  const [confirmDel, setConfirm]   = useState(false)
+
+  // Call scheduling fields
+  const initTz = contact?.call_timezone ?? 'Montréal'
+  const initLocal = contact?.call_scheduled_at
+    ? utcToLocal(contact.call_scheduled_at, initTz, TZ_OPTIONS)
+    : null
+  const [callDate, setCallDate] = useState(initLocal?.date ?? '')
+  const [callTime, setCallTime] = useState(initLocal?.time ?? '09:00')
+  const [callTz,   setCallTz]   = useState(initTz)
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) { if (e.key === 'Escape') onClose() }
@@ -37,16 +46,35 @@ export default function OutreachModal({ mode, contact, onClose, onSave, onDelete
     return () => document.removeEventListener('keydown', onKey)
   }, [onClose])
 
+  // Live call preview
+  const selectedTZ = TZ_OPTIONS.find(t => t.label === callTz) ?? TZ_OPTIONS[1]
+  let previewContact = '—', previewVN = '—'
+  if (status === 'call_scheduled' && callDate && callTime) {
+    try {
+      const utcIso = localToUtc(callDate, callTime, callTz, TZ_OPTIONS)
+      const utc = new Date(utcIso)
+      previewContact = toHHMM(utc, selectedTZ.offset)
+      previewVN      = toHHMM(utc, 7)
+    } catch { /* ignore */ }
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setSaving(true)
+    let call_scheduled_at: string | null = null
+    let call_timezone: string | null     = null
+    if (status === 'call_scheduled' && callDate && callTime) {
+      call_scheduled_at = localToUtc(callDate, callTime, callTz, TZ_OPTIONS)
+      call_timezone     = callTz
+    }
     await onSave({
-      name: name.trim(),
-      channel,
+      name: name.trim(), channel,
       status: status as Contact['status'],
       notes: notes.trim() || null,
       follow_up_date: followUp || null,
       promo_code_given: promo,
+      call_scheduled_at,
+      call_timezone,
     })
     setSaving(false)
   }
@@ -73,17 +101,12 @@ export default function OutreachModal({ mode, contact, onClose, onSave, onDelete
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-5 space-y-4">
+        <form onSubmit={handleSubmit} className="p-5 space-y-4 max-h-[80vh] overflow-y-auto">
           <div>
             <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Name *</label>
             <input
-              type="text"
-              value={name}
-              onChange={e => setName(e.target.value)}
-              required
-              placeholder="Jean Dupont"
-              autoFocus
-              className={inputCls}
+              type="text" value={name} onChange={e => setName(e.target.value)}
+              required placeholder="Jean Dupont" autoFocus className={inputCls}
             />
           </div>
 
@@ -104,6 +127,51 @@ export default function OutreachModal({ mode, contact, onClose, onSave, onDelete
             )}
           </div>
 
+          {/* Call scheduling — shown when status is call_scheduled */}
+          {status === 'call_scheduled' && (
+            <div className="bg-violet-50 dark:bg-violet-900/20 border border-violet-200 dark:border-violet-800 rounded-xl p-4 space-y-3">
+              <div className="flex items-center gap-1.5 mb-1">
+                <Phone size={12} className="text-violet-600 dark:text-violet-400" />
+                <span className="text-xs font-semibold text-violet-700 dark:text-violet-300">Call details</span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Date</label>
+                  <input type="date" value={callDate} onChange={e => setCallDate(e.target.value)} className={inputCls} />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Time</label>
+                  <input type="time" value={callTime} onChange={e => setCallTime(e.target.value)} className={inputCls} />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Timezone</label>
+                <select value={callTz} onChange={e => setCallTz(e.target.value)} className={inputCls}>
+                  {TZ_OPTIONS.map(t => (
+                    <option key={t.label} value={t.label}>
+                      {t.flag} {t.label} (UTC{t.offset >= 0 ? '+' : ''}{t.offset})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {callDate && callTime && (
+                <div className="flex gap-4 text-xs pt-1">
+                  {selectedTZ.label !== 'Vietnam' && (
+                    <div><span className="text-slate-400">{selectedTZ.flag} {selectedTZ.label}:</span>{' '}
+                      <span className="font-semibold text-slate-700 dark:text-slate-300">{previewContact}</span>
+                    </div>
+                  )}
+                  <div><span className="text-slate-400">🇻🇳 Vietnam:</span>{' '}
+                    <span className="font-semibold text-slate-700 dark:text-slate-300">{previewVN}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
           <div>
             <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Follow-up date</label>
             <input type="date" value={followUp} onChange={e => setFollowUp(e.target.value)} className={inputCls} />
@@ -112,51 +180,31 @@ export default function OutreachModal({ mode, contact, onClose, onSave, onDelete
           <div>
             <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Notes</label>
             <textarea
-              value={notes}
-              onChange={e => setNotes(e.target.value)}
-              rows={3}
-              placeholder="Conversation notes, interests, context…"
+              value={notes} onChange={e => setNotes(e.target.value)}
+              rows={3} placeholder="Conversation notes, interests, context…"
               className={`${inputCls} resize-none`}
             />
           </div>
 
           {mode === 'edit' && (
             <label className="flex items-center gap-2.5 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={promo}
-                onChange={e => setPromo(e.target.checked)}
-                className="w-4 h-4 rounded accent-primary"
-              />
+              <input type="checkbox" checked={promo} onChange={e => setPromo(e.target.checked)} className="w-4 h-4 rounded accent-primary" />
               <span className="text-sm text-slate-700 dark:text-slate-300">🎟️ Promo code given</span>
             </label>
           )}
 
           <div className="flex items-center gap-2 pt-1">
-            <button
-              type="submit"
-              disabled={saving || !name.trim()}
-              className="btn-primary text-sm py-2 px-5 disabled:opacity-50 flex-1"
-            >
+            <button type="submit" disabled={saving || !name.trim()} className="btn-primary text-sm py-2 px-5 disabled:opacity-50 flex-1">
               {saving ? 'Saving…' : mode === 'add' ? 'Add Contact' : 'Save Changes'}
             </button>
 
             {mode === 'edit' && onDelete && (
               confirmDel ? (
-                <button
-                  type="button"
-                  onClick={handleDelete}
-                  disabled={deleting}
-                  className="text-xs text-red-600 dark:text-red-400 hover:underline px-2 py-2 disabled:opacity-50"
-                >
+                <button type="button" onClick={handleDelete} disabled={deleting} className="text-xs text-red-600 dark:text-red-400 hover:underline px-2 py-2 disabled:opacity-50">
                   {deleting ? 'Deleting…' : 'Confirm delete'}
                 </button>
               ) : (
-                <button
-                  type="button"
-                  onClick={() => setConfirm(true)}
-                  className="text-xs text-slate-400 hover:text-red-500 dark:hover:text-red-400 px-2 py-2 transition-colors"
-                >
+                <button type="button" onClick={() => setConfirm(true)} className="text-xs text-slate-400 hover:text-red-500 dark:hover:text-red-400 px-2 py-2 transition-colors">
                   Delete
                 </button>
               )

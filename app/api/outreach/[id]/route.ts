@@ -17,7 +17,7 @@ async function assertAdmin() {
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
   if (!await assertAdmin()) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   const body = await req.json().catch(() => ({}))
-  const allowed = ['status', 'notes', 'follow_up_date', 'promo_code_given', 'channel', 'name']
+  const allowed = ['status', 'notes', 'follow_up_date', 'promo_code_given', 'channel', 'name', 'call_scheduled_at', 'call_timezone']
   const update: Record<string, unknown> = {}
   for (const k of allowed) if (k in body) update[k] = body[k]
   if (!Object.keys(update).length) return NextResponse.json({ error: 'Nothing to update' }, { status: 400 })
