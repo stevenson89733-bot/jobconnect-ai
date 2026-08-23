@@ -17,6 +17,8 @@ export type BlogPost = {
 export const BLOG_POSTS: BlogPost[] = [
   {
     slug:          'how-to-get-remote-job-france-international',
+    heroImage:     '/images/blog/hero-international-laptop.jpg',
+    heroImageAlt:  'Laptop with globe — international remote job search',
     title:         'How to Get a Remote Job in France as an International Candidate (2026)',
     excerpt:       'France tech is international — but only in certain sectors and at certain company stages. Learn the legal structures, CV format, lettre de motivation rules, and which platforms French companies actually use to hire globally.',
     date:          '2026-08-28',
@@ -34,6 +36,8 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug:          'remote-job-salary-by-country',
+    heroImage:     '/images/blog/hero-salary-by-country.jpg',
+    heroImageAlt:  'World map showing remote job salary ranges by country',
     title:         'Remote Job Salaries by Country: What International Candidates Can Realistically Expect (2026)',
     excerpt:       'Why the $150K posted salary is not your salary as a contractor, how to benchmark correctly across US, UK, Germany, France and Canada, and the red flags that signal a company is underpaying international hires.',
     date:          '2026-08-26',
@@ -51,6 +55,8 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug:          'how-to-get-remote-job-in-germany-as-foreigner',
+    heroImage:     '/images/blog/hero-germany.jpg',
+    heroImageAlt:  'Map of Europe with Germany highlighted and German flag',
     title:         'How to Get a Remote Job in Germany as a Foreign National (2026 Guide)',
     excerpt:       'Everything you need to know about the Lebenslauf format, professional photos, cover letters, and which platforms actually hire internationally.',
     date:          '2026-08-15',
@@ -67,6 +73,8 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug:          'resume-format-by-country',
+    heroImage:     '/images/blog/hero-laptop-world.jpg',
+    heroImageAlt:  'Laptop displaying a world map at a remote work desk',
     title:         'Resume Format by Country: US vs UK vs Germany vs France vs Canada',
     excerpt:       'A practical comparison of what hiring managers in 5 countries expect — photos, length, tone, personal information, and the differences that trip up international applicants.',
     date:          '2026-08-10',
@@ -84,6 +92,8 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug:          'how-to-spot-fake-remote-jobs',
+    heroImage:     '/images/blog/hero-remote-desk.jpg',
+    heroImageAlt:  'Laptop and coffee on a desk — remote work setup',
     title:         "How to Tell if a Remote Job Actually Hires Internationally (and Which Don't)",
     excerpt:       'The exact phrases to look for, the red flags that cost you hours of wasted applications, and how our Remote-Friendly Detector automates this for you.',
     date:          '2026-08-05',
@@ -100,6 +110,8 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug:          'how-to-get-remote-job-canada-international',
+    heroImage:     '/images/blog/hero-canada.jpg',
+    heroImageAlt:  'Map of North America with Canada highlighted and Canadian flag',
     title:         'How to Get a Remote Job in Canada as an International Candidate (2026)',
     excerpt:       "Canada actively recruits global tech talent — but the rules differ from the US. Here's everything you need to know about work permits, bilingual advantage, and the Canadian application style.",
     date:          '2026-08-22',
@@ -117,6 +129,8 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug:          'remote-work-france-foreigner',
+    heroImage:     '/images/blog/hero-france.jpg',
+    heroImageAlt:  'Map of Europe with France highlighted and French flag',
     title:         'Working Remotely for a French Company as a Foreigner: What You Need to Know',
     excerpt:       'French professional culture, the CV format with no photo, the art of the lettre de motivation, and the platforms where international candidates actually find French remote roles.',
     date:          '2026-08-20',
@@ -133,6 +147,8 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug:          'cross-border-remote-job-skills',
+    heroImage:     '/images/blog/hero-cross-border-skills.jpg',
+    heroImageAlt:  'Globe with connection lines — cross-border remote skills',
     title:         'The 10 Skills That Make You Hireable Internationally (For Remote Jobs)',
     excerpt:       'Technical skills get you through the door. These 10 cross-border skills determine whether a company in Germany, Canada, or the UK actually hires you over a local candidate.',
     date:          '2026-08-18',
@@ -149,6 +165,8 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug:          'ats-resume-international-candidates',
+    heroImage:     '/images/blog/hero-ats-resume.jpg',
+    heroImageAlt:  'ATS resume scanning icon with orbit rings',
     title:         'ATS Optimization for International Candidates: Why Your Resume Gets Rejected',
     excerpt:       'Most international candidates are filtered out before a human ever reads their resume. Here is exactly how ATS systems work, why international resumes fail, and how to fix yours.',
     date:          '2026-08-16',
@@ -165,6 +183,8 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug:          'how-to-get-remote-job-usa-international',
+    heroImage:     '/images/blog/hero-usa.jpg',
+    heroImageAlt:  'Map of North America with USA highlighted and American flag',
     title:         'How to Get a Remote Job in the USA as an International Candidate (2026)',
     excerpt:       'The US is the largest remote job market — but most listings exclude non-US candidates by default. Learn W-2 vs 1099 vs Corp-to-Corp, how to detect genuinely international-open roles, and how to position yourself to win.',
     date:          '2026-08-24',
@@ -182,6 +202,8 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug:          'remote-job-uk-international',
+    heroImage:     '/images/blog/hero-uk.jpg',
+    heroImageAlt:  'Map of Europe with UK highlighted and British flag',
     title:         'How to Land a Remote Job in the UK as a Non-UK Resident (2026)',
     excerpt:       "Post-Brexit, right-to-work rules, British CV format, and which UK sectors genuinely hire international remote workers — everything you need to run a smart UK job search.",
     date:          '2026-08-14',

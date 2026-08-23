@@ -19,6 +19,7 @@ export type LandingMarket = {
   salaryRange: string
   topCities: string
   openGraph: { title: string; description: string }
+  heroImage?: string
 }
 
 export const LANDING_MARKETS: LandingMarket[] = [
@@ -60,6 +61,7 @@ export const LANDING_MARKETS: LandingMarket[] = [
       title:       'Remote Jobs in Germany for International Candidates',
       description: 'AI-powered job search for Germany. Lebenslauf builder, Remote-Friendly Detector, and curated international-friendly roles.',
     },
+    heroImage: '/images/blog/hero-germany.jpg',
   },
   {
     slug:            'remote-jobs-france',
@@ -99,6 +101,7 @@ export const LANDING_MARKETS: LandingMarket[] = [
       title:       'Remote Jobs in France for International Candidates',
       description: 'AI-powered job search for France. French CV builder, Remote-Friendly Detector, and curated international-friendly roles.',
     },
+    heroImage: '/images/blog/hero-france.jpg',
   },
   {
     slug:            'remote-jobs-uk',
@@ -138,6 +141,7 @@ export const LANDING_MARKETS: LandingMarket[] = [
       title:       'Remote Jobs in the UK for International Candidates',
       description: 'AI-powered job search for the United Kingdom. British CV builder, Remote-Friendly Detector, and curated international-friendly roles.',
     },
+    heroImage: '/images/blog/hero-uk.jpg',
   },
   {
     slug:            'remote-jobs-usa',
@@ -177,6 +181,7 @@ export const LANDING_MARKETS: LandingMarket[] = [
       title:       'Remote Jobs in the USA for International Candidates',
       description: 'AI-powered job search for the US. ATS-optimized resume builder, Remote-Friendly Detector, and curated international-friendly roles.',
     },
+    heroImage: '/images/blog/hero-usa.jpg',
   },
   {
     slug:            'remote-jobs-canada',
@@ -216,6 +221,7 @@ export const LANDING_MARKETS: LandingMarket[] = [
       title:       'Remote Jobs in Canada for International Candidates',
       description: 'AI-powered job search for Canada. Canadian resume builder, Remote-Friendly Detector, and curated international-friendly roles.',
     },
+    heroImage: '/images/blog/hero-canada.jpg',
   },
 ]
 

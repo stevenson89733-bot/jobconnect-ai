@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, CheckCircle2 } from 'lucide-react'
 import type { LandingMarket } from '@/lib/seo/landing-data'
@@ -30,6 +31,21 @@ export default function RemoteJobsLanding({ market: m }: { market: LandingMarket
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+
+      {/* ── Hero image ── */}
+      {m.heroImage && (
+        <div className="relative w-full h-[220px] sm:h-[300px] md:h-[360px] overflow-hidden bg-slate-100 dark:bg-slate-800">
+          <Image
+            src={m.heroImage}
+            alt={`Remote jobs in ${m.countryName}`}
+            fill
+            unoptimized
+            priority
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/5 to-black/25" />
+        </div>
+      )}
 
       {/* ── Hero ── */}
       <section className="bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 border-b border-slate-200 dark:border-slate-800">
