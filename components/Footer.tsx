@@ -50,7 +50,7 @@ export default async function Footer() {
   return (
     <footer className="border-t border-slate-200 dark:border-slate-800 mt-24">
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-10">
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 font-bold text-lg mb-3">
               <span className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center text-white text-xs font-black">J</span>
@@ -63,6 +63,7 @@ export default async function Footer() {
             <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
               <li><Link href="/jobs" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">{tn('browseJobs')}</Link></li>
               <li><Link href="/companies" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">{tn('companies')}</Link></li>
+              <li><Link href="/blog" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">Blog</Link></li>
               <li><Link href="/pricing" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">{tn('pricing')}</Link></li>
             </ul>
           </div>
@@ -78,6 +79,16 @@ export default async function Footer() {
             <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
               <li><Link href="/about" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">{t('about')}</Link></li>
               <li><Link href="/contact" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">{t('contact')}</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Explore Markets</h3>
+            <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+              <li><Link href="/remote-jobs-usa" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">🇺🇸 Remote Jobs USA</Link></li>
+              <li><Link href="/remote-jobs-canada" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">🇨🇦 Remote Jobs Canada</Link></li>
+              <li><Link href="/remote-jobs-france" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">🇫🇷 Remote Jobs France</Link></li>
+              <li><Link href="/remote-jobs-germany" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">🇩🇪 Remote Jobs Germany</Link></li>
+              <li><Link href="/remote-jobs-uk" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">🇬🇧 Remote Jobs UK</Link></li>
             </ul>
           </div>
         </div>
