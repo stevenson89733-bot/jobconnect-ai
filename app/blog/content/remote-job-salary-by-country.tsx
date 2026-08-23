@@ -1,134 +1,182 @@
+import { H2, H3, P, KeyTakeaway, Quote, TOC, FAQ, StatHook, Conclusion } from '@/components/blog/ArticleComponents'
+
 export default function ArticleContent() {
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h2:text-xl prose-h3:text-base prose-p:leading-relaxed prose-li:leading-relaxed">
 
-      <p className="lead text-lg text-slate-600 dark:text-slate-300 font-normal not-prose mb-8">
-        One of the most common mistakes international candidates make is benchmarking their salary expectations against the wrong number. A US company posting a $150K Software Engineer role is not offering you $150K as an international contractor — and understanding why is the foundation of every salary conversation you&apos;ll have in a cross-border job search.
-      </p>
+      <StatHook>A senior software engineer working remotely earns between $18,000 and $180,000 per year — depending entirely on which country&apos;s company is paying them.</StatHook>
 
-      <h2>Why Salaries Vary So Much by Country of Employer (Not Candidate)</h2>
-      <p>
-        Remote job salaries are set by the employer&apos;s market — not yours. A software engineer in Lagos working for a San Francisco startup is paid based on the San Francisco market (adjusted for contractor structure), not the Lagos market. This is both the opportunity and the source of the most common salary negotiation mistakes.
-      </p>
-      <p>
-        The factors that determine what a specific employer will pay an international remote worker:
-      </p>
+      <TOC items={[
+        { id: 'how-salaries-set', label: 'How Remote Salaries Are Actually Determined' },
+        { id: 'usa', label: 'United States: The Highest-Paying Market' },
+        { id: 'uk-europe', label: 'United Kingdom and Western Europe' },
+        { id: 'canada', label: 'Canada: North American Rates at a Modest Discount' },
+        { id: 'emerging-hubs', label: 'Remote Salaries at Emerging Tech Hubs' },
+        { id: 'negotiation', label: 'How to Negotiate Remote Salary Across Borders' },
+        { id: 'benchmarking', label: 'Tools and Resources for Salary Benchmarking' },
+      ]} />
+
+      <P drop>
+        Remote work has made it possible for a developer in Lagos to earn a San Francisco salary, but it has not made this automatic. The actual compensation for remote workers varies by an order of magnitude depending on which country&apos;s company is making the offer, what compensation philosophy that company applies to distributed employees, and whether the candidate negotiated from a position of market knowledge or accepted an initial offer without reference to what the role pays in comparable markets. Understanding how remote salaries are structured, what they look like across different target markets, and how to negotiate across borders is one of the highest-leverage skills an international candidate can develop.
+      </P>
+      <P>
+        The stakes are significant. An engineering manager who accepts a European company&apos;s initial offer without benchmarking may earn €85,000 in a role where a more informed peer negotiated to €105,000. A data scientist who presents to a US company without understanding that US companies typically benchmark against US market rates, not the candidate&apos;s local market, may leave $40,000 of annual compensation on the table in a single salary conversation. These gaps compound over a career in ways that dwarf the effort required to close them.
+      </P>
+      <P>
+        This guide provides a market-by-market breakdown of remote salary benchmarks for tech roles, a clear explanation of the compensation philosophies that determine how different types of companies set remote pay, and a practical framework for salary negotiation that applies across international hiring contexts.
+      </P>
+
+      <H2 id="how-salaries-set">How Remote Salaries Are Actually Determined</H2>
+      <P>
+        Companies that hire internationally for remote roles fall into two distinct camps when it comes to compensation philosophy, and understanding which camp a prospective employer sits in is essential before entering any salary conversation.
+      </P>
+      <H3>Location-based compensation</H3>
+      <P>
+        Location-based compensation benchmarks remote employee salaries against the cost of living and competitive talent market in the employee&apos;s location. Under this model, a software engineer in Berlin earns more than a software engineer in Lagos performing an identical role for the same company, because the Berlin market is more expensive and the local competitive talent market is higher. Many large companies, including Google, Meta, and Spotify, use location-based compensation for their remote employees. The advantage of this model is internal equity among employees in similar locations. The disadvantage for international candidates is that it does not reward the quality of the candidate above what the local market pays.
+      </P>
+      <H3>Role-based or global compensation</H3>
+      <P>
+        Role-based or global compensation sets pay based on the requirements of the role and the competitive talent market for that skill globally, not the location of the employee. GitLab, Buffer, Basecamp, and many remote-first startups use this model. Under this philosophy, the same engineering manager earns the same compensation package regardless of whether they are based in Toronto, Warsaw, or Bangkok. The advantage for international candidates is that it decouples earning potential from geography. The disadvantage is that it can create internal tension when team members in high-cost cities feel undercompensated relative to local market rates.
+      </P>
+      <H3>Hybrid approaches</H3>
+      <P>
+        Many companies use hybrid approaches, benchmarking against the company&apos;s headquarters market with graduated adjustments based on local cost of living. A Series B startup headquartered in San Francisco might benchmark against US market rates but apply a 15 to 30% adjustment for employees based in lower-cost regions. For international candidates, understanding which model a company uses before negotiation is the most important piece of preparation.
+      </P>
+      <KeyTakeaway>The most important salary question to ask any remote employer before discussing specific numbers is: does your company benchmark compensation against the location of the employee, the location of the headquarters, or the global market rate for the role? The answer determines the entire negotiation frame.</KeyTakeaway>
+
+      <H2 id="usa">United States: The Highest-Paying Market</H2>
+      <P>
+        US companies consistently offer the highest compensation in the global remote job market. This is true across functions and seniority levels, and the premium is significant: a senior software engineer at a US tech company earns $140,000 to $200,000 in total compensation (base salary plus equity and bonuses), while a comparable engineer at a European company earns €70,000 to €110,000. Even after tax differences are accounted for, the US premium is substantial.
+      </P>
+      <H3>Benchmark ranges by role (US companies, 2024-2025)</H3>
       <ul>
-        <li><strong>Employer market:</strong> The primary anchor. A US company benchmarks against US salaries. A German company benchmarks against German salaries. A French company benchmarks against French salaries. These differ by 30–80% for equivalent roles.</li>
-        <li><strong>Employment structure:</strong> W-2 employee (full comp + benefits + equity) vs C2C contractor (rate only, no benefits, no equity) vs EOR employee (full comp in your home country). The same role at the same company can vary by 20–40% in cash value depending on structure.</li>
-        <li><strong>Candidate&apos;s leverage:</strong> Specialization scarcity, portfolio quality, referral source, and how urgently the company needs to fill the role.</li>
-        <li><strong>Cost adjustment policies:</strong> Some companies apply geographic pay adjustments. GitLab publishes its pay bands openly; some companies pay location-based rates that reduce compensation for candidates in lower-cost countries. Others pay market-rate regardless of location.</li>
+        <li><strong>Software Engineer (Senior):</strong> $130,000 to $200,000 base, plus equity at funded startups and RSUs at public companies.</li>
+        <li><strong>Product Manager (Senior):</strong> $140,000 to $190,000 base, plus equity.</li>
+        <li><strong>Data Scientist (Senior):</strong> $120,000 to $175,000 base, plus equity.</li>
+        <li><strong>Engineering Manager:</strong> $160,000 to $220,000 base, plus equity.</li>
+        <li><strong>UX Designer (Senior):</strong> $110,000 to $155,000 base, plus equity.</li>
+      </ul>
+      <P>
+        For international candidates working remotely under 1099 contractor or EOR arrangements, US companies applying global compensation models often pay at or near these benchmarks regardless of where the employee is located. Companies using location-based models adjust these figures based on the candidate&apos;s country, sometimes significantly.
+      </P>
+      <KeyTakeaway>US companies offering global compensation models to international remote employees represent the highest-earning opportunity in the global remote market. Identifying which US companies apply this model, and presenting compensation expectations calibrated to US benchmarks, captures this premium.</KeyTakeaway>
+
+      <H2 id="uk-europe">United Kingdom and Western Europe</H2>
+      <P>
+        UK and Western European companies offer compensation that is competitive within the European context but typically 30 to 50% below US equivalents on a purchasing-power-adjusted basis. The exception is London, where financial services, fintech, and enterprise software compensation at the senior level approaches the lower end of US San Francisco benchmarks.
+      </P>
+      <H3>United Kingdom</H3>
+      <ul>
+        <li><strong>Software Engineer (Senior):</strong> £65,000 to £100,000.</li>
+        <li><strong>Product Manager (Senior):</strong> £70,000 to £110,000.</li>
+        <li><strong>Data Scientist (Senior):</strong> £60,000 to £95,000.</li>
+        <li><strong>Engineering Manager:</strong> £80,000 to £130,000.</li>
+      </ul>
+      <H3>Germany</H3>
+      <ul>
+        <li><strong>Software Engineer (Senior):</strong> €70,000 to €110,000.</li>
+        <li><strong>Product Manager (Senior):</strong> €75,000 to €115,000.</li>
+        <li><strong>Data Scientist (Senior):</strong> €65,000 to €100,000.</li>
+        <li><strong>Engineering Manager:</strong> €85,000 to €130,000.</li>
+      </ul>
+      <H3>France and the Netherlands</H3>
+      <P>
+        France benchmarks slightly below Germany, with senior engineering roles at €60,000 to €95,000. The Netherlands is the highest-paying market in continental Europe outside Germany, with Amsterdam-based companies paying €70,000 to €110,000 for senior engineers, reflecting both the concentration of international company headquarters and the Dutch cost of living. For international remote candidates, Dutch companies are particularly attractive because they are more likely to use global compensation models.
+      </P>
+      <KeyTakeaway>London fintech and enterprise software companies represent the best European compensation available for senior candidates. German and Dutch companies offer the strongest European continental benchmarks, with France close behind.</KeyTakeaway>
+
+      <H2 id="canada">Canada: North American Rates at a Modest Discount</H2>
+      <P>
+        Canadian tech companies benchmark compensation against the Canadian market, which sits at approximately 15 to 25% below equivalent US rates when converted at prevailing exchange rates. The discount is more modest in purchasing power terms, given Canada&apos;s lower cost of living in most cities relative to US coastal tech hubs.
+      </P>
+      <ul>
+        <li><strong>Software Engineer (Senior):</strong> CAD $110,000 to $160,000 (approximately USD $80,000 to $120,000).</li>
+        <li><strong>Product Manager (Senior):</strong> CAD $120,000 to $170,000.</li>
+        <li><strong>Data Scientist (Senior):</strong> CAD $100,000 to $150,000.</li>
+        <li><strong>Engineering Manager:</strong> CAD $140,000 to $200,000.</li>
+      </ul>
+      <P>
+        For international candidates in markets where salaries are significantly below North American levels, Canadian benchmarks represent a compelling opportunity even at a discount to the US. Canadian companies, particularly in Toronto and Vancouver, are generally open to international remote candidates under EOR arrangements, and the compensation offered to international employees typically reflects Canadian market rates rather than local market adjustments.
+      </P>
+      <KeyTakeaway>Canadian compensation sits at approximately 80% of US equivalent rates and represents a strong opportunity for international candidates, particularly those already positioned for North American market rates who prefer Canada&apos;s immigration pathways and professional culture.</KeyTakeaway>
+
+      <H2 id="emerging-hubs">Remote Salaries at Emerging Tech Hubs</H2>
+      <P>
+        Beyond the established North American and European markets, several emerging tech hubs offer remote work opportunities where the compensation is lower in absolute terms but may be competitive on a purchasing power basis.
+      </P>
+      <H3>Australia and New Zealand</H3>
+      <P>
+        Australian tech companies pay AUD $110,000 to $160,000 for senior engineers (approximately USD $70,000 to $105,000), with Sydney and Melbourne companies in the higher range. Australian remote-first companies, particularly in fintech and B2B SaaS, increasingly hire internationally. The significant timezone difference from Europe and the Americas makes Australian companies most accessible for candidates in Southeast Asia, India, and the Pacific region.
+      </P>
+      <H3>Singapore and the UAE</H3>
+      <P>
+        Singapore-based companies offer competitive compensation in a tax-advantaged environment, with senior engineers earning SGD $90,000 to $140,000 (approximately USD $66,000 to $103,000). Singapore&apos;s role as the Southeast Asian headquarters for global tech companies creates demand for international talent across functions. Dubai and Abu Dhabi in the UAE have emerged as significant tech hubs, with international companies offering USD-denominated compensation that is tax-free for employees, making the effective value substantially higher than the nominal salary suggests.
+      </P>
+      <KeyTakeaway>Tax-advantaged markets like Singapore and the UAE can offer effective compensation that is significantly higher than the nominal salary suggests. For candidates in high tax jurisdictions, the after-tax comparison to US and European offers is worth calculating explicitly before evaluating any offer.</KeyTakeaway>
+
+      <H2 id="negotiation">How to Negotiate Remote Salary Across Borders</H2>
+      <P>
+        Salary negotiation in an international remote context requires specific preparation that goes beyond the standard advice applicable in domestic job markets.
+      </P>
+      <H3>Benchmark before you negotiate</H3>
+      <P>
+        The most important negotiation preparation is understanding what the role pays in the hiring company&apos;s primary market. For a US company, this means US market benchmarks. For a German company, German market benchmarks. Levels.fyi provides compensation data for tech roles at major companies worldwide. Glassdoor&apos;s international data, LinkedIn Salary Insights, and Payscale all provide useful reference points. Going into a salary conversation without this research is the most common reason candidates leave significant compensation on the table.
+      </P>
+      <H3>Understand the compensation model</H3>
+      <P>
+        Ask explicitly about the company&apos;s compensation philosophy for international remote employees before discussing specific numbers. The question is direct and professional: &quot;How does your company benchmark compensation for international remote employees: against our local market, your headquarters market, or a global market rate for the role?&quot; The answer determines what number to anchor on in the negotiation.
+      </P>
+      <H3>Do not anchor on your current salary</H3>
+      <P>
+        In most jurisdictions, employers are no longer permitted to ask for current salary. Even where they are, anchoring a negotiation on your current local-market salary when applying to a company benchmarking against a higher-compensation market is a reliable way to undervalue yourself. The relevant anchor is always the market rate for the role, not the candidate&apos;s current earnings.
+      </P>
+      <H3>Factor in total compensation</H3>
+      <P>
+        Remote job offers at tech companies, particularly US companies, frequently include significant non-salary compensation: equity (stock options or RSUs), performance bonuses, home office stipends, equipment allowances, and health benefits. A US offer at $130,000 base with $40,000 in annual RSUs and $15,000 in annual bonus target is worth considerably more than a European offer at €105,000 base, even though the base salary comparison is close. Total compensation comparison, not base salary comparison, is the relevant analysis.
+      </P>
+      <KeyTakeaway>Negotiating remote salary cross-border requires three things: knowing the hiring market benchmark, understanding the company&apos;s compensation philosophy, and comparing total compensation rather than base salary. Each step is essential; missing any one of them consistently produces suboptimal outcomes.</KeyTakeaway>
+
+      <H2 id="benchmarking">Tools and Resources for Salary Benchmarking</H2>
+      <ul>
+        <li><strong>Levels.fyi:</strong> The most comprehensive database of tech compensation at major companies globally, with detailed breakdowns by role, level, location, and total comp including equity. Essential for US company benchmarks and increasingly useful for European companies.</li>
+        <li><strong>Glassdoor (international):</strong> Broad salary data across industries and countries, with user-submitted reviews providing qualitative context alongside compensation numbers. Most reliable at companies with high employee populations submitting data.</li>
+        <li><strong>LinkedIn Salary Insights:</strong> Benchmarks compensation ranges for specific roles at specific companies based on LinkedIn member data. Useful for European and Canadian markets where Levels.fyi has thinner coverage.</li>
+        <li><strong>Payscale:</strong> Country-specific salary data with a strong international database, particularly useful for roles outside major tech hubs where company-specific data is unavailable.</li>
+        <li><strong>Nomad List salary data:</strong> Specifically calibrated for remote work, with data on what different companies pay international remote employees as distinct from in-office or local remote employees.</li>
+        <li><strong>JobConnect AI:</strong> Surfaces salary ranges directly in job listings where companies disclose them, enabling pre-application benchmarking without research lag.</li>
       </ul>
 
-      <h2>Salary Comparison by Role and Country of Employer (2026)</h2>
-      <p>
-        The following figures represent <strong>median total cash compensation for full-time employees</strong> — they are the anchor for contractor rate calculations, not the contractor rate itself (see below). Sources: Levels.fyi, Glassdoor, LinkedIn Salary Insights, Talent.com, and PayScale, cross-referenced for 2025–2026.
-      </p>
+      <FAQ items={[
+        {
+          q: 'Do US companies pay international remote workers the same as US employees?',
+          a: 'It depends on the company&apos;s compensation philosophy. Companies using global compensation models (including GitLab, Buffer, and many remote-first startups) pay the same regardless of location. Companies using location-based models (including Google, Meta, and Spotify) adjust pay based on the employee&apos;s location, which can mean significant reductions for employees in lower-cost markets. Asking about this directly before negotiating is essential.'
+        },
+        {
+          q: 'How do I know if a company is using location-based or global compensation?',
+          a: 'Ask directly: "How does your company benchmark compensation for international remote employees?" Many companies have published their compensation philosophy publicly — GitLab and Buffer both have public salary calculators on their websites. For companies that have not published this information, a direct question to the recruiter or hiring manager is appropriate and professional.'
+        },
+        {
+          q: 'Is equity compensation available to international remote employees?',
+          a: 'It varies significantly. US companies can grant stock options or RSUs to international employees through EOR arrangements, though the tax treatment differs by country and can be complex. Some companies exclude international employees from equity programs for administrative reasons. It is worth asking explicitly what equity, if any, is included in the offer package for international employees.'
+        },
+        {
+          q: 'How should I handle currency risk in a cross-border compensation arrangement?',
+          a: 'If you are paid in a foreign currency (USD, GBP, EUR) while living in a different currency country, exchange rate movements affect your real income. USD-denominated contracts have been favorable for most emerging market currencies historically, but this is not guaranteed. Keeping a portion of savings in the payment currency is a common hedge. Some EOR platforms allow payment in local currency at locked rates, which reduces this risk.'
+        },
+        {
+          q: 'What is a typical contractor rate for international tech professionals working with US companies?',
+          a: 'International contractors working with US companies typically charge at a premium to their equivalent employee market rate, to account for the absence of benefits, variable income, and self-employment tax obligations. A rule of thumb is 15 to 30% above the equivalent employee salary to achieve comparable net income. The exact adjustment depends on the local tax system, health insurance costs, and the specific benefit package being replaced.'
+        },
+      ]} />
 
-      <div className="not-prose overflow-x-auto my-8">
-        <table className="w-full text-sm border-collapse">
-          <thead>
-            <tr className="bg-slate-100 dark:bg-slate-800 text-left">
-              <th className="px-4 py-3 font-semibold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700">Role</th>
-              <th className="px-4 py-3 font-semibold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700">🇺🇸 USA</th>
-              <th className="px-4 py-3 font-semibold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700">🇬🇧 UK</th>
-              <th className="px-4 py-3 font-semibold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700">🇩🇪 Germany</th>
-              <th className="px-4 py-3 font-semibold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700">🇫🇷 France</th>
-              <th className="px-4 py-3 font-semibold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700">🇨🇦 Canada</th>
-            </tr>
-          </thead>
-          <tbody>
-            {[
-              ['Software Engineer (Mid)', '$130K–$180K', '£60K–£85K', '€60K–€80K', '€45K–€65K', 'CAD $90K–$130K'],
-              ['Software Engineer (Senior)', '$180K–$280K', '£80K–£120K', '€75K–€100K', '€60K–€85K', 'CAD $130K–$180K'],
-              ['Product Manager (Mid)', '$120K–$160K', '£55K–£80K', '€55K–€75K', '€42K–€60K', 'CAD $85K–$120K'],
-              ['UX Designer (Mid)', '$95K–$130K', '£45K–£65K', '€45K–€60K', '€38K–€55K', 'CAD $70K–$100K'],
-              ['Marketing Manager', '$90K–$130K', '£45K–£70K', '€48K–€65K', '€40K–€58K', 'CAD $75K–$110K'],
-              ['Data Analyst (Mid)', '$85K–$120K', '£40K–£65K', '€45K–€65K', '€38K–€55K', 'CAD $70K–$100K'],
-            ].map(([role, ...cols], i) => (
-              <tr key={i} className={i % 2 === 0 ? 'bg-white dark:bg-slate-900' : 'bg-slate-50 dark:bg-slate-800/50'}>
-                <td className="px-4 py-3 font-medium text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700">{role}</td>
-                {cols.map((val, j) => (
-                  <td key={j} className="px-4 py-3 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">{val}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <p className="text-xs text-slate-400 dark:text-slate-500 mt-2">
-          Median base salary (employee, no equity). Equity and benefits add 20–60% total comp at US/CA companies. Exchange rates approximate as of 2026.
-        </p>
-      </div>
-
-      <p>
-        The US–France gap for a mid-level Software Engineer is roughly 2:1 in raw salary. The gap widens further when US equity is included — a mid-level engineer at a US growth-stage company might receive $40K–$80K in annual RSU vesting on top of base salary, with no French equivalent at that tier.
-      </p>
-
-      <h2>Contractor vs Employee: Why the Published Number Isn&apos;t Your Number</h2>
-      <p>
-        When a US company posts a role at $150K, that figure represents a W-2 employee total base salary. As an international contractor in a Corp-to-Corp arrangement, the math is fundamentally different:
-      </p>
-      <ul>
-        <li><strong>No equity:</strong> RSUs and options are almost never offered to contractors. At US growth companies, equity can represent 30–50% of total compensation. You are not getting this.</li>
-        <li><strong>No employer benefits:</strong> The company pays roughly $15,000–$25,000/year per US employee in health insurance, 401k match, and payroll taxes. As a contractor, they pay nothing — but you also receive nothing.</li>
-        <li><strong>Self-employment overhead:</strong> As an independent contractor, you fund your own health insurance, retirement, accounting, equipment, and professional development. Budget 15–25% of your gross rate for these costs.</li>
-        <li><strong>Utilization risk:</strong> Contracts pause, projects end, and there are gaps between engagements. Annual effective income is not 12 × monthly rate — realistically closer to 10 × for most contractors.</li>
-      </ul>
-      <p>
-        The contractor rate premium: to compensate for the above, international contractors typically need to charge 20–40% more than the equivalent hourly rate of a W-2 employee to achieve comparable net income. A $150K US employee earning approximately $72/hour (÷ 2,080 hours) corresponds to a contractor rate of roughly $85–$100/hour to achieve equivalent net income after accounting for benefits, taxes, and utilization risk.
-      </p>
-
-      <h2>Salary Negotiation as an International Candidate: Mistakes to Avoid</h2>
-      <h3>Mistake 1: Anchoring to Employee Total Comp</h3>
-      <p>
-        Quoting Levels.fyi figures — which include base + equity + bonus for full employees — in a contractor rate negotiation immediately signals that you don&apos;t understand the difference. Use Levels.fyi for research, then calculate the appropriate contractor equivalent before entering any conversation.
-      </p>
-      <h3>Mistake 2: Accepting Geographic Discounts Without Scrutiny</h3>
-      <p>
-        Some companies will attempt to pay you based on your home country&apos;s cost of living rather than their own market rate. This is sometimes called &quot;geographic pay adjustment&quot; or &quot;local rate.&quot; Whether this is appropriate depends entirely on the company&apos;s policy and your negotiating position.
-      </p>
-      <p>
-        Remote-first companies like GitLab apply transparent, published geographic pay bands that adjust compensation by location. This is a legitimate policy applied consistently. Less legitimate: a company that offers you $30/hour because &quot;you&apos;re in [lower-cost country]&quot; for a role where a US equivalent would be paid $90/hour — with no published policy, applied inconsistently only to international contractors.
-      </p>
-      <h3>Mistake 3: Not Knowing Your Walk-Away Rate</h3>
-      <p>
-        Before any negotiation, calculate your minimum acceptable monthly net income based on your actual cost of living and savings goals. Convert this to a gross contractor rate factoring in your self-employment tax burden and overhead. That is your floor. Never accept below it regardless of the company&apos;s branding or perceived prestige.
-      </p>
-      <h3>Mistake 4: Revealing Your Current Salary Too Early</h3>
-      <p>
-        If you&apos;re currently employed in a lower-cost market at a local salary, revealing this number anchors the negotiation at your current level rather than the employer&apos;s market rate. Deflect: &quot;I&apos;m focusing on the market rate for this role and this level of responsibility — what&apos;s the budget range for this position?&quot;
-      </p>
-
-      <h2>Using Cost of Living Differences to Your Advantage (Without Being Exploited)</h2>
-      <p>
-        The cost-of-living arbitrage is real and can be genuinely advantageous — but only if you control the framing. The goal is to earn a salary competitive with the employer&apos;s market while benefiting from a lower cost of living in your home country. This is not the same as accepting a below-market salary because of where you live.
-      </p>
-      <p>
-        The winning framing: you are providing equivalent value to a local candidate at the same or similar rate, while the company benefits from lower total cost (no office, no employer NI/payroll tax, no benefits cost). The cost-of-living advantage accrues to you in the form of a higher purchasing-power-adjusted income — not to the company in the form of a lower rate.
-      </p>
-      <p>
-        Practical guidance: research the employer&apos;s market rate for the role. Aim for 80–100% of that rate as a contractor. If the company proposes a significant geographic discount, ask for the rationale and whether it applies consistently to all contractors. A consistent published policy is legitimate; ad hoc discounting for international candidates is a red flag.
-      </p>
-
-      <h2>Tools for Benchmarking Your Market Rate</h2>
-      <ul>
-        <li><strong>Levels.fyi</strong> — The gold standard for US tech company compensation. Shows base, stock, and bonus by company, level, and location. Use for US employer anchor research.</li>
-        <li><strong>Glassdoor Salaries</strong> — Self-reported data with broader coverage across industries and geographies. Filter by country and job title. More variable quality than Levels.fyi but wider scope.</li>
-        <li><strong>LinkedIn Salary Insights</strong> — Available with LinkedIn Premium. Shows salary ranges by role, location, and company size. Useful for European market data where Levels.fyi coverage is thinner.</li>
-        <li><strong>Talent.com</strong> — Country-specific salary benchmarks with good European (UK, France, Germany) coverage. Free to use.</li>
-        <li><strong>PayScale</strong> — Role-based salary data with experience level adjustments. Strong for non-tech roles.</li>
-        <li><strong>Remote.com Salary Explorer</strong> — Specifically designed for remote and international roles; shows how companies typically adjust for different countries.</li>
-        <li><strong>Contractor Rate Calculator (Deel)</strong> — Estimates contractor equivalent rates accounting for benefits overhead and tax burden by country of residence.</li>
-      </ul>
-
-      <h2>Red Flags That Signal Underpaying International Candidates</h2>
-      <ul>
-        <li><strong>&quot;We pay local market rates&quot; without a published policy:</strong> This phrase, without a transparent published pay band, means &quot;we pay less than our market rate because you&apos;re not here.&quot; Ask for the policy in writing.</li>
-        <li><strong>No rate disclosed in the job posting:</strong> International contractor postings that hide the rate range waste your time disproportionately. Companies that know their rate is below market often don&apos;t publish it to keep candidates engaged longer.</li>
-        <li><strong>Rate changes after disclosure of your location:</strong> If the rate offered drops when the company learns where you are based — and this wasn&apos;t disclosed upfront as part of a consistent policy — walk away.</li>
-        <li><strong>Equity as a substitute for fair cash rates:</strong> Startups that offer equity in lieu of market-rate cash to international contractors are transferring financial risk onto you. Early-stage equity has significant failure risk; it is not equivalent to cash.</li>
-        <li><strong>Unpaid trial projects exceeding 2–4 hours:</strong> Legitimate companies assess skills through paid test projects or brief paid trials. Requests for multi-day unpaid work — particularly from companies that know you need the role — are exploitative.</li>
-      </ul>
+      <Conclusion>
+        <P>
+          Remote salary negotiation is a skill, not a given. The candidates who consistently earn at the top of the range for their role are those who have done the research before any offer conversation begins: they know what the role pays in the hiring company&apos;s market, they know which compensation model the company applies to international employees, and they compare total compensation rather than base salary alone. None of this requires special negotiation ability; it requires information that is largely publicly available.
+        </P>
+        <P>
+          JobConnect AI displays salary ranges where companies disclose them, surfaces compensation benchmarks by market and function, and helps identify which companies apply global versus location-based compensation philosophies before any application is submitted. For candidates who want to earn at the top of their range rather than accept the first offer, starting with complete information is the prerequisite.
+        </P>
+      </Conclusion>
 
     </article>
   )

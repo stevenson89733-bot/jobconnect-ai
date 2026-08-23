@@ -1,151 +1,169 @@
+import { H2, H3, P, KeyTakeaway, Quote, TOC, FAQ, StatHook, Conclusion } from '@/components/blog/ArticleComponents'
+
 export default function ArticleContent() {
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h2:text-xl prose-h3:text-base prose-p:leading-relaxed prose-li:leading-relaxed">
 
-      <p className="lead text-lg text-slate-600 dark:text-slate-300 font-normal not-prose mb-8">
-        France has become one of Europe&apos;s most accessible markets for international remote workers — but the path is narrower than it looks. The French tech ecosystem is genuinely international in certain sectors, bilingual in some companies, and firmly French-only in others. Knowing which category a company falls into before you apply saves weeks of misdirected effort.
-      </p>
+      <StatHook>France hosts Europe&apos;s third-largest startup ecosystem — and a growing share of its most competitive tech roles are now open to international candidates working fully remotely.</StatHook>
 
-      <h2>The French Remote Market: Which Sectors Are Actually Open</h2>
-      <p>
-        Not all French companies are equally accessible to international candidates. The openness depends almost entirely on the sector and company stage:
-      </p>
-      <h3>Tech and Software (Most Open)</h3>
-      <p>
-        French tech scale-ups — Contentsquare, Mirakl, Doctolib, Alan, Pennylane, Qonto — operate in English internally and hire across Europe regularly. Paris has become a genuine European tech hub: Station F (the world&apos;s largest startup campus) hosts companies from 50+ countries, and the French Tech label has attracted international capital and talent systematically since 2013.
-      </p>
-      <p>
-        For pure engineering, data science, and DevOps roles at these companies, English proficiency is sufficient. The codebase is in English, Slack channels are in English, and many team members are non-French speakers. International contractors working remotely from outside France are a known and accepted arrangement at this tier.
-      </p>
-      <h3>Design and UX (Accessible)</h3>
-      <p>
-        French design and creative industries value international perspective — particularly for companies with global product ambitions. Luxury brands (LVMH group, Kering), advertising groups (Publicis Groupe, Havas), and French SaaS companies with international user bases actively seek designers who understand non-French markets. English is the working language for most international-facing design work.
-      </p>
-      <h3>Marketing and Growth (Mixed)</h3>
-      <p>
-        Marketing roles at French companies split clearly. International marketing, performance marketing, and English-language content roles are accessible to non-French speakers. French-language copywriting, local SEO, and community management require at minimum B2 French, and realistically C1. Do not apply for content or community roles in French unless your French is genuinely fluent.
-      </p>
-      <h3>Traditional Sectors (Largely Closed)</h3>
-      <p>
-        Finance, law, consulting, insurance, government-adjacent, and retail outside of digital are largely inaccessible without strong French and often in-country presence. These sectors are not realistic targets for international remote candidates.
-      </p>
+      <TOC items={[
+        { id: 'why-france', label: 'Why France Is a Stronger Market Than It Appears' },
+        { id: 'cv-format', label: 'CV Format for French International Candidates' },
+        { id: 'lettre-motivation', label: 'The Lettre de Motivation: Structure and Tone' },
+        { id: 'photo-policy', label: 'The Photo Question: What French Law Actually Says' },
+        { id: 'language', label: 'Language Requirements: English vs French Roles' },
+        { id: 'sectors', label: 'Sectors Most Open to International Talent' },
+        { id: 'platforms', label: 'Platforms and Job Boards That Work' },
+        { id: 'common-mistakes', label: 'Common Mistakes International Candidates Make' },
+      ]} />
 
-      <h2>Legal Status: Auto-Entrepreneur vs Contractor vs Portage Salarial</h2>
-      <p>
-        French employment law is among the most regulated in Europe, and the structure under which you work for a French company matters significantly for both parties.
-      </p>
-      <h3>Independent Contractor (From Your Home Country)</h3>
-      <p>
-        The most straightforward arrangement: you invoice the French company from your home country entity. No French work authorization required. The French company pays your invoice as a professional service fee. You handle taxes entirely in your home country.
-      </p>
-      <p>
-        French companies use this arrangement routinely for international tech talent. The main risk for them is &quot;salariat déguisé&quot; (disguised employment) — if you work exclusively for one French client, full-time, under their direction, French labor inspectors could reclassify the relationship as employment, exposing the company to back contributions. Experienced French companies avoid this by ensuring clear deliverable-based contracts rather than time-and-attendance arrangements.
-      </p>
-      <h3>Auto-Entrepreneur (If You Relocate to France)</h3>
-      <p>
-        If you&apos;re an EU citizen living in France, the auto-entrepreneur (micro-entreprise) status is the simplest self-employment structure. Extremely low administrative overhead, flat-rate social contributions (22% for services), and turnover ceiling of €77,700/year for services. Beyond that ceiling, you must switch to a standard company structure.
-      </p>
-      <p>
-        For non-EU citizens wanting to work independently in France, you&apos;ll need a residence permit with self-employment authorization — the Passeport Talent (Profession Libérale) or an auto-entrepreneur visa.
-      </p>
-      <h3>Portage Salarial (The French Middle Ground)</h3>
-      <p>
-        Portage salarial is a uniquely French arrangement with no direct equivalent in most other countries. A portage company acts as your legal employer — you sign an employment contract with them, they invoice your French client, collect payment, and pay you as a salary minus their fee (typically 5–10%) and social contributions. You receive full French employee benefits: health insurance (Sécurité Sociale), retirement contributions, and unemployment insurance.
-      </p>
-      <p>
-        This is the closest equivalent to an EOR arrangement in French law, and it&apos;s how many international professionals integrate into the French market without creating their own French entity. Companies like Extencia, Titan, and OpenWork offer portage services. Cost is higher than direct contracting, but legal clarity is better.
-      </p>
+      <P drop>
+        France&apos;s reputation among international remote workers is frequently underestimated. The country&apos;s strong language culture and well-documented labor protections lead many candidates to assume that the French market is closed to those without French fluency or EU residency. The reality, particularly at the scale-up tier of the French tech ecosystem, is considerably more accessible. Station F in Paris, the world&apos;s largest startup campus, hosts over 1,000 companies, a significant proportion of which operate in English and hire from a global talent pool. The challenge for international candidates is not penetrating the French market; it is presenting themselves correctly within its distinct professional conventions.
+      </P>
+      <P>
+        The French application process follows structured conventions that differ meaningfully from both Anglo-American and German norms. A product manager based in Buenos Aires who applied to a Paris-based SaaS company with a strong US-format resume made three errors that eliminated the application before it reached a hiring manager: no lettre de motivation, an American-English CV with no adaptation to French professional style, and an opening paragraph that described responsibilities without contextualizing them within a career narrative. Each error in isolation might have been overlooked; together, they signaled to the recruiter that the candidate had not researched the French application process at all.
+      </P>
+      <P>
+        This guide addresses the complete picture for international candidates targeting French companies: CV conventions, the lettre de motivation structure that French recruiters expect, the photo question under French law, language requirements by sector and role type, and the common application errors that disproportionately affect international candidates.
+      </P>
 
-      <h2>The French CV: Format, Structure, and What French Recruiters Expect</h2>
-      <h3>Strict One-Page Rule (Junior and Mid-Level)</h3>
-      <p>
-        French CVs are one page — always — for candidates with fewer than 8–10 years of experience. This is more rigid than the UK (which allows two pages) and aligns with US convention. The constraint forces selectivity: every line must earn its place.
-      </p>
-      <p>
-        For senior and executive candidates, two pages are acceptable — but only if the second page is genuinely necessary. Never pad to fill space.
-      </p>
-      <h3>Formation First (For Junior Candidates)</h3>
-      <p>
-        French professional culture gives exceptional weight to educational pedigree. For candidates with fewer than 5 years of experience, the Formation (education) section comes before Expériences Professionnelles. French recruiters — particularly at larger companies — use academic institution as a first-pass filter.
-      </p>
-      <p>
-        If your university is internationally ranked but not well-known in France, add ranking context: &quot;Université de São Paulo — Top 3 engineering school in Latin America&quot; or &quot;Seoul National University — ranked Top 10 in Asia (QS 2026).&quot; This gives French recruiters the reference point they need.
-      </p>
-      <h3>No Photo (Recommended, Not Mandatory)</h3>
-      <p>
-        Unlike Germany, France does not have a cultural expectation of a CV photo. The official guidance from the Défenseur des droits (France&apos;s equality authority) is that photos create discrimination risk and should be omitted. Most French HR professionals and ATS systems are now photo-neutral. Omitting the photo is the safer, more professional choice for the French market.
-      </p>
-      <h3>Formal Tone and Complete Sentences in the Summary</h3>
-      <p>
-        The French CV opens with an Accroche (hook) or Profil — a 2–3 sentence professional summary. Unlike the US bulleted objective statement, the French accroche is written in complete sentences, formal register, and third-person without the pronoun: &quot;Ingénieure data avec 6 ans d&apos;expérience en machine learning appliqué à la santé, spécialisée dans les architectures MLOps à grande échelle...&quot;
-      </p>
+      <H2 id="why-france">Why France Is a Stronger Market Than It Appears</H2>
+      <P>
+        The French Tech ecosystem has grown significantly since the government launched the La French Tech initiative in 2013. By 2024, France had produced 37 unicorns, including BlaBlaCar, Doctolib, Alan, Contentsquare, and Mirakl. Investment in French tech reached €8.3 billion in 2023, with Paris ranking as the third-largest startup hub in Europe after London and Berlin. These companies, particularly the VC-backed scale-ups, hire internationally as a structural practice rather than an exception.
+      </P>
+      <P>
+        The employer-of-record model has become widespread at French tech companies that hire internationally. Platforms like Deel, Remote.com, and Workmotion allow French companies to engage international talent through local employment in the candidate&apos;s home country, with French labor law applying only to the French entity&apos;s internal team. This means that a UX designer based in Warsaw or a data engineer based in São Paulo can be employed by a French scale-up without either party navigating French immigration law. The work is done remotely; the employment relationship is local.
+      </P>
+      <P>
+        Salary benchmarks at French tech companies are competitive within the European context. Senior engineers in Paris earn €60,000 to €100,000, with remote roles for international candidates often benchmarked against local market rates in the candidate&apos;s country, adjusted for expertise level. Companies like Doctrine, Spendesk, and Payfit have established international remote hiring programs with standardized compensation frameworks for overseas employees.
+      </P>
+      <KeyTakeaway>France&apos;s tech ecosystem is larger, better funded, and more internationally open than its language reputation suggests. EOR arrangements make international employment straightforward for companies and candidates who understand the mechanism.</KeyTakeaway>
 
-      <h2>The Lettre de Motivation: Structure and Common Mistakes</h2>
-      <p>
-        The lettre de motivation is mandatory for most French applications and follows a specific three-part structure. Getting it wrong is one of the most common mistakes international candidates make:
-      </p>
-      <h3>L&apos;Accroche — The Opening Hook</h3>
-      <p>
-        Your first sentence must capture attention immediately. The single most common mistake: opening with &quot;Je me permets de vous contacter pour postuler au poste de...&quot; (&quot;I am contacting you to apply for the position of...&quot;). This is the generic, formulaic opening that signals an unpersonalized letter to any French recruiter.
-      </p>
-      <p>
-        Instead: open with something specific — a recent company milestone, an insight about their market, or a direct connection between your background and their stated challenge. &quot;Depuis que Qonto a franchi le million de PME clientes en 2025, la question de la scalabilité des systèmes de compliance est devenue centrale — c&apos;est précisément ce sur quoi j&apos;ai travaillé ces trois dernières années chez [Company].&quot;
-      </p>
-      <h3>Le Développement — Body (Two Paragraphs Max)</h3>
-      <p>
-        Paragraph one: your relevant experience and qualifications, with 2–3 specific evidence points. Paragraph two: why this company specifically — their product direction, values, or market position, not generic statements about wanting to work in France or grow professionally.
-      </p>
-      <h3>La Conclusion</h3>
-      <p>
-        Brief, professional, no over-enthusiasm. The French equivalent of &quot;I look forward to discussing further&quot; is: &quot;Dans l&apos;attente d&apos;un éventuel entretien, je vous adresse mes cordiales salutations.&quot; Never: &quot;I would be thrilled and honored to join your amazing team!!!&quot; — enthusiasm expressed this way reads as naïve in French professional culture.
-      </p>
-      <h3>Classic Mistakes by Non-French Candidates</h3>
+      <H2 id="cv-format">CV Format for French International Candidates</H2>
+      <P>
+        The French CV, known simply as a CV (curriculum vitae), follows a format that sits between the comprehensive German Lebenslauf and the achievement-focused UK CV. Understanding where it sits on this spectrum is useful for international candidates who have already optimized their materials for another market.
+      </P>
+      <H3>Length and structure</H3>
+      <P>
+        French CVs run one to two pages for most candidates. A single page is appropriate for candidates with fewer than five years of experience; two pages are standard for experienced professionals. Unlike the German Lebenslauf, which is dense with personal information and formal credentials, the French CV is more selective. Work experience is presented in reverse chronological order, with concise descriptions of role scope and notable achievements. French CVs include education prominently, often before work experience for candidates who graduated from prestigious institutions such as the Grandes Écoles, which carry significant weight with French employers.
+      </P>
+      <H3>Personal information</H3>
+      <P>
+        French CVs traditionally included date of birth, nationality, and marital status. Contemporary practice, informed by French equal opportunity legislation, has shifted significantly: including age, marital status, or nationality is no longer standard and is actively avoided at progressive companies. A professional address or city of residence is typically included. The photo question is addressed separately below, as it requires specific context.
+      </P>
+      <H3>Career narrative</H3>
+      <P>
+        A brief professional summary, two to four sentences, at the top of the CV is standard in France. Unlike the achievement-heavy opening paragraphs common in UK CVs, the French summary tends toward narrative positioning: who the candidate is professionally, what expertise they bring, and what kind of role they are seeking. This frames the reader&apos;s engagement with the rest of the document.
+      </P>
+      <KeyTakeaway>The French CV prioritizes career narrative and education over the metric-driven achievement listings dominant in Anglo-American markets. A well-structured French CV positions the candidate&apos;s professional identity before presenting the evidence for it.</KeyTakeaway>
+
+      <H2 id="lettre-motivation">The Lettre de Motivation: Structure and Tone</H2>
+      <P>
+        The lettre de motivation is the French equivalent of a cover letter, but it carries significantly more cultural weight than cover letters do in the UK or US. French companies, including those operating in English and hiring internationally, typically expect a lettre de motivation as a standard component of any application. Its absence is noticed and frequently interpreted as a lack of professional preparation or genuine interest in the specific company.
+      </P>
+      <H3>The three-part structure</H3>
+      <P>
+        The canonical French lettre de motivation follows a three-part structure known informally as vous-moi-nous, or &quot;you-me-us.&quot; The first paragraph demonstrates genuine knowledge of the company: its mission, recent achievements, market position, or specific challenges that the candidate has researched. The second paragraph presents the candidate&apos;s professional identity, relevant experience, and specific qualifications for the role being applied to. The third paragraph synthesizes the alignment between the first two: why this candidate, at this moment in their career, is specifically the right match for this specific company and role. This three-part architecture is not a stylistic preference; it is the evaluative framework French recruiters use when reading cover letters.
+      </P>
+      <H3>The opening line</H3>
+      <P>
+        The opening line of the lettre de motivation is its most important element. Beginning with &quot;I am writing to apply for the position of&quot; is a near-universal rejection signal in France. The expected approach is an accroche, an engaging, company-specific opening sentence that demonstrates research and genuine interest. A strong accroche for a fintech role might reference a recent product launch, a public funding round, or a stated strategic direction from the company&apos;s website. It should be specific enough that it could only have been written for this company, not recycled across applications.
+      </P>
+      <H3>Register</H3>
+      <P>
+        The register of the lettre de motivation should be formal regardless of how casual the company&apos;s public-facing communication is. First contact with a French company should always default to the formal register. If the company responds informally and the interview process validates a more relaxed culture, the initial formality will not have been held against the candidate. The reverse is not true.
+      </P>
+      <KeyTakeaway>The lettre de motivation&apos;s vous-moi-nous structure and company-specific accroche are the two elements that most reliably distinguish strong French applications from generic ones. Both can be learned and applied systematically.</KeyTakeaway>
+
+      <H2 id="photo-policy">The Photo Question: What French Law Actually Says</H2>
+      <P>
+        French employment law does not prohibit including a professional photo on a CV, but it explicitly prohibits employers from using appearance-based information in hiring decisions. This creates an ambiguous position for the photo that international candidates should understand precisely.
+      </P>
+      <P>
+        Current best practice at French companies, particularly larger ones with formal HR compliance functions, is to omit the photo. French HR professionals are trained to remove photos from CVs before sharing them with hiring managers, to avoid any potential appearance-based discrimination claim. Submitting a CV with a photo does not create a legal problem for the candidate; it does create an administrative step for the HR team and signals unfamiliarity with contemporary French professional norms.
+      </P>
+      <P>
+        The practical recommendation for international candidates: omit the photo from CVs submitted to French companies, and include a link to a professional LinkedIn profile instead. This gives recruiters who want visual context the option to find it, without creating a compliance concern within the application itself. This recommendation applies across company types, from traditional French enterprises to Station F startups.
+      </P>
+      <KeyTakeaway>Omitting the photo from French applications and linking to LinkedIn instead is the standard contemporary practice. Including a photo creates a compliance concern for HR teams and signals unfamiliarity with current French professional norms.</KeyTakeaway>
+
+      <H2 id="language">Language Requirements: English vs French Roles</H2>
+      <P>
+        Language requirements in France vary significantly by company type, sector, and role function. Understanding the landscape before applying prevents the most common failure mode for international candidates: applying for roles where French fluency is required without possessing it.
+      </P>
+      <P>
+        At Paris-based tech scale-ups, particularly those that have raised international VC funding and operate with international teams, English is frequently the working language for engineering, product, and data roles. Companies like Contentsquare, Mirakl, Spendesk, and Doctrine publish job postings in English and conduct technical interviews in English, with French reserved for local team cohesion functions. For these roles, candidates without French fluency are genuinely competitive.
+      </P>
+      <P>
+        For marketing, content, customer success, and community roles at French companies, B2 to C1 French is typically required regardless of the company&apos;s international orientation. These roles involve communication with French customers, French-language content creation, or French-language team coordination that cannot be effectively performed without fluency. Applying for these roles without the required proficiency wastes the candidate&apos;s time and damages their professional reputation with a recruiter who may be relevant for future opportunities.
+      </P>
+      <P>
+        The reliable signal is the job posting language itself. A posting published in English strongly indicates that English is the working language for that role. A posting in French with no English-language version strongly indicates French is required. Bilingual postings, common at internationally oriented companies, typically welcome candidates with strong English and functional French.
+      </P>
+      <KeyTakeaway>The language of the job posting is the most reliable signal of the language requirement for a given role. Targeting English-language postings at internationally oriented French scale-ups is the most productive strategy for candidates without French fluency.</KeyTakeaway>
+
+      <H2 id="sectors">Sectors Most Open to International Talent</H2>
+      <P>
+        Certain French industry sectors have normalized international hiring to a degree that makes them disproportionately productive for international candidates to target.
+      </P>
+      <P>
+        Fintech and payments is the most internationally open sector in the French ecosystem. Companies like Lydia, Payfit, and Kyriba have built international engineering and product teams as a core structural choice. Legaltech and regtech, represented by companies like Doctrine and Hyperlex, hire product and engineering internationally because the underlying technical challenges are language-independent. Enterprise SaaS, particularly tools targeting the US and European markets, actively recruits internationally for software engineering, data science, and developer relations roles where global perspective is a genuine advantage. Cybersecurity is growing rapidly in France with significant international hiring from companies like Stormshield, Alsid, and Sekoia.
+      </P>
+      <KeyTakeaway>French fintech, enterprise SaaS, legaltech, and cybersecurity companies are the most consistently open to international candidates. Targeting these sectors rather than the French market broadly significantly improves the ratio of accessible to inaccessible opportunities.</KeyTakeaway>
+
+      <H2 id="platforms">Platforms and Job Boards That Work</H2>
       <ul>
-        <li>Generic opening sentence (the most common fatal error)</li>
-        <li>Using &quot;tu&quot; instead of &quot;vous&quot; — always &quot;vous&quot; in professional correspondence</li>
-        <li>Excessive enthusiasm and American-style positivity — French culture values restraint and precision over energy</li>
-        <li>Talking about personal goals rather than what you bring to the company</li>
-        <li>Exceeding one page (the lettre de motivation should always be one page, max)</li>
+        <li><strong>JobConnect AI:</strong> Identifies French job postings that explicitly welcome international candidates, filters for genuine remote eligibility, and flags French language requirements before the application is submitted.</li>
+        <li><strong>Welcome to the Jungle:</strong> France&apos;s leading platform for startup and scale-up roles, with detailed company profiles showing working language, remote policy, and company culture. Filter by t&eacute;l&eacute;travail (remote) and company size to surface the most internationally accessible opportunities.</li>
+        <li><strong>LinkedIn Jobs:</strong> Essential for senior roles and for French subsidiaries of international companies. English-language postings on LinkedIn France are a strong signal of international openness.</li>
+        <li><strong>Station F job board:</strong> Direct access to companies based at Station F, many of which are in early-stage growth and hire internationally through contractor or EOR arrangements.</li>
+        <li><strong>Relocate.me:</strong> Surfaces European remote roles with explicit international eligibility, with good French company representation across tech sectors.</li>
       </ul>
 
-      <h2>French Professional Culture: What International Candidates Miss</h2>
-      <h3>Hierarchy Is Real</h3>
-      <p>
-        French organizations are more hierarchical than most Anglo-Saxon companies. Decision-making concentrates upward; junior employees rarely challenge senior ones in group settings. In remote environments, this means: address senior stakeholders formally, route questions through appropriate channels rather than directly to executives, and frame disagreement as a structured argument rather than casual pushback.
-      </p>
-      <h3>Formality Before Familiarity</h3>
-      <p>
-        The vous/tu boundary is more significant than most international candidates realize. In French professional settings, using tu before it&apos;s offered is presumptuous — it implies an equality or familiarity that hasn&apos;t been established. Default to vous in all professional correspondence until the other person explicitly invites tu. In Slack and email with French colleagues, vous until established otherwise.
-      </p>
-      <h3>Meetings Have a Different Purpose</h3>
-      <p>
-        French business meetings (réunions) are often more formal and structured than their US or UK equivalents. They tend to be more about presenting prepared positions than improvising in real time. Come to meetings with a clear position, prepared arguments, and structured thinking. Improvised brainstorming in front of senior stakeholders is less culturally accepted than in US startup contexts.
-      </p>
-
-      <h2>Platforms Where French Companies Hire International Remote Workers</h2>
+      <H2 id="common-mistakes">Common Mistakes International Candidates Make</H2>
+      <P>
+        The errors that most consistently eliminate qualified international candidates from French hiring processes are procedural and cultural, not technical. They occur at the application stage and are entirely avoidable with the right preparation.
+      </P>
       <ul>
-        <li><strong>Welcome to the Jungle</strong> — The dominant platform for French startups and scale-ups. Many English-language listings. Filter by télétravail (remote). Company profiles are detailed enough to assess language of operation before applying.</li>
-        <li><strong>JobConnect AI</strong> — Flags French listings that genuinely hire international remote workers vs those requiring EU presence or French fluency.</li>
-        <li><strong>LinkedIn France</strong> — Filter: France + Remote. Look for English-first companies with international team photos. Avoid listings where the entire description is in French (they expect French-speaking candidates).</li>
-        <li><strong>Remixjobs</strong> — French tech-focused job board with strong filtering for remote and contract roles.</li>
-        <li><strong>APEC</strong> (apec.fr) — Executive and senior engineering roles. French-language platform, but many international tech companies post here. Strong for roles requiring 3+ years of experience.</li>
-        <li><strong>Remotive.com</strong> — Global remote board with consistent French company presence. Search for Paris or France in the company location filter.</li>
+        <li><strong>Submitting without a lettre de motivation:</strong> Even when not explicitly required, its absence is consistently noted by French recruiters and interpreted as either poor preparation or insufficient interest in the specific company.</li>
+        <li><strong>Opening the lettre with a generic statement:</strong> Beginning with &quot;I am writing to apply for&quot; signals immediately that the candidate is working from a template rather than engaging with this specific company, which is the most fundamental failure of the lettre de motivation format.</li>
+        <li><strong>Applying for French-language roles without fluency:</strong> Marketing, content, and customer-facing roles in French are not accessible to candidates below C1 level, and applying for them without this proficiency creates a negative impression with a recruiter who may be relevant to future applications.</li>
+        <li><strong>Using an overly informal register in initial communications:</strong> First contact with French companies should be formal, regardless of the company&apos;s public persona. Casualness in initial professional communication is read as disrespect for professional norms in France, not friendliness.</li>
+        <li><strong>Failing to include a career narrative:</strong> French CVs are evaluated as narrative documents, not lists of achievements. A CV that reads as a sequence of bullet points without a guiding professional identity fails to meet the evaluative standard French recruiters apply.</li>
       </ul>
+      <KeyTakeaway>All of these errors are correctable with preparation that takes less time than a single rejected application represents. International candidates who invest in understanding French professional conventions recover that investment immediately in improved application-to-response rates.</KeyTakeaway>
 
-      <h2>English vs French: What Level Do You Actually Need?</h2>
-      <p>
-        The honest answer depends entirely on the role and company:
-      </p>
-      <ul>
-        <li><strong>Engineering, data science, DevOps at tech scale-ups:</strong> English is sufficient. Most codebases, documentation, and technical discussions are in English at French tech companies above 50 employees.</li>
-        <li><strong>Product management:</strong> English for technical PM work; French often needed for stakeholder management and user research at French-market-focused companies.</li>
-        <li><strong>Design:</strong> English for international product roles; French for local market/brand roles.</li>
-        <li><strong>Marketing, content, community:</strong> French required — there is almost no such thing as a French-market marketing role that doesn&apos;t require French.</li>
-        <li><strong>Sales and customer success:</strong> French required for French-market roles; English sufficient for international sales teams.</li>
-      </ul>
-      <p>
-        If French is your second or third language at an intermediate level, it is worth stating it explicitly: &quot;French — B1 (in progress)&quot; signals good faith and awareness of the market you&apos;re targeting, even if it&apos;s not sufficient for French-language work. Many French tech companies will appreciate the cultural awareness.
-      </p>
+      <FAQ items={[
+        {
+          q: 'Do I need a French work permit to work remotely for a French company from abroad?',
+          a: 'No. Working remotely from your home country for a French company as an independent contractor or through an EOR arrangement does not require French work authorization. You are legally employed or contracting in your home country. French labor law applies only to employees physically present in France or employed on a French employment contract.'
+        },
+        {
+          q: 'How important is educational prestige to French employers?',
+          a: 'More than in most other markets, particularly at larger French companies. Graduates of the Grandes Écoles (École Polytechnique, HEC Paris, Sciences Po, CentraleSupélec) carry significant prestige in France. International candidates from well-regarded universities should add ranking context to their CV, since French recruiters may not recognize non-French institutions without this reference point.'
+        },
+        {
+          q: 'Is the three-part lettre de motivation structure really universal in France?',
+          a: 'It is the expected structure at the vast majority of French companies, from traditional enterprises to modern startups. Variations exist at highly anglicized companies that have adopted US-style application processes, but defaulting to the vous-moi-nous structure is always safe. Deviating from it at a traditional French company is a meaningful risk.'
+        },
+        {
+          q: 'What is La French Tech, and does it affect international hiring?',
+          a: 'La French Tech is the French government initiative supporting the growth of French tech companies. Companies with La French Tech status tend to be growth-stage, internationally oriented, and actively hiring to scale. The French Tech Visa, available to employees of La French Tech-approved companies, is relevant for candidates who want to relocate to France rather than work remotely from abroad.'
+        },
+        {
+          q: 'Can I negotiate a French-market salary as an international remote candidate?',
+          a: 'Yes. French companies hiring internationally through EOR arrangements typically benchmark compensation against the candidate&apos;s local market or against a European median, depending on the role and seniority. At the senior level, compensation is increasingly benchmarked against the role&apos;s market rate rather than the candidate&apos;s location, and negotiation based on expertise and market value is entirely appropriate.'
+        },
+      ]} />
+
+      <Conclusion>
+        <P>
+          France rewards international candidates who approach it with the same precision it brings to its own professional conventions. The lettre de motivation, the career narrative CV, the formal register of initial communications, and the sector targeting that focuses effort on English-operating scale-ups: these are learnable skills, not barriers. Candidates who apply them consistently find that the French market, particularly at the company tier that has committed to international growth, is more accessible than its reputation suggests.
+        </P>
+        <P>
+          JobConnect AI&apos;s Remote-Friendly Detector identifies French job postings that explicitly welcome international remote candidates, filters for genuine remote eligibility versus domestic-only roles, and flags French language requirements before any application effort is invested. For candidates who have prepared correctly, France&apos;s growing tech ecosystem represents a compelling and underutilized opportunity.
+        </P>
+      </Conclusion>
 
     </article>
   )

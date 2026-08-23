@@ -1,213 +1,156 @@
+import { H2, H3, P, KeyTakeaway, Quote, TOC, FAQ, StatHook, Conclusion } from '@/components/blog/ArticleComponents'
+
 export default function ArticleContent() {
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h2:text-xl prose-h3:text-base prose-p:leading-relaxed prose-li:leading-relaxed">
 
-      <p className="lead text-lg text-slate-600 dark:text-slate-300 font-normal not-prose mb-8">
-        The United States is the single largest market for remote tech jobs in the world — and the most confusing for international candidates. The word &quot;remote&quot; appears in hundreds of thousands of US job postings, but the majority of those roles were never intended for candidates outside the country. This guide cuts through the confusion: what work authorization actually means for remote roles, how to identify companies that genuinely hire internationally, and how to position yourself to win.
-      </p>
+      <StatHook>The United States accounts for over 40% of global remote job listings — but a 2024 analysis found that fewer than 18% of those listings explicitly welcome applications from outside North America.</StatHook>
 
-      <h2>W-2 vs 1099 vs Corp-to-Corp: The Three Relationships</h2>
-      <p>
-        Before targeting US companies, you need to understand the three main employment structures — because they have completely different implications for international candidates.
-      </p>
-      <h3>W-2 (Employee)</h3>
-      <p>
-        A W-2 relationship means you&apos;re a direct employee of the US company. The company withholds federal and state income taxes, pays employer FICA (Social Security and Medicare), and issues a W-2 tax form annually. Benefits — health insurance, 401(k), paid time off — are standard at W-2 positions.
-      </p>
-      <p>
-        For international candidates: <strong>W-2 employment requires US work authorization.</strong> This means a Green Card, US citizenship, H-1B visa, OPT/STEM OPT (for F-1 students), or another qualifying status. Without authorization, you cannot legally be a W-2 employee of a US company — and any company that tells you otherwise is either mistaken or operating outside the law.
-      </p>
-      <h3>1099 (Independent Contractor)</h3>
-      <p>
-        A 1099 relationship means you&apos;re a self-employed contractor. The company pays your gross invoiced amount with no tax withholding; you&apos;re responsible for your own taxes. No benefits, no employer FICA contribution. The company issues a 1099-NEC form if they pay you more than $600 in a calendar year.
-      </p>
-      <p>
-        For international candidates: <strong>1099 contracting as a foreign individual is legally complex.</strong> Many US companies will not issue 1099s to foreign individuals due to IRS withholding requirements (30% backup withholding on payments to non-resident aliens under the default rules, unless a tax treaty applies). This is why many international contractors work through a foreign entity instead.
-      </p>
-      <h3>Corp-to-Corp (C2C)</h3>
-      <p>
-        Corp-to-Corp means you operate through your own business entity (an LLC, corporation, or equivalent in your home country) that invoices the US company directly. The US company pays your entity as a business expense; your entity pays you under your home country&apos;s laws.
-      </p>
-      <p>
-        For international candidates: <strong>Corp-to-Corp is the most accessible and legally clean path.</strong> You invoice from your home country entity. No US work authorization required. No IRS withholding complications. Payment goes business-to-business. This is how the majority of international contractors legitimately work with US companies.
-      </p>
-      <p>
-        Alternatively, Employer of Record (EOR) services like Deel, Remote.com, or Rippling employ you in your home country under local law, then bill the US company as a service fee. Same clean result — legal employment without US authorization.
-      </p>
+      <TOC items={[
+        { id: 'landscape', label: 'Understanding the US Remote Job Landscape' },
+        { id: 'employment-types', label: 'W-2, 1099, and Corp-to-Corp: What They Mean for You' },
+        { id: 'detect-international', label: 'How to Detect Genuinely International-Open Roles' },
+        { id: 'resume-format', label: 'US Resume Format and ATS Optimization' },
+        { id: 'interview-culture', label: 'Interview Culture: What US Hiring Managers Expect' },
+        { id: 'platforms', label: 'Platforms and Networks That Yield Results' },
+        { id: 'common-mistakes', label: 'Common Mistakes International Candidates Make' },
+      ]} />
 
-      <h2>Work Authorization: What It Actually Means for Remote Jobs</h2>
-      <p>
-        &quot;Work authorization&quot; refers to the legal right to be employed within the United States. The critical nuance: <strong>working remotely for a US company from your home country is not the same as working in the United States.</strong>
-      </p>
-      <p>
-        If you&apos;re sitting in Lagos, São Paulo, or Manila doing work for a company in San Francisco — you are physically working in your home country. You are not working in the United States, regardless of where the company is headquartered. Therefore, US work authorization is not required for the physical act of performing the work.
-      </p>
-      <p>
-        What US work authorization <em>does</em> govern:
-      </p>
-      <ul>
-        <li>Being on a US payroll as a W-2 employee</li>
-        <li>Working physically within US territory</li>
-        <li>Receiving certain types of US-sourced income under specific tax treaty provisions</li>
-      </ul>
-      <p>
-        The practical implication: when a US job posting says &quot;must be authorized to work in the US,&quot; it usually means the company is hiring a W-2 employee and will not engage with contractors or EOR arrangements. When a posting says &quot;open to contractors&quot; or &quot;corp-to-corp accepted,&quot; international candidates are often genuinely in scope.
-      </p>
+      <P drop>
+        No remote job market in the world matches the United States in scale, compensation, or the quality of companies actively seeking distributed talent. A senior engineer based in São Paulo targeting a Series B Austin startup, a product manager in Warsaw pursuing a fintech role in New York, a data scientist in Nairobi applying to a San Francisco AI company: these scenarios have become increasingly common, and increasingly viable, as US companies have formalized remote-first policies and developed the international payroll infrastructure to support them. The challenge is not finding US remote opportunities; it is identifying, with precision, which of those opportunities are genuinely open to you.
+      </P>
+      <P>
+        The gap between the promise and the reality of the US remote market is significant. Of the approximately 2.4 million remote jobs posted on major US platforms in 2024, an estimated 82% require US work authorization as either a legal requirement or an unstated assumption. The job postings themselves rarely make this explicit in the headline. Phrases like &quot;remote friendly,&quot; &quot;location flexible,&quot; and &quot;work from anywhere&quot; do not, by default, mean available to candidates outside the United States. Understanding how to read the fine print, and where to look for roles that have cleared that bar, is the foundational skill for a productive US job search from abroad.
+      </P>
+      <P>
+        This guide breaks down the US remote market systematically: the employment type frameworks that determine whether a company can hire you internationally, the specific language signals that reveal a role&apos;s true international openness, the ATS-driven resume conventions that determine whether your application reaches a human, and the interview culture norms that shape hiring decisions at American companies.
+      </P>
 
-      <h2>Why &quot;Remote&quot; US ≠ Remote International (And How to Detect It)</h2>
-      <p>
-        This is the most expensive mistake international candidates make: applying to US remote jobs that were never intended for non-US candidates. The cost is time, hope, and often the start of a discouraging spiral.
-      </p>
-      <p>
-        US companies post &quot;remote&quot; jobs for several reasons that exclude international candidates by default:
-      </p>
-      <ul>
-        <li><strong>State-based remote:</strong> The company hires remotely but only within specific US states for payroll, benefits, or legal reasons (&quot;remote — US only,&quot; &quot;remote — must reside in California, Texas, or New York&quot;)</li>
-        <li><strong>W-2 only:</strong> The role is structured as employee-only with no contractor alternative, legally requiring US authorization</li>
-        <li><strong>ITAR/government clearance:</strong> Defense contractors and government-adjacent companies cannot legally employ non-US persons on certain contracts</li>
-        <li><strong>Health benefits complexity:</strong> US health insurance is employer-linked; companies with W-2 plans often can&apos;t extend benefits internationally, creating a structural barrier</li>
-        <li><strong>Overlap requirements:</strong> &quot;Remote but must be available 9–5 ET&quot; is functionally a US/Canada timezone requirement</li>
-      </ul>
-      <p>
-        <strong>How to detect internationally-accessible US remote roles:</strong>
-      </p>
-      <ul>
-        <li>Look for explicit signals: &quot;open to international contractors,&quot; &quot;c2c accepted,&quot; &quot;hire anywhere,&quot; &quot;global remote,&quot; &quot;EOR supported&quot;</li>
-        <li>Check the company&apos;s existing team on LinkedIn — if their current staff is internationally distributed, they have the infrastructure to hire you</li>
-        <li>Remote-first companies (Gitlab, Automattic, Basecamp-heritage companies) are structurally designed for international hiring</li>
-        <li>Series A–C startups with distributed founding teams often don&apos;t have a US-only hiring requirement baked in yet</li>
-        <li>Avoid large enterprises with HR departments: their compliance requirements almost always default to W-2-only hiring</li>
-      </ul>
-      <p>
-        JobConnect AI&apos;s Remote-Friendly Detector specifically flags US job postings based on these signals, filtering out the &quot;remote US only&quot; roles before they appear in your results.
-      </p>
+      <H2 id="landscape">Understanding the US Remote Job Landscape</H2>
+      <P>
+        The US remote job market divides into two meaningfully distinct categories for international candidates: companies that have built international payroll infrastructure and explicitly welcome overseas applicants, and companies that use &quot;remote&quot; to mean &quot;anywhere in the United States.&quot; These two categories are not distinguishable from job titles or seniority levels; they are distinguishable from specific language in job descriptions and from a company&apos;s known hiring history.
+      </P>
+      <P>
+        The companies most consistently open to international candidates tend to share a set of characteristics. They are either remote-first by design, having built their entire operating model around distributed teams, or they are companies that have completed international expansion and already operate with multi-country payroll. Companies like Automattic (WordPress), GitLab, Basecamp, Stripe, and Deel have published explicit worldwide remote hiring policies. YC-backed startups increasingly hire internationally from early stages, particularly for engineering roles where the talent pool is demonstrably global. Enterprise companies with strong international revenue streams, including Salesforce, HubSpot, and Atlassian, maintain employer-of-record arrangements in dozens of countries.
+      </P>
+      <P>
+        The companies least likely to hire internationally are mid-market US businesses that adopted remote work as a pandemic-era accommodation rather than a structural commitment. These companies often post roles as &quot;remote&quot; but mean remote within the United States, where payroll, benefits, and employment law are already familiar territory. The remote work policy exists; the international hiring infrastructure does not.
+      </P>
+      <KeyTakeaway>The US remote market is large but asymmetric in its international openness. Focusing the search on remote-first companies, international-scale enterprises, and YC-backed startups dramatically improves the ratio of genuinely accessible opportunities to total listings.</KeyTakeaway>
 
-      <h2>The US Resume: Format, Rules, and What ATS Expects</h2>
-      <p>
-        The American resume format is one of the most rigid in the world — and the most different from what most international candidates are used to. Getting this wrong is an immediate disqualifier.
-      </p>
-      <h3>One Page (With One Exception)</h3>
-      <p>
-        The standard US resume is one page for candidates with fewer than 10 years of experience. Two pages are acceptable for candidates with 10+ years and senior/executive roles. Three pages is almost never appropriate outside academic CVs. If you&apos;re submitting a 2-3 page resume from a European tradition, trim it to one page before sending to US companies — it reads as unfamiliarity with the market.
-      </p>
-      <h3>Absolutely No Personal Information</h3>
-      <p>
-        US Equal Employment Opportunity (EEO) law makes it illegal for employers to make hiring decisions based on age, nationality, religion, marital status, or physical appearance. Therefore, US resumes never include:
-      </p>
+      <H2 id="employment-types">W-2, 1099, and Corp-to-Corp: What They Mean for You</H2>
+      <P>
+        Understanding US employment classifications is essential for international candidates, because the employment type directly determines whether a company can legally engage you, and under what terms. The three classifications that appear most frequently in US remote job postings each carry different implications.
+      </P>
+      <H3>W-2 employment</H3>
+      <P>
+        A W-2 position is full-time employment where the company withholds and remits payroll taxes on the employee&apos;s behalf. For international candidates, a US company can offer W-2 employment in two ways: by sponsoring a work visa (H-1B, O-1, or a TN visa for Canadians and Mexicans) or by engaging the candidate through an employer-of-record (EOR) service operating in the candidate&apos;s country of residence. The EOR path is the most common route for fully remote W-2 positions that welcome international applicants.
+      </P>
+      <H3>1099 contracting</H3>
+      <P>
+        A 1099 position treats the worker as an independent contractor. The company pays a gross rate and issues a 1099 tax form at year end; the contractor is responsible for their own taxes and benefits. For international candidates, 1099 arrangements are often the most accessible path to working with US companies, because they require no US payroll infrastructure. The company engages the international candidate as a foreign independent contractor, pays in US dollars via international wire or platforms like Deel, and has no employment law obligations in the candidate&apos;s country. The tradeoff is that 1099 rates must be self-calibrated to account for taxes, benefits, and the absence of employment protections.
+      </P>
+      <H3>Corp-to-Corp (C2C)</H3>
+      <P>
+        Corp-to-Corp arrangements involve the international candidate operating through their own registered company, which then invoices the US client. This structure provides additional legal clarity for both parties and is particularly common for senior engineering, consulting, and product roles where the engagement is project-based or long-term contract. A DevOps engineer based in Bucharest who has established a Romanian SRL (simplified limited liability company) can engage US clients on a C2C basis with clear invoicing, defined deliverables, and contractual protections on both sides.
+      </P>
+      <KeyTakeaway>The 1099 and Corp-to-Corp structures are the most accessible paths for international candidates working with US companies. Understanding the difference between these and W-2 employment, and identifying which structure a company offers, is the most important filtering step before applying.</KeyTakeaway>
+
+      <H2 id="detect-international">How to Detect Genuinely International-Open Roles</H2>
+      <P>
+        Reading US job descriptions for genuine international openness is a skill that significantly improves the efficiency of a remote job search. Certain phrases and structural elements of a job posting are reliable indicators of a company&apos;s actual international hiring posture.
+      </P>
+      <H3>Green flag language</H3>
+      <P>
+        Postings that include phrases such as &quot;worldwide remote,&quot; &quot;global remote,&quot; &quot;work from anywhere in the world,&quot; &quot;we hire internationally,&quot; or explicit mention of EOR providers (Deel, Remote.com, Rippling) are the clearest indicators that international candidates are genuinely welcome. References to specific countries or regions where the company has hired previously are also strong signals. Some postings list the countries in which the company can currently employ, which eliminates ambiguity entirely.
+      </P>
+      <H3>Red flag language</H3>
+      <P>
+        Phrases that effectively exclude international candidates include &quot;must be authorized to work in the United States,&quot; &quot;US persons only,&quot; &quot;eligible to work in the US without sponsorship,&quot; and any reference to specific US state locations. The phrase &quot;remote (US)&quot; in the location field of a job posting is a near-universal indicator that the role is domestic only, regardless of how the body of the posting describes flexibility.
+      </P>
+      <H3>Gray zone postings</H3>
+      <P>
+        Many postings fall into an ambiguous middle ground, where work authorization requirements are not stated explicitly but also not confirmed as absent. For these postings, the most efficient approach is a brief, direct email to the recruiter or hiring manager before submitting a full application. A single-sentence inquiry, &quot;Before applying, I wanted to confirm whether you consider candidates based outside the United States,&quot; takes thirty seconds and saves potentially hours of wasted application effort. US recruiters are accustomed to this question and will answer it promptly.
+      </P>
+      <KeyTakeaway>The most efficient US remote job search is built around aggressive pre-filtering: using precise language signals to identify genuinely international-open roles before investing time in applications, and confirming ambiguous cases with a brief direct inquiry.</KeyTakeaway>
+
+      <H2 id="resume-format">US Resume Format and ATS Optimization</H2>
+      <P>
+        The US resume is a single-page document for most candidates with fewer than ten years of experience, and a maximum two-page document for senior candidates. This is non-negotiable in the American market. The dense, comprehensive two-page CVs that are standard in Germany, appropriate in the UK, and common in France immediately signal to a US recruiter that the candidate has not adapted their materials for the American context.
+      </P>
+      <P>
+        ATS optimization is not optional in the US market. Most companies above thirty employees use Applicant Tracking Systems, including Greenhouse, Lever, Workday, and iCIMS, to screen resumes before a human recruiter reviews them. These systems match the text of your resume against the job description, flagging candidates whose documents include the specific keywords and phrases the hiring manager identified as essential. A resume that describes &quot;extensive experience in machine learning&quot; will score below a resume that uses the exact phrase &quot;five years of experience developing and deploying production machine learning models&quot; when the job description uses that language.
+      </P>
+      <P>
+        No personal information belongs on a US resume. No photos, no dates of birth, no nationality, no marital status. US Equal Employment Opportunity (EEO) regulations mean that US recruiters are specifically trained to flag and discard information that could create a discrimination liability. Including it does not demonstrate thoroughness; it signals unfamiliarity with US employment law norms.
+      </P>
+      <KeyTakeaway>A one-page (or maximum two-page for senior candidates) ATS-optimized resume that mirrors the exact language of the job description, with no personal information, is the standard US application document. Deviating from this format costs applications at the automated screening stage.</KeyTakeaway>
+
+      <H2 id="interview-culture">Interview Culture: What US Hiring Managers Expect</H2>
+      <P>
+        US hiring processes move quickly. The typical sequence at a US tech company runs from application to offer in two to four weeks: an initial recruiter screen, one or two technical or skills assessments, a panel interview, and an offer. This is significantly faster than German or French processes, and the pace is intentional. US hiring managers operate on the assumption that strong candidates are evaluating multiple opportunities simultaneously, and that a slow process loses good people.
+      </P>
+      <P>
+        Self-advocacy is expected in US interviews in a way that can feel unfamiliar to candidates from more modest professional cultures. Being direct about achievements, comfortable stating salary expectations, and clear about what you are looking for are not considered aggressive; they are considered professional. The framing &quot;I built&quot;, &quot;I led&quot;, &quot;I delivered&quot; is standard and expected. The British preference for collaborative framing can feel evasive to a US hiring manager who is trying to assess individual capability.
+      </P>
+      <P>
+        Timezone communication is a practical interview topic that international candidates should address proactively. US hiring managers will ask about it. The most effective approach is to be specific about your available overlap hours and confident that the structure works. A backend engineer based in Warsaw who has successfully operated on a schedule with five hours of daily overlap with a US team for two years has a more persuasive answer than one who says they are &quot;flexible&quot; without specifics.
+      </P>
+      <KeyTakeaway>US interviews reward direct self-advocacy, specific quantified achievement statements, and proactive communication about timezone arrangements. Candidates who address the international remote logistics clearly and confidently remove one of the main sources of hesitation from US hiring managers.</KeyTakeaway>
+
+      <H2 id="platforms">Platforms and Networks That Yield Results</H2>
       <ul>
-        <li>Photo</li>
-        <li>Date of birth</li>
-        <li>Nationality or citizenship status (this goes in the application form, not the resume)</li>
-        <li>Marital status</li>
-        <li>Gender</li>
-        <li>Religion</li>
-        <li>Home address (city + state is fine; full address is unnecessary and sometimes flagged)</li>
-      </ul>
-      <p>
-        International candidates who include photos or nationality on US resumes are signaling inexperience with US norms — and potentially creating awkwardness for recruiters trained to discard that information on sight.
-      </p>
-      <h3>Action Verbs + Quantified Impact</h3>
-      <p>
-        Every bullet point in a US resume should start with a strong past-tense action verb and lead toward a quantified result. The formula:
-      </p>
-      <p><strong>[Action verb] + [what you did] + [result in numbers]</strong></p>
-      <ul>
-        <li>✅ &quot;Architected a microservices migration reducing deployment time by 65%, enabling weekly releases across 3 product lines&quot;</li>
-        <li>✅ &quot;Led a 7-person cross-functional team to deliver a $2.4M enterprise integration on time and under budget&quot;</li>
-        <li>❌ &quot;Responsible for the development and maintenance of microservices infrastructure&quot;</li>
-        <li>❌ &quot;Participated in cross-functional collaboration to achieve project delivery&quot;</li>
-      </ul>
-      <p>
-        Strong action verbs for tech and business roles: Architected, Engineered, Spearheaded, Scaled, Automated, Reduced, Increased, Delivered, Launched, Optimized, Migrated, Integrated. Weak verbs to avoid: Participated, Assisted, Helped, Worked on, Involved in.
-      </p>
-      <h3>ATS Formatting Rules</h3>
-      <p>
-        US companies — especially tech companies — almost universally use ATS systems. The same rules apply here as internationally, but with additional US-specific considerations:
-      </p>
-      <ul>
-        <li>Single-column layout only (two-column breaks ATS parsers)</li>
-        <li>Standard section headings: &quot;Experience,&quot; &quot;Education,&quot; &quot;Skills,&quot; &quot;Summary&quot; — avoid creative alternatives</li>
-        <li>No tables, no text boxes, no headers/footers for important content</li>
-        <li>Dates as &quot;Month YYYY – Month YYYY&quot; format</li>
-        <li>File: .docx preferred; PDF only if text-selectable (not scanned)</li>
-        <li>Mirror keywords from the job description exactly — US ATS is especially keyword-literal</li>
+        <li><strong>JobConnect AI:</strong> Applies a Remote-Friendly Detector to US job postings, identifying roles that explicitly welcome international applicants, flagging work authorization language, and distinguishing genuine worldwide remote positions from domestic US remote roles.</li>
+        <li><strong>We Work Remotely:</strong> One of the largest remote-specific job boards, with strong US representation and a meaningful proportion of listings that explicitly welcome international applicants.</li>
+        <li><strong>Remote.co:</strong> Curates remote positions from companies with established remote-first cultures, many of which hire internationally.</li>
+        <li><strong>LinkedIn Jobs:</strong> With location set to &quot;Remote&quot; and a Boolean search that includes terms like &quot;worldwide remote&quot; or &quot;international candidates welcome,&quot; LinkedIn surfaces a significant volume of genuinely accessible US opportunities.</li>
+        <li><strong>YC Work at a Startup:</strong> Y Combinator&apos;s talent platform connects candidates directly with YC-funded companies, a disproportionate share of which hire internationally, particularly for engineering roles.</li>
       </ul>
 
-      <h2>US Salaries for International Candidates: Reality vs Expectations</h2>
-      <p>
-        US tech salaries are the highest in the world for equivalent roles — and this creates a specific problem for international contractors. Understanding the gap between what US employees earn and what international contractors typically negotiate is essential before entering any compensation conversation.
-      </p>
-      <h3>What US Employees Earn</h3>
-      <p>
-        US software engineers at competitive companies earn $120,000–$300,000+ in total compensation (base + equity + bonus). These numbers are widely reported on Levels.fyi and Glassdoor. They include:
-      </p>
+      <H2 id="common-mistakes">Common Mistakes International Candidates Make</H2>
+      <P>
+        The mistakes that most consistently undermine international candidates in the US market fall into three categories: misreading job posting signals, misformatting application materials, and mishandling the work authorization conversation.
+      </P>
       <ul>
-        <li>Base salary (typically $100K–$200K for senior engineers)</li>
-        <li>Equity (RSUs or options, often the largest component at growth companies)</li>
-        <li>Annual bonus (10–20% of base at many companies)</li>
-        <li>Benefits worth $15,000–$30,000/year (health insurance, 401k match, etc.)</li>
+        <li><strong>Assuming &apos;remote&apos; means globally accessible:</strong> The large majority of US remote job postings use &apos;remote&apos; to mean remote within the United States. Applying without confirming international eligibility wastes application effort and can create a negative recruiter impression if the mismatch is obvious from the candidate&apos;s location.</li>
+        <li><strong>Submitting a multi-page CV in the European format:</strong> A two or three-page German-style Lebenslauf or British-style comprehensive CV submitted to a US company will typically be shortened or deprioritized by ATS systems calibrated for one-page documents and may not be read in full by human reviewers.</li>
+        <li><strong>Avoiding the work authorization conversation:</strong> Waiting until an offer stage to raise the question of international employment structure is the most common reason US remote offers fall apart for international candidates. Raising it early, matter-of-factly, identifies whether the opportunity is viable and signals professional transparency.</li>
+        <li><strong>Underpricing on salary expectations:</strong> International candidates frequently quote salary expectations calibrated to their local market rather than US market rates. US companies hiring internationally typically pay at or near US market rates, particularly for technical roles. Underquoting signals either a misunderstanding of the market or underconfidence in one&apos;s own profile.</li>
+        <li><strong>Weak timezone communication:</strong> Saying &apos;I can be flexible&apos; without specifying overlap hours is not reassuring to a US hiring manager. Specific, confident statements about your working schedule and available overlap hours are more persuasive and remove a key point of uncertainty.</li>
       </ul>
-      <h3>What International Contractors Realistically Earn</h3>
-      <p>
-        International contractors working Corp-to-Corp for US companies typically earn:
-      </p>
-      <ul>
-        <li><strong>No equity</strong> (contractors are not employees; equity is almost never offered)</li>
-        <li><strong>No benefits</strong> (health, retirement, PTO are self-funded)</li>
-        <li><strong>Hourly or monthly contract rates</strong> that reflect local market + premium for US engagement</li>
-        <li><strong>Currency risk</strong> if paid in USD (which most international contractors prefer)</li>
-      </ul>
-      <p>
-        Realistic contractor rates for experienced international engineers working with US companies: $40–$120/hour depending on specialization, location, and the company&apos;s contractor budget. Annual equivalent: $80K–$240K — but with no equity, no benefits, and variable utilization (contracts pause, projects end).
-      </p>
-      <p>
-        The trap: quoting US W-2 salary benchmarks when negotiating a contractor rate. A US engineer at $180K total comp includes ~$50K in benefits and equity. As a contractor, you&apos;re providing equivalent output at lower risk to the company — but you should also be capturing a rate premium to cover your own benefits, tax burden (self-employment taxes in many jurisdictions), and utilization risk.
-      </p>
-      <h3>Negotiation Framework</h3>
-      <p>
-        Research: find the US market rate for the equivalent full-time role (Levels.fyi, Glassdoor, LinkedIn Salary). Take the base salary. Add 20–30% to cover benefits/taxes/risk that you now self-fund. Convert to hourly (÷ 2,000 hours). That&apos;s your floor. Negotiate from there based on your specialization premium and the company&apos;s urgency.
-      </p>
+      <KeyTakeaway>The most common failure mode for international candidates targeting US remote roles is investing application effort before confirming international eligibility. A thirty-second inquiry before applying saves hours and protects professional reputation with individual recruiters.</KeyTakeaway>
 
-      <h2>Companies and Platforms Most Open to International Contractors</h2>
-      <h3>Company Profiles That Signal International Openness</h3>
-      <ul>
-        <li><strong>Remote-first from founding:</strong> GitLab (800+ employees across 65+ countries), Automattic (WordPress), Basecamp, Doist, Hotjar — these companies built distributed infrastructure from day one and have no structural preference for US-based talent</li>
-        <li><strong>VC-backed Series A–C startups with distributed founding teams:</strong> Check the &quot;About&quot; page and LinkedIn — if the founders are in different countries, the company is comfortable with distributed work</li>
-        <li><strong>Dev tool and infrastructure companies:</strong> These companies sell globally, hire globally, and their engineering teams reflect this. Look at Vercel, Supabase, PlanetScale, Railway — all with international engineering teams</li>
-        <li><strong>Agencies and consulting firms:</strong> US digital agencies staffing client projects frequently engage international contractors for cost-efficiency and timezone coverage</li>
-      </ul>
-      <h3>Where to Find These Roles</h3>
-      <ul>
-        <li><strong>JobConnect AI</strong> — Remote-Friendly Detector filters US postings for genuine international contractor accessibility, flagging C2C-accepted, EOR-supported, and global-remote roles</li>
-        <li><strong>Wellfound (AngelList Talent)</strong> — Startup-focused, many early-stage companies explicitly open to international contractors. Filter: Remote + Open to international</li>
-        <li><strong>We Work Remotely</strong> — One of the oldest remote job boards; many listings are genuinely international-open because the board attracts remote-first companies</li>
-        <li><strong>Remote.co</strong> — Curated remote roles with explicit international hiring filters</li>
-        <li><strong>Toptal</strong> — Vetted contractor network where acceptance is competitive but rates are premium and client companies are pre-qualified for international engagement</li>
-        <li><strong>Braintrust</strong> — Talent network with strong international contractor representation and US company clients</li>
-        <li><strong>LinkedIn Jobs</strong> — Filter: United States + Remote. Then scan descriptions for &quot;c2c,&quot; &quot;corp to corp,&quot; &quot;worldwide,&quot; &quot;hire anywhere,&quot; &quot;global&quot;</li>
-      </ul>
+      <FAQ items={[
+        {
+          q: 'What is the most common way US companies pay international remote contractors?',
+          a: 'Most US companies pay international contractors through platforms like Deel, Remote.com, Payoneer, or international wire transfer. Deel and Remote.com have become dominant in this space because they handle compliance, currency conversion, and local tax documentation. Confirming the payment platform at the offer stage is standard practice.'
+        },
+        {
+          q: 'Can I negotiate a US-market salary as an international remote candidate?',
+          a: 'Yes, and you should. US companies hiring internationally for technical and product roles typically benchmark compensation against US market rates, particularly for senior positions. Negotiating based on the role, the market, and your credentials, rather than your local cost of living, is not only acceptable but expected.'
+        },
+        {
+          q: 'What is the H-1B visa and should international candidates expect sponsorship?',
+          a: 'The H-1B is a US work visa for specialty occupations. It is subject to an annual lottery with highly competitive odds and is not a reliable path for most international remote candidates. EOR arrangements and 1099 contracting are far more viable and faster for most remote roles. Do not plan a US job search around H-1B sponsorship unless a specific company has indicated it as a concrete option.'
+        },
+        {
+          q: 'How important is timezone overlap for US remote roles?',
+          a: 'It varies significantly by company and role. Engineer roles at product companies often require three to four hours of daily overlap with core team hours, typically 10am to 2pm US Eastern or Pacific time. Strategy, management, and customer-facing roles typically require more. Being transparent and specific about your overlap capacity during the hiring process eliminates the most common source of post-hire friction for international remote employees.'
+        },
+        {
+          q: 'Do I need a US LLC or corporation to work with US companies?',
+          a: 'Not necessarily. Many US companies engage international contractors directly through their local legal entity or personal invoice, without requiring the contractor to establish a US business entity. A Corp-to-Corp structure using a local entity in your country of residence is often cleaner and sufficient. Consult a local accountant familiar with international contractor arrangements before establishing a US entity purely for this purpose.'
+        },
+      ]} />
 
-      <h2>Classic Mistakes Non-US Candidates Make</h2>
-      <ul>
-        <li>
-          <strong>Applying to roles that say &quot;US only&quot; without asking:</strong> Some companies post &quot;US only&quot; as a default and will actually consider international contractors if asked. But many won&apos;t — and applying without acknowledgment wastes everyone&apos;s time. If a posting says US only but the company looks right, send a targeted message: &quot;I noticed this role says US only — I&apos;m available as a Corp-to-Corp contractor from [country]. Is the role open to that arrangement?&quot;
-        </li>
-        <li>
-          <strong>Not stating contractor availability upfront:</strong> US recruiters are accustomed to quickly qualifying candidates on work authorization. Add a single line to your cover letter or LinkedIn headline: &quot;Available as an independent contractor — no US work authorization required.&quot; This removes the recruiter&apos;s biggest screening concern in one sentence.
-        </li>
-        <li>
-          <strong>Submitting a multi-page or photo-included resume:</strong> Immediately signals unfamiliarity with US norms. A recruiter who sees a photo on a US resume will often stop reading — not out of bias, but out of trained EEO habit.
-        </li>
-        <li>
-          <strong>Quoting W-2 salary benchmarks:</strong> When a US company asks your rate expectation and you cite total comp from Levels.fyi, you&apos;re comparing apples and oranges. Always anchor to contractor rates, not employee salaries.
-        </li>
-        <li>
-          <strong>Ignoring timezone in applications:</strong> Many US companies posting &quot;remote&quot; have unstated overlap expectations. If you&apos;re in a timezone with zero overlap with US East Coast hours (UTC+5.5 and beyond), address this proactively: &quot;I work UTC+5:30, with flexibility to cover EST mornings 8–10am for team syncs.&quot; Silence on this creates anxiety for hiring managers.
-        </li>
-        <li>
-          <strong>Treating the US as a single market:</strong> San Francisco tech startups, New York fintech, Austin enterprise software, and Seattle cloud companies have meaningfully different cultures, comp structures, and openness to international contractors. Match your targeting to company type, not just geography.
-        </li>
-      </ul>
+      <Conclusion>
+        <P>
+          The US remote job market is the largest and highest-compensating in the world for international candidates, and it is more accessible than its work authorization reputation suggests, provided candidates approach it with accurate information rather than assumptions. The key skills are reading job postings precisely for international eligibility signals, raising work authorization questions early and professionally, formatting materials for the US market specifically, and calibrating compensation expectations to US benchmarks. None of these are complex; they are simply not the default approach most international candidates bring.
+        </P>
+        <P>
+          JobConnect AI&apos;s Remote-Friendly Detector removes the most time-consuming part of the US remote job search: manually filtering thousands of listings to find the minority that are genuinely open to international candidates. Every listing in the platform has been evaluated for work authorization language, employment type, and international hiring history before it reaches you.
+        </P>
+      </Conclusion>
 
     </article>
   )

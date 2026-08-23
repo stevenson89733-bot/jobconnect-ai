@@ -1,133 +1,151 @@
+import { H2, H3, P, KeyTakeaway, Quote, TOC, FAQ, StatHook, Conclusion } from '@/components/blog/ArticleComponents'
+
 export default function ArticleContent() {
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h2:text-xl prose-h3:text-base prose-p:leading-relaxed prose-li:leading-relaxed">
 
-      <p className="lead text-lg text-slate-600 dark:text-slate-300 font-normal not-prose mb-8">
-        The UK is home to Europe&apos;s most mature tech ecosystem — London fintech, Oxford and Cambridge deep tech, Manchester and Edinburgh growing into serious hubs. For international candidates targeting UK remote roles, the picture in 2026 is genuinely positive: thousands of roles are open to non-UK residents, particularly for contractor arrangements. But the post-Brexit landscape, CV format expectations, and sector-specific nuances matter enormously. Here&apos;s what you need to know.
-      </p>
+      <StatHook>The United Kingdom produces more tech unicorns than any other European country — yet fewer than 30% of international candidates submit a CV that meets British professional standards.</StatHook>
 
-      <h2>The Post-Brexit Landscape: What Actually Changed</h2>
-      <p>
-        Brexit fundamentally changed the UK&apos;s relationship with EU workers. Before 2021, EU citizens had the right to work in the UK without any additional authorization. That right ended on 31 December 2020. Since then, EU citizens applying for UK employment roles follow the same process as non-EU international candidates.
-      </p>
-      <p>
-        What this means in practice:
-      </p>
+      <TOC items={[
+        { id: 'why-uk', label: 'Why the UK Remains a Premier Remote Job Market' },
+        { id: 'cv-format', label: 'CV vs Resume: What Changes for the UK' },
+        { id: 'right-to-work', label: 'Right-to-Work and Post-Brexit Reality' },
+        { id: 'british-culture', label: 'British Professional Culture' },
+        { id: 'sectors', label: 'Sectors With the Strongest International Hiring' },
+        { id: 'platforms', label: 'Platforms That Hire Internationally for UK Roles' },
+        { id: 'common-mistakes', label: 'Common Mistakes International Candidates Make' },
+      ]} />
+
+      <P drop>
+        London&apos;s financial district, the fintech corridor stretching from Shoreditch to Canary Wharf, and the quietly world-class tech clusters in Manchester, Edinburgh, and Bristol make the United Kingdom one of the most compelling remote job markets available to international candidates. Post-Brexit, the landscape has shifted in ways that are not always intuitive: some doors have closed, others have opened unexpectedly, and international candidates who understand the current reality rather than the pre-2021 assumptions are consistently better positioned to succeed.
+      </P>
+      <P>
+        What makes the UK market distinctive, beyond its concentration of exceptional companies, is how clearly defined its professional standards are. A data scientist based in Lagos who submitted a polished, achievement-focused US-format resume to a London fintech discovered firsthand what UK recruiters mean when they say a CV feels &quot;thin&quot;: two pages of metric-driven bullet points, no personal statement, no structured career narrative. Technically impressive. Professionally unconvincing in the British context. The same candidate resubmitted with a UK-format CV two weeks later and was invited to interview.
+      </P>
+      <P>
+        This guide addresses every aspect of breaking into the UK remote job market from abroad: the CV conventions that differ meaningfully from US norms, the right-to-work framework post-Brexit, the British professional culture that influences hiring decisions at every stage, and the specific sectors and platforms where international openness is highest.
+      </P>
+
+      <H2 id="why-uk">Why the UK Remains a Premier Remote Job Market</H2>
+      <P>
+        Despite the economic and regulatory disruption of Brexit, the United Kingdom remains Europe&apos;s leading tech talent destination by most measures. London alone hosts more than 40,000 technology companies and attracts over £10 billion in venture capital investment annually. Revolut, Monzo, Wise, Starling Bank, Deliveroo, and Babylon Health are among the dozens of UK-headquartered companies that have built explicitly global, remote-first teams.
+      </P>
+      <P>
+        Salaries are compelling: senior software engineers earn £70,000 to £130,000 in London, with remote roles at UK companies often maintaining competitive packages even for candidates based outside the UK. The English language is the default working language, eliminating the barrier that makes Germany or France more challenging for many international candidates. And the UK&apos;s mature startup ecosystem means that the quality of companies available, particularly in fintech, healthtech, and B2B SaaS, is consistently high.
+      </P>
+      <P>
+        The remote work culture at UK tech companies has solidified since 2020. Companies like Monzo, Multiverse, and GoCardless have established distributed-team policies that explicitly accommodate international team members. The challenge for international candidates is less about finding willing employers and more about presenting themselves in the format those employers expect.
+      </P>
+      <KeyTakeaway>The UK&apos;s combination of high salaries, English as the working language, and a mature remote-work culture makes it one of the most accessible international job markets, provided candidates understand its distinct professional conventions.</KeyTakeaway>
+
+      <H2 id="cv-format">CV vs Resume: What Changes for the UK</H2>
+      <P>
+        The first thing international candidates must understand about the UK job market is the terminology itself. In the United Kingdom, the document is called a CV, not a resume. This distinction is not merely semantic; it carries specific expectations about length, content, and structure that differ meaningfully from the one-page resume standard dominant in the United States.
+      </P>
+      <H3>Length: Two pages is standard</H3>
+      <P>
+        UK CVs for experienced candidates are expected to run two pages. A single-page resume, standard practice in the US for candidates with under ten years of experience, is typically perceived by UK recruiters as underdeveloped. It suggests either a lack of experience or, worse, a candidate who applied without adapting their materials to the British context. The appropriate length is two pages for most mid-career and senior candidates, with a first page that draws the reader in quickly and a second page that provides the depth to support the narrative.
+      </P>
+      <H3>No personal information</H3>
+      <P>
+        Unlike Germany&apos;s Lebenslauf, which requires date of birth, nationality, and marital status, UK CVs must contain none of this information. The Equality Act 2010 means that UK recruiters are trained to screen out personal details that could inadvertently influence hiring decisions based on protected characteristics. Including a photo, age, or nationality on a UK CV does not merely fail to help; it actively signals that the candidate is unfamiliar with British professional norms, which is a meaningful negative signal at the initial screening stage.
+      </P>
+      <H3>Achievement-driven, not duty-driven</H3>
+      <P>
+        UK CVs should quantify achievements rather than list responsibilities. The bullet point &quot;Responsible for backend API development&quot; conveys little to a British recruiter trained to look for impact. The alternative, &quot;Reduced API latency by 40% across a system serving 2 million daily active users, enabling the team to meet a critical SLA contractually required by three enterprise clients,&quot; conveys competence, context, and consequence. Every bullet point in a UK CV should answer the implicit question: so what?
+      </P>
+      <H3>British English throughout</H3>
+      <P>
+        Use British spelling consistently: optimise rather than optimize, colour rather than color, centre rather than center. This is a small detail that has a disproportionate signaling effect. A CV written in American English submitted to a London company tells a recruiter that the candidate applied without reviewing the document for the British context, which suggests a similar degree of care in their work.
+      </P>
+      <KeyTakeaway>A UK CV runs two pages, contains no personal details, leads with achievements not duties, and uses British English. These are not preferences; they are the professional standard against which UK recruiters evaluate candidate preparation.</KeyTakeaway>
+
+      <H2 id="right-to-work">Right-to-Work and Post-Brexit Reality</H2>
+      <P>
+        Brexit fundamentally changed the right-to-work framework for international candidates targeting UK companies. Before 2021, EU nationals had automatic rights to work in the United Kingdom; that framework no longer applies. Understanding the current landscape is essential before investing significant effort in a UK job search.
+      </P>
+      <P>
+        For non-UK residents applying to UK companies for remote roles, the picture is more nuanced than it first appears. Many UK companies that recruit internationally for remote positions hire contractors or engage candidates through employer-of-record arrangements, which sidestep UK work permit requirements entirely. The candidate is legally employed in their country of residence, not the UK, and the UK company engages them as an overseas service provider. This arrangement has become standard at UK tech companies with global remote policies.
+      </P>
+      <P>
+        For candidates seeking UK-based employment with a UK work visa, the Skilled Worker visa (formerly Tier 2) is the primary pathway. The sponsoring company must hold a sponsor licence, and the role must meet salary thresholds that vary by occupation. Many UK tech companies do hold sponsor licences, particularly those that recruited internationally before Brexit and maintained the infrastructure to do so. Job postings that mention &quot;visa sponsorship available&quot; are worth prioritising; those that state &quot;right to work in the UK required&quot; indicate that sponsorship is not available for that role.
+      </P>
+      <KeyTakeaway>Post-Brexit right-to-work requirements are manageable for international candidates through contractor arrangements or visa sponsorship. Understanding which path applies to each role before applying saves significant time and avoids a common source of wasted applications.</KeyTakeaway>
+
+      <H2 id="british-culture">British Professional Culture</H2>
+      <P>
+        British professional culture has characteristics that international candidates sometimes misread, particularly those coming from direct communication cultures like Germany or the high-energy assertiveness culture common at US startups. Understanding these characteristics is useful not only for interviews but for day-to-day collaboration on a distributed team.
+      </P>
+      <P>
+        British professional communication tends toward understatement. A British manager who says &quot;that&apos;s an interesting approach&quot; in response to a proposal may be expressing genuine approval or polite scepticism; the context usually clarifies which, but candidates used to more explicit feedback often find the ambiguity disorienting at first. Direct criticism, when delivered, is typically framed constructively rather than bluntly, a contrast to the directness common in German professional culture.
+      </P>
+      <P>
+        Humility in self-presentation is valued. The aggressive first-person achievement framing common in US professional culture, &quot;I built&quot;, &quot;I drove&quot;, &quot;I led&quot;, can read as self-aggrandizing in a British context. British CVs and interviews tend to use collaborative language: &quot;as part of a team of four engineers, we delivered&quot;, &quot;working closely with the product team&quot;. This does not mean downplaying achievements; it means framing them in a collaborative context, which aligns with how UK companies typically describe their own work.
+      </P>
+      <KeyTakeaway>British professional culture values understatement, collaborative framing, and contextual communication. Candidates who adapt to this register in interviews and written communication consistently receive more positive feedback from UK hiring managers.</KeyTakeaway>
+
+      <H2 id="sectors">Sectors With the Strongest International Hiring</H2>
+      <P>
+        Not all UK sectors hire internationally with equal openness. Certain industries have built explicitly global teams as a core structural choice, and targeting these industries significantly improves the odds for international candidates.
+      </P>
+      <P>
+        Fintech is the standout sector. Companies like Revolut, Wise, Monzo, and Starling Bank have built distributed engineering and product teams across dozens of countries, with robust remote-work infrastructure and EOR arrangements in place. Their job postings routinely specify worldwide remote eligibility. Healthtech is similarly open, with companies like Babylon Health, Lantum, and Accurx having normalised remote-first hiring partly in response to the pandemic-driven acceleration of digital health adoption. B2B SaaS companies, particularly those targeting the US market from a UK base, frequently hire internationally for roles where timezone overlap with the Americas is an advantage rather than a barrier.
+      </P>
+      <KeyTakeaway>UK fintech, healthtech, and B2B SaaS companies are the most reliably international in their hiring. Candidates who focus their search on these sectors rather than targeting the UK market broadly will find significantly higher rates of genuine international openness.</KeyTakeaway>
+
+      <H2 id="platforms">Platforms That Hire Internationally for UK Roles</H2>
       <ul>
-        <li><strong>EU citizens no longer have automatic right to work in the UK.</strong> For UK employee roles requiring right-to-work, EU citizens (without settled or pre-settled status) now need a visa — typically the Skilled Worker visa.</li>
-        <li><strong>UK employers must check right-to-work documents</strong> for all new hires, including EU nationals. This has made some UK employers more cautious about EU candidates for full-time employment.</li>
-        <li><strong>For remote contractor arrangements,</strong> the situation is different and more accessible. Non-UK contractors working for UK companies from their home country don&apos;t need UK work authorization — they&apos;re providing services from abroad, not working in the UK.</li>
-        <li><strong>Irish citizens retain full rights</strong> to work in the UK under the Common Travel Area arrangement. If you hold an Irish passport, you effectively have the same employment rights as a UK citizen.</li>
+        <li><strong>JobConnect AI:</strong> Scans UK job postings and identifies genuine remote-first roles that accept international candidates, filtering out &quot;UK-only&quot; listings and flagging right-to-work requirements before you apply.</li>
+        <li><strong>LinkedIn Jobs:</strong> The dominant platform for UK professional hiring. Filtering for &quot;Remote&quot; combined with location set to &quot;United Kingdom&quot; and company size filters for startups and scale-ups surfaces the most internationally accessible opportunities.</li>
+        <li><strong>Otta:</strong> A UK-focused job platform that specialises in startup and scale-up roles, with strong representation from London fintech and tech companies that hire internationally.</li>
+        <li><strong>Relocate.me:</strong> Surfaces European remote roles with explicit international eligibility, including strong UK representation.</li>
+        <li><strong>Working Not Working:</strong> Strong for creative, product, and design roles at design-forward UK companies, with significant remote representation.</li>
       </ul>
 
-      <h2>Right to Work vs Remote Contractor: The Critical Distinction</h2>
-      <p>
-        This distinction determines which UK roles you can realistically target. Understanding it precisely saves significant wasted effort.
-      </p>
-      <h3>UK Employee (Right to Work Required)</h3>
-      <p>
-        If a UK company wants to hire you as an employee — with employment rights, PAYE tax, employer NI contributions, and UK statutory benefits (holiday pay, sick pay, pension auto-enrollment) — you need the legal right to work in the UK. Options:
-      </p>
+      <H2 id="common-mistakes">Common Mistakes International Candidates Make</H2>
+      <P>
+        The majority of international applications to UK companies fail not at the skills assessment stage but at the initial screening stage, where CV format and professional convention signal whether the candidate has done their homework on the British market.
+      </P>
       <ul>
-        <li><strong>UK citizenship or settled status</strong></li>
-        <li><strong>Indefinite Leave to Remain (ILR)</strong></li>
-        <li><strong>Skilled Worker Visa</strong> — the most common route for new international hires. Requires employer sponsorship, a job meeting the minimum salary threshold (currently £26,200 or the &quot;going rate&quot; for the role, whichever is higher), and a sponsor licence held by the employer.</li>
-        <li><strong>Other visa categories</strong> (Global Talent, Scale-up Visa, High Potential Individual) for specific circumstances</li>
+        <li><strong>Submitting a one-page US resume:</strong> UK recruiters consistently describe one-page CVs from experienced candidates as feeling thin and underdeveloped. A two-page UK-format CV demonstrates that the candidate understands British professional standards.</li>
+        <li><strong>Including personal details:</strong> Listing age, nationality, or a photo on a UK CV immediately signals unfamiliarity with British equality law and professional norms, both negative signals at the screening stage.</li>
+        <li><strong>Using American English:</strong> Submitting a document with American spelling to a British company is one of the clearest indicators that the application has not been adapted for the UK market.</li>
+        <li><strong>Ignoring right-to-work requirements:</strong> Applying for roles that explicitly require UK work authorisation without either holding that authorisation or inquiring about sponsorship wastes time for both candidate and recruiter.</li>
+        <li><strong>Leading with duties rather than achievements:</strong> UK hiring managers are trained to look for impact and quantified results. A CV that describes what you were responsible for, rather than what you delivered, fails to meet the standard benchmark.</li>
       </ul>
-      <h3>Remote Contractor (No UK Authorization Required)</h3>
-      <p>
-        If you&apos;re working for a UK company as an independent contractor from your home country, you&apos;re providing services under contract rather than working in the UK. No right-to-work check applies. The UK company pays your invoices as a business expense; you pay taxes in your home country.
-      </p>
-      <p>
-        This is the most accessible arrangement for international candidates and is standard practice at many UK tech companies, particularly startups and scale-ups. Look for job postings that mention &quot;B2B contract,&quot; &quot;contractor basis,&quot; or &quot;via your own limited company or umbrella company.&quot;
-      </p>
-      <h3>Employer of Record (EOR)</h3>
-      <p>
-        A growing number of UK companies use EOR services (Deel, Remote.com, Papaya Global) to employ international workers as full employees under the employment law of the worker&apos;s home country, with the EOR acting as the legal employer. This gives you employment protections without UK work authorization.
-      </p>
+      <KeyTakeaway>Every one of these mistakes is easily corrected with preparation. International candidates who tailor their materials to British conventions consistently advance further in UK hiring processes than those who submit unadapted documents.</KeyTakeaway>
 
-      <h2>The British CV: Format and Expectations</h2>
-      <p>
-        The UK CV is a distinct format from both US resumes and European CVs, with specific conventions that British hiring managers are trained to evaluate:
-      </p>
-      <h3>Personal Profile</h3>
-      <p>
-        The UK CV opens with a Personal Profile — a 3–4 sentence professional summary that immediately tells the recruiter who you are and what you offer. This is not used on US resumes but is standard on UK CVs. It should be:
-      </p>
-      <ul>
-        <li>Written in third person without using your name (&quot;An experienced backend engineer with 7 years...&quot;) or first person without the pronoun (&quot;Experienced backend engineer with 7 years...&quot;)</li>
-        <li>Specific to the role you&apos;re applying for — not a generic statement</li>
-        <li>Focused on what you bring, not what you&apos;re looking for</li>
-        <li>3–4 sentences maximum</li>
-      </ul>
-      <p>
-        Example: &quot;Senior data engineer with 8 years&apos; experience building large-scale distributed data pipelines in financial services environments. Track record of reducing data latency by 40%+ at two FTSE 100 companies. AWS Certified Solutions Architect with expertise in Spark, Kafka, and dbt. Seeking a senior individual contributor role in a distributed team with a focus on data platform quality.&quot;
-      </p>
-      <h3>Length: 2 Pages</h3>
-      <p>
-        UK CVs are typically 2 pages for candidates with more than 3–4 years of experience. A 1-page CV reads as junior or thin. A 3-page CV reads as unable to edit and prioritize. 2 pages is the sweet spot, and British hiring managers are specifically trained to expect it.
-      </p>
-      <h3>No Personal Information</h3>
-      <p>
-        UK CVs include only: name, phone number, email address, LinkedIn URL (optional), and general location (city or region — not full address). Equality Act 2010 means UK recruiters are trained to flag CVs with age, nationality, marital status, religion, or photo as potential bias triggers. Including these marks you as unfamiliar with UK norms.
-      </p>
-      <h3>Achievement-Focused Bullet Points</h3>
-      <p>
-        UK hiring culture values achievement over responsibility. Each work experience bullet point should lead with a result or impact:
-      </p>
-      <ul>
-        <li>✅ &quot;Reduced API response time by 60% through Redis caching implementation, serving 4M daily requests&quot;</li>
-        <li>❌ &quot;Responsible for API performance optimization and caching implementation&quot;</li>
-      </ul>
-      <h3>British English Throughout</h3>
-      <p>
-        Optimise (not optimize). Colour (not color). Programme (not program, in non-tech contexts). Analyse (not analyze). These are not small differences — UK hiring managers and ATS configured for UK roles will notice US English as a signal that you haven&apos;t adapted your application to the local market. It takes 20 minutes and a quick search/replace to correct; skipping it costs credibility.
-      </p>
+      <FAQ items={[
+        {
+          q: 'Can I apply for UK remote jobs without the right to work in the UK?',
+          a: 'Yes, if the company hires internationally through contractor or employer-of-record arrangements. Many UK tech companies, particularly in fintech and SaaS, engage overseas talent this way. Look for postings that explicitly mention "worldwide remote" or "global remote" to identify these opportunities.'
+        },
+        {
+          q: 'Should I include a personal statement on my UK CV?',
+          a: 'A two to three sentence professional summary at the top of your CV is standard and recommended in the UK. It should describe your professional identity, key areas of expertise, and what you are looking for. Keep it factual and achievement-oriented rather than generic.'
+        },
+        {
+          q: 'How long does a UK hiring process typically take?',
+          a: 'UK hiring processes are generally more structured and slower than US processes. Expect two to four weeks from application to first response at well-resourced companies, with a total process running four to eight weeks from application to offer. Following up after two weeks if you have received no response is entirely appropriate.'
+        },
+        {
+          q: 'Do UK companies use ATS systems the same way as US companies?',
+          a: 'Yes. Most UK companies above a certain size use Applicant Tracking Systems such as Greenhouse, Lever, or Workday. Keyword matching applies. Review each job description carefully and ensure that your CV uses the specific terminology and skill names mentioned in the posting.'
+        },
+        {
+          q: 'Is a cover letter expected for UK job applications?',
+          a: 'Cover letters are less culturally entrenched in the UK than in Germany, but they remain a valuable differentiating tool when the candidate has something specific and relevant to say. A generic cover letter is worse than no cover letter. A tailored, specific cover letter is better than both.'
+        },
+      ]} />
 
-      <h2>Sectors Most Open to International Remote Workers</h2>
-      <p>
-        Not all UK sectors are equally accessible to international candidates. These are the most open:
-      </p>
-      <h3>Fintech</h3>
-      <p>
-        London is the world&apos;s fintech capital. Revolut, Monzo, Wise, Starling Bank, and hundreds of funded companies are globally distributed by design and actively use EOR and contractor arrangements to access international talent. Engineering, data science, product, and compliance roles are frequently open to international candidates.
-      </p>
-      <h3>SaaS and B2B Software</h3>
-      <p>
-        The UK has a mature SaaS market with hundreds of scale-ups (Paddle, Hopin, Pleo UK, Yapily) that operate with distributed remote teams and contractor-first hiring models.
-      </p>
-      <h3>Digital Media and Creative Tech</h3>
-      <p>
-        UK media, advertising, and creative tech companies (Channel 4, BBC Studios digital division, Sky Creative, GroupM) increasingly hire international contractors for digital, content, and technical roles. Remote-first creative agencies are particularly open.
-      </p>
-      <h3>Deep Tech and Research</h3>
-      <p>
-        Oxford and Cambridge spin-outs in AI, healthtech, and quantum computing routinely hire internationally, particularly for PhD-level research and engineering roles where the global talent pool is necessary to fill positions.
-      </p>
-
-      <h2>Where to Find UK Remote Roles Open to International Candidates</h2>
-      <ul>
-        <li><strong>JobConnect AI</strong> — Remote-Friendly Detector identifies UK job postings that accept international contractors vs those requiring right-to-work authorization.</li>
-        <li><strong>LinkedIn Jobs</strong> — Filter: United Kingdom + Remote. English-language by default. Look for English-first companies and explicit contractor mentions.</li>
-        <li><strong>Adzuna</strong> — Strong UK job aggregator with remote filtering. Many UK-specific roles not found on US-focused boards.</li>
-        <li><strong>Jobsite.co.uk</strong> — Reed.co.uk equivalent with strong UK tech and finance listings.</li>
-        <li><strong>Tech Nation</strong> (technation.io) — UK&apos;s tech growth network, their job board focuses on visa-sponsoring tech companies and international talent attraction.</li>
-        <li><strong>Remotive.com</strong> — Filter for UK companies. Many UK-based remote-first companies post here explicitly to reach international candidates.</li>
-      </ul>
-
-      <h2>The Skilled Worker Visa: When Relocation Is the Goal</h2>
-      <p>
-        If your goal is to work in the UK as a full employee (rather than a remote contractor), the Skilled Worker Visa is the primary pathway. Key requirements in 2026:
-      </p>
-      <ul>
-        <li>A job offer from a UK employer with a Home Office sponsor licence</li>
-        <li>The role must meet the minimum salary threshold (currently £26,200 for most roles, higher for specialized occupations)</li>
-        <li>English language requirement (B1 level)</li>
-        <li>Certificate of Sponsorship from the employer</li>
-      </ul>
-      <p>
-        Processing time is typically 3–8 weeks once the employer issues a Certificate of Sponsorship. Many UK tech companies maintain an active sponsor licence and will consider visa sponsorship for strong candidates — but you need to ask explicitly, as it won&apos;t always be stated in the job posting.
-      </p>
+      <Conclusion>
+        <P>
+          The UK remote job market rewards candidates who combine strong technical credentials with a precise understanding of British professional conventions. The CV format, the language register, the right-to-work framework, and the cultural norms around self-presentation are all learnable systems, and mastering them is what separates international candidates who consistently advance in UK hiring processes from those who plateau at initial screening.
+        </P>
+        <P>
+          JobConnect AI&apos;s Remote-Friendly Detector identifies which UK job postings explicitly welcome international applicants, flags right-to-work requirements upfront, and surfaces the fintech, healthtech, and SaaS companies most likely to have international hiring infrastructure in place. The British CV builder generates a two-page, achievement-focused, UK-standard document ready for submission.
+        </P>
+      </Conclusion>
 
     </article>
   )
