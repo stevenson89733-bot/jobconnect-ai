@@ -6,6 +6,8 @@ export type BlogPost = {
   readingTime: number
   category: string
   categoryColor: string
+  heroImage?: string    // absolute URL — overrides auto-generated Unsplash image
+  heroImageAlt?: string
   ctaHref?: string
   ctaText?: string
   ctaSubtext?: string
@@ -199,6 +201,35 @@ export const BLOG_POSTS: BlogPost[] = [
 
 export function getPost(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find(p => p.slug === slug)
+}
+
+// Slug → Unsplash search keywords for auto-generated images
+const SLUG_KEYWORDS: Record<string, string> = {
+  'how-to-get-remote-job-in-germany-as-foreigner': 'germany,berlin,remote,work',
+  'resume-format-by-country':                      'resume,laptop,desk,professional',
+  'how-to-spot-fake-remote-jobs':                  'job,search,laptop,coffee,focus',
+  'how-to-get-remote-job-canada-international':    'canada,toronto,remote,work',
+  'remote-work-france-foreigner':                  'paris,france,remote,work',
+  'cross-border-remote-job-skills':                'teamwork,collaboration,remote,global',
+  'ats-resume-international-candidates':           'resume,computer,office,hiring',
+  'remote-job-uk-international':                   'london,uk,remote,work',
+  'how-to-get-remote-job-usa-international':       'newyork,usa,remote,work',
+  'how-to-get-remote-job-france-international':    'paris,eiffel,france,work',
+  'remote-job-salary-by-country':                  'salary,money,international,remote',
+}
+
+/** Returns heroImage if set, otherwise a keyword-based Unsplash URL */
+export function getPostHeroImage(post: BlogPost): string {
+  if (post.heroImage) return post.heroImage
+  const kw = SLUG_KEYWORDS[post.slug] ?? 'remote,work,laptop,office'
+  return `https://source.unsplash.com/1200x400/?${kw}`
+}
+
+/** Thumbnail variant (smaller crop) */
+export function getPostThumbnail(post: BlogPost): string {
+  if (post.heroImage) return post.heroImage
+  const kw = SLUG_KEYWORDS[post.slug] ?? 'remote,work,laptop,office'
+  return `https://source.unsplash.com/400x280/?${kw}`
 }
 
 export function formatDate(iso: string): string {

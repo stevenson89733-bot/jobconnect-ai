@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, Clock, Calendar } from 'lucide-react'
-import { BLOG_POSTS, getPost, formatDate } from '@/lib/blog/posts'
+import { BLOG_POSTS, getPost, formatDate, getPostHeroImage } from '@/lib/blog/posts'
 import { SITE_URL } from '@/lib/seo'
 
 // Article content components — one per slug
@@ -40,22 +41,26 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const post = getPost(params.slug)
   if (!post) return {}
 
+  const heroUrl = getPostHeroImage(post)
+
   return {
     title:       `${post.title} | JobConnect AI Blog`,
     description: post.excerpt,
     alternates:  { canonical: `${SITE_URL}/blog/${post.slug}` },
     openGraph: {
-      title:       post.title,
-      description: post.excerpt,
-      url:         `${SITE_URL}/blog/${post.slug}`,
-      siteName:    'JobConnect AI',
-      type:        'article',
+      title:         post.title,
+      description:   post.excerpt,
+      url:           `${SITE_URL}/blog/${post.slug}`,
+      siteName:      'JobConnect AI',
+      type:          'article',
       publishedTime: post.date,
+      images:        [{ url: heroUrl, width: 1200, height: 400, alt: post.title }],
     },
     twitter: {
       card:        'summary_large_image',
       title:       post.title,
       description: post.excerpt,
+      images:      [heroUrl],
     },
   }
 }
@@ -88,7 +93,11 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       '@type': 'WebPage',
       '@id': `${SITE_URL}/blog/${post.slug}`,
     },
+    image: getPostHeroImage(post),
   }
+
+  const heroUrl = getPostHeroImage(post)
+  const heroAlt = post.heroImageAlt ?? post.title
 
   return (
     <>
@@ -96,6 +105,20 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+
+      {/* Hero image — full viewport width */}
+      <div className="relative w-full h-[260px] sm:h-[360px] md:h-[400px] overflow-hidden bg-slate-100 dark:bg-slate-800">
+        <Image
+          src={heroUrl}
+          alt={heroAlt}
+          fill
+          unoptimized
+          priority
+          className="object-cover"
+        />
+        {/* Subtle gradient overlay so the breadcrumb stays readable */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/30" />
+      </div>
 
       <div className="max-w-3xl mx-auto px-6 py-12">
         {/* Breadcrumb */}

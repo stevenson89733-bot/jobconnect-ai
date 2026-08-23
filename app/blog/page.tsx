@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Clock } from 'lucide-react'
-import { BLOG_POSTS, formatDate } from '@/lib/blog/posts'
+import { BLOG_POSTS, formatDate, getPostThumbnail } from '@/lib/blog/posts'
 import { SITE_URL } from '@/lib/seo'
 
 export const metadata: Metadata = {
@@ -34,11 +35,22 @@ export default function BlogPage() {
           <Link
             key={post.slug}
             href={`/blog/${post.slug}`}
-            className="group block bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 hover:border-primary/50 dark:hover:border-blue-500/50 hover:shadow-md transition-all duration-200"
+            className="group block bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 hover:border-primary/50 dark:hover:border-blue-500/50 hover:shadow-md transition-all duration-200"
           >
-            <div className="flex items-start justify-between gap-4">
+            <div className="flex items-start gap-4">
+              {/* Thumbnail */}
+              <div className="hidden sm:block flex-shrink-0 relative w-28 h-20 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800">
+                <Image
+                  src={getPostThumbnail(post)}
+                  alt={post.title}
+                  fill
+                  unoptimized
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              {/* Content */}
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-3">
+                <div className="flex items-center gap-2 mb-2.5">
                   <span className={`text-xs font-medium px-2.5 py-0.5 rounded-full ${post.categoryColor}`}>
                     {post.category}
                   </span>
@@ -49,7 +61,7 @@ export default function BlogPage() {
                     <Clock size={10} /> {post.readingTime} min read
                   </span>
                 </div>
-                <h2 className="font-bold text-base text-slate-900 dark:text-white mb-2 leading-snug group-hover:text-primary dark:group-hover:text-blue-400 transition-colors">
+                <h2 className="font-bold text-base text-slate-900 dark:text-white mb-1.5 leading-snug group-hover:text-primary dark:group-hover:text-blue-400 transition-colors">
                   {post.title}
                 </h2>
                 <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2">
