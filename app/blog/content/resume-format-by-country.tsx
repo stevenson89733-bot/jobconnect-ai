@@ -4,7 +4,7 @@ export default function ArticleContent() {
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h2:text-xl prose-h3:text-base prose-p:leading-relaxed prose-li:leading-relaxed">
 
-      <StatHook>A survey of international recruiters found that 68% immediately categorize an application as &quot;uninformed&quot; when the resume format does not match the conventions of the target country — regardless of the candidate&apos;s qualifications.</StatHook>
+      <StatHook>A survey of international recruiters found that 68% immediately categorize an application as &quot;uninformed&quot; when the resume format does not match the conventions of the target country, regardless of the candidate&apos;s qualifications.</StatHook>
 
       <TOC items={[
         { id: 'why-format-matters', label: 'Why Resume Format Is a Qualification Signal' },

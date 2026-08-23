@@ -4,7 +4,7 @@ export default function ArticleContent() {
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h2:text-xl prose-h3:text-base prose-p:leading-relaxed prose-li:leading-relaxed">
 
-      <StatHook>France hosts Europe&apos;s third-largest startup ecosystem — and a growing share of its most competitive tech roles are now open to international candidates working fully remotely.</StatHook>
+      <StatHook>France hosts Europe&apos;s third-largest startup ecosystem, and a growing share of its most competitive tech roles are now open to international candidates working fully remotely.</StatHook>
 
       <TOC items={[
         { id: 'why-france', label: 'Why France Is a Stronger Market Than It Appears' },
@@ -117,8 +117,8 @@ export default function ArticleContent() {
         <li><strong>Welcome to the Jungle:</strong> France&apos;s leading platform for startup and scale-up roles, with detailed company profiles showing working language, remote policy, and company culture. Filter by t&eacute;l&eacute;travail (remote) and company size to surface the most internationally accessible opportunities.</li>
         <li><strong>LinkedIn Jobs:</strong> Essential for senior roles and for French subsidiaries of international companies. English-language postings on LinkedIn France are a strong signal of international openness.</li>
         <li><strong>Station F job board:</strong> Direct access to companies based at Station F, many of which are in early-stage growth and hire internationally through contractor or EOR arrangements.</li>
-        <li><strong>Relocate.me:</strong> Surfaces European remote roles with explicit international eligibility, with good French company representation across tech sectors.</li>
       </ul>
+      <P>For broader European context, Relocate.me surfaces remote roles with explicit international eligibility across the continent, with solid French company representation in tech. It is particularly useful for candidates who are open to multiple European markets and want to compare French opportunities against comparable roles in Germany, the Netherlands, or the UK simultaneously.</P>
 
       <H2 id="common-mistakes">Common Mistakes International Candidates Make</H2>
       <P>
@@ -129,8 +129,8 @@ export default function ArticleContent() {
         <li><strong>Opening the lettre with a generic statement:</strong> Beginning with &quot;I am writing to apply for&quot; signals immediately that the candidate is working from a template rather than engaging with this specific company, which is the most fundamental failure of the lettre de motivation format.</li>
         <li><strong>Applying for French-language roles without fluency:</strong> Marketing, content, and customer-facing roles in French are not accessible to candidates below C1 level, and applying for them without this proficiency creates a negative impression with a recruiter who may be relevant to future applications.</li>
         <li><strong>Using an overly informal register in initial communications:</strong> First contact with French companies should be formal, regardless of the company&apos;s public persona. Casualness in initial professional communication is read as disrespect for professional norms in France, not friendliness.</li>
-        <li><strong>Failing to include a career narrative:</strong> French CVs are evaluated as narrative documents, not lists of achievements. A CV that reads as a sequence of bullet points without a guiding professional identity fails to meet the evaluative standard French recruiters apply.</li>
       </ul>
+      <P>The key insight here is structural: French CVs are evaluated as narrative documents, not lists of achievements. What does this mean in practice? A CV that reads as a sequence of bullet points without a guiding professional identity fails to meet the evaluative standard French recruiters apply, regardless of how technically impressive those bullet points are. The narrative summary at the top of the CV is not decorative; it is the interpretive frame through which everything else is read.</P>
       <KeyTakeaway>All of these errors are correctable with preparation that takes less time than a single rejected application represents. International candidates who invest in understanding French professional conventions recover that investment immediately in improved application-to-response rates.</KeyTakeaway>
 
       <FAQ items={[

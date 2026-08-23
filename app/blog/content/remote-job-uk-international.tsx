@@ -4,7 +4,7 @@ export default function ArticleContent() {
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h2:text-xl prose-h3:text-base prose-p:leading-relaxed prose-li:leading-relaxed">
 
-      <StatHook>The United Kingdom produces more tech unicorns than any other European country — yet fewer than 30% of international candidates submit a CV that meets British professional standards.</StatHook>
+      <StatHook>The United Kingdom produces more tech unicorns than any other European country. Yet fewer than 30% of international candidates submit a CV that meets British professional standards.</StatHook>
 
       <TOC items={[
         { id: 'why-uk', label: 'Why the UK Remains a Premier Remote Job Market' },
@@ -99,8 +99,8 @@ export default function ArticleContent() {
         <li><strong>LinkedIn Jobs:</strong> The dominant platform for UK professional hiring. Filtering for &quot;Remote&quot; combined with location set to &quot;United Kingdom&quot; and company size filters for startups and scale-ups surfaces the most internationally accessible opportunities.</li>
         <li><strong>Otta:</strong> A UK-focused job platform that specialises in startup and scale-up roles, with strong representation from London fintech and tech companies that hire internationally.</li>
         <li><strong>Relocate.me:</strong> Surfaces European remote roles with explicit international eligibility, including strong UK representation.</li>
-        <li><strong>Working Not Working:</strong> Strong for creative, product, and design roles at design-forward UK companies, with significant remote representation.</li>
       </ul>
+      <P>For creative, product design, and brand roles, Working Not Working deserves a separate search. It specialises in design-forward UK companies and surfaces remote representation in the creative industry that standard tech-focused job boards consistently underrepresent. Is your role at the intersection of design and tech? This platform will surface opportunities that LinkedIn rarely shows.</P>
 
       <H2 id="common-mistakes">Common Mistakes International Candidates Make</H2>
       <P>
@@ -111,8 +111,8 @@ export default function ArticleContent() {
         <li><strong>Including personal details:</strong> Listing age, nationality, or a photo on a UK CV immediately signals unfamiliarity with British equality law and professional norms, both negative signals at the screening stage.</li>
         <li><strong>Using American English:</strong> Submitting a document with American spelling to a British company is one of the clearest indicators that the application has not been adapted for the UK market.</li>
         <li><strong>Ignoring right-to-work requirements:</strong> Applying for roles that explicitly require UK work authorisation without either holding that authorisation or inquiring about sponsorship wastes time for both candidate and recruiter.</li>
-        <li><strong>Leading with duties rather than achievements:</strong> UK hiring managers are trained to look for impact and quantified results. A CV that describes what you were responsible for, rather than what you delivered, fails to meet the standard benchmark.</li>
       </ul>
+      <P>The key insight here is that UK hiring managers assess impact, not scope. A CV that describes what you were responsible for, rather than what you actually delivered, consistently fails the benchmark British recruiters apply. Quantified achievements are the standard unit of professional evidence in this market. Without them, even a genuinely strong candidacy reads as underprepared.</P>
       <KeyTakeaway>Every one of these mistakes is easily corrected with preparation. International candidates who tailor their materials to British conventions consistently advance further in UK hiring processes than those who submit unadapted documents.</KeyTakeaway>
 
       <FAQ items={[

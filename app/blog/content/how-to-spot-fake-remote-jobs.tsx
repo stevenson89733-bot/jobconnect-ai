@@ -4,7 +4,7 @@ export default function ArticleContent() {
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h2:text-xl prose-h3:text-base prose-p:leading-relaxed prose-li:leading-relaxed">
 
-      <StatHook>The US Federal Trade Commission reported a 75% increase in job scam complaints between 2020 and 2024 — driven almost entirely by the explosion in fake remote job listings.</StatHook>
+      <StatHook>The US Federal Trade Commission reported a 75% increase in job scam complaints between 2020 and 2024, driven almost entirely by the explosion in fake remote job listings.</StatHook>
 
       <TOC items={[
         { id: 'landscape', label: 'The Fake Job Landscape in 2024-2025' },

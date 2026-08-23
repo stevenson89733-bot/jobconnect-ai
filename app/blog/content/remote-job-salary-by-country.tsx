@@ -4,7 +4,7 @@ export default function ArticleContent() {
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h2:text-xl prose-h3:text-base prose-p:leading-relaxed prose-li:leading-relaxed">
 
-      <StatHook>A senior software engineer working remotely earns between $18,000 and $180,000 per year — depending entirely on which country&apos;s company is paying them.</StatHook>
+      <StatHook>A senior software engineer working remotely earns between $18,000 and $180,000 per year. The difference depends entirely on which country&apos;s company is paying them.</StatHook>
 
       <TOC items={[
         { id: 'how-salaries-set', label: 'How Remote Salaries Are Actually Determined' },
@@ -54,10 +54,9 @@ export default function ArticleContent() {
         <li><strong>Product Manager (Senior):</strong> $140,000 to $190,000 base, plus equity.</li>
         <li><strong>Data Scientist (Senior):</strong> $120,000 to $175,000 base, plus equity.</li>
         <li><strong>Engineering Manager:</strong> $160,000 to $220,000 base, plus equity.</li>
-        <li><strong>UX Designer (Senior):</strong> $110,000 to $155,000 base, plus equity.</li>
       </ul>
       <P>
-        For international candidates working remotely under 1099 contractor or EOR arrangements, US companies applying global compensation models often pay at or near these benchmarks regardless of where the employee is located. Companies using location-based models adjust these figures based on the candidate&apos;s country, sometimes significantly.
+        Senior UX designers earn $110,000 to $155,000 in base compensation at US companies, with equity participation consistent with the engineering and product roles above. For international candidates working remotely under 1099 contractor or EOR arrangements, US companies applying global compensation models often pay at or near these benchmarks regardless of where the employee is located. Companies using location-based models adjust these figures based on the candidate&apos;s country, sometimes significantly.
       </P>
       <KeyTakeaway>US companies offering global compensation models to international remote employees represent the highest-earning opportunity in the global remote market. Identifying which US companies apply this model, and presenting compensation expectations calibrated to US benchmarks, captures this premium.</KeyTakeaway>
 
@@ -142,9 +141,8 @@ export default function ArticleContent() {
         <li><strong>Glassdoor (international):</strong> Broad salary data across industries and countries, with user-submitted reviews providing qualitative context alongside compensation numbers. Most reliable at companies with high employee populations submitting data.</li>
         <li><strong>LinkedIn Salary Insights:</strong> Benchmarks compensation ranges for specific roles at specific companies based on LinkedIn member data. Useful for European and Canadian markets where Levels.fyi has thinner coverage.</li>
         <li><strong>Payscale:</strong> Country-specific salary data with a strong international database, particularly useful for roles outside major tech hubs where company-specific data is unavailable.</li>
-        <li><strong>Nomad List salary data:</strong> Specifically calibrated for remote work, with data on what different companies pay international remote employees as distinct from in-office or local remote employees.</li>
-        <li><strong>JobConnect AI:</strong> Surfaces salary ranges directly in job listings where companies disclose them, enabling pre-application benchmarking without research lag.</li>
       </ul>
+      <P>Two additional resources address the remote-specific compensation gap. Nomad List salary data is calibrated for remote work, distinguishing between what companies pay international remote employees versus in-office staff, a distinction that the other platforms collapse. JobConnect AI surfaces salary ranges directly in job listings where companies choose to disclose them, enabling pre-application benchmarking before any recruiter conversation begins.</P>
 
       <FAQ items={[
         {
@@ -153,7 +151,7 @@ export default function ArticleContent() {
         },
         {
           q: 'How do I know if a company is using location-based or global compensation?',
-          a: 'Ask directly: "How does your company benchmark compensation for international remote employees?" Many companies have published their compensation philosophy publicly — GitLab and Buffer both have public salary calculators on their websites. For companies that have not published this information, a direct question to the recruiter or hiring manager is appropriate and professional.'
+          a: 'Ask directly: "How does your company benchmark compensation for international remote employees?" Many companies have published their compensation philosophy publicly. GitLab and Buffer both have public salary calculators on their websites. For companies that have not published this information, a direct question to the recruiter or hiring manager is appropriate and professional.'
         },
         {
           q: 'Is equity compensation available to international remote employees?',

@@ -19,7 +19,7 @@ export function H2({ id, children }: { id?: string; children: React.ReactNode })
 // Sub-section heading (H3)
 export function H3({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="not-prose text-lg font-bold text-slate-800 dark:text-slate-200 mt-8 mb-3">
+    <h3 className="not-prose text-lg font-bold text-slate-800 dark:text-slate-200 mt-8 mb-3 border-l-[3px] border-[#57C7E3] pl-3">
       {children}
     </h3>
   )
@@ -57,7 +57,7 @@ export function KeyTakeaway({ children }: { children: React.ReactNode }) {
 // Styled blockquote
 export function Quote({ children }: { children: React.ReactNode }) {
   return (
-    <blockquote className="not-prose my-8 border-l-4 border-[#57C7E3] pl-6 italic text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+    <blockquote className="not-prose my-8 border-l-4 border-[#F2A65A] pl-6 italic text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
       {children}
     </blockquote>
   )

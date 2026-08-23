@@ -4,7 +4,7 @@ export default function ArticleContent() {
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h2:text-xl prose-h3:text-base prose-p:leading-relaxed prose-li:leading-relaxed">
 
-      <StatHook>Over 99% of Fortune 500 companies use Applicant Tracking Systems to screen resumes — and international candidates face an additional set of ATS failure modes that domestic candidates rarely encounter.</StatHook>
+      <StatHook>Over 99% of Fortune 500 companies use Applicant Tracking Systems to screen resumes, and international candidates face an additional set of ATS failure modes that domestic candidates rarely encounter.</StatHook>
 
       <TOC items={[
         { id: 'what-is-ats', label: 'How ATS Systems Actually Work' },
@@ -20,7 +20,7 @@ export default function ArticleContent() {
         International candidates who submit well-written, carefully tailored resumes to US and European companies frequently receive no response. The most common explanation is not that their qualifications were rejected by a human recruiter; it is that their resume never reached one. Applicant Tracking Systems, the software platforms used by the overwhelming majority of mid-size and large companies to manage hiring processes, parse incoming resumes before any human review occurs, and they do so according to rules that have specific implications for the format and content conventions common outside North America and the UK.
       </P>
       <P>
-        A data scientist based in São Paulo applied to a US Series B company with a resume that, by any reasonable professional standard, was well-prepared. It was organized, clearly written, and accurately represented a strong background. The resume was formatted in a design-forward two-column layout common in Latin American professional markets, included a professional profile photo standard in Brazil, and used skill proficiency bars — graphical representations of skill levels — that are common in European resume templates. The ATS rejected it before any human saw it, not because the qualifications were insufficient, but because two-column layouts disrupt ATS parsing, photos appear as unreadable image data, and skill proficiency bars are visually encoded information that ATS systems cannot interpret as text.
+        A data scientist based in São Paulo applied to a US Series B company with a resume that, by any reasonable professional standard, was well-prepared. It was organized, clearly written, and accurately represented a strong background. The resume was formatted in a design-forward two-column layout common in Latin American professional markets, included a professional profile photo standard in Brazil, and used skill proficiency bars (graphical representations of skill levels) that are common in European resume templates. The ATS rejected it before any human saw it, not because the qualifications were insufficient, but because two-column layouts disrupt ATS parsing, photos appear as unreadable image data, and skill proficiency bars are visually encoded information that ATS systems cannot interpret as text.
       </P>
       <P>
         This guide covers ATS systems comprehensively for international candidates: how they work, the specific failure modes that disproportionately affect candidates from non-US markets, how to optimize keywords without compromising the document&apos;s human readability, and how to verify ATS compliance before submitting any application.

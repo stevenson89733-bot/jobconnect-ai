@@ -4,7 +4,7 @@ export default function ArticleContent() {
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h2:text-xl prose-h3:text-base prose-p:leading-relaxed prose-li:leading-relaxed">
 
-      <StatHook>LinkedIn&apos;s 2024 Global Talent Report found that &quot;cross-cultural collaboration&quot; is now in the top five most-requested skills by international remote employers — ahead of project management and cloud architecture.</StatHook>
+      <StatHook>LinkedIn&apos;s 2024 Global Talent Report found that &quot;cross-cultural collaboration&quot; is now in the top five most-requested skills by international remote employers, ranking ahead of project management and cloud architecture.</StatHook>
 
       <TOC items={[
         { id: 'what-cross-border', label: 'What Cross-Border Skills Actually Are' },
@@ -58,7 +58,7 @@ export default function ArticleContent() {
 
       <H2 id="cultural-fluency">Cross-Cultural Professional Fluency</H2>
       <P>
-        Professional cultures differ in ways that are systematic, learnable, and consequential for distributed team performance. A candidate who has developed genuine cross-cultural professional fluency — not merely an awareness that cultures differ, but a practical ability to adapt their communication and collaboration style to different cultural norms — is a materially better distributed team member than one who has not.
+        Professional cultures differ in ways that are systematic, learnable, and consequential for distributed team performance. A candidate who has developed genuine cross-cultural professional fluency (not merely an awareness that cultures differ, but a practical ability to adapt their communication and collaboration style to different cultural norms) is a materially better distributed team member than one who has not.
       </P>
       <H3>Directness and feedback norms</H3>
       <P>
@@ -131,7 +131,7 @@ export default function ArticleContent() {
         },
         {
           q: 'Which cross-border skill is most valued by international remote employers?',
-          a: 'Based on consistent patterns in research on distributed team performance and international recruiter surveys, asynchronous communication mastery is the most universally valued. It affects every working interaction and is most directly observable during onboarding and early performance reviews. Developing this skill — writing complete, actionable, context-rich messages that do not require real-time follow-up — has the highest return on investment of any cross-border competency.'
+          a: 'Based on consistent patterns in research on distributed team performance and international recruiter surveys, asynchronous communication mastery is the most universally valued. It affects every working interaction and is most directly observable during onboarding and early performance reviews. Developing this skill, specifically: writing complete, actionable, context-rich messages that do not require real-time follow-up, has the highest return on investment of any cross-border competency.'
         },
         {
           q: 'How should I address the timezone question in an interview?',

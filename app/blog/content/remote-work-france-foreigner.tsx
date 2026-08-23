@@ -4,7 +4,7 @@ export default function ArticleContent() {
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h2:text-xl prose-h3:text-base prose-p:leading-relaxed prose-li:leading-relaxed">
 
-      <StatHook>France passed groundbreaking remote work legislation in 2021, opening the door for international talent to work for French companies without relocating — yet most candidates still apply using formats that immediately disqualify them.</StatHook>
+      <StatHook>France passed groundbreaking remote work legislation in 2021, opening the door for international talent to work for French companies without relocating. Yet most candidates still apply using formats that immediately disqualify them.</StatHook>
 
       <TOC items={[
         { id: 'french-tech-landscape', label: 'The French Tech Landscape' },
@@ -116,8 +116,8 @@ export default function ArticleContent() {
         <li><strong>Opening the lettre de motivation with a generic application statement:</strong> The formulaic first-line approach is the single most consistent reason French recruiters dismiss an otherwise strong application at the first review, and it is entirely avoidable.</li>
         <li><strong>Applying for French-language roles without the required proficiency:</strong> Marketing, content, and community roles in French are not accessible to candidates below C1 level, regardless of how strong the creative or technical qualifications are on the rest of the CV.</li>
         <li><strong>Using informal register in initial professional communications:</strong> First contact with French recruiters should match the formal tone of the lettre de motivation; casual or overly direct communication signals a misunderstanding of professional norms from the very first impression.</li>
-        <li><strong>Assuming that English-operating French companies share professional norms with UK or US employers:</strong> The hierarchy is real, the formality preferences are persistent, and the three-part cover letter structure is expected even at companies that conduct all internal work entirely in English.</li>
       </ul>
+      <P>One assumption underlies several of these errors and deserves to be named directly: that an English-operating French company shares professional norms with a UK or US employer. It does not. The hierarchy is real, the formality preferences are persistent, and the three-part lettre de motivation structure is expected even at companies that conduct all internal work entirely in English. The working language is not the same as the professional culture.</P>
 
       <FAQ items={[
         { q: 'Do I need a French work permit to work remotely for a French company from abroad?', a: 'No. If you remain in your home country and invoice the French company as an independent contractor, no French work authorization is required. You pay taxes entirely in your home country, and the French company treats the payment as a professional services fee. Employer of Record services such as Deel and Remote.com can also formally employ you in your home country on behalf of the French company, with full local employment benefits.' },

@@ -4,7 +4,7 @@ export default function ArticleContent() {
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h2:text-xl prose-h3:text-base prose-p:leading-relaxed prose-li:leading-relaxed">
 
-      <StatHook>Canada is consistently ranked among the top three most immigrant-friendly tech job markets globally — and its remote work adoption rate is the highest in the G7.</StatHook>
+      <StatHook>Canada is consistently ranked among the top three most immigrant-friendly tech job markets globally, with the highest remote work adoption rate in the G7.</StatHook>
 
       <TOC items={[
         { id: 'why-canada', label: 'Why Canada Is a High-Value Target for International Candidates' },
@@ -105,8 +105,8 @@ export default function ArticleContent() {
         <li><strong>LinkedIn Jobs:</strong> The dominant platform for Canadian professional hiring. Filtering for Canada with &quot;Remote&quot; and targeting companies with documented international hiring history yields the most accessible opportunities.</li>
         <li><strong>Workopolis:</strong> Canada&apos;s largest dedicated job board, with comprehensive coverage of tech, product, and design roles across all three major hubs. Less strong for remote filtering but essential for Canadian company discovery.</li>
         <li><strong>Indeed Canada:</strong> High volume with strong filtering capability. Boolean searches combining &quot;remote&quot; with specific tech stack keywords surface engineering roles across the full range of Canadian company types.</li>
-        <li><strong>Jobboom:</strong> Strong for Quebec-based and bilingual roles, particularly relevant for Montreal opportunities in French and bilingual organizations.</li>
       </ul>
+      <P>For candidates targeting Montreal specifically, Jobboom is worth adding to the toolkit. Strong for Quebec-based and bilingual roles, it is the most relevant dedicated platform for opportunities in French-speaking and bilingual organizations. How much does this matter in practice? In Quebec, companies legally operating in French may not advertise on English-first platforms at all, making Jobboom the only reliable discovery channel for that segment.</P>
 
       <H2 id="common-mistakes">Common Mistakes International Candidates Make</H2>
       <P>
@@ -117,8 +117,8 @@ export default function ArticleContent() {
         <li><strong>Underestimating Canadian English as a distinct standard:</strong> Submitting a UK-English CV with British spellings to a Canadian company, or an American-English document that misses key Canadian conventions, signals insufficient attention to the specific market being targeted.</li>
         <li><strong>Using overly competitive or superlative self-framing:</strong> Canadian hiring culture is put off by the aggressive personal branding common in US startup applications. Grounded, collaborative achievement descriptions are more persuasive and culturally appropriate.</li>
         <li><strong>Ignoring Montreal&apos;s bilingual requirement:</strong> Candidates targeting Montreal roles without researching the language requirement of each specific company waste application effort on roles that require French proficiency they do not hold.</li>
-        <li><strong>Not preparing references proactively:</strong> Canadian companies request references at a consistent point in the process. Candidates who have not prepared their reference list in advance introduce avoidable delay, which in competitive hiring situations can cost an offer to a faster-moving candidate.</li>
       </ul>
+      <P>In practice, one preparation step is routinely overlooked: assembling a reference list before the job search begins. Canadian companies request references at a consistent and predictable point in the process. Candidates who are unprepared at that moment introduce avoidable delay; in competitive situations, that delay can cost a candidate the offer.</P>
       <KeyTakeaway>Proactive work authorization research before applying is the single highest-leverage preparatory step for international candidates targeting Canadian roles. It eliminates the most common reason strong candidates lose offers they otherwise deserved.</KeyTakeaway>
 
       <FAQ items={[

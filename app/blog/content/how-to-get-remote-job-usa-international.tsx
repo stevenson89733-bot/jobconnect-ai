@@ -4,7 +4,7 @@ export default function ArticleContent() {
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h2:text-xl prose-h3:text-base prose-p:leading-relaxed prose-li:leading-relaxed">
 
-      <StatHook>The United States accounts for over 40% of global remote job listings — but a 2024 analysis found that fewer than 18% of those listings explicitly welcome applications from outside North America.</StatHook>
+      <StatHook>The United States accounts for over 40% of global remote job listings, but a 2024 analysis found that fewer than 18% of those listings explicitly welcome applications from outside North America.</StatHook>
 
       <TOC items={[
         { id: 'landscape', label: 'Understanding the US Remote Job Landscape' },
@@ -104,8 +104,8 @@ export default function ArticleContent() {
         <li><strong>We Work Remotely:</strong> One of the largest remote-specific job boards, with strong US representation and a meaningful proportion of listings that explicitly welcome international applicants.</li>
         <li><strong>Remote.co:</strong> Curates remote positions from companies with established remote-first cultures, many of which hire internationally.</li>
         <li><strong>LinkedIn Jobs:</strong> With location set to &quot;Remote&quot; and a Boolean search that includes terms like &quot;worldwide remote&quot; or &quot;international candidates welcome,&quot; LinkedIn surfaces a significant volume of genuinely accessible US opportunities.</li>
-        <li><strong>YC Work at a Startup:</strong> Y Combinator&apos;s talent platform connects candidates directly with YC-funded companies, a disproportionate share of which hire internationally, particularly for engineering roles.</li>
       </ul>
+      <P>Consider this a separate search worth running: Y Combinator&apos;s Work at a Startup platform connects candidates directly with YC-funded companies, a disproportionate share of which hire internationally for engineering roles. It surfaces opportunities that rarely appear on standard job boards and reaches companies that are often in their first international hire.</P>
 
       <H2 id="common-mistakes">Common Mistakes International Candidates Make</H2>
       <P>
@@ -116,8 +116,8 @@ export default function ArticleContent() {
         <li><strong>Submitting a multi-page CV in the European format:</strong> A two or three-page German-style Lebenslauf or British-style comprehensive CV submitted to a US company will typically be shortened or deprioritized by ATS systems calibrated for one-page documents and may not be read in full by human reviewers.</li>
         <li><strong>Avoiding the work authorization conversation:</strong> Waiting until an offer stage to raise the question of international employment structure is the most common reason US remote offers fall apart for international candidates. Raising it early, matter-of-factly, identifies whether the opportunity is viable and signals professional transparency.</li>
         <li><strong>Underpricing on salary expectations:</strong> International candidates frequently quote salary expectations calibrated to their local market rather than US market rates. US companies hiring internationally typically pay at or near US market rates, particularly for technical roles. Underquoting signals either a misunderstanding of the market or underconfidence in one&apos;s own profile.</li>
-        <li><strong>Weak timezone communication:</strong> Saying &apos;I can be flexible&apos; without specifying overlap hours is not reassuring to a US hiring manager. Specific, confident statements about your working schedule and available overlap hours are more persuasive and remove a key point of uncertainty.</li>
       </ul>
+      <P>What this means for timezone communication is worth stating directly: &quot;I can be flexible&quot; is not reassuring. Specific, confident statements about your working schedule and daily overlap hours are more persuasive and remove a key point of uncertainty before the offer stage arrives.</P>
       <KeyTakeaway>The most common failure mode for international candidates targeting US remote roles is investing application effort before confirming international eligibility. A thirty-second inquiry before applying saves hours and protects professional reputation with individual recruiters.</KeyTakeaway>
 
       <FAQ items={[
