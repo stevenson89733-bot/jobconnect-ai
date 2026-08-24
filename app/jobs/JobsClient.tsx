@@ -187,12 +187,43 @@ export default function JobsClient({
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-10">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{t('title')}</h1>
-        <p className="text-slate-600 dark:text-slate-400">
-          {t('positionCount', { count: total ?? jobs.length })}
-          {query ? t('matchingQuery', { query }) : ''}
-        </p>
+      {/* Visual header banner */}
+      <div className="mb-8 rounded-2xl bg-gradient-to-br from-primary/5 via-white to-sky-50 dark:from-primary/10 dark:via-card dark:to-card border border-slate-200 dark:border-slate-700/60 px-6 py-5">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold bg-teal-100 dark:bg-teal-900/40 text-teal-700 dark:text-teal-400 px-2.5 py-1 rounded-full">
+                <span className="w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse" />
+                Remote-Friendly Verified
+              </span>
+            </div>
+            <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-0.5">{t('title')}</h1>
+            <p className="text-sm text-slate-600 dark:text-slate-400">
+              {t('positionCount', { count: total ?? jobs.length })}
+              {query ? t('matchingQuery', { query }) : ''}
+            </p>
+          </div>
+          {/* Country quick-filters */}
+          <div className="flex flex-wrap gap-2 sm:justify-end">
+            {[
+              { flag: '🌍', label: 'Worldwide', value: '' },
+              { flag: '🇺🇸', label: 'USA', value: 'USA' },
+              { flag: '🇬🇧', label: 'UK', value: 'UK' },
+              { flag: '🇩🇪', label: 'DE', value: 'Germany' },
+              { flag: '🇫🇷', label: 'FR', value: 'France' },
+              { flag: '🇨🇦', label: 'CA', value: 'Canada' },
+            ].map(({ flag, label, value }) => (
+              <button
+                key={label}
+                onClick={() => navigate({ q: value ? value : '' })}
+                className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-primary/50 hover:text-primary dark:hover:text-blue-400 transition-colors bg-white dark:bg-slate-800/50"
+              >
+                <span>{flag}</span>
+                <span>{label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* ── Search + Filters ──────────────────────────────── */}

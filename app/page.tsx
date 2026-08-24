@@ -130,38 +130,80 @@ export default async function Home() {
             </AnimatedCTA>
           </div>
 
-          {/* Chat mock — showing the copilot experience, not describing it */}
+          {/* Product screenshot mockup — AI copilot in action */}
           <FadeIn>
-            <div className="max-w-xl mx-auto bg-white dark:bg-card border border-slate-200 dark:border-slate-700/50 rounded-[20px] shadow-[0_20px_50px_-20px_rgba(15,23,42,.18)] overflow-hidden text-start mb-14">
-              <div className="flex items-center gap-2 px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/50 text-sm font-bold text-body dark:text-slate-400">
-                <span className="w-2 h-2 rounded-full bg-mint" />
-                {t('chatLabel')}
-              </div>
-              <div className="flex flex-col gap-3 px-5 py-4">
-                <div className="self-end max-w-[80%] bg-primary text-white text-sm leading-relaxed rounded-2xl rounded-br-md px-4 py-2.5">
-                  {t('chatUser1')}
+            <div className="max-w-2xl mx-auto mb-14">
+              <div className="rounded-[20px] overflow-hidden shadow-[0_24px_64px_-20px_rgba(15,23,42,.22)] border border-slate-200 dark:border-slate-700/50">
+                {/* Window chrome */}
+                <div className="bg-slate-100 dark:bg-slate-800 px-5 py-3 flex items-center gap-2 border-b border-slate-200 dark:border-slate-700/50">
+                  <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-red-400" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                    <div className="w-3 h-3 rounded-full bg-green-400" />
+                  </div>
+                  <span className="text-xs text-slate-500 dark:text-slate-400 mx-auto font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-mint inline-block mr-1.5 animate-pulse" />
+                    {t('chatLabel')}
+                  </span>
                 </div>
-                <div className="self-start max-w-[85%] bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm leading-relaxed rounded-2xl rounded-bl-md px-4 py-2.5">
-                  {t.rich('chatBot1', {
-                    link: (chunks) => (
-                      <Link href="/ai-tools/resume-builder" className="text-primary dark:text-blue-400 font-bold hover:underline">
-                        {chunks}
-                      </Link>
-                    ),
-                  })}
-                </div>
-                <div className="self-end max-w-[80%] bg-primary text-white text-sm leading-relaxed rounded-2xl rounded-br-md px-4 py-2.5">
-                  {t('chatUser2')}
-                </div>
-                <div className="self-start max-w-[85%] bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm leading-relaxed rounded-2xl rounded-bl-md px-4 py-2.5">
-                  {t.rich('chatBot2', {
-                    b: (chunks) => <b>{chunks}</b>,
-                    link: (chunks) => (
-                      <Link href="/jobs" className="text-primary dark:text-blue-400 font-bold hover:underline">
-                        {chunks}
-                      </Link>
-                    ),
-                  })}
+                {/* Two-panel UI */}
+                <div className="bg-white dark:bg-card grid grid-cols-5 divide-x divide-slate-100 dark:divide-slate-700/50 text-xs">
+                  {/* Left: chat */}
+                  <div className="col-span-2 p-4 space-y-3 text-start">
+                    <div className="self-end bg-primary/10 dark:bg-primary/20 rounded-xl rounded-tl-none px-3 py-2 text-slate-700 dark:text-slate-300">
+                      {t('chatUser1')}
+                    </div>
+                    <div className="flex gap-2 items-start">
+                      <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[8px] font-bold shrink-0 mt-0.5">AI</div>
+                      <div className="bg-slate-50 dark:bg-slate-800/60 rounded-xl rounded-tl-none px-3 py-2 text-slate-600 dark:text-slate-400 flex-1">
+                        {t.rich('chatBot1', {
+                          link: (chunks) => (
+                            <Link href="/ai-tools/resume-builder" className="text-primary dark:text-blue-400 font-bold hover:underline">{chunks}</Link>
+                          ),
+                        })}
+                      </div>
+                    </div>
+                    <div className="self-end bg-primary/10 dark:bg-primary/20 rounded-xl rounded-tl-none px-3 py-2 text-slate-700 dark:text-slate-300">
+                      {t('chatUser2')}
+                    </div>
+                    <div className="flex gap-2 items-start">
+                      <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[8px] font-bold shrink-0 mt-0.5">AI</div>
+                      <div className="bg-slate-50 dark:bg-slate-800/60 rounded-xl rounded-tl-none px-3 py-2 text-slate-600 dark:text-slate-400 flex-1">
+                        {t.rich('chatBot2', {
+                          b: (chunks) => <b>{chunks}</b>,
+                          link: (chunks) => (
+                            <Link href="/jobs" className="text-primary dark:text-blue-400 font-bold hover:underline">{chunks}</Link>
+                          ),
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                  {/* Right: resume preview panel */}
+                  <div className="col-span-3 p-4 bg-slate-50 dark:bg-slate-800/40 space-y-2.5 text-start">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Résumé — Optimisé IA</span>
+                      <span className="bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 text-[10px] font-bold px-2 py-0.5 rounded-full">ATS 87/100</span>
+                    </div>
+                    <div className="bg-white dark:bg-slate-800 rounded-lg p-3 border border-slate-200 dark:border-slate-700 space-y-2">
+                      <div className="font-bold text-slate-900 dark:text-white text-sm">Amara D.</div>
+                      <div className="text-[11px] text-primary dark:text-blue-400 font-medium">Senior Product Manager</div>
+                      <div className="border-t border-slate-100 dark:border-slate-700 pt-2 space-y-1">
+                        <div className="text-[11px] text-slate-600 dark:text-slate-400">✦ Led cross-functional team of 12, shipped payments for 50M users</div>
+                        <div className="text-[11px] text-slate-600 dark:text-slate-400">✦ Increased conversion 34% via A/B-tested checkout redesign</div>
+                      </div>
+                      <div className="flex flex-wrap gap-1 pt-1">
+                        {['Product Strategy', 'Roadmapping', 'OKRs', 'A/B Testing'].map((s) => (
+                          <span key={s} className="bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-[9px] px-1.5 py-0.5 rounded">{s}</span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="space-y-1">
+                      <div className="text-[10px] text-slate-500 dark:text-slate-400">Keyword match</div>
+                      <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-1.5">
+                        <div className="bg-green-500 h-1.5 rounded-full" style={{ width: '87%' }} />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -282,6 +324,33 @@ export default async function Home() {
       </FadeIn>
 
       <HowItWorks />
+
+      {/* Built for professionals in — country flags quick-links */}
+      <FadeIn>
+        <section className="max-w-5xl mx-auto px-6 py-16">
+          <p className="text-center text-xs font-semibold text-body dark:text-slate-400 uppercase tracking-widest mb-8">
+            Built for cross-border professionals in
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            {[
+              { flag: '🇺🇸', label: 'USA', href: '/remote-jobs-usa' },
+              { flag: '🇬🇧', label: 'UK', href: '/remote-jobs-uk' },
+              { flag: '🇩🇪', label: 'Germany', href: '/remote-jobs-germany' },
+              { flag: '🇫🇷', label: 'France', href: '/remote-jobs-france' },
+              { flag: '🇨🇦', label: 'Canada', href: '/remote-jobs-canada' },
+            ].map(({ flag, label, href }) => (
+              <Link
+                key={label}
+                href={href}
+                className="flex flex-col items-center gap-2 group px-6 py-4 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 dark:hover:border-blue-500/50 hover:shadow-md transition-all"
+              >
+                <span className="text-4xl">{flag}</span>
+                <span className="text-xs font-semibold text-body dark:text-slate-400 group-hover:text-primary dark:group-hover:text-blue-400 transition-colors">{label}</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      </FadeIn>
 
       {/* Pricing teaser — real numbers, mirrors /pricing exactly */}
       <FadeIn>

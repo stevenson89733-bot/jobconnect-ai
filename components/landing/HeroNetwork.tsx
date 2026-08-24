@@ -54,7 +54,7 @@ export default function HeroNetwork() {
           key={i}
           x1={NODES[a][0]} y1={NODES[a][1]}
           x2={NODES[b][0]} y2={NODES[b][1]}
-          className="stroke-primary/[0.10] dark:stroke-blue-400/[0.13]"
+          className="stroke-primary/[0.22] dark:stroke-blue-400/[0.22]"
           strokeWidth="1"
         />
       ))}
@@ -66,7 +66,7 @@ export default function HeroNetwork() {
           cx={NODES[idx][0]}
           cy={NODES[idx][1]}
           r={NODES[idx][2] * 3.5}
-          className="fill-primary/[0.07] dark:fill-blue-400/[0.09]"
+          className="fill-primary/[0.15] dark:fill-blue-400/[0.15]"
         />
       ))}
 
@@ -76,8 +76,8 @@ export default function HeroNetwork() {
           cx={x} cy={y} r={r}
           className={
             HUBS.has(i)
-              ? 'fill-primary/60 dark:fill-blue-400/70'
-              : 'fill-primary/25 dark:fill-blue-400/30'
+              ? 'fill-primary/75 dark:fill-blue-400/80'
+              : 'fill-primary/45 dark:fill-blue-400/50'
           }
         />
       ))}
