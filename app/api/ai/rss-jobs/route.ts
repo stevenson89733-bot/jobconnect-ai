@@ -14,9 +14,9 @@ export async function GET(req: Request) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: t('mustBeSignedIn') }, { status: 401 })
 
-  const { data: profile } = await supabase.from('profiles').select('role').eq('user_id', user.id).single()
-  if (profile?.role !== 'employer') {
-    return NextResponse.json({ error: t('onlyEmployerAccountsCanPostJobs') }, { status: 403 })
+  const { data: profile } = await supabase.from('profiles').select('is_admin').eq('user_id', user.id).single()
+  if (!profile?.is_admin) {
+    return NextResponse.json({ error: t('adminsOnly') }, { status: 403 })
   }
 
   const { ok } = rateLimit(`ai-generate:rss-jobs:${user.id ?? getClientIp()}`, RSS_LIMIT, RSS_WINDOW_MS)

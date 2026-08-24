@@ -32,10 +32,12 @@ export default function PostJobModal({
   companyName,
   triggerClassName,
   triggerLabel,
+  isAdmin,
 }: {
   companyName: string
   triggerClassName: string
   triggerLabel: string
+  isAdmin?: boolean
 }) {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -260,13 +262,15 @@ export default function PostJobModal({
                   >
                     {t('pasteToFillButton')}
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => { setShowRss(true); fetchRssJobs() }}
-                    className="w-full text-sm text-primary dark:text-blue-400 border border-dashed border-primary/40 rounded-lg py-2.5 hover:bg-primary/5 transition-colors"
-                  >
-                    Browse We Work Remotely
-                  </button>
+                  {isAdmin && (
+                    <button
+                      type="button"
+                      onClick={() => { setShowRss(true); fetchRssJobs() }}
+                      className="w-full text-sm text-primary dark:text-blue-400 border border-dashed border-primary/40 rounded-lg py-2.5 hover:bg-primary/5 transition-colors"
+                    >
+                      Browse We Work Remotely
+                    </button>
+                  )}
                 </div>
               ) : showPaste ? (
                 <div className="border border-primary/30 rounded-lg p-3.5 space-y-3 bg-primary/5 dark:bg-primary/10">

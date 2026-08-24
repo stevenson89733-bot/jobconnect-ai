@@ -34,6 +34,7 @@ export default async function EmployerDashboard() {
   const locale = await getLocale()
 
   let companyName = ''
+  let isAdmin = false
   let jobs: JobRow[] = []
   let applications: Application[] = []
 
@@ -43,7 +44,7 @@ export default async function EmployerDashboard() {
 
     if (user) {
       const [{ data: profileRow }, { data: jobRows, error: jobsError }] = await Promise.all([
-        supabase.from('profiles').select('company_name').eq('user_id', user.id).maybeSingle(),
+        supabase.from('profiles').select('company_name, is_admin').eq('user_id', user.id).maybeSingle(),
         supabase
           .from('jobs')
           .select('id, title, is_active, created_at')
@@ -52,6 +53,7 @@ export default async function EmployerDashboard() {
       ])
 
       companyName = profileRow?.company_name ?? ''
+      isAdmin = profileRow?.is_admin ?? false
       if (jobsError) console.error('[recruiter/jobs]', jobsError.message)
       jobs = (jobRows as JobRow[] | null) ?? []
 
@@ -139,7 +141,7 @@ export default async function EmployerDashboard() {
         <div className="flex gap-3">
           <Link href="/recruiter/profile" className="btn-outline text-sm">{t('editCompanyProfile')}</Link>
           <Link href="/jobs" className="btn-outline text-sm">{t('viewAllJobs')}</Link>
-          <PostJobModal companyName={companyName} triggerClassName="btn-primary text-sm" triggerLabel={t('postAJob')} />
+          <PostJobModal companyName={companyName} triggerClassName="btn-primary text-sm" triggerLabel={t('postAJob')} isAdmin={isAdmin} />
         </div>
       </div>
 
@@ -244,7 +246,7 @@ export default async function EmployerDashboard() {
         <div className="xl:col-span-2 card">
           <div className="flex items-center justify-between mb-5">
             <h2 className="font-semibold text-slate-900 dark:text-white">{t('yourJobPostings')}</h2>
-            <PostJobModal companyName={companyName} triggerClassName="text-xs text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300" triggerLabel={t('postNewJob')} />
+            <PostJobModal companyName={companyName} triggerClassName="text-xs text-primary dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300" triggerLabel={t('postNewJob')} isAdmin={isAdmin} />
           </div>
           {jobs.length === 0 ? (
             <div className="text-center py-10 text-slate-600 dark:text-slate-400">
