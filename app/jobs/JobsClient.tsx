@@ -53,6 +53,7 @@ export default function JobsClient({
   initialCategory = 'All',
   initialSort = 'relevance',
   initialCrossBorder = false,
+  initialCountry = '',
   totalPages = 1,
   total,
 }: {
@@ -63,6 +64,7 @@ export default function JobsClient({
   initialCategory?: string
   initialSort?: SortOption
   initialCrossBorder?: boolean
+  initialCountry?: string
   totalPages?: number
   total?: number
 }) {
@@ -93,6 +95,7 @@ export default function JobsClient({
   const [category, setCategory] = useState(initialCategory)
   const [sort, setSort] = useState<SortOption>(initialSort)
   const [crossBorder, setCrossBorder] = useState(initialCrossBorder)
+  const [country, setCountry] = useState(initialCountry)
 
   // Infinite scroll state — the server always renders page 1 (via the
   // `jobs` prop); this accumulates pages 2+ fetched client-side from
@@ -115,7 +118,7 @@ export default function JobsClient({
     setHasMore(totalPages > 1)
   }, [jobs, totalPages])
 
-  function navigate(next: { q?: string; workType?: string; type?: string; category?: string; sort?: SortOption; crossBorder?: boolean }) {
+  function navigate(next: { q?: string; workType?: string; type?: string; category?: string; sort?: SortOption; crossBorder?: boolean; country?: string }) {
     const params = new URLSearchParams()
     const q = next.q ?? query
     const w = next.workType ?? workType
@@ -123,6 +126,7 @@ export default function JobsClient({
     const c = next.category ?? category
     const s = next.sort ?? sort
     const cb = next.crossBorder ?? crossBorder
+    const cn = next.country !== undefined ? next.country : country
 
     if (q) params.set('q', q)
     if (w !== 'All') params.set('workType', w)
@@ -130,6 +134,7 @@ export default function JobsClient({
     if (c !== 'All') params.set('category', c)
     if (s !== 'relevance') params.set('sort', s)
     if (cb) params.set('crossBorder', '1')
+    if (cn) params.set('country', cn)
 
     startTransition(() => {
       router.push(`${pathname}?${params.toString()}`)
@@ -147,6 +152,7 @@ export default function JobsClient({
       if (category !== 'All') params.set('category', category)
       if (sort !== 'relevance') params.set('sort', sort)
       if (crossBorder) params.set('crossBorder', '1')
+      if (country) params.set('country', country)
       params.set('page', String(nextPage))
 
       const res = await fetch(`/api/jobs?${params.toString()}`)
@@ -182,7 +188,8 @@ export default function JobsClient({
     setJobType('All')
     setCategory('All')
     setCrossBorder(false)
-    navigate({ q: '', workType: 'All', type: 'All', category: 'All', crossBorder: false })
+    setCountry('')
+    navigate({ q: '', workType: 'All', type: 'All', category: 'All', crossBorder: false, country: '' })
   }
 
   return (
@@ -215,8 +222,12 @@ export default function JobsClient({
             ].map(({ flag, label, value }) => (
               <button
                 key={label}
-                onClick={() => navigate({ q: value ? value : '' })}
-                className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-primary/50 hover:text-primary dark:hover:text-blue-400 transition-colors bg-white dark:bg-slate-800/50"
+                onClick={() => { setCountry(value); navigate({ country: value }) }}
+                className={`flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg border transition-colors ${
+                  country === value
+                    ? 'bg-primary border-primary text-white'
+                    : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-primary/50 hover:text-primary dark:hover:text-blue-400 bg-white dark:bg-slate-800/50'
+                }`}
               >
                 <span>{flag}</span>
                 <span>{label}</span>

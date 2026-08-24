@@ -14,6 +14,16 @@ export type JobFilters = {
   category: string
   sort: SortOption
   crossBorder: boolean
+  country: string
+}
+
+// Maps UI country value → location substrings to match in Supabase
+const COUNTRY_TERMS: Record<string, string[]> = {
+  USA:     ['USA', 'United States'],
+  UK:      ['UK', 'United Kingdom'],
+  Germany: ['Germany'],
+  France:  ['France'],
+  Canada:  ['Canada'],
 }
 
 export function parseSort(value: string | null | undefined): SortOption {
@@ -28,13 +38,17 @@ export function parseCrossBorder(value: string | null | undefined): boolean {
 
 export function applyJobFilters<T extends { or: any; ilike: any; eq: any; order: any }>(
   query: T,
-  { q, workType, jobType, category, sort, crossBorder }: JobFilters
+  { q, workType, jobType, category, sort, crossBorder, country }: JobFilters
 ): T {
   if (q) {
     // Real keyword match across title/company/description only — no
     // fabricated relevance scoring beyond what these ilike hits are.
     const escaped = q.replace(/[%_]/g, (c) => `\\${c}`)
     query = query.or(`title.ilike.%${escaped}%,company_name.ilike.%${escaped}%,description.ilike.%${escaped}%`)
+  }
+  if (country && COUNTRY_TERMS[country]) {
+    const terms = COUNTRY_TERMS[country].map((t) => t.replace(/[%_]/g, (c) => `\\${c}`))
+    query = query.or(terms.map((t) => `location.ilike.%${t}%`).join(','))
   }
   if (workType && workType !== 'All') query = query.eq('work_type', workType)
   if (jobType && jobType !== 'All') query = query.eq('job_type', jobType)

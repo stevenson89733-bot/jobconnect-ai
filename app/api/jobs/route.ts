@@ -26,6 +26,7 @@ export async function GET(req: Request) {
   const category = searchParams.get('category') ?? 'All'
   const sort = parseSort(searchParams.get('sort'))
   const crossBorder = parseCrossBorder(searchParams.get('crossBorder'))
+  const country = searchParams.get('country') ?? ''
 
   const supabase = createClient()
   let query = supabase
@@ -33,7 +34,7 @@ export async function GET(req: Request) {
     .select(JOB_SELECT_FIELDS, { count: 'exact' })
     .eq('is_active', true)
 
-  query = applyJobFilters(query, { q, workType, jobType, category, sort, crossBorder })
+  query = applyJobFilters(query, { q, workType, jobType, category, sort, crossBorder, country })
 
   const { data: jobs, count, error } = await query.range(from, to)
 
