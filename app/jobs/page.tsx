@@ -4,6 +4,7 @@ import { createPublicClient } from '@/lib/supabase/public'
 import { createClient } from '@/lib/supabase/server'
 import { getCandidateProfile } from '@/lib/profile'
 import { parseSkillSet, calculateMatchPercent } from '@/lib/jobMatching'
+import { calculateJobScore } from '@/lib/jobScoring'
 import { applyJobFilters, normalizeJobCompany, parseSort, parseCrossBorder, JOB_SELECT_FIELDS, type JobFilters } from '@/lib/jobsQuery'
 import { absoluteUrl } from '@/lib/seo'
 import JobsClient from './JobsClient'
@@ -87,19 +88,25 @@ export default async function JobsPage({
   // skills listed; otherwise every job's matchPercent stays null and the
   // client omits the badge entirely rather than showing a fabricated score.
   let skillSet = new Set<string>()
+  let candidateProfile: Awaited<ReturnType<typeof getCandidateProfile>> = null
   try {
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
-      const profile = await getCandidateProfile(supabase, user.id)
-      skillSet = parseSkillSet(profile?.skills)
+      candidateProfile = await getCandidateProfile(supabase, user.id)
+      skillSet = parseSkillSet(candidateProfile?.skills)
     }
   } catch {}
 
-  const jobsWithMatch = jobs.map((job) => ({
-    ...job,
-    matchPercent: calculateMatchPercent(job.tags, skillSet),
-  }))
+  const jobsWithMatch = jobs.map((job) => {
+    const scoreResult = calculateJobScore(job, candidateProfile)
+    return {
+      ...job,
+      matchPercent: calculateMatchPercent(job.tags, skillSet),
+      matchScore: scoreResult?.score ?? null,
+      matchDetails: scoreResult?.details ?? null,
+    }
+  })
 
   return (
     <JobsClient

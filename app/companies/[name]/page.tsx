@@ -90,6 +90,8 @@ export default async function CompanyPage({ params }: { params: { name: string }
     if (user) {
       const profile = await getCandidateProfile(supabase, user.id)
       skillSet = parseSkillSet(profile?.skills)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      void profile // profile stored for future scoring extension
 
       const { data: existing } = await supabase
         .from('company_reviews')
@@ -134,6 +136,8 @@ export default async function CompanyPage({ params }: { params: { name: string }
   const jobsWithMatch = jobs.map((job) => ({
     ...job,
     matchPercent: calculateMatchPercent(job.tags, skillSet),
+    matchScore: null,
+    matchDetails: null,
   }))
 
   // Simple factual aggregation across this company's own real open

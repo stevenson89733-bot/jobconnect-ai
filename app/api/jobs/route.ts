@@ -4,6 +4,7 @@ import { revalidateTag } from 'next/cache'
 import { getTranslations } from 'next-intl/server'
 import { getCandidateProfile } from '@/lib/profile'
 import { parseSkillSet, calculateMatchPercent } from '@/lib/jobMatching'
+import { calculateJobScore } from '@/lib/jobScoring'
 import { applyJobFilters, normalizeJobCompany, parseSort, parseCrossBorder, JOB_SELECT_FIELDS } from '@/lib/jobsQuery'
 import { employerPlanLimit } from '@/lib/employerPlan'
 import { classifyCrossBorder } from '@/lib/ai/crossBorder'
@@ -45,16 +46,22 @@ export async function GET(req: Request) {
   // LLM call, so no rate limiting is warranted; null (badge omitted) for
   // logged-out users or empty profiles, never a fabricated score.
   let skillSet = new Set<string>()
+  let candidateProfile: Awaited<ReturnType<typeof getCandidateProfile>> = null
   const { data: { user } } = await supabase.auth.getUser()
   if (user) {
-    const profile = await getCandidateProfile(supabase, user.id)
-    skillSet = parseSkillSet(profile?.skills)
+    candidateProfile = await getCandidateProfile(supabase, user.id)
+    skillSet = parseSkillSet(candidateProfile?.skills)
   }
 
-  const jobsWithMatch = (jobs ?? []).map(normalizeJobCompany).map((job) => ({
-    ...job,
-    matchPercent: calculateMatchPercent(job.tags, skillSet),
-  }))
+  const jobsWithMatch = (jobs ?? []).map(normalizeJobCompany).map((job) => {
+    const scoreResult = calculateJobScore(job, candidateProfile)
+    return {
+      ...job,
+      matchPercent: calculateMatchPercent(job.tags, skillSet),
+      matchScore: scoreResult?.score ?? null,
+      matchDetails: scoreResult?.details ?? null,
+    }
+  })
 
   const total = count ?? 0
   return NextResponse.json({

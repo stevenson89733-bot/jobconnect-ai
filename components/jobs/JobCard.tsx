@@ -168,10 +168,31 @@ export default function JobCard({
         {job.is_featured && (
           <Badge variant="primary" className="shrink-0">{t('featured')}</Badge>
         )}
-        {job.matchPercent != null && (
-          <Badge variant="success" className="shrink-0 flex items-center gap-1">
-            <Sparkles className="w-3 h-3" strokeWidth={2} /> {job.matchPercent}%
-          </Badge>
+        {job.matchScore != null && job.matchScore >= 40 && (
+          <span className="relative group shrink-0">
+            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold cursor-default select-none whitespace-nowrap ${
+              job.matchScore >= 80
+                ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-300 dark:border-green-800/50'
+                : job.matchScore >= 60
+                ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border border-blue-300 dark:border-blue-800/50'
+                : 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-300 dark:border-amber-800/50'
+            }`}>
+              <Sparkles className="w-2.5 h-2.5" strokeWidth={2} />
+              {job.matchScore >= 80 ? 'Excellent' : job.matchScore >= 60 ? 'Good match' : 'Partial'} · {job.matchScore}%
+            </span>
+            {job.matchDetails && job.matchDetails.length > 0 && (
+              <span className="pointer-events-none absolute bottom-full left-0 z-30 mb-2 w-44 hidden group-hover:block bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg p-2.5 space-y-1.5">
+                {job.matchDetails.map((d, i) => (
+                  <span key={i} className="flex items-center gap-1.5 text-[11px] text-slate-600 dark:text-slate-300">
+                    <span className={`shrink-0 ${d.matched ? 'text-green-500 dark:text-green-400' : 'text-slate-300 dark:text-slate-600'}`}>
+                      {d.matched ? '✓' : '·'}
+                    </span>
+                    {d.label}
+                  </span>
+                ))}
+              </span>
+            )}
+          </span>
         )}
 
         {/* Salary — most important trust signal, anchored right on line 1 */}

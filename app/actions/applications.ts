@@ -151,3 +151,42 @@ export async function inviteCandidateToInterview(
   revalidatePath('/candidate')
   return { ok: true }
 }
+
+// Candidate-side status update — lets a candidate mark their own application
+// as 'interview', 'offer', or 'rejected' after the fact (e.g. they heard back
+// via email). Ownership is enforced both here (candidate_id = user.id check)
+// and by the RLS policy on the table.
+export async function updateCandidateApplicationStatus(
+  applicationId: string,
+  status: ApplicationStatus
+): Promise<UpdateApplicationStatusResult> {
+  const t = await getTranslations('errors')
+  const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { ok: false, error: t('mustBeSignedIn') }
+
+  if (!APPLICATION_STATUSES.includes(status)) {
+    return { ok: false, error: t('invalidApplicationStatus') }
+  }
+
+  const { data, error } = await supabase
+    .from('applications')
+    .update({ status })
+    .eq('id', applicationId)
+    .eq('candidate_id', user.id)
+    .select('id')
+    .maybeSingle()
+
+  if (error) {
+    console.error('[candidate/applications/status]', error.message)
+    return { ok: false, error: t('couldNotUpdateApplication') }
+  }
+
+  if (!data) {
+    return { ok: false, error: t('onlyUpdateOwnJobApplications') }
+  }
+
+  revalidatePath('/candidate/applications')
+  revalidatePath('/candidate')
+  return { ok: true }
+}

@@ -13,6 +13,8 @@ export type CandidateProfileFields = {
   linkedin_url: string | null
   github_url: string | null
   portfolio_url: string | null
+  work_preference: string | null
+  location: string | null
 }
 
 // Single source of truth for "the candidate's real saved profile" — used by
@@ -26,7 +28,7 @@ export async function getCandidateProfile(
 ): Promise<CandidateProfileFields | null> {
   const { data } = await supabase
     .from('profiles')
-    .select('is_premium, title, bio, experience, skills, education, full_name, email, phone, linkedin_url, github_url, portfolio_url')
+    .select('is_premium, title, bio, experience, skills, education, full_name, email, phone, linkedin_url, github_url, portfolio_url, work_preference, location')
     .eq('user_id', userId)
     .single()
 

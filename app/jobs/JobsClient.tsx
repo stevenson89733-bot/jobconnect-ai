@@ -31,6 +31,8 @@ export type Job = {
   created_at: string
   apply_url: string | null
   source: string | null
+  matchScore: number | null
+  matchDetails: Array<{ label: string; matched: boolean }> | null
   company: { logo_url: string | null } | null
   // Real overlap between the signed-in candidate's real profile skills and
   // this job's real tags (lib/jobMatching.ts) — null whenever there's

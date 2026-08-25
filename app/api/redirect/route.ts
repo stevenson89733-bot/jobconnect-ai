@@ -23,6 +23,12 @@ export async function GET(req: Request) {
   // Log the click — best-effort, never blocks the redirect
   supabase.from('job_clicks').insert({ job_id: jobId, source, user_id: user?.id ?? null }).then(() => {})
 
+  // Auto-track external application for logged-in candidates — best-effort,
+  // silently ignored on duplicate (unique constraint) or RLS rejection.
+  if (user) {
+    supabase.from('applications').insert({ candidate_id: user.id, job_id: jobId, status: 'submitted' }).then(() => {})
+  }
+
   const dest = new URL(applyUrl)
   dest.searchParams.set('utm_source', source)
   dest.searchParams.set('utm_medium', 'jobboard')
