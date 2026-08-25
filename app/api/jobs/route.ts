@@ -98,9 +98,11 @@ export async function POST(req: Request) {
   }
 
   const body = await req.json()
+  const VALID_SOURCES = new Set(['wwr', 'remotive', 'direct'])
+  const source = body.source && VALID_SOURCES.has(body.source) ? body.source : null
   const { data: job, error } = await supabase
     .from('jobs')
-    .insert({ ...body, posted_by: user.id })
+    .insert({ ...body, source, posted_by: user.id })
     .select()
     .single()
 

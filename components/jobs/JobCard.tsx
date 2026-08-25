@@ -257,11 +257,18 @@ export default function JobCard({
           />
         )}
 
+        {/* Source badge — only for aggregated listings */}
+        {(job.source === 'remotive' || job.source === 'wwr') && (
+          <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 dark:bg-slate-700/60 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-600/50 whitespace-nowrap shrink-0">
+            {job.source === 'remotive' ? 'Remotive' : 'WWR'}
+          </span>
+        )}
+
         {/* Apply — pushed to end */}
         <span className="ml-auto shrink-0">
           {job.apply_url ? (
             <a
-              href={`/api/redirect?job=${encodeURIComponent(job.id)}&source=wwr`}
+              href={`/api/redirect?job=${encodeURIComponent(job.id)}&source=${encodeURIComponent(job.source ?? 'direct')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 bg-primary text-white text-[11px] font-semibold px-3 py-1.5 rounded-lg hover:bg-blue-600 transition-colors"

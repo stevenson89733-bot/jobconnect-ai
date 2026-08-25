@@ -30,6 +30,7 @@ export type Job = {
   cross_border_signals: string[] | null
   created_at: string
   apply_url: string | null
+  source: string | null
   company: { logo_url: string | null } | null
   // Real overlap between the signed-in candidate's real profile skills and
   // this job's real tags (lib/jobMatching.ts) — null whenever there's

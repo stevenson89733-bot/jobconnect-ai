@@ -3,6 +3,8 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import type { RemotiveJob } from '@/lib/remotive'
+import { mapRemotiveCategory, mapRemotiveJobType, parseRemotiveSalary } from '@/lib/remotive'
 
 const JOB_TYPES = ['Full-time', 'Part-time', 'Contract', 'Internship']
 const CATEGORIES = ['Engineering', 'Design', 'Data', 'Research', 'Developer Relations', 'Content']
@@ -94,6 +96,13 @@ export default function PostJobModal({
   const [showRss, setShowRss] = useState(false)
   const [selectedRssItem, setSelectedRssItem] = useState<typeof rssJobs[0] | null>(null)
 
+  const [remotiveJobs, setRemotiveJobs] = useState<RemotiveJob[]>([])
+  const [remotiveLoading, setRemotiveLoading] = useState(false)
+  const [remotiveError, setRemotiveError] = useState('')
+  const [showRemotive, setShowRemotive] = useState(false)
+
+  const [source, setSource] = useState<string | null>(null)
+
   function applyExtracted(extracted: Record<string, unknown>) {
     if (extracted.title) setTitle(extracted.title as string)
     if (extracted.company_name) setCompany(extracted.company_name as string)
@@ -171,6 +180,7 @@ export default function PostJobModal({
       setLocation('Remote, Worldwide')
       if (item.link) setApplyUrl(item.link)
 
+      setSource('wwr')
       setShowRss(false)
       setRssJobs([])
       setRssError('')
@@ -181,6 +191,40 @@ export default function PostJobModal({
     } finally {
       setExtracting(false)
     }
+  }
+
+  async function fetchRemotiveJobsClient() {
+    setRemotiveLoading(true)
+    setRemotiveError('')
+    try {
+      const res = await fetch('/api/admin/remotive-jobs', { method: 'GET' })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || t('extractGenericError'))
+      setRemotiveJobs(data.jobs || [])
+    } catch (err) {
+      setRemotiveError(err instanceof Error ? err.message : t('extractGenericError'))
+    } finally {
+      setRemotiveLoading(false)
+    }
+  }
+
+  function handleRemotiveItemSelect(item: RemotiveJob) {
+    const { min, max } = parseRemotiveSalary(item.salary)
+    setTitle(item.title)
+    setCompany(item.company_name)
+    setLocation(item.candidate_required_location || 'Remote, Worldwide')
+    setWorkType('remote')
+    setJobType(mapRemotiveJobType(item.job_type))
+    setCategory(mapRemotiveCategory(item.category))
+    setDescription(item.description)
+    setSalaryMin(min)
+    setSalaryMax(max)
+    setTags(item.tags.join(', '))
+    setApplyUrl(item.url)
+    setSource('remotive')
+    setShowRemotive(false)
+    setRemotiveJobs([])
+    setRemotiveError('')
   }
 
   function resetForm() {
@@ -206,6 +250,10 @@ export default function PostJobModal({
     setRssError('')
     setShowRss(false)
     setSelectedRssItem(null)
+    setRemotiveJobs([])
+    setRemotiveError('')
+    setShowRemotive(false)
+    setSource(null)
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -235,6 +283,7 @@ export default function PostJobModal({
         tags: tags.split(',').map((t) => t.trim()).filter(Boolean),
         is_featured: isFeatured,
         apply_url: applyUrl.trim() || null,
+        source: source || null,
       }),
     })
 
@@ -280,7 +329,7 @@ export default function PostJobModal({
             </div>
 
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              {!showPaste && !showRss ? (
+              {!showPaste && !showRss && !showRemotive ? (
                 isAdmin ? (
                 <div className="space-y-2">
                   <button
@@ -296,6 +345,13 @@ export default function PostJobModal({
                     className="w-full text-sm text-primary dark:text-blue-400 border border-dashed border-primary/40 rounded-lg py-2.5 hover:bg-primary/5 transition-colors"
                   >
                     Browse We Work Remotely
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setShowRemotive(true); fetchRemotiveJobsClient() }}
+                    className="w-full text-sm text-primary dark:text-blue-400 border border-dashed border-primary/40 rounded-lg py-2.5 hover:bg-primary/5 transition-colors"
+                  >
+                    Browse Remotive
                   </button>
                 </div>
                 ) : null
@@ -401,6 +457,46 @@ export default function PostJobModal({
                     <button
                       type="button"
                       onClick={() => { setShowRss(false); setRssError(''); setRssJobs([]) }}
+                      className="btn-outline py-2 px-4 text-sm w-full"
+                    >
+                      {t('cancel')}
+                    </button>
+                  </div>
+                </div>
+              ) : showRemotive ? (
+                <div className="border border-primary/30 rounded-lg p-3.5 space-y-3 bg-primary/5 dark:bg-primary/10">
+                  <p className="text-xs font-medium text-slate-700 dark:text-slate-300">Browse Remotive</p>
+
+                  {remotiveLoading && (
+                    <p className="text-xs text-slate-500 dark:text-slate-400">Loading…</p>
+                  )}
+
+                  {remotiveError && (
+                    <p className="text-sm text-red-600 dark:text-red-400">{remotiveError}</p>
+                  )}
+
+                  {!remotiveLoading && !remotiveError && remotiveJobs.length > 0 && (
+                    <div className="space-y-2 max-h-[300px] overflow-y-auto">
+                      {remotiveJobs.map((job) => (
+                        <button
+                          key={job.id}
+                          type="button"
+                          onClick={() => handleRemotiveItemSelect(job)}
+                          className="w-full text-left p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-white/50 dark:hover:bg-slate-800/50 transition-colors text-sm"
+                        >
+                          <div className="font-medium text-slate-900 dark:text-white truncate">{job.title}</div>
+                          <div className="text-xs text-slate-500 dark:text-slate-400 truncate mt-0.5">
+                            {job.company_name} · {job.category}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => { setShowRemotive(false); setRemotiveError(''); setRemotiveJobs([]) }}
                       className="btn-outline py-2 px-4 text-sm w-full"
                     >
                       {t('cancel')}
