@@ -5,6 +5,7 @@ import { createPublicClient } from '@/lib/supabase/public'
 import { createClient } from '@/lib/supabase/server'
 import { getCandidateProfile } from '@/lib/profile'
 import { parseSkillSet, calculateMatchPercent } from '@/lib/jobMatching'
+import { calculateJobScore } from '@/lib/jobScoring'
 import { JOB_SELECT_FIELDS, normalizeJobCompany } from '@/lib/jobsQuery'
 import { candidateHasApplicationAt, type OwnReview, type PublicReview } from '@/lib/reviews'
 import { getCompanyProfileSummary, type CompanyProfileSummary } from '@/lib/companyProfileSummary'
@@ -82,6 +83,7 @@ export default async function CompanyPage({ params }: { params: { name: string }
   // Real Match % — same computation as the Jobs page (lib/jobMatching.ts),
   // never a second matching system.
   let skillSet = new Set<string>()
+  let candidateProfile: Awaited<ReturnType<typeof getCandidateProfile>> = null
   let canReview = false
   let ownReview: OwnReview | null = null
   try {
@@ -90,8 +92,7 @@ export default async function CompanyPage({ params }: { params: { name: string }
     if (user) {
       const profile = await getCandidateProfile(supabase, user.id)
       skillSet = parseSkillSet(profile?.skills)
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      void profile // profile stored for future scoring extension
+      candidateProfile = profile
 
       const { data: existing } = await supabase
         .from('company_reviews')
@@ -133,12 +134,15 @@ export default async function CompanyPage({ params }: { params: { name: string }
     companySummary = await getCompanyProfileSummary(displayName)
   } catch {}
 
-  const jobsWithMatch = jobs.map((job) => ({
-    ...job,
-    matchPercent: calculateMatchPercent(job.tags, skillSet),
-    matchScore: null,
-    matchDetails: null,
-  }))
+  const jobsWithMatch = jobs.map((job) => {
+    const scoreResult = calculateJobScore(job, candidateProfile)
+    return {
+      ...job,
+      matchPercent: calculateMatchPercent(job.tags, skillSet),
+      matchScore: scoreResult?.score ?? null,
+      matchDetails: scoreResult?.details ?? null,
+    }
+  })
 
   // Simple factual aggregation across this company's own real open
   // positions with real salary data — not a market "insight", just what's
