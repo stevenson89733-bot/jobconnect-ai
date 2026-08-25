@@ -1,0 +1,30 @@
+# JobConnect AI
+> AI-powered platform connecting professionals worldwide
+> with remote and cross-border job opportunities
+
+## What we do
+JobConnect AI uses artificial intelligence to match job seekers
+with remote-friendly and cross-border roles — regardless of
+location, language, or nationality.
+
+11 languages. 63 countries. Free to start.
+
+## Who we serve
+- Professionals seeking remote or international career opportunities
+- Anyone looking to work across borders without relocation barriers
+- Employers hiring globally for remote and distributed teams
+
+## Key pages
+- /jobs : Remote & cross-border job listings with AI match scoring
+- /candidate : Candidate dashboard with application tracking
+- /employers : Post a job, reach global remote talent
+- /pricing : Plans and pricing
+
+## Core features
+- AI job matching with visible 0-100 match score
+- Multilingual job search (11 languages)
+- AI cover letter and CV generation adapted by country
+- Application tracking dashboard
+- Skill gap analysis
+- LinkedIn profile optimizer
+- Interview preparation assistant
