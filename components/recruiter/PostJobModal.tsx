@@ -61,6 +61,7 @@ export default function PostJobModal({
   const [salaryMax, setSalaryMax] = useState('')
   const [tags, setTags] = useState('')
   const [isFeatured, setIsFeatured] = useState(false)
+  const [applyUrl, setApplyUrl] = useState('')
 
   // Paste-and-extract — prefills the fields above from a pasted job
   // description via Mistral (lib/ai/jobExtract.ts). Never posts anything
@@ -146,6 +147,7 @@ export default function PostJobModal({
       if (!res.ok) throw new Error(data.error || t('extractGenericError'))
 
       applyExtracted(data.extracted)
+      if (item.link) setApplyUrl(item.link)
       setShowRss(false)
       setRssJobs([])
       setRssError('')
@@ -170,6 +172,7 @@ export default function PostJobModal({
     setSalaryMax('')
     setTags('')
     setIsFeatured(false)
+    setApplyUrl('')
     setError('')
     setPasteText('')
     setPasteUrl('')
@@ -208,6 +211,7 @@ export default function PostJobModal({
         salary_label: salaryLabel,
         tags: tags.split(',').map((t) => t.trim()).filter(Boolean),
         is_featured: isFeatured,
+        apply_url: applyUrl.trim() || null,
       }),
     })
 

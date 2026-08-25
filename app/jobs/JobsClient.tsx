@@ -29,6 +29,7 @@ export type Job = {
   // Candidate-facing signals explaining the classification — 2-3 short strings.
   cross_border_signals: string[] | null
   created_at: string
+  apply_url: string | null
   company: { logo_url: string | null } | null
   // Real overlap between the signed-in candidate's real profile skills and
   // this job's real tags (lib/jobMatching.ts) — null whenever there's

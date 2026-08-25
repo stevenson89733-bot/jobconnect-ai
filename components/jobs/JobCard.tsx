@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
-import { Bookmark, Share2, Check, Sparkles, ChevronDown } from 'lucide-react'
+import { Bookmark, Share2, Check, Sparkles, ChevronDown, ExternalLink } from 'lucide-react'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -259,12 +259,24 @@ export default function JobCard({
 
         {/* Apply — pushed to end */}
         <span className="ml-auto shrink-0">
-          <ApplyModal
-            jobId={job.id}
-            jobTitle={job.title}
-            company={job.company_name}
-            alreadyApplied={alreadyApplied}
-          />
+          {job.apply_url ? (
+            <a
+              href={`/api/redirect?job=${encodeURIComponent(job.id)}&source=wwr`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 bg-primary text-white text-[11px] font-semibold px-3 py-1.5 rounded-lg hover:bg-blue-600 transition-colors"
+            >
+              {t('applyNow')}
+              <ExternalLink className="w-3 h-3" strokeWidth={2} />
+            </a>
+          ) : (
+            <ApplyModal
+              jobId={job.id}
+              jobTitle={job.title}
+              company={job.company_name}
+              alreadyApplied={alreadyApplied}
+            />
+          )}
         </span>
       </div>
 
