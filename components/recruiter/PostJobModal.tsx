@@ -25,6 +25,20 @@ const inputClass =
   'w-full bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary'
 const labelClass = 'block text-sm text-slate-600 dark:text-slate-400 mb-1.5'
 
+// WWR title format: "Category: Job Title at Company Name"
+// Falls back gracefully when the " at " separator or category prefix is absent.
+function parseWwrTitle(raw: string): { parsedTitle: string; parsedCompany: string } {
+  const withoutCategory = raw.includes(': ') ? raw.split(': ').slice(1).join(': ') : raw
+  const atIdx = withoutCategory.lastIndexOf(' at ')
+  if (atIdx > 0) {
+    return {
+      parsedTitle: withoutCategory.slice(0, atIdx).trim(),
+      parsedCompany: withoutCategory.slice(atIdx + 4).trim(),
+    }
+  }
+  return { parsedTitle: withoutCategory.trim(), parsedCompany: '' }
+}
+
 // Real POST to the existing /api/jobs endpoint (app/api/jobs/route.ts),
 // which already enforces the employer role check + RLS insert policy — this
 // modal is the first (and only) UI that actually calls it.
@@ -146,8 +160,17 @@ export default function PostJobModal({
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || t('extractGenericError'))
 
+      // AI extraction covers structured fields (category, job_type, work_type, salary, tags)
       applyExtracted(data.extracted)
+
+      // Overwrite with structured RSS data — more reliable than AI for these fields
+      const { parsedTitle, parsedCompany } = parseWwrTitle(item.title ?? '')
+      if (parsedTitle) setTitle(parsedTitle)
+      if (parsedCompany) setCompany(parsedCompany)
+      if (item.description) setDescription(item.description)
+      setLocation('Remote, Worldwide')
       if (item.link) setApplyUrl(item.link)
+
       setShowRss(false)
       setRssJobs([])
       setRssError('')
@@ -258,6 +281,7 @@ export default function PostJobModal({
 
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               {!showPaste && !showRss ? (
+                isAdmin ? (
                 <div className="space-y-2">
                   <button
                     type="button"
@@ -266,16 +290,15 @@ export default function PostJobModal({
                   >
                     {t('pasteToFillButton')}
                   </button>
-                  {isAdmin && (
-                    <button
-                      type="button"
-                      onClick={() => { setShowRss(true); fetchRssJobs() }}
-                      className="w-full text-sm text-primary dark:text-blue-400 border border-dashed border-primary/40 rounded-lg py-2.5 hover:bg-primary/5 transition-colors"
-                    >
-                      Browse We Work Remotely
-                    </button>
-                  )}
+                  <button
+                    type="button"
+                    onClick={() => { setShowRss(true); fetchRssJobs() }}
+                    className="w-full text-sm text-primary dark:text-blue-400 border border-dashed border-primary/40 rounded-lg py-2.5 hover:bg-primary/5 transition-colors"
+                  >
+                    Browse We Work Remotely
+                  </button>
                 </div>
+                ) : null
               ) : showPaste ? (
                 <div className="border border-primary/30 rounded-lg p-3.5 space-y-3 bg-primary/5 dark:bg-primary/10">
                   {/* Mode toggle: Text / URL */}

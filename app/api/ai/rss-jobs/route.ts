@@ -32,7 +32,7 @@ export async function GET(req: Request) {
       .map(item => ({
         title: item.title,
         link: item.link,
-        description: item.description?.substring(0, 300), // Preview only
+        description: item.description?.substring(0, 3000),
         pubDate: item.pubDate,
         guid: item.guid,
       }))
