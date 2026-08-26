@@ -34,6 +34,14 @@ import AiMatchingArticle            from '../content/how-ai-job-matching-works'
 import MatchingIAArticle            from '../content/matching-ia-emploi-comment-ca-marche'
 import InterviewPrepArticle         from '../content/remote-job-interview-prep-international-candidate'
 import PreparerEntretienArticle     from '../content/preparer-entretien-emploi-remote-international'
+import HireRemoteTalentArticle      from '../content/hire-remote-talent-globally-without-local-entity'
+import RecruterTalentsArticle       from '../content/recruter-talents-remote-monde-entier'
+import SkillGapGuideArticle         from '../content/skill-gap-analysis-remote-jobs-guide'
+import AnalyseCompetencesArticle    from '../content/analyse-competences-avant-postuler'
+import LinkedInOptimArticle         from '../content/linkedin-profile-optimization-international-jobs'
+import OptimiserLinkedInArticle     from '../content/optimiser-profil-linkedin-emploi-international'
+import StateRemoteWork2026Article   from '../content/state-of-cross-border-remote-work-2026'
+import TeletravailEtatLieuxArticle  from '../content/teletravail-international-2026-etat-des-lieux'
 
 const CONTENT_MAP: Record<string, React.ComponentType> = {
   'how-to-get-remote-job-in-germany-as-foreigner': GermanyArticle,
@@ -62,7 +70,15 @@ const CONTENT_MAP: Record<string, React.ComponentType> = {
   'how-ai-job-matching-works':                     AiMatchingArticle,
   'matching-ia-emploi-comment-ca-marche':          MatchingIAArticle,
   'remote-job-interview-prep-international-candidate': InterviewPrepArticle,
-  'preparer-entretien-emploi-remote-international':    PreparerEntretienArticle,
+  'preparer-entretien-emploi-remote-international':        PreparerEntretienArticle,
+  'hire-remote-talent-globally-without-local-entity':      HireRemoteTalentArticle,
+  'recruter-talents-remote-monde-entier':                  RecruterTalentsArticle,
+  'skill-gap-analysis-remote-jobs-guide':                  SkillGapGuideArticle,
+  'analyse-competences-avant-postuler':                    AnalyseCompetencesArticle,
+  'linkedin-profile-optimization-international-jobs':      LinkedInOptimArticle,
+  'optimiser-profil-linkedin-emploi-international':        OptimiserLinkedInArticle,
+  'state-of-cross-border-remote-work-2026':                StateRemoteWork2026Article,
+  'teletravail-international-2026-etat-des-lieux':         TeletravailEtatLieuxArticle,
 }
 
 export function generateStaticParams() {
