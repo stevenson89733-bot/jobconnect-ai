@@ -17,7 +17,15 @@ import AtsArticle           from '../content/ats-resume-international-candidates
 import UkArticle            from '../content/remote-job-uk-international'
 import UsaArticle           from '../content/how-to-get-remote-job-usa-international'
 import FranceIntlArticle    from '../content/how-to-get-remote-job-france-international'
-import SalaryArticle        from '../content/remote-job-salary-by-country'
+import SalaryArticle             from '../content/remote-job-salary-by-country'
+import VietnamArticle            from '../content/how-to-find-remote-job-from-vietnam-2026'
+import RemoteEtrangerArticle     from '../content/trouver-emploi-remote-depuis-etranger'
+import CrossBorderGuideArticle   from '../content/cross-border-remote-jobs-complete-guide'
+import TravaillerDistanceArticle from '../content/travailler-distance-entreprise-etrangere'
+import FrenchSpeakersArticle     from '../content/best-remote-jobs-french-speakers-2026'
+import FrancophoneArticle        from '../content/meilleurs-emplois-remote-francophones-2026'
+import IntlNoRelocateArticle     from '../content/international-jobs-without-relocating'
+import PostulerSansDemenagerArticle from '../content/postuler-emploi-international-sans-demenager'
 
 const CONTENT_MAP: Record<string, React.ComponentType> = {
   'how-to-get-remote-job-in-germany-as-foreigner': GermanyArticle,
@@ -31,6 +39,14 @@ const CONTENT_MAP: Record<string, React.ComponentType> = {
   'how-to-get-remote-job-usa-international':       UsaArticle,
   'how-to-get-remote-job-france-international':    FranceIntlArticle,
   'remote-job-salary-by-country':                  SalaryArticle,
+  'how-to-find-remote-job-from-vietnam-2026':      VietnamArticle,
+  'trouver-emploi-remote-depuis-etranger':         RemoteEtrangerArticle,
+  'cross-border-remote-jobs-complete-guide':       CrossBorderGuideArticle,
+  'travailler-distance-entreprise-etrangere':      TravaillerDistanceArticle,
+  'best-remote-jobs-french-speakers-2026':         FrenchSpeakersArticle,
+  'meilleurs-emplois-remote-francophones-2026':    FrancophoneArticle,
+  'international-jobs-without-relocating':         IntlNoRelocateArticle,
+  'postuler-emploi-international-sans-demenager':  PostulerSansDemenagerArticle,
 }
 
 export function generateStaticParams() {
