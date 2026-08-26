@@ -8,7 +8,7 @@ import React from 'react'
 export function H2({ id, children }: { id?: string; children: React.ReactNode }) {
   return (
     <div id={id} className="not-prose text-center mt-14 mb-7 scroll-mt-24">
-      <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white leading-snug">
+      <h2 className="text-2xl md:text-4xl font-bold text-slate-900 dark:text-white leading-snug">
         {children}
       </h2>
       <div className="mt-3 mx-auto w-14 h-[3px] bg-[#57C7E3] rounded-full" />
@@ -19,7 +19,7 @@ export function H2({ id, children }: { id?: string; children: React.ReactNode })
 // Sub-section heading (H3)
 export function H3({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="not-prose text-lg font-bold text-slate-800 dark:text-slate-200 mt-8 mb-3 border-l-[3px] border-[#57C7E3] pl-3">
+    <h3 className="not-prose text-xl md:text-2xl font-bold text-slate-800 dark:text-slate-200 mt-8 mb-3 border-l-[3px] border-[#57C7E3] pl-3">
       {children}
     </h3>
   )
@@ -29,7 +29,7 @@ export function H3({ children }: { children: React.ReactNode }) {
 export function P({ drop, children }: { drop?: boolean; children: React.ReactNode }) {
   return (
     <p
-      className={`not-prose text-slate-700 dark:text-slate-300 leading-relaxed mb-5 text-[1.0625rem] text-justify ${
+      className={`not-prose text-slate-700 dark:text-slate-300 leading-relaxed mb-6 text-[1.0625rem] text-justify max-w-[65ch] ${
         drop
           ? 'first-letter:float-left first-letter:text-[4rem] first-letter:font-extrabold first-letter:leading-none first-letter:mr-3 first-letter:mt-1 first-letter:text-[#57C7E3]'
           : ''
@@ -94,7 +94,7 @@ export function FAQ({ items }: { items: FAQItem[] }) {
   return (
     <div className="not-prose mt-14">
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
+        <h2 className="text-2xl md:text-4xl font-bold text-slate-900 dark:text-white">
           Frequently Asked Questions
         </h2>
         <div className="mt-3 mx-auto w-14 h-[3px] bg-[#57C7E3] rounded-full" />

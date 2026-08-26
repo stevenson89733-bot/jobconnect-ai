@@ -103,7 +103,7 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
           <CountrySelector />
           <ThemeToggle />
           <button
-            className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+            className="p-2.5 -mr-2.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
             onClick={() => setOpen(!open)}
             aria-label={open ? t('closeMenu') : t('openMenu')}
             aria-expanded={open}

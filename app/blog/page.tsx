@@ -42,7 +42,7 @@ export default function BlogPage({
     <section className="max-w-3xl mx-auto py-12 px-6">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
+        <h1 className="text-[32px] md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
           JobConnect AI Blog
         </h1>
         <p className="text-slate-500 dark:text-slate-400">

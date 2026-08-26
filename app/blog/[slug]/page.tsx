@@ -192,7 +192,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
               <Clock size={10} /> {post.readingTime} min read
             </span>
           </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white leading-tight mb-4">
+          <h1 className="text-[32px] md:text-5xl font-extrabold text-slate-900 dark:text-white leading-tight mb-4">
             {post.title}
           </h1>
           <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed">

@@ -50,8 +50,8 @@ export default async function Footer() {
   return (
     <footer className="border-t border-slate-200 dark:border-slate-800 mt-24">
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-10">
-          <div className="col-span-2 md:col-span-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 mb-10">
+          <div className="sm:col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 font-bold text-lg mb-3">
               <span className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center text-white text-xs font-black">J</span>
               <span className="text-slate-900 dark:text-white">{tc('brand')} <span className="text-primary dark:text-blue-400">{tc('brandSuffix')}</span></span>

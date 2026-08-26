@@ -116,7 +116,7 @@ export default async function Home() {
             <span>{t('heroBadge')}</span>
           </div>
 
-          <h1 className="font-display text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white leading-tight tracking-tight mb-6">
+          <h1 className="font-display text-[32px] md:text-5xl font-extrabold text-slate-900 dark:text-white leading-tight tracking-tight mb-6">
             {t('heroTitle')}
           </h1>
 
@@ -244,7 +244,7 @@ export default async function Home() {
             <span className="badge bg-primarySoft dark:bg-primary/20 text-primary dark:text-blue-400 mb-4 inline-flex">
               {t('aiSearchBadge')}
             </span>
-            <h2 className="text-2xl md:font-display text-3xl font-bold text-slate-900 dark:text-white mb-2">{t('aiSearchTitle')}</h2>
+            <h2 className="font-display text-2xl md:text-4xl font-bold text-slate-900 dark:text-white mb-2">{t('aiSearchTitle')}</h2>
             <p className="text-body dark:text-slate-400 max-w-xl mx-auto">{t('aiSearchSubtitle')}</p>
           </div>
         </section>
@@ -272,7 +272,7 @@ export default async function Home() {
         <section className="max-w-7xl mx-auto px-6 py-20">
           <div className="flex items-end justify-between mb-8">
             <div>
-              <h2 className="font-display text-3xl font-bold text-slate-900 dark:text-white">{t('featuredJobsTitle')}</h2>
+              <h2 className="font-display text-2xl md:text-4xl font-bold text-slate-900 dark:text-white">{t('featuredJobsTitle')}</h2>
               <p className="text-body dark:text-slate-400 mt-1">{t('featuredJobsSubtitle')}</p>
             </div>
             <Link href="/jobs" className="btn-outline text-sm hidden sm:flex">{t('viewAllJobs')}</Link>
@@ -356,7 +356,7 @@ export default async function Home() {
       <FadeIn>
         <section className="max-w-5xl mx-auto px-6 py-20">
           <div className="text-center mb-12">
-            <h2 className="font-display text-3xl font-bold text-slate-900 dark:text-white mb-3">{t('pricingTeaserTitle')}</h2>
+            <h2 className="font-display text-2xl md:text-4xl font-bold text-slate-900 dark:text-white mb-3">{t('pricingTeaserTitle')}</h2>
             <p className="text-body dark:text-slate-400">{t('pricingTeaserSubtitle')}</p>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
@@ -383,7 +383,7 @@ export default async function Home() {
       {/* FAQ */}
       <FadeIn>
         <section className="max-w-7xl mx-auto px-6 py-20">
-          <h2 className="font-display text-3xl font-bold text-slate-900 dark:text-white text-center mb-12">{t('faqTitle')}</h2>
+          <h2 className="font-display text-2xl md:text-4xl font-bold text-slate-900 dark:text-white text-center mb-12">{t('faqTitle')}</h2>
           <FAQAccordion items={FAQ_ITEMS} />
         </section>
       </FadeIn>
@@ -393,7 +393,7 @@ export default async function Home() {
       <FadeIn>
         <section className="max-w-7xl mx-auto px-6 py-24">
           <div className="max-w-4xl mx-auto bg-gradient-to-br from-primary to-primaryDark rounded-[26px] px-8 md:px-14 py-14 text-center text-white">
-            <h2 className="font-display text-3xl md:text-4xl font-bold mb-5">{t('ctaTitle')}</h2>
+            <h2 className="font-display text-2xl md:text-4xl font-bold mb-5">{t('ctaTitle')}</h2>
             <p className="text-lg md:text-xl italic leading-relaxed max-w-2xl mx-auto mb-9 text-white/90">
               {t('missionQuote')}
             </p>

@@ -31,7 +31,7 @@ export default async function HowItWorks() {
     <section id="how-it-works" className="bg-slate-50 dark:bg-card border-y border-slate-200 dark:border-slate-800 py-20">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-14">
-          <h2 className="font-display text-3xl font-bold text-slate-900 dark:text-white mb-3">
+          <h2 className="font-display text-2xl md:text-4xl font-bold text-slate-900 dark:text-white mb-3">
             {t('howItWorksTitle')}
           </h2>
           <p className="text-body dark:text-slate-400 max-w-xl mx-auto">

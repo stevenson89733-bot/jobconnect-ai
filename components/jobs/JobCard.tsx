@@ -211,11 +211,11 @@ export default function JobCard({
             size="sm"
             aria-label={isSaved ? t('unsaveJob') : t('saveJob')}
             onClick={() => onToggleSave(job.id)}
-            className="!px-1.5 !py-1 h-auto"
+            className="!px-1.5 !py-1 h-auto min-h-[44px] md:min-h-0"
           >
             <Bookmark className={`w-3.5 h-3.5 ${isSaved ? 'fill-current text-primary' : 'text-slate-400'}`} strokeWidth={1.75} />
           </Button>
-          <Button variant="ghost" size="sm" aria-label={t('shareJob')} onClick={handleShare} className="!px-1.5 !py-1 h-auto">
+          <Button variant="ghost" size="sm" aria-label={t('shareJob')} onClick={handleShare} className="!px-1.5 !py-1 h-auto min-h-[44px] md:min-h-0">
             {shareStatus === 'copied'
               ? <Check className="w-3.5 h-3.5 text-green-600 dark:text-green-400" />
               : <Share2 className="w-3.5 h-3.5 text-slate-400" strokeWidth={1.75} />}
@@ -292,7 +292,7 @@ export default function JobCard({
               href={`/api/redirect?job=${encodeURIComponent(job.id)}&source=${encodeURIComponent(job.source ?? 'direct')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 bg-primary text-white text-[11px] font-semibold px-3 py-1.5 rounded-lg hover:bg-blue-600 transition-colors"
+              className="inline-flex items-center gap-1 bg-primary text-white text-[11px] font-semibold px-3 py-1.5 rounded-lg hover:bg-blue-600 transition-colors min-h-[44px] md:min-h-0"
             >
               {t('applyNow')}
               <ExternalLink className="w-3 h-3" strokeWidth={2} />
