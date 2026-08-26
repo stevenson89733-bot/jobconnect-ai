@@ -26,6 +26,14 @@ import FrenchSpeakersArticle     from '../content/best-remote-jobs-french-speake
 import FrancophoneArticle        from '../content/meilleurs-emplois-remote-francophones-2026'
 import IntlNoRelocateArticle     from '../content/international-jobs-without-relocating'
 import PostulerSansDemenagerArticle from '../content/postuler-emploi-international-sans-demenager'
+import AfricaGlobalArticle          from '../content/remote-jobs-africa-global-companies'
+import AfriqueMondialesArticle      from '../content/emploi-remote-afrique-entreprises-mondiales'
+import VisaFriendlyArticle          from '../content/visa-friendly-remote-jobs-employers-accept'
+import VisaEmployeursArticle        from '../content/emploi-remote-visa-employeurs-acceptent'
+import AiMatchingArticle            from '../content/how-ai-job-matching-works'
+import MatchingIAArticle            from '../content/matching-ia-emploi-comment-ca-marche'
+import InterviewPrepArticle         from '../content/remote-job-interview-prep-international-candidate'
+import PreparerEntretienArticle     from '../content/preparer-entretien-emploi-remote-international'
 
 const CONTENT_MAP: Record<string, React.ComponentType> = {
   'how-to-get-remote-job-in-germany-as-foreigner': GermanyArticle,
@@ -47,6 +55,14 @@ const CONTENT_MAP: Record<string, React.ComponentType> = {
   'meilleurs-emplois-remote-francophones-2026':    FrancophoneArticle,
   'international-jobs-without-relocating':         IntlNoRelocateArticle,
   'postuler-emploi-international-sans-demenager':  PostulerSansDemenagerArticle,
+  'remote-jobs-africa-global-companies':           AfricaGlobalArticle,
+  'emploi-remote-afrique-entreprises-mondiales':   AfriqueMondialesArticle,
+  'visa-friendly-remote-jobs-employers-accept':    VisaFriendlyArticle,
+  'emploi-remote-visa-employeurs-acceptent':       VisaEmployeursArticle,
+  'how-ai-job-matching-works':                     AiMatchingArticle,
+  'matching-ia-emploi-comment-ca-marche':          MatchingIAArticle,
+  'remote-job-interview-prep-international-candidate': InterviewPrepArticle,
+  'preparer-entretien-emploi-remote-international':    PreparerEntretienArticle,
 }
 
 export function generateStaticParams() {
