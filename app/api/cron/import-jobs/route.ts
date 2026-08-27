@@ -161,7 +161,7 @@ async function importRemotive(
   }
 }
 
-export async function POST(req: Request) {
+export async function GET(req: Request) {
   const cronSecret = process.env.CRON_SECRET
   if (!cronSecret) {
     return NextResponse.json({ error: 'CRON_SECRET not configured' }, { status: 500 })
