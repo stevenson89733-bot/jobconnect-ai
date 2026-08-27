@@ -3,6 +3,6 @@
 
 alter table public.jobs
   add column if not exists source text
-  check (source in ('wwr', 'remotive', 'direct'));
+  check (source in ('wwr', 'remotive', 'direct', 'arbeitnow', 'adzuna_gb', 'adzuna_au', 'adzuna_fr', 'adzuna_de', 'adzuna_ca', 'adzuna_nl'));
 
 create index if not exists jobs_source_idx on public.jobs (source);

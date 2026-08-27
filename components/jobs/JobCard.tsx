@@ -279,9 +279,18 @@ export default function JobCard({
         )}
 
         {/* Source badge — only for aggregated listings */}
-        {(job.source === 'remotive' || job.source === 'wwr') && (
+        {job.source && job.source !== 'direct' && (
           <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 dark:bg-slate-700/60 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-600/50 whitespace-nowrap shrink-0">
-            {job.source === 'remotive' ? 'Remotive' : 'WWR'}
+            {job.source === 'remotive' ? 'Remotive'
+              : job.source === 'wwr' ? 'WWR'
+              : job.source === 'arbeitnow' ? 'Arbeitnow'
+              : job.source === 'adzuna_gb' ? 'Adzuna UK'
+              : job.source === 'adzuna_au' ? 'Adzuna AU'
+              : job.source === 'adzuna_fr' ? 'Adzuna FR'
+              : job.source === 'adzuna_de' ? 'Adzuna DE'
+              : job.source === 'adzuna_ca' ? 'Adzuna CA'
+              : job.source === 'adzuna_nl' ? 'Adzuna NL'
+              : job.source}
           </span>
         )}
 

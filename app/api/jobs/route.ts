@@ -105,7 +105,7 @@ export async function POST(req: Request) {
   }
 
   const body = await req.json()
-  const VALID_SOURCES = new Set(['wwr', 'remotive', 'direct'])
+  const VALID_SOURCES = new Set(['wwr', 'remotive', 'direct', 'arbeitnow', 'adzuna_gb', 'adzuna_au', 'adzuna_fr', 'adzuna_de', 'adzuna_ca', 'adzuna_nl'])
   const source = body.source && VALID_SOURCES.has(body.source) ? body.source : null
   const { data: job, error } = await supabase
     .from('jobs')

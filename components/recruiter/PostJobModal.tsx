@@ -5,6 +5,10 @@ import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import type { RemotiveJob } from '@/lib/remotive'
 import { mapRemotiveCategory, mapRemotiveJobType, parseRemotiveSalary } from '@/lib/remotive'
+import type { ArbeitnowJob } from '@/lib/arbeitnow'
+import { mapArbeitnowJobType } from '@/lib/arbeitnow'
+import type { AdzunaJob, AdzunaCountryCode } from '@/lib/adzuna'
+import { ADZUNA_COUNTRIES, adzunaSourceKey, formatAdzunaSalary } from '@/lib/adzuna'
 
 const JOB_TYPES = ['Full-time', 'Part-time', 'Contract', 'Internship']
 const CATEGORIES = ['Engineering', 'Design', 'Data', 'Research', 'Developer Relations', 'Content']
@@ -100,6 +104,17 @@ export default function PostJobModal({
   const [remotiveLoading, setRemotiveLoading] = useState(false)
   const [remotiveError, setRemotiveError] = useState('')
   const [showRemotive, setShowRemotive] = useState(false)
+
+  const [arbeitnowJobs, setArbeitnowJobs] = useState<ArbeitnowJob[]>([])
+  const [arbeitnowLoading, setArbeitnowLoading] = useState(false)
+  const [arbeitnowError, setArbeitnowError] = useState('')
+  const [showArbeitnow, setShowArbeitnow] = useState(false)
+
+  const [adzunaJobs, setAdzunaJobs] = useState<AdzunaJob[]>([])
+  const [adzunaLoading, setAdzunaLoading] = useState(false)
+  const [adzunaError, setAdzunaError] = useState('')
+  const [showAdzuna, setShowAdzuna] = useState(false)
+  const [adzunaCountry, setAdzunaCountry] = useState<AdzunaCountryCode>('gb')
 
   const [source, setSource] = useState<string | null>(null)
 
@@ -227,6 +242,67 @@ export default function PostJobModal({
     setRemotiveError('')
   }
 
+  async function fetchArbeitnowJobsClient() {
+    setArbeitnowLoading(true)
+    setArbeitnowError('')
+    try {
+      const res = await fetch('/api/admin/arbeitnow-jobs', { method: 'GET' })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || t('extractGenericError'))
+      setArbeitnowJobs(data.jobs || [])
+    } catch (err) {
+      setArbeitnowError(err instanceof Error ? err.message : t('extractGenericError'))
+    } finally {
+      setArbeitnowLoading(false)
+    }
+  }
+
+  function handleArbeitnowItemSelect(item: ArbeitnowJob) {
+    setTitle(item.title)
+    setCompany(item.company_name)
+    setLocation(item.location || 'Remote, Worldwide')
+    setWorkType('remote')
+    setJobType(mapArbeitnowJobType(item.job_types))
+    setDescription(item.description)
+    setTags(item.tags.join(', '))
+    setApplyUrl(item.url)
+    setSource('arbeitnow')
+    setShowArbeitnow(false)
+    setArbeitnowJobs([])
+    setArbeitnowError('')
+  }
+
+  async function fetchAdzunaJobsClient(country: AdzunaCountryCode) {
+    setAdzunaLoading(true)
+    setAdzunaError('')
+    try {
+      const res = await fetch(`/api/admin/adzuna-jobs?country=${country}`, { method: 'GET' })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || t('extractGenericError'))
+      setAdzunaJobs(data.jobs || [])
+    } catch (err) {
+      setAdzunaError(err instanceof Error ? err.message : t('extractGenericError'))
+    } finally {
+      setAdzunaLoading(false)
+    }
+  }
+
+  function handleAdzunaItemSelect(item: AdzunaJob) {
+    const { minStr, maxStr } = formatAdzunaSalary(item.salary_min, item.salary_max)
+    setTitle(item.title)
+    setCompany(item.company_name)
+    setLocation(item.location || 'Remote')
+    setWorkType('remote')
+    setDescription(item.description)
+    setSalaryMin(minStr)
+    setSalaryMax(maxStr)
+    setApplyUrl(item.redirect_url)
+    setSource(adzunaSourceKey(item.country))
+    setShowAdzuna(false)
+    setAdzunaJobs([])
+    setAdzunaError('')
+  }
+
   function resetForm() {
     setTitle('')
     setCompany(companyName)
@@ -253,6 +329,13 @@ export default function PostJobModal({
     setRemotiveJobs([])
     setRemotiveError('')
     setShowRemotive(false)
+    setArbeitnowJobs([])
+    setArbeitnowError('')
+    setShowArbeitnow(false)
+    setAdzunaJobs([])
+    setAdzunaError('')
+    setShowAdzuna(false)
+    setAdzunaCountry('gb')
     setSource(null)
   }
 
@@ -329,7 +412,7 @@ export default function PostJobModal({
             </div>
 
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              {!showPaste && !showRss && !showRemotive ? (
+              {!showPaste && !showRss && !showRemotive && !showArbeitnow && !showAdzuna ? (
                 isAdmin ? (
                 <div className="space-y-2">
                   <button
@@ -352,6 +435,20 @@ export default function PostJobModal({
                     className="w-full text-sm text-primary dark:text-blue-400 border border-dashed border-primary/40 rounded-lg py-2.5 hover:bg-primary/5 transition-colors"
                   >
                     Browse Remotive
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setShowArbeitnow(true); fetchArbeitnowJobsClient() }}
+                    className="w-full text-sm text-primary dark:text-blue-400 border border-dashed border-primary/40 rounded-lg py-2.5 hover:bg-primary/5 transition-colors"
+                  >
+                    Browse Arbeitnow
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setShowAdzuna(true); fetchAdzunaJobsClient(adzunaCountry) }}
+                    className="w-full text-sm text-primary dark:text-blue-400 border border-dashed border-primary/40 rounded-lg py-2.5 hover:bg-primary/5 transition-colors"
+                  >
+                    Browse Adzuna
                   </button>
                 </div>
                 ) : null
@@ -497,6 +594,102 @@ export default function PostJobModal({
                     <button
                       type="button"
                       onClick={() => { setShowRemotive(false); setRemotiveError(''); setRemotiveJobs([]) }}
+                      className="btn-outline py-2 px-4 text-sm w-full"
+                    >
+                      {t('cancel')}
+                    </button>
+                  </div>
+                </div>
+              ) : showArbeitnow ? (
+                <div className="border border-primary/30 rounded-lg p-3.5 space-y-3 bg-primary/5 dark:bg-primary/10">
+                  <p className="text-xs font-medium text-slate-700 dark:text-slate-300">Browse Arbeitnow</p>
+
+                  {arbeitnowLoading && (
+                    <p className="text-xs text-slate-500 dark:text-slate-400">Loading…</p>
+                  )}
+
+                  {arbeitnowError && (
+                    <p className="text-sm text-red-600 dark:text-red-400">{arbeitnowError}</p>
+                  )}
+
+                  {!arbeitnowLoading && !arbeitnowError && arbeitnowJobs.length > 0 && (
+                    <div className="space-y-2 max-h-[300px] overflow-y-auto">
+                      {arbeitnowJobs.map((job) => (
+                        <button
+                          key={job.slug}
+                          type="button"
+                          onClick={() => handleArbeitnowItemSelect(job)}
+                          className="w-full text-left p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-white/50 dark:hover:bg-slate-800/50 transition-colors text-sm"
+                        >
+                          <div className="font-medium text-slate-900 dark:text-white truncate">{job.title}</div>
+                          <div className="text-xs text-slate-500 dark:text-slate-400 truncate mt-0.5">
+                            {job.company_name} · {job.location}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => { setShowArbeitnow(false); setArbeitnowError(''); setArbeitnowJobs([]) }}
+                      className="btn-outline py-2 px-4 text-sm w-full"
+                    >
+                      {t('cancel')}
+                    </button>
+                  </div>
+                </div>
+              ) : showAdzuna ? (
+                <div className="border border-primary/30 rounded-lg p-3.5 space-y-3 bg-primary/5 dark:bg-primary/10">
+                  <div className="flex items-center gap-2">
+                    <p className="text-xs font-medium text-slate-700 dark:text-slate-300">Browse Adzuna</p>
+                    <select
+                      value={adzunaCountry}
+                      onChange={(e) => {
+                        const c = e.target.value as AdzunaCountryCode
+                        setAdzunaCountry(c)
+                        setAdzunaJobs([])
+                        fetchAdzunaJobsClient(c)
+                      }}
+                      className="ml-auto text-xs bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded px-2 py-1"
+                    >
+                      {ADZUNA_COUNTRIES.map((c) => (
+                        <option key={c.code} value={c.code}>{c.label}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {adzunaLoading && (
+                    <p className="text-xs text-slate-500 dark:text-slate-400">Loading…</p>
+                  )}
+
+                  {adzunaError && (
+                    <p className="text-sm text-red-600 dark:text-red-400">{adzunaError}</p>
+                  )}
+
+                  {!adzunaLoading && !adzunaError && adzunaJobs.length > 0 && (
+                    <div className="space-y-2 max-h-[300px] overflow-y-auto">
+                      {adzunaJobs.map((job) => (
+                        <button
+                          key={job.id}
+                          type="button"
+                          onClick={() => handleAdzunaItemSelect(job)}
+                          className="w-full text-left p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-white/50 dark:hover:bg-slate-800/50 transition-colors text-sm"
+                        >
+                          <div className="font-medium text-slate-900 dark:text-white truncate">{job.title}</div>
+                          <div className="text-xs text-slate-500 dark:text-slate-400 truncate mt-0.5">
+                            {job.company_name} · {job.location}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => { setShowAdzuna(false); setAdzunaError(''); setAdzunaJobs([]) }}
                       className="btn-outline py-2 px-4 text-sm w-full"
                     >
                       {t('cancel')}
