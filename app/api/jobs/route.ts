@@ -80,8 +80,8 @@ export async function POST(req: Request) {
   // displaying this text, so it's left untranslated intentionally.
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const { data: profile } = await supabase.from('profiles').select('role, employer_plan, is_unlimited_posting').eq('user_id', user.id).single()
-  if (profile?.role !== 'employer') {
+  const { data: profile } = await supabase.from('profiles').select('role, employer_plan, is_unlimited_posting, is_admin').eq('user_id', user.id).single()
+  if (!profile?.is_admin && profile?.role !== 'employer') {
     return NextResponse.json({ error: t('onlyEmployerAccountsCanPostJobs') }, { status: 403 })
   }
 
@@ -89,7 +89,7 @@ export async function POST(req: Request) {
   // active postings (not a lifetime cap), so deactivating an old listing
   // frees up a real slot rather than permanently using up their one shot.
   // Bypass limit for unlimited accounts (admin/owner).
-  if (!profile.is_unlimited_posting) {
+  if (!profile?.is_admin && !profile.is_unlimited_posting) {
     const { count: activeCount } = await supabase
       .from('jobs')
       .select('*', { count: 'exact', head: true })
@@ -107,6 +107,28 @@ export async function POST(req: Request) {
   const body = await req.json()
   const VALID_SOURCES = new Set(['wwr', 'remotive', 'direct', 'arbeitnow', 'adzuna_gb', 'adzuna_au', 'adzuna_fr', 'adzuna_de', 'adzuna_ca', 'adzuna_nl'])
   const source = body.source && VALID_SOURCES.has(body.source) ? body.source : null
+
+  // Deduplication — skip insert if a matching job already exists:
+  // 1. Exact apply_url match (fastest — indexed column)
+  // 2. Fallback: case-insensitive title + company_name match
+  if (body.apply_url) {
+    const { data: byUrl } = await supabase
+      .from('jobs').select('id').eq('apply_url', body.apply_url).limit(1)
+    if (byUrl?.[0]) {
+      return NextResponse.json({ deduplicated: true, id: byUrl[0].id }, { status: 200 })
+    }
+  }
+  if (body.title && body.company_name) {
+    const { data: byTitle } = await supabase
+      .from('jobs').select('id')
+      .ilike('title', body.title.trim())
+      .ilike('company_name', body.company_name.trim())
+      .limit(1)
+    if (byTitle?.[0]) {
+      return NextResponse.json({ deduplicated: true, id: byTitle[0].id }, { status: 200 })
+    }
+  }
+
   const { data: job, error } = await supabase
     .from('jobs')
     .insert({ ...body, source, posted_by: user.id })

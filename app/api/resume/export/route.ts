@@ -29,8 +29,8 @@ export async function POST(req: Request) {
   const { ok: withinLimit } = rateLimit(`resume-export:${user.id}`, 20, 60 * 60 * 1000)
   if (!withinLimit) return NextResponse.json({ error: t('tooManyExports') }, { status: 429 })
 
-  const { data: profile } = await supabase.from('profiles').select('is_premium').eq('user_id', user.id).single()
-  if (!profile?.is_premium) {
+  const { data: profile } = await supabase.from('profiles').select('is_premium, is_admin').eq('user_id', user.id).single()
+  if (!profile?.is_premium && !profile?.is_admin) {
     return NextResponse.json({ error: t('resumeExportPremiumOnly') }, { status: 403 })
   }
 

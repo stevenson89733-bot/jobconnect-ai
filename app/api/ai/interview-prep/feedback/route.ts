@@ -24,13 +24,15 @@ export async function POST(req: Request) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: t('mustBeSignedIn') }, { status: 401 })
 
-  const { data: profile } = await supabase.from('profiles').select('is_premium').eq('user_id', user.id).single()
-  if (!profile?.is_premium) {
+  const { data: profile } = await supabase.from('profiles').select('is_premium, is_admin').eq('user_id', user.id).single()
+  if (!profile?.is_premium && !profile?.is_admin) {
     return NextResponse.json({ error: t('interviewPrepPremiumOnly') }, { status: 403 })
   }
 
-  const { ok } = rateLimit(`ai-generate:interview-prep-feedback:${user.id ?? getClientIp()}`, FEEDBACK_LIMIT, FEEDBACK_WINDOW_MS)
-  if (!ok) return NextResponse.json({ error: t('tooManyInterviewPrepRequests') }, { status: 429 })
+  if (!profile?.is_admin) {
+    const { ok } = rateLimit(`ai-generate:interview-prep-feedback:${user.id ?? getClientIp()}`, FEEDBACK_LIMIT, FEEDBACK_WINDOW_MS)
+    if (!ok) return NextResponse.json({ error: t('tooManyInterviewPrepRequests') }, { status: 429 })
+  }
 
   const body = (await req.json().catch(() => ({}))) as Body
   const question = body.question?.trim().slice(0, MAX_QUESTION_LENGTH)
