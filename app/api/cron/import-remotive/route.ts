@@ -3,8 +3,8 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { fetchRemotiveJobs, mapRemotiveCategory, mapRemotiveJobType, parseRemotiveSalary } from '@/lib/remotive'
 
 // CRITIQUE : protégé par CRON_SECRET — jamais exposé à des non-admins.
-// Retourne toujours 200 — même sur timeout externe — pour que le cron
-// reste vert indépendamment de la disponibilité de la source.
+// Route utilisée uniquement pour l'import manuel via PostJobModal admin.
+// Le cron automatique est désactivé — Remotive dépasse le timeout Vercel Hobby (10s).
 
 export const maxDuration = 10
 
