@@ -7,56 +7,121 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: 'Dry run (does not call the endpoint, just prints the URL)'
+        description: 'Dry run (does not call the endpoints, just prints the URLs)'
         required: false
         default: 'false'
         type: boolean
 
 jobs:
   import:
-    name: Import Arbeitnow + Adzuna
+    name: Import Arbeitnow + Remotive + Adzuna
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
+
+    env:
+      CRON_SECRET: ${{ secrets.CRON_SECRET }}
+      APP_URL: ${{ secrets.APP_URL }}
 
     steps:
-      - name: Trigger import
-        env:
-          CRON_SECRET: ${{ secrets.CRON_SECRET }}
-          APP_URL: ${{ secrets.APP_URL }}
+      - name: Check secrets
         run: |
           if [ "${{ inputs.dry_run }}" = "true" ]; then
-            echo "Dry run — would call: ${APP_URL}/api/cron/import-jobs"
+            echo "Dry run — would call:"
+            echo "  ${APP_URL}/api/cron/import-arbeitnow"
+            echo "  ${APP_URL}/api/cron/import-remotive"
+            for country in gb fr de ca au nl; do
+              echo "  ${APP_URL}/api/cron/import-adzuna?country=${country}"
+            done
             exit 0
           fi
-
           if [ -z "$CRON_SECRET" ] || [ -z "$APP_URL" ]; then
             echo "::error::CRON_SECRET and APP_URL secrets must be set in repository settings"
             exit 1
           fi
 
-          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" \
-            --max-time 90 \
+      - name: Import Arbeitnow
+        if: ${{ inputs.dry_run != 'true' }}
+        run: |
+          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 15 \
             -H "Authorization: Bearer ${CRON_SECRET}" \
-            "${APP_URL}/api/cron/import-jobs")
-
+            "${APP_URL}/api/cron/import-arbeitnow")
           cat /tmp/response.json
           echo "HTTP Status: ${HTTP_CODE}"
+          [ "${HTTP_CODE}" = "200" ] || { echo "::error::Arbeitnow failed (${HTTP_CODE})"; exit 1; }
 
-          if [ "${HTTP_CODE}" != "200" ]; then
-            echo "Error: unexpected status ${HTTP_CODE}"
-            exit 1
-          fi
+      - name: Import Remotive
+        if: ${{ inputs.dry_run != 'true' }}
+        run: |
+          sleep 5
+          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 15 \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${APP_URL}/api/cron/import-remotive")
+          cat /tmp/response.json
+          echo "HTTP Status: ${HTTP_CODE}"
+          [ "${HTTP_CODE}" = "200" ] || { echo "::error::Remotive failed (${HTTP_CODE})"; exit 1; }
 
-          # Surface stats in the workflow summary
-          imported=$(cat /tmp/response.json | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('imported', '?'))")
-          deduped=$(cat /tmp/response.json | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('deduplicated', '?'))")
-          enriched=$(cat /tmp/response.json | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('enriched', '?'))")
-          pending=$(cat /tmp/response.json | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('enrichPending', '?'))")
+      - name: Import Adzuna GB
+        if: ${{ inputs.dry_run != 'true' }}
+        run: |
+          sleep 5
+          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 15 \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${APP_URL}/api/cron/import-adzuna?country=gb")
+          cat /tmp/response.json
+          echo "HTTP Status: ${HTTP_CODE}"
+          [ "${HTTP_CODE}" = "200" ] || { echo "::error::Adzuna GB failed (${HTTP_CODE})"; exit 1; }
 
-          echo "## Import summary" >> $GITHUB_STEP_SUMMARY
-          echo "| Metric | Value |" >> $GITHUB_STEP_SUMMARY
-          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Imported (new) | ${imported} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Deduplicated (skipped) | ${deduped} |" >> $GITHUB_STEP_SUMMARY
-          echo "| AI enriched | ${enriched} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Enrichment pending (next run) | ${pending} |" >> $GITHUB_STEP_SUMMARY
+      - name: Import Adzuna FR
+        if: ${{ inputs.dry_run != 'true' }}
+        run: |
+          sleep 5
+          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 15 \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${APP_URL}/api/cron/import-adzuna?country=fr")
+          cat /tmp/response.json
+          echo "HTTP Status: ${HTTP_CODE}"
+          [ "${HTTP_CODE}" = "200" ] || { echo "::error::Adzuna FR failed (${HTTP_CODE})"; exit 1; }
+
+      - name: Import Adzuna DE
+        if: ${{ inputs.dry_run != 'true' }}
+        run: |
+          sleep 5
+          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 15 \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${APP_URL}/api/cron/import-adzuna?country=de")
+          cat /tmp/response.json
+          echo "HTTP Status: ${HTTP_CODE}"
+          [ "${HTTP_CODE}" = "200" ] || { echo "::error::Adzuna DE failed (${HTTP_CODE})"; exit 1; }
+
+      - name: Import Adzuna CA
+        if: ${{ inputs.dry_run != 'true' }}
+        run: |
+          sleep 5
+          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 15 \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${APP_URL}/api/cron/import-adzuna?country=ca")
+          cat /tmp/response.json
+          echo "HTTP Status: ${HTTP_CODE}"
+          [ "${HTTP_CODE}" = "200" ] || { echo "::error::Adzuna CA failed (${HTTP_CODE})"; exit 1; }
+
+      - name: Import Adzuna AU
+        if: ${{ inputs.dry_run != 'true' }}
+        run: |
+          sleep 5
+          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 15 \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${APP_URL}/api/cron/import-adzuna?country=au")
+          cat /tmp/response.json
+          echo "HTTP Status: ${HTTP_CODE}"
+          [ "${HTTP_CODE}" = "200" ] || { echo "::error::Adzuna AU failed (${HTTP_CODE})"; exit 1; }
+
+      - name: Import Adzuna NL
+        if: ${{ inputs.dry_run != 'true' }}
+        run: |
+          sleep 5
+          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 15 \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${APP_URL}/api/cron/import-adzuna?country=nl")
+          cat /tmp/response.json
+          echo "HTTP Status: ${HTTP_CODE}"
+          [ "${HTTP_CODE}" = "200" ] || { echo "::error::Adzuna NL failed (${HTTP_CODE})"; exit 1; }
