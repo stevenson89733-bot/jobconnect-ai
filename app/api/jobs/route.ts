@@ -5,9 +5,10 @@ import { getTranslations } from 'next-intl/server'
 import { getCandidateProfile } from '@/lib/profile'
 import { parseSkillSet, calculateMatchPercent } from '@/lib/jobMatching'
 import { calculateJobScore } from '@/lib/jobScoring'
-import { applyJobFilters, normalizeJobCompany, parseSort, parseCrossBorder, JOB_SELECT_FIELDS } from '@/lib/jobsQuery'
+import { applyJobFilters, normalizeJobCompany, parseSort, parseCrossBorder, parseTrueRemote, JOB_SELECT_FIELDS } from '@/lib/jobsQuery'
 import { employerPlanLimit } from '@/lib/employerPlan'
 import { classifyCrossBorder } from '@/lib/ai/crossBorder'
+import { analyzeGeoCompliance } from '@/lib/ai/geoAnalysis'
 
 const PAGE_SIZE = 20
 
@@ -27,6 +28,7 @@ export async function GET(req: Request) {
   const category = searchParams.get('category') ?? 'All'
   const sort = parseSort(searchParams.get('sort'))
   const crossBorder = parseCrossBorder(searchParams.get('crossBorder'))
+  const trueRemote = parseTrueRemote(searchParams.get('trueRemote'))
   const country = searchParams.get('country') ?? ''
 
   const supabase = createClient()
@@ -35,7 +37,7 @@ export async function GET(req: Request) {
     .select(JOB_SELECT_FIELDS, { count: 'exact' })
     .eq('is_active', true)
 
-  query = applyJobFilters(query, { q, workType, jobType, category, sort, crossBorder, country })
+  query = applyJobFilters(query, { q, workType, jobType, category, sort, crossBorder, country, trueRemote })
 
   const { data: jobs, count, error } = await query.range(from, to)
 
@@ -165,6 +167,22 @@ export async function POST(req: Request) {
       else if (updateError) console.error('[jobs/cross-border] update failed:', updateError.message)
     } catch (err) {
       console.error('[jobs/cross-border] classification failed:', err instanceof Error ? err.message : err)
+    }
+
+    // Geo-compliance analysis — same pattern as cross-border: synchronous,
+    // failure-safe, never blocks the actual job posting response.
+    try {
+      const geoResult = await analyzeGeoCompliance(job.title, job.description ?? '', job.location ?? '')
+      const { data: geoUpdated, error: geoError } = await supabase
+        .from('jobs')
+        .update({ geo_analysis: geoResult })
+        .eq('id', job.id)
+        .select()
+        .single()
+      if (!geoError && geoUpdated) Object.assign(job, geoUpdated)
+      else if (geoError) console.error('[jobs/geo-analysis] update failed:', geoError.message)
+    } catch (err) {
+      console.error('[jobs/geo-analysis] analysis failed:', err instanceof Error ? err.message : err)
     }
   }
 

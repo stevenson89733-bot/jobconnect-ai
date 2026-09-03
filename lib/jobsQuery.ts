@@ -5,7 +5,7 @@
 export type SortOption = 'relevance' | 'date' | 'salary'
 
 export const JOB_SELECT_FIELDS =
-  'id, title, company_name, location, work_type, salary_label, salary_min, salary_max, job_type, category, tags, description, is_featured, cross_border_status, cross_border_signals, created_at, apply_url, source, company:companies(logo_url)'
+  'id, title, company_name, location, work_type, salary_label, salary_min, salary_max, job_type, category, tags, description, is_featured, cross_border_status, cross_border_signals, created_at, apply_url, source, geo_analysis, company:companies(logo_url)'
 
 export type JobFilters = {
   q: string
@@ -15,6 +15,7 @@ export type JobFilters = {
   sort: SortOption
   crossBorder: boolean
   country: string
+  trueRemote: boolean
 }
 
 // Maps UI country value → location substrings to match in Supabase
@@ -36,9 +37,13 @@ export function parseCrossBorder(value: string | null | undefined): boolean {
   return value === '1' || value === 'true'
 }
 
-export function applyJobFilters<T extends { or: any; ilike: any; eq: any; order: any }>(
+export function parseTrueRemote(value: string | null | undefined): boolean {
+  return value === '1' || value === 'true'
+}
+
+export function applyJobFilters<T extends { or: any; ilike: any; eq: any; filter: any; order: any }>(
   query: T,
-  { q, workType, jobType, category, sort, crossBorder, country }: JobFilters
+  { q, workType, jobType, category, sort, crossBorder, country, trueRemote }: JobFilters
 ): T {
   if (q) {
     // Real keyword match across title/company/description only — no
@@ -56,6 +61,7 @@ export function applyJobFilters<T extends { or: any; ilike: any; eq: any; order:
   // Only real, classified-as-'yes' postings — never 'unclear'/'no'/null,
   // same honesty rule as the badge itself.
   if (crossBorder) query = query.eq('cross_border_status', 'yes')
+  if (trueRemote) query = query.filter("geo_analysis->>'classification'", 'eq', 'true_anywhere')
 
   if (sort === 'salary') {
     // nullsFirst: false keeps jobs without a real salary_min at the end

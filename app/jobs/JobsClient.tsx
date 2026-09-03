@@ -28,6 +28,14 @@ export type Job = {
   cross_border_status: 'yes' | 'no' | 'unclear' | null
   // Candidate-facing signals explaining the classification — 2-3 short strings.
   cross_border_signals: string[] | null
+  // GPT-4o-mini geo-compliance classification — null when not yet analyzed.
+  geo_analysis: {
+    classification: 'true_anywhere' | 'regional_remote' | 'local_remote_only'
+    has_tax_restriction: boolean
+    eor_contractor_friendly: boolean
+    confidence_score: number
+    notes: string
+  } | null
   created_at: string
   apply_url: string | null
   source: string | null
@@ -58,6 +66,7 @@ export default function JobsClient({
   initialSort = 'relevance',
   initialCrossBorder = false,
   initialCountry = '',
+  initialTrueRemote = false,
   totalPages = 1,
   total,
 }: {
@@ -69,6 +78,7 @@ export default function JobsClient({
   initialSort?: SortOption
   initialCrossBorder?: boolean
   initialCountry?: string
+  initialTrueRemote?: boolean
   totalPages?: number
   total?: number
 }) {
@@ -100,6 +110,7 @@ export default function JobsClient({
   const [sort, setSort] = useState<SortOption>(initialSort)
   const [crossBorder, setCrossBorder] = useState(initialCrossBorder)
   const [country, setCountry] = useState(initialCountry)
+  const [trueRemote, setTrueRemote] = useState(initialTrueRemote)
 
   // Infinite scroll state — the server always renders page 1 (via the
   // `jobs` prop); this accumulates pages 2+ fetched client-side from
@@ -122,7 +133,7 @@ export default function JobsClient({
     setHasMore(totalPages > 1)
   }, [jobs, totalPages])
 
-  function navigate(next: { q?: string; workType?: string; type?: string; category?: string; sort?: SortOption; crossBorder?: boolean; country?: string }) {
+  function navigate(next: { q?: string; workType?: string; type?: string; category?: string; sort?: SortOption; crossBorder?: boolean; country?: string; trueRemote?: boolean }) {
     const params = new URLSearchParams()
     const q = next.q ?? query
     const w = next.workType ?? workType
@@ -131,6 +142,7 @@ export default function JobsClient({
     const s = next.sort ?? sort
     const cb = next.crossBorder ?? crossBorder
     const cn = next.country !== undefined ? next.country : country
+    const tr = next.trueRemote ?? trueRemote
 
     if (q) params.set('q', q)
     if (w !== 'All') params.set('workType', w)
@@ -139,6 +151,7 @@ export default function JobsClient({
     if (s !== 'relevance') params.set('sort', s)
     if (cb) params.set('crossBorder', '1')
     if (cn) params.set('country', cn)
+    if (tr) params.set('trueRemote', '1')
 
     startTransition(() => {
       router.push(`${pathname}?${params.toString()}`)
@@ -157,6 +170,7 @@ export default function JobsClient({
       if (sort !== 'relevance') params.set('sort', sort)
       if (crossBorder) params.set('crossBorder', '1')
       if (country) params.set('country', country)
+      if (trueRemote) params.set('trueRemote', '1')
       params.set('page', String(nextPage))
 
       const res = await fetch(`/api/jobs?${params.toString()}`)
@@ -171,7 +185,7 @@ export default function JobsClient({
     } finally {
       setLoadingMore(false)
     }
-  }, [loadingMore, hasMore, query, workType, jobType, category, sort, crossBorder, nextPage])
+  }, [loadingMore, hasMore, query, workType, jobType, category, sort, crossBorder, country, trueRemote, nextPage])
 
   useEffect(() => {
     const el = sentinelRef.current
@@ -193,7 +207,8 @@ export default function JobsClient({
     setCategory('All')
     setCrossBorder(false)
     setCountry('')
-    navigate({ q: '', workType: 'All', type: 'All', category: 'All', crossBorder: false, country: '' })
+    setTrueRemote(false)
+    navigate({ q: '', workType: 'All', type: 'All', category: 'All', crossBorder: false, country: '', trueRemote: false })
   }
 
   return (
@@ -351,6 +366,17 @@ export default function JobsClient({
             }`}
           >
             {t('crossBorderFilterLabel')}
+          </button>
+          <button
+            onClick={() => { const next = !trueRemote; setTrueRemote(next); navigate({ trueRemote: next }) }}
+            aria-pressed={trueRemote}
+            className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${
+              trueRemote
+                ? 'bg-green-100 dark:bg-green-900/30 border-green-300 dark:border-green-800/50 text-green-700 dark:text-green-400'
+                : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-slate-300'
+            }`}
+          >
+            True Remote
           </button>
         </div>
       </div>

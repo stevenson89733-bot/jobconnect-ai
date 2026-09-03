@@ -294,6 +294,39 @@ export default function JobCard({
           </span>
         )}
 
+        {/* Geo-compliance badges — only shown when confidence_score >= 0.7 */}
+        {job.geo_analysis && job.geo_analysis.confidence_score >= 0.7 && (() => {
+          const g = job.geo_analysis!
+          const isDiaspora = g.classification === 'true_anywhere' && g.eor_contractor_friendly && !g.has_tax_restriction
+          const isTrueRemote = g.classification === 'true_anywhere' && !isDiaspora
+          const isRegional = g.classification === 'regional_remote'
+          const isLocal = g.classification === 'local_remote_only'
+          return (
+            <>
+              {isDiaspora && (
+                <span title={g.notes} className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border border-blue-300 dark:border-blue-800/50 whitespace-nowrap shrink-0 cursor-default">
+                  Diaspora Friendly
+                </span>
+              )}
+              {isTrueRemote && (
+                <span title={g.notes} className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-300 dark:border-green-800/50 whitespace-nowrap shrink-0 cursor-default">
+                  True Remote
+                </span>
+              )}
+              {isRegional && (
+                <span title={g.notes} className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 border border-orange-300 dark:border-orange-800/50 whitespace-nowrap shrink-0 cursor-default">
+                  Regional
+                </span>
+              )}
+              {isLocal && (
+                <span title={g.notes} className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-300 dark:border-red-800/50 whitespace-nowrap shrink-0 cursor-default">
+                  Local Required
+                </span>
+              )}
+            </>
+          )
+        })()}
+
         {/* Apply — pushed to end */}
         <span className="ml-auto shrink-0">
           {job.apply_url ? (
