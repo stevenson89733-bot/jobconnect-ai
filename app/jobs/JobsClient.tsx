@@ -33,6 +33,7 @@ export type Job = {
     classification: 'true_anywhere' | 'regional_remote' | 'local_remote_only'
     has_tax_restriction: boolean
     eor_contractor_friendly: boolean
+    employment_type: 'EOR' | 'Contractor' | 'Local Contract' | 'Unknown'
     confidence_score: number
     notes: string
   } | null

@@ -61,7 +61,11 @@ export function applyJobFilters<T extends { or: any; ilike: any; eq: any; filter
   // Only real, classified-as-'yes' postings — never 'unclear'/'no'/null,
   // same honesty rule as the badge itself.
   if (crossBorder) query = query.eq('cross_border_status', 'yes')
-  if (trueRemote) query = query.filter("geo_analysis->>'classification'", 'eq', 'true_anywhere')
+  if (trueRemote) {
+    query = query.filter("geo_analysis->>'classification'", 'eq', 'true_anywhere')
+    // Exclude low-confidence classifications — PostgREST supports numeric cast on JSONB text
+    query = query.filter("(geo_analysis->>'confidence_score')::numeric", 'gte', '0.7')
+  }
 
   if (sort === 'salary') {
     // nullsFirst: false keeps jobs without a real salary_min at the end
