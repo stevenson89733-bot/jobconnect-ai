@@ -6,9 +6,9 @@ import { fetchWwrJobs } from '@/lib/wwr'
 // Retourne toujours 200 — même sur timeout externe — pour que le cron
 // reste vert indépendamment de la disponibilité de la source.
 
-// 30s nécessite Vercel Pro — sur Hobby, cette route reste accessible
-// uniquement via le PostJobModal admin (import manuel).
-export const maxDuration = 30
+// Route utilisée uniquement pour l'import manuel via PostJobModal admin.
+// Le cron automatique est désactivé — WWR RSS dépasse le timeout Vercel Hobby (10s).
+export const maxDuration = 10
 
 export async function GET(req: Request) {
   const secret = process.env.CRON_SECRET
