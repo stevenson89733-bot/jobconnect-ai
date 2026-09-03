@@ -28,9 +28,11 @@ export interface AdzunaJob {
 export async function fetchAdzunaJobs({
   country,
   resultsPerPage = 50,
+  timeoutMs = FETCH_TIMEOUT_MS,
 }: {
   country: AdzunaCountryCode
   resultsPerPage?: number
+  timeoutMs?: number
 }): Promise<AdzunaJob[]> {
   const appId = process.env.ADZUNA_APP_ID
   const appKey = process.env.ADZUNA_APP_KEY
@@ -47,7 +49,7 @@ export async function fetchAdzunaJobs({
   url.searchParams.set('content-type', 'application/json')
 
   const res = await fetch(url.toString(), {
-    signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+    signal: AbortSignal.timeout(timeoutMs),
     headers: {
       'User-Agent': 'Mozilla/5.0 (compatible; JobConnectBot/1.0)',
       Accept: 'application/json',

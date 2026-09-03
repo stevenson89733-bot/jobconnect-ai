@@ -7,7 +7,7 @@ import { fetchAdzunaJobs, adzunaSourceKey, ADZUNA_COUNTRIES, type AdzunaCountryC
 
 export const maxDuration = 10
 
-const LIMIT = 15
+const LIMIT = 5
 const VALID_COUNTRIES = new Set<string>(ADZUNA_COUNTRIES.map((c) => c.code))
 
 export async function GET(req: Request) {
@@ -31,7 +31,7 @@ export async function GET(req: Request) {
   let errors = 0
 
   try {
-    const jobs = await fetchAdzunaJobs({ country: country as AdzunaCountryCode, resultsPerPage: LIMIT })
+    const jobs = await fetchAdzunaJobs({ country: country as AdzunaCountryCode, resultsPerPage: LIMIT, timeoutMs: 6000 })
     for (const j of jobs) {
       const { data: byUrl } = await supabase
         .from('jobs').select('id').eq('apply_url', j.redirect_url).limit(1)
