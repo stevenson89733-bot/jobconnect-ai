@@ -1,0 +1,63 @@
+name: Import Jobs
+
+on:
+  schedule:
+    # Twice daily — 6h and 18h UTC
+    - cron: '0 6,18 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (does not call the endpoint, just prints the URL)'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  import:
+    name: Import Arbeitnow + Adzuna
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Trigger import
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          APP_URL: ${{ secrets.APP_URL }}
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            echo "Dry run — would call: ${APP_URL}/api/cron/import-jobs"
+            exit 0
+          fi
+
+          if [ -z "$CRON_SECRET" ] || [ -z "$APP_URL" ]; then
+            echo "::error::CRON_SECRET and APP_URL secrets must be set in repository settings"
+            exit 1
+          fi
+
+          http_code=$(curl -s -o response.json -w "%{http_code}" \
+            --max-time 90 \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${APP_URL}/api/cron/import-jobs")
+
+          echo "HTTP Status: ${http_code}"
+          echo "Response:"
+          cat response.json
+
+          if [ "${http_code}" != "200" ]; then
+            echo "::error::Import failed with HTTP ${http_code}"
+            exit 1
+          fi
+
+          # Surface stats in the workflow summary
+          imported=$(cat response.json | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('imported', '?'))")
+          deduped=$(cat response.json | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('deduplicated', '?'))")
+          enriched=$(cat response.json | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('enriched', '?'))")
+          pending=$(cat response.json | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('enrichPending', '?'))")
+
+          echo "## Import summary" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Imported (new) | ${imported} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Deduplicated (skipped) | ${deduped} |" >> $GITHUB_STEP_SUMMARY
+          echo "| AI enriched | ${enriched} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Enrichment pending (next run) | ${pending} |" >> $GITHUB_STEP_SUMMARY
