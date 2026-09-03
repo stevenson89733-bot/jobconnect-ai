@@ -49,17 +49,6 @@ jobs:
           echo "HTTP Status: ${HTTP_CODE}"
           [ "${HTTP_CODE}" = "200" ] || { echo "::error::Arbeitnow failed (${HTTP_CODE})"; exit 1; }
 
-      - name: Import WWR
-        if: ${{ inputs.dry_run != 'true' }}
-        run: |
-          sleep 5
-          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 15 \
-            -H "Authorization: Bearer ${CRON_SECRET}" \
-            "${APP_URL}/api/cron/import-wwr")
-          cat /tmp/response.json
-          echo "HTTP Status: ${HTTP_CODE}"
-          [ "${HTTP_CODE}" = "200" ] || { echo "::error::WWR failed (${HTTP_CODE})"; exit 1; }
-
       - name: Import Remotive
         if: ${{ inputs.dry_run != 'true' }}
         run: |
