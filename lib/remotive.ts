@@ -34,10 +34,12 @@ export async function fetchRemotiveJobs({
   category,
   search,
   limit = 50,
+  timeoutMs = FETCH_TIMEOUT_MS,
 }: {
   category?: string
   search?: string
   limit?: number
+  timeoutMs?: number
 } = {}): Promise<RemotiveJob[]> {
   const url = new URL(REMOTIVE_API_URL)
   if (category) url.searchParams.set('category', category)
@@ -45,7 +47,7 @@ export async function fetchRemotiveJobs({
   url.searchParams.set('limit', String(limit))
 
   const res = await fetch(url.toString(), {
-    signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+    signal: AbortSignal.timeout(timeoutMs),
     headers: {
       'User-Agent': 'Mozilla/5.0 (compatible; JobConnectBot/1.0)',
       Accept: 'application/json',

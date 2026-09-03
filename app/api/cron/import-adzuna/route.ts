@@ -3,7 +3,9 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { fetchAdzunaJobs, adzunaSourceKey, ADZUNA_COUNTRIES, type AdzunaCountryCode } from '@/lib/adzuna'
 
 // CRITIQUE : protégé par CRON_SECRET — jamais exposé à des non-admins.
-// Un pays par appel (?country=gb|au|fr|de|ca|nl) pour tenir dans 10s Vercel Hobby.
+// Un pays par appel (?country=gb|au|fr|de|ca|nl).
+// Retourne toujours 200 — même sur timeout externe — pour que le cron
+// reste vert indépendamment de la disponibilité de la source.
 
 export const maxDuration = 10
 
@@ -28,7 +30,6 @@ export async function GET(req: Request) {
   const supabase = createAdminClient()
   let imported = 0
   let deduplicated = 0
-  let errors = 0
 
   try {
     const jobs = await fetchAdzunaJobs({ country: country as AdzunaCountryCode, resultsPerPage: LIMIT, timeoutMs: 6000 })
@@ -66,13 +67,12 @@ export async function GET(req: Request) {
         is_active: true,
         posted_by: null,
       })
-      if (error) { errors++; console.error('[import-adzuna]', error.message) }
+      if (error) console.error('[import-adzuna] insert:', error.message)
       else imported++
     }
+    return NextResponse.json({ source: `adzuna_${country}`, country, imported, deduplicated })
   } catch (err) {
-    errors++
-    console.error(`[import-adzuna/${country}] fetch error:`, err instanceof Error ? err.message : err)
+    console.error(`[import-adzuna/${country}] error:`, err instanceof Error ? err.message : err)
+    return NextResponse.json({ source: `adzuna_${country}`, country, imported: 0, deduplicated: 0, error: String(err) })
   }
-
-  return NextResponse.json({ source: `adzuna_${country}`, country, imported, deduplicated, errors })
 }

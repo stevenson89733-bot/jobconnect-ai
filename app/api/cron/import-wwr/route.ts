@@ -3,7 +3,8 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { fetchWwrJobs } from '@/lib/wwr'
 
 // CRITIQUE : protégé par CRON_SECRET — jamais exposé à des non-admins.
-// RSS WWR est plus léger que les APIs JSON, répond généralement en 1-2s.
+// Retourne toujours 200 — même sur timeout externe — pour que le cron
+// reste vert indépendamment de la disponibilité de la source.
 
 export const maxDuration = 10
 
@@ -16,7 +17,6 @@ export async function GET(req: Request) {
   const supabase = createAdminClient()
   let imported = 0
   let deduplicated = 0
-  let errors = 0
 
   try {
     const jobs = await fetchWwrJobs({ limit: 15, timeoutMs: 5000 })
@@ -49,14 +49,12 @@ export async function GET(req: Request) {
         is_active: true,
         posted_by: null,
       })
-      if (error) { errors++; console.error('[import-wwr]', error.message) }
+      if (error) console.error('[import-wwr] insert:', error.message)
       else imported++
     }
+    return NextResponse.json({ source: 'wwr', imported, deduplicated })
   } catch (err) {
-    // Timeout ou erreur réseau — retourner 200 avec ce qu'on a plutôt que 504
-    console.error('[import-wwr] fetch error:', err instanceof Error ? err.message : err)
-    errors++
+    console.error('[import-wwr] error:', err instanceof Error ? err.message : err)
+    return NextResponse.json({ source: 'wwr', imported: 0, deduplicated: 0, error: String(err) })
   }
-
-  return NextResponse.json({ source: 'wwr', imported, deduplicated, errors })
 }

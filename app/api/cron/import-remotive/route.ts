@@ -3,12 +3,10 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { fetchRemotiveJobs, mapRemotiveCategory, mapRemotiveJobType, parseRemotiveSalary } from '@/lib/remotive'
 
 // CRITIQUE : protégé par CRON_SECRET — jamais exposé à des non-admins.
-// Conçu pour tenir dans le timeout Vercel Hobby (10s) :
-// pas d'enrichissement IA, 15 offres max par appel.
+// Retourne toujours 200 — même sur timeout externe — pour que le cron
+// reste vert indépendamment de la disponibilité de la source.
 
 export const maxDuration = 10
-
-const LIMIT = 15
 
 export async function GET(req: Request) {
   const secret = process.env.CRON_SECRET
@@ -19,10 +17,9 @@ export async function GET(req: Request) {
   const supabase = createAdminClient()
   let imported = 0
   let deduplicated = 0
-  let errors = 0
 
   try {
-    const jobs = await fetchRemotiveJobs({ limit: LIMIT })
+    const jobs = await fetchRemotiveJobs({ limit: 15, timeoutMs: 6000 })
     for (const j of jobs) {
       const { data: byUrl } = await supabase
         .from('jobs').select('id').eq('apply_url', j.url).limit(1)
@@ -36,8 +33,6 @@ export async function GET(req: Request) {
       if (byTitle?.[0]) { deduplicated++; continue }
 
       const { min: salaryMin, max: salaryMax } = parseRemotiveSalary(j.salary)
-      const salaryLabel = j.salary || null
-
       const { error } = await supabase.from('jobs').insert({
         title: j.title,
         company_name: j.company_name,
@@ -51,17 +46,16 @@ export async function GET(req: Request) {
         source: 'remotive',
         salary_min: salaryMin ? parseInt(salaryMin, 10) : null,
         salary_max: salaryMax ? parseInt(salaryMax, 10) : null,
-        salary_label: salaryLabel,
+        salary_label: j.salary || null,
         is_active: true,
         posted_by: null,
       })
-      if (error) { errors++; console.error('[import-remotive]', error.message) }
+      if (error) console.error('[import-remotive] insert:', error.message)
       else imported++
     }
+    return NextResponse.json({ source: 'remotive', imported, deduplicated })
   } catch (err) {
-    errors++
-    console.error('[import-remotive] fetch error:', err instanceof Error ? err.message : err)
+    console.error('[import-remotive] error:', err instanceof Error ? err.message : err)
+    return NextResponse.json({ source: 'remotive', imported: 0, deduplicated: 0, error: String(err) })
   }
-
-  return NextResponse.json({ source: 'remotive', imported, deduplicated, errors })
 }
