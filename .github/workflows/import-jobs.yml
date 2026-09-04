@@ -2,7 +2,6 @@ name: Import Jobs
 
 on:
   schedule:
-    # Twice daily — 6h and 18h UTC
     - cron: '0 6,18 * * *'
   workflow_dispatch:
     inputs:
@@ -35,82 +34,101 @@ jobs:
             exit 0
           fi
           if [ -z "$CRON_SECRET" ] || [ -z "$APP_URL" ]; then
-            echo "::error::CRON_SECRET and APP_URL secrets must be set in repository settings"
+            echo "::error::CRON_SECRET and APP_URL secrets must be set"
             exit 1
           fi
 
       - name: Import Arbeitnow
         if: ${{ inputs.dry_run != 'true' }}
+        continue-on-error: true
         run: |
-          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 15 \
+          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 55 \
             -H "Authorization: Bearer ${CRON_SECRET}" \
             "${APP_URL}/api/cron/import-arbeitnow")
           cat /tmp/response.json
           echo "HTTP Status: ${HTTP_CODE}"
-          [ "${HTTP_CODE}" = "200" ] || { echo "::error::Arbeitnow failed (${HTTP_CODE})"; exit 1; }
+          [ "${HTTP_CODE}" = "200" ] || echo "::warning::Arbeitnow failed (${HTTP_CODE}) — continuing"
+
+      - name: Import Remotive
+        if: ${{ inputs.dry_run != 'true' }}
+        continue-on-error: true
+        run: |
+          sleep 3
+          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 55 \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${APP_URL}/api/cron/import-remotive")
+          cat /tmp/response.json
+          echo "HTTP Status: ${HTTP_CODE}"
+          [ "${HTTP_CODE}" = "200" ] || echo "::warning::Remotive failed (${HTTP_CODE}) — continuing"
 
       - name: Import Adzuna GB
         if: ${{ inputs.dry_run != 'true' }}
+        continue-on-error: true
         run: |
-          sleep 5
-          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 15 \
+          sleep 3
+          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 55 \
             -H "Authorization: Bearer ${CRON_SECRET}" \
             "${APP_URL}/api/cron/import-adzuna?country=gb")
           cat /tmp/response.json
           echo "HTTP Status: ${HTTP_CODE}"
-          [ "${HTTP_CODE}" = "200" ] || { echo "::error::Adzuna GB failed (${HTTP_CODE})"; exit 1; }
+          [ "${HTTP_CODE}" = "200" ] || echo "::warning::Adzuna GB failed (${HTTP_CODE}) — continuing"
 
       - name: Import Adzuna FR
         if: ${{ inputs.dry_run != 'true' }}
+        continue-on-error: true
         run: |
-          sleep 5
-          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 15 \
+          sleep 3
+          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 55 \
             -H "Authorization: Bearer ${CRON_SECRET}" \
             "${APP_URL}/api/cron/import-adzuna?country=fr")
           cat /tmp/response.json
           echo "HTTP Status: ${HTTP_CODE}"
-          [ "${HTTP_CODE}" = "200" ] || { echo "::error::Adzuna FR failed (${HTTP_CODE})"; exit 1; }
+          [ "${HTTP_CODE}" = "200" ] || echo "::warning::Adzuna FR failed (${HTTP_CODE}) — continuing"
 
       - name: Import Adzuna DE
         if: ${{ inputs.dry_run != 'true' }}
+        continue-on-error: true
         run: |
-          sleep 5
-          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 15 \
+          sleep 3
+          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 55 \
             -H "Authorization: Bearer ${CRON_SECRET}" \
             "${APP_URL}/api/cron/import-adzuna?country=de")
           cat /tmp/response.json
           echo "HTTP Status: ${HTTP_CODE}"
-          [ "${HTTP_CODE}" = "200" ] || { echo "::error::Adzuna DE failed (${HTTP_CODE})"; exit 1; }
+          [ "${HTTP_CODE}" = "200" ] || echo "::warning::Adzuna DE failed (${HTTP_CODE}) — continuing"
 
       - name: Import Adzuna CA
         if: ${{ inputs.dry_run != 'true' }}
+        continue-on-error: true
         run: |
-          sleep 5
-          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 15 \
+          sleep 3
+          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 55 \
             -H "Authorization: Bearer ${CRON_SECRET}" \
             "${APP_URL}/api/cron/import-adzuna?country=ca")
           cat /tmp/response.json
           echo "HTTP Status: ${HTTP_CODE}"
-          [ "${HTTP_CODE}" = "200" ] || { echo "::error::Adzuna CA failed (${HTTP_CODE})"; exit 1; }
+          [ "${HTTP_CODE}" = "200" ] || echo "::warning::Adzuna CA failed (${HTTP_CODE}) — continuing"
 
       - name: Import Adzuna AU
         if: ${{ inputs.dry_run != 'true' }}
+        continue-on-error: true
         run: |
-          sleep 5
-          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 15 \
+          sleep 3
+          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 55 \
             -H "Authorization: Bearer ${CRON_SECRET}" \
             "${APP_URL}/api/cron/import-adzuna?country=au")
           cat /tmp/response.json
           echo "HTTP Status: ${HTTP_CODE}"
-          [ "${HTTP_CODE}" = "200" ] || { echo "::error::Adzuna AU failed (${HTTP_CODE})"; exit 1; }
+          [ "${HTTP_CODE}" = "200" ] || echo "::warning::Adzuna AU failed (${HTTP_CODE}) — continuing"
 
       - name: Import Adzuna NL
         if: ${{ inputs.dry_run != 'true' }}
+        continue-on-error: true
         run: |
-          sleep 5
-          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 15 \
+          sleep 3
+          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 55 \
             -H "Authorization: Bearer ${CRON_SECRET}" \
             "${APP_URL}/api/cron/import-adzuna?country=nl")
           cat /tmp/response.json
           echo "HTTP Status: ${HTTP_CODE}"
-          [ "${HTTP_CODE}" = "200" ] || { echo "::error::Adzuna NL failed (${HTTP_CODE})"; exit 1; }
+          [ "${HTTP_CODE}" = "200" ] || echo "::warning::Adzuna NL failed (${HTTP_CODE}) — continuing"
