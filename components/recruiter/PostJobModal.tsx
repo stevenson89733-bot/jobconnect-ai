@@ -116,6 +116,10 @@ export default function PostJobModal({
   const [showAdzuna, setShowAdzuna] = useState(false)
   const [adzunaCountry, setAdzunaCountry] = useState<AdzunaCountryCode>('gb')
 
+  const [enrichLoading, setEnrichLoading] = useState(false)
+  const [enrichResult, setEnrichResult] = useState<{ enriched: number; remaining: number } | null>(null)
+  const [enrichError, setEnrichError] = useState('')
+
   const [source, setSource] = useState<string | null>(null)
 
   function applyExtracted(extracted: Record<string, unknown>) {
@@ -240,6 +244,21 @@ export default function PostJobModal({
     setShowRemotive(false)
     setRemotiveJobs([])
     setRemotiveError('')
+  }
+
+  async function runEnrichJobs() {
+    setEnrichLoading(true)
+    setEnrichError('')
+    try {
+      const res = await fetch('/api/admin/enrich-jobs', { method: 'POST' })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Failed')
+      setEnrichResult(data)
+    } catch (err) {
+      setEnrichError(err instanceof Error ? err.message : 'Failed')
+    } finally {
+      setEnrichLoading(false)
+    }
   }
 
   async function fetchArbeitnowJobsClient() {
@@ -450,6 +469,40 @@ export default function PostJobModal({
                   >
                     Browse Adzuna
                   </button>
+
+                  {/* Enrich Jobs — batch geo-analysis on remote jobs with null geo_analysis */}
+                  <div className="rounded-lg border border-dashed border-emerald-400/50 dark:border-emerald-600/40 overflow-hidden">
+                    <button
+                      type="button"
+                      onClick={runEnrichJobs}
+                      disabled={enrichLoading}
+                      className="w-full text-sm text-emerald-700 dark:text-emerald-400 py-2.5 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors disabled:opacity-50"
+                    >
+                      {enrichLoading ? '⏳ Enriching geo-analysis…' : '✦ Enrich Jobs (geo-analysis)'}
+                    </button>
+                    {enrichError && (
+                      <p className="text-xs text-red-500 dark:text-red-400 px-3 pb-2">{enrichError}</p>
+                    )}
+                    {enrichResult && (
+                      <div className="px-3 pb-3 space-y-1.5 border-t border-emerald-100 dark:border-emerald-800/30 pt-2">
+                        <p className="text-xs text-slate-600 dark:text-slate-400">
+                          ✓ Enriched: <span className="font-bold text-emerald-700 dark:text-emerald-400">{enrichResult.enriched}</span>
+                          {' · '}
+                          Remaining: <span className="font-bold text-slate-800 dark:text-slate-200">{enrichResult.remaining}</span>
+                        </p>
+                        {enrichResult.remaining > 0 && (
+                          <button
+                            type="button"
+                            onClick={runEnrichJobs}
+                            disabled={enrichLoading}
+                            className="w-full text-xs text-emerald-700 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-700 rounded py-1.5 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors disabled:opacity-50"
+                          >
+                            Continue →
+                          </button>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </div>
                 ) : null
               ) : showPaste ? (
