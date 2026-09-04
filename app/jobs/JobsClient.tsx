@@ -212,221 +212,242 @@ export default function JobsClient({
     navigate({ q: '', workType: 'All', type: 'All', category: 'All', crossBorder: false, country: '', trueRemote: false })
   }
 
+  const COUNTRY_CHIPS = [
+    { flag: '🌍', label: 'All',  value: '' },
+    { flag: '🇺🇸', label: 'US',   value: 'USA' },
+    { flag: '🇬🇧', label: 'UK',   value: 'UK' },
+    { flag: '🇩🇪', label: 'DE',   value: 'Germany' },
+    { flag: '🇫🇷', label: 'FR',   value: 'France' },
+    { flag: '🇨🇦', label: 'CA',   value: 'Canada' },
+  ]
+
+  const SORT_LABELS: Record<SortOption, string> = {
+    relevance: 'Match Score',
+    date: t('sortNewest'),
+    salary: t('sortSalary'),
+  }
+
   return (
-    <div className="max-w-7xl mx-auto px-6 py-10">
-      {/* Visual header banner */}
-      <div className="mb-8 rounded-2xl bg-gradient-to-br from-primary/5 via-white to-sky-50 dark:from-primary/10 dark:via-card dark:to-card border border-slate-200 dark:border-slate-700/60 px-6 py-5">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="inline-flex items-center gap-1.5 text-xs font-semibold bg-teal-100 dark:bg-teal-900/40 text-teal-700 dark:text-teal-400 px-2.5 py-1 rounded-full">
-                <span className="w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse" />
-                Remote-Friendly Verified
+    <div className="min-h-screen" style={{ background: '#F7F9FD' }}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+
+        {/* ── Hero Section ──────────────────────────────── */}
+        <div className="rounded-2xl mb-6 overflow-hidden" style={{ background: '#10152A' }}>
+          <div className="px-6 sm:px-10 py-10">
+            <p className="text-[12px] font-semibold tracking-widest uppercase text-[#57C7E3] mb-3">
+              Remote Jobs · AI Matched
+            </p>
+            <h1 className="text-3xl sm:text-4xl font-bold text-white leading-tight mb-1">
+              Find work that travels with you.
+            </h1>
+            <p className="italic text-[#57C7E3] text-base mb-2">
+              For the borderless professional.
+            </p>
+            <p className="text-slate-400 text-sm mb-6 max-w-lg">
+              AI-matched remote roles from companies that understand how the world works.
+            </p>
+
+            {/* Live counter */}
+            <div className="flex items-center gap-2 mb-6">
+              <span className="w-2 h-2 rounded-full bg-[#57C7E3] animate-pulse shrink-0" />
+              <span className="text-[13px] text-slate-300 font-medium">
+                {(total ?? allJobs.length).toLocaleString()} fresh matches today
               </span>
             </div>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-0.5">{t('title')}</h1>
-            <p className="text-sm text-slate-600 dark:text-slate-400">
-              {t('positionCount', { count: total ?? jobs.length })}
-              {query ? t('matchingQuery', { query }) : ''}
-            </p>
-          </div>
-          {/* Country quick-filters */}
-          <div className="flex flex-wrap gap-2 sm:justify-end">
-            {[
-              { flag: '🌍', label: 'Worldwide', value: '' },
-              { flag: '🇺🇸', label: 'USA', value: 'USA' },
-              { flag: '🇬🇧', label: 'UK', value: 'UK' },
-              { flag: '🇩🇪', label: 'DE', value: 'Germany' },
-              { flag: '🇫🇷', label: 'FR', value: 'France' },
-              { flag: '🇨🇦', label: 'CA', value: 'Canada' },
-            ].map(({ flag, label, value }) => (
+
+            {/* AI Copilot search bar */}
+            <div className="relative max-w-2xl">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#57C7E3] text-base select-none pointer-events-none">✦</span>
+              <input
+                type="text"
+                placeholder="Ask the AI Copilot: Find me a remote job in Germany..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && navigate({ q: query })}
+                className="w-full rounded-xl pl-10 pr-28 py-3.5 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#57C7E3]/50"
+                style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)' }}
+              />
+              {query && (
+                <button
+                  onClick={() => { setQuery(''); navigate({ q: '' }) }}
+                  className="absolute right-24 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-sm"
+                >
+                  ✕
+                </button>
+              )}
               <button
-                key={label}
-                onClick={() => { setCountry(value); navigate({ country: value }) }}
-                className={`flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg border transition-colors ${
-                  country === value
-                    ? 'bg-primary border-primary text-white'
-                    : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-primary/50 hover:text-primary dark:hover:text-blue-400 bg-white dark:bg-slate-800/50'
-                }`}
+                onClick={() => navigate({ q: query })}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors text-white"
+                style={{ background: '#57C7E3' }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = '#3ab5d1')}
+                onMouseLeave={(e) => (e.currentTarget.style.background = '#57C7E3')}
               >
-                <span>{flag}</span>
-                <span>{label}</span>
+                {t('search')}
               </button>
-            ))}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* ── Search + Filters ──────────────────────────────── */}
-      <div className="card mb-6">
-        <div className="flex flex-col sm:flex-row gap-3 mb-4">
-          <div className="relative flex-1">
-            <svg
-              className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <input
-              type="text"
-              placeholder={t('searchPlaceholder')}
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && navigate({ q: query })}
-              className="w-full bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-xl ps-9 pe-4 py-2.5
-                         text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500
-                         focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
-            />
-            {query && (
-              <button
-                onClick={() => { setQuery(''); navigate({ q: '' }) }}
-                className="absolute end-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
+        {/* ── Filter bar ──────────────────────────────── */}
+        <div className="bg-white rounded-xl border border-slate-200 px-5 py-4 mb-5">
+          {/* Row 1: Country chips + Sort */}
+          <div className="flex items-center gap-2 flex-wrap justify-between mb-3">
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {COUNTRY_CHIPS.map(({ flag, label, value }) => (
+                <button
+                  key={label}
+                  onClick={() => { setCountry(value); navigate({ country: value }) }}
+                  className={`inline-flex items-center gap-1.5 text-[13px] font-medium px-3 py-1.5 rounded-full border transition-colors ${
+                    country === value
+                      ? 'text-white border-[#57C7E3]'
+                      : 'border-slate-200 text-slate-600 hover:border-[#57C7E3]/50 hover:text-[#57C7E3] bg-transparent'
+                  }`}
+                  style={country === value ? { background: '#57C7E3' } : {}}
+                >
+                  <span>{flag}</span>
+                  <span>{label}</span>
+                </button>
+              ))}
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <span className="text-[12px] text-slate-400 whitespace-nowrap">Sort by</span>
+              <label htmlFor="job-sort" className="sr-only">{t('sortJobsBy')}</label>
+              <select
+                id="job-sort"
+                value={sort}
+                onChange={(e) => { const s = e.target.value as SortOption; setSort(s); navigate({ sort: s }) }}
+                className="bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-[13px] text-slate-700 focus:outline-none focus:border-[#57C7E3] cursor-pointer"
               >
-                ✕
-              </button>
-            )}
+                {SORT_IDS.map((id) => (
+                  <option key={id} value={id}>{SORT_LABELS[id]}</option>
+                ))}
+              </select>
+            </div>
           </div>
-          <button
-            onClick={() => navigate({ q: query })}
-            className="btn-primary text-sm px-5 py-2.5 shrink-0"
-          >
-            {t('search')}
-          </button>
-          <label htmlFor="job-sort" className="sr-only">{t('sortJobsBy')}</label>
-          <select
-            id="job-sort"
-            value={sort}
-            onChange={(e) => { const s = e.target.value as SortOption; setSort(s); navigate({ sort: s }) }}
-            className="bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5
-                       text-sm text-slate-700 dark:text-slate-300 focus:outline-none focus:border-primary shrink-0"
-          >
-            {SORT_IDS.map((id) => (
-              <option key={id} value={id}>{t('sortLabel', { label: sortLabel(id) })}</option>
-            ))}
-          </select>
-        </div>
 
-        <div className="flex flex-wrap gap-2">
-          <div className="flex gap-1.5 flex-wrap">
+          {/* Row 2: Advanced chips */}
+          <div className="flex flex-wrap gap-1.5">
             {WORK_TYPES.map((wt) => (
               <button
                 key={wt}
                 onClick={() => { setWorkType(wt); navigate({ workType: wt }) }}
-                className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${
+                className={`text-[12px] px-3 py-1 rounded-full border transition-colors ${
                   workType === wt
-                    ? 'bg-green-100 dark:bg-green-900/30 border-green-300 dark:border-green-800/50 text-green-700 dark:text-green-400'
-                    : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-slate-300'
+                    ? 'bg-slate-800 border-slate-800 text-white'
+                    : 'border-slate-200 text-slate-500 hover:border-slate-400 hover:text-slate-700'
                 }`}
               >
                 {workTypeLabel(wt)}
               </button>
             ))}
-          </div>
-          <div className="w-px bg-slate-200 dark:bg-slate-700 mx-1 hidden sm:block" />
-          <div className="flex gap-1.5 flex-wrap">
+            <span className="w-px bg-slate-200 mx-0.5 self-stretch hidden sm:block" />
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}
                 onClick={() => { setCategory(cat); navigate({ category: cat }) }}
-                className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${
+                className={`text-[12px] px-3 py-1 rounded-full border transition-colors ${
                   category === cat
-                    ? 'bg-primary border-primary text-white'
-                    : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-slate-300'
+                    ? 'bg-slate-800 border-slate-800 text-white'
+                    : 'border-slate-200 text-slate-500 hover:border-slate-400 hover:text-slate-700'
                 }`}
               >
                 {categoryLabel(cat)}
               </button>
             ))}
-          </div>
-          <div className="w-px bg-slate-200 dark:bg-slate-700 mx-1 hidden sm:block" />
-          <div className="flex gap-1.5 flex-wrap">
+            <span className="w-px bg-slate-200 mx-0.5 self-stretch hidden sm:block" />
             {JOB_TYPES.map((type) => (
               <button
                 key={type}
                 onClick={() => { setJobType(type); navigate({ type }) }}
-                className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${
+                className={`text-[12px] px-3 py-1 rounded-full border transition-colors ${
                   jobType === type
-                    ? 'bg-accent/10 dark:bg-accent/20 border-accent text-orange-700 dark:text-orange-400'
-                    : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-slate-300'
+                    ? 'bg-slate-800 border-slate-800 text-white'
+                    : 'border-slate-200 text-slate-500 hover:border-slate-400 hover:text-slate-700'
                 }`}
               >
                 {jobTypeLabel(type)}
               </button>
             ))}
+            <span className="w-px bg-slate-200 mx-0.5 self-stretch hidden sm:block" />
+            <button
+              onClick={() => { const next = !crossBorder; setCrossBorder(next); navigate({ crossBorder: next }) }}
+              aria-pressed={crossBorder}
+              className={`text-[12px] px-3 py-1 rounded-full border transition-colors ${
+                crossBorder
+                  ? 'bg-teal-600 border-teal-600 text-white'
+                  : 'border-slate-200 text-slate-500 hover:border-slate-400 hover:text-slate-700'
+              }`}
+            >
+              {t('crossBorderFilterLabel')}
+            </button>
+            <button
+              onClick={() => { const next = !trueRemote; setTrueRemote(next); navigate({ trueRemote: next }) }}
+              aria-pressed={trueRemote}
+              className={`text-[12px] px-3 py-1 rounded-full border transition-colors ${
+                trueRemote
+                  ? 'bg-green-600 border-green-600 text-white'
+                  : 'border-slate-200 text-slate-500 hover:border-slate-400 hover:text-slate-700'
+              }`}
+            >
+              True Remote
+            </button>
           </div>
-          <div className="w-px bg-slate-200 dark:bg-slate-700 mx-1 hidden sm:block" />
-          <button
-            onClick={() => { const next = !crossBorder; setCrossBorder(next); navigate({ crossBorder: next }) }}
-            aria-pressed={crossBorder}
-            className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${
-              crossBorder
-                ? 'bg-teal-100 dark:bg-teal-900/30 border-teal-300 dark:border-teal-800/50 text-teal-700 dark:text-teal-400'
-                : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-slate-300'
-            }`}
-          >
-            {t('crossBorderFilterLabel')}
-          </button>
-          <button
-            onClick={() => { const next = !trueRemote; setTrueRemote(next); navigate({ trueRemote: next }) }}
-            aria-pressed={trueRemote}
-            className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${
-              trueRemote
-                ? 'bg-green-100 dark:bg-green-900/30 border-green-300 dark:border-green-800/50 text-green-700 dark:text-green-400'
-                : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-slate-300'
-            }`}
-          >
-            True Remote
-          </button>
         </div>
-      </div>
 
-      {/* ── Job Cards ────────────────────────────────────── */}
-      {isPending ? (
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
-          {Array.from({ length: 6 }).map((_, i) => <JobCardSkeleton key={i} />)}
-        </div>
-      ) : allJobs.length === 0 ? (
-        <div className="text-center py-20 text-slate-600 dark:text-slate-400">
-          <div className="text-4xl mb-3">🔍</div>
-          <p className="font-medium text-slate-700 dark:text-slate-400">{t('noJobsFound')}</p>
-          <p className="text-sm mt-1">{t('tryDifferentKeywords')}</p>
-          <button onClick={clearAll} className="mt-4 btn-outline text-xs px-4 py-2">
-            {t('clearAllFilters')}
-          </button>
-        </div>
-      ) : (
-        <>
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
-            {allJobs.map((job) => (
-              <JobCard
-                key={job.id}
-                job={job}
-                isSaved={savedIds.has(job.id)}
-                onToggleSave={toggleSave}
-                alreadyApplied={appliedIds.has(job.id)}
-              />
-            ))}
-          </div>
-
-          {loadingMore && (
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 mt-3">
-              {Array.from({ length: 3 }).map((_, i) => <JobCardSkeleton key={i} />)}
-            </div>
-          )}
-
-          {/* Sentinel — IntersectionObserver triggers loadMore() when this
-              scrolls near the viewport. Invisible, not a UI element. */}
-          {hasMore && <div ref={sentinelRef} className="h-1" />}
-
-          {!hasMore && (
-            <p className="text-center text-sm text-slate-600 dark:text-slate-400 py-8">
-              {t('reachedEnd', { count: total ?? allJobs.length })}
+        {/* ── Section title ──────────────────────────── */}
+        {!isPending && allJobs.length > 0 && (
+          <div className="mb-5">
+            <h2 className="text-[20px] font-bold" style={{ color: '#10152A' }}>Top matches for you</h2>
+            <p className="text-[13px] text-slate-500 mt-0.5">
+              Ranked by skill fit, location flexibility, and verified hiring signals.
             </p>
-          )}
-        </>
-      )}
+          </div>
+        )}
+
+        {/* ── Job Cards ────────────────────────────────────── */}
+        {isPending ? (
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+            {Array.from({ length: 6 }).map((_, i) => <JobCardSkeleton key={i} />)}
+          </div>
+        ) : allJobs.length === 0 ? (
+          <div className="text-center py-20 text-slate-500">
+            <div className="text-4xl mb-3">🔍</div>
+            <p className="font-medium text-slate-700">{t('noJobsFound')}</p>
+            <p className="text-sm mt-1">{t('tryDifferentKeywords')}</p>
+            <button onClick={clearAll} className="mt-4 btn-outline text-xs px-4 py-2">
+              {t('clearAllFilters')}
+            </button>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+              {allJobs.map((job) => (
+                <JobCard
+                  key={job.id}
+                  job={job}
+                  isSaved={savedIds.has(job.id)}
+                  onToggleSave={toggleSave}
+                  alreadyApplied={appliedIds.has(job.id)}
+                />
+              ))}
+            </div>
+
+            {loadingMore && (
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-4">
+                {Array.from({ length: 3 }).map((_, i) => <JobCardSkeleton key={i} />)}
+              </div>
+            )}
+
+            {hasMore && <div ref={sentinelRef} className="h-1" />}
+
+            {!hasMore && (
+              <p className="text-center text-sm text-slate-500 py-8">
+                {t('reachedEnd', { count: total ?? allJobs.length })}
+              </p>
+            )}
+          </>
+        )}
+      </div>
     </div>
   )
 }
