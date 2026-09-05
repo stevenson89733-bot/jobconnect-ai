@@ -251,7 +251,7 @@ export default function AiApplyModal({
                 <div className="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center text-2xl">✓</div>
                 <div className="text-center">
                   <p className="font-bold text-lg text-emerald-700">Application submitted!</p>
-                  <p className="text-sm text-slate-500 mt-1">We've sent your application to {company}.</p>
+                  <p className="text-sm text-slate-500 mt-1">Application sent to {company}.</p>
                 </div>
                 <button
                   type="button"
