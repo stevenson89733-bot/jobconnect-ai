@@ -39,9 +39,12 @@ export default function AiApplyModal({
   const [open, setOpen] = useState(false)
   const [planState, setPlanState] = useState<PlanState>('loading')
 
-  // Profile (Pro)
-  const [cvStrengths, setCvStrengths] = useState('')
+  // Profile fields (Pro/Admin — stored individually so adapt-cv gets the right shape)
   const [profileTitle, setProfileTitle] = useState('')
+  const [profileBio, setProfileBio] = useState('')
+  const [profileExperience, setProfileExperience] = useState('')
+  const [profileSkills, setProfileSkills] = useState('')
+  const [profileEducation, setProfileEducation] = useState('')
   const [resumeUrl, setResumeUrl] = useState<string | null>(null)
 
   // Pro pipeline
@@ -99,11 +102,14 @@ export default function AiApplyModal({
         .select('is_premium, is_admin, title, bio, experience, skills, education, resume_url')
         .eq('user_id', user.id)
         .single()
-      setPlanState((data?.is_premium || data?.is_admin) ? 'pro' : 'free')
+      const isPro = data?.is_admin === true || data?.is_premium === true
+      setPlanState(isPro ? 'pro' : 'free')
       if (data?.resume_url) setResumeUrl(data.resume_url)
       setProfileTitle(data?.title ?? '')
-      const parts = [data?.bio, data?.experience, data?.skills, data?.education].filter(Boolean)
-      setCvStrengths(parts.join('\n\n').slice(0, 2000))
+      setProfileBio(data?.bio ?? '')
+      setProfileExperience(data?.experience ?? '')
+      setProfileSkills(data?.skills ?? '')
+      setProfileEducation(data?.education ?? '')
     }
     checkPlan()
   }, [])
@@ -121,13 +127,20 @@ export default function AiApplyModal({
     setDraftError('')
     setAdaptedCv('')
     setMessage('')
+    const profileStrengths = [profileBio, profileExperience, profileSkills, profileEducation]
+      .filter(Boolean).join('\n\n').slice(0, 2000)
     try {
       setPipelineStep('adapting')
       const adaptRes = await fetch('/api/ai/adapt-cv', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          candidateProfile: { title: profileTitle, bio: cvStrengths, experience: cvStrengths, skills: cvStrengths },
+          candidateProfile: {
+            title: profileTitle,
+            bio: profileBio,
+            experience: profileExperience,
+            skills: profileSkills,
+          },
           job: { title: jobTitle, company, description: description?.slice(0, 2000) ?? '', tags },
         }),
       })
@@ -143,7 +156,7 @@ export default function AiApplyModal({
           targetRole: jobTitle,
           company,
           jobDescription: description?.slice(0, 3000) ?? (tags?.join(', ') ?? ''),
-          strengths: adapted || cvStrengths,
+          strengths: adapted || profileStrengths,
           style: 'Formal',
         }),
       })

@@ -32,9 +32,10 @@ export default function BlogPage({
   searchParams?: { category?: string }
 }) {
   const activeCategory = searchParams?.category ?? ''
-  const filtered = activeCategory
-    ? BLOG_POSTS.filter((p) => p.category === activeCategory)
-    : BLOG_POSTS
+  const todayStr = new Date().toISOString().slice(0, 10)
+  const filtered = BLOG_POSTS
+    .filter((p) => p.date <= todayStr)
+    .filter((p) => !activeCategory || p.category === activeCategory)
 
   const sorted = [...filtered].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   const [featured, ...rest] = sorted
