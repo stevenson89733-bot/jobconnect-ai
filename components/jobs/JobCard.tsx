@@ -201,15 +201,24 @@ export default function JobCard({
       {/* Row 5 — Apply · Save · Time */}
       <div className="flex items-center gap-2 pt-1">
         {job.apply_url ? (
-          <a
-            href={`/api/redirect?job=${encodeURIComponent(job.id)}&source=${encodeURIComponent(job.source ?? 'direct')}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 bg-[#57C7E3] text-white text-[13px] font-semibold px-4 py-2 rounded-lg hover:bg-[#3ab5d1] transition-colors"
-          >
-            Apply now
-            <ExternalLink className="w-3.5 h-3.5" strokeWidth={2} />
-          </a>
+          <>
+            <a
+              href={`/api/redirect?job=${encodeURIComponent(job.id)}&source=${encodeURIComponent(job.source ?? 'direct')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 bg-[#57C7E3] text-white text-[13px] font-semibold px-4 py-2 rounded-lg hover:bg-[#3ab5d1] transition-colors"
+            >
+              Apply now
+              <ExternalLink className="w-3.5 h-3.5" strokeWidth={2} />
+            </a>
+            <AiApplyModal
+              jobId={job.id}
+              jobTitle={job.title}
+              company={job.company_name}
+              description={job.description}
+              alreadyApplied={alreadyApplied}
+            />
+          </>
         ) : (
           <AiApplyModal
             jobId={job.id}

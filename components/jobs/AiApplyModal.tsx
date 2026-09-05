@@ -1,7 +1,10 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import { createClient } from '@/lib/supabase/client'
+
+type PlanState = 'loading' | 'anonymous' | 'free' | 'pro'
 
 export default function AiApplyModal({
   jobId,
@@ -17,6 +20,7 @@ export default function AiApplyModal({
   alreadyApplied?: boolean
 }) {
   const [open, setOpen] = useState(false)
+  const [planState, setPlanState] = useState<PlanState>('loading')
   const [message, setMessage] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [drafted, setDrafted] = useState(false)
@@ -28,6 +32,21 @@ export default function AiApplyModal({
   const t = useTranslations('jobs')
   const tc = useTranslations('common')
   const te = useTranslations('errors')
+
+  useEffect(() => {
+    async function checkPlan() {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) { setPlanState('anonymous'); return }
+      const { data } = await supabase
+        .from('profiles')
+        .select('is_premium')
+        .eq('id', user.id)
+        .single()
+      setPlanState(data?.is_premium ? 'pro' : 'free')
+    }
+    checkPlan()
+  }, [])
 
   async function draftWithAi() {
     setDrafting(true)
@@ -116,12 +135,12 @@ export default function AiApplyModal({
       <button
         type="button"
         onClick={handleOpen}
-        className="inline-flex items-center gap-1.5 text-white text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors"
-        style={{ background: '#57C7E3' }}
-        onMouseEnter={(e) => (e.currentTarget.style.background = '#3ab5d1')}
-        onMouseLeave={(e) => (e.currentTarget.style.background = '#57C7E3')}
+        className="inline-flex items-center gap-1.5 text-[13px] font-semibold px-4 py-2 rounded-lg border transition-colors"
+        style={{ borderColor: '#57C7E3', color: '#57C7E3', background: 'rgba(87,199,227,0.07)' }}
+        onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(87,199,227,0.15)' }}
+        onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(87,199,227,0.07)' }}
       >
-        Apply now
+        ✦ Apply with AI
       </button>
 
       {open && (
@@ -146,85 +165,145 @@ export default function AiApplyModal({
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              {/* AI Draft button */}
-              <div>
-                <button
-                  type="button"
-                  onClick={draftWithAi}
-                  disabled={drafting}
-                  className="w-full inline-flex items-center justify-center gap-2 text-[13px] font-semibold rounded-lg py-2.5 border transition-colors disabled:opacity-50"
-                  style={{
-                    background: drafted ? 'rgba(87,199,227,0.08)' : 'rgba(87,199,227,0.1)',
-                    borderColor: 'rgba(87,199,227,0.4)',
-                    color: '#57C7E3',
-                  }}
+            {/* Body — gated by plan */}
+            {planState === 'loading' && (
+              <div className="flex items-center justify-center p-12">
+                <svg className="animate-spin w-6 h-6 text-[#57C7E3]" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                </svg>
+              </div>
+            )}
+
+            {planState === 'anonymous' && (
+              <div className="p-8 text-center space-y-4">
+                <div className="text-4xl">✦</div>
+                <p className="font-semibold text-slate-800 dark:text-white text-base">Sign in to apply with AI</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  Create an account or sign in to draft a tailored cover letter instantly.
+                </p>
+                <a
+                  href="/login?redirectTo=/jobs"
+                  className="inline-flex items-center justify-center w-full py-2.5 text-sm font-semibold text-white rounded-lg transition-colors"
+                  style={{ background: '#57C7E3' }}
                 >
-                  {drafting ? (
-                    <>
-                      <svg className="animate-spin w-3.5 h-3.5" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-                      </svg>
-                      Drafting with AI…
-                    </>
-                  ) : drafted ? (
-                    '✦ Redraft with AI'
-                  ) : (
-                    '✦ Draft with AI'
-                  )}
-                </button>
-                {draftError && (
-                  <p className="text-red-500 text-xs mt-1.5">{draftError}</p>
-                )}
-              </div>
-
-              {/* Message textarea */}
-              <div>
-                <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">
-                  {t('messageToHiringTeam')}{' '}
-                  <span className="text-slate-400 dark:text-slate-500">{t('optional')}</span>
-                </label>
-                <textarea
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  rows={7}
-                  placeholder={drafted ? '' : t('messagePlaceholder')}
-                  className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#57C7E3] resize-none"
-                />
-                {drafted && (
-                  <p className="text-[11px] text-slate-400 mt-1">AI draft — edit freely before sending.</p>
-                )}
-              </div>
-
-              {submitError && <p className="text-red-600 dark:text-red-400 text-sm">{submitError}</p>}
-
-              <div className="flex gap-3 pt-1">
+                  Sign in
+                </a>
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="flex-1 btn-outline py-2.5 text-sm"
+                  className="w-full text-sm text-slate-500 hover:text-slate-700 transition-colors"
                 >
                   {tc('cancel')}
                 </button>
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="flex-1 py-2.5 text-sm font-semibold text-white rounded-lg transition-colors disabled:opacity-50"
+              </div>
+            )}
+
+            {planState === 'free' && (
+              <div className="p-8 text-center space-y-4">
+                <div className="text-4xl">✦</div>
+                <p className="font-semibold text-slate-800 dark:text-white text-base">Apply with AI is a Pro feature</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  Upgrade to Pro to draft AI-powered cover letters and track your applications.
+                </p>
+                <a
+                  href="/pricing"
+                  className="inline-flex items-center justify-center w-full py-2.5 text-sm font-semibold text-white rounded-lg transition-colors"
                   style={{ background: '#57C7E3' }}
                 >
-                  {submitting ? (
-                    <span className="flex items-center justify-center gap-2">
-                      <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-                      </svg>
-                      {t('submitting')}
-                    </span>
-                  ) : t('submitApplication')}
+                  Upgrade to Pro →
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  className="w-full text-sm text-slate-500 hover:text-slate-700 transition-colors"
+                >
+                  {tc('cancel')}
                 </button>
               </div>
-            </form>
+            )}
+
+            {planState === 'pro' && (
+              <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                {/* AI Draft button */}
+                <div>
+                  <button
+                    type="button"
+                    onClick={draftWithAi}
+                    disabled={drafting}
+                    className="w-full inline-flex items-center justify-center gap-2 text-[13px] font-semibold rounded-lg py-2.5 border transition-colors disabled:opacity-50"
+                    style={{
+                      background: drafted ? 'rgba(87,199,227,0.08)' : 'rgba(87,199,227,0.1)',
+                      borderColor: 'rgba(87,199,227,0.4)',
+                      color: '#57C7E3',
+                    }}
+                  >
+                    {drafting ? (
+                      <>
+                        <svg className="animate-spin w-3.5 h-3.5" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                        </svg>
+                        Drafting with AI…
+                      </>
+                    ) : drafted ? (
+                      '✦ Redraft with AI'
+                    ) : (
+                      '✦ Draft with AI'
+                    )}
+                  </button>
+                  {draftError && (
+                    <p className="text-red-500 text-xs mt-1.5">{draftError}</p>
+                  )}
+                </div>
+
+                {/* Message textarea */}
+                <div>
+                  <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">
+                    {t('messageToHiringTeam')}{' '}
+                    <span className="text-slate-400 dark:text-slate-500">{t('optional')}</span>
+                  </label>
+                  <textarea
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    rows={7}
+                    placeholder={drafted ? '' : t('messagePlaceholder')}
+                    className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#57C7E3] resize-none"
+                  />
+                  {drafted && (
+                    <p className="text-[11px] text-slate-400 mt-1">AI draft — edit freely before sending.</p>
+                  )}
+                </div>
+
+                {submitError && <p className="text-red-600 dark:text-red-400 text-sm">{submitError}</p>}
+
+                <div className="flex gap-3 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => setOpen(false)}
+                    className="flex-1 btn-outline py-2.5 text-sm"
+                  >
+                    {tc('cancel')}
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="flex-1 py-2.5 text-sm font-semibold text-white rounded-lg transition-colors disabled:opacity-50"
+                    style={{ background: '#57C7E3' }}
+                  >
+                    {submitting ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                        </svg>
+                        {t('submitting')}
+                      </span>
+                    ) : t('submitApplication')}
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       )}
