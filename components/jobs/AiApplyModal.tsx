@@ -165,76 +165,19 @@ export default function AiApplyModal({
               </button>
             </div>
 
-            {/* Body — gated by plan */}
-            {planState === 'loading' && (
-              <div className="flex items-center justify-center p-12">
-                <svg className="animate-spin w-6 h-6 text-[#57C7E3]" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-                </svg>
-              </div>
-            )}
-
-            {planState === 'anonymous' && (
-              <div className="p-8 text-center space-y-4">
-                <div className="text-4xl">✦</div>
-                <p className="font-semibold text-slate-800 dark:text-white text-base">Sign in to apply with AI</p>
-                <p className="text-sm text-slate-500 dark:text-slate-400">
-                  Create an account or sign in to draft a tailored cover letter instantly.
-                </p>
-                <a
-                  href="/login?redirectTo=/jobs"
-                  className="inline-flex items-center justify-center w-full py-2.5 text-sm font-semibold text-white rounded-lg transition-colors"
-                  style={{ background: '#57C7E3' }}
-                >
-                  Sign in
-                </a>
-                <button
-                  type="button"
-                  onClick={() => setOpen(false)}
-                  className="w-full text-sm text-slate-500 hover:text-slate-700 transition-colors"
-                >
-                  {tc('cancel')}
-                </button>
-              </div>
-            )}
-
-            {planState === 'free' && (
-              <div className="p-8 text-center space-y-4">
-                <div className="text-4xl">✦</div>
-                <p className="font-semibold text-slate-800 dark:text-white text-base">Apply with AI is a Pro feature</p>
-                <p className="text-sm text-slate-500 dark:text-slate-400">
-                  Upgrade to Pro to draft AI-powered cover letters and track your applications.
-                </p>
-                <a
-                  href="/pricing"
-                  className="inline-flex items-center justify-center w-full py-2.5 text-sm font-semibold text-white rounded-lg transition-colors"
-                  style={{ background: '#57C7E3' }}
-                >
-                  Upgrade to Pro →
-                </a>
-                <button
-                  type="button"
-                  onClick={() => setOpen(false)}
-                  className="w-full text-sm text-slate-500 hover:text-slate-700 transition-colors"
-                >
-                  {tc('cancel')}
-                </button>
-              </div>
-            )}
-
-            {planState === 'pro' && (
-              <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                {/* Job description */}
-                <div>
-                  <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide mb-1">Job description</p>
-                  <div className="max-h-48 overflow-y-auto rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-3 py-2 text-[12px] text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-line">
-                    {description?.trim() || <span className="text-slate-400 italic">No description available.</span>}
-                  </div>
+            {/* Body — open to all; only Draft button is Pro-gated */}
+            <form onSubmit={handleSubmit} className="p-6 space-y-4">
+              {/* Job description */}
+              <div>
+                <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide mb-1">Job description</p>
+                <div className="max-h-48 overflow-y-auto rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-3 py-2 text-[12px] text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-line">
+                  {description?.trim() || <span className="text-slate-400 italic">No description available.</span>}
                 </div>
+              </div>
 
-                {/* AI Draft button */}
-                <div>
+              {/* AI Draft button — Pro/admin only */}
+              <div>
+                {planState === 'pro' ? (
                   <button
                     type="button"
                     onClick={draftWithAi}
@@ -260,58 +203,71 @@ export default function AiApplyModal({
                       '✦ Draft with AI'
                     )}
                   </button>
-                  {draftError && (
-                    <p className="text-red-500 text-xs mt-1.5">{draftError}</p>
-                  )}
-                </div>
-
-                {/* Message textarea */}
-                <div>
-                  <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">
-                    {t('messageToHiringTeam')}{' '}
-                    <span className="text-slate-400 dark:text-slate-500">{t('optional')}</span>
-                  </label>
-                  <textarea
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    rows={7}
-                    placeholder={drafted ? '' : t('messagePlaceholder')}
-                    className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#57C7E3] resize-none"
-                  />
-                  {drafted && (
-                    <p className="text-[11px] text-slate-400 mt-1">AI draft — edit freely before sending.</p>
-                  )}
-                </div>
-
-                {submitError && <p className="text-red-600 dark:text-red-400 text-sm">{submitError}</p>}
-
-                <div className="flex gap-3 pt-1">
-                  <button
-                    type="button"
-                    onClick={() => setOpen(false)}
-                    className="flex-1 btn-outline py-2.5 text-sm"
+                ) : (
+                  <a
+                    href="/pricing"
+                    title="Upgrade to Pro to unlock AI drafts"
+                    className="w-full inline-flex items-center justify-center gap-2 text-[13px] font-semibold rounded-lg py-2.5 border cursor-not-allowed opacity-50 select-none"
+                    style={{
+                      borderColor: 'rgba(148,163,184,0.4)',
+                      color: '#94a3b8',
+                      background: 'rgba(148,163,184,0.06)',
+                    }}
                   >
-                    {tc('cancel')}
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    className="flex-1 py-2.5 text-sm font-semibold text-white rounded-lg transition-colors disabled:opacity-50"
-                    style={{ background: '#57C7E3' }}
-                  >
-                    {submitting ? (
-                      <span className="flex items-center justify-center gap-2">
-                        <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-                        </svg>
-                        {t('submitting')}
-                      </span>
-                    ) : t('submitApplication')}
-                  </button>
-                </div>
-              </form>
-            )}
+                    ✦ Draft with AI — Pro feature
+                  </a>
+                )}
+                {draftError && (
+                  <p className="text-red-500 text-xs mt-1.5">{draftError}</p>
+                )}
+              </div>
+
+              {/* Message textarea */}
+              <div>
+                <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">
+                  {t('messageToHiringTeam')}{' '}
+                  <span className="text-slate-400 dark:text-slate-500">{t('optional')}</span>
+                </label>
+                <textarea
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  rows={7}
+                  placeholder={drafted ? '' : t('messagePlaceholder')}
+                  className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#57C7E3] resize-none"
+                />
+                {drafted && (
+                  <p className="text-[11px] text-slate-400 mt-1">AI draft — edit freely before sending.</p>
+                )}
+              </div>
+
+              {submitError && <p className="text-red-600 dark:text-red-400 text-sm">{submitError}</p>}
+
+              <div className="flex gap-3 pt-1">
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  className="flex-1 btn-outline py-2.5 text-sm"
+                >
+                  {tc('cancel')}
+                </button>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="flex-1 py-2.5 text-sm font-semibold text-white rounded-lg transition-colors disabled:opacity-50"
+                  style={{ background: '#57C7E3' }}
+                >
+                  {submitting ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                      </svg>
+                      {t('submitting')}
+                    </span>
+                  ) : t('submitApplication')}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
