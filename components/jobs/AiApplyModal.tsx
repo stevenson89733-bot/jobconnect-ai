@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import { ExternalLink } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 
 type PlanState = 'loading' | 'anonymous' | 'free' | 'pro'
@@ -11,17 +12,22 @@ export default function AiApplyModal({
   jobTitle,
   company,
   description,
+  applyUrl,
   alreadyApplied = false,
 }: {
   jobId: string
   jobTitle: string
   company: string
   description?: string | null
+  applyUrl?: string | null
   alreadyApplied?: boolean
 }) {
   const [open, setOpen] = useState(false)
   const [planState, setPlanState] = useState<PlanState>('loading')
   const [strengths, setStrengths] = useState('')
+  const [resumeUrl, setResumeUrl] = useState<string | null>(null)
+  const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState('')
   const [message, setMessage] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [drafted, setDrafted] = useState(false)
@@ -30,12 +36,13 @@ export default function AiApplyModal({
   const [submitError, setSubmitError] = useState('')
   const [applied, setApplied] = useState(alreadyApplied)
   const autoDraftedRef = useRef(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
   const t = useTranslations('jobs')
   const tc = useTranslations('common')
   const te = useTranslations('errors')
 
-  // On mount: resolve plan + fetch profile fields for strengths
+  // On mount: resolve plan + fetch profile fields
   useEffect(() => {
     async function checkPlan() {
       const supabase = createClient()
@@ -43,17 +50,24 @@ export default function AiApplyModal({
       if (!user) { setPlanState('anonymous'); return }
       const { data } = await supabase
         .from('profiles')
-        .select('is_premium, is_admin, experience, skills, education, bio')
+        .select('is_premium, is_admin, title, bio, experience, skills, education, resume_url')
         .eq('user_id', user.id)
         .single()
       setPlanState((data?.is_premium || data?.is_admin) ? 'pro' : 'free')
-      const parts = [data?.bio, data?.experience, data?.skills, data?.education].filter(Boolean)
+      if (data?.resume_url) setResumeUrl(data.resume_url)
+      const parts = [
+        data?.title ? `Headline: ${data.title}` : null,
+        data?.bio,
+        data?.experience,
+        data?.skills,
+        data?.education,
+      ].filter(Boolean)
       setStrengths(parts.join('\n\n').slice(0, 2000))
     }
     checkPlan()
   }, [])
 
-  // Auto-draft when modal opens and user is confirmed Pro — once per open
+  // Auto-draft when modal opens and user is Pro — once per open
   useEffect(() => {
     if (open && planState === 'pro' && !autoDraftedRef.current) {
       autoDraftedRef.current = true
@@ -90,6 +104,32 @@ export default function AiApplyModal({
       setDraftError(err instanceof Error ? err.message : 'AI draft failed')
     } finally {
       setDrafting(false)
+    }
+  }
+
+  async function handleCvUpload(file: File) {
+    setUploading(true)
+    setUploadError('')
+    try {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) throw new Error('Not signed in')
+      const ext = file.name.split('.').pop()?.toLowerCase() || 'pdf'
+      const path = `${user.id}/${crypto.randomUUID()}.${ext}`
+      const { error: upErr } = await supabase.storage.from('resumes').upload(path, file, {
+        cacheControl: '3600',
+        upsert: false,
+      })
+      if (upErr) throw new Error(upErr.message)
+      const { data: urlData } = supabase.storage.from('resumes').getPublicUrl(path)
+      const url = urlData.publicUrl
+      setResumeUrl(url)
+      // Best-effort save to profile
+      await supabase.from('profiles').update({ resume_url: url }).eq('user_id', user.id)
+    } catch (err) {
+      setUploadError(err instanceof Error ? err.message : 'Upload failed')
+    } finally {
+      setUploading(false)
     }
   }
 
@@ -132,6 +172,7 @@ export default function AiApplyModal({
     setDrafted(false)
     setDraftError('')
     setSubmitError('')
+    setUploadError('')
     autoDraftedRef.current = false
     setOpen(true)
   }
@@ -162,9 +203,9 @@ export default function AiApplyModal({
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
           onClick={(e) => { if (e.target === e.currentTarget) setOpen(false) }}
         >
-          <div className="bg-white dark:bg-card border border-slate-200 dark:border-slate-700 rounded-2xl w-full max-w-md shadow-2xl">
+          <div className="bg-white dark:bg-card border border-slate-200 dark:border-slate-700 rounded-2xl w-full max-w-md shadow-2xl max-h-[90vh] overflow-y-auto">
             {/* Header */}
-            <div className="flex items-start justify-between p-6 pb-4 border-b border-slate-200 dark:border-slate-800">
+            <div className="flex items-start justify-between p-6 pb-4 border-b border-slate-200 dark:border-slate-800 sticky top-0 bg-white dark:bg-card z-10">
               <div>
                 <h2 className="text-slate-900 dark:text-white font-bold text-lg">{t('applyForRole')}</h2>
                 <p className="text-slate-600 dark:text-slate-400 text-sm mt-0.5">
@@ -173,25 +214,78 @@ export default function AiApplyModal({
               </div>
               <button
                 onClick={() => setOpen(false)}
-                className="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors text-xl leading-none ms-4"
+                className="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors text-xl leading-none ms-4 shrink-0"
               >
                 ✕
               </button>
             </div>
 
-            {/* Body */}
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               {/* Job description */}
               <div>
                 <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide mb-1">Job description</p>
-                <div className="max-h-48 overflow-y-auto rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-3 py-2 text-[12px] text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-line">
+                <div className="max-h-32 overflow-y-auto rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-3 py-2 text-[12px] text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-line">
                   {description?.trim() || <span className="text-slate-400 italic">No description available.</span>}
                 </div>
               </div>
 
-              {/* Textarea area — spinner while auto-drafting for Pro, empty for free */}
+              {/* CV section */}
+              <div>
+                <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide mb-1">Your CV</p>
+                {resumeUrl ? (
+                  <div className="flex items-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-3 py-2">
+                    <a
+                      href={resumeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1 text-[13px] font-semibold text-[#57C7E3] hover:underline truncate"
+                    >
+                      View CV <ExternalLink className="w-3 h-3 shrink-0" />
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={uploading}
+                      className="ml-auto text-[12px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 shrink-0 transition-colors disabled:opacity-50"
+                    >
+                      {uploading ? 'Uploading…' : 'Replace'}
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={uploading}
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-lg border border-dashed border-slate-300 dark:border-slate-600 py-2.5 text-[13px] text-slate-500 dark:text-slate-400 hover:border-[#57C7E3] hover:text-[#57C7E3] transition-colors disabled:opacity-50"
+                  >
+                    {uploading ? (
+                      <>
+                        <svg className="animate-spin w-3.5 h-3.5" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                        </svg>
+                        Uploading…
+                      </>
+                    ) : '↑ Upload CV (PDF · optional)'}
+                  </button>
+                )}
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".pdf,.doc,.docx"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) handleCvUpload(file)
+                    e.target.value = ''
+                  }}
+                />
+                {uploadError && <p className="text-red-500 text-xs mt-1">{uploadError}</p>}
+              </div>
+
+              {/* Textarea / spinner */}
               {drafting ? (
-                <div className="flex flex-col items-center justify-center gap-3 py-8 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
+                <div className="flex flex-col items-center justify-center gap-3 py-10 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
                   <svg className="animate-spin w-6 h-6 text-[#57C7E3]" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
@@ -217,7 +311,7 @@ export default function AiApplyModal({
                 </div>
               )}
 
-              {/* Redraft button (Pro) or upgrade prompt (free/anonymous) */}
+              {/* Draft button — Pro only */}
               {!drafting && (
                 <div>
                   {planState === 'pro' ? (
@@ -237,7 +331,7 @@ export default function AiApplyModal({
                     <a
                       href="/pricing"
                       title="Upgrade to Pro to unlock AI drafts"
-                      className="w-full inline-flex items-center justify-center gap-2 text-[13px] font-semibold rounded-lg py-2.5 border opacity-50 select-none"
+                      className="w-full inline-flex items-center justify-center gap-2 text-[13px] font-semibold rounded-lg py-2.5 border opacity-50"
                       style={{
                         borderColor: 'rgba(148,163,184,0.4)',
                         color: '#94a3b8',
@@ -247,14 +341,13 @@ export default function AiApplyModal({
                       ✦ Draft with AI — Upgrade to Pro
                     </a>
                   )}
-                  {draftError && (
-                    <p className="text-red-500 text-xs mt-1.5">{draftError}</p>
-                  )}
+                  {draftError && <p className="text-red-500 text-xs mt-1.5">{draftError}</p>}
                 </div>
               )}
 
               {submitError && <p className="text-red-600 dark:text-red-400 text-sm">{submitError}</p>}
 
+              {/* Actions */}
               <div className="flex gap-3 pt-1">
                 <button
                   type="button"
@@ -280,6 +373,19 @@ export default function AiApplyModal({
                   ) : t('submitApplication')}
                 </button>
               </div>
+
+              {/* Apply on company website */}
+              {applyUrl && (
+                <a
+                  href={applyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-1.5 w-full text-[13px] text-slate-500 dark:text-slate-400 hover:text-[#57C7E3] transition-colors pt-1"
+                >
+                  Apply on company website
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              )}
             </form>
           </div>
         </div>

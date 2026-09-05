@@ -216,6 +216,7 @@ export default function JobCard({
               jobTitle={job.title}
               company={job.company_name}
               description={job.description}
+              applyUrl={job.apply_url}
               alreadyApplied={alreadyApplied}
             />
           </>
