@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { useRouter } from 'next/navigation'
 import { ExternalLink } from 'lucide-react'
+import { createClient } from '@/lib/supabase/client'
 
 type CoverLetterMode = 'write' | 'upload'
 
@@ -84,16 +85,31 @@ export default function AiApplyModal({
   useEffect(() => {
     async function loadProfile() {
       try {
-        const res = await fetch('/api/candidate/profile')
-        if (!res.ok) { setProfileLoaded(true); return }
-        const { is_admin, plan, resume_text, skills, experience, headline, bio, resume_url: ru } = await res.json()
-        const pro = is_admin === true || plan === 'pro' || plan === 'premium'
-        console.log('[AiApplyModal] isPro:', pro, 'is_admin:', is_admin, 'plan:', plan)
+        const supabase = createClient()
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) { setProfileLoaded(true); return }
+
+        const { data: profile, error } = await supabase
+          .from('profiles')
+          .select('is_admin, is_premium, title, bio, experience, skills, resume_url')
+          .eq('user_id', user.id)
+          .single()
+
+        console.log('PROFILE DEBUG:', JSON.stringify(profile), 'error:', error?.message)
+
+        const pro = profile?.is_admin === true || profile?.is_premium === true
+        console.log('[AiApplyModal] isPro:', pro, 'is_admin:', profile?.is_admin, 'is_premium:', profile?.is_premium)
         setIsPro(pro)
-        setResumeUrl(ru ?? null)
-        profileRef.current = { resume_text, skills, experience, headline, bio }
-      } catch {
-        // anonymous or network error — default free flow
+        setResumeUrl(profile?.resume_url ?? null)
+        profileRef.current = {
+          resume_text: null,
+          skills: profile?.skills ?? null,
+          experience: profile?.experience ?? null,
+          headline: profile?.title ?? null,
+          bio: profile?.bio ?? null,
+        }
+      } catch (err) {
+        console.error('[AiApplyModal] loadProfile error:', err)
       } finally {
         setProfileLoaded(true)
       }
