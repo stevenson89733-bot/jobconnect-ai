@@ -40,10 +40,10 @@ export default function AiApplyModal({
       if (!user) { setPlanState('anonymous'); return }
       const { data } = await supabase
         .from('profiles')
-        .select('is_premium')
+        .select('is_premium, is_admin')
         .eq('id', user.id)
         .single()
-      setPlanState(data?.is_premium ? 'pro' : 'free')
+      setPlanState((data?.is_premium || data?.is_admin) ? 'pro' : 'free')
     }
     checkPlan()
   }, [])
@@ -225,6 +225,14 @@ export default function AiApplyModal({
 
             {planState === 'pro' && (
               <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                {/* Job description */}
+                <div>
+                  <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide mb-1">Job description</p>
+                  <div className="max-h-48 overflow-y-auto rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-3 py-2 text-[12px] text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-line">
+                    {description?.trim() || <span className="text-slate-400 italic">No description available.</span>}
+                  </div>
+                </div>
+
                 {/* AI Draft button */}
                 <div>
                   <button
