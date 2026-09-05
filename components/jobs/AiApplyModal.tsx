@@ -88,6 +88,7 @@ export default function AiApplyModal({
         if (!res.ok) { setProfileLoaded(true); return }
         const { is_admin, plan, resume_text, skills, experience, headline, bio, resume_url: ru } = await res.json()
         const pro = is_admin === true || plan === 'pro' || plan === 'premium'
+        console.log('[AiApplyModal] isPro:', pro, 'is_admin:', is_admin, 'plan:', plan)
         setIsPro(pro)
         setResumeUrl(ru ?? null)
         profileRef.current = { resume_text, skills, experience, headline, bio }
