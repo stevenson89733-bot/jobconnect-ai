@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Bookmark, ExternalLink } from 'lucide-react'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
-import ApplyModal from '@/components/ApplyModal'
 import AiApplyModal from '@/components/jobs/AiApplyModal'
 import { companyInitials, clearbitLogoUrl } from '@/lib/companyDisplay'
 import { CATEGORY_KEY, JOB_TYPE_KEY } from '@/lib/i18n/jobLabels'
@@ -63,7 +62,6 @@ export default function JobCard({
   alreadyApplied: boolean
 }) {
   const [signalsOpen, setSignalsOpen] = useState(false)
-  const [aiApplyOpen, setAiApplyOpen] = useState(false)
   const t = useTranslations('jobs')
 
   const flag = getFlag(job.location)
@@ -213,25 +211,12 @@ export default function JobCard({
             <ExternalLink className="w-3.5 h-3.5" strokeWidth={2} />
           </a>
         ) : (
-          <ApplyModal
+          <AiApplyModal
             jobId={job.id}
             jobTitle={job.title}
             company={job.company_name}
+            description={job.description}
             alreadyApplied={alreadyApplied}
-          />
-        )}
-                <button
-          type="button"
-          onClick={() => setAiApplyOpen(true)}
-          className="inline-flex items-center gap-1.5 border border-[#57C7E3] text-[#57C7E3] text-[13px] font-semibold px-4 py-2 rounded-lg hover:bg-[#57C7E3]/10 transition-colors"
-        >
-          ✦ Apply with AI
-        </button>
-
-        {aiApplyOpen && (
-          <AiApplyModal
-            job={job}
-            onClose={() => setAiApplyOpen(false)}
           />
         )}
 
