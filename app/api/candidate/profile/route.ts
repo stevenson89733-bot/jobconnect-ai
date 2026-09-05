@@ -18,16 +18,20 @@ export async function GET() {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    console.log('[/api/candidate/profile] user:', user.id, 'is_admin:', data?.is_admin, 'is_premium:', data?.is_premium)
+    // Explicit boolean coercion — never trust DB nulls to be falsy in JS ternary
+    const isAdmin   = data?.is_admin   === true
+    const isPremium = data?.is_premium === true
+
+    console.log('[/api/candidate/profile] user:', user.id, 'is_admin:', isAdmin, 'is_premium:', isPremium)
 
     return NextResponse.json({
-      is_admin:    data?.is_admin    ?? false,
-      plan:        data?.is_admin || data?.is_premium ? 'pro' : 'free',
-      full_name:   data?.full_name   ?? null,
-      headline:    data?.title       ?? null,
-      bio:         data?.bio         ?? null,
-      experience:  data?.experience  ?? null,
-      skills:      data?.skills      ?? null,
+      is_admin:    isAdmin,
+      plan:        isAdmin || isPremium ? 'pro' : 'free',
+      full_name:   data?.full_name  ?? null,
+      headline:    data?.title      ?? null,
+      bio:         data?.bio        ?? null,
+      experience:  data?.experience ?? null,
+      skills:      data?.skills     ?? null,
       resume_text: null,
       resume_url:  null,
     })

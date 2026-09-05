@@ -91,18 +91,24 @@ export default function AiApplyModal({
     async function init() {
       try {
         const res = await fetch('/api/candidate/profile')
+        // Any HTTP error (401, 500, network…) → stay free, never Pro
         if (!res.ok) { setProfileLoaded(true); return }
-        const data = await res.json()
 
-        const pro = data.is_admin === true || data.plan === 'pro' || data.plan === 'premium'
-        console.log('[AiApplyModal] isPro:', pro, 'is_admin:', data.is_admin, 'plan:', data.plan)
+        let data: Record<string, unknown>
+        try { data = await res.json() } catch { setProfileLoaded(true); return }
+
+        // Strict boolean checks — null / undefined / 0 / '' all evaluate to false
+        const isAdmin = data.is_admin === true
+        const plan    = typeof data.plan === 'string' ? data.plan : 'free'
+        const pro     = isAdmin || plan === 'pro' || plan === 'premium'
+        console.log('[AiApplyModal] isPro:', pro, 'is_admin:', isAdmin, 'plan:', plan)
 
         profileRef.current = {
-          full_name:  data.full_name  ?? null,
-          headline:   data.headline   ?? null,
-          bio:        data.bio        ?? null,
-          experience: data.experience ?? null,
-          skills:     data.skills     ?? null,
+          full_name:  typeof data.full_name  === 'string' ? data.full_name  : null,
+          headline:   typeof data.headline   === 'string' ? data.headline   : null,
+          bio:        typeof data.bio        === 'string' ? data.bio        : null,
+          experience: typeof data.experience === 'string' ? data.experience : null,
+          skills:     typeof data.skills     === 'string' ? data.skills     : null,
         }
 
         setIsPro(pro)
