@@ -10,7 +10,7 @@ import { employerPlanLimit } from '@/lib/employerPlan'
 import { classifyCrossBorder } from '@/lib/ai/crossBorder'
 import { analyzeGeoCompliance } from '@/lib/ai/geoAnalysis'
 
-const PAGE_SIZE = 20
+const PAGE_SIZE = 8
 
 // Backs the Jobs page's infinite scroll (page 1 is server-rendered directly
 // in app/jobs/page.tsx; this serves page 2+ as the user scrolls). Same

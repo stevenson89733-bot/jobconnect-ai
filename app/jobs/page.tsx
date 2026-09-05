@@ -9,7 +9,7 @@ import { applyJobFilters, normalizeJobCompany, parseSort, parseCrossBorder, pars
 import { absoluteUrl } from '@/lib/seo'
 import JobsClient from './JobsClient'
 
-const PAGE_SIZE = 20
+const PAGE_SIZE = 8
 export type { SortOption } from '@/lib/jobsQuery'
 
 export const metadata: Metadata = {

@@ -36,7 +36,8 @@ export default function BlogPage({
     ? BLOG_POSTS.filter((p) => p.category === activeCategory)
     : BLOG_POSTS
 
-  const [featured, ...rest] = filtered
+  const sorted = [...filtered].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  const [featured, ...rest] = sorted
 
   return (
     <section className="max-w-3xl mx-auto py-12 px-6">
