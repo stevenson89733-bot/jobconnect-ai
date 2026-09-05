@@ -3,11 +3,14 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { rateLimit, getClientIp } from '@/lib/rateLimit'
 import { analyzeGeoCompliance } from '@/lib/ai/geoAnalysis'
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
 
 // CRITIQUE : is_admin === true requis — retourne 403 sinon.
 // Enrichit par batch de 10 les jobs remote sans geo_analysis.
 
-const BATCH_SIZE = 10
+const BATCH_SIZE = 3
 
 export async function POST(req: Request) {
   const supabase = createClient()
@@ -54,6 +57,7 @@ export async function POST(req: Request) {
     } catch (err) {
       console.error('[enrich-jobs] analysis failed for job', job.id, err instanceof Error ? err.message : err)
     }
+        await sleep(1500)
   }
 
   // Compte les jobs restants à enrichir
