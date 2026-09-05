@@ -88,10 +88,10 @@ async function resolveProvider(): Promise<Provider & { contact: ContactInfo; use
       userId = user.id
       const { data } = await supabase
         .from('profiles')
-        .select('is_premium, full_name, email, phone, linkedin_url, github_url, portfolio_url')
+        .select('is_premium, is_admin, full_name, email, phone, linkedin_url, github_url, portfolio_url')
         .eq('user_id', user.id)
         .single()
-      isPremium = data?.is_premium ?? false
+      isPremium = (data?.is_premium || data?.is_admin) ?? false
       contact = buildContactInfo(data, user.email)
     }
   } catch {
