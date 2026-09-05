@@ -146,3 +146,14 @@ jobs:
             [ "${REMAINING}" = "0" ] && break
             sleep 10
           done
+      - name: Import WWR
+        if: ${{ inputs.dry_run != 'true' }}
+        continue-on-error: true
+        run: |
+          sleep 3
+          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 55 \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${APP_URL}/api/cron/import-wwr")
+          cat /tmp/response.json
+          echo "HTTP Status: ${HTTP_CODE}"
+          [ "${HTTP_CODE}" = "200" ] || echo "::warning::WWR failed (${HTTP_CODE}) — continuing"
