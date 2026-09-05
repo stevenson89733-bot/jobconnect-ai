@@ -132,3 +132,17 @@ jobs:
           cat /tmp/response.json
           echo "HTTP Status: ${HTTP_CODE}"
           [ "${HTTP_CODE}" = "200" ] || echo "::warning::Adzuna NL failed (${HTTP_CODE}) — continuing"
+      - name: Enrich Jobs (geo-analysis)
+        if: ${{ inputs.dry_run != 'true' }}
+        continue-on-error: true
+        run: |
+          for i in 1 2 3 4 5; do
+            HTTP_CODE=$(curl -s -o /tmp/enrich.json -w "%{http_code}" --max-time 55 \
+              -H "Authorization: Bearer ${CRON_SECRET}" \
+              "${APP_URL}/api/admin/enrich-jobs")
+            cat /tmp/enrich.json
+            REMAINING=$(cat /tmp/enrich.json | grep -o '"remaining":[0-9]*' | grep -o '[0-9]*')
+            echo "Remaining: ${REMAINING}"
+            [ "${REMAINING}" = "0" ] && break
+            sleep 10
+          done
