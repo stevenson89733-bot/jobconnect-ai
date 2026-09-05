@@ -9,7 +9,7 @@ export async function GET() {
 
     const { data, error } = await supabase
       .from('profiles')
-      .select('is_admin, is_premium, full_name, title, bio, experience, skills, education')
+      .select('is_admin, is_premium, full_name, title, bio, experience, skills, education, email')
       .eq('user_id', user.id)
       .single()
 
@@ -29,6 +29,7 @@ export async function GET() {
       plan:        isAdmin || isPremium ? 'pro' : 'free',
       full_name:   data?.full_name  ?? null,
       headline:    data?.title      ?? null,
+      email:       data?.email      ?? null,
       bio:         data?.bio        ?? null,
       experience:  data?.experience ?? null,
       skills:      data?.skills     ?? null,

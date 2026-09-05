@@ -26,79 +26,95 @@ function Spinner({ className = 'w-4 h-4' }: { className?: string }) {
 type Profile = {
   full_name:  string | null
   headline:   string | null
+  email:      string | null
   bio:        string | null
   experience: string | null
   skills:     string | null
 }
 
-function isSectionHeader(line: string) {
-  // Detects lines like "EXPERIENCE", "Skills:", "EDUCATION" as section headers
-  const t = line.trim()
-  return t.length > 0 && t.length < 40 && (
-    t === t.toUpperCase() ||
-    /^[A-Z][a-zA-Z\s]+:$/.test(t) ||
-    /^\*\*[^*]+\*\*$/.test(t)
+function cleanMd(line: string) {
+  return line.replace(/^\*+|\*+$/g, '').replace(/^#+\s*/, '').trim()
+}
+
+function isCvSectionHeader(raw: string) {
+  const t = raw.trim()
+  if (!t || t.length > 50) return false
+  const clean = cleanMd(t)
+  return (
+    /^\*\*[^*]+\*\*$/.test(t) ||           // **Bold**
+    /^#+\s/.test(t) ||                       // ## Markdown header
+    (clean === clean.toUpperCase() && clean.length >= 3) || // ALL CAPS
+    /^[A-Z][a-zA-Z\s&]+:$/.test(clean)      // Title Case:
   )
 }
 
-function cleanLine(line: string) {
-  return line.replace(/^\*+|\*+$/g, '').replace(/^#+\s*/, '').trim()
-}
+// CV: line height = font-size 10 × 1.5 spacing → ~5.3 mm
+const CV_LINE_H = 5.3
 
 async function buildCvPdf(p: Profile | null, cvText: string, job: { title: string; company: string }): Promise<Blob> {
   const { jsPDF } = await import('jspdf')
   const doc = new jsPDF({ unit: 'mm', format: 'a4' })
-  const W = 210, ml = 18, mr = 18, tw = W - ml - mr
-  let y = 22
+  const W = 210, ml = 20, mr = 20, tw = W - ml - mr
+  const cx = W / 2
+  let y = 20
 
-  // ── Header ──
+  // ── HEADER — centré ──────────────────────────────────────────────────────
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(22)
+  doc.setFontSize(20)
   doc.setTextColor(15, 23, 42)
-  doc.text(p?.full_name ?? 'Candidate', ml, y); y += 9
+  doc.text(p?.full_name ?? 'Candidate', cx, y, { align: 'center' }); y += 8
 
   if (p?.headline) {
     doc.setFont('helvetica', 'normal')
-    doc.setFontSize(11)
-    doc.setTextColor(87, 199, 227)
-    doc.text(p.headline, ml, y); y += 7
+    doc.setFontSize(12)
+    doc.setTextColor(100, 116, 139)
+    doc.text(p.headline, cx, y, { align: 'center' }); y += 6
   }
 
-  // Adapted-for line
-  doc.setFont('helvetica', 'italic')
-  doc.setFontSize(9)
-  doc.setTextColor(100, 116, 139)
-  doc.text(`Adapted for: ${job.title} at ${job.company}`, ml, y); y += 5
+  // Email · (phone · linkedin si disponibles)
+  const contactParts: string[] = []
+  if (p?.email) contactParts.push(p.email)
+  if (contactParts.length > 0) {
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(10)
+    doc.setTextColor(100, 116, 139)
+    doc.text(contactParts.join(' · '), cx, y, { align: 'center' }); y += 5
+  }
 
-  // Divider
-  doc.setDrawColor(226, 232, 240)
-  doc.setLineWidth(0.4)
-  doc.line(ml, y, W - mr, y); y += 7
+  // Ligne séparatrice header
+  y += 2
+  doc.setDrawColor(203, 213, 225) // slate-300
+  doc.setLineWidth(0.5)
+  doc.line(ml, y, W - mr, y); y += 8
 
-  // ── Body text ──
+  // ── SECTIONS ────────────────────────────────────────────────────────────
   const rawLines = cvText.split('\n')
   for (const raw of rawLines) {
-    const line = cleanLine(raw)
-    if (!line) { y += 3; continue }
+    if (!raw.trim()) { y += 3; continue }
 
-    if (isSectionHeader(raw)) {
-      if (y > 265) { doc.addPage(); y = 20 }
-      y += 2
+    if (isCvSectionHeader(raw)) {
+      if (y > 262) { doc.addPage(); y = 20 }
+
+      y += 8 // espace avant section
       doc.setFont('helvetica', 'bold')
-      doc.setFontSize(10.5)
+      doc.setFontSize(13)
       doc.setTextColor(15, 23, 42)
-      doc.text(line.replace(/:$/, '').toUpperCase(), ml, y); y += 2
-      doc.setDrawColor(87, 199, 227)
-      doc.setLineWidth(0.6)
-      doc.line(ml, y, ml + 35, y); y += 4
+      const title = cleanMd(raw).replace(/:$/, '').toUpperCase()
+      doc.text(title, ml, y); y += 4 // espace après sous-titre
+
+      // Ligne fine sous le sous-titre
+      doc.setDrawColor(203, 213, 225)
+      doc.setLineWidth(0.3)
+      doc.line(ml, y, W - mr, y); y += 4
     } else {
       doc.setFont('helvetica', 'normal')
       doc.setFontSize(10)
       doc.setTextColor(51, 65, 85)
+      const line = cleanMd(raw)
       const wrapped = doc.splitTextToSize(line, tw)
       for (const wl of wrapped) {
-        if (y > 278) { doc.addPage(); y = 20 }
-        doc.text(wl, ml, y); y += 5
+        if (y > 277) { doc.addPage(); y = 20 }
+        doc.text(wl, ml, y); y += CV_LINE_H
       }
     }
   }
@@ -106,60 +122,66 @@ async function buildCvPdf(p: Profile | null, cvText: string, job: { title: strin
   return doc.output('blob')
 }
 
+// Cover letter: font-size 11 × 1.6 spacing → ~6.2 mm
+const CL_LINE_H = 6.2
+
 async function buildCoverLetterPdf(p: Profile | null, text: string, job: { title: string; company: string }): Promise<Blob> {
   const { jsPDF } = await import('jspdf')
   const doc = new jsPDF({ unit: 'mm', format: 'a4' })
   const W = 210, ml = 25, mr = 25, tw = W - ml - mr
   const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-  let y = 28
+  let y = 25
 
   // ── Sender block ──
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(15)
+  doc.setFontSize(14)
   doc.setTextColor(15, 23, 42)
-  doc.text(p?.full_name ?? 'Candidate', ml, y); y += 7
+  doc.text(p?.full_name ?? 'Candidate', ml, y); y += 6
 
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(10)
   doc.setTextColor(100, 116, 139)
   if (p?.headline) { doc.text(p.headline, ml, y); y += 5 }
-  doc.text(date, ml, y); y += 12
+  if (p?.email) { doc.text(p.email, ml, y); y += 5 }
+  doc.text(date, ml, y); y += 10
 
-  // ── Company / role ──
+  // To / Re
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(10.5)
+  doc.setFontSize(10)
   doc.setTextColor(15, 23, 42)
   doc.text(job.company, ml, y); y += 5
-  doc.setFont('helvetica', 'italic')
-  doc.setFontSize(9.5)
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(10)
   doc.setTextColor(100, 116, 139)
   doc.text(`Re: ${job.title}`, ml, y); y += 10
 
-  // Divider
-  doc.setDrawColor(226, 232, 240)
-  doc.setLineWidth(0.3)
-  doc.line(ml, y, W - mr, y); y += 8
-
-  // ── Letter body ──
+  // ── Body justifié ────────────────────────────────────────────────────────
   doc.setFont('helvetica', 'normal')
-  doc.setFontSize(10.5)
+  doc.setFontSize(11)
   doc.setTextColor(51, 65, 85)
 
   const paras = text.split(/\n{2,}/)
   for (const para of paras) {
-    const lines = doc.splitTextToSize(para.trim(), tw)
-    for (const l of lines) {
-      if (y > 265) { doc.addPage(); y = 20 }
-      doc.text(l, ml, y); y += 5.5
+    const trimmed = para.trim()
+    if (!trimmed) continue
+    const lines = doc.splitTextToSize(trimmed, tw)
+    for (let i = 0; i < lines.length; i++) {
+      if (y > 265) { doc.addPage(); y = 25 }
+      // Justify all lines except the last of each paragraph
+      const isLast = i === lines.length - 1
+      doc.text(lines[i], ml, y, { align: isLast ? 'left' : 'justify', maxWidth: tw })
+      y += CL_LINE_H
     }
-    y += 4 // paragraph gap
+    y += 4 // espace inter-paragraphe
   }
 
   // ── Signature ──
-  if (y > 250) { doc.addPage(); y = 20 }
-  y += 4
+  if (y > 252) { doc.addPage(); y = 25 }
+  y += 6
   doc.setFont('helvetica', 'normal')
-  doc.text('Sincerely,', ml, y); y += 12
+  doc.setFontSize(11)
+  doc.setTextColor(51, 65, 85)
+  doc.text('Sincerely,', ml, y); y += 14
   doc.setFont('helvetica', 'bold')
   doc.text(p?.full_name ?? '', ml, y)
 
@@ -249,6 +271,7 @@ export default function AiApplyModal({
         profileRef.current = {
           full_name:  typeof data.full_name  === 'string' ? data.full_name  : null,
           headline:   typeof data.headline   === 'string' ? data.headline   : null,
+          email:      typeof data.email      === 'string' ? data.email      : null,
           bio:        typeof data.bio        === 'string' ? data.bio        : null,
           experience: typeof data.experience === 'string' ? data.experience : null,
           skills:     typeof data.skills     === 'string' ? data.skills     : null,
