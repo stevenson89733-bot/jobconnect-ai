@@ -41,7 +41,7 @@ export default function AiApplyModal({
       const { data } = await supabase
         .from('profiles')
         .select('is_premium, is_admin')
-        .eq('id', user.id)
+        .eq('user_id', user.id)
         .single()
       setPlanState((data?.is_premium || data?.is_admin) ? 'pro' : 'free')
     }
