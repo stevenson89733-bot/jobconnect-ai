@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Bookmark, ExternalLink } from 'lucide-react'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import ApplyModal from '@/components/ApplyModal'
+import AiApplyModal from '@/components/AiApplyModal'
 import { companyInitials, clearbitLogoUrl } from '@/lib/companyDisplay'
 import { CATEGORY_KEY, JOB_TYPE_KEY } from '@/lib/i18n/jobLabels'
 import Link from 'next/link'
@@ -62,6 +63,7 @@ export default function JobCard({
   alreadyApplied: boolean
 }) {
   const [signalsOpen, setSignalsOpen] = useState(false)
+  const [aiApplyOpen, setAiApplyOpen] = useState(false)
   const t = useTranslations('jobs')
 
   const flag = getFlag(job.location)
@@ -216,6 +218,20 @@ export default function JobCard({
             jobTitle={job.title}
             company={job.company_name}
             alreadyApplied={alreadyApplied}
+          />
+        )}
+                <button
+          type="button"
+          onClick={() => setAiApplyOpen(true)}
+          className="inline-flex items-center gap-1.5 border border-[#57C7E3] text-[#57C7E3] text-[13px] font-semibold px-4 py-2 rounded-lg hover:bg-[#57C7E3]/10 transition-colors"
+        >
+          ✦ Apply with AI
+        </button>
+
+        {aiApplyOpen && (
+          <AiApplyModal
+            job={job}
+            onClose={() => setAiApplyOpen(false)}
           />
         )}
 
