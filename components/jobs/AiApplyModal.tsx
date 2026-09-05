@@ -86,14 +86,15 @@ export default function AiApplyModal({
     async function loadProfile() {
       try {
         const supabase = createClient()
-        const { data: { user } } = await supabase.auth.getUser()
+        const { data: { user }, error: authError } = await supabase.auth.getUser()
+        console.log('AUTH USER:', user?.id, 'authError:', authError?.message)
         if (!user) { setProfileLoaded(true); return }
 
         const { data: profile, error } = await supabase
           .from('profiles')
           .select('is_admin, is_premium, title, bio, experience, skills, resume_url')
           .eq('user_id', user.id)
-          .single()
+          .maybeSingle()
 
         console.log('PROFILE DEBUG:', JSON.stringify(profile), 'error:', error?.message)
 
