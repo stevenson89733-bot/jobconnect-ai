@@ -18,11 +18,23 @@ export async function GET() {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    // Explicit boolean coercion — never trust DB nulls to be falsy in JS ternary
     const isAdmin   = data?.is_admin   === true
     const isPremium = data?.is_premium === true
 
     console.log('[/api/candidate/profile] user:', user.id, 'is_admin:', isAdmin, 'is_premium:', isPremium)
+
+    // phone & linkedin_url are optional columns — graceful fallback if absent
+    let phone: string | null = null
+    let linkedin: string | null = null
+    try {
+      const { data: ext } = await supabase
+        .from('profiles')
+        .select('phone, linkedin_url')
+        .eq('user_id', user.id)
+        .single()
+      phone    = typeof ext?.phone         === 'string' ? ext.phone         : null
+      linkedin = typeof ext?.linkedin_url  === 'string' ? ext.linkedin_url  : null
+    } catch { /* columns may not exist yet */ }
 
     return NextResponse.json({
       is_admin:    isAdmin,
@@ -30,6 +42,8 @@ export async function GET() {
       full_name:   data?.full_name  ?? null,
       headline:    data?.title      ?? null,
       email:       data?.email      ?? null,
+      phone,
+      linkedin,
       bio:         data?.bio        ?? null,
       experience:  data?.experience ?? null,
       skills:      data?.skills     ?? null,

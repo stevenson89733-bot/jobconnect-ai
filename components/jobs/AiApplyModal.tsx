@@ -27,6 +27,8 @@ type Profile = {
   full_name:  string | null
   headline:   string | null
   email:      string | null
+  phone:      string | null
+  linkedin:   string | null
   bio:        string | null
   experience: string | null
   skills:     string | null
@@ -55,11 +57,16 @@ async function buildCvPdf(p: Profile | null, cvText: string, job: { title: strin
     doc.text(p.headline, cx, y, { align: 'center' }); y += 6
   }
 
-  if (p?.email) {
+  // Contact line : email · phone · linkedin
+  const contactParts: string[] = []
+  if (p?.email)    contactParts.push(p.email)
+  if (p?.phone)    contactParts.push(p.phone)
+  if (p?.linkedin) contactParts.push(p.linkedin)
+  if (contactParts.length > 0) {
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(10)
     doc.setTextColor(100, 116, 139)
-    doc.text(p.email, cx, y, { align: 'center' }); y += 5
+    doc.text(contactParts.join('  ·  '), cx, y, { align: 'center' }); y += 5
   }
 
   // Ligne séparatrice header
@@ -68,14 +75,12 @@ async function buildCvPdf(p: Profile | null, cvText: string, job: { title: strin
   doc.setLineWidth(0.5)
   doc.line(ml, y, W - mr, y); y += 8
 
-  // ── HELPER : rend une section structurée ─────────────────────────────────
-  // Sections are always hardcoded — never parsed from AI output,
-  // because the API returns narrative prose, not structured headers.
+  // ── HELPER : section structurée avec texte justifié ───────────────────────
   function renderSection(title: string, content: string) {
     if (!content?.trim()) return
     if (y > 258) { doc.addPage(); y = 20 }
 
-    y += 4 // espace avant section
+    y += 4
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(13)
     doc.setTextColor(15, 23, 42)
@@ -91,19 +96,22 @@ async function buildCvPdf(p: Profile | null, cvText: string, job: { title: strin
 
     const paras = content.trim().split(/\n{2,}/)
     for (const para of paras) {
-      const wrapped = doc.splitTextToSize(para.trim(), tw)
-      for (const wl of wrapped) {
+      const lines = doc.splitTextToSize(para.trim(), tw)
+      for (let i = 0; i < lines.length; i++) {
         if (y > 278) { doc.addPage(); y = 20 }
-        doc.text(wl, ml, y); y += CV_LINE_H
+        // Justify all lines except the last of each paragraph
+        const isLast = i === lines.length - 1
+        doc.text(lines[i], ml, y, { align: isLast ? 'left' : 'justify', maxWidth: tw })
+        y += CV_LINE_H
       }
-      y += 2 // inter-paragraphe
+      y += 2
     }
   }
 
-  // ── SECTIONS — structure imposée, contenu depuis le profil ───────────────
-  // cvText (adapt-cv output) → Professional Summary
-  // profile fields → Experience, Skills
-  renderSection('Professional Summary', cvText)
+  // ── SECTIONS ─────────────────────────────────────────────────────────────
+  // Professional Summary = FIRST PARAGRAPH only of the AI narrative (concise)
+  const summaryText = cvText.trim().split(/\n{2,}/)[0] ?? cvText.trim()
+  renderSection('Professional Summary', summaryText)
   if (p?.experience) renderSection('Experience', p.experience)
   if (p?.skills)     renderSection('Skills',      p.skills)
 
@@ -266,6 +274,8 @@ export default function AiApplyModal({
           full_name:  typeof data.full_name  === 'string' ? data.full_name  : null,
           headline:   typeof data.headline   === 'string' ? data.headline   : null,
           email:      typeof data.email      === 'string' ? data.email      : null,
+          phone:      typeof data.phone      === 'string' ? data.phone      : null,
+          linkedin:   typeof data.linkedin   === 'string' ? data.linkedin   : null,
           bio:        typeof data.bio        === 'string' ? data.bio        : null,
           experience: typeof data.experience === 'string' ? data.experience : null,
           skills:     typeof data.skills     === 'string' ? data.skills     : null,
