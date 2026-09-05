@@ -28,7 +28,7 @@ export async function GET() {
 
     const { data, error } = await service
       .from('profiles')
-      .select('is_admin, is_premium, title, bio, experience, skills, education, resume_url')
+      .select('is_admin, is_premium, title, bio, experience, skills, education')
       .eq('user_id', user.id)
       .single()
 
@@ -47,7 +47,7 @@ export async function GET() {
       experience:  data?.experience  ?? null,
       skills:      data?.skills      ?? null,
       resume_text: null,
-      resume_url:  data?.resume_url  ?? null,
+      resume_url:  null,
     })
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err)
