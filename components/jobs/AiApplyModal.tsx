@@ -7,12 +7,10 @@ import { ExternalLink } from 'lucide-react'
 type Step = 'preparing' | 'ready'
 type CoverLetterMode = 'write' | 'upload'
 
+const BRAND = '#57C7E3'
+
 const stripHtml = (html: string) =>
   html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
-
-function makeBlobUrl(text: string): string {
-  return URL.createObjectURL(new Blob([text], { type: 'text/plain' }))
-}
 
 function Spinner({ className = 'w-4 h-4' }: { className?: string }) {
   return (
@@ -23,6 +21,8 @@ function Spinner({ className = 'w-4 h-4' }: { className?: string }) {
   )
 }
 
+// ── PDF helpers (jsPDF loaded dynamically — Pro path only) ─────────────────
+
 type Profile = {
   full_name:  string | null
   headline:   string | null
@@ -30,6 +30,147 @@ type Profile = {
   experience: string | null
   skills:     string | null
 }
+
+function isSectionHeader(line: string) {
+  // Detects lines like "EXPERIENCE", "Skills:", "EDUCATION" as section headers
+  const t = line.trim()
+  return t.length > 0 && t.length < 40 && (
+    t === t.toUpperCase() ||
+    /^[A-Z][a-zA-Z\s]+:$/.test(t) ||
+    /^\*\*[^*]+\*\*$/.test(t)
+  )
+}
+
+function cleanLine(line: string) {
+  return line.replace(/^\*+|\*+$/g, '').replace(/^#+\s*/, '').trim()
+}
+
+async function buildCvPdf(p: Profile | null, cvText: string, job: { title: string; company: string }): Promise<Blob> {
+  const { jsPDF } = await import('jspdf')
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' })
+  const W = 210, ml = 18, mr = 18, tw = W - ml - mr
+  let y = 22
+
+  // ── Header ──
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(22)
+  doc.setTextColor(15, 23, 42)
+  doc.text(p?.full_name ?? 'Candidate', ml, y); y += 9
+
+  if (p?.headline) {
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(11)
+    doc.setTextColor(87, 199, 227)
+    doc.text(p.headline, ml, y); y += 7
+  }
+
+  // Adapted-for line
+  doc.setFont('helvetica', 'italic')
+  doc.setFontSize(9)
+  doc.setTextColor(100, 116, 139)
+  doc.text(`Adapted for: ${job.title} at ${job.company}`, ml, y); y += 5
+
+  // Divider
+  doc.setDrawColor(226, 232, 240)
+  doc.setLineWidth(0.4)
+  doc.line(ml, y, W - mr, y); y += 7
+
+  // ── Body text ──
+  const rawLines = cvText.split('\n')
+  for (const raw of rawLines) {
+    const line = cleanLine(raw)
+    if (!line) { y += 3; continue }
+
+    if (isSectionHeader(raw)) {
+      if (y > 265) { doc.addPage(); y = 20 }
+      y += 2
+      doc.setFont('helvetica', 'bold')
+      doc.setFontSize(10.5)
+      doc.setTextColor(15, 23, 42)
+      doc.text(line.replace(/:$/, '').toUpperCase(), ml, y); y += 2
+      doc.setDrawColor(87, 199, 227)
+      doc.setLineWidth(0.6)
+      doc.line(ml, y, ml + 35, y); y += 4
+    } else {
+      doc.setFont('helvetica', 'normal')
+      doc.setFontSize(10)
+      doc.setTextColor(51, 65, 85)
+      const wrapped = doc.splitTextToSize(line, tw)
+      for (const wl of wrapped) {
+        if (y > 278) { doc.addPage(); y = 20 }
+        doc.text(wl, ml, y); y += 5
+      }
+    }
+  }
+
+  return doc.output('blob')
+}
+
+async function buildCoverLetterPdf(p: Profile | null, text: string, job: { title: string; company: string }): Promise<Blob> {
+  const { jsPDF } = await import('jspdf')
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' })
+  const W = 210, ml = 25, mr = 25, tw = W - ml - mr
+  const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+  let y = 28
+
+  // ── Sender block ──
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(15)
+  doc.setTextColor(15, 23, 42)
+  doc.text(p?.full_name ?? 'Candidate', ml, y); y += 7
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(10)
+  doc.setTextColor(100, 116, 139)
+  if (p?.headline) { doc.text(p.headline, ml, y); y += 5 }
+  doc.text(date, ml, y); y += 12
+
+  // ── Company / role ──
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(10.5)
+  doc.setTextColor(15, 23, 42)
+  doc.text(job.company, ml, y); y += 5
+  doc.setFont('helvetica', 'italic')
+  doc.setFontSize(9.5)
+  doc.setTextColor(100, 116, 139)
+  doc.text(`Re: ${job.title}`, ml, y); y += 10
+
+  // Divider
+  doc.setDrawColor(226, 232, 240)
+  doc.setLineWidth(0.3)
+  doc.line(ml, y, W - mr, y); y += 8
+
+  // ── Letter body ──
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(10.5)
+  doc.setTextColor(51, 65, 85)
+
+  const paras = text.split(/\n{2,}/)
+  for (const para of paras) {
+    const lines = doc.splitTextToSize(para.trim(), tw)
+    for (const l of lines) {
+      if (y > 265) { doc.addPage(); y = 20 }
+      doc.text(l, ml, y); y += 5.5
+    }
+    y += 4 // paragraph gap
+  }
+
+  // ── Signature ──
+  if (y > 250) { doc.addPage(); y = 20 }
+  y += 4
+  doc.setFont('helvetica', 'normal')
+  doc.text('Sincerely,', ml, y); y += 12
+  doc.setFont('helvetica', 'bold')
+  doc.text(p?.full_name ?? '', ml, y)
+
+  return doc.output('blob')
+}
+
+function makePdfUrl(blob: Blob) {
+  return URL.createObjectURL(blob)
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 
 export default function AiApplyModal({
   jobId,
@@ -54,18 +195,21 @@ export default function AiApplyModal({
   const [mounted, setMounted] = useState(false)
   const router = useRouter()
 
-  // ── Profile (loaded once on mount, never changes) ──────────────────────────
+  // ── Profile ────────────────────────────────────────────────────────────────
   const [isPro, setIsPro]                 = useState(false)
   const [profileLoaded, setProfileLoaded] = useState(false)
   const profileRef = useRef<Profile | null>(null)
 
   // ── Pro pipeline ───────────────────────────────────────────────────────────
-  const [step, setStep]                     = useState<Step>('preparing')
-  const [draftError, setDraftError]         = useState('')
-  const [coverLetter, setCoverLetter]       = useState('')
-  const [adaptedCvText, setAdaptedCvText]   = useState('')
-  const [adaptedCvUrl, setAdaptedCvUrl]     = useState('')
-  const [coverLetterUrl, setCoverLetterUrl] = useState('')
+  const [step, setStep]               = useState<Step>('preparing')
+  const [draftError, setDraftError]   = useState('')
+  const [coverLetter, setCoverLetter] = useState('')
+  const [adaptedCvText, setAdaptedCvText]         = useState('')
+  const [cvPdfUrl, setCvPdfUrl]                   = useState('')
+  const [coverLetterPdfUrl, setCoverLetterPdfUrl] = useState('')
+  // Keep blobs in refs so we can re-download without re-creating URLs
+  const cvBlobRef = useRef<Blob | null>(null)
+  const clBlobRef = useRef<Blob | null>(null)
   const pipelineRanRef = useRef(false)
 
   // ── Free flow ──────────────────────────────────────────────────────────────
@@ -79,27 +223,23 @@ export default function AiApplyModal({
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const [applied, setApplied]             = useState(alreadyApplied)
 
-  // ── SSR guard ──────────────────────────────────────────────────────────────
   useEffect(() => { setMounted(true) }, [])
 
-  // ── Scroll lock ────────────────────────────────────────────────────────────
   useEffect(() => {
     if (open) document.body.style.overflow = 'hidden'
     return () => { document.body.style.overflow = '' }
   }, [open])
 
-  // ── Load profile ONCE on mount (no pipeline here) ─────────────────────────
+  // ── Load profile once on mount ─────────────────────────────────────────────
   useEffect(() => {
     async function loadProfile() {
       try {
         const res = await fetch('/api/candidate/profile')
-        // Any non-2xx → stay freemium, never promote to Pro
         if (!res.ok) { setProfileLoaded(true); return }
 
         let data: Record<string, unknown>
         try { data = await res.json() } catch { setProfileLoaded(true); return }
 
-        // Strict boolean — null/undefined/0 all stay freemium
         const isAdmin = data.is_admin === true
         const plan    = typeof data.plan === 'string' ? data.plan : 'free'
         const pro     = isAdmin || plan === 'pro' || plan === 'premium'
@@ -124,8 +264,7 @@ export default function AiApplyModal({
     loadProfile()
   }, [])
 
-  // ── Trigger pipeline when modal opens AND user is Pro AND profile is ready ─
-  // This fires ONLY for Pro users, and ONLY when they actually click Apply.
+  // ── Pipeline triggers when modal opens AND user is Pro ─────────────────────
   useEffect(() => {
     if (open && isPro && profileLoaded && !pipelineRanRef.current) {
       pipelineRanRef.current = true
@@ -133,19 +272,20 @@ export default function AiApplyModal({
     }
   }, [open, isPro, profileLoaded]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ── Pro pipeline: adapt-cv then cover-letter ───────────────────────────────
+  // ── Pro pipeline ───────────────────────────────────────────────────────────
   async function runPipeline(p: Profile | null) {
-    // Safety guard — should never be called for freemium but belt-and-suspenders
     if (!isPro) return
 
     setStep('preparing')
     setDraftError('')
     setAdaptedCvText('')
-    setAdaptedCvUrl('')
+    setCvPdfUrl('')
+    setCoverLetterPdfUrl('')
     setCoverLetter('')
-    setCoverLetterUrl('')
+    cvBlobRef.current = null
+    clBlobRef.current = null
 
-    const jobDesc = description ? stripHtml(description) : tags?.join(', ') ?? ''
+    const jobDesc   = description ? stripHtml(description) : tags?.join(', ') ?? ''
     const strengths = [
       p?.full_name  ? `Name: ${p.full_name}` : null,
       p?.headline   ? `Role: ${p.headline}` : null,
@@ -155,8 +295,8 @@ export default function AiApplyModal({
     ].filter(Boolean).join('\n\n')
 
     try {
-      // A) Adapt CV to this specific job
-      const cvRes = await fetch('/api/ai/adapt-cv', {
+      // A) Adapt CV
+      const cvRes  = await fetch('/api/ai/adapt-cv', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -177,13 +317,16 @@ export default function AiApplyModal({
       })
       const cvData = await cvRes.json()
       if (!cvRes.ok) throw new Error(cvData.error || 'CV adaptation failed')
+
       if (cvData.adaptedCv) {
         setAdaptedCvText(cvData.adaptedCv)
-        setAdaptedCvUrl(makeBlobUrl(cvData.adaptedCv))
+        const blob = await buildCvPdf(p, cvData.adaptedCv, { title: jobTitle, company })
+        cvBlobRef.current = blob
+        setCvPdfUrl(makePdfUrl(blob))
       }
 
-      // B) Cover letter correlated to this specific job
-      const clRes = await fetch('/api/ai/cover-letter', {
+      // B) Cover letter
+      const clRes  = await fetch('/api/ai/cover-letter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -195,11 +338,14 @@ export default function AiApplyModal({
       })
       const clData = await clRes.json()
       if (!clRes.ok) throw new Error(clData.error || 'Cover letter generation failed')
+
       const letter = clData?.letter
       if (letter) {
         const text = [letter.opening, letter.body, letter.closing].filter(Boolean).join('\n\n')
         setCoverLetter(text)
-        setCoverLetterUrl(makeBlobUrl(text))
+        const blob = await buildCoverLetterPdf(p, text, { title: jobTitle, company })
+        clBlobRef.current = blob
+        setCoverLetterPdfUrl(makePdfUrl(blob))
       }
     } catch (err) {
       setDraftError(err instanceof Error ? err.message : 'Generation failed — please try again.')
@@ -208,11 +354,39 @@ export default function AiApplyModal({
     }
   }
 
+  // Regenerate cover letter PDF when user edits the textarea
+  async function handleCoverLetterEdit(text: string) {
+    setCoverLetter(text)
+    if (!isPro) return
+    try {
+      const blob = await buildCoverLetterPdf(profileRef.current, text, { title: jobTitle, company })
+      clBlobRef.current = blob
+      // Revoke old URL before setting new one
+      if (coverLetterPdfUrl) URL.revokeObjectURL(coverLetterPdfUrl)
+      setCoverLetterPdfUrl(makePdfUrl(blob))
+    } catch { /* non-blocking */ }
+  }
+
   // ── Submit ─────────────────────────────────────────────────────────────────
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setSubmitting(true)
     setSubmitError('')
+
+    // Auto-download PDFs so candidate has them for the external application
+    if (isPro && cvPdfUrl) {
+      const a = document.createElement('a')
+      a.href = cvPdfUrl
+      a.download = `CV-${company.replace(/\s+/g, '-')}.pdf`
+      a.click()
+    }
+    if (isPro && coverLetterPdfUrl) {
+      const a = document.createElement('a')
+      a.href = coverLetterPdfUrl
+      a.download = `CoverLetter-${company.replace(/\s+/g, '-')}.pdf`
+      a.click()
+    }
+
     try {
       const res = await fetch('/api/applications', {
         method: 'POST',
@@ -240,7 +414,6 @@ export default function AiApplyModal({
     setClFile(null)
     setClMode('write')
     setDraftError('')
-    // Reset so the pipeline runs again for this new open
     pipelineRanRef.current = false
     setOpen(true)
   }
@@ -262,7 +435,7 @@ export default function AiApplyModal({
       type="button"
       onClick={handleOpen}
       className="inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-lg border whitespace-nowrap transition-colors"
-      style={{ borderColor: '#57C7E3', color: '#57C7E3', background: 'rgba(87,199,227,0.07)' }}
+      style={{ borderColor: BRAND, color: BRAND, background: 'rgba(87,199,227,0.07)' }}
       onMouseEnter={e => { e.currentTarget.style.background = 'rgba(87,199,227,0.15)' }}
       onMouseLeave={e => { e.currentTarget.style.background = 'rgba(87,199,227,0.07)' }}
     >
@@ -276,11 +449,10 @@ export default function AiApplyModal({
     ? stripHtml(description)
     : tags?.length ? tags.join(' · ') : 'No description available.'
 
-  // ── Modal body based on state ──────────────────────────────────────────────
+  // ── Modal body ─────────────────────────────────────────────────────────────
   let body: React.ReactNode
 
   if (!profileLoaded) {
-    // Profile still loading
     body = (
       <div className="flex flex-col items-center justify-center gap-3 py-16">
         <Spinner className="w-6 h-6 text-[#57C7E3]" />
@@ -288,17 +460,18 @@ export default function AiApplyModal({
       </div>
     )
   } else if (isPro && step === 'preparing') {
-    // Pro: pipeline running
     body = (
-      <div className="flex flex-col items-center justify-center gap-3 py-16 rounded-xl border border-slate-200 bg-slate-50">
-        <Spinner className="w-6 h-6 text-[#57C7E3]" />
-        <p className="text-sm font-semibold text-slate-500">
-          ✦ Generating your CV + Cover Letter for {jobTitle}…
-        </p>
+      <div className="flex flex-col items-center justify-center gap-4 py-14 rounded-xl border border-slate-100 bg-slate-50">
+        <Spinner className="w-7 h-7 text-[#57C7E3]" />
+        <div className="text-center">
+          <p className="text-sm font-semibold text-slate-700">
+            ✦ Generating your documents…
+          </p>
+          <p className="text-xs text-slate-400 mt-1">{jobTitle} at {company}</p>
+        </div>
       </div>
     )
   } else if (isPro && step === 'ready') {
-    // Pro: results ready
     body = (
       <div className="space-y-4">
         {draftError && (
@@ -307,60 +480,68 @@ export default function AiApplyModal({
           </p>
         )}
 
-        {adaptedCvText && (
-          <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 flex items-center justify-between gap-3">
-            <p className="text-xs font-semibold text-emerald-700">
-              ✓ CV adapted for {jobTitle} at {company}
-            </p>
-            <a
-              href={adaptedCvUrl}
-              download={`CV-${company.replace(/\s+/g, '-')}.txt`}
-              className="text-xs font-semibold text-emerald-700 hover:underline shrink-0"
-            >
-              ⬇ Download
-            </a>
+        {/* CV PDF card */}
+        {cvPdfUrl && (
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="text-lg shrink-0">📄</span>
+                <div className="min-w-0">
+                  <p className="text-xs font-bold text-emerald-800 truncate">CV adapté — {jobTitle}</p>
+                  <p className="text-[11px] text-emerald-600">{company} · PDF professionnel</p>
+                </div>
+              </div>
+              <a
+                href={cvPdfUrl}
+                download={`CV-${company.replace(/\s+/g, '-')}.pdf`}
+                className="shrink-0 flex items-center gap-1 text-xs font-bold text-emerald-700 bg-white border border-emerald-200 rounded-lg px-3 py-1.5 hover:bg-emerald-50 transition-colors"
+              >
+                ⬇ CV (PDF)
+              </a>
+            </div>
           </div>
         )}
 
+        {/* Cover letter section */}
         <div>
           <div className="flex items-center justify-between mb-2">
             <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
-              Cover letter <span className="normal-case font-normal">(optional)</span>
+              Cover letter <span className="normal-case font-normal">(optional — edit freely)</span>
             </p>
-            {coverLetterUrl && (
+            {coverLetterPdfUrl && (
               <a
-                href={coverLetterUrl}
-                download={`CoverLetter-${company.replace(/\s+/g, '-')}.txt`}
-                className="text-xs font-semibold text-[#57C7E3] hover:underline"
+                href={coverLetterPdfUrl}
+                download={`CoverLetter-${company.replace(/\s+/g, '-')}.pdf`}
+                className="flex items-center gap-1 text-[11px] font-bold text-[#57C7E3] bg-sky-50 border border-sky-200 rounded-lg px-2.5 py-1 hover:bg-sky-100 transition-colors"
               >
-                ⬇ Download
+                ⬇ Letter (PDF)
               </a>
             )}
           </div>
           <textarea
             value={coverLetter}
-            onChange={e => {
-              setCoverLetter(e.target.value)
-              setCoverLetterUrl(makeBlobUrl(e.target.value))
-            }}
+            onChange={e => handleCoverLetterEdit(e.target.value)}
             rows={9}
             placeholder="Your cover letter will appear here…"
-            className="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#57C7E3] resize-none"
+            className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#57C7E3] resize-none"
           />
+          <p className="text-[11px] text-slate-400 mt-1">
+            Editing regenerates the PDF automatically.
+          </p>
         </div>
 
         <button
           type="button"
           onClick={handleRedraft}
           className="w-full flex items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-semibold border transition-colors"
-          style={{ background: 'rgba(87,199,227,0.07)', borderColor: 'rgba(87,199,227,0.35)', color: '#57C7E3' }}
+          style={{ background: 'rgba(87,199,227,0.07)', borderColor: 'rgba(87,199,227,0.35)', color: BRAND }}
         >
-          ↺ Redraft
+          ↺ Redraft documents
         </button>
       </div>
     )
   } else {
-    // Freemium — only reaches here when isPro === false
+    // Freemium
     body = (
       <div className="space-y-4">
         <div>
@@ -371,12 +552,8 @@ export default function AiApplyModal({
             {cvFile
               ? <><span className="flex-1 truncate font-medium text-slate-700">{cvFile.name}</span><span className="text-xs text-slate-400 shrink-0">Replace</span></>
               : '↑ Upload CV — PDF, DOC'}
-            <input
-              type="file"
-              accept=".pdf,.doc,.docx"
-              className="hidden"
-              onChange={e => { const f = e.target.files?.[0]; if (f) setCvFile(f); e.target.value = '' }}
-            />
+            <input type="file" accept=".pdf,.doc,.docx" className="hidden"
+              onChange={e => { const f = e.target.files?.[0]; if (f) setCvFile(f); e.target.value = '' }} />
           </label>
         </div>
 
@@ -387,18 +564,11 @@ export default function AiApplyModal({
             </p>
             <div className="flex rounded-lg border border-slate-200 overflow-hidden text-[12px]">
               {(['write', 'upload'] as CoverLetterMode[]).map(mode => (
-                <button
-                  key={mode}
-                  type="button"
-                  onClick={() => setClMode(mode)}
+                <button key={mode} type="button" onClick={() => setClMode(mode)}
                   className={`px-3 py-1 capitalize transition-colors ${
-                    clMode === mode
-                      ? 'bg-[#57C7E3] text-white font-semibold'
-                      : 'text-slate-500 hover:text-slate-700'
+                    clMode === mode ? 'bg-[#57C7E3] text-white font-semibold' : 'text-slate-500 hover:text-slate-700'
                   }`}
-                >
-                  {mode}
-                </button>
+                >{mode}</button>
               ))}
             </div>
           </div>
@@ -415,20 +585,14 @@ export default function AiApplyModal({
               {clFile
                 ? <><span className="flex-1 truncate font-medium text-slate-700">{clFile.name}</span><span className="text-xs text-slate-400 shrink-0">Replace</span></>
                 : '↑ Upload cover letter — PDF, DOC'}
-              <input
-                type="file"
-                accept=".pdf,.doc,.docx"
-                className="hidden"
-                onChange={e => { const f = e.target.files?.[0]; if (f) setClFile(f); e.target.value = '' }}
-              />
+              <input type="file" accept=".pdf,.doc,.docx" className="hidden"
+                onChange={e => { const f = e.target.files?.[0]; if (f) setClFile(f); e.target.value = '' }} />
             </label>
           )}
         </div>
 
-        <button
-          type="button"
-          onClick={() => router.push('/pricing')}
-          className="w-full flex items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-semibold border opacity-50 cursor-pointer"
+        <button type="button" onClick={() => router.push('/pricing')}
+          className="w-full flex items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-semibold border opacity-50"
           style={{ borderColor: 'rgba(148,163,184,0.4)', color: '#94a3b8', background: 'rgba(148,163,184,0.06)' }}
         >
           ✦ Draft with AI — Upgrade to Pro
@@ -444,22 +608,20 @@ export default function AiApplyModal({
       onClick={handleClose}
     >
       <div
-        className="bg-white rounded-2xl shadow-xl w-full max-w-[520px] max-h-[85vh] overflow-y-auto"
+        className="bg-white rounded-2xl shadow-xl w-full max-w-[540px] max-h-[88vh] overflow-y-auto"
         style={{ fontSize: '14px' }}
         onClick={e => e.stopPropagation()}
       >
+        {/* Header */}
         <div className="flex items-start justify-between px-6 pt-6 pb-4 border-b border-slate-100">
           <div>
             <h2 className="font-bold text-lg text-slate-900 leading-snug">Apply for this role</h2>
             <p className="text-sm text-slate-500 mt-0.5">
-              {jobTitle} {' · '} <span className="font-medium text-slate-700">{company}</span>
+              {jobTitle}{' · '}<span className="font-medium text-slate-700">{company}</span>
             </p>
           </div>
-          <button
-            type="button"
-            onClick={handleClose}
-            className="ml-4 shrink-0 text-slate-400 hover:text-slate-800 transition-colors text-xl leading-none mt-0.5"
-          >
+          <button type="button" onClick={handleClose}
+            className="ml-4 shrink-0 text-slate-400 hover:text-slate-800 transition-colors text-xl leading-none mt-0.5">
             ✕
           </button>
         </div>
@@ -471,14 +633,19 @@ export default function AiApplyModal({
                 <div className="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center text-2xl">✓</div>
                 <div className="text-center">
                   <p className="font-bold text-lg text-emerald-700">Application submitted!</p>
-                  <p className="text-sm text-slate-500 mt-1">Application sent to {company}.</p>
+                  <p className="text-sm text-slate-500 mt-1">Sent to {company}.</p>
+                  {isPro && cvPdfUrl && (
+                    <p className="text-xs text-slate-400 mt-2">Your PDF documents were downloaded automatically.</p>
+                  )}
                 </div>
-                <button type="button" onClick={handleClose} className="px-6 py-2.5 rounded-lg text-sm font-semibold border border-slate-200 hover:bg-slate-50 transition-colors">
+                <button type="button" onClick={handleClose}
+                  className="px-6 py-2.5 rounded-lg text-sm font-semibold border border-slate-200 hover:bg-slate-50 transition-colors">
                   Close
                 </button>
               </div>
             ) : (
               <>
+                {/* Job description preview */}
                 <div>
                   <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-400 mb-2">Job description</p>
                   <div className="max-h-24 overflow-y-auto rounded-lg border border-slate-100 bg-slate-50 px-3 py-2.5">
@@ -497,34 +664,24 @@ export default function AiApplyModal({
 
           {!submitSuccess && profileLoaded && !(isPro && step === 'preparing') && (
             <div className="flex gap-3 px-6 pb-5 border-t border-slate-100 pt-4">
-              <button
-                type="button"
-                onClick={handleClose}
-                className="flex-1 py-3 rounded-lg text-sm font-semibold border border-slate-200 hover:bg-slate-50 transition-colors"
-              >
+              <button type="button" onClick={handleClose}
+                className="flex-1 py-3 rounded-lg text-sm font-semibold border border-slate-200 hover:bg-slate-50 transition-colors">
                 Cancel
               </button>
-              <button
-                type="submit"
-                disabled={submitting}
+              <button type="submit" disabled={submitting}
                 className="flex-1 py-3 rounded-lg text-sm font-bold text-white transition-colors disabled:opacity-50"
-                style={{ background: '#57C7E3' }}
-              >
+                style={{ background: BRAND }}>
                 {submitting
                   ? <span className="flex items-center justify-center gap-2"><Spinner /> Submitting…</span>
-                  : 'Submit Application'}
+                  : isPro && cvPdfUrl ? 'Submit & Download PDFs' : 'Submit Application'}
               </button>
             </div>
           )}
 
           {applyUrl && !submitSuccess && (
             <div className="px-6 pb-5">
-              <a
-                href={applyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-1.5 w-full text-sm text-slate-400 hover:text-[#57C7E3] transition-colors"
-              >
+              <a href={applyUrl} target="_blank" rel="noopener noreferrer"
+                className="flex items-center justify-center gap-1.5 w-full text-sm text-slate-400 hover:text-[#57C7E3] transition-colors">
                 Apply on company website
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
