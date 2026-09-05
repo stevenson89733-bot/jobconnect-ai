@@ -55,6 +55,16 @@ export default function AiApplyModal({
   const tc = useTranslations('common')
   const te = useTranslations('errors')
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [open])
+
   // On mount: resolve plan + fetch profile fields for pipeline
   useEffect(() => {
     async function checkPlan() {
@@ -234,12 +244,15 @@ export default function AiApplyModal({
 
       {open && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-          onClick={(e) => { if (e.target === e.currentTarget) setOpen(false) }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+          onClick={() => setOpen(false)}
         >
-          <div className="bg-white dark:bg-card border border-slate-200 dark:border-slate-700 rounded-2xl w-full max-w-md shadow-2xl max-h-[90vh] flex flex-col">
-            {/* Header — sticky */}
-            <div className="flex items-start justify-between p-6 pb-4 border-b border-slate-200 dark:border-slate-800 shrink-0">
+          <div
+            className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[85vh] overflow-y-auto relative z-10 mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="flex items-start justify-between p-6 pb-4 border-b border-slate-200 dark:border-slate-800">
               <div>
                 <h2 className="text-slate-900 dark:text-white font-bold text-lg">{t('applyForRole')}</h2>
                 <p className="text-slate-600 dark:text-slate-400 text-sm mt-0.5">
@@ -254,9 +267,7 @@ export default function AiApplyModal({
               </button>
             </div>
 
-            {/* Scrollable body */}
-            <div className="overflow-y-auto flex-1">
-              <form onSubmit={handleSubmit} className="p-6 space-y-4">
+            <form onSubmit={handleSubmit} className="p-6 space-y-4">
                 {/* Job description */}
                 <div>
                   <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide mb-1">Job description</p>
@@ -444,8 +455,7 @@ export default function AiApplyModal({
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 )}
-              </form>
-            </div>
+            </form>
           </div>
         </div>
       )}
