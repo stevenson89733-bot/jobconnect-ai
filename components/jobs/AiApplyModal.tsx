@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { createClient } from '@/lib/supabase/client'
@@ -21,6 +21,7 @@ export default function AiApplyModal({
 }) {
   const [open, setOpen] = useState(false)
   const [planState, setPlanState] = useState<PlanState>('loading')
+  const [strengths, setStrengths] = useState('')
   const [message, setMessage] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [drafted, setDrafted] = useState(false)
@@ -28,11 +29,13 @@ export default function AiApplyModal({
   const [draftError, setDraftError] = useState('')
   const [submitError, setSubmitError] = useState('')
   const [applied, setApplied] = useState(alreadyApplied)
+  const autoDraftedRef = useRef(false)
   const router = useRouter()
   const t = useTranslations('jobs')
   const tc = useTranslations('common')
   const te = useTranslations('errors')
 
+  // On mount: resolve plan + fetch profile fields for strengths
   useEffect(() => {
     async function checkPlan() {
       const supabase = createClient()
@@ -40,15 +43,25 @@ export default function AiApplyModal({
       if (!user) { setPlanState('anonymous'); return }
       const { data } = await supabase
         .from('profiles')
-        .select('is_premium, is_admin')
+        .select('is_premium, is_admin, experience, skills, education, bio')
         .eq('user_id', user.id)
         .single()
       setPlanState((data?.is_premium || data?.is_admin) ? 'pro' : 'free')
+      const parts = [data?.bio, data?.experience, data?.skills, data?.education].filter(Boolean)
+      setStrengths(parts.join('\n\n').slice(0, 2000))
     }
     checkPlan()
   }, [])
 
-  async function draftWithAi() {
+  // Auto-draft when modal opens and user is confirmed Pro — once per open
+  useEffect(() => {
+    if (open && planState === 'pro' && !autoDraftedRef.current) {
+      autoDraftedRef.current = true
+      runDraft()
+    }
+  }, [open, planState]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  async function runDraft() {
     setDrafting(true)
     setDraftError('')
     try {
@@ -59,12 +72,12 @@ export default function AiApplyModal({
           targetRole: jobTitle,
           company,
           jobDescription: description?.slice(0, 3000) ?? '',
+          strengths,
           style: 'Formal',
         }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'AI draft failed')
-
       const letter = data?.letter
       if (letter) {
         const parts = [letter.opening, letter.body, letter.closing].filter(Boolean)
@@ -119,6 +132,7 @@ export default function AiApplyModal({
     setDrafted(false)
     setDraftError('')
     setSubmitError('')
+    autoDraftedRef.current = false
     setOpen(true)
   }
 
@@ -165,7 +179,7 @@ export default function AiApplyModal({
               </button>
             </div>
 
-            {/* Body — open to all; only Draft button is Pro-gated */}
+            {/* Body */}
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               {/* Job description */}
               <div>
@@ -175,70 +189,69 @@ export default function AiApplyModal({
                 </div>
               </div>
 
-              {/* AI Draft button — Pro/admin only */}
-              <div>
-                {planState === 'pro' ? (
-                  <button
-                    type="button"
-                    onClick={draftWithAi}
-                    disabled={drafting}
-                    className="w-full inline-flex items-center justify-center gap-2 text-[13px] font-semibold rounded-lg py-2.5 border transition-colors disabled:opacity-50"
-                    style={{
-                      background: drafted ? 'rgba(87,199,227,0.08)' : 'rgba(87,199,227,0.1)',
-                      borderColor: 'rgba(87,199,227,0.4)',
-                      color: '#57C7E3',
-                    }}
-                  >
-                    {drafting ? (
-                      <>
-                        <svg className="animate-spin w-3.5 h-3.5" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-                        </svg>
-                        Drafting with AI…
-                      </>
-                    ) : drafted ? (
-                      '✦ Redraft with AI'
-                    ) : (
-                      '✦ Draft with AI'
-                    )}
-                  </button>
-                ) : (
-                  <a
-                    href="/pricing"
-                    title="Upgrade to Pro to unlock AI drafts"
-                    className="w-full inline-flex items-center justify-center gap-2 text-[13px] font-semibold rounded-lg py-2.5 border cursor-not-allowed opacity-50 select-none"
-                    style={{
-                      borderColor: 'rgba(148,163,184,0.4)',
-                      color: '#94a3b8',
-                      background: 'rgba(148,163,184,0.06)',
-                    }}
-                  >
-                    ✦ Draft with AI — Pro feature
-                  </a>
-                )}
-                {draftError && (
-                  <p className="text-red-500 text-xs mt-1.5">{draftError}</p>
-                )}
-              </div>
+              {/* Textarea area — spinner while auto-drafting for Pro, empty for free */}
+              {drafting ? (
+                <div className="flex flex-col items-center justify-center gap-3 py-8 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
+                  <svg className="animate-spin w-6 h-6 text-[#57C7E3]" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                  </svg>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Preparing your application…</p>
+                </div>
+              ) : (
+                <div>
+                  <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">
+                    {t('messageToHiringTeam')}{' '}
+                    <span className="text-slate-400 dark:text-slate-500">{t('optional')}</span>
+                  </label>
+                  <textarea
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    rows={7}
+                    placeholder={drafted ? '' : t('messagePlaceholder')}
+                    className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#57C7E3] resize-none"
+                  />
+                  {drafted && (
+                    <p className="text-[11px] text-slate-400 mt-1">AI draft — edit freely before sending.</p>
+                  )}
+                </div>
+              )}
 
-              {/* Message textarea */}
-              <div>
-                <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1.5">
-                  {t('messageToHiringTeam')}{' '}
-                  <span className="text-slate-400 dark:text-slate-500">{t('optional')}</span>
-                </label>
-                <textarea
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  rows={7}
-                  placeholder={drafted ? '' : t('messagePlaceholder')}
-                  className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#57C7E3] resize-none"
-                />
-                {drafted && (
-                  <p className="text-[11px] text-slate-400 mt-1">AI draft — edit freely before sending.</p>
-                )}
-              </div>
+              {/* Redraft button (Pro) or upgrade prompt (free/anonymous) */}
+              {!drafting && (
+                <div>
+                  {planState === 'pro' ? (
+                    <button
+                      type="button"
+                      onClick={() => { autoDraftedRef.current = true; runDraft() }}
+                      className="w-full inline-flex items-center justify-center gap-2 text-[13px] font-semibold rounded-lg py-2.5 border transition-colors"
+                      style={{
+                        background: 'rgba(87,199,227,0.08)',
+                        borderColor: 'rgba(87,199,227,0.4)',
+                        color: '#57C7E3',
+                      }}
+                    >
+                      {drafted ? '✦ Redraft with AI' : '✦ Draft with AI'}
+                    </button>
+                  ) : (
+                    <a
+                      href="/pricing"
+                      title="Upgrade to Pro to unlock AI drafts"
+                      className="w-full inline-flex items-center justify-center gap-2 text-[13px] font-semibold rounded-lg py-2.5 border opacity-50 select-none"
+                      style={{
+                        borderColor: 'rgba(148,163,184,0.4)',
+                        color: '#94a3b8',
+                        background: 'rgba(148,163,184,0.06)',
+                      }}
+                    >
+                      ✦ Draft with AI — Upgrade to Pro
+                    </a>
+                  )}
+                  {draftError && (
+                    <p className="text-red-500 text-xs mt-1.5">{draftError}</p>
+                  )}
+                </div>
+              )}
 
               {submitError && <p className="text-red-600 dark:text-red-400 text-sm">{submitError}</p>}
 
@@ -252,7 +265,7 @@ export default function AiApplyModal({
                 </button>
                 <button
                   type="submit"
-                  disabled={submitting}
+                  disabled={submitting || drafting}
                   className="flex-1 py-2.5 text-sm font-semibold text-white rounded-lg transition-colors disabled:opacity-50"
                   style={{ background: '#57C7E3' }}
                 >
