@@ -216,6 +216,7 @@ export default function JobCard({
               jobTitle={job.title}
               company={job.company_name}
               description={job.description}
+              tags={job.tags}
               applyUrl={job.apply_url}
               alreadyApplied={alreadyApplied}
             />
@@ -226,6 +227,7 @@ export default function JobCard({
             jobTitle={job.title}
             company={job.company_name}
             description={job.description}
+            tags={job.tags}
             alreadyApplied={alreadyApplied}
           />
         )}
