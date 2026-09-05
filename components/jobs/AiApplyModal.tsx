@@ -4,10 +4,15 @@ import { createPortal } from 'react-dom'
 import { useRouter } from 'next/navigation'
 import { ExternalLink } from 'lucide-react'
 
+type Step = 'preparing' | 'ready'
 type CoverLetterMode = 'write' | 'upload'
 
 const stripHtml = (html: string) =>
   html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
+
+function makeBlobUrl(text: string): string {
+  return URL.createObjectURL(new Blob([text], { type: 'text/plain' }))
+}
 
 function Spinner({ className = 'w-4 h-4' }: { className?: string }) {
   return (
@@ -41,9 +46,29 @@ export default function AiApplyModal({
   const [mounted, setMounted] = useState(false)
   const router = useRouter()
 
-  // Profile
-  const [isPro, setIsPro]                 = useState(false)
-  const [profileLoaded, setProfileLoaded] = useState(false)
+  // ── States ────────────────────────────────────────────────────────────────
+  const [isPro, setIsPro]                   = useState(false)
+  const [profileLoaded, setProfileLoaded]   = useState(false)
+  const [step, setStep]                     = useState<Step>('preparing')
+  const [coverLetter, setCoverLetter]       = useState('')
+  const [adaptedCvText, setAdaptedCvText]   = useState('')
+  const [adaptedCvUrl, setAdaptedCvUrl]     = useState('')
+  const [coverLetterUrl, setCoverLetterUrl] = useState('')
+  const [draftError, setDraftError]         = useState('')
+  const pipelineRanRef = useRef(false)
+
+  // Free flow
+  const [clMode, setClMode] = useState<CoverLetterMode>('write')
+  const [cvFile, setCvFile] = useState<File | null>(null)
+  const [clFile, setClFile] = useState<File | null>(null)
+
+  // Submit
+  const [submitting, setSubmitting]       = useState(false)
+  const [submitError, setSubmitError]     = useState('')
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [applied, setApplied]             = useState(alreadyApplied)
+
+  // Profile ref to avoid stale closures in pipeline
   const profileRef = useRef<{
     full_name: string | null
     headline: string | null
@@ -51,25 +76,6 @@ export default function AiApplyModal({
     experience: string | null
     skills: string | null
   } | null>(null)
-
-  // Pro pipeline
-  const [drafting, setDrafting]         = useState(false)
-  const [draftError, setDraftError]     = useState('')
-  const [adaptedCv, setAdaptedCv]       = useState('')
-  const [coverLetter, setCoverLetter]   = useState('')
-  const [draftReady, setDraftReady]     = useState(false)
-  const pipelineRanRef = useRef(false)
-
-  // Free flow
-  const [clMode, setClMode]   = useState<CoverLetterMode>('write')
-  const [cvFile, setCvFile]   = useState<File | null>(null)
-  const [clFile, setClFile]   = useState<File | null>(null)
-
-  // Submit
-  const [submitting, setSubmitting]       = useState(false)
-  const [submitError, setSubmitError]     = useState('')
-  const [submitSuccess, setSubmitSuccess] = useState(false)
-  const [applied, setApplied]             = useState(alreadyApplied)
 
   // ── SSR guard ──────────────────────────────────────────────────────────────
   useEffect(() => { setMounted(true) }, [])
@@ -80,54 +86,60 @@ export default function AiApplyModal({
     return () => { document.body.style.overflow = '' }
   }, [open])
 
-  // ── Fetch profile on mount ─────────────────────────────────────────────────
+  // ── Mount: load profile then run pipeline if Pro ───────────────────────────
   useEffect(() => {
-    async function loadProfile() {
+    async function init() {
       try {
         const res = await fetch('/api/candidate/profile')
         if (!res.ok) { setProfileLoaded(true); return }
-        const { is_admin, plan, full_name, headline, bio, experience, skills } = await res.json()
-        const pro = is_admin === true || plan === 'pro' || plan === 'premium'
-        console.log('[AiApplyModal] isPro:', pro, 'is_admin:', is_admin, 'plan:', plan)
+        const data = await res.json()
+
+        const pro = data.is_admin === true || data.plan === 'pro' || data.plan === 'premium'
+        console.log('[AiApplyModal] isPro:', pro, 'is_admin:', data.is_admin, 'plan:', data.plan)
+
+        profileRef.current = {
+          full_name:  data.full_name  ?? null,
+          headline:   data.headline   ?? null,
+          bio:        data.bio        ?? null,
+          experience: data.experience ?? null,
+          skills:     data.skills     ?? null,
+        }
+
         setIsPro(pro)
-        profileRef.current = { full_name, headline, bio, experience, skills }
+        setProfileLoaded(true)
+
+        if (pro && !pipelineRanRef.current) {
+          pipelineRanRef.current = true
+          await runPipeline(profileRef.current)
+        }
       } catch (err) {
-        console.error('[AiApplyModal] loadProfile error:', err)
-      } finally {
+        console.error('[AiApplyModal] init error:', err)
         setProfileLoaded(true)
       }
     }
-    loadProfile()
-  }, [])
+    init()
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ── Auto-run Pro pipeline when modal opens ─────────────────────────────────
-  useEffect(() => {
-    if (open && isPro && profileLoaded && !pipelineRanRef.current) {
-      pipelineRanRef.current = true
-      runPipeline()
-    }
-  }, [open, isPro, profileLoaded]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  // ── Pro pipeline: adapt-cv → cover-letter ─────────────────────────────────
-  async function runPipeline() {
-    setDrafting(true)
+  // ── Pro pipeline ───────────────────────────────────────────────────────────
+  async function runPipeline(p: typeof profileRef.current) {
+    setStep('preparing')
     setDraftError('')
-    setDraftReady(false)
-    setAdaptedCv('')
+    setAdaptedCvText('')
+    setAdaptedCvUrl('')
     setCoverLetter('')
+    setCoverLetterUrl('')
 
-    const p = profileRef.current
     const jobDesc = description ? stripHtml(description) : tags?.join(', ') ?? ''
     const strengths = [
-      p?.full_name ? `Name: ${p.full_name}` : null,
-      p?.headline  ? `Role: ${p.headline}` : null,
-      p?.bio       ? `Bio: ${p.bio}` : null,
+      p?.full_name  ? `Name: ${p.full_name}` : null,
+      p?.headline   ? `Role: ${p.headline}` : null,
+      p?.bio        ? `Bio: ${p.bio}` : null,
       p?.experience ? `Experience:\n${p.experience}` : null,
-      p?.skills    ? `Skills: ${p.skills}` : null,
+      p?.skills     ? `Skills: ${p.skills}` : null,
     ].filter(Boolean).join('\n\n')
 
     try {
-      // Step 1 — Adapt CV
+      // A) Adapt CV
       const cvRes = await fetch('/api/ai/adapt-cv', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -149,9 +161,12 @@ export default function AiApplyModal({
       })
       const cvData = await cvRes.json()
       if (!cvRes.ok) throw new Error(cvData.error || 'CV adaptation failed')
-      if (cvData.adaptedCv) setAdaptedCv(cvData.adaptedCv)
+      if (cvData.adaptedCv) {
+        setAdaptedCvText(cvData.adaptedCv)
+        setAdaptedCvUrl(makeBlobUrl(cvData.adaptedCv))
+      }
 
-      // Step 2 — Cover letter
+      // B) Cover letter
       const clRes = await fetch('/api/ai/cover-letter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -164,17 +179,17 @@ export default function AiApplyModal({
       })
       const clData = await clRes.json()
       if (!clRes.ok) throw new Error(clData.error || 'Cover letter generation failed')
-
       const letter = clData?.letter
       if (letter) {
-        const parts = [letter.opening, letter.body, letter.closing].filter(Boolean)
-        setCoverLetter(parts.join('\n\n'))
-        setDraftReady(true)
+        const text = [letter.opening, letter.body, letter.closing].filter(Boolean).join('\n\n')
+        setCoverLetter(text)
+        setCoverLetterUrl(makeBlobUrl(text))
       }
+
+      setStep('ready')
     } catch (err) {
       setDraftError(err instanceof Error ? err.message : 'Generation failed — please try again.')
-    } finally {
-      setDrafting(false)
+      setStep('ready')
     }
   }
 
@@ -204,20 +219,20 @@ export default function AiApplyModal({
   }
 
   function handleOpen() {
-    setCoverLetter('')
-    setAdaptedCv('')
-    setDraftError('')
     setSubmitError('')
     setSubmitSuccess(false)
     setCvFile(null)
     setClFile(null)
     setClMode('write')
-    setDraftReady(false)
-    pipelineRanRef.current = false
     setOpen(true)
   }
 
   function handleClose() { setOpen(false) }
+
+  async function handleRedraft() {
+    pipelineRanRef.current = true
+    await runPipeline(profileRef.current)
+  }
 
   // ── Trigger ────────────────────────────────────────────────────────────────
   const trigger = applied ? (
@@ -241,9 +256,171 @@ export default function AiApplyModal({
 
   const jobDescText = description?.trim()
     ? stripHtml(description)
-    : tags?.length
-    ? tags.join(' · ')
-    : 'No description available.'
+    : tags?.length ? tags.join(' · ') : 'No description available.'
+
+  // ── Modal content ──────────────────────────────────────────────────────────
+  let body: React.ReactNode
+
+  if (!profileLoaded) {
+    body = (
+      <div className="flex flex-col items-center justify-center gap-3 py-16">
+        <Spinner className="w-6 h-6 text-[#57C7E3]" />
+        <p className="text-sm text-slate-500">Loading…</p>
+      </div>
+    )
+  } else if (isPro && step === 'preparing') {
+    body = (
+      <div className="flex flex-col items-center justify-center gap-3 py-16 rounded-xl border border-slate-200 bg-slate-50">
+        <Spinner className="w-6 h-6 text-[#57C7E3]" />
+        <p className="text-sm font-semibold text-slate-500">
+          ✦ Generating your CV + Cover Letter for {jobTitle}…
+        </p>
+      </div>
+    )
+  } else if (isPro && step === 'ready') {
+    body = (
+      <div className="space-y-4">
+        {draftError && (
+          <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+            {draftError}
+          </p>
+        )}
+
+        {/* Adapted CV */}
+        {adaptedCvText && (
+          <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 space-y-2">
+            <p className="text-xs font-semibold text-emerald-700">
+              ✓ CV adapted for {jobTitle} at {company}
+            </p>
+            <a
+              href={adaptedCvUrl}
+              download={`CV-${company.replace(/\s+/g, '-')}.txt`}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 hover:underline"
+            >
+              ⬇ Download Adapted CV
+            </a>
+          </div>
+        )}
+
+        {/* Cover letter */}
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
+              Cover letter <span className="normal-case font-normal">(optional)</span>
+            </p>
+            {coverLetterUrl && (
+              <a
+                href={coverLetterUrl}
+                download={`CoverLetter-${company.replace(/\s+/g, '-')}.txt`}
+                className="text-xs font-semibold text-[#57C7E3] hover:underline"
+              >
+                ⬇ Download
+              </a>
+            )}
+          </div>
+          <textarea
+            value={coverLetter}
+            onChange={e => {
+              setCoverLetter(e.target.value)
+              setCoverLetterUrl(makeBlobUrl(e.target.value))
+            }}
+            rows={9}
+            placeholder="Your cover letter will appear here…"
+            className="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#57C7E3] resize-none"
+          />
+        </div>
+
+        {/* Redraft */}
+        <button
+          type="button"
+          onClick={handleRedraft}
+          className="w-full flex items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-semibold border transition-colors"
+          style={{ background: 'rgba(87,199,227,0.07)', borderColor: 'rgba(87,199,227,0.35)', color: '#57C7E3' }}
+        >
+          ↺ Redraft
+        </button>
+      </div>
+    )
+  } else {
+    // Freemium
+    body = (
+      <div className="space-y-4">
+        {/* CV upload */}
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-400 mb-2">
+            Your CV <span className="normal-case font-normal text-slate-400">(optional)</span>
+          </p>
+          <label className="flex items-center gap-2 w-full cursor-pointer rounded-lg border-2 border-dashed border-slate-200 px-4 py-3 text-sm text-slate-500 hover:border-[#57C7E3] hover:text-[#57C7E3] transition-colors">
+            {cvFile
+              ? <><span className="flex-1 truncate font-medium text-slate-700">{cvFile.name}</span><span className="text-xs text-slate-400 shrink-0">Replace</span></>
+              : '↑ Upload CV — PDF, DOC'}
+            <input
+              type="file"
+              accept=".pdf,.doc,.docx"
+              className="hidden"
+              onChange={e => { const f = e.target.files?.[0]; if (f) setCvFile(f); e.target.value = '' }}
+            />
+          </label>
+        </div>
+
+        {/* Cover letter */}
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
+              Cover letter <span className="normal-case font-normal text-slate-400">(optional)</span>
+            </p>
+            <div className="flex rounded-lg border border-slate-200 overflow-hidden text-[12px]">
+              {(['write', 'upload'] as CoverLetterMode[]).map(mode => (
+                <button
+                  key={mode}
+                  type="button"
+                  onClick={() => setClMode(mode)}
+                  className={`px-3 py-1 capitalize transition-colors ${
+                    clMode === mode
+                      ? 'bg-[#57C7E3] text-white font-semibold'
+                      : 'text-slate-500 hover:text-slate-700'
+                  }`}
+                >
+                  {mode}
+                </button>
+              ))}
+            </div>
+          </div>
+          {clMode === 'write' ? (
+            <textarea
+              value={coverLetter}
+              onChange={e => setCoverLetter(e.target.value)}
+              rows={5}
+              placeholder="Briefly explain why you are a great fit…"
+              className="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#57C7E3] resize-none"
+            />
+          ) : (
+            <label className="flex items-center gap-2 w-full cursor-pointer rounded-lg border-2 border-dashed border-slate-200 px-4 py-3 text-sm text-slate-500 hover:border-[#57C7E3] hover:text-[#57C7E3] transition-colors">
+              {clFile
+                ? <><span className="flex-1 truncate font-medium text-slate-700">{clFile.name}</span><span className="text-xs text-slate-400 shrink-0">Replace</span></>
+                : '↑ Upload cover letter — PDF, DOC'}
+              <input
+                type="file"
+                accept=".pdf,.doc,.docx"
+                className="hidden"
+                onChange={e => { const f = e.target.files?.[0]; if (f) setClFile(f); e.target.value = '' }}
+              />
+            </label>
+          )}
+        </div>
+
+        {/* Locked AI button */}
+        <button
+          type="button"
+          onClick={() => router.push('/pricing')}
+          className="w-full flex items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-semibold border opacity-50 cursor-pointer"
+          style={{ borderColor: 'rgba(148,163,184,0.4)', color: '#94a3b8', background: 'rgba(148,163,184,0.06)' }}
+        >
+          ✦ Draft with AI — Upgrade to Pro
+        </button>
+      </div>
+    )
+  }
 
   const modal = (
     <div
@@ -260,9 +437,7 @@ export default function AiApplyModal({
           <div>
             <h2 className="font-bold text-lg text-slate-900 leading-snug">Apply for this role</h2>
             <p className="text-sm text-slate-500 mt-0.5">
-              {jobTitle}
-              {' · '}
-              <span className="font-medium text-slate-700">{company}</span>
+              {jobTitle} {' · '} <span className="font-medium text-slate-700">{company}</span>
             </p>
           </div>
           <button
@@ -276,7 +451,6 @@ export default function AiApplyModal({
 
         <form onSubmit={handleSubmit}>
           <div className="px-6 py-5 space-y-5">
-
             {/* Success */}
             {submitSuccess ? (
               <div className="flex flex-col items-center gap-4 py-10">
@@ -285,11 +459,7 @@ export default function AiApplyModal({
                   <p className="font-bold text-lg text-emerald-700">Application submitted!</p>
                   <p className="text-sm text-slate-500 mt-1">Application sent to {company}.</p>
                 </div>
-                <button
-                  type="button"
-                  onClick={handleClose}
-                  className="px-6 py-2.5 rounded-lg text-sm font-semibold border border-slate-200 hover:bg-slate-50 transition-colors"
-                >
+                <button type="button" onClick={handleClose} className="px-6 py-2.5 rounded-lg text-sm font-semibold border border-slate-200 hover:bg-slate-50 transition-colors">
                   Close
                 </button>
               </div>
@@ -303,139 +473,7 @@ export default function AiApplyModal({
                   </div>
                 </div>
 
-                {/* PRO / ADMIN */}
-                {isPro ? (
-                  <div className="space-y-4">
-                    {drafting ? (
-                      <div className="flex flex-col items-center justify-center gap-3 py-12 rounded-xl border border-slate-200 bg-slate-50">
-                        <Spinner className="w-6 h-6 text-[#57C7E3]" />
-                        <p className="text-sm font-semibold text-slate-500">✦ Preparing your application…</p>
-                      </div>
-                    ) : (
-                      <>
-                        {/* Adapted CV badge */}
-                        {adaptedCv && (
-                          <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2">
-                            <p className="text-xs font-semibold text-emerald-700">
-                              ✓ CV adapted for {jobTitle} at {company}
-                            </p>
-                          </div>
-                        )}
-
-                        {draftError && (
-                          <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
-                            {draftError}
-                          </p>
-                        )}
-
-                        {draftReady && (
-                          <p className="text-xs font-semibold text-[#57C7E3]">✦ AI draft ready — edit freely</p>
-                        )}
-
-                        {/* Cover letter textarea */}
-                        <div>
-                          <label className="block text-[11px] font-semibold uppercase tracking-widest text-slate-400 mb-2">
-                            Cover letter <span className="normal-case font-normal">(optional)</span>
-                          </label>
-                          <textarea
-                            value={coverLetter}
-                            onChange={e => setCoverLetter(e.target.value)}
-                            rows={9}
-                            placeholder="Your cover letter will appear here…"
-                            className="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#57C7E3] resize-none"
-                          />
-                        </div>
-
-                        {/* Redraft */}
-                        <button
-                          type="button"
-                          onClick={() => { pipelineRanRef.current = true; runPipeline() }}
-                          className="w-full flex items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-semibold border transition-colors"
-                          style={{ background: 'rgba(87,199,227,0.07)', borderColor: 'rgba(87,199,227,0.35)', color: '#57C7E3' }}
-                        >
-                          ↺ Redraft
-                        </button>
-                      </>
-                    )}
-                  </div>
-                ) : (
-                  /* FREEMIUM */
-                  <div className="space-y-4">
-                    {/* CV upload */}
-                    <div>
-                      <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-400 mb-2">
-                        Your CV <span className="normal-case font-normal text-slate-400">(optional)</span>
-                      </p>
-                      <label className="flex items-center gap-2 w-full cursor-pointer rounded-lg border-2 border-dashed border-slate-200 px-4 py-3 text-sm text-slate-500 hover:border-[#57C7E3] hover:text-[#57C7E3] transition-colors">
-                        {cvFile
-                          ? <><span className="flex-1 truncate font-medium text-slate-700">{cvFile.name}</span><span className="text-xs text-slate-400 shrink-0">Replace</span></>
-                          : '↑ Upload CV — PDF, DOC'}
-                        <input
-                          type="file"
-                          accept=".pdf,.doc,.docx"
-                          className="hidden"
-                          onChange={e => { const f = e.target.files?.[0]; if (f) setCvFile(f); e.target.value = '' }}
-                        />
-                      </label>
-                    </div>
-
-                    {/* Cover letter */}
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
-                          Cover letter <span className="normal-case font-normal text-slate-400">(optional)</span>
-                        </p>
-                        <div className="flex rounded-lg border border-slate-200 overflow-hidden text-[12px]">
-                          {(['write', 'upload'] as CoverLetterMode[]).map(mode => (
-                            <button
-                              key={mode}
-                              type="button"
-                              onClick={() => setClMode(mode)}
-                              className={`px-3 py-1 capitalize transition-colors ${
-                                clMode === mode
-                                  ? 'bg-[#57C7E3] text-white font-semibold'
-                                  : 'text-slate-500 hover:text-slate-700'
-                              }`}
-                            >
-                              {mode}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                      {clMode === 'write' ? (
-                        <textarea
-                          value={coverLetter}
-                          onChange={e => setCoverLetter(e.target.value)}
-                          rows={5}
-                          placeholder="Briefly explain why you are a great fit…"
-                          className="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#57C7E3] resize-none"
-                        />
-                      ) : (
-                        <label className="flex items-center gap-2 w-full cursor-pointer rounded-lg border-2 border-dashed border-slate-200 px-4 py-3 text-sm text-slate-500 hover:border-[#57C7E3] hover:text-[#57C7E3] transition-colors">
-                          {clFile
-                            ? <><span className="flex-1 truncate font-medium text-slate-700">{clFile.name}</span><span className="text-xs text-slate-400 shrink-0">Replace</span></>
-                            : '↑ Upload cover letter — PDF, DOC'}
-                          <input
-                            type="file"
-                            accept=".pdf,.doc,.docx"
-                            className="hidden"
-                            onChange={e => { const f = e.target.files?.[0]; if (f) setClFile(f); e.target.value = '' }}
-                          />
-                        </label>
-                      )}
-                    </div>
-
-                    {/* Locked AI draft */}
-                    <button
-                      type="button"
-                      onClick={() => router.push('/pricing')}
-                      className="w-full flex items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-semibold border opacity-50 cursor-pointer"
-                      style={{ borderColor: 'rgba(148,163,184,0.4)', color: '#94a3b8', background: 'rgba(148,163,184,0.06)' }}
-                    >
-                      ✦ Draft with AI — Upgrade to Pro
-                    </button>
-                  </div>
-                )}
+                {body}
 
                 {submitError && (
                   <p className="text-sm text-red-600">{submitError}</p>
@@ -445,7 +483,7 @@ export default function AiApplyModal({
           </div>
 
           {/* Actions */}
-          {!submitSuccess && (
+          {!submitSuccess && profileLoaded && step !== 'preparing' && (
             <div className="flex gap-3 px-6 pb-5 border-t border-slate-100 pt-4">
               <button
                 type="button"
@@ -456,20 +494,18 @@ export default function AiApplyModal({
               </button>
               <button
                 type="submit"
-                disabled={submitting || drafting}
+                disabled={submitting}
                 className="flex-1 py-3 rounded-lg text-sm font-bold text-white transition-colors disabled:opacity-50"
                 style={{ background: '#57C7E3' }}
               >
-                {submitting ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <Spinner /> Submitting…
-                  </span>
-                ) : 'Submit Application'}
+                {submitting
+                  ? <span className="flex items-center justify-center gap-2"><Spinner /> Submitting…</span>
+                  : 'Submit Application'}
               </button>
             </div>
           )}
 
-          {/* Company website link */}
+          {/* Company website */}
           {applyUrl && !submitSuccess && (
             <div className="px-6 pb-5">
               <a
