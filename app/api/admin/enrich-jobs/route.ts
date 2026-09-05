@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     .from('profiles').select('is_admin').eq('user_id', user.id).single()
   if (!profile?.is_admin) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
-  const { ok } = rateLimit(`admin:enrich-jobs:${user.id ?? getClientIp()}`, 5, 60 * 60 * 1000)
+  const { ok } = rateLimit(`admin:enrich-jobs:${user.id ?? getClientIp()}`, 100, 60 * 60 * 1000)
   if (!ok) return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 })
 
   const admin = createAdminClient()
