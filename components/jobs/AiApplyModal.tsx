@@ -32,23 +32,7 @@ type Profile = {
   skills:     string | null
 }
 
-function cleanMd(line: string) {
-  return line.replace(/^\*+|\*+$/g, '').replace(/^#+\s*/, '').trim()
-}
-
-function isCvSectionHeader(raw: string) {
-  const t = raw.trim()
-  if (!t || t.length > 50) return false
-  const clean = cleanMd(t)
-  return (
-    /^\*\*[^*]+\*\*$/.test(t) ||           // **Bold**
-    /^#+\s/.test(t) ||                       // ## Markdown header
-    (clean === clean.toUpperCase() && clean.length >= 3) || // ALL CAPS
-    /^[A-Z][a-zA-Z\s&]+:$/.test(clean)      // Title Case:
-  )
-}
-
-// CV: line height = font-size 10 × 1.5 spacing → ~5.3 mm
+// CV: font-size 10 × line-spacing 1.5 → ~5.3 mm per line
 const CV_LINE_H = 5.3
 
 async function buildCvPdf(p: Profile | null, cvText: string, job: { title: string; company: string }): Promise<Blob> {
@@ -71,53 +55,63 @@ async function buildCvPdf(p: Profile | null, cvText: string, job: { title: strin
     doc.text(p.headline, cx, y, { align: 'center' }); y += 6
   }
 
-  // Email · (phone · linkedin si disponibles)
-  const contactParts: string[] = []
-  if (p?.email) contactParts.push(p.email)
-  if (contactParts.length > 0) {
+  if (p?.email) {
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(10)
     doc.setTextColor(100, 116, 139)
-    doc.text(contactParts.join(' · '), cx, y, { align: 'center' }); y += 5
+    doc.text(p.email, cx, y, { align: 'center' }); y += 5
   }
 
   // Ligne séparatrice header
   y += 2
-  doc.setDrawColor(203, 213, 225) // slate-300
+  doc.setDrawColor(203, 213, 225)
   doc.setLineWidth(0.5)
   doc.line(ml, y, W - mr, y); y += 8
 
-  // ── SECTIONS ────────────────────────────────────────────────────────────
-  const rawLines = cvText.split('\n')
-  for (const raw of rawLines) {
-    if (!raw.trim()) { y += 3; continue }
+  // ── HELPER : rend une section structurée ─────────────────────────────────
+  // Sections are always hardcoded — never parsed from AI output,
+  // because the API returns narrative prose, not structured headers.
+  function renderSection(title: string, content: string) {
+    if (!content?.trim()) return
+    if (y > 258) { doc.addPage(); y = 20 }
 
-    if (isCvSectionHeader(raw)) {
-      if (y > 262) { doc.addPage(); y = 20 }
+    y += 4 // espace avant section
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(13)
+    doc.setTextColor(15, 23, 42)
+    doc.text(title.toUpperCase(), ml, y); y += 4
 
-      y += 8 // espace avant section
-      doc.setFont('helvetica', 'bold')
-      doc.setFontSize(13)
-      doc.setTextColor(15, 23, 42)
-      const title = cleanMd(raw).replace(/:$/, '').toUpperCase()
-      doc.text(title, ml, y); y += 4 // espace après sous-titre
+    doc.setDrawColor(203, 213, 225)
+    doc.setLineWidth(0.3)
+    doc.line(ml, y, W - mr, y); y += 4
 
-      // Ligne fine sous le sous-titre
-      doc.setDrawColor(203, 213, 225)
-      doc.setLineWidth(0.3)
-      doc.line(ml, y, W - mr, y); y += 4
-    } else {
-      doc.setFont('helvetica', 'normal')
-      doc.setFontSize(10)
-      doc.setTextColor(51, 65, 85)
-      const line = cleanMd(raw)
-      const wrapped = doc.splitTextToSize(line, tw)
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(10)
+    doc.setTextColor(51, 65, 85)
+
+    const paras = content.trim().split(/\n{2,}/)
+    for (const para of paras) {
+      const wrapped = doc.splitTextToSize(para.trim(), tw)
       for (const wl of wrapped) {
-        if (y > 277) { doc.addPage(); y = 20 }
+        if (y > 278) { doc.addPage(); y = 20 }
         doc.text(wl, ml, y); y += CV_LINE_H
       }
+      y += 2 // inter-paragraphe
     }
   }
+
+  // ── SECTIONS — structure imposée, contenu depuis le profil ───────────────
+  // cvText (adapt-cv output) → Professional Summary
+  // profile fields → Experience, Skills
+  renderSection('Professional Summary', cvText)
+  if (p?.experience) renderSection('Experience', p.experience)
+  if (p?.skills)     renderSection('Skills',      p.skills)
+
+  // Footer discret
+  doc.setFont('helvetica', 'italic')
+  doc.setFontSize(8)
+  doc.setTextColor(148, 163, 184)
+  doc.text(`Adapted for: ${job.title} at ${job.company}`, cx, 291, { align: 'center' })
 
   return doc.output('blob')
 }
