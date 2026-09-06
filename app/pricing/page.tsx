@@ -186,6 +186,7 @@ export default function PricingPage() {
             <div className="flex flex-wrap gap-3 justify-center">
               <a href="/ai-tools/resume-builder" className="btn-primary text-sm py-2 px-5">{t('goToResumeBuilder')}</a>
               <a href="/ai-tools/cover-letter" className="btn-outline text-sm py-2 px-5">{t('goToCoverLetter')}</a>
+              <a href="/auto-apply" className="btn-outline text-sm py-2 px-5 border-cyan-500/50 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-500/10">🤖 Auto-Apply Beta</a>
             </div>
           </div>
         )}
@@ -299,6 +300,24 @@ export default function PricingPage() {
             )}
           </div>
         </div>
+
+        {/* ── Auto-Apply Beta callout ─────────────────────────── */}
+        <Link
+          href="/auto-apply"
+          className="mt-6 flex items-center justify-between gap-4 rounded-2xl border border-cyan-500/25 bg-gradient-to-r from-[#10152A] to-[#0f1a35] px-6 py-4 hover:border-cyan-500/50 transition-colors group"
+        >
+          <div className="flex items-center gap-4">
+            <span className="text-2xl">🤖</span>
+            <div>
+              <div className="flex items-center gap-2 mb-0.5">
+                <span className="font-bold text-white text-sm">Auto-Apply Beta</span>
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">Pro · Beta</span>
+              </div>
+              <p className="text-xs text-slate-400">Let AI find and apply to remote jobs for you — every day.</p>
+            </div>
+          </div>
+          <span className="text-cyan-400 text-sm font-semibold group-hover:translate-x-0.5 transition-transform">Learn more →</span>
+        </Link>
       </section>
 
       {/* ── For Employers ──────────────────────────────────────── */}
