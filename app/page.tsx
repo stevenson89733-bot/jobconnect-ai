@@ -181,6 +181,17 @@ export default async function Home() {
                 </Link>
               </div>
 
+              {/* Auto-Apply teaser */}
+              <Link
+                href="/auto-apply"
+                className="inline-flex items-center gap-2 text-[13px] font-semibold text-cyan-400 hover:text-cyan-300 transition-colors mb-5"
+              >
+                <span className="flex items-center gap-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1">
+                  🤖 <span>Auto-Apply Beta — let AI apply for you daily</span>
+                  <span className="opacity-60">→</span>
+                </span>
+              </Link>
+
               {/* Flag row */}
               <div className="flex items-center gap-3 justify-center lg:justify-start">
                 <span className="flex gap-1 text-2xl">🇺🇸🇬🇧🇩🇪🇫🇷🇨🇦</span>
@@ -482,6 +493,39 @@ export default async function Home() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+      </FadeIn>
+
+      {/* ── Auto-Apply strip ──────────────────────────────────── */}
+      <FadeIn>
+        <section style={{ background: '#10152A', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 py-14 text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1.5 text-sm font-semibold text-cyan-400 mb-5">
+              ⭐ Pro · Beta
+            </div>
+            <h2 className="font-extrabold text-white leading-tight mb-4" style={{ fontSize: 'clamp(24px, 3.5vw, 40px)' }}>
+              Too busy to apply? Let AI do it for you.
+            </h2>
+            <p className="text-slate-400 mb-8 max-w-lg mx-auto" style={{ fontSize: '16px', lineHeight: '1.7' }}>
+              Upload your CV once — JobConnect AI finds verified remote jobs and sends personalized applications on your behalf, every day.
+            </p>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Link
+                href="/auto-apply"
+                className="inline-flex items-center gap-2 font-bold rounded-full px-7 py-3.5 text-[15px] text-slate-900 transition-all hover:brightness-110"
+                style={{ background: '#22D3EE' }}
+              >
+                🤖 Discover Auto-Apply →
+              </Link>
+              <Link
+                href="/pricing"
+                className="inline-flex items-center gap-2 border font-semibold rounded-full px-7 py-3.5 text-[15px] text-cyan-400 transition-colors hover:bg-cyan-500/10"
+                style={{ borderColor: 'rgba(34,211,238,0.35)' }}
+              >
+                View Pro plans
+              </Link>
             </div>
           </div>
         </section>
