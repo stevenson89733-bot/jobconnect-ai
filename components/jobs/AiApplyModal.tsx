@@ -220,8 +220,8 @@ export default function AiApplyModal({
   const router = useRouter()
 
   // ── Profile ────────────────────────────────────────────────────────────────
-  const [isPro, setIsPro]                 = useState(false)
-  const [profileLoaded, setProfileLoaded] = useState(false)
+  const [profileState, setProfileState] = useState<{ isPro: boolean; loaded: boolean }>({ isPro: false, loaded: false })
+  const { isPro, loaded: profileLoaded } = profileState
   const profileRef = useRef<Profile | null>(null)
 
   // ── Pro pipeline ───────────────────────────────────────────────────────────
@@ -259,10 +259,10 @@ export default function AiApplyModal({
     async function loadProfile() {
       try {
         const res = await fetch('/api/candidate/profile')
-        if (!res.ok) { setProfileLoaded(true); return }
+        if (!res.ok) { setProfileState({ isPro: false, loaded: true }); return }
 
         let data: Record<string, unknown>
-        try { data = await res.json() } catch { setProfileLoaded(true); return }
+        try { data = await res.json() } catch { setProfileState({ isPro: false, loaded: true }); return }
 
         const isAdmin = data.is_admin === true
         const plan    = typeof data.plan === 'string' ? data.plan : 'free'
@@ -281,11 +281,10 @@ export default function AiApplyModal({
           skills:     typeof data.skills     === 'string' ? data.skills     : null,
         }
 
-        setIsPro(pro)
+        setProfileState({ isPro: pro, loaded: true })
       } catch (err) {
         console.error('[AiApplyModal] loadProfile error:', err)
-      } finally {
-        setProfileLoaded(true)
+        setProfileState({ isPro: false, loaded: true })
       }
     }
     loadProfile()
@@ -453,21 +452,27 @@ export default function AiApplyModal({
   }
 
   // ── Trigger button ─────────────────────────────────────────────────────────
-  const trigger = applied ? (
-    <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-2 whitespace-nowrap">
-      ✓ Applied
+  // Stable wrapper (min-w-max) prevents layout shift when mounted flips or
+  // the portal attaches — the reserved space never collapses mid-render.
+  const trigger = (
+    <span className="inline-flex min-w-max">
+      {applied ? (
+        <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-2 whitespace-nowrap">
+          ✓ Applied
+        </span>
+      ) : (
+        <button
+          type="button"
+          onClick={handleOpen}
+          className="inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-lg border whitespace-nowrap transition-colors"
+          style={{ borderColor: BRAND, color: BRAND, background: 'rgba(87,199,227,0.07)' }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(87,199,227,0.15)' }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(87,199,227,0.07)' }}
+        >
+          ✦ Apply with AI
+        </button>
+      )}
     </span>
-  ) : (
-    <button
-      type="button"
-      onClick={handleOpen}
-      className="inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-lg border whitespace-nowrap transition-colors"
-      style={{ borderColor: BRAND, color: BRAND, background: 'rgba(87,199,227,0.07)' }}
-      onMouseEnter={e => { e.currentTarget.style.background = 'rgba(87,199,227,0.15)' }}
-      onMouseLeave={e => { e.currentTarget.style.background = 'rgba(87,199,227,0.07)' }}
-    >
-      ✦ Apply with AI
-    </button>
   )
 
   if (!mounted || !open) return trigger
@@ -481,7 +486,7 @@ export default function AiApplyModal({
 
   if (!profileLoaded) {
     body = (
-      <div className="flex flex-col items-center justify-center gap-3 py-16">
+      <div className="flex flex-col items-center justify-center gap-3 py-16 min-h-[320px]">
         <Spinner className="w-6 h-6 text-[#57C7E3]" />
         <p className="text-sm text-slate-500">Loading…</p>
       </div>
