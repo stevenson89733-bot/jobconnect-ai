@@ -16,6 +16,7 @@ import QuickActions from '@/components/dashboard/QuickActions'
 import CareerCoachSummary from '@/components/shared/CareerCoachSummary'
 import FadeIn from '@/components/dashboard/FadeIn'
 import RegistrationPixel from '@/components/analytics/RegistrationPixel'
+import AutoApplyBetaCard from '@/components/dashboard/AutoApplyBetaCard'
 
 export const dynamic = 'force-dynamic'
 
@@ -32,6 +33,7 @@ type Profile = {
   availability: string | null
   work_preference: string | null
   is_premium: boolean | null
+  is_admin: boolean | null
 }
 
 type JobRef = { title: string; company_name: string }
@@ -85,7 +87,7 @@ export default async function CandidateDashboard({
 
       const [{ data: profileData }, { data: allApplications }, { data: appsData }, { data: analysisRow }] = await Promise.all([
         supabase.from('profiles')
-          .select('full_name, title, location, bio, experience, skills, avatar_url, years_experience, portfolio_url, availability, work_preference, is_premium')
+          .select('full_name, title, location, bio, experience, skills, avatar_url, years_experience, portfolio_url, availability, work_preference, is_premium, is_admin')
           .eq('user_id', user.id).single(),
         // Full (unjoined, lightweight) set — feeds the count, the response
         // rates, and the avg response time, all from one query rather than
@@ -143,9 +145,12 @@ export default async function CandidateDashboard({
 
   const skillTags = (profile?.skills ?? '').split(',').map(s => s.trim()).filter(Boolean)
 
+  const isPro = profile?.is_admin === true || profile?.is_premium === true
+
   return (
     <div className="max-w-7xl mx-auto px-6 py-10 space-y-8">
       {searchParams.registered === '1' && <RegistrationPixel />}
+      <AutoApplyBetaCard isPro={isPro} />
       <WelcomeHeader firstName={firstName} initials={initials} avatarUrl={profile?.avatar_url ?? null} />
 
       <ProfileCompletionCard completion={completion} />
