@@ -144,13 +144,13 @@ function normalize(raw: unknown): CopilotClassification {
 }
 
 export async function classifyMessage(message: string): Promise<CopilotClassification> {
-  const apiKey = process.env.MISTRAL_API_KEY
-  if (!apiKey) throw new CopilotError('Mistral not configured', 503)
+  const apiKey = process.env.OPENAI_API_KEY
+  if (!apiKey) throw new CopilotError('OpenAI not configured', 503)
 
-  const client = new OpenAI({ apiKey, baseURL: 'https://api.mistral.ai/v1' })
+  const client = new OpenAI({ apiKey })
   try {
     const res = await client.chat.completions.create({
-      model: 'mistral-small-latest',
+      model: 'gpt-4o-mini',
       messages: [{ role: 'user', content: buildPrompt(message, getPromptLanguageName()) }],
       max_tokens: 300,
       response_format: { type: 'json_object' },
