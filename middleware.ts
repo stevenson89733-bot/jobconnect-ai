@@ -103,6 +103,9 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  // Expose pathname to server components (root layout uses it to suppress
+  // nav/footer on standalone LP pages that have their own chrome).
+  response.headers.set('x-pathname', request.nextUrl.pathname)
   return response
 }
 

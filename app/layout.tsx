@@ -1,6 +1,6 @@
 import './globals.css'
 import React from 'react'
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
 import { Inter, Noto_Sans_Arabic, Sora } from 'next/font/google'
 import Script from 'next/script'
 import { NextIntlClientProvider } from 'next-intl'
@@ -49,6 +49,9 @@ export const metadata = {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const pathname = headers().get('x-pathname') ?? ''
+  const isLp = pathname.startsWith('/lp/')
+
   let user = null
   let isAdmin = false
   let isCandidate = false
@@ -98,12 +101,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <NextIntlClientProvider messages={messages} locale={locale}>
           <ThemeProvider>
             <CountryProvider initialCountry={initialCountry}>
-              <Header userEmail={user?.email} isAdmin={isAdmin} />
+              {!isLp && <Header userEmail={user?.email} isAdmin={isAdmin} />}
               <main>{children}</main>
-              <Footer />
-              {isCandidate && <CopilotWidget />}
-              <FaqWidget />
-              <CrispChat />
+              {!isLp && <Footer />}
+              {!isLp && isCandidate && <CopilotWidget />}
+              {!isLp && <FaqWidget />}
+              {!isLp && <CrispChat />}
             </CountryProvider>
           </ThemeProvider>
         </NextIntlClientProvider>

@@ -195,7 +195,7 @@ export default async function Home() {
               {/* Flag row */}
               <div className="flex items-center gap-3 justify-center lg:justify-start">
                 <span className="flex gap-1 text-2xl">🇺🇸🇬🇧🇩🇪🇫🇷🇨🇦</span>
-                <span className="text-[13px] text-slate-400">Jobs available in 5 markets</span>
+                <span className="text-[13px] text-slate-400">Jobs available in 63 countries — 11 languages</span>
               </div>
             </div>
 
