@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import AutoApplyJoinButton from './AutoApplyJoinButton'
+import WaitlistCounter from './WaitlistCounter'
 
 export const dynamic = 'force-dynamic'
 
@@ -80,11 +81,7 @@ export default async function AutoApplyPage() {
             </Link>
           )}
 
-          {waitlistCount > 0 && (
-            <p className="mt-6 text-sm text-slate-500">
-              <span className="text-slate-300 font-semibold">{waitlistCount}</span> candidate{waitlistCount > 1 ? 's' : ''} already on the waitlist
-            </p>
-          )}
+          <WaitlistCounter initial={waitlistCount} />
         </div>
       </section>
 

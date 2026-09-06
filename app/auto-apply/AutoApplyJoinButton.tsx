@@ -8,7 +8,12 @@ export default function AutoApplyJoinButton() {
     setState('loading')
     try {
       const res = await fetch('/api/auto-apply/waitlist', { method: 'POST' })
-      setState(res.ok ? 'done' : 'error')
+      if (res.ok) {
+        setState('done')
+        window.dispatchEvent(new Event('waitlist-joined'))
+      } else {
+        setState('error')
+      }
     } catch {
       setState('error')
     }
