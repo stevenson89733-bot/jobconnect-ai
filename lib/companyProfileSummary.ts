@@ -99,7 +99,7 @@ export async function getCompanyProfileSummary(companyName: string): Promise<Com
     return null
   }
 
-  const result = await buildCompanySummary(companyName)
+  const result = await buildCompanySummary(companyName, locale)
   await saveToCache(companyName, locale, result)
   return result
 }

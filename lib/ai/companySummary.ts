@@ -12,17 +12,17 @@
 
 import OpenAI from 'openai'
 import { researchCompany, type CompanySource } from './companyResearch'
-import { getPromptLanguageName } from './promptLocale'
+import { LOCALE_LABELS, type Locale } from '@/lib/i18n/config'
 
 export type CompanySummaryResult =
   | { found: true; summary: string; sources: CompanySource[] }
   | { found: false }
 
-async function synthesize(companyName: string, researchSummary: string): Promise<string | null> {
+async function synthesize(companyName: string, researchSummary: string, locale: string): Promise<string | null> {
   const apiKey = process.env.MISTRAL_API_KEY
   if (!apiKey) return null
 
-  const languageName = getPromptLanguageName()
+  const languageName = LOCALE_LABELS[locale as Locale] ?? 'English'
   const prompt = `You are writing a short, factual "Company Overview" for a job platform. You must use ONLY the real, sourced facts below — do not add, infer, or embellish anything beyond what is literally stated, even if it sounds plausible.
 
 LANGUAGE: Write the "summary" value entirely in ${languageName}, regardless of what language the research snippets below are written in — always output in ${languageName}, never default to English unless ${languageName} IS English.
@@ -56,13 +56,13 @@ Return a JSON object: { "summary": "<2-4 sentence overview using ONLY the facts 
   }
 }
 
-export async function buildCompanySummary(companyName: string): Promise<CompanySummaryResult> {
+export async function buildCompanySummary(companyName: string, locale: string): Promise<CompanySummaryResult> {
   const research = await researchCompany(companyName)
   if (!research.found) return { found: false }
 
   // If synthesis fails (no Mistral key, API error), fall back to the real
   // research snippets as-is rather than discarding real, verified facts —
   // less polished, never fabricated either way.
-  const summary = (await synthesize(companyName, research.summary)) ?? research.summary
+  const summary = (await synthesize(companyName, research.summary, locale)) ?? research.summary
   return { found: true, summary, sources: research.sources }
 }
