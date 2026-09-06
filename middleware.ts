@@ -66,7 +66,10 @@ async function updateSession(request: NextRequest) {
   if (!user && isProtected) {
     const loginUrl = request.nextUrl.clone()
     loginUrl.pathname = '/login'
-    loginUrl.searchParams.set('redirectTo', pathname)
+    const fullPath = request.nextUrl.search
+      ? `${pathname}${request.nextUrl.search}`
+      : pathname
+    loginUrl.searchParams.set('redirectTo', fullPath)
 
     const redirectResponse = NextResponse.redirect(loginUrl)
     // Copy the refreshed session cookies onto the redirect response,
