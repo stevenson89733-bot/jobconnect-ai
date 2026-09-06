@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import Link from 'next/link'
 import AutoApplyJoinButton from './AutoApplyJoinButton'
 import WaitlistCounter from './WaitlistCounter'
@@ -26,7 +27,8 @@ export default async function AutoApplyPage() {
 
   let waitlistCount = 0
   try {
-    const { count } = await supabase
+    const adminSupabase = createAdminClient()
+    const { count } = await adminSupabase
       .from('auto_apply_waitlist')
       .select('*', { count: 'exact', head: true })
     waitlistCount = count ?? 0

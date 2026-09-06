@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 export async function POST() {
   try {
@@ -25,7 +26,7 @@ export async function POST() {
 
 export async function GET() {
   try {
-    const supabase = createClient()
+    const supabase = createAdminClient()
     const { count, error } = await supabase
       .from('auto_apply_waitlist')
       .select('*', { count: 'exact', head: true })
