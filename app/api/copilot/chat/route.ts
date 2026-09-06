@@ -24,8 +24,8 @@ type HistoryRow = {
 }
 
 async function isCandidate(supabase: ReturnType<typeof createClient>, userId: string): Promise<boolean> {
-  const { data } = await supabase.from('profiles').select('role').eq('user_id', userId).single()
-  return data?.role === 'candidate'
+  const { data } = await supabase.from('profiles').select('role, is_admin').eq('user_id', userId).single()
+  return data?.role === 'candidate' || data?.is_admin === true
 }
 
 export async function GET() {

@@ -32,11 +32,11 @@ export async function GET() {
 
   const { data: profile } = await supabase
     .from('profiles')
-    .select('role, title, skills, full_name, location, bio, experience, avatar_url, portfolio_url, availability, work_preference, years_experience, is_premium')
+    .select('role, is_admin, title, skills, full_name, location, bio, experience, avatar_url, portfolio_url, availability, work_preference, years_experience, is_premium')
     .eq('user_id', user.id)
     .single()
 
-  if (!profile || profile.role !== 'candidate') return NextResponse.json({ signals: [] })
+  if (!profile || (profile.role !== 'candidate' && !profile.is_admin)) return NextResponse.json({ signals: [] })
 
   const [{ data: applications }, { data: analysisHistory }, { data: recentJobs }] = await Promise.all([
     supabase
