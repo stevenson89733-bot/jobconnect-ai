@@ -557,27 +557,27 @@ export default function PostJobModal({
                   {himalayasError && (
                     <p className="text-xs text-red-500 dark:text-red-400 px-3">{himalayasError}</p>
                   )}
-                  {himalayasResult && (
+                  {himalayas && (
                     <p className="text-xs text-slate-600 dark:text-slate-400 px-3">
-                      ✓ Himalayas: <span className="font-bold text-emerald-700 dark:text-emerald-400">{himalayasResult.imported}</span> imported, <span className="font-bold text-slate-800 dark:text-slate-200">{himalayasResult.deduplicated}</span> deduplicated
+                      ✓ Himalayas: <span className="font-bold text-emerald-700 dark:text-emerald-400">{himalayas.imported}</span> imported, <span className="font-bold text-slate-800 dark:text-slate-200">{himalayas.deduplicated}</span> deduplicated
                     </p>
                   )}
 
                   {jobicyError && (
                     <p className="text-xs text-red-500 dark:text-red-400 px-3">{jobicyError}</p>
                   )}
-                  {jobicyResult && (
+                  {jobicy && (
                     <p className="text-xs text-slate-600 dark:text-slate-400 px-3">
-                      ✓ Jobicy: <span className="font-bold text-emerald-700 dark:text-emerald-400">{jobicyResult.imported}</span> imported, <span className="font-bold text-slate-800 dark:text-slate-200">{jobicyResult.deduplicated}</span> deduplicated
+                      ✓ Jobicy: <span className="font-bold text-emerald-700 dark:text-emerald-400">{jobicy.imported}</span> imported, <span className="font-bold text-slate-800 dark:text-slate-200">{jobicy.deduplicated}</span> deduplicated
                     </p>
                   )}
 
                   {greenhouseError && (
                     <p className="text-xs text-red-500 dark:text-red-400 px-3">{greenhouseError}</p>
                   )}
-                  {greenhouseResult && (
+                  {greenhouse && (
                     <p className="text-xs text-slate-600 dark:text-slate-400 px-3">
-                      ✓ Greenhouse: <span className="font-bold text-emerald-700 dark:text-emerald-400">{greenhouseResult.imported}</span> imported, <span className="font-bold text-slate-800 dark:text-slate-200">{greenhouseResult.deduplicated}</span> deduplicated
+                      ✓ Greenhouse: <span className="font-bold text-emerald-700 dark:text-emerald-400">{greenhouse.imported}</span> imported, <span className="font-bold text-slate-800 dark:text-slate-200">{greenhouse.deduplicated}</span> deduplicated
                     </p>
                   )}
 
