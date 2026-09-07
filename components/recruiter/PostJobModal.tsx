@@ -277,7 +277,7 @@ export default function PostJobModal({
     setHimalayasLoading(true)
     setHimalayasError('')
     try {
-      const res = await fetch('/api/cron/import-himalayas', { method: 'GET' })
+      const res = await fetch('/api/admin/import-himalayas', { method: 'GET' })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Failed')
       setHimalayasResult(data)
@@ -292,7 +292,7 @@ export default function PostJobModal({
     setJobicyLoading(true)
     setJobicyError('')
     try {
-      const res = await fetch('/api/cron/import-jobicy', { method: 'GET' })
+      const res = await fetch('/api/admin/import-jobicy', { method: 'GET' })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Failed')
       setJobicyResult(data)
@@ -307,7 +307,7 @@ export default function PostJobModal({
     setGreenhouseLoading(true)
     setGreenhouseError('')
     try {
-      const res = await fetch('/api/cron/import-greenhouse', { method: 'GET' })
+      const res = await fetch('/api/admin/import-greenhouse', { method: 'GET' })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Failed')
       setGreenhouseResult(data)
