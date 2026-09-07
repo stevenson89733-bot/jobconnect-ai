@@ -157,3 +157,39 @@ jobs:
           cat /tmp/response.json
           echo "HTTP Status: ${HTTP_CODE}"
           [ "${HTTP_CODE}" = "200" ] || echo "::warning::WWR failed (${HTTP_CODE}) — continuing"
+
+      - name: Import Himalayas
+        if: ${{ inputs.dry_run != 'true' }}
+        continue-on-error: true
+        run: |
+          sleep 3
+          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 55 \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${APP_URL}/api/cron/import-himalayas")
+          cat /tmp/response.json
+          echo "HTTP Status: ${HTTP_CODE}"
+          [ "${HTTP_CODE}" = "200" ] || echo "::warning::Himalayas failed (${HTTP_CODE}) — continuing"
+
+      - name: Import Jobicy
+        if: ${{ inputs.dry_run != 'true' }}
+        continue-on-error: true
+        run: |
+          sleep 3
+          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 55 \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${APP_URL}/api/cron/import-jobicy")
+          cat /tmp/response.json
+          echo "HTTP Status: ${HTTP_CODE}"
+          [ "${HTTP_CODE}" = "200" ] || echo "::warning::Jobicy failed (${HTTP_CODE}) — continuing"
+
+      - name: Import Greenhouse
+        if: ${{ inputs.dry_run != 'true' }}
+        continue-on-error: true
+        run: |
+          sleep 3
+          HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 55 \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${APP_URL}/api/cron/import-greenhouse")
+          cat /tmp/response.json
+          echo "HTTP Status: ${HTTP_CODE}"
+          [ "${HTTP_CODE}" = "200" ] || echo "::warning::Greenhouse failed (${HTTP_CODE}) — continuing"
