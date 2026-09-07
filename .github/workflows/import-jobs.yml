@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: 'Dry run (does not call the endpoints, just prints the URLs)'
+        description: 'Dry run - does not call endpoints, just prints URLs'
         required: false
         default: 'false'
         type: boolean
