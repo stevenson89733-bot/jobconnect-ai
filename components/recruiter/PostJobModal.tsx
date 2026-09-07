@@ -120,6 +120,18 @@ export default function PostJobModal({
   const [enrichResult, setEnrichResult] = useState<{ enriched: number; remaining: number } | null>(null)
   const [enrichError, setEnrichError] = useState('')
 
+  const [himalayas, setHimalayasResult] = useState<{ imported: number; deduplicated: number } | null>(null)
+  const [himalayasLoading, setHimalayasLoading] = useState(false)
+  const [himalayasError, setHimalayasError] = useState('')
+
+  const [jobicy, setJobicyResult] = useState<{ imported: number; deduplicated: number } | null>(null)
+  const [jobicyLoading, setJobicyLoading] = useState(false)
+  const [jobicyError, setJobicyError] = useState('')
+
+  const [greenhouse, setGreenhouseResult] = useState<{ imported: number; deduplicated: number } | null>(null)
+  const [greenhouseLoading, setGreenhouseLoading] = useState(false)
+  const [greenhouseError, setGreenhouseError] = useState('')
+
   const [source, setSource] = useState<string | null>(null)
 
   function applyExtracted(extracted: Record<string, unknown>) {
@@ -258,6 +270,51 @@ export default function PostJobModal({
       setEnrichError(err instanceof Error ? err.message : 'Failed')
     } finally {
       setEnrichLoading(false)
+    }
+  }
+
+  async function runHimalayasImport() {
+    setHimalayasLoading(true)
+    setHimalayasError('')
+    try {
+      const res = await fetch('/api/cron/import-himalayas', { method: 'GET' })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Failed')
+      setHimalayasResult(data)
+    } catch (err) {
+      setHimalayasError(err instanceof Error ? err.message : 'Failed')
+    } finally {
+      setHimalayasLoading(false)
+    }
+  }
+
+  async function runJobicyImport() {
+    setJobicyLoading(true)
+    setJobicyError('')
+    try {
+      const res = await fetch('/api/cron/import-jobicy', { method: 'GET' })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Failed')
+      setJobicyResult(data)
+    } catch (err) {
+      setJobicyError(err instanceof Error ? err.message : 'Failed')
+    } finally {
+      setJobicyLoading(false)
+    }
+  }
+
+  async function runGreenhouseImport() {
+    setGreenhouseLoading(true)
+    setGreenhouseError('')
+    try {
+      const res = await fetch('/api/cron/import-greenhouse', { method: 'GET' })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Failed')
+      setGreenhouseResult(data)
+    } catch (err) {
+      setGreenhouseError(err instanceof Error ? err.message : 'Failed')
+    } finally {
+      setGreenhouseLoading(false)
     }
   }
 
@@ -469,6 +526,60 @@ export default function PostJobModal({
                   >
                     Browse Adzuna
                   </button>
+
+                  <button
+                    type="button"
+                    onClick={runHimalayasImport}
+                    disabled={himalayasLoading}
+                    className="w-full text-sm text-primary dark:text-blue-400 border border-dashed border-primary/40 rounded-lg py-2.5 hover:bg-primary/5 transition-colors disabled:opacity-50"
+                  >
+                    {himalayasLoading ? '⏳ Importing Himalayas…' : 'Browse Himalayas'}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={runJobicyImport}
+                    disabled={jobicyLoading}
+                    className="w-full text-sm text-primary dark:text-blue-400 border border-dashed border-primary/40 rounded-lg py-2.5 hover:bg-primary/5 transition-colors disabled:opacity-50"
+                  >
+                    {jobicyLoading ? '⏳ Importing Jobicy…' : 'Browse Jobicy'}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={runGreenhouseImport}
+                    disabled={greenhouseLoading}
+                    className="w-full text-sm text-primary dark:text-blue-400 border border-dashed border-primary/40 rounded-lg py-2.5 hover:bg-primary/5 transition-colors disabled:opacity-50"
+                  >
+                    {greenhouseLoading ? '⏳ Importing Greenhouse…' : 'Browse Greenhouse'}
+                  </button>
+
+                  {himalayasError && (
+                    <p className="text-xs text-red-500 dark:text-red-400 px-3">{himalayasError}</p>
+                  )}
+                  {himalayasResult && (
+                    <p className="text-xs text-slate-600 dark:text-slate-400 px-3">
+                      ✓ Himalayas: <span className="font-bold text-emerald-700 dark:text-emerald-400">{himalayasResult.imported}</span> imported, <span className="font-bold text-slate-800 dark:text-slate-200">{himalayasResult.deduplicated}</span> deduplicated
+                    </p>
+                  )}
+
+                  {jobicyError && (
+                    <p className="text-xs text-red-500 dark:text-red-400 px-3">{jobicyError}</p>
+                  )}
+                  {jobicyResult && (
+                    <p className="text-xs text-slate-600 dark:text-slate-400 px-3">
+                      ✓ Jobicy: <span className="font-bold text-emerald-700 dark:text-emerald-400">{jobicyResult.imported}</span> imported, <span className="font-bold text-slate-800 dark:text-slate-200">{jobicyResult.deduplicated}</span> deduplicated
+                    </p>
+                  )}
+
+                  {greenhouseError && (
+                    <p className="text-xs text-red-500 dark:text-red-400 px-3">{greenhouseError}</p>
+                  )}
+                  {greenhouseResult && (
+                    <p className="text-xs text-slate-600 dark:text-slate-400 px-3">
+                      ✓ Greenhouse: <span className="font-bold text-emerald-700 dark:text-emerald-400">{greenhouseResult.imported}</span> imported, <span className="font-bold text-slate-800 dark:text-slate-200">{greenhouseResult.deduplicated}</span> deduplicated
+                    </p>
+                  )}
 
                   {/* Enrich Jobs — batch geo-analysis on remote jobs with null geo_analysis */}
                   <div className="rounded-lg border border-dashed border-emerald-400/50 dark:border-emerald-600/40 overflow-hidden">
