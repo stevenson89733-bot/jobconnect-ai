@@ -167,7 +167,7 @@ export default function LpFrancophonePage() {
           </div>
           <div className="feature-item">
             <div className="feature-icon">🤖</div>
-            <div className="feature-title">Auto-Candidature Beta</div>
+            <div className="feature-title">Auto-Candidature</div>
             <div className="feature-desc">Déposez votre CV une seule fois. JobConnect AI vous associe à de nouvelles offres chaque jour et envoie des candidatures en votre nom.</div>
           </div>
         </div>

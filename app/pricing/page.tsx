@@ -312,7 +312,7 @@ export default function PricingPage() {
           </div>
         </div>
 
-        {/* ── Auto-Apply Beta callout ─────────────────────────── */}
+        {/* ── Auto-Apply callout ─────────────────────────── */}
         <Link
           href="/auto-apply"
           className="mt-6 flex items-center justify-between gap-4 rounded-2xl border border-cyan-500/25 bg-gradient-to-r from-[#10152A] to-[#0f1a35] px-6 py-4 hover:border-cyan-500/50 transition-colors group"

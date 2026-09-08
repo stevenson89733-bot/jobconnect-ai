@@ -503,7 +503,7 @@ export default async function Home() {
         <section style={{ background: '#10152A', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
           <div className="max-w-4xl mx-auto px-4 sm:px-6 py-14 text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1.5 text-sm font-semibold text-cyan-400 mb-5">
-              ⭐ Pro · Beta
+              ✨ Pro Feature
             </div>
             <h2 className="font-extrabold text-white leading-tight mb-4" style={{ fontSize: 'clamp(24px, 3.5vw, 40px)' }}>
               Too busy to apply? Let AI do it for you.
