@@ -12,10 +12,10 @@ export default function AutoApplyBetaCard({ isPro }: { isPro: boolean }) {
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-2">
             <span className="inline-flex items-center gap-1 rounded-full bg-cyan-500/15 border border-cyan-500/30 px-2.5 py-0.5 text-xs font-semibold text-cyan-400">
-              ⭐ Pro · Beta · New
+              ⭐ Pro Feature · New
             </span>
           </div>
-          <h2 className="text-lg font-bold text-white mb-1">Auto-Apply Beta</h2>
+          <h2 className="text-lg font-bold text-white mb-1">Auto-Apply</h2>
           <p className="text-sm text-slate-400 leading-relaxed max-w-lg">
             Upload your CV once — JobConnect AI matches you to verified remote jobs daily and sends personalized applications on your behalf.
           </p>
@@ -27,7 +27,7 @@ export default function AutoApplyBetaCard({ isPro }: { isPro: boolean }) {
               href="/auto-apply"
               className="inline-flex items-center gap-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold text-sm px-5 py-2.5 transition-colors shadow-lg shadow-cyan-500/25"
             >
-              <span className="text-base">✦</span> Join Beta
+              <span className="text-base">✦</span> Enable Auto-Apply
             </Link>
           ) : (
             <div className="flex flex-col items-start sm:items-end gap-1.5">

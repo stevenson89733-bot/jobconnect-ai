@@ -60,7 +60,7 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
                 <Link href="/auto-apply" className="flex flex-col rounded-lg px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                   <span className="font-medium text-slate-900 dark:text-white flex items-center gap-2">
                     🤖 Auto-Apply
-                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30">Pro · Beta</span>
+                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30">Pro Feature</span>
                   </span>
                   <span className="text-xs text-slate-600 dark:text-slate-400">AI applies to remote jobs for you daily</span>
                 </Link>
@@ -145,7 +145,7 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
             <Link href="/ai-tools/skill-gap" className="block text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white mb-2" onClick={() => setOpen(false)}>🧭 {t('skillGap')}</Link>
             <Link href="/auto-apply" className="flex items-center gap-2 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>
               🤖 Auto-Apply
-              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30">Pro · Beta</span>
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30">Pro Feature</span>
             </Link>
           </div>
           {userEmail ? (
