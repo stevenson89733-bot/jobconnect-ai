@@ -64,7 +64,10 @@ export default function PricingPage() {
   async function handleUpgrade() {
     setLoading(true)
     setError('')
-    const res = await fetch('/api/stripe/checkout', { method: 'POST' })
+    // Paddle checkout
+    const res = await fetch('/api/paddle/checkout', { method: 'POST' })
+    // Stripe checkout (DISABLED — to be reactivated after Singapore incorporation)
+    // const res = await fetch('/api/stripe/checkout', { method: 'POST' })
     if (res.status === 401) {
       window.location.href = '/login?redirectTo=/pricing'
       return
@@ -81,7 +84,10 @@ export default function PricingPage() {
   async function handleEmployerUpgrade() {
     setEmployerLoading(true)
     setEmployerError('')
-    const res = await fetch('/api/stripe/checkout/employer', { method: 'POST' })
+    // Paddle checkout
+    const res = await fetch('/api/paddle/checkout/employer', { method: 'POST' })
+    // Stripe checkout (DISABLED — to be reactivated after Singapore incorporation)
+    // const res = await fetch('/api/stripe/checkout/employer', { method: 'POST' })
     if (res.status === 401) {
       window.location.href = '/login?redirectTo=/pricing'
       return
