@@ -454,95 +454,9 @@ export default function PricingPage() {
         </div>
         <p className="text-xs text-slate-600 dark:text-slate-400 text-center mt-6">{t('employerPlanLimitNote')}</p>
 
-        {/* Coming Soon Plans */}
-        <div className="hidden mt-12 pt-8 border-t border-slate-200 dark:border-slate-700">
-          <h3 className="text-center text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-6">Coming Soon</h3>
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Professional Plan */}
-            <div className="card opacity-50 flex flex-col">
-              <div className="mb-6">
-                <div className="text-sm font-semibold text-primary/60 dark:text-blue-400/60 uppercase tracking-wider mb-1">{t('employerProLabel')}</div>
-                <div className="flex items-end gap-1">
-                  <span className="text-4xl font-extrabold text-slate-900/60 dark:text-white/60">$99</span>
-                  <span className="text-slate-600/60 dark:text-slate-400/60 mb-1">{t('employerProPeriod')}</span>
-                </div>
-                <div className="text-slate-600/60 dark:text-slate-400/60 text-sm mt-1">{t('employerProDesc')}</div>
-              </div>
-              <ul className="space-y-3 mb-8 flex-1">
-                {[
-                  t('employerProFeature1'), t('employerProFeature2'), t('employerProFeature3'),
-                  t('employerProFeature4'), t('employerProFeature5'), t('employerProFeature6'),
-                ].map((f) => (
-                  <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700/60 dark:text-slate-300/60">
-                    <span className="text-primary/50 dark:text-blue-400/50 shrink-0">✦</span> {f}
-                  </li>
-                ))}
-              </ul>
-              <div className="text-xs text-center text-slate-500/60 dark:text-slate-400/60 py-3 px-3 rounded-lg bg-slate-100/60 dark:bg-slate-800/60">
-                Coming Soon
-              </div>
-            </div>
-
-            {/* Enterprise Plan */}
-            <div className="card opacity-50 flex flex-col">
-              <div className="mb-6">
-                <div className="text-sm font-semibold text-primary/60 dark:text-blue-400/60 uppercase tracking-wider mb-1">{t('employerEnterpriseLabel')}</div>
-                <div className="flex items-end gap-1">
-                  <span className="text-4xl font-extrabold text-slate-900/60 dark:text-white/60">{t('employerEnterprisePrice')}</span>
-                  <span className="text-slate-600/60 dark:text-slate-400/60 mb-1">{t('employerProPeriod')}</span>
-                </div>
-                <div className="text-slate-600/60 dark:text-slate-400/60 text-sm mt-1">{t('employerEnterpriseDesc')}</div>
-              </div>
-              <ul className="space-y-3 mb-8 flex-1">
-                {[
-                  t('employerEnterpriseFeature1'), t('employerEnterpriseFeature2'), t('employerEnterpriseFeature3'),
-                  t('employerEnterpriseFeature4'), t('employerEnterpriseFeature5'), t('employerEnterpriseFeature6'),
-                  t('employerEnterpriseFeature7'),
-                ].map((f) => (
-                  <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700/60 dark:text-slate-300/60">
-                    <span className="text-primary/50 dark:text-blue-400/50 shrink-0">✦</span> {f}
-                  </li>
-                ))}
-              </ul>
-              <div className="text-xs text-center text-slate-500/60 dark:text-slate-400/60 py-3 px-3 rounded-lg bg-slate-100/60 dark:bg-slate-800/60">
-                Coming Soon
-              </div>
-            </div>
-          </div>
-
-          {/* Second Row: Featured Listing & Recruiter Marketplace */}
-          <div className="grid md:grid-cols-2 gap-6 mt-6">
-            {/* Featured Listing */}
-            <div className="card opacity-50 flex flex-col">
-              <div className="mb-6">
-                <div className="text-sm font-semibold text-primary/60 dark:text-blue-400/60 uppercase tracking-wider mb-1">{t('employerFeaturedListingLabel')}</div>
-                <div className="flex items-end gap-1">
-                  <span className="text-2xl font-extrabold text-slate-900/60 dark:text-white/60">$29-99</span>
-                </div>
-                <div className="text-slate-600/60 dark:text-slate-400/60 text-sm mt-1">{t('employerFeaturedListingDesc')}</div>
-              </div>
-              <div className="flex-1 flex items-center justify-center">
-                <p className="text-sm text-slate-600/60 dark:text-slate-400/60 text-center">Per-job visibility boost · 7-30 days</p>
-              </div>
-              <div className="text-xs text-center text-slate-500/60 dark:text-slate-400/60 py-3 px-3 rounded-lg bg-slate-100/60 dark:bg-slate-800/60">
-                Coming Soon
-              </div>
-            </div>
-
-            {/* Recruiter Marketplace */}
-            <div className="card opacity-50 flex flex-col">
-              <div className="mb-6">
-                <div className="text-sm font-semibold text-primary/60 dark:text-blue-400/60 uppercase tracking-wider mb-1">{t('employerMarketplaceLabel')}</div>
-                <div className="text-slate-600/60 dark:text-slate-400/60 text-sm mt-1">{t('employerMarketplaceDesc')}</div>
-              </div>
-              <div className="flex-1 flex items-center justify-center">
-                <p className="text-sm text-slate-600/60 dark:text-slate-400/60 text-center">Access pre-vetted talent · Performance-based fees</p>
-              </div>
-              <div className="text-xs text-center text-slate-500/60 dark:text-slate-400/60 py-3 px-3 rounded-lg bg-slate-100/60 dark:bg-slate-800/60">
-                Coming Soon
-              </div>
-            </div>
-          </div>
+        {/* Coming Soon Banner */}
+        <div className="mt-12 pt-8 text-center">
+          <p className="text-xs text-slate-400 dark:text-slate-500">More plans coming soon — Enterprise hiring, Featured Listings & Recruiter Marketplace.</p>
         </div>
       </section>
 
