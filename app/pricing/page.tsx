@@ -455,7 +455,7 @@ export default function PricingPage() {
         <p className="text-xs text-slate-600 dark:text-slate-400 text-center mt-6">{t('employerPlanLimitNote')}</p>
 
         {/* Coming Soon Plans */}
-        <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-700">
+        <div className="hidden mt-12 pt-8 border-t border-slate-200 dark:border-slate-700">
           <h3 className="text-center text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-6">Coming Soon</h3>
           <div className="grid md:grid-cols-2 gap-6">
             {/* Professional Plan */}
