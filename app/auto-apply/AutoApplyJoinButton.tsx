@@ -21,9 +21,9 @@ export default function AutoApplyJoinButton() {
 
   if (state === 'done') {
     return (
-      <div className="inline-flex items-center gap-2 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-semibold text-base px-8 py-3.5">
-        ✓ You&apos;re on the waitlist!
-      </div>
+      <a href="/auto-apply/settings" className="inline-flex items-center gap-2 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-semibold text-base px-8 py-3.5 hover:bg-emerald-500/30 transition-colors">
+        ✓ Go to Settings →
+      </a>
     )
   }
 
