@@ -206,7 +206,11 @@ export default function PricingPage() {
               <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('candidateFreeDesc')}</div>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
-              {[t('candidateFreeFeature1'), t('candidateFreeFeature2'), t('candidateFreeFeature3'), t('candidateFreeFeature4')].map((f) => (
+              {[
+                t('candidateFreeFeature1'), t('candidateFreeFeature2'), t('candidateFreeFeature3'), t('candidateFreeFeature4'),
+                t('candidateFreeFeature5'), t('candidateFreeFeature6'), t('candidateFreeFeature7'), t('candidateFreeFeature8'),
+                t('candidateFreeFeature9'), t('candidateFreeFeature10'),
+              ].map((f) => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
                   <span className="text-green-600 dark:text-green-400 shrink-0">✓</span> {f}
                 </li>
@@ -232,6 +236,7 @@ export default function PricingPage() {
               {[
                 t('candidatePremiumFeature1'), t('candidatePremiumFeature2'), t('candidatePremiumFeature3'),
                 t('candidatePremiumFeature4'), t('candidatePremiumFeature5'), t('candidatePremiumFeature6'), t('candidatePremiumFeature7'),
+                t('candidatePremiumFeature8'), t('candidatePremiumFeature9'), t('candidatePremiumFeature10'), t('candidatePremiumFeature11'),
               ].map((f) => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
                   <span className="text-orange-600 dark:text-accent shrink-0">✦</span> {f}
@@ -414,11 +419,21 @@ export default function PricingPage() {
               <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('employerGrowthDesc')}</div>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
-              {[t('employerGrowthFeature1'), t('employerGrowthFeature2'), t('employerGrowthFeature3'), t('employerGrowthFeature4')].map((f) => (
+              {[
+                t('employerGrowthFeature1'), t('employerGrowthFeature2'), t('employerGrowthFeature3'),
+                t('employerGrowthFeature4'), t('employerGrowthFeature5'), t('employerGrowthFeature6'),
+              ].map((f) => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
                   <span className="text-orange-600 dark:text-accent shrink-0">✦</span> {f}
                 </li>
               ))}
+              <div className="pt-2 mt-2 border-t border-slate-300 dark:border-slate-600 space-y-2">
+                {[t('employerGrowthFeatureNot1'), t('employerGrowthFeatureNot2')].map((f) => (
+                  <li key={f} className="flex items-center gap-2.5 text-sm text-slate-500 dark:text-slate-400">
+                    <span className="text-slate-400 dark:text-slate-500 shrink-0">✗</span> {f}
+                  </li>
+                ))}
+              </div>
             </ul>
             <button
               onClick={handleEmployerUpgrade}
@@ -438,6 +453,71 @@ export default function PricingPage() {
           </div>
         </div>
         <p className="text-xs text-slate-600 dark:text-slate-400 text-center mt-6">{t('employerPlanLimitNote')}</p>
+
+        {/* Coming Soon Plans */}
+        <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-700">
+          <h3 className="text-center text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-6">Coming Soon</h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Professional Plan */}
+            <div className="card opacity-60 flex flex-col">
+              <div className="mb-6">
+                <div className="text-sm font-semibold text-primary dark:text-blue-400 uppercase tracking-wider mb-1">{t('employerProLabel')}</div>
+                <div className="flex items-end gap-1">
+                  <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$99</span>
+                  <span className="text-slate-600 dark:text-slate-400 mb-1">{t('employerProPeriod')}</span>
+                </div>
+                <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('employerProDesc')}</div>
+              </div>
+              <ul className="space-y-3 mb-8 flex-1">
+                {[
+                  t('employerProFeature1'), t('employerProFeature2'), t('employerProFeature3'),
+                  t('employerProFeature4'), t('employerProFeature5'), t('employerProFeature6'),
+                ].map((f) => (
+                  <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+                    <span className="text-primary/70 dark:text-blue-400/70 shrink-0">✦</span> {f}
+                  </li>
+                ))}
+              </ul>
+              <div className="text-xs text-center text-slate-500 dark:text-slate-400 py-3 px-3 rounded-lg bg-slate-100 dark:bg-slate-800">
+                Coming Soon
+              </div>
+            </div>
+
+            {/* Enterprise Plan */}
+            <div className="card opacity-60 flex flex-col">
+              <div className="mb-6">
+                <div className="text-sm font-semibold text-primary dark:text-blue-400 uppercase tracking-wider mb-1">{t('employerEnterpriseLabel')}</div>
+                <div className="flex items-end gap-1">
+                  <span className="text-4xl font-extrabold text-slate-900 dark:text-white">Custom</span>
+                </div>
+                <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('employerEnterpriseDesc')}</div>
+              </div>
+              <div className="flex-1 flex items-center justify-center">
+                <p className="text-sm text-slate-600 dark:text-slate-400 text-center">Dedicated support, SSO, custom integrations</p>
+              </div>
+              <div className="text-xs text-center text-slate-500 dark:text-slate-400 py-3 px-3 rounded-lg bg-slate-100 dark:bg-slate-800">
+                Coming Soon
+              </div>
+            </div>
+
+            {/* Featured Listing */}
+            <div className="card opacity-60 flex flex-col">
+              <div className="mb-6">
+                <div className="text-sm font-semibold text-primary dark:text-blue-400 uppercase tracking-wider mb-1">{t('employerFeaturedListingLabel')}</div>
+                <div className="flex items-end gap-1">
+                  <span className="text-2xl font-extrabold text-slate-900 dark:text-white">$29-99</span>
+                </div>
+                <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('employerFeaturedListingDesc')}</div>
+              </div>
+              <div className="flex-1 flex items-center justify-center">
+                <p className="text-sm text-slate-600 dark:text-slate-400 text-center">Per-job visibility boost · 7-30 days</p>
+              </div>
+              <div className="text-xs text-center text-slate-500 dark:text-slate-400 py-3 px-3 rounded-lg bg-slate-100 dark:bg-slate-800">
+                Coming Soon
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ── Trusted by ──────────────────────────────────────────── */}
