@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
 export async function POST(req: Request) {
   const authHeader = req.headers.get('authorization')
@@ -213,7 +213,7 @@ export async function POST(req: Request) {
         }
 
         // Send email report
-        if (applicationsThisRound.length > 0 && profile?.email) {
+        if (applicationsThisRound.length > 0 && profile?.email && resend) {
           try {
             const jobsHtml = applicationsThisRound
               .map(
@@ -227,7 +227,7 @@ export async function POST(req: Request) {
               )
               .join('')
 
-            await resend.emails.send({
+            await resend!.emails.send({
               from: 'noreply@jobconnect-ai.com',
               to: profile.email,
               subject: `✦ JobConnect AI — ${applicationsThisRound.length} application${applicationsThisRound.length === 1 ? '' : 's'} sent today`,
@@ -293,6 +293,8 @@ export async function POST(req: Request) {
             const message = emailErr instanceof Error ? emailErr.message : String(emailErr)
             console.error(`[auto-apply] Email error for user ${setting.user_id}:`, message)
           }
+        } else if (applicationsThisRound.length > 0 && !resend) {
+          console.log(`[auto-apply] Resend not configured, skipping email for user ${setting.user_id}`)
         }
       } catch (err) {
         const message = err instanceof Error ? err.message : String(err)
