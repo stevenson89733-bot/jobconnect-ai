@@ -44,7 +44,7 @@ export default async function AutoApplyPage() {
 
         <div className="relative max-w-3xl mx-auto px-6 pt-24 pb-20 text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1.5 text-sm font-semibold text-cyan-400 mb-8">
-            ⭐ Pro · Beta
+            ✨ Pro Feature
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight mb-6">
@@ -79,7 +79,7 @@ export default async function AutoApplyPage() {
               href="/login"
               className="inline-flex items-center gap-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold text-base px-8 py-3.5 transition-colors shadow-lg shadow-cyan-500/30"
             >
-              Sign in to join Beta
+              Sign in to enable Auto-Apply
             </Link>
           )}
 
