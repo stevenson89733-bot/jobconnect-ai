@@ -170,7 +170,7 @@ export default function LpVietnamPage() {
           </div>
           <div className="feature-item">
             <div className="feature-icon">🤖</div>
-            <div className="feature-title">Auto-Apply Beta</div>
+            <div className="feature-title">Auto-Apply</div>
             <div className="feature-desc">Upload your CV once. JobConnect AI matches you to new jobs daily and sends personalized applications on your behalf.</div>
           </div>
         </div>

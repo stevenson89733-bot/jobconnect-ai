@@ -156,7 +156,7 @@ export default function LpAnglophonePage() {
           </div>
           <div className="feature-card">
             <div className="feature-icon">🤖</div>
-            <div className="feature-title">Auto-Apply Beta</div>
+            <div className="feature-title">Auto-Apply</div>
             <div className="feature-desc">Upload your CV once — we match you to new roles daily and send applications on your behalf. Wake up to new opportunities.</div>
             <span className="feature-tag">Pro feature</span>
           </div>

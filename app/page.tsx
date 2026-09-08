@@ -187,7 +187,7 @@ export default async function Home() {
                 className="inline-flex items-center gap-2 text-[13px] font-semibold text-cyan-400 hover:text-cyan-300 transition-colors mb-5"
               >
                 <span className="flex items-center gap-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1">
-                  🤖 <span>Auto-Apply Beta — let AI apply for you daily</span>
+                  🤖 <span>Auto-Apply — let AI apply for you daily</span>
                   <span className="opacity-60">→</span>
                 </span>
               </Link>
