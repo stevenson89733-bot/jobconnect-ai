@@ -42,7 +42,7 @@ export default function AutoApplyJoinButton() {
           Joining…
         </>
       ) : (
-        <><span className="text-base">✦</span> Join Auto-Apply Beta</>
+        <><span className="text-base">✦</span> Enable Auto-Apply</>
       )}
     </button>
   )
