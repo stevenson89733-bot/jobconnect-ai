@@ -25,12 +25,22 @@ export default function PricingPage() {
   const [promoType, setPromoType] = useState<'candidate' | 'employer'>('candidate')
 
   useEffect(() => {
-    initializePaddle({
-      token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN || '',
-      environment: 'production',
-    }).then((paddleInstance) => {
-      setPaddle(paddleInstance)
-    })
+    const initPaddle = async () => {
+      try {
+        if (!process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN) {
+          console.error('Paddle token not found')
+          return
+        }
+        const paddleInstance = await initializePaddle({
+          token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN,
+          environment: 'production',
+        })
+        setPaddle(paddleInstance)
+      } catch (err) {
+        console.error('Failed to initialize Paddle:', err)
+      }
+    }
+    initPaddle()
   }, [])
 
   async function handlePromoRedeem() {
