@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import { initializePaddle } from '@paddle/paddle-js'
+import { createClient } from '@/lib/supabase/client'
 
 export default function PricingPage() {
   const router = useRouter()
@@ -13,6 +15,7 @@ export default function PricingPage() {
   const [eliteLoading, setEliteLoading] = useState(false)
   const [employerLoading, setEmployerLoading] = useState(false)
   const [employerError, setEmployerError] = useState('')
+  const [paddle, setPaddle] = useState<any>(null)
 
   const [showPromoField, setShowPromoField] = useState(false)
   const [promoCode, setPromoCode] = useState('')
@@ -20,6 +23,15 @@ export default function PricingPage() {
   const [promoError, setPromoError] = useState('')
   const [promoSuccess, setPromoSuccess] = useState(false)
   const [promoType, setPromoType] = useState<'candidate' | 'employer'>('candidate')
+
+  useEffect(() => {
+    initializePaddle({
+      token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN || '',
+      environment: 'production',
+    }).then((paddleInstance) => {
+      setPaddle(paddleInstance)
+    })
+  }, [])
 
   async function handlePromoRedeem() {
     if (!promoCode.trim()) return
@@ -63,61 +75,90 @@ export default function PricingPage() {
   }, [success, employerSuccess, router])
 
   async function handleUpgrade() {
+    if (!paddle) return
     setLoading(true)
     setError('')
-    // Paddle checkout — Pro plan
-    const res = await fetch('/api/paddle/checkout?plan=pro', { method: 'POST' })
-    // Stripe checkout (DISABLED — to be reactivated after Singapore incorporation)
-    // const res = await fetch('/api/stripe/checkout', { method: 'POST' })
-    if (res.status === 401) {
-      window.location.href = '/login?redirectTo=/pricing'
-      return
-    }
-    const data = await res.json()
-    if (data.error) {
-      setError(data.error)
+
+    try {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+
+      if (!user) {
+        window.location.href = '/login?redirectTo=/pricing'
+        return
+      }
+
+      paddle.Checkout.open({
+        items: [
+          { priceId: process.env.NEXT_PUBLIC_PADDLE_CANDIDATE_PRO_PRICE_ID || '', quantity: 1 }
+        ],
+        customer: { email: user.email || '' },
+        customData: { supabase_user_id: user.id, plan: 'pro' }
+      })
+
       setLoading(false)
-      return
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Checkout failed')
+      setLoading(false)
     }
-    window.location.href = data.url
   }
 
   async function handleEliteUpgrade() {
+    if (!paddle) return
     setEliteLoading(true)
     setError('')
-    // Paddle checkout — Elite plan
-    const res = await fetch('/api/paddle/checkout?plan=elite', { method: 'POST' })
-    if (res.status === 401) {
-      window.location.href = '/login?redirectTo=/pricing'
-      return
-    }
-    const data = await res.json()
-    if (data.error) {
-      setError(data.error)
+
+    try {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+
+      if (!user) {
+        window.location.href = '/login?redirectTo=/pricing'
+        return
+      }
+
+      paddle.Checkout.open({
+        items: [
+          { priceId: process.env.NEXT_PUBLIC_PADDLE_CANDIDATE_ELITE_PRICE_ID || '', quantity: 1 }
+        ],
+        customer: { email: user.email || '' },
+        customData: { supabase_user_id: user.id, plan: 'elite' }
+      })
+
       setEliteLoading(false)
-      return
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Checkout failed')
+      setEliteLoading(false)
     }
-    window.location.href = data.url
   }
 
   async function handleEmployerUpgrade() {
+    if (!paddle) return
     setEmployerLoading(true)
     setEmployerError('')
-    // Paddle checkout
-    const res = await fetch('/api/paddle/checkout/employer', { method: 'POST' })
-    // Stripe checkout (DISABLED — to be reactivated after Singapore incorporation)
-    // const res = await fetch('/api/stripe/checkout/employer', { method: 'POST' })
-    if (res.status === 401) {
-      window.location.href = '/login?redirectTo=/pricing'
-      return
-    }
-    const data = await res.json()
-    if (data.error) {
-      setEmployerError(data.error)
+
+    try {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+
+      if (!user) {
+        window.location.href = '/login?redirectTo=/pricing'
+        return
+      }
+
+      paddle.Checkout.open({
+        items: [
+          { priceId: process.env.NEXT_PUBLIC_PADDLE_EMPLOYER_GROWTH_PRICE_ID || '', quantity: 1 }
+        ],
+        customer: { email: user.email || '' },
+        customData: { supabase_user_id: user.id, role: 'employer' }
+      })
+
       setEmployerLoading(false)
-      return
+    } catch (err) {
+      setEmployerError(err instanceof Error ? err.message : 'Checkout failed')
+      setEmployerLoading(false)
     }
-    window.location.href = data.url
   }
 
   return (
