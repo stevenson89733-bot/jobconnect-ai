@@ -57,6 +57,10 @@ export default async function AutoApplyPage() {
             applications on your behalf — every day.
           </p>
 
+          <p className="text-sm text-slate-300 mb-10">
+            Included in <span className="font-semibold text-cyan-400">Pro ($19.99/mo)</span> and <span className="font-semibold text-cyan-400">Elite ($39.99/mo)</span>
+          </p>
+
           {isPro ? (
             <AutoApplyJoinButton />
           ) : isSignedIn ? (
