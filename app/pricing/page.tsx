@@ -27,17 +27,22 @@ export default function PricingPage() {
   useEffect(() => {
     const initPaddle = async () => {
       try {
+        console.log('[Paddle] Initializing...')
+        console.log('[Paddle] Token:', process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN ? 'exists' : 'MISSING')
         if (!process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN) {
-          console.error('Paddle token not found')
+          console.error('[Paddle] Token not found')
           return
         }
+        console.log('[Paddle] Calling initializePaddle...')
         const paddleInstance = await initializePaddle({
           token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN,
           environment: 'production',
         })
+        console.log('[Paddle] SDK initialized:', !!paddleInstance)
+        console.log('[Paddle] Checkout available:', !!paddleInstance?.Checkout)
         setPaddle(paddleInstance)
       } catch (err) {
-        console.error('Failed to initialize Paddle:', err)
+        console.error('[Paddle] Initialization failed:', err)
       }
     }
     initPaddle()
@@ -114,22 +119,31 @@ export default function PricingPage() {
   }
 
   async function handleEliteUpgrade() {
-    if (!paddle) return
+    console.log('[Checkout] Elite button clicked, paddle:', !!paddle)
+    if (!paddle) {
+      console.error('[Checkout] Paddle not initialized')
+      return
+    }
     setEliteLoading(true)
     setError('')
 
     try {
+      console.log('[Checkout] Getting user...')
       const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
 
       if (!user) {
+        console.log('[Checkout] No user, redirecting to login')
         window.location.href = '/login?redirectTo=/pricing'
         return
       }
 
+      const priceId = process.env.NEXT_PUBLIC_PADDLE_CANDIDATE_ELITE_PRICE_ID || ''
+      console.log('[Checkout] Opening Elite checkout, priceId:', priceId || 'EMPTY')
+
       paddle.Checkout.open({
         items: [
-          { priceId: process.env.NEXT_PUBLIC_PADDLE_CANDIDATE_ELITE_PRICE_ID || '', quantity: 1 }
+          { priceId, quantity: 1 }
         ],
         customer: { email: user.email || '' },
         customData: { supabase_user_id: user.id, plan: 'elite' }
@@ -137,6 +151,7 @@ export default function PricingPage() {
 
       setEliteLoading(false)
     } catch (err) {
+      console.error('[Checkout] Error:', err)
       setError(err instanceof Error ? err.message : 'Checkout failed')
       setEliteLoading(false)
     }
