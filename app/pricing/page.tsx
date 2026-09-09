@@ -30,39 +30,8 @@ export default function PricingPage() {
   const [promoType, setPromoType] = useState<'candidate' | 'employer'>('candidate')
 
   useEffect(() => {
-    const initPaddle = async () => {
-      try {
-        console.log('[Paddle] Waiting for Paddle SDK...')
-
-        // Wait for window.Paddle to be available (max 5 seconds)
-        let attempts = 0
-        while (!window.Paddle && attempts < 50) {
-          await new Promise(r => setTimeout(r, 100))
-          attempts++
-        }
-
-        if (!window.Paddle) {
-          console.error('[Paddle] SDK not loaded after timeout')
-          return
-        }
-
-        console.log('[Paddle] SDK found, initializing...')
-        const token = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN
-        console.log('[Paddle] Token:', token ? 'exists' : 'MISSING')
-
-        if (!token) {
-          console.error('[Paddle] Token not configured')
-          return
-        }
-
-        window.Paddle.Setup({ token, environment: 'production' })
-        console.log('[Paddle] Setup complete')
-        setPaddle(window.Paddle)
-      } catch (err) {
-        console.error('[Paddle] Initialization failed:', err)
-      }
-    }
-    initPaddle()
+    // Paddle is initialized via API route, set flag to indicate ready
+    setPaddle(true)
   }, [])
 
   async function handlePromoRedeem() {
@@ -112,23 +81,26 @@ export default function PricingPage() {
     setError('')
 
     try {
-      const supabase = createClient()
-      const { data: { user } } = await supabase.auth.getUser()
-
-      if (!user) {
-        window.location.href = '/login?redirectTo=/pricing'
+      const priceId = process.env.NEXT_PUBLIC_PADDLE_CANDIDATE_PRO_PRICE_ID
+      if (!priceId) {
+        setError('Price configuration missing')
+        setLoading(false)
         return
       }
 
-      paddle.Checkout.open({
-        items: [
-          { priceId: process.env.NEXT_PUBLIC_PADDLE_CANDIDATE_PRO_PRICE_ID || '', quantity: 1 }
-        ],
-        customer: { email: user.email || '' },
-        customData: { supabase_user_id: user.id, plan: 'pro' }
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ priceId, plan: 'pro' })
       })
 
-      setLoading(false)
+      const data = await res.json()
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl
+      } else {
+        setError('Failed to create checkout')
+        setLoading(false)
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Checkout failed')
       setLoading(false)
@@ -136,39 +108,32 @@ export default function PricingPage() {
   }
 
   async function handleEliteUpgrade() {
-    console.log('[Checkout] Elite button clicked, paddle:', !!paddle)
-    if (!paddle) {
-      console.error('[Checkout] Paddle not initialized')
-      return
-    }
+    if (!paddle) return
     setEliteLoading(true)
     setError('')
 
     try {
-      console.log('[Checkout] Getting user...')
-      const supabase = createClient()
-      const { data: { user } } = await supabase.auth.getUser()
-
-      if (!user) {
-        console.log('[Checkout] No user, redirecting to login')
-        window.location.href = '/login?redirectTo=/pricing'
+      const priceId = process.env.NEXT_PUBLIC_PADDLE_CANDIDATE_ELITE_PRICE_ID
+      if (!priceId) {
+        setError('Price configuration missing')
+        setEliteLoading(false)
         return
       }
 
-      const priceId = process.env.NEXT_PUBLIC_PADDLE_CANDIDATE_ELITE_PRICE_ID || ''
-      console.log('[Checkout] Opening Elite checkout, priceId:', priceId || 'EMPTY')
-
-      paddle.Checkout.open({
-        items: [
-          { priceId, quantity: 1 }
-        ],
-        customer: { email: user.email || '' },
-        customData: { supabase_user_id: user.id, plan: 'elite' }
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ priceId, plan: 'elite' })
       })
 
-      setEliteLoading(false)
+      const data = await res.json()
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl
+      } else {
+        setError('Failed to create checkout')
+        setEliteLoading(false)
+      }
     } catch (err) {
-      console.error('[Checkout] Error:', err)
       setError(err instanceof Error ? err.message : 'Checkout failed')
       setEliteLoading(false)
     }
