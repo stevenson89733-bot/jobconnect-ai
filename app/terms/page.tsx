@@ -15,7 +15,7 @@ export default function TermsPage() {
         <div className="space-y-8 text-slate-300">
           <section>
             <h2 className="text-2xl font-semibold text-white mb-4">1. Acceptance of Terms</h2>
-            <p>By accessing and using JobConnect AI ("Service"), you accept and agree to be bound by these Terms of Service. If you do not agree to abide by the above, please do not use this service.</p>
+            <p>By accessing and using JobConnect AI (&quot;Service&quot;), you accept and agree to be bound by these Terms of Service. If you do not agree to abide by the above, please do not use this service.</p>
           </section>
 
           <section>
@@ -82,7 +82,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-2xl font-semibold text-white mb-4">9. Limitation of Liability</h2>
-            <p><strong className="text-white">TO THE MAXIMUM EXTENT PERMITTED BY LAW:</strong> JobConnect AI is provided "AS IS" without warranties of any kind. We are not liable for indirect, incidental, special, or consequential damages arising from your use or inability to use the Service, including lost profits or data loss.</p>
+            <p><strong className="text-white">TO THE MAXIMUM EXTENT PERMITTED BY LAW:</strong> JobConnect AI is provided &quot;AS IS&quot; without warranties of any kind. We are not liable for indirect, incidental, special, or consequential damages arising from your use or inability to use the Service, including lost profits or data loss.</p>
           </section>
 
           <section>
