@@ -81,7 +81,7 @@ export default function PricingPage() {
     setError('')
 
     try {
-      const priceId = process.env.NEXT_PUBLIC_PADDLE_CANDIDATE_PRO_PRICE_ID
+      const priceId = 'pri_01m1y0hsqtf174a0n6bbd7wwqn'
       if (!priceId) {
         setError('Price configuration missing')
         setLoading(false)
@@ -113,7 +113,7 @@ export default function PricingPage() {
     setError('')
 
     try {
-      const priceId = process.env.NEXT_PUBLIC_PADDLE_CANDIDATE_ELITE_PRICE_ID
+      const priceId = 'pri_01m23228djrev51x1bas2jhfd7'
       if (!priceId) {
         setError('Price configuration missing')
         setEliteLoading(false)
