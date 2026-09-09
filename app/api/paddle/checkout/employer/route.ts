@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 export async function POST() {
   const paddleClientToken = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN
   const priceId = process.env.NEXT_PUBLIC_PADDLE_EMPLOYER_GROWTH_PRICE_ID
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
+  const appUrl = 'https://jobconnect-ai.com'
 
   if (!paddleClientToken || !priceId) {
     return NextResponse.json({ error: 'Paddle not configured' }, { status: 503 })

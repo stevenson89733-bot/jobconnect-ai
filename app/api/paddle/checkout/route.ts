@@ -5,7 +5,7 @@ export async function POST(req: Request) {
   const paddleClientToken = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN
   const proPriceId = process.env.NEXT_PUBLIC_PADDLE_CANDIDATE_PRO_PRICE_ID
   const elitePriceId = process.env.NEXT_PUBLIC_PADDLE_CANDIDATE_ELITE_PRICE_ID
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
+  const appUrl = 'https://jobconnect-ai.com'
 
   const { searchParams } = new URL(req.url)
   const plan = searchParams.get('plan') ?? 'pro'
