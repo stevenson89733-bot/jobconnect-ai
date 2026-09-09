@@ -1,5 +1,11 @@
 -- Create enum type for better type safety
-CREATE TYPE IF NOT EXISTS candidate_plan_enum AS ENUM ('free', 'pro', 'elite');
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'candidate_plan_enum') THEN
+        CREATE TYPE candidate_plan_enum AS ENUM ('free', 'pro', 'elite');
+    END IF;
+END
+$$;
 
 -- Add candidate_plan column to profiles table
 -- Tracks which plan a candidate is on: 'free', 'pro', or 'elite'
