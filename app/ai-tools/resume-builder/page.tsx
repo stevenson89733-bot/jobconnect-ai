@@ -9,18 +9,18 @@ export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'AI Resume Builder | JobConnect AI',
-  description: 'Generate an ATS-optimized, GPT-4o-polished resume from your real profile — with a live preview and instant resume/ATS scoring.',
+  description: 'Generate an ATS-optimized resume from your real profile — with a live preview and instant resume/ATS scoring.',
   alternates: { canonical: absoluteUrl('/ai-tools/resume-builder') },
   openGraph: {
     title: 'AI Resume Builder | JobConnect AI',
-    description: 'Generate an ATS-optimized, GPT-4o-polished resume from your real profile.',
+    description: 'Generate an ATS-optimized resume from your real profile.',
     url: absoluteUrl('/ai-tools/resume-builder'),
     type: 'website',
   },
   twitter: {
     card: 'summary',
     title: 'AI Resume Builder | JobConnect AI',
-    description: 'Generate an ATS-optimized, GPT-4o-polished resume from your real profile.',
+    description: 'Generate an ATS-optimized resume from your real profile.',
   },
 }
 

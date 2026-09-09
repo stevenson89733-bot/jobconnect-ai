@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Mobility Skill-Gap | JobConnect AI',
-  description: 'Compare your real profile against a target role or a real job listing — see which skills you already have and which to develop next, with GPT-4o.',
+  description: 'Compare your real profile against a target role or a real job listing — see which skills you already have and which to develop next.',
   alternates: { canonical: absoluteUrl('/ai-tools/skill-gap') },
   openGraph: {
     title: 'Mobility Skill-Gap | JobConnect AI',

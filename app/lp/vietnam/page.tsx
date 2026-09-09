@@ -161,7 +161,7 @@ export default function LpVietnamPage() {
           <div className="feature-item">
             <div className="feature-icon">📄</div>
             <div className="feature-title">ATS Resume Builder</div>
-            <div className="feature-desc">Generate a tailored, ATS-optimized CV for any role in seconds. Includes a 0–100 score and keyword suggestions powered by GPT-4o.</div>
+            <div className="feature-desc">Generate a tailored, ATS-optimized CV for any role in seconds. Includes a 0–100 score and keyword suggestions.</div>
           </div>
           <div className="feature-item">
             <div className="feature-icon">✉️</div>

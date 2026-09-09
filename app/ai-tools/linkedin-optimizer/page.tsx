@@ -12,14 +12,14 @@ export const metadata: Metadata = {
   alternates: { canonical: absoluteUrl('/ai-tools/linkedin-optimizer') },
   openGraph: {
     title: 'LinkedIn Optimizer | JobConnect AI',
-    description: 'Analyze or generate an optimized LinkedIn profile with GPT-4o, grounded in your real experience.',
+    description: 'Analyze or generate an optimized LinkedIn profile grounded in your real experience.',
     url: absoluteUrl('/ai-tools/linkedin-optimizer'),
     type: 'website',
   },
   twitter: {
     card: 'summary',
     title: 'LinkedIn Optimizer | JobConnect AI',
-    description: 'Analyze or generate an optimized LinkedIn profile with GPT-4o, grounded in your real experience.',
+    description: 'Analyze or generate an optimized LinkedIn profile grounded in your real experience.',
   },
 }
 

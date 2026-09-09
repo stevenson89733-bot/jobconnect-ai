@@ -146,7 +146,7 @@ export default function LpAnglophonePage() {
             <div className="feature-icon">📄</div>
             <div className="feature-title">ATS Resume Builder</div>
             <div className="feature-desc">Generate ATS-optimized resumes tailored to each role. Includes a 0–100 score, keyword gaps, and grammar suggestions.</div>
-            <span className="feature-tag">GPT-4o powered</span>
+            <span className="feature-tag">AI-powered</span>
           </div>
           <div className="feature-card">
             <div className="feature-icon">✉️</div>
