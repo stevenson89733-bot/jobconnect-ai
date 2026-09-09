@@ -46,9 +46,10 @@ export async function POST(req: Request) {
             .update({ employer_plan: 'growth' })
             .eq('user_id', userId)
         } else {
+          const candidatePlan = customData?.plan === 'elite' ? 'elite' : 'pro'
           await supabase
             .from('profiles')
-            .update({ is_premium: true })
+            .update({ is_premium: true, candidate_plan: candidatePlan })
             .eq('user_id', userId)
         }
       }
@@ -73,7 +74,7 @@ export async function POST(req: Request) {
       } else {
         await supabase
           .from('profiles')
-          .update({ is_premium: false })
+          .update({ is_premium: false, candidate_plan: 'free' })
           .eq('paddle_customer_id', customerId)
       }
     }
@@ -105,7 +106,7 @@ export async function POST(req: Request) {
       if (profile?.role !== 'employer') {
         await supabase
           .from('profiles')
-          .update({ is_premium: false })
+          .update({ is_premium: false, candidate_plan: 'free' })
           .eq('paddle_customer_id', customerId)
       }
     }

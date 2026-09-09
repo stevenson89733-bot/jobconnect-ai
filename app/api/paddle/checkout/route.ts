@@ -1,10 +1,15 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
-export async function POST() {
+export async function POST(req: Request) {
   const paddleClientToken = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN
-  const priceId = process.env.NEXT_PUBLIC_PADDLE_CANDIDATE_PREMIUM_PRICE_ID
+  const proPriceId = process.env.NEXT_PUBLIC_PADDLE_CANDIDATE_PRO_PRICE_ID
+  const elitePriceId = process.env.NEXT_PUBLIC_PADDLE_CANDIDATE_ELITE_PRICE_ID
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
+
+  const { searchParams } = new URL(req.url)
+  const plan = searchParams.get('plan') ?? 'pro'
+  const priceId = plan === 'elite' ? elitePriceId : proPriceId
 
   if (!paddleClientToken || !priceId) {
     return NextResponse.json({ error: 'Paddle not configured' }, { status: 503 })
@@ -43,7 +48,7 @@ export async function POST() {
     }
 
     // Add metadata for user tracking
-    checkoutUrl.searchParams.append('custom_data', JSON.stringify({ supabase_user_id: user.id }))
+    checkoutUrl.searchParams.append('custom_data', JSON.stringify({ supabase_user_id: user.id, plan }))
 
     // Store paddle_customer_id if needed (Paddle will generate if not exists)
     if (!profile?.paddle_customer_id) {

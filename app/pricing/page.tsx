@@ -10,6 +10,7 @@ export default function PricingPage() {
   const t = useTranslations('pricing')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [eliteLoading, setEliteLoading] = useState(false)
   const [employerLoading, setEmployerLoading] = useState(false)
   const [employerError, setEmployerError] = useState('')
 
@@ -64,8 +65,8 @@ export default function PricingPage() {
   async function handleUpgrade() {
     setLoading(true)
     setError('')
-    // Paddle checkout
-    const res = await fetch('/api/paddle/checkout', { method: 'POST' })
+    // Paddle checkout — Pro plan
+    const res = await fetch('/api/paddle/checkout?plan=pro', { method: 'POST' })
     // Stripe checkout (DISABLED — to be reactivated after Singapore incorporation)
     // const res = await fetch('/api/stripe/checkout', { method: 'POST' })
     if (res.status === 401) {
@@ -76,6 +77,24 @@ export default function PricingPage() {
     if (data.error) {
       setError(data.error)
       setLoading(false)
+      return
+    }
+    window.location.href = data.url
+  }
+
+  async function handleEliteUpgrade() {
+    setEliteLoading(true)
+    setError('')
+    // Paddle checkout — Elite plan
+    const res = await fetch('/api/paddle/checkout?plan=elite', { method: 'POST' })
+    if (res.status === 401) {
+      window.location.href = '/login?redirectTo=/pricing'
+      return
+    }
+    const data = await res.json()
+    if (data.error) {
+      setError(data.error)
+      setEliteLoading(false)
       return
     }
     window.location.href = data.url
@@ -332,11 +351,11 @@ export default function PricingPage() {
               ))}
             </ul>
             <button
-              onClick={handleUpgrade}
-              disabled={loading}
+              onClick={handleEliteUpgrade}
+              disabled={eliteLoading}
               className="btn-primary py-3 text-sm font-semibold disabled:opacity-50 w-full"
             >
-              {loading ? (
+              {eliteLoading ? (
                 <span className="flex items-center justify-center gap-2">
                   <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
@@ -344,7 +363,7 @@ export default function PricingPage() {
                   </svg>
                   {t('redirectingToStripe')}
                 </span>
-              ) : 'Upgrade to Elite — $39.99/mo'}
+              ) : 'Get Elite — $39.99/mo'}
             </button>
           </div>
         </div>
