@@ -94,11 +94,16 @@ export default function PricingPage() {
         body: JSON.stringify({ priceId, plan: 'pro' })
       })
 
+      if (res.status === 401) {
+        window.location.href = '/login?redirectTo=/pricing'
+        return
+      }
+
       const data = await res.json()
       if (data.checkoutUrl) {
         window.location.href = data.checkoutUrl
       } else {
-        setError('Failed to create checkout')
+        setError(data.error || 'Failed to create checkout')
         setLoading(false)
       }
     } catch (err) {
@@ -126,11 +131,16 @@ export default function PricingPage() {
         body: JSON.stringify({ priceId, plan: 'elite' })
       })
 
+      if (res.status === 401) {
+        window.location.href = '/login?redirectTo=/pricing'
+        return
+      }
+
       const data = await res.json()
       if (data.checkoutUrl) {
         window.location.href = data.checkoutUrl
       } else {
-        setError('Failed to create checkout')
+        setError(data.error || 'Failed to create checkout')
         setEliteLoading(false)
       }
     } catch (err) {
