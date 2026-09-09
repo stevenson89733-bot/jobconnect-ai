@@ -3,8 +3,13 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { initializePaddle } from '@paddle/paddle-js'
 import { createClient } from '@/lib/supabase/client'
+
+declare global {
+  interface Window {
+    Paddle?: any
+  }
+}
 
 export default function PricingPage() {
   const router = useRouter()
@@ -27,20 +32,32 @@ export default function PricingPage() {
   useEffect(() => {
     const initPaddle = async () => {
       try {
-        console.log('[Paddle] Initializing...')
-        console.log('[Paddle] Token:', process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN ? 'exists' : 'MISSING')
-        if (!process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN) {
-          console.error('[Paddle] Token not found')
+        console.log('[Paddle] Waiting for Paddle SDK...')
+
+        // Wait for window.Paddle to be available (max 5 seconds)
+        let attempts = 0
+        while (!window.Paddle && attempts < 50) {
+          await new Promise(r => setTimeout(r, 100))
+          attempts++
+        }
+
+        if (!window.Paddle) {
+          console.error('[Paddle] SDK not loaded after timeout')
           return
         }
-        console.log('[Paddle] Calling initializePaddle...')
-        const paddleInstance = await initializePaddle({
-          token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN,
-          environment: 'production',
-        })
-        console.log('[Paddle] SDK initialized:', !!paddleInstance)
-        console.log('[Paddle] Checkout available:', !!paddleInstance?.Checkout)
-        setPaddle(paddleInstance)
+
+        console.log('[Paddle] SDK found, initializing...')
+        const token = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN
+        console.log('[Paddle] Token:', token ? 'exists' : 'MISSING')
+
+        if (!token) {
+          console.error('[Paddle] Token not configured')
+          return
+        }
+
+        window.Paddle.Setup({ token, environment: 'production' })
+        console.log('[Paddle] Setup complete')
+        setPaddle(window.Paddle)
       } catch (err) {
         console.error('[Paddle] Initialization failed:', err)
       }
