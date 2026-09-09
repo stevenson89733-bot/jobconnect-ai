@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 
-export default function AutoApplyBetaCard({ isPro }: { isPro: boolean }) {
+export default function AutoApplyCard({ isPro }: { isPro: boolean }) {
   return (
     <div className="relative overflow-hidden rounded-2xl border border-slate-700/60 bg-gradient-to-br from-[#10152A] via-[#0f1a35] to-[#0c1628] p-6 shadow-xl">
       {/* Ambient glow */}

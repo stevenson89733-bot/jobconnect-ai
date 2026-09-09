@@ -16,7 +16,7 @@ import QuickActions from '@/components/dashboard/QuickActions'
 import CareerCoachSummary from '@/components/shared/CareerCoachSummary'
 import FadeIn from '@/components/dashboard/FadeIn'
 import RegistrationPixel from '@/components/analytics/RegistrationPixel'
-import AutoApplyBetaCard from '@/components/dashboard/AutoApplyBetaCard'
+import AutoApplyCard from '@/components/dashboard/AutoApplyCard'
 
 export const dynamic = 'force-dynamic'
 
@@ -150,7 +150,7 @@ export default async function CandidateDashboard({
   return (
     <div className="max-w-7xl mx-auto px-6 py-10 space-y-8">
       {searchParams.registered === '1' && <RegistrationPixel />}
-      <AutoApplyBetaCard isPro={isPro} />
+      <AutoApplyCard isPro={isPro} />
       <WelcomeHeader firstName={firstName} initials={initials} avatarUrl={profile?.avatar_url ?? null} />
 
       <ProfileCompletionCard completion={completion} />
