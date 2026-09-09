@@ -203,7 +203,7 @@ export default function PricingPage() {
           </div>
         )}
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-3 gap-6">
           {/* Free plan */}
           <div className="card flex flex-col">
             <div className="mb-6">
@@ -233,7 +233,7 @@ export default function PricingPage() {
             <div className="mb-6">
               <div className="text-sm font-semibold text-primary dark:text-blue-400 uppercase tracking-wider mb-1">{t('candidatePremiumLabel')}</div>
               <div className="flex items-end gap-1">
-                <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$19</span>
+                <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$19.99</span>
                 <span className="text-slate-600 dark:text-slate-400 mb-1">{t('candidatePremiumPeriod')}</span>
               </div>
               <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('candidatePremiumDesc')}</div>
@@ -309,6 +309,43 @@ export default function PricingPage() {
                 )}
               </>
             )}
+          </div>
+
+          {/* Elite plan */}
+          <div className="card flex flex-col">
+            <div className="mb-6">
+              <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">{t('candidateEliteLabel')}</div>
+              <div className="flex items-end gap-1">
+                <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$39.99</span>
+                <span className="text-slate-600 dark:text-slate-400 mb-1">{t('candidateElitePeriod')}</span>
+              </div>
+              <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('candidateEliteDesc')}</div>
+            </div>
+            <ul className="space-y-3 mb-8 flex-1">
+              {[
+                t('candidateEliteFeature1'), t('candidateEliteFeature2'), t('candidateEliteFeature3'),
+                t('candidateEliteFeature4'), t('candidateEliteFeature5'),
+              ].map((f) => (
+                <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+                  <span className="text-purple-600 dark:text-purple-400 shrink-0">✦</span> {f}
+                </li>
+              ))}
+            </ul>
+            <button
+              onClick={handleUpgrade}
+              disabled={loading}
+              className="btn-primary py-3 text-sm font-semibold disabled:opacity-50 w-full"
+            >
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
+                  </svg>
+                  {t('redirectingToStripe')}
+                </span>
+              ) : 'Upgrade to Elite — $39.99/mo'}
+            </button>
           </div>
         </div>
 
