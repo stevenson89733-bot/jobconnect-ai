@@ -114,8 +114,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </NextIntlClientProvider>
         <Analytics />
         <Script
-          src="https://cdn.paddle.com/paddle/v2/paddle.js"
-          strategy="afterInteractive"
+          src="https://cdn.paddle.com/paddle/paddle.js"
+          strategy="beforeInteractive"
         />
         <Script id="fb-pixel" strategy="afterInteractive">{`
           !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
