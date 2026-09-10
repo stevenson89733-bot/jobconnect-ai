@@ -3,6 +3,10 @@ import { createClient } from '@/lib/supabase/server'
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('[Checkout] ENV CHECK:', {
+      PADDLE_API_KEY: process.env.PADDLE_API_KEY ? 'SET (' + process.env.PADDLE_API_KEY.substring(0, 10) + '...)' : 'MISSING',
+      NODE_ENV: process.env.NODE_ENV,
+    })
     console.log('[Checkout] === REQUEST START ===')
     const body = await request.json()
     const { priceId, plan } = body
