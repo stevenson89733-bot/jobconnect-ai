@@ -65,17 +65,11 @@ export default async function AutoApplyPage() {
             <AutoApplyJoinButton />
           ) : isSignedIn ? (
             <div className="flex flex-col items-center gap-3">
-              <button
-                disabled
-                className="inline-flex items-center gap-2 rounded-xl bg-slate-700 text-slate-500 font-semibold text-base px-8 py-3.5 cursor-not-allowed"
-              >
-                Auto-Apply — Pro Feature
-              </button>
               <Link
                 href="/pricing"
-                className="text-sm text-cyan-400 hover:text-cyan-300 font-medium transition-colors"
+                className="inline-flex items-center gap-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold text-base px-8 py-3.5 transition-colors shadow-lg shadow-cyan-500/30"
               >
-                Upgrade to Pro →
+                Get Pro — $19.99/mo
               </Link>
             </div>
           ) : (

@@ -284,15 +284,23 @@ export default function PricingPage() {
           {/* Free plan */}
           <div className="card flex flex-col">
             <div className="mb-6">
-              <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">{t('candidateFreeLabel')}</div>
+              <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Forever free</div>
               <div className="text-4xl font-extrabold text-slate-900 dark:text-white">$0</div>
               <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('candidateFreeDesc')}</div>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
               {[
-                t('candidateFreeFeature1'), t('candidateFreeFeature2'), t('candidateFreeFeature3'), t('candidateFreeFeature4'),
-                t('candidateFreeFeature5'), t('candidateFreeFeature6'), t('candidateFreeFeature7'), t('candidateFreeFeature8'),
-                t('candidateFreeFeature9'), t('candidateFreeFeature10'),
+                "Browse all remote jobs worldwide",
+                "Apply to unlimited jobs",
+                "Manual apply — upload CV + cover letter",
+                "AI Match Score 0-100 per job",
+                "Cross-border detector — yes/no/unclear",
+                "Basic job alerts",
+                "Full candidate dashboard",
+                "Application Tracker — auto-tracked",
+                "Career Copilot — basic AI assistant",
+                "Interview Prep text — 5 Q + feedback",
+                "Multilingual candidate profile (11 languages)",
               ].map((f) => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
                   <span className="text-green-600 dark:text-green-400 shrink-0">✓</span> {f}
@@ -305,21 +313,29 @@ export default function PricingPage() {
           {/* Premium plan */}
           <div className="card border-primary/50 bg-gradient-to-br from-primary/5 to-white dark:to-card flex flex-col relative overflow-hidden">
             <div className="absolute top-4 end-4">
-              <span className="text-xs font-semibold bg-orange-700 text-white px-2.5 py-1 rounded-full">{t('mostPopular')}</span>
+              <span className="text-xs font-semibold bg-orange-700 text-white px-2.5 py-1 rounded-full">Most Popular · Cancel anytime</span>
             </div>
             <div className="mb-6">
-              <div className="text-sm font-semibold text-primary dark:text-blue-400 uppercase tracking-wider mb-1">{t('candidatePremiumLabel')}</div>
+              <div className="text-sm font-semibold text-primary dark:text-blue-400 uppercase tracking-wider mb-1">Pro</div>
               <div className="flex items-end gap-1">
                 <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$19.99</span>
-                <span className="text-slate-600 dark:text-slate-400 mb-1">{t('candidatePremiumPeriod')}</span>
+                <span className="text-slate-600 dark:text-slate-400 mb-1">/mo</span>
               </div>
-              <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('candidatePremiumDesc')}</div>
+              <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">Everything in Free +</div>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
               {[
-                t('candidatePremiumFeature1'), t('candidatePremiumFeature2'), t('candidatePremiumFeature3'),
-                t('candidatePremiumFeature4'), t('candidatePremiumFeature5'), t('candidatePremiumFeature6'), t('candidatePremiumFeature7'),
-                t('candidatePremiumFeature8'), t('candidatePremiumFeature9'), t('candidatePremiumFeature10'), t('candidatePremiumFeature11'),
+                "AI Resume Builder GPT-4o — tailored per role",
+                "ATS Score 0-100 — keywords · formatting · exp · skills",
+                "AI Cover Letter Generator — personalized by offer",
+                "Resume adapted by country — format per market",
+                "PDF download — resume + cover letter ready",
+                "3 AI improvement tips — concrete suggestions",
+                "LinkedIn Optimizer — profile analysis + generation",
+                "Mobility Skill-Gap A→B — skills gap between markets",
+                "Voice Interview Prep — simulation + feedback",
+                "Auto-Apply — 10 jobs/day — daily auto applications",
+                "Priority support",
               ].map((f) => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
                   <span className="text-orange-600 dark:text-accent shrink-0">✦</span> {f}
@@ -391,17 +407,20 @@ export default function PricingPage() {
           {/* Elite plan */}
           <div className="card flex flex-col">
             <div className="mb-6">
-              <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">{t('candidateEliteLabel')}</div>
+              <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Elite · Cancel anytime</div>
               <div className="flex items-end gap-1">
                 <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$39.99</span>
-                <span className="text-slate-600 dark:text-slate-400 mb-1">{t('candidateElitePeriod')}</span>
+                <span className="text-slate-600 dark:text-slate-400 mb-1">/mo</span>
               </div>
-              <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('candidateEliteDesc')}</div>
+              <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">Everything in Pro +</div>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
               {[
-                t('candidateEliteFeature1'), t('candidateEliteFeature2'), t('candidateEliteFeature3'),
-                t('candidateEliteFeature4'), t('candidateEliteFeature5'),
+                "Everything in Pro +",
+                "Auto-Apply — 25 jobs/day",
+                "Priority matching",
+                "Dedicated 24/7 support",
+                "Elite badge on candidate profile",
               ].map((f) => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
                   <span className="text-purple-600 dark:text-purple-400 shrink-0">✦</span> {f}

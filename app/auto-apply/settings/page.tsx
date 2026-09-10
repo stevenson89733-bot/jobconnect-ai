@@ -56,7 +56,7 @@ export default function AutoApplySettingsPage() {
           .insert({
             user_id: user.id,
             is_active: false,
-            max_applications_per_day: 5,
+            max_applications_per_day: 10,
             min_match_score: 60,
           })
           .select()
@@ -188,14 +188,14 @@ export default function AutoApplySettingsPage() {
             </label>
             <input
               type="range"
-              min="4"
-              max="10"
-              value={settings?.max_applications_per_day || 5}
+              min="10"
+              max="25"
+              value={settings?.max_applications_per_day || 10}
               onChange={(e) => setSettings({ ...settings, max_applications_per_day: parseInt(e.target.value) })}
               className="w-full"
             />
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-              JobConnect AI will send 4–10 applications daily based on your preference.
+              JobConnect AI will send 10–25 applications daily based on your preference.
             </p>
           </div>
 
