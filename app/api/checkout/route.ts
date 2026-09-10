@@ -49,11 +49,13 @@ export async function POST(request: NextRequest) {
     }
 
     const transaction = await paddleResponse.json()
-    const checkoutUrl = transaction.data?.checkout?.url
+    console.log('[Checkout] Paddle response:', JSON.stringify(transaction, null, 2))
+
+    const checkoutUrl = transaction.data?.checkout?.url || transaction.checkout?.url || transaction.data?.checkout_link
 
     if (!checkoutUrl) {
-      console.error('[Checkout] No checkout URL in Paddle response:', transaction)
-      return NextResponse.json({ error: 'No checkout URL returned' }, { status: 500 })
+      console.error('[Checkout] No checkout URL found in Paddle response:', JSON.stringify(transaction, null, 2))
+      return NextResponse.json({ error: 'No checkout URL returned', response: transaction }, { status: 500 })
     }
 
     return NextResponse.json({ checkoutUrl })
