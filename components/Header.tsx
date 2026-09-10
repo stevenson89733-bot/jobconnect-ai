@@ -15,9 +15,9 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
   return (
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-background/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 font-bold text-xl">
-          <img src="/logo.png" alt="JobConnect AI" height={40} className="object-contain" style={{ height: 40, width: 'auto' }} />
-          <span className="text-slate-900 dark:text-white">{tc('brand')} <span className="text-primary dark:text-blue-400">{tc('brandSuffix')}</span></span>
+        <Link href="/" className="flex items-center gap-3 font-bold text-2xl">
+          <img src="/logo.png" alt="JobConnect AI" height={48} className="object-contain" style={{ height: 48, width: 'auto' }} />
+          <span className="text-slate-900 dark:text-white font-bold">{tc('brand')} <span className="text-primary dark:text-blue-400">{tc('brandSuffix')}</span></span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600 dark:text-slate-400">
