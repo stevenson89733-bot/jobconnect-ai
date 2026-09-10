@@ -3,8 +3,8 @@ export default function Logo() {
     <div className="flex items-center gap-2">
       {/* SVG Logo */}
       <svg
-        width="36"
-        height="36"
+        width="48"
+        height="48"
         viewBox="0 0 36 36"
         className="flex-shrink-0"
         fill="none"
@@ -28,7 +28,7 @@ export default function Logo() {
       </svg>
 
       {/* Text: JobConnect AI */}
-      <span className="font-black text-slate-900 dark:text-white text-lg tracking-tight">
+      <span className="font-black text-slate-900 dark:text-white text-xl tracking-tight">
         JobConnect{' '}
         <span className="text-blue-600 dark:text-blue-400">AI</span>
       </span>
