@@ -95,7 +95,7 @@ export default function PricingPage() {
     setError('')
 
     try {
-      const res = await fetch('/api/stripe/checkout', {
+      const res = await fetch('/api/stripe/checkout/elite', {
         method: 'POST',
       })
 

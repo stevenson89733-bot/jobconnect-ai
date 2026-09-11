@@ -4,7 +4,7 @@ import Stripe from 'stripe'
 
 export async function POST() {
   const stripeKey = process.env.STRIPE_SECRET_KEY
-  const priceId   = process.env.STRIPE_PRICE_ID
+  const priceId   = process.env.STRIPE_ELITE_PRICE_ID
   const appUrl    = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
 
   if (!stripeKey || !priceId) {
@@ -44,15 +44,15 @@ export async function POST() {
       customer: customerId,
       mode: 'subscription',
       line_items: [{ price: priceId, quantity: 1 }],
-      success_url: `${appUrl}/pricing?success=true&plan=pro`,
-      cancel_url:  `${appUrl}/pricing?canceled=true&plan=pro`,
-      metadata: { supabase_user_id: user.id, plan: 'pro' },
-      subscription_data: { metadata: { supabase_user_id: user.id, plan: 'pro' } },
+      success_url: `${appUrl}/pricing?success=true&plan=elite`,
+      cancel_url:  `${appUrl}/pricing?canceled=true&plan=elite`,
+      metadata: { supabase_user_id: user.id, plan: 'elite' },
+      subscription_data: { metadata: { supabase_user_id: user.id, plan: 'elite' } },
     })
     return NextResponse.json({ url: session.url })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err)
-    console.error('[stripe/checkout]', message)
+    console.error('[stripe/checkout/elite]', message)
     return NextResponse.json({ error: message }, { status: 500 })
   }
 }
