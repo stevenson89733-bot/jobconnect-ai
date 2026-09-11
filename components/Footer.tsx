@@ -58,7 +58,7 @@ export default async function Footer() {
                 <span className="text-primary dark:text-blue-400" style={{ fontSize: '20px', fontWeight: 700 }}>AI</span>
               </div>
             </Link>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">AI-Powered Remote Jobs · 63 Countries</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">Connecting Talent. Building Futures.</p>
             <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{t('tagline')}</p>
           </div>
           <div>
