@@ -28,7 +28,7 @@ export default function PrivacyPage() {
                   <li>Full name, profile information, and location</li>
                   <li>Resumes, cover letters, and work experience</li>
                   <li>Application history and job preferences</li>
-                  <li>Payment information (processed securely through Paddle)</li>
+                  <li>Payment information (processed securely through Stripe)</li>
                 </ul>
               </div>
               <div>
@@ -63,7 +63,7 @@ export default function PrivacyPage() {
                 <p className="text-sm text-slate-400">Analytics and advertising. Tracks user interactions to improve our service and measure marketing campaigns.</p>
               </div>
               <div className="bg-slate-900/50 border border-slate-800 p-4 rounded-lg">
-                <h3 className="font-semibold text-slate-200 mb-1">Paddle</h3>
+                <h3 className="font-semibold text-slate-200 mb-1">Stripe</h3>
                 <p className="text-sm text-slate-400">Payment processor. Handles subscription payments securely without storing card details on our servers.</p>
               </div>
             </div>

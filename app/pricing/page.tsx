@@ -1,15 +1,9 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { createClient } from '@/lib/supabase/client'
-
-declare global {
-  interface Window {
-    Paddle?: any
-  }
-}
 
 export default function PricingPage() {
   const router = useRouter()
@@ -20,7 +14,6 @@ export default function PricingPage() {
   const [eliteLoading, setEliteLoading] = useState(false)
   const [employerLoading, setEmployerLoading] = useState(false)
   const [employerError, setEmployerError] = useState('')
-  const [paddle, setPaddle] = useState<any>(null)
 
   const [showPromoField, setShowPromoField] = useState(false)
   const [promoCode, setPromoCode] = useState('')
@@ -28,11 +21,6 @@ export default function PricingPage() {
   const [promoError, setPromoError] = useState('')
   const [promoSuccess, setPromoSuccess] = useState(false)
   const [promoType, setPromoType] = useState<'candidate' | 'employer'>('candidate')
-
-  useEffect(() => {
-    // Paddle is initialized via API route, set flag to indicate ready
-    setPaddle(true)
-  }, [])
 
   async function handlePromoRedeem() {
     if (!promoCode.trim()) return
