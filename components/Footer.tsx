@@ -53,7 +53,14 @@ export default async function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 mb-10">
           <div className="sm:col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 font-bold text-lg mb-3">
-              <span className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center text-white text-xs font-black">J</span>
+              <img
+                src="/logo.png"
+                alt="JobConnect AI"
+                width={40}
+                height={40}
+                className="object-contain"
+                style={{ height: 40, width: 'auto' }}
+              />
               <span className="text-slate-900 dark:text-white">{tc('brand')} <span className="text-primary dark:text-blue-400">{tc('brandSuffix')}</span></span>
             </Link>
             <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{t('tagline')}</p>
