@@ -76,22 +76,12 @@ export default function PricingPage() {
   }, [success, employerSuccess, router])
 
   async function handleUpgrade() {
-    if (!paddle) return
     setLoading(true)
     setError('')
 
     try {
-      const priceId = 'pri_01m1y0hsqtf174a0n6bbd7wwqn'
-      if (!priceId) {
-        setError('Price configuration missing')
-        setLoading(false)
-        return
-      }
-
-      const res = await fetch('/api/checkout', {
+      const res = await fetch('/api/stripe/checkout', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ priceId, plan: 'pro' })
       })
 
       if (res.status === 401) {
@@ -100,8 +90,8 @@ export default function PricingPage() {
       }
 
       const data = await res.json()
-      if (data.checkoutUrl) {
-        window.location.href = data.checkoutUrl
+      if (data.url) {
+        window.location.href = data.url
       } else {
         setError(data.error || 'Failed to create checkout')
         setLoading(false)
@@ -113,22 +103,12 @@ export default function PricingPage() {
   }
 
   async function handleEliteUpgrade() {
-    if (!paddle) return
     setEliteLoading(true)
     setError('')
 
     try {
-      const priceId = 'pri_01m23228djrev51x1bas2jhfd7'
-      if (!priceId) {
-        setError('Price configuration missing')
-        setEliteLoading(false)
-        return
-      }
-
-      const res = await fetch('/api/checkout', {
+      const res = await fetch('/api/stripe/checkout', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ priceId, plan: 'elite' })
       })
 
       if (res.status === 401) {
@@ -137,8 +117,8 @@ export default function PricingPage() {
       }
 
       const data = await res.json()
-      if (data.checkoutUrl) {
-        window.location.href = data.checkoutUrl
+      if (data.url) {
+        window.location.href = data.url
       } else {
         setError(data.error || 'Failed to create checkout')
         setEliteLoading(false)
@@ -150,28 +130,26 @@ export default function PricingPage() {
   }
 
   async function handleEmployerUpgrade() {
-    if (!paddle) return
     setEmployerLoading(true)
     setEmployerError('')
 
     try {
-      const supabase = createClient()
-      const { data: { user } } = await supabase.auth.getUser()
+      const res = await fetch('/api/stripe/checkout/employer', {
+        method: 'POST',
+      })
 
-      if (!user) {
+      if (res.status === 401) {
         window.location.href = '/login?redirectTo=/pricing'
         return
       }
 
-      paddle.Checkout.open({
-        items: [
-          { priceId: process.env.NEXT_PUBLIC_PADDLE_EMPLOYER_GROWTH_PRICE_ID || '', quantity: 1 }
-        ],
-        customer: { email: user.email || '' },
-        customData: { supabase_user_id: user.id, role: 'employer' }
-      })
-
-      setEmployerLoading(false)
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        setEmployerError(data.error || 'Failed to create checkout')
+        setEmployerLoading(false)
+      }
     } catch (err) {
       setEmployerError(err instanceof Error ? err.message : 'Checkout failed')
       setEmployerLoading(false)
