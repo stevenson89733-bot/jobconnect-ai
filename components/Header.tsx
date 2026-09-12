@@ -15,16 +15,16 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
   return (
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-background/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-1.5">
+        <Link href="/" className="flex items-center gap-2">
           <img
             src="/logo.png"
             alt="JobConnect AI"
-            width={36}
-            height={36}
+            width={50}
+            height={50}
             className="object-contain flex-shrink-0"
-            style={{ height: 36, width: 'auto' }}
+            style={{ height: 50, width: 'auto' }}
           />
-          <div style={{ fontSize: '18px', fontWeight: 800, color: '#0F1623', display: 'flex', alignItems: 'center', gap: '0' }}>
+          <div style={{ fontSize: '22px', fontWeight: 800, color: '#0F1623', display: 'flex', alignItems: 'center', gap: '0' }}>
             <span>{tc('brand')}</span><span style={{ color: '#FF6B35' }}>{tc('brandSuffix')}</span>
           </div>
         </Link>

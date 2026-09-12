@@ -56,12 +56,12 @@ export default async function Footer() {
               <img
                 src="/logo.png"
                 alt="JobConnect AI"
-                width={36}
-                height={36}
+                width={50}
+                height={50}
                 className="object-contain flex-shrink-0"
-                style={{ height: 36, width: 'auto' }}
+                style={{ height: 50, width: 'auto' }}
               />
-              <div style={{ fontSize: '18px', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0' }}>
+              <div style={{ fontSize: '22px', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0' }}>
                 <span className="text-slate-900 dark:text-white">JobConnect</span><span style={{ color: '#FF6B35' }}>AI</span>
               </div>
             </Link>
