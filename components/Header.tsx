@@ -15,14 +15,13 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
   return (
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-background/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3">
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
-            <text x="20" y="28" fontSize="32" fontWeight="800" textAnchor="middle" fill="#2E5CF6">J</text>
-            <text x="28" y="28" fontSize="32" fontWeight="800" textAnchor="middle" fill="#F0663A">C</text>
-          </svg>
-          <div style={{ fontSize: '22px', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0' }}>
-            <span className="dark:text-white" style={{ color: '#0F1623' }}>{tc('brand')}</span><span style={{ color: '#F0663A' }}>{tc('brandSuffix')}</span>
-          </div>
+        <Link href="/" className="flex items-center">
+          <img
+            src="/logo-full.png"
+            alt="JobConnect AI"
+            height={44}
+            style={{ objectFit: 'contain' }}
+          />
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600 dark:text-slate-400">
