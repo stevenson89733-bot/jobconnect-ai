@@ -53,10 +53,12 @@ export default async function Footer() {
       <div className="max-w-7xl mx-auto px-6 py-12 bg-transparent">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 mb-10">
           <div className="sm:col-span-2 md:col-span-1 bg-transparent">
-            <Link href="/">
-              <Logo height={44} />
+            <Link href="/" className="inline-block bg-transparent">
+              <div className="bg-transparent">
+                <Logo height={44} />
+              </div>
             </Link>
-            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{t('tagline')}</p>
+            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mt-2">{t('tagline')}</p>
           </div>
           <div>
             <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">{t('product')}</h3>

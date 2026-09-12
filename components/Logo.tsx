@@ -4,7 +4,7 @@ export default function Logo({ height = 44 }: { height?: number }) {
       viewBox="0 0 800 150"
       xmlns="http://www.w3.org/2000/svg"
       height={height}
-      style={{ objectFit: 'contain', width: 'auto', display: 'block' }}
+      style={{ objectFit: 'contain', width: 'auto', display: 'block', backgroundColor: 'transparent' }}
     >
       {/* JC Icon */}
       <g transform="translate(10, 20)">
