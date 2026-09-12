@@ -56,8 +56,8 @@ export default async function Footer() {
               <img
                 src="/logo-full.png"
                 alt="JobConnect AI"
-                height={52}
-                style={{ objectFit: 'contain' }}
+                height={64}
+                style={{ objectFit: 'contain', width: 'auto' }}
               />
             </Link>
             <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{t('tagline')}</p>

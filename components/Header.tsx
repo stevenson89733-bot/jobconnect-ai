@@ -19,8 +19,8 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
           <img
             src="/logo-full.png"
             alt="JobConnect AI"
-            height={44}
-            style={{ objectFit: 'contain' }}
+            height={56}
+            style={{ objectFit: 'contain', width: 'auto' }}
           />
         </Link>
 
