@@ -52,7 +52,7 @@ export default async function Footer() {
     <footer className="border-t border-slate-200 dark:border-slate-800 mt-24">
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 mb-10">
-          <div className="sm:col-span-2 md:col-span-1">
+          <div className="sm:col-span-2 md:col-span-1 bg-transparent">
             <Link href="/">
               <Logo height={44} />
             </Link>
