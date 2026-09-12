@@ -1,31 +1,31 @@
 export default function Logo({ height = 44 }: { height?: number }) {
   return (
     <svg
-      viewBox="0 0 1400 320"
+      viewBox="0 0 800 150"
       xmlns="http://www.w3.org/2000/svg"
       height={height}
-      style={{ objectFit: 'contain', width: 'auto' }}
+      style={{ objectFit: 'contain', width: 'auto', display: 'block' }}
     >
       {/* JC Icon */}
-      <g transform="translate(60, 60)">
+      <g transform="translate(10, 20)">
         {/* J shape - blue */}
         <path
-          d="M 40 20 Q 80 20 80 60 Q 80 100 40 100 Q 20 100 20 85"
+          d="M 20 10 Q 45 10 45 35 Q 45 55 20 55 Q 10 55 10 48"
           fill="none"
           stroke="#2563EB"
-          strokeWidth="18"
+          strokeWidth="8"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         {/* Person icon - blue */}
-        <circle cx="50" cy="45" r="12" fill="#2563EB" />
-        <ellipse cx="50" cy="75" rx="20" ry="25" fill="#2563EB" />
+        <circle cx="28" cy="25" r="6" fill="#2563EB" />
+        <ellipse cx="28" cy="43" rx="10" ry="13" fill="#2563EB" />
         {/* C shape - orange */}
         <path
-          d="M 120 20 Q 150 20 150 60 Q 150 100 120 100"
+          d="M 60 10 Q 80 10 80 35 Q 80 55 60 55"
           fill="none"
           stroke="#FF6B35"
-          strokeWidth="18"
+          strokeWidth="8"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
@@ -33,40 +33,26 @@ export default function Logo({ height = 44 }: { height?: number }) {
 
       {/* JobConnect text - blue */}
       <text
-        x="280"
-        y="130"
+        x="120"
+        y="65"
         fontFamily="Helvetica, Arial, sans-serif"
-        fontSize="110"
+        fontSize="50"
         fontWeight="bold"
         fill="#2563EB"
-        letterSpacing="-2"
       >
         JobConnect
       </text>
 
       {/* AI text - orange */}
       <text
-        x="1130"
-        y="130"
+        x="620"
+        y="65"
         fontFamily="Helvetica, Arial, sans-serif"
-        fontSize="110"
+        fontSize="50"
         fontWeight="bold"
         fill="#FF6B35"
       >
         AI
-      </text>
-
-      {/* Tagline - dark blue */}
-      <text
-        x="280"
-        y="200"
-        fontFamily="Helvetica, Arial, sans-serif"
-        fontSize="32"
-        fill="#1E3A5F"
-        fontWeight="500"
-        letterSpacing="1"
-      >
-        CONNECTING TALENT. BUILDING FUTURES.
       </text>
     </svg>
   )
