@@ -16,19 +16,12 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-background/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
-          <img
-            src="/logo.svg"
-            alt="JobConnect AI"
-            width={40}
-            height={40}
-            className="object-contain flex-shrink-0"
-            style={{ height: 40, width: 'auto' }}
-          />
-          <div className="flex flex-col">
-            <div style={{ fontSize: '22px', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0', lineHeight: 1 }}>
-              <span style={{ color: '#0F1623' }}>{tc('brand')}</span><span style={{ color: '#F0663A' }}>{tc('brandSuffix')}</span>
-            </div>
-            <div style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.12em', color: '#6B7280', textTransform: 'uppercase', lineHeight: 1.2 }}>— Connecting Talent. Building Futures. —</div>
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
+            <text x="20" y="28" fontSize="32" fontWeight="800" textAnchor="middle" fill="#2E5CF6">J</text>
+            <text x="28" y="28" fontSize="32" fontWeight="800" textAnchor="middle" fill="#F0663A">C</text>
+          </svg>
+          <div style={{ fontSize: '22px', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0' }}>
+            <span className="dark:text-white" style={{ color: '#0F1623' }}>{tc('brand')}</span><span style={{ color: '#F0663A' }}>{tc('brandSuffix')}</span>
           </div>
         </Link>
 
