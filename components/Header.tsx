@@ -25,7 +25,7 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
             style={{ height: 36, width: 'auto', backgroundColor: 'transparent' }}
           />
           <div style={{ fontSize: '18px', fontWeight: 800, color: '#0F1623', display: 'flex', alignItems: 'center', gap: '0' }}>
-            <span>{tc('brand')}</span><span style={{ color: '#2E5CF6' }}>{tc('brandSuffix')}</span>
+            <span>{tc('brand')}</span><span style={{ color: '#FF6B35' }}>{tc('brandSuffix')}</span>
           </div>
         </Link>
 

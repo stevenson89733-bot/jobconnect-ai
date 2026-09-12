@@ -62,7 +62,7 @@ export default async function Footer() {
                 style={{ height: 36, width: 'auto', backgroundColor: 'transparent' }}
               />
               <div style={{ fontSize: '18px', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0' }}>
-                <span className="text-slate-900 dark:text-white">JobConnect</span><span style={{ color: '#2E5CF6' }}>AI</span>
+                <span className="text-slate-900 dark:text-white">JobConnect</span><span style={{ color: '#FF6B35' }}>AI</span>
               </div>
             </Link>
             <p className="text-xs font-semibold mb-3 uppercase" style={{ color: '#94A3B8', letterSpacing: '0.1em', fontSize: '10px' }}>Connecting Talent. Building Futures.</p>
