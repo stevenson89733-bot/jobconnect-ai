@@ -22,7 +22,7 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
             width={36}
             height={36}
             className="object-contain flex-shrink-0"
-            style={{ height: 36, width: 'auto', backgroundColor: 'transparent' }}
+            style={{ height: 36, width: 'auto' }}
           />
           <div style={{ fontSize: '18px', fontWeight: 800, color: '#0F1623', display: 'flex', alignItems: 'center', gap: '0' }}>
             <span>{tc('brand')}</span><span style={{ color: '#FF6B35' }}>{tc('brandSuffix')}</span>
