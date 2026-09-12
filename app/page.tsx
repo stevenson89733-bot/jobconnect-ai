@@ -133,124 +133,95 @@ export default async function Home() {
       <OrganizationJsonLd />
 
       {/* ── 1. HERO ───────────────────────────────────────────── */}
-      <section style={{ background: 'linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%)' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <section style={{ background: '#10152A' }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-16">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 
-            {/* Left — Features & Copy */}
-            <div>
-              {/* Trust Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-50 border border-blue-200 text-blue-700 text-sm font-semibold mb-8">
-                ✓ TRUSTED BY JOB SEEKERS WORLDWIDE
+            {/* Left copy */}
+            <div className="flex-1 text-center lg:text-left">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/15 text-[13px] text-slate-300 mb-8"
+                   style={{ background: 'rgba(255,255,255,0.07)' }}>
+                <span className="w-2 h-2 rounded-full animate-pulse shrink-0" style={{ background: '#57C7E3' }} />
+                🌍 The #1 platform for cross-border remote jobs
               </div>
 
-              {/* Main Headline */}
-              <h1 className="font-bold text-4xl sm:text-5xl leading-tight mb-4" style={{ color: '#0F1623' }}>
-                YOUR NEXT<br />OPPORTUNITY<br />IS OUT THERE.
+              {/* H1 */}
+              <h1 className="font-bold text-white leading-tight tracking-tight mb-2"
+                  style={{ fontSize: 'clamp(36px, 6vw, 64px)' }}>
+                Your career has<br className="hidden sm:block" /> no borders.
               </h1>
-              <p className="text-3xl font-bold mb-6" style={{ color: '#F0663A' }}>
-                LET AI HELP YOU FIND IT.
+
+              {/* Cyan italic sub */}
+              <p className="text-base sm:text-lg font-medium italic mb-4" style={{ color: '#57C7E3' }}>
+                Find work that travels with you.
               </p>
 
               {/* Description */}
-              <p className="text-slate-600 mb-2 text-lg">
-                The global job market is changing.
-              </p>
-              <p className="text-slate-600 mb-8 text-lg">
-                And your <span className="text-blue-600 font-semibold">career search</span> should evolve with it.
+              <p className="text-slate-400 mb-8 max-w-lg mx-auto lg:mx-0"
+                 style={{ fontSize: '17px', lineHeight: '1.7' }}>
+                AI-powered career tools for international professionals targeting remote roles in US, UK, Germany, France and Canada.
               </p>
 
-              <p className="text-slate-600 mb-10 leading-relaxed">
-                JobConnect AI helps you search smarter by bringing <span className="text-blue-600 font-semibold">AI-powered</span> intelligence into your job search.
-              </p>
-
-              {/* Feature List */}
-              <div className="space-y-4 mb-10">
-                {[
-                  { icon: '🧠', title: 'AI-Powered Job Matching', desc: 'Find opportunities aligned with your profile.' },
-                  { icon: '🎯', title: 'Smart Recommendations', desc: 'Discover roles that fit your skills and goals.' },
-                  { icon: '🌍', title: 'Global Opportunities', desc: 'Explore remote & cross-border jobs across 63 countries.' },
-                  { icon: '🌐', title: '11 Languages', desc: 'Search and apply with fewer language barriers.' },
-                  { icon: '📄', title: 'AI Application Support', desc: 'Strengthen your resume and applications.' },
-                  { icon: '⚡', title: 'Save Time', desc: 'Spend less time searching and more time applying.' },
-                ].map((item, i) => (
-                  <div key={i} className="flex gap-4">
-                    <span className="text-2xl flex-shrink-0">{item.icon}</span>
-                    <div>
-                      <h3 className="font-bold text-slate-900">{item.title}</h3>
-                      <p className="text-slate-600 text-sm">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
+              {/* CTAs */}
+              <div className="flex flex-wrap gap-3 justify-center lg:justify-start mb-8">
+                <Link
+                  href="/jobs"
+                  className="inline-flex items-center gap-2 text-white font-bold rounded-full px-7 py-3.5 text-[15px] transition-all hover:brightness-110"
+                  style={{ background: '#57C7E3' }}
+                >
+                  Find remote jobs →
+                </Link>
+                <Link
+                  href="/register"
+                  className="inline-flex items-center gap-2 border font-bold rounded-full px-7 py-3.5 text-[15px] text-white transition-colors hover:bg-white/10"
+                  style={{ borderColor: 'rgba(255,255,255,0.3)' }}
+                >
+                  ▶ See how it works
+                </Link>
               </div>
 
-              {/* CTA Button */}
+              {/* Auto-Apply teaser */}
               <Link
-                href="/jobs"
-                className="inline-flex items-center gap-2 text-white font-bold rounded-lg px-8 py-3.5 text-lg transition-all hover:brightness-110"
-                style={{ background: '#F0663A' }}
+                href="/auto-apply"
+                className="inline-flex items-center gap-2 text-[13px] font-semibold text-cyan-400 hover:text-cyan-300 transition-colors mb-5"
               >
-                DISCOVER JOBCONNECT AI →
+                <span className="flex items-center gap-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1">
+                  🤖 <span>Auto-Apply — let AI apply for you daily</span>
+                  <span className="opacity-60">→</span>
+                </span>
               </Link>
-            </div>
 
-            {/* Right — Image Mockup */}
-            <div className="flex justify-center lg:justify-end">
-              <div className="relative w-full max-w-md">
-                {/* Placeholder for professional image */}
-                <div className="bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl aspect-square flex items-center justify-center text-white text-center p-8">
-                  <div>
-                    <p className="text-sm opacity-80 mb-2">Professional Image</p>
-                    <svg width="120" height="120" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="mx-auto mb-4 opacity-90">
-                      <text x="20" y="28" fontSize="32" fontWeight="800" textAnchor="middle" fill="white">J</text>
-                      <text x="28" y="28" fontSize="32" fontWeight="800" textAnchor="middle" fill="#F0663A">C</text>
-                    </svg>
-                    <p className="text-xs opacity-75">Person with laptop</p>
-                  </div>
-                </div>
+              {/* Flag row */}
+              <div className="flex items-center gap-3 justify-center lg:justify-start">
+                <span className="flex gap-1 text-2xl">🇺🇸🇬🇧🇩🇪🇫🇷🇨🇦</span>
+                <span className="text-[13px] text-slate-400">Jobs available in 63 countries — 11 languages</span>
               </div>
             </div>
-          </div>
 
-          {/* Stats Row Below Hero */}
-          <div className="grid grid-cols-3 gap-6 mt-16 pt-12 border-t border-slate-200">
-            {[
-              { value: '63', label: 'Countries', desc: 'Global opportunities at your fingertips.' },
-              { value: '11', label: 'Languages', desc: 'Search and apply in your language.' },
-              { value: '1', label: 'Smarter Way', desc: 'One profile. One world of opportunities.' },
-            ].map((stat, i) => (
-              <div key={i} className="text-center">
-                <div className="text-4xl sm:text-5xl font-black mb-1" style={{ color: '#2E5CF6' }}>
-                  {stat.value}
-                </div>
-                <div className="font-bold text-slate-900 mb-2">{stat.label}</div>
-                <p className="text-sm text-slate-600">{stat.desc}</p>
-              </div>
-            ))}
+            {/* Right — floating job card */}
+            <div className="w-full lg:w-auto lg:flex-shrink-0 flex justify-center lg:justify-end">
+              <HeroJobCard />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── 2. CTA FOOTER SECTION ──────────────────────────── */}
-      <section style={{ background: '#0F1623' }}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-            <div>
-              <h2 className="text-4xl font-bold text-white mb-2">
-                ONE PROFILE.
-              </h2>
-              <p className="text-3xl font-bold mb-4" style={{ color: '#F0663A' }}>
-                ONE WORLD.
-              </p>
-              <p className="text-xl text-slate-300">ENDLESS OPPORTUNITIES.</p>
-            </div>
-            <Link
-              href="/jobs"
-              className="inline-flex items-center gap-2 text-white font-bold rounded-lg px-8 py-4 text-lg transition-all hover:brightness-110 flex-shrink-0"
-              style={{ background: '#F0663A' }}
-            >
-              DISCOVER JOBCONNECT AI →
-            </Link>
+      {/* ── 2. STATS ROW ──────────────────────────────────────── */}
+      <section style={{ background: '#0c1020' }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0 md:divide-x divide-white/10">
+            {[
+              { value: '2,400+', label: 'Remote Jobs' },
+              { value: '94%',    label: 'Match Accuracy' },
+              { value: '5',      label: 'Target Markets' },
+              { value: 'Free',   label: 'To Start' },
+            ].map(({ value, label }) => (
+              <div key={label} className="text-center px-6">
+                <div className="font-black text-4xl sm:text-5xl text-white mb-1">{value}</div>
+                <div className="text-[12px] font-semibold uppercase tracking-widest text-slate-400">{label}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
