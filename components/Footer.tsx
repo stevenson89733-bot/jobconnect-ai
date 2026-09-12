@@ -54,7 +54,7 @@ export default async function Footer() {
           <div className="sm:col-span-2 md:col-span-1">
             <Link href="/" className="inline-flex items-center gap-2 mb-2">
               <img
-                src="/logo.png"
+                src="/logo.svg"
                 alt="JobConnect AI"
                 width={50}
                 height={50}
