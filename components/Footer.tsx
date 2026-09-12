@@ -53,7 +53,7 @@ export default async function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 mb-10">
           <div className="sm:col-span-2 md:col-span-1">
             <Link href="/">
-              <img src="/logo-full.png" alt="JobConnect AI" height={44} style={{ objectFit: 'contain' }} />
+              <img src="/logo-full.svg" alt="JobConnect AI" height={44} style={{ objectFit: 'contain' }} />
             </Link>
             <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{t('tagline')}</p>
           </div>
