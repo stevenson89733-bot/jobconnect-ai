@@ -24,10 +24,9 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
             className="object-contain flex-shrink-0"
             style={{ height: 40, width: 'auto' }}
           />
-          <div style={{ fontSize: '20px', fontWeight: 700, lineHeight: 1 }}>
-            <span className="text-slate-900 dark:text-white" style={{ color: '#0F1623' }}>{tc('brand')}</span>
-            <span className="text-primary dark:text-blue-400" style={{ color: '#2E5CF6' }}>{tc('brandSuffix')}</span>
-          </div>
+          <span style={{ fontSize: '20px', fontWeight: 700, color: '#0F1623', whiteSpace: 'nowrap' }}>
+            {tc('brand')}<span style={{ color: '#2E5CF6' }}>{tc('brandSuffix')}</span>
+          </span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600 dark:text-slate-400">
