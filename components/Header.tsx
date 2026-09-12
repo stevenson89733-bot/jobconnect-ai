@@ -15,12 +15,11 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
   return (
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-background/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center">
+        <Link href="/" className="flex items-center flex-shrink-0">
           <img
             src="/logo-full.png"
             alt="JobConnect AI"
-            height={56}
-            style={{ objectFit: 'contain', width: 'auto' }}
+            style={{ maxHeight: '56px', width: 'auto', objectFit: 'contain' }}
           />
         </Link>
 
