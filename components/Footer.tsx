@@ -52,20 +52,22 @@ export default async function Footer() {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 mb-10">
           <div className="sm:col-span-2 md:col-span-1">
-            <Link href="/" className="inline-flex items-center gap-2 mb-2">
+            <Link href="/" className="inline-flex items-center gap-3 mb-4">
               <img
                 src="/logo.svg"
                 alt="JobConnect AI"
-                width={50}
-                height={50}
+                width={40}
+                height={40}
                 className="object-contain flex-shrink-0"
-                style={{ height: 50, width: 'auto' }}
+                style={{ height: 40, width: 'auto' }}
               />
-              <div style={{ fontSize: '22px', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0' }}>
-                <span className="text-slate-900 dark:text-white">JobConnect</span><span style={{ color: '#FF6B35' }}>AI</span>
+              <div className="flex flex-col">
+                <div style={{ fontSize: '22px', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0', lineHeight: 1 }}>
+                  <span style={{ color: '#0F1623' }}>JobConnect</span><span style={{ color: '#F0663A' }}>AI</span>
+                </div>
+                <div style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.12em', color: '#6B7280', textTransform: 'uppercase', lineHeight: 1.2 }}>— Connecting Talent. Building Futures. —</div>
               </div>
             </Link>
-            <p className="text-xs font-semibold mb-3 uppercase" style={{ color: '#94A3B8', letterSpacing: '0.1em', fontSize: '10px' }}>Connecting Talent. Building Futures.</p>
             <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{t('tagline')}</p>
           </div>
           <div>

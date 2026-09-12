@@ -15,17 +15,20 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
   return (
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-background/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-3">
           <img
             src="/logo.svg"
             alt="JobConnect AI"
-            width={50}
-            height={50}
+            width={40}
+            height={40}
             className="object-contain flex-shrink-0"
-            style={{ height: 50, width: 'auto' }}
+            style={{ height: 40, width: 'auto' }}
           />
-          <div style={{ fontSize: '22px', fontWeight: 800, color: '#0F1623', display: 'flex', alignItems: 'center', gap: '0' }}>
-            <span>{tc('brand')}</span><span style={{ color: '#FF6B35' }}>{tc('brandSuffix')}</span>
+          <div className="flex flex-col">
+            <div style={{ fontSize: '22px', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0', lineHeight: 1 }}>
+              <span style={{ color: '#0F1623' }}>{tc('brand')}</span><span style={{ color: '#F0663A' }}>{tc('brandSuffix')}</span>
+            </div>
+            <div style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.12em', color: '#6B7280', textTransform: 'uppercase', lineHeight: 1.2 }}>— Connecting Talent. Building Futures. —</div>
           </div>
         </Link>
 
