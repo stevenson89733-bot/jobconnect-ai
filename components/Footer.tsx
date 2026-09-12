@@ -52,12 +52,8 @@ export default async function Footer() {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 mb-10">
           <div className="sm:col-span-2 md:col-span-1">
-            <Link href="/" className="inline-block mb-4">
-              <img
-                src="/logo-full.png"
-                alt="JobConnect AI"
-                style={{ maxHeight: '64px', width: 'auto', objectFit: 'contain' }}
-              />
+            <Link href="/">
+              <img src="/logo-full.png" alt="JobConnect AI" height={44} style={{ objectFit: 'contain', background: 'transparent' }} />
             </Link>
             <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{t('tagline')}</p>
           </div>

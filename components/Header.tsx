@@ -15,12 +15,8 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
   return (
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-background/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
       <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
-        <Link href="/" className="flex items-center flex-shrink-0">
-          <img
-            src="/logo-full.png"
-            alt="JobConnect AI"
-            style={{ maxHeight: '56px', width: 'auto', objectFit: 'contain' }}
-          />
+        <Link href="/">
+          <img src="/logo-full.png" alt="JobConnect AI" height={44} style={{ objectFit: 'contain', background: 'transparent' }} />
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600 dark:text-slate-400">
