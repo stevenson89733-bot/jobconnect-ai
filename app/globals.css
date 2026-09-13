@@ -39,15 +39,3 @@ html, body {
   z-index: 10 !important;
 }
 
-/* Ensure footer logo transparency */
-footer {
-  background-color: transparent !important;
-}
-
-footer > div {
-  background-color: transparent !important;
-}
-
-footer svg {
-  background-color: transparent !important;
-}

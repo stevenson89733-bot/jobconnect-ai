@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
-import Logo from './Logo'
 
 type IconProps = { size?: number; color?: string }
 
@@ -52,11 +51,10 @@ export default async function Footer() {
     <footer className="border-t border-slate-200 dark:border-slate-800 mt-24 bg-white dark:bg-background">
       <div className="max-w-7xl mx-auto px-6 py-12 bg-transparent">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 mb-10">
-          <div className="sm:col-span-2 md:col-span-1 bg-transparent">
-            <Link href="/" className="inline-block bg-transparent">
-              <div className="bg-transparent">
-                <Logo height={44} />
-              </div>
+          <div className="sm:col-span-2 md:col-span-1">
+            <Link href="/" className="inline-block">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo-full.png" alt="JobConnect AI" height={52} style={{ objectFit: 'contain', background: 'transparent', display: 'block' }} />
             </Link>
             <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mt-2">{t('tagline')}</p>
           </div>

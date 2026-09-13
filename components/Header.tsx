@@ -6,7 +6,6 @@ import { signOut } from '@/app/actions/auth'
 import ThemeToggle from './ThemeToggle'
 import LanguageSwitcher from './LanguageSwitcher'
 import CountrySelector from './country/CountrySelector'
-import Logo from './Logo'
 
 export default function Header({ userEmail, isAdmin }: { userEmail?: string | null; isAdmin?: boolean }) {
   const [open, setOpen] = useState(false)
@@ -17,7 +16,8 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-background/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
       <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
         <Link href="/">
-          <Logo height={44} />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo-full.png" alt="JobConnect AI" height={48} style={{ objectFit: 'contain', background: 'transparent', display: 'block' }} />
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600 dark:text-slate-400">
