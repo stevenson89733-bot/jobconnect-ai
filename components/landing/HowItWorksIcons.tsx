@@ -46,20 +46,3 @@ export function IconSalary({ className }: { className?: string }) {
     </svg>
   )
 }
-
-export function IconATS({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5"
-      strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
-      {/* Score ring arc — ~85% filled */}
-      <path d="M10 3a7 7 0 016.06 3.5" strokeWidth="2" strokeLinecap="round" />
-      <path d="M16.06 6.5A7 7 0 113.94 6.5" strokeWidth="2" strokeLinecap="round"
-        strokeDasharray="22 4" />
-      {/* Score label */}
-      <text x="10" y="11.5" textAnchor="middle" fontSize="4.5" fontWeight="700"
-        stroke="none" fill="currentColor" fontFamily="inherit">85</text>
-      <text x="10" y="14.5" textAnchor="middle" fontSize="2.8"
-        stroke="none" fill="currentColor" opacity="0.6" fontFamily="inherit">ATS</text>
-    </svg>
-  )
-}

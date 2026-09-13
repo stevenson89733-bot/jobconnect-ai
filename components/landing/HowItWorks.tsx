@@ -1,11 +1,10 @@
 import { getTranslations } from 'next-intl/server'
-import { IconCrossBorder, IconLanguage, IconSalary, IconATS } from './HowItWorksIcons'
+import { IconCrossBorder, IconLanguage, IconSalary } from './HowItWorksIcons'
 
 const FEATURES = [
   { id: 'crossBorder', Icon: IconCrossBorder },
   { id: 'language',    Icon: IconLanguage },
   { id: 'salary',      Icon: IconSalary },
-  { id: 'ats',         Icon: IconATS },
 ] as const
 
 type FeatureId = typeof FEATURES[number]['id']
@@ -14,14 +13,12 @@ const TITLE_KEY: Record<FeatureId, string> = {
   crossBorder: 'featureCrossBorderTitle',
   language:    'featureLanguageTitle',
   salary:      'featureSalaryTitle',
-  ats:         'featureAtsTitle',
 }
 
 const BODY_KEY: Record<FeatureId, string> = {
   crossBorder: 'featureCrossBorderBody',
   language:    'featureLanguageBody',
   salary:      'featureSalaryBody',
-  ats:         'featureAtsBody',
 }
 
 export default async function HowItWorks() {
@@ -39,7 +36,7 @@ export default async function HowItWorks() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid sm:grid-cols-3 gap-5">
           {FEATURES.map(({ id, Icon }) => (
             <div
               key={id}
