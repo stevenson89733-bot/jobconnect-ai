@@ -395,14 +395,14 @@ export default async function Home() {
                   icon: '📊',
                   title: 'Skill Gap Analysis',
                   desc: 'Find out exactly what skills you need for your target market — before you apply.',
-                  href: '/ai-tools',
+                  href: null,
                 },
                 {
                   num: '04',
                   icon: '🤖',
                   title: 'AI Copilot',
                   desc: 'Type what you want in plain language. We handle the rest.',
-                  href: '/ai-tools',
+                  href: null,
                 },
               ].map(({ num, icon, title, desc, href }) => (
                 <div
@@ -415,13 +415,15 @@ export default async function Home() {
                   </div>
                   <h3 className="font-bold text-[17px] mb-2" style={{ color: '#10152A' }}>{title}</h3>
                   <p className="text-slate-500 text-[14px] leading-relaxed mb-4">{desc}</p>
-                  <Link
-                    href={href}
-                    className="text-[13px] font-semibold transition-colors group-hover:underline"
-                    style={{ color: '#57C7E3' }}
-                  >
-                    Explore feature ↗
-                  </Link>
+                  {href && (
+                    <Link
+                      href={href}
+                      className="text-[13px] font-semibold transition-colors group-hover:underline"
+                      style={{ color: '#57C7E3' }}
+                    >
+                      Explore feature ↗
+                    </Link>
+                  )}
                 </div>
               ))}
             </div>
