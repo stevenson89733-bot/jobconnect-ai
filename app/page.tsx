@@ -395,14 +395,14 @@ export default async function Home() {
                   icon: '📊',
                   title: 'Skill Gap Analysis',
                   desc: 'Find out exactly what skills you need for your target market — before you apply.',
-                  href: null,
+                  href: '/dashboard',
                 },
                 {
                   num: '04',
                   icon: '🤖',
                   title: 'AI Copilot',
                   desc: 'Type what you want in plain language. We handle the rest.',
-                  href: null,
+                  href: '/jobs',
                 },
               ].map(({ num, icon, title, desc, href }) => (
                 <div
