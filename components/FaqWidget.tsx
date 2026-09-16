@@ -1,6 +1,6 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { X, MoreHorizontal, Download, RefreshCw, Minus, ChevronDown, ChevronUp, MessageCircle, Maximize2, Minimize2 } from 'lucide-react'
 
 type Message = { type: 'user' | 'bot'; text: string; time: string }
@@ -19,6 +19,7 @@ function makeWelcome(g1: string, g2: string): Message[] {
 
 export default function FaqWidget() {
   const t = useTranslations('chatWidget')
+  const locale = useLocale()
 
   const FAQ_THEMES = [
     {
@@ -83,6 +84,13 @@ export default function FaqWidget() {
 
   const msgsRef     = useRef<HTMLDivElement>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
+
+  // Reset welcome messages to new locale's text after a language switch.
+  // The useState lazy initializer only runs on mount, so we reset explicitly.
+  useEffect(() => {
+    setConvo(makeWelcome(t('greeting1'), t('greeting2')))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locale])
 
   useEffect(() => {
     const el = msgsRef.current

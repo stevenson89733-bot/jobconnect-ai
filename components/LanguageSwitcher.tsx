@@ -1,19 +1,20 @@
 'use client'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
 import { SUPPORTED_LOCALES, LOCALE_LABELS, LOCALE_COOKIE, type Locale } from '@/lib/i18n/config'
 
-// Persists the choice to a cookie (same pattern as ThemeToggle's `theme`
-// cookie) then refreshes so Server Components re-render with the new
-// locale's messages — client components under NextIntlClientProvider pick
-// up the new messages automatically since they're passed down from the
-// (re-rendered) root layout.
+// Persists the choice to a cookie then refreshes so Server Components
+// re-render with the new locale's messages. startTransition lets React keep
+// the current UI interactive while the refresh is in flight, then applies
+// all translation changes atomically — preventing a partial-update flash
+// where some components have switched and others haven't.
 export default function LanguageSwitcher() {
   const locale = useLocale() as Locale
   const t = useTranslations('nav')
   const router = useRouter()
   const [open, setOpen] = useState(false)
+  const [isPending, startTransition] = useTransition()
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -25,9 +26,10 @@ export default function LanguageSwitcher() {
   }, [])
 
   function selectLocale(next: Locale) {
+    if (next === locale) { setOpen(false); return }
     document.cookie = `${LOCALE_COOKIE}=${next}; path=/; max-age=31536000; SameSite=Lax`
     setOpen(false)
-    router.refresh()
+    startTransition(() => { router.refresh() })
   }
 
   return (
@@ -36,7 +38,8 @@ export default function LanguageSwitcher() {
         onClick={() => setOpen((o) => !o)}
         aria-label={t('language')}
         aria-expanded={open}
-        className="flex items-center gap-1 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors px-2 py-2 rounded-lg border border-slate-300 dark:border-slate-700"
+        disabled={isPending}
+        className={`flex items-center gap-1 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors px-2 py-2 rounded-lg border border-slate-300 dark:border-slate-700 ${isPending ? 'opacity-60 cursor-wait' : ''}`}
       >
         <span className="uppercase font-medium">{locale}</span>
         <svg className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
