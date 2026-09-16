@@ -2,13 +2,14 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
-import { FileText } from 'lucide-react'
+import { FileText, Upload } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { updateProfile, type ProfileFields } from '@/app/actions/profile'
 import { Button } from '@/components/ui/button'
 import EditableSection from '@/components/profile/EditableSection'
 import Timeline from '@/components/profile/Timeline'
 import CareerCoachSummary from '@/components/shared/CareerCoachSummary'
+import CvImportModal from '@/components/profile/CvImportModal'
 import type { Project, Certificate, Language } from '@/lib/profileSections'
 
 // Code-split: none of these four are needed for initial paint (Projects/
@@ -119,9 +120,11 @@ export default function ProfileEditor({
   const [linksEditing, setLinksEditing] = useState(false)
 
   const skillTags = skills.split(',').map((s) => s.trim()).filter(Boolean)
+  const [cvModalOpen, setCvModalOpen] = useState(false)
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-10 space-y-6">
+      {cvModalOpen && <CvImportModal onClose={() => setCvModalOpen(false)} />}
       {/* Header */}
       <div className="mb-2">
         <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-3">
@@ -129,8 +132,21 @@ export default function ProfileEditor({
           <span>/</span>
           <span className="text-slate-700 dark:text-slate-300">{t('breadcrumbProfile')}</span>
         </div>
-        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">{t('title')}</h1>
-        <p className="text-slate-600 dark:text-slate-400">{t('subtitle')}</p>
+        <div className="flex items-start justify-between gap-4 flex-wrap">
+          <div>
+            <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">{t('title')}</h1>
+            <p className="text-slate-600 dark:text-slate-400">{t('subtitle')}</p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setCvModalOpen(true)}
+            className="flex items-center gap-2 font-semibold text-white rounded-xl px-5 py-2.5 text-sm shrink-0 transition-all hover:opacity-90"
+            style={{ background: '#57C7E3' }}
+          >
+            <Upload size={15} />
+            Import CV
+          </button>
+        </div>
       </div>
 
       {/* Photo + Basics */}
