@@ -5,6 +5,21 @@ import OpenAI from 'openai'
 export const runtime = 'nodejs'
 export const maxDuration = 60
 
+// pdfjs-dist (used by unpdf) calls DOMMatrix which Node.js doesn't expose globally.
+// A minimal polyfill is sufficient for text extraction (no canvas rendering).
+if (typeof globalThis.DOMMatrix === 'undefined') {
+  // biome-ignore lint: polyfill for pdfjs-dist in Node.js
+  ;(globalThis as Record<string, unknown>).DOMMatrix = class DOMMatrix {
+    a=1; b=0; c=0; d=1; e=0; f=0
+    multiply() { return this }
+    translate() { return this }
+    scale() { return this }
+    rotate() { return this }
+    inverse() { return this }
+    transformPoint(p: unknown) { return p }
+  }
+}
+
 const MAX_FILE_BYTES = 5 * 1024 * 1024 // 5 MB
 
 export type CvExtracted = {
