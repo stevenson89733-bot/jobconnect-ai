@@ -56,6 +56,10 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
                   <span className="font-medium text-slate-900 dark:text-white">🧭 {t('skillGap')}</span>
                   <span className="text-xs text-slate-600 dark:text-slate-400">{t('skillGapDesc')}</span>
                 </Link>
+                <Link href="/ai-tools/cv-builder" className="flex flex-col rounded-lg px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                  <span className="font-medium text-slate-900 dark:text-white">📋 {t('cvBuilder')}</span>
+                  <span className="text-xs text-slate-600 dark:text-slate-400">{t('cvBuilderDesc')}</span>
+                </Link>
                 <div className="my-1 border-t border-slate-100 dark:border-slate-800" />
                 <Link href="/auto-apply" className="flex flex-col rounded-lg px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                   <span className="font-medium text-slate-900 dark:text-white flex items-center gap-2">
@@ -143,6 +147,7 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
             <Link href="/ai-tools/interview-prep" className="block text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white mb-2" onClick={() => setOpen(false)}>🎤 {t('interviewPrep')}</Link>
             <Link href="/ai-tools/linkedin-optimizer" className="block text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white mb-2" onClick={() => setOpen(false)}>🔗 {t('linkedinOptimizer')}</Link>
             <Link href="/ai-tools/skill-gap" className="block text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white mb-2" onClick={() => setOpen(false)}>🧭 {t('skillGap')}</Link>
+            <Link href="/ai-tools/cv-builder" className="block text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white mb-2" onClick={() => setOpen(false)}>📋 {t('cvBuilder')}</Link>
             <Link href="/auto-apply" className="flex items-center gap-2 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>
               🤖 Auto-Apply
               <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30">Pro Feature</span>

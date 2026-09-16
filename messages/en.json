@@ -34,7 +34,9 @@
     "linkedinOptimizer": "LinkedIn Optimizer",
     "linkedinOptimizerDesc": "Analyze or generate your LinkedIn profile",
     "skillGap": "Skill-Gap",
-    "skillGapDesc": "Compare your profile to your next role"
+    "skillGapDesc": "Compare your profile to your next role",
+    "cvBuilder": "CV Builder",
+    "cvBuilderDesc": "Improve or generate an ATS-ready CV"
   },
   "footer": {
     "tagline": "AI-powered remote job platform connecting top candidates with leading companies worldwide.",
