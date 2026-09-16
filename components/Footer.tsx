@@ -78,6 +78,7 @@ export default async function Footer() {
             <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">{t('company')}</h3>
             <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
               <li><Link href="/about" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">{t('about')}</Link></li>
+              <li><Link href="/methodology" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">How It Works</Link></li>
               <li><Link href="/contact" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">{t('contact')}</Link></li>
             </ul>
           </div>
