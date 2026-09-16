@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 import { absoluteUrl } from '@/lib/seo'
 import FadeIn from '@/components/dashboard/FadeIn'
 import { CountUpStat } from '@/components/landing/CountUpStat'
@@ -128,6 +129,8 @@ function ATSMockup() {
 }
 
 export default async function Home() {
+  const t = await getTranslations('home')
+
   return (
     <>
       <OrganizationJsonLd />
@@ -143,24 +146,24 @@ export default async function Home() {
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/15 text-[13px] text-slate-300 mb-8"
                    style={{ background: 'rgba(255,255,255,0.07)' }}>
                 <span className="w-2 h-2 rounded-full animate-pulse shrink-0" style={{ background: '#57C7E3' }} />
-                🌍 The #1 platform for cross-border remote jobs
+                🌍 {t('v2_heroBadge')}
               </div>
 
               {/* H1 */}
               <h1 className="font-bold text-white leading-tight tracking-tight mb-2"
                   style={{ fontSize: 'clamp(36px, 6vw, 64px)' }}>
-                Your career has<br className="hidden sm:block" /> no borders.
+                {t('v2_heroH1a')}<br className="hidden sm:block" /> {t('v2_heroH1b')}
               </h1>
 
               {/* Cyan italic sub */}
               <p className="text-base sm:text-lg font-medium italic mb-4" style={{ color: '#57C7E3' }}>
-                Find work that travels with you.
+                {t('v2_heroTagline')}
               </p>
 
               {/* Description */}
               <p className="text-slate-400 mb-8 max-w-lg mx-auto lg:mx-0"
                  style={{ fontSize: '17px', lineHeight: '1.7' }}>
-                AI-powered career tools for international professionals targeting remote roles in US, UK, Germany, France and Canada.
+                {t('v2_heroDesc')}
               </p>
 
               {/* CTAs */}
@@ -170,14 +173,14 @@ export default async function Home() {
                   className="inline-flex items-center gap-2 text-white font-bold rounded-full px-7 py-3.5 text-[15px] transition-all hover:brightness-110"
                   style={{ background: '#57C7E3' }}
                 >
-                  Find remote jobs →
+                  {t('v2_heroCta1')}
                 </Link>
                 <Link
                   href="/register"
                   className="inline-flex items-center gap-2 border font-bold rounded-full px-7 py-3.5 text-[15px] text-white transition-colors hover:bg-white/10"
                   style={{ borderColor: 'rgba(255,255,255,0.3)' }}
                 >
-                  ▶ See how it works
+                  {t('v2_heroCta2')}
                 </Link>
               </div>
 
@@ -187,7 +190,7 @@ export default async function Home() {
                 className="inline-flex items-center gap-2 text-[13px] font-semibold text-cyan-400 hover:text-cyan-300 transition-colors mb-5"
               >
                 <span className="flex items-center gap-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1">
-                  🤖 <span>Auto-Apply — let AI apply for you daily</span>
+                  🤖 <span>{t('v2_heroAutoApply')}</span>
                   <span className="opacity-60">→</span>
                 </span>
               </Link>
@@ -195,7 +198,7 @@ export default async function Home() {
               {/* Flag row */}
               <div className="flex items-center gap-3 justify-center lg:justify-start">
                 <span className="flex gap-1 text-2xl">🇺🇸🇬🇧🇩🇪🇫🇷🇨🇦</span>
-                <span className="text-[13px] text-slate-400">Jobs available in 63 countries — 11 languages</span>
+                <span className="text-[13px] text-slate-400">{t('v2_heroFlagsLabel')}</span>
               </div>
             </div>
 
@@ -212,10 +215,10 @@ export default async function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0 md:divide-x divide-white/10">
             {[
-              { value: '2,400+', label: 'Remote Jobs' },
-              { value: '94%',    label: 'Match Accuracy' },
-              { value: '5',      label: 'Target Markets' },
-              { value: 'Free',   label: 'To Start' },
+              { value: '2,400+', label: t('v2_statJobs') },
+              { value: '94%',    label: t('v2_statAccuracy') },
+              { value: '5',      label: t('v2_statMarkets') },
+              { value: 'Free',   label: t('v2_statFree') },
             ].map(({ value, label }) => (
               <div key={label} className="text-center px-6">
                 <div className="font-black text-4xl sm:text-5xl text-white mb-1">{value}</div>
@@ -235,16 +238,16 @@ export default async function Home() {
               {/* Left copy */}
               <div className="flex-1 text-center lg:text-left">
                 <p className="text-[11px] font-bold uppercase tracking-widest mb-4" style={{ color: '#57C7E3' }}>
-                  Powered by Intent, Not Keywords
+                  {t('v2_copilotEyebrow')}
                 </p>
                 <h2 className="font-bold leading-tight mb-2" style={{ fontSize: 'clamp(32px, 4vw, 52px)', color: '#10152A' }}>
-                  Don&apos;t search.
+                  {t('v2_copilotH2a')}
                 </h2>
                 <p className="text-3xl sm:text-4xl font-bold italic mb-6" style={{ color: '#57C7E3' }}>
-                  Just ask.
+                  {t('v2_copilotH2b')}
                 </p>
                 <p className="text-slate-500 max-w-md mx-auto lg:mx-0" style={{ fontSize: '16px', lineHeight: '1.75' }}>
-                  Traditional job boards make you translate your ambitions into filters. JobConnect understands what you mean — and finds the signal in the noise.
+                  {t('v2_copilotDesc')}
                 </p>
               </div>
 
@@ -254,9 +257,9 @@ export default async function Home() {
                   {/* Header */}
                   <div className="px-5 py-4 border-b border-slate-100" style={{ background: '#10152A' }}>
                     <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-0.5">
-                      Your Personal Career Copilot
+                      {t('v2_copilotChatHeader')}
                     </div>
-                    <div className="text-[13px] text-white">Ask anything about your next move</div>
+                    <div className="text-[13px] text-white">{t('v2_copilotChatSubheader')}</div>
                   </div>
 
                   {/* Chat messages */}
@@ -264,7 +267,7 @@ export default async function Home() {
                     {/* User message */}
                     <div className="flex justify-end">
                       <div className="bg-slate-100 rounded-xl rounded-tr-none px-4 py-2.5 text-[13px] text-slate-700 max-w-xs">
-                        Find me a remote UX Designer role in Germany
+                        {t('v2_copilotChatUser')}
                       </div>
                     </div>
 
@@ -310,7 +313,7 @@ export default async function Home() {
                   <div className="px-4 pb-4">
                     <div className="flex items-center gap-2 border border-slate-200 rounded-xl px-3 py-2.5 bg-slate-50">
                       <span style={{ color: '#57C7E3' }} className="text-base">✦</span>
-                      <span className="text-[13px] text-slate-400 flex-1">Ask the AI Copilot...</span>
+                      <span className="text-[13px] text-slate-400 flex-1">{t('v2_copilotPlaceholder')}</span>
                     </div>
                   </div>
                 </div>
@@ -334,20 +337,20 @@ export default async function Home() {
               {/* Right copy */}
               <div className="flex-1 text-center lg:text-left">
                 <p className="text-[11px] font-bold uppercase tracking-widest mb-4" style={{ color: '#57C7E3' }}>
-                  AI Resume Optimization
+                  {t('v2_atsEyebrow')}
                 </p>
                 <h2 className="font-bold leading-tight mb-4" style={{ fontSize: 'clamp(28px, 3.5vw, 44px)', color: '#10152A' }}>
-                  Know your score<br /> before you apply.
+                  {t('v2_atsH2a')}<br /> {t('v2_atsH2b')}
                 </h2>
                 <p className="text-slate-500 mb-6 max-w-md mx-auto lg:mx-0" style={{ fontSize: '16px', lineHeight: '1.75' }}>
-                  Our AI scores your resume against the target role and market — country-specific ATS expectations, skill gaps, and keyword density — so you apply with confidence.
+                  {t('v2_atsDesc')}
                 </p>
                 <Link
                   href="/ai-tools/resume-builder"
                   className="inline-flex items-center gap-2 font-semibold text-[14px] transition-colors"
                   style={{ color: '#57C7E3' }}
                 >
-                  Try the Resume Builder ↗
+                  {t('v2_atsCta')}
                 </Link>
               </div>
             </div>
@@ -362,14 +365,14 @@ export default async function Home() {
             {/* Heading */}
             <div className="text-center mb-14">
               <p className="text-[11px] font-bold uppercase tracking-widest mb-4" style={{ color: '#57C7E3' }}>
-                Everything You Need to Move
+                {t('v2_featuresEyebrow')}
               </p>
               <h2 className="font-bold leading-tight mb-4" style={{ fontSize: 'clamp(28px, 4vw, 48px)', color: '#10152A' }}>
-                A smarter way to{' '}
-                <span className="italic" style={{ color: '#57C7E3' }}>work abroad.</span>
+                {t('v2_featuresH2a')}{' '}
+                <span className="italic" style={{ color: '#57C7E3' }}>{t('v2_featuresH2b')}</span>
               </h2>
               <p className="text-slate-500 max-w-xl mx-auto" style={{ fontSize: '16px', lineHeight: '1.75' }}>
-                From your first search to your signed offer, every part of your cross-border career gets a little more intelligent.
+                {t('v2_featuresDesc')}
               </p>
             </div>
 
@@ -379,29 +382,29 @@ export default async function Home() {
                 {
                   num: '01',
                   icon: '📄',
-                  title: 'AI Resume Builder',
-                  desc: 'Build a resume that speaks the language of your target market with country-specific formats and signals.',
+                  title: t('v2_feature1Title'),
+                  desc: t('v2_feature1Desc'),
                   href: '/ai-tools/resume-builder',
                 },
                 {
                   num: '02',
                   icon: '🌍',
-                  title: 'Remote-Friendly Detector',
-                  desc: 'Know before you apply. Every role is scored Likely, Unclear, or Unlikely to hire internationally.',
+                  title: t('v2_feature2Title'),
+                  desc: t('v2_feature2Desc'),
                   href: '/jobs',
                 },
                 {
                   num: '03',
                   icon: '📊',
-                  title: 'Skill Gap Analysis',
-                  desc: 'Find out exactly what skills you need for your target market — before you apply.',
+                  title: t('v2_feature3Title'),
+                  desc: t('v2_feature3Desc'),
                   href: '/dashboard',
                 },
                 {
                   num: '04',
                   icon: '🤖',
-                  title: 'AI Copilot',
-                  desc: 'Type what you want in plain language. We handle the rest.',
+                  title: t('v2_feature4Title'),
+                  desc: t('v2_feature4Desc'),
                   href: '/jobs',
                 },
               ].map(({ num, icon, title, desc, href }) => (
@@ -421,7 +424,7 @@ export default async function Home() {
                       className="text-[13px] font-semibold transition-colors group-hover:underline"
                       style={{ color: '#57C7E3' }}
                     >
-                      Explore feature ↗
+                      {t('v2_featuresExplore')}
                     </Link>
                   )}
                 </div>
@@ -438,11 +441,11 @@ export default async function Home() {
             {/* Heading */}
             <div className="text-center mb-12">
               <p className="text-[11px] font-bold uppercase tracking-widest mb-4" style={{ color: '#57C7E3' }}>
-                A Global Community
+                {t('v2_testimonialsEyebrow')}
               </p>
               <h2 className="font-bold leading-tight" style={{ fontSize: 'clamp(28px, 4vw, 48px)', color: 'white' }}>
-                Trusted by professionals{' '}
-                <span className="italic" style={{ color: '#57C7E3' }}>from 40+ countries.</span>
+                {t('v2_testimonialsH2a')}{' '}
+                <span className="italic" style={{ color: '#57C7E3' }}>{t('v2_testimonialsH2b')}</span>
               </h2>
             </div>
 
@@ -452,26 +455,26 @@ export default async function Home() {
                 {
                   initials: 'LM',
                   color: '#7c3aed',
-                  quote: 'JobConnect helped me stop guessing which companies could actually hire me. I landed my first US remote role in six weeks.',
-                  name: 'Laura M.',
-                  role: 'Product Designer',
-                  city: 'Berlin',
+                  quote: t('v2_testimonial1Quote'),
+                  name: t('v2_testimonial1Name'),
+                  role: t('v2_testimonial1Role'),
+                  city: t('v2_testimonial1City'),
                 },
                 {
                   initials: 'AK',
                   color: '#2563eb',
-                  quote: 'The skill gap analysis showed me exactly what I was missing for the German market. Three months later, I had an offer.',
-                  name: 'Amara K.',
-                  role: 'Data Analyst',
-                  city: 'Lagos',
+                  quote: t('v2_testimonial2Quote'),
+                  name: t('v2_testimonial2Name'),
+                  role: t('v2_testimonial2Role'),
+                  city: t('v2_testimonial2City'),
                 },
                 {
                   initials: 'JR',
                   color: '#059669',
-                  quote: "Finally a platform that understands I'm not looking for a job near me — I'm looking for a job that works for me, wherever I am.",
-                  name: 'James R.',
-                  role: 'Software Engineer',
-                  city: 'Manila',
+                  quote: t('v2_testimonial3Quote'),
+                  name: t('v2_testimonial3Name'),
+                  role: t('v2_testimonial3Role'),
+                  city: t('v2_testimonial3City'),
                 },
               ].map(({ initials, color, quote, name, role, city }) => (
                 <div
@@ -505,13 +508,13 @@ export default async function Home() {
         <section style={{ background: '#10152A', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
           <div className="max-w-4xl mx-auto px-4 sm:px-6 py-14 text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1.5 text-sm font-semibold text-cyan-400 mb-5">
-              ✨ Pro Feature
+              {t('v2_autoApplyBadge')}
             </div>
             <h2 className="font-extrabold text-white leading-tight mb-4" style={{ fontSize: 'clamp(24px, 3.5vw, 40px)' }}>
-              Too busy to apply? Let AI do it for you.
+              {t('v2_autoApplyH2')}
             </h2>
             <p className="text-slate-400 mb-8 max-w-lg mx-auto" style={{ fontSize: '16px', lineHeight: '1.7' }}>
-              Upload your CV once — JobConnect AI finds verified remote jobs and sends personalized applications on your behalf, every day.
+              {t('v2_autoApplyDesc')}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
@@ -519,14 +522,14 @@ export default async function Home() {
                 className="inline-flex items-center gap-2 font-bold rounded-full px-7 py-3.5 text-[15px] text-slate-900 transition-all hover:brightness-110"
                 style={{ background: '#22D3EE' }}
               >
-                🤖 Discover Auto-Apply →
+                {t('v2_autoApplyCta1')}
               </Link>
               <Link
                 href="/pricing"
                 className="inline-flex items-center gap-2 border font-semibold rounded-full px-7 py-3.5 text-[15px] text-cyan-400 transition-colors hover:bg-cyan-500/10"
                 style={{ borderColor: 'rgba(34,211,238,0.35)' }}
               >
-                View Pro plans
+                {t('v2_autoApplyCta2')}
               </Link>
             </div>
           </div>
@@ -538,17 +541,17 @@ export default async function Home() {
         <section style={{ background: 'linear-gradient(135deg, #57C7E3 0%, #3ab5d1 50%, #2a9fc0 100%)' }}>
           <div className="max-w-4xl mx-auto px-4 sm:px-6 py-20 text-center">
             <h2 className="font-bold text-white leading-tight mb-4" style={{ fontSize: 'clamp(28px, 4vw, 48px)' }}>
-              Start your cross-border career today.
+              {t('v2_ctaH2')}
             </h2>
             <p className="text-white/80 mb-8 max-w-lg mx-auto" style={{ fontSize: '17px' }}>
-              Join thousands of international professionals finding remote work abroad.
+              {t('v2_ctaDesc')}
             </p>
             <Link
               href="/register"
               className="inline-flex items-center gap-2 font-bold rounded-full px-8 py-4 text-[15px] transition-colors hover:bg-slate-50"
               style={{ background: 'white', color: '#10152A' }}
             >
-              Get Started Free →
+              {t('v2_ctaCta')}
             </Link>
           </div>
         </section>
