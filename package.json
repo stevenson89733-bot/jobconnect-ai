@@ -37,7 +37,8 @@
     "resend": "^6.26.0",
     "stripe": "12.9.0",
     "swr": "2.2.0",
-    "tailwind-merge": "^3.6.0"
+    "tailwind-merge": "^3.6.0",
+    "unpdf": "^1.8.1"
   },
   "devDependencies": {
     "@react-pdf/types": "^2.11.1",

@@ -22,10 +22,9 @@ export type CvExtracted = {
 
 async function extractText(buffer: Buffer, mimeType: string): Promise<string> {
   if (mimeType === 'application/pdf') {
-    // pdf-parse v2: class-based API, { data: buffer }
-    const { PDFParse } = require('pdf-parse') as { PDFParse: new (opts: { data: Buffer }) => { getText: () => Promise<{ text: string }> } }
-    const parser = new PDFParse({ data: buffer })
-    const result = await parser.getText()
+    // unpdf is serverless-safe (no DOMMatrix/canvas dependency)
+    const { extractText } = require('unpdf') as { extractText: (data: Uint8Array, opts: { mergePages: boolean }) => Promise<{ text: string }> }
+    const result = await extractText(new Uint8Array(buffer), { mergePages: true })
     return result.text ?? ''
   }
 
