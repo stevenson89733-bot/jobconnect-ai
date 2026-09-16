@@ -453,7 +453,7 @@ export default async function Home() {
             <div className="grid md:grid-cols-3 gap-5">
               {[
                 {
-                  initials: 'LM',
+                  initials: 'SP',
                   color: '#7c3aed',
                   quote: t('v2_testimonial1Quote'),
                   name: t('v2_testimonial1Name'),
@@ -461,7 +461,7 @@ export default async function Home() {
                   city: t('v2_testimonial1City'),
                 },
                 {
-                  initials: 'AK',
+                  initials: 'SA',
                   color: '#2563eb',
                   quote: t('v2_testimonial2Quote'),
                   name: t('v2_testimonial2Name'),
@@ -469,8 +469,8 @@ export default async function Home() {
                   city: t('v2_testimonial2City'),
                 },
                 {
-                  initials: 'JR',
-                  color: '#059669',
+                  initials: '✦',
+                  color: '#57C7E3',
                   quote: t('v2_testimonial3Quote'),
                   name: t('v2_testimonial3Name'),
                   role: t('v2_testimonial3Role'),
@@ -493,7 +493,7 @@ export default async function Home() {
                     </div>
                     <div>
                       <div className="text-[13px] font-semibold text-white">{name}</div>
-                      <div className="text-[11px] text-slate-400">{role} · {city}</div>
+                      <div className="text-[11px] text-slate-400">{role}{city ? ` · ${city}` : ''}</div>
                     </div>
                   </div>
                 </div>
