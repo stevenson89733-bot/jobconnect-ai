@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
+import { submitGreenhouseApplication } from '@/lib/ats/greenhouse'
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
@@ -88,7 +89,7 @@ export async function POST(req: Request) {
 
         const { data: jobs, error: jobsError } = await supabase
           .from('jobs')
-          .select('id, title, company_name, description, location, match_score')
+          .select('id, title, company_name, description, location, match_score, apply_url')
           .eq('is_active', true)
           .gte('match_score', setting.min_match_score)
           .gte('created_at', yesterday.toISOString())
@@ -160,13 +161,44 @@ export async function POST(req: Request) {
 
             const { cover_letter } = await coverLetterRes.json()
 
+            // Attempt real ATS submission for Greenhouse jobs
+            let atsStatus: 'sent' | 'pending' | 'failed' = 'pending'
+            const applyUrl: string | null = (job as { apply_url?: string | null }).apply_url ?? null
+
+            if (applyUrl?.includes('greenhouse.io')) {
+              const nameParts = (profile?.full_name ?? '').trim().split(/\s+/)
+              const firstName = nameParts[0] ?? ''
+              const lastName = nameParts.slice(1).join(' ') || firstName
+
+              const ghResult = await submitGreenhouseApplication({
+                apply_url: applyUrl,
+                first_name: firstName,
+                last_name: lastName,
+                email: profile?.email ?? '',
+                cv_url: profile?.cv_url ?? null,
+                cover_letter,
+              })
+
+              if (ghResult.success) {
+                atsStatus = 'sent'
+                console.log(
+                  `[auto-apply] Greenhouse submission OK — id ${ghResult.greenhouse_id} for user ${setting.user_id} job ${job.id}`
+                )
+              } else {
+                atsStatus = 'failed'
+                console.error(
+                  `[auto-apply] Greenhouse submission failed for user ${setting.user_id} job ${job.id}: ${ghResult.error}`
+                )
+              }
+            }
+
             // Record in auto_apply_log
             const { error: logError } = await supabase
               .from('auto_apply_log')
               .insert({
                 user_id: setting.user_id,
                 job_id: job.id,
-                status: 'sent',
+                status: atsStatus,
                 cover_letter,
                 adapted_cv_url: profile?.cv_url ?? null,
               })
