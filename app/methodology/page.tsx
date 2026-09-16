@@ -74,7 +74,7 @@ export default function MethodologyPage() {
       {/* 2. Cross-Border Eligibility */}
       <Section icon="🌍" title="How We Detect Cross-Border Eligibility">
         <p>
-          Not every "remote" job is truly open to international candidates. Our <strong>Remote-Friendly Detector</strong> reads each job description and flags roles that include restrictive language that disqualifies cross-border applicants.
+          Not every &ldquo;remote&rdquo; job is truly open to international candidates. Our <strong>Remote-Friendly Detector</strong> reads each job description and flags roles that include restrictive language that disqualifies cross-border applicants.
         </p>
         <p>We scan for four categories of restriction:</p>
         <div className="space-y-2 mt-2">
