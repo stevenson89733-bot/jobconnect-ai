@@ -69,8 +69,8 @@ export async function signUp(formData: FormData) {
     `[signup timing] role=${role} rateLimit=${tRateLimit - t0}ms signUp=${tSignUp - tRateLimit}ms profileUpsert=${tProfile - tSignUp}ms total=${tProfile - t0}ms`
   )
 
-  // Step 8: redirect by role
-  redirect(role === 'employer' ? '/recruiter' : '/candidate?registered=1')
+  // Step 8: redirect by role — candidates go through onboarding first
+  redirect(role === 'employer' ? '/recruiter' : '/onboarding')
 }
 
 // ── Step 7: Authenticate via Supabase, Step 8: redirect by role ───────────────

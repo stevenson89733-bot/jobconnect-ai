@@ -17,6 +17,7 @@ import CareerCoachSummary from '@/components/shared/CareerCoachSummary'
 import FadeIn from '@/components/dashboard/FadeIn'
 import RegistrationPixel from '@/components/analytics/RegistrationPixel'
 import AutoApplyCard from '@/components/dashboard/AutoApplyCard'
+import OnboardingModal from '@/components/OnboardingModal'
 
 export const dynamic = 'force-dynamic'
 
@@ -147,8 +148,29 @@ export default async function CandidateDashboard({
 
   const isPro = profile?.is_admin === true || profile?.is_premium === true
 
+  // Show onboarding modal for candidates who haven't completed it yet.
+  // Fetched separately so a missing column (pre-migration) doesn't crash the page.
+  let needsOnboarding = false
+  if (profile !== null) {
+    try {
+      const supabase2 = createClient()
+      const { data: { user: u2 } } = await supabase2.auth.getUser()
+      if (u2) {
+        const { data: ob } = await supabase2
+          .from('profiles')
+          .select('onboarding_completed')
+          .eq('user_id', u2.id)
+          .single()
+        needsOnboarding = ob?.onboarding_completed === false
+      }
+    } catch {
+      // Column not yet added — skip modal
+    }
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-6 py-10 space-y-8">
+      {needsOnboarding && <OnboardingModal defaultNext="/candidate" />}
       {searchParams.registered === '1' && <RegistrationPixel />}
       <AutoApplyCard isPro={isPro} />
       <WelcomeHeader firstName={firstName} initials={initials} avatarUrl={profile?.avatar_url ?? null} />
