@@ -26,18 +26,24 @@ export async function POST(req: Request) {
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   )
 
-  // One profile has one role — an employer's checkout is always the
-  // employer Growth plan, a candidate's is always Premium, so the existing
-  // metadata.supabase_user_id / stripe_customer_id linkage (unchanged) is
-  // enough to route to the right field without a second, plan-specific
-  // metadata key.
+  // Employer plan is determined by which price the checkout used:
+  // price_1UGMUmBHJVowT7ouBDORCd3s = Employer Pro $99/mo → 'pro'
+  // any other employer price (Growth $49/mo)             → 'growth'
+  // candidate prices                                     → is_premium: true
+  const EMPLOYER_PRO_PRICE_ID = process.env.STRIPE_EMPLOYER_PRO_PRICE_ID ?? 'price_1UGMUmBHJVowT7ouBDORCd3s'
+
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session
     const userId  = session.metadata?.supabase_user_id
     if (userId) {
       const { data: profile } = await supabase.from('profiles').select('role').eq('user_id', userId).single()
       if (profile?.role === 'employer') {
-        await supabase.from('profiles').update({ employer_plan: 'growth' }).eq('user_id', userId)
+        // Determine which employer plan was purchased by inspecting the line items price
+        const stripe = new Stripe(stripeKey, { apiVersion: '2022-11-15' })
+        const lineItems = await stripe.checkout.sessions.listLineItems(session.id, { limit: 1 })
+        const purchasedPriceId = lineItems.data[0]?.price?.id
+        const plan = purchasedPriceId === EMPLOYER_PRO_PRICE_ID ? 'pro' : 'growth'
+        await supabase.from('profiles').update({ employer_plan: plan }).eq('user_id', userId)
       } else {
         await supabase.from('profiles').update({ is_premium: true }).eq('user_id', userId)
       }

@@ -35,6 +35,7 @@ export default async function EmployerDashboard() {
 
   let companyName = ''
   let isAdmin = false
+  let employerPlan = 'free'
   let jobs: JobRow[] = []
   let applications: Application[] = []
 
@@ -44,7 +45,7 @@ export default async function EmployerDashboard() {
 
     if (user) {
       const [{ data: profileRow }, { data: jobRows, error: jobsError }] = await Promise.all([
-        supabase.from('profiles').select('company_name, is_admin').eq('user_id', user.id).maybeSingle(),
+        supabase.from('profiles').select('company_name, is_admin, employer_plan').eq('user_id', user.id).maybeSingle(),
         supabase
           .from('jobs')
           .select('id, title, is_active, created_at')
@@ -54,6 +55,7 @@ export default async function EmployerDashboard() {
 
       companyName = profileRow?.company_name ?? ''
       isAdmin = profileRow?.is_admin ?? false
+      employerPlan = profileRow?.employer_plan ?? 'free'
       if (jobsError) console.error('[recruiter/jobs]', jobsError.message)
       jobs = (jobRows as JobRow[] | null) ?? []
 
@@ -138,7 +140,16 @@ export default async function EmployerDashboard() {
             )}
           </div>
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3 items-center">
+          {employerPlan === 'free' && (
+            <Link
+              href="/pricing#employers"
+              className="flex items-center gap-1.5 font-semibold text-white rounded-full px-4 py-2 text-xs transition-all"
+              style={{ background: '#57C7E3' }}
+            >
+              ✦ Upgrade to Pro
+            </Link>
+          )}
           <Link href="/recruiter/profile" className="btn-outline text-sm">{t('editCompanyProfile')}</Link>
           <Link href="/jobs" className="btn-outline text-sm">{t('viewAllJobs')}</Link>
           <PostJobModal companyName={companyName} triggerClassName="btn-primary text-sm" triggerLabel={t('postAJob')} isAdmin={isAdmin} />

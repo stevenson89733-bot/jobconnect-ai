@@ -14,6 +14,8 @@ export default function PricingPage() {
   const [eliteLoading, setEliteLoading] = useState(false)
   const [employerLoading, setEmployerLoading] = useState(false)
   const [employerError, setEmployerError] = useState('')
+  const [employerProLoading, setEmployerProLoading] = useState(false)
+  const [employerProError, setEmployerProError] = useState('')
 
   const [showPromoField, setShowPromoField] = useState(false)
   const [promoCode, setPromoCode] = useState('')
@@ -141,6 +143,33 @@ export default function PricingPage() {
     } catch (err) {
       setEmployerError(err instanceof Error ? err.message : 'Checkout failed')
       setEmployerLoading(false)
+    }
+  }
+
+  async function handleEmployerProUpgrade() {
+    setEmployerProLoading(true)
+    setEmployerProError('')
+
+    try {
+      const res = await fetch('/api/stripe/checkout/employer-pro', {
+        method: 'POST',
+      })
+
+      if (res.status === 401) {
+        window.location.href = '/login?redirectTo=/pricing'
+        return
+      }
+
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        setEmployerProError(data.error || 'Failed to create checkout')
+        setEmployerProLoading(false)
+      }
+    } catch (err) {
+      setEmployerProError(err instanceof Error ? err.message : 'Checkout failed')
+      setEmployerProLoading(false)
     }
   }
 
@@ -556,8 +585,55 @@ export default function PricingPage() {
         </div>
         <p className="text-xs text-slate-600 dark:text-slate-400 text-center mt-6">{t('employerPlanLimitNote')}</p>
 
-        {/* Coming Soon Banner */}
-        <div className="mt-12 pt-8 text-center">
+        {/* Employer Pro plan */}
+        <div className="mt-8">
+          {employerProError && (
+            <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/30 border border-red-300 dark:border-red-700 rounded-xl text-red-700 dark:text-red-400 text-sm text-center">
+              {employerProError}
+            </div>
+          )}
+          <div className="card border-[#57C7E3]/40 bg-gradient-to-br from-[#57C7E3]/5 to-white dark:to-card flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
+            <div className="absolute top-0 right-0 bg-[#57C7E3] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-bl-xl">New</div>
+            <div className="flex-1">
+              <div className="text-sm font-semibold uppercase tracking-wider mb-1" style={{ color: '#57C7E3' }}>{t('employerProLabel')}</div>
+              <div className="flex items-end gap-1 mb-1">
+                <span className="text-3xl font-extrabold text-slate-900 dark:text-white">$99</span>
+                <span className="text-slate-600 dark:text-slate-400 mb-0.5">{t('employerProPeriod')}</span>
+              </div>
+              <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">{t('employerProDesc')}</p>
+              <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-2">
+                {[
+                  t('employerProFeature1'), t('employerProFeature2'), t('employerProFeature3'),
+                  t('employerProFeature4'), t('employerProFeature5'), t('employerProFeature6'),
+                ].map((f) => (
+                  <li key={f} className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+                    <span style={{ color: '#57C7E3' }} className="shrink-0">✦</span> {f}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="shrink-0 w-full md:w-auto">
+              <button
+                onClick={handleEmployerProUpgrade}
+                disabled={employerProLoading}
+                className="w-full md:w-auto font-semibold text-white rounded-full px-8 py-3 text-sm transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                style={{ background: '#57C7E3' }}
+              >
+                {employerProLoading ? (
+                  <>
+                    <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
+                    </svg>
+                    {t('redirectingToStripe')}
+                  </>
+                ) : t('employerProButton')}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-10 pt-8 text-center">
           <p className="text-xs text-slate-400 dark:text-slate-500">More plans coming soon — Enterprise hiring, Featured Listings & Recruiter Marketplace.</p>
         </div>
       </section>
