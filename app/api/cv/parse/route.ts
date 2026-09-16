@@ -22,9 +22,10 @@ export type CvExtracted = {
 
 async function extractText(buffer: Buffer, mimeType: string): Promise<string> {
   if (mimeType === 'application/pdf') {
-    // pdf-parse has no ESM default export — require() is intentional here
-    const pdfParse = require('pdf-parse') as (buf: Buffer) => Promise<{ text: string }>
-    const result = await pdfParse(buffer)
+    // pdf-parse v2: class-based API, { data: buffer }
+    const { PDFParse } = require('pdf-parse') as { PDFParse: new (opts: { data: Buffer }) => { getText: () => Promise<{ text: string }> } }
+    const parser = new PDFParse({ data: buffer })
+    const result = await parser.getText()
     return result.text ?? ''
   }
 
