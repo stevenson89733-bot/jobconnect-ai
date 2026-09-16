@@ -51,6 +51,39 @@ export async function POST(req: Request) {
   const filenameBase = `${sanitizeFilenamePart(content.name, 'CV')}_CV`
 
   const buffer = await renderResumePdf(content, 'classic', labels)
+
+  // Upload to Supabase Storage and persist the signed URL — fire-and-forget
+  // so a storage failure never blocks the user's download.
+  ;(async () => {
+    try {
+      const storagePath = `${user.id}/cv-${Date.now()}.pdf`
+      const { error: uploadError } = await supabase.storage
+        .from('cv-pdfs')
+        .upload(storagePath, buffer, { contentType: 'application/pdf', upsert: false })
+
+      if (uploadError) {
+        console.error('[cv-export] Storage upload failed:', uploadError.message)
+        return
+      }
+
+      const { data: signedData, error: signedError } = await supabase.storage
+        .from('cv-pdfs')
+        .createSignedUrl(storagePath, 60 * 60 * 24 * 365) // 1 year
+
+      if (signedError || !signedData?.signedUrl) {
+        console.error('[cv-export] Signed URL creation failed:', signedError?.message)
+        return
+      }
+
+      await supabase
+        .from('profiles')
+        .update({ cv_url: signedData.signedUrl })
+        .eq('user_id', user.id)
+    } catch (err) {
+      console.error('[cv-export] Persistence error:', err)
+    }
+  })()
+
   return new NextResponse(buffer, {
     status: 200,
     headers: {

@@ -43,7 +43,7 @@ export async function POST(req: Request) {
         // Check if user has Pro plan
         const { data: profile } = await supabase
           .from('profiles')
-          .select('is_premium, email, full_name, resume_text, skills, experience, headline, bio')
+          .select('is_premium, email, full_name, resume_text, skills, experience, headline, bio, cv_url')
           .eq('user_id', setting.user_id)
           .single()
 
@@ -168,7 +168,7 @@ export async function POST(req: Request) {
                 job_id: job.id,
                 status: 'sent',
                 cover_letter,
-                adapted_cv_url: null,
+                adapted_cv_url: profile?.cv_url ?? null,
               })
 
             if (logError) {
