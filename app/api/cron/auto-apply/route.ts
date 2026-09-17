@@ -70,8 +70,9 @@ export async function POST(req: Request) {
           profileError: profileError?.message ?? null,
         }))
 
-        if (!profile?.is_premium) {
-          console.log(`[auto-apply] User ${setting.user_id} not premium, skipping`)
+        const isPremium = profile?.is_premium === true || ['pro', 'elite'].includes(profile?.candidate_plan ?? '')
+        if (!isPremium) {
+          console.log(`[auto-apply] User ${setting.user_id} not premium (is_premium=${profile?.is_premium} plan=${profile?.candidate_plan}), skipping`)
           continue
         }
 
