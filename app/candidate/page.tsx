@@ -140,7 +140,7 @@ export default async function CandidateDashboard({
       try {
         const { data: reviewLogs } = await supabase
           .from('auto_apply_log')
-          .select('cover_letter, job_id, jobs!job_id(title, company_name, match_score)')
+          .select('cover_letter, job_id, jobs!job_id(title, company_name)')
           .eq('user_id', user.id)
           .eq('status', 'pending_review')
           .order('applied_at', { ascending: false })
@@ -153,7 +153,7 @@ export default async function CandidateDashboard({
             return {
               company: (jobRow as { company_name?: string })?.company_name ?? 'Unknown company',
               title: (jobRow as { title?: string })?.title ?? 'Unknown role',
-              matchScore: (jobRow as { match_score?: number | null })?.match_score ?? null,
+              matchScore: null,
               coverLetterExcerpt: (log.cover_letter ?? '').slice(0, 160),
             }
           })

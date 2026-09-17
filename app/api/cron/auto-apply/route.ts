@@ -4,11 +4,9 @@ import { Resend } from 'resend'
 import { submitGreenhouseApplication } from '@/lib/ats/greenhouse'
 import { detectLeverUrl, submitLeverApplication } from '@/lib/ats/lever'
 import {
-  checkMatchThreshold,
   checkCrossBorder,
   checkDailyLimit,
   DAILY_LIMIT,
-  MATCH_THRESHOLD,
 } from '@/lib/autoApplyGuardrails'
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
@@ -102,13 +100,16 @@ export async function POST(req: Request) {
         const yesterday = new Date()
         yesterday.setDate(yesterday.getDate() - 1)
 
+        // TODO: match_score is not stored on the jobs table — it's computed
+        // per-user dynamically. Re-add the gte filter once a user_job_matches
+        // table (or equivalent) is available. For now we fetch recent active
+        // cross-border jobs and apply the guardrails per-job below.
         const { data: jobs, error: jobsError } = await supabase
           .from('jobs')
-          .select('id, title, company_name, description, location, match_score, apply_url, cross_border_status')
+          .select('id, title, company_name, description, location, apply_url, cross_border_status')
           .eq('is_active', true)
-          .gte('match_score', setting.min_match_score)
           .gte('created_at', yesterday.toISOString())
-          .order('match_score', { ascending: false })
+          .order('created_at', { ascending: false })
           .limit(remaining)
 
         if (jobsError) {
@@ -143,23 +144,10 @@ export async function POST(req: Request) {
         // Apply to each job
         for (const job of unappliedJobs) {
           try {
-            const jobAny = job as { match_score?: number | null; cross_border_status?: string | null; apply_url?: string | null }
+            const jobAny = job as { cross_border_status?: string | null; apply_url?: string | null }
 
-            // Guardrail 1: match threshold
-            const matchCheck = checkMatchThreshold(jobAny.match_score)
-            if (!matchCheck.allowed) {
-              await supabase.from('auto_apply_log').insert({
-                user_id: setting.user_id,
-                job_id: job.id,
-                status: matchCheck.reason,
-                cover_letter: null,
-                adapted_cv_url: null,
-              })
-              console.log(`[auto-apply] Blocked job ${job.id} for user ${setting.user_id}: ${matchCheck.reason} (score ${jobAny.match_score})`)
-              continue
-            }
-
-            // Guardrail 2: cross-border filter
+            // Guardrail: cross-border filter
+            // TODO: re-add match_score guardrail once user_job_matches table exists
             const cbCheck = checkCrossBorder(jobAny.cross_border_status)
             if (!cbCheck.allowed) {
               await supabase.from('auto_apply_log').insert({
