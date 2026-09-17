@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
 import { submitGreenhouseApplication } from '@/lib/ats/greenhouse'
+import { detectLeverUrl, submitLeverApplication } from '@/lib/ats/lever'
 import {
   checkMatchThreshold,
   checkCrossBorder,
@@ -228,15 +229,15 @@ export async function POST(req: Request) {
               continue
             }
 
-            // Attempt real ATS submission for Greenhouse jobs
-            let atsStatus: 'sent' | 'pending' | 'failed' = 'pending'
+            // Attempt real ATS submission — Greenhouse → Lever → skipped
+            let atsStatus: 'sent' | 'pending' | 'failed' | 'skipped_no_ats_match' = 'skipped_no_ats_match'
             const applyUrl: string | null = (job as { apply_url?: string | null }).apply_url ?? null
 
-            if (applyUrl?.includes('greenhouse.io')) {
-              const nameParts = (profile?.full_name ?? '').trim().split(/\s+/)
-              const firstName = nameParts[0] ?? ''
-              const lastName = nameParts.slice(1).join(' ') || firstName
+            const nameParts = (profile?.full_name ?? '').trim().split(/\s+/)
+            const firstName = nameParts[0] ?? ''
+            const lastName = nameParts.slice(1).join(' ') || firstName
 
+            if (applyUrl?.includes('greenhouse.io')) {
               const ghResult = await submitGreenhouseApplication({
                 apply_url: applyUrl,
                 first_name: firstName,
@@ -248,15 +249,29 @@ export async function POST(req: Request) {
 
               if (ghResult.success) {
                 atsStatus = 'sent'
-                console.log(
-                  `[auto-apply] Greenhouse submission OK — id ${ghResult.greenhouse_id} for user ${setting.user_id} job ${job.id}`
-                )
+                console.log(`[auto-apply] Greenhouse OK — id ${ghResult.greenhouse_id} user ${setting.user_id} job ${job.id}`)
               } else {
                 atsStatus = 'failed'
-                console.error(
-                  `[auto-apply] Greenhouse submission failed for user ${setting.user_id} job ${job.id}: ${ghResult.error}`
-                )
+                console.error(`[auto-apply] Greenhouse failed user ${setting.user_id} job ${job.id}: ${ghResult.error}`)
               }
+            } else if (applyUrl && detectLeverUrl(applyUrl)) {
+              const leverResult = await submitLeverApplication(applyUrl, {
+                name: profile?.full_name ?? `${firstName} ${lastName}`.trim(),
+                email: profile?.email ?? '',
+                phone: undefined,
+                cvUrl: profile?.cv_url ?? null,
+                coverLetter: cover_letter,
+              })
+
+              if (leverResult.success) {
+                atsStatus = 'sent'
+                console.log(`[auto-apply] Lever OK — user ${setting.user_id} job ${job.id}`)
+              } else {
+                atsStatus = 'failed'
+                console.error(`[auto-apply] Lever failed user ${setting.user_id} job ${job.id}: ${leverResult.error}`)
+              }
+            } else {
+              console.log(`[auto-apply] No ATS match for job ${job.id} (url: ${applyUrl ?? 'none'}) — skipped`)
             }
 
             // Record in auto_apply_log
