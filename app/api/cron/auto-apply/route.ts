@@ -197,22 +197,14 @@ export async function POST(req: Request) {
             const coverLetterUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/ai/cover-letter`
             const coverLetterRes = await fetch(coverLetterUrl, {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${cronSecret}`,
-              },
+              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                candidateProfile: {
-                  skills: profile?.skills,
-                  experience: profile?.experience,
-                  bio: profile?.bio,
-                },
-                job: {
-                  title: job.title,
-                  company_name: job.company_name,
-                  description: job.description,
-                  location: job.location,
-                },
+                targetRole: job.title,
+                company: job.company_name,
+                jobDescription: job.description ?? '',
+                skills: profile?.skills ?? '',
+                experience: profile?.experience ?? '',
+                bio: profile?.bio ?? '',
               }),
             })
 
@@ -230,7 +222,10 @@ export async function POST(req: Request) {
             }
 
             const clJson = await coverLetterRes.json()
-            const cover_letter: string = clJson.cover_letter ?? ''
+            // Response shape: { letter: { subject, greeting, opening, body, closing } }
+            const letter = clJson.letter ?? {}
+            const cover_letter: string = [letter.greeting, letter.opening, letter.body, letter.closing]
+              .filter(Boolean).join('\n\n') || JSON.stringify(clJson)
             console.log(`[auto-apply] Cover letter generated for job ${job.id} (${cover_letter.length} chars)`)
 
             // Guardrail 4: review mode — queue for user approval instead of sending
