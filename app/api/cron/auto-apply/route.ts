@@ -28,11 +28,14 @@ export async function POST(req: Request) {
   let totalApplications = 0
 
   try {
-    // 1. Fetch all active users with auto-apply enabled and pro plan
+    // 1. Fetch all active users with auto-apply enabled
+    console.log('[auto-apply] Querying auto_apply_settings WHERE is_active = true')
     const { data: settings, error: settingsError } = await supabase
       .from('auto_apply_settings')
       .select('user_id, max_applications_per_day, min_match_score')
       .eq('is_active', true)
+
+    console.log('[auto-apply] Settings query result:', JSON.stringify({ count: settings?.length ?? 0, error: settingsError?.message ?? null }))
 
     if (settingsError) {
       console.error('[auto-apply] Settings fetch error:', settingsError.message)
@@ -40,19 +43,32 @@ export async function POST(req: Request) {
     }
 
     if (!settings || settings.length === 0) {
-      console.log('[auto-apply] No active auto-apply users')
+      console.log('[auto-apply] No active auto-apply users — auto_apply_settings table may be empty or no rows have is_active=true')
       return NextResponse.json({ processed_users: 0, total_applications: 0 })
     }
+
+    console.log(`[auto-apply] Found ${settings.length} active user(s):`, settings.map(s => s.user_id))
 
     // 2. For each user with auto-apply enabled
     for (const setting of settings) {
       try {
-        // Check if user has Pro plan
-        const { data: profile } = await supabase
+        console.log(`[auto-apply] Processing user ${setting.user_id}`)
+
+        // Fetch profile
+        const { data: profile, error: profileError } = await supabase
           .from('profiles')
           .select('is_premium, candidate_plan, auto_apply_review_mode, email, full_name, resume_text, skills, experience, headline, bio, cv_url')
           .eq('user_id', setting.user_id)
           .single()
+
+        console.log(`[auto-apply] Profile for ${setting.user_id}:`, JSON.stringify({
+          found: !!profile,
+          is_premium: profile?.is_premium,
+          candidate_plan: profile?.candidate_plan,
+          auto_apply_review_mode: profile?.auto_apply_review_mode,
+          has_cv_url: !!profile?.cv_url,
+          profileError: profileError?.message ?? null,
+        }))
 
         if (!profile?.is_premium) {
           console.log(`[auto-apply] User ${setting.user_id} not premium, skipping`)
@@ -83,6 +99,8 @@ export async function POST(req: Request) {
         const candidatePlan = profile?.candidate_plan ?? 'free'
         const dailyLimit = DAILY_LIMIT[candidatePlan] ?? 0
 
+        console.log(`[auto-apply] User ${setting.user_id} plan=${candidatePlan} dailyLimit=${dailyLimit} alreadySent=${alreadySent}`)
+
         if (dailyLimit === 0) {
           console.log(`[auto-apply] User ${setting.user_id} plan "${candidatePlan}" has auto-apply disabled`)
           continue
@@ -112,15 +130,15 @@ export async function POST(req: Request) {
           .order('created_at', { ascending: false })
           .limit(remaining)
 
+        console.log(`[auto-apply] Jobs query returned ${jobs?.length ?? 0} jobs, error: ${jobsError?.message ?? null}`)
+
         if (jobsError) {
           console.error(`[auto-apply] User ${setting.user_id} jobs error:`, jobsError.message)
           continue
         }
 
         if (!jobs || jobs.length === 0) {
-          console.log(
-            `[auto-apply] No matching jobs for user ${setting.user_id} (min_score: ${setting.min_match_score})`
-          )
+          console.log(`[auto-apply] No matching jobs for user ${setting.user_id}`)
           continue
         }
 
