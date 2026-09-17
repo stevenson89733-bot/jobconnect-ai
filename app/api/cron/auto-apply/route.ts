@@ -119,17 +119,17 @@ export async function POST(req: Request) {
         const yesterday = new Date()
         yesterday.setDate(yesterday.getDate() - 1)
 
-        // TODO: match_score is not stored on the jobs table — it's computed
-        // per-user dynamically. Re-add the gte filter once a user_job_matches
-        // table (or equivalent) is available. For now we fetch recent active
-        // cross-border jobs and apply the guardrails per-job below.
+        // Window: 7 days (Greenhouse jobs are typically older than 24h)
+        const windowStart = new Date()
+        windowStart.setDate(windowStart.getDate() - 7)
+
         const { data: jobs, error: jobsError } = await supabase
           .from('jobs')
           .select('id, title, company_name, description, location, apply_url, cross_border_status')
           .eq('is_active', true)
-          .gte('created_at', yesterday.toISOString())
+          .gte('created_at', windowStart.toISOString())
           .order('created_at', { ascending: false })
-          .limit(remaining)
+          .limit(remaining * 20) // fetch more to account for cross-border filtering
 
         console.log(`[auto-apply] Jobs query returned ${jobs?.length ?? 0} jobs, error: ${jobsError?.message ?? null}`)
 

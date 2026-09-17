@@ -20,7 +20,8 @@ export function checkMatchThreshold(matchScore: number | null | undefined): Guar
 }
 
 export function checkCrossBorder(crossBorderStatus: string | null | undefined): GuardrailResult {
-  if (crossBorderStatus !== 'yes') {
+  // Allow 'yes' and null (unclassified) — only block explicit 'no'
+  if (crossBorderStatus === 'no') {
     return { allowed: false, reason: 'blocked_not_international' }
   }
   return { allowed: true }
