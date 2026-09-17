@@ -18,6 +18,8 @@ import FadeIn from '@/components/dashboard/FadeIn'
 import RegistrationPixel from '@/components/analytics/RegistrationPixel'
 import AutoApplyCard from '@/components/dashboard/AutoApplyCard'
 import OnboardingModal from '@/components/OnboardingModal'
+import PendingReviewBanner from '@/components/dashboard/PendingReviewBanner'
+import AtsEducationWidget from '@/components/dashboard/AtsEducationWidget'
 
 export const dynamic = 'force-dynamic'
 
@@ -80,6 +82,8 @@ export default async function CandidateDashboard({
   // feature.
   let applicationRates: ApplicationRates = { total: 0, responded: 0, responseRate: null, interviewRate: null, offerRate: null, anyResponseYet: false }
   let avgResponseTime: AvgResponseTime = { avgDays: null, sampleSize: 0 }
+  let pendingReviewCount = 0
+  let pendingReviewPreviews: { company: string; title: string; matchScore: number | null; coverLetterExcerpt: string }[] = []
 
   try {
     const { data: { user } } = await supabase.auth.getUser()
@@ -131,6 +135,32 @@ export default async function CandidateDashboard({
       atsScore = analysisJson?.atsScore?.score ?? null
       profileStrength = analysisJson?.profileStrength?.score ?? null
       analysisGeneratedAt = analysisRow?.generated_at ?? null
+
+      // Pending review count + previews for the banner
+      try {
+        const { data: reviewLogs } = await supabase
+          .from('auto_apply_log')
+          .select('cover_letter, job_id, jobs!job_id(title, company_name, match_score)')
+          .eq('user_id', user.id)
+          .eq('status', 'pending_review')
+          .order('applied_at', { ascending: false })
+          .limit(3)
+
+        if (reviewLogs && reviewLogs.length > 0) {
+          pendingReviewCount = reviewLogs.length
+          pendingReviewPreviews = reviewLogs.map((log) => {
+            const jobRow = Array.isArray(log.jobs) ? log.jobs[0] : log.jobs
+            return {
+              company: (jobRow as { company_name?: string })?.company_name ?? 'Unknown company',
+              title: (jobRow as { title?: string })?.title ?? 'Unknown role',
+              matchScore: (jobRow as { match_score?: number | null })?.match_score ?? null,
+              coverLetterExcerpt: (log.cover_letter ?? '').slice(0, 160),
+            }
+          })
+        }
+      } catch {
+        // Missing column or table — skip banner silently
+      }
     }
   } catch {
     // Supabase unavailable — render with empty/zeroed data rather than crashing
@@ -173,6 +203,7 @@ export default async function CandidateDashboard({
       {needsOnboarding && <OnboardingModal defaultNext="/candidate" />}
       {searchParams.registered === '1' && <RegistrationPixel />}
       <AutoApplyCard isPro={isPro} />
+      <PendingReviewBanner count={pendingReviewCount} previews={pendingReviewPreviews} />
       <WelcomeHeader firstName={firstName} initials={initials} avatarUrl={profile?.avatar_url ?? null} />
 
       <ProfileCompletionCard completion={completion} />
@@ -211,6 +242,7 @@ export default async function CandidateDashboard({
         <SkillsCard skills={skillTags} />
       </div>
 
+      <AtsEducationWidget />
       <QuickActions />
     </div>
   )

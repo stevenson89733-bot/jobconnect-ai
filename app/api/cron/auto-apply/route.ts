@@ -2,6 +2,13 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
 import { submitGreenhouseApplication } from '@/lib/ats/greenhouse'
+import {
+  checkMatchThreshold,
+  checkCrossBorder,
+  checkDailyLimit,
+  DAILY_LIMIT,
+  MATCH_THRESHOLD,
+} from '@/lib/autoApplyGuardrails'
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
@@ -44,7 +51,7 @@ export async function POST(req: Request) {
         // Check if user has Pro plan
         const { data: profile } = await supabase
           .from('profiles')
-          .select('is_premium, email, full_name, resume_text, skills, experience, headline, bio, cv_url')
+          .select('is_premium, candidate_plan, auto_apply_review_mode, email, full_name, resume_text, skills, experience, headline, bio, cv_url')
           .eq('user_id', setting.user_id)
           .single()
 
@@ -74,14 +81,21 @@ export async function POST(req: Request) {
         }
 
         const alreadySent = todayLogs?.length || 0
-        const remaining = setting.max_applications_per_day - alreadySent
+        const candidatePlan = profile?.candidate_plan ?? 'free'
+        const dailyLimit = DAILY_LIMIT[candidatePlan] ?? 0
 
-        if (remaining <= 0) {
-          console.log(
-            `[auto-apply] User ${setting.user_id} reached daily limit (${alreadySent}/${setting.max_applications_per_day})`
-          )
+        if (dailyLimit === 0) {
+          console.log(`[auto-apply] User ${setting.user_id} plan "${candidatePlan}" has auto-apply disabled`)
           continue
         }
+
+        const dailyLimitCheck = checkDailyLimit(candidatePlan, alreadySent)
+        if (!dailyLimitCheck.allowed) {
+          console.log(`[auto-apply] User ${setting.user_id} reached daily limit (${alreadySent}/${dailyLimit})`)
+          continue
+        }
+
+        const remaining = dailyLimit - alreadySent
 
         // Get recently posted jobs matching criteria
         const yesterday = new Date()
@@ -89,7 +103,7 @@ export async function POST(req: Request) {
 
         const { data: jobs, error: jobsError } = await supabase
           .from('jobs')
-          .select('id, title, company_name, description, location, match_score, apply_url')
+          .select('id, title, company_name, description, location, match_score, apply_url, cross_border_status')
           .eq('is_active', true)
           .gte('match_score', setting.min_match_score)
           .gte('created_at', yesterday.toISOString())
@@ -128,6 +142,43 @@ export async function POST(req: Request) {
         // Apply to each job
         for (const job of unappliedJobs) {
           try {
+            const jobAny = job as { match_score?: number | null; cross_border_status?: string | null; apply_url?: string | null }
+
+            // Guardrail 1: match threshold
+            const matchCheck = checkMatchThreshold(jobAny.match_score)
+            if (!matchCheck.allowed) {
+              await supabase.from('auto_apply_log').insert({
+                user_id: setting.user_id,
+                job_id: job.id,
+                status: matchCheck.reason,
+                cover_letter: null,
+                adapted_cv_url: null,
+              })
+              console.log(`[auto-apply] Blocked job ${job.id} for user ${setting.user_id}: ${matchCheck.reason} (score ${jobAny.match_score})`)
+              continue
+            }
+
+            // Guardrail 2: cross-border filter
+            const cbCheck = checkCrossBorder(jobAny.cross_border_status)
+            if (!cbCheck.allowed) {
+              await supabase.from('auto_apply_log').insert({
+                user_id: setting.user_id,
+                job_id: job.id,
+                status: cbCheck.reason,
+                cover_letter: null,
+                adapted_cv_url: null,
+              })
+              console.log(`[auto-apply] Blocked job ${job.id} for user ${setting.user_id}: ${cbCheck.reason}`)
+              continue
+            }
+
+            // Guardrail 3: re-check daily limit (may have consumed slots in this loop)
+            const loopLimitCheck = checkDailyLimit(candidatePlan, alreadySent + applicationsThisRound.length)
+            if (!loopLimitCheck.allowed) {
+              console.log(`[auto-apply] User ${setting.user_id} hit daily limit mid-loop, stopping`)
+              break
+            }
+
             // Generate cover letter
             const coverLetterRes = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/ai/cover-letter`, {
               method: 'POST',
@@ -160,6 +211,22 @@ export async function POST(req: Request) {
             }
 
             const { cover_letter } = await coverLetterRes.json()
+
+            // Guardrail 4: review mode — queue for user approval instead of sending
+            const reviewMode = profile?.auto_apply_review_mode !== false // default true
+            if (reviewMode) {
+              await supabase.from('auto_apply_log').insert({
+                user_id: setting.user_id,
+                job_id: job.id,
+                status: 'pending_review',
+                cover_letter,
+                adapted_cv_url: profile?.cv_url ?? null,
+              })
+              applicationsThisRound.push(job)
+              totalApplications++
+              console.log(`[auto-apply] Queued for review: user ${setting.user_id} job ${job.id} "${job.title}"`)
+              continue
+            }
 
             // Attempt real ATS submission for Greenhouse jobs
             let atsStatus: 'sent' | 'pending' | 'failed' = 'pending'
