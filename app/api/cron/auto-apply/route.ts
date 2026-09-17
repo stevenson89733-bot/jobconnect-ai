@@ -144,15 +144,19 @@ export async function POST(req: Request) {
           continue
         }
 
-        // Filter out jobs already applied to
-        const { data: appliedJobs } = await supabase
+        // Filter out jobs already applied to (applications table uses candidate_id)
+        const { data: appliedJobs, error: appliedJobsError } = await supabase
           .from('applications')
           .select('job_id')
-          .eq('user_id', setting.user_id)
+          .eq('candidate_id', setting.user_id)
           .in('job_id', jobs.map((j) => j.id))
+
+        console.log(`[auto-apply] Applied jobs lookup: ${appliedJobs?.length ?? 0} already applied, error: ${appliedJobsError?.message ?? null}`)
 
         const appliedJobIds = new Set(appliedJobs?.map((a) => a.job_id))
         const unappliedJobs = jobs.filter((j) => !appliedJobIds.has(j.id))
+
+        console.log(`[auto-apply] User ${setting.user_id}: ${jobs.length} jobs fetched, ${appliedJobIds.size} already applied, ${unappliedJobs.length} unapplied`)
 
         if (unappliedJobs.length === 0) {
           console.log(`[auto-apply] User ${setting.user_id} already applied to all matching jobs`)
@@ -166,30 +170,32 @@ export async function POST(req: Request) {
           try {
             const jobAny = job as { cross_border_status?: string | null; apply_url?: string | null }
 
-            // Guardrail: cross-border filter
-            // TODO: re-add match_score guardrail once user_job_matches table exists
+            // Guardrail: cross-border filter (null = unanalyzed = allowed; only 'no' is blocked)
             const cbCheck = checkCrossBorder(jobAny.cross_border_status)
             if (!cbCheck.allowed) {
-              await supabase.from('auto_apply_log').insert({
+              const { error: cbLogErr } = await supabase.from('auto_apply_log').insert({
                 user_id: setting.user_id,
                 job_id: job.id,
                 status: cbCheck.reason,
                 cover_letter: null,
                 adapted_cv_url: null,
               })
-              console.log(`[auto-apply] Blocked job ${job.id} for user ${setting.user_id}: ${cbCheck.reason}`)
+              console.log(`[auto-apply] Blocked job ${job.id} (cross_border=${jobAny.cross_border_status}): ${cbCheck.reason}, log_err=${cbLogErr?.message ?? null}`)
               continue
             }
 
-            // Guardrail 3: re-check daily limit (may have consumed slots in this loop)
+            // Guardrail: re-check daily limit (may have consumed slots in this loop)
             const loopLimitCheck = checkDailyLimit(candidatePlan, alreadySent + applicationsThisRound.length)
             if (!loopLimitCheck.allowed) {
-              console.log(`[auto-apply] User ${setting.user_id} hit daily limit mid-loop, stopping`)
+              console.log(`[auto-apply] User ${setting.user_id} hit daily limit mid-loop (${alreadySent + applicationsThisRound.length}/${dailyLimit}), stopping`)
               break
             }
 
+            console.log(`[auto-apply] Job ${job.id} "${job.title}" passed guardrails — generating cover letter`)
+
             // Generate cover letter
-            const coverLetterRes = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/ai/cover-letter`, {
+            const coverLetterUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/ai/cover-letter`
+            const coverLetterRes = await fetch(coverLetterUrl, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -211,13 +217,21 @@ export async function POST(req: Request) {
             })
 
             if (!coverLetterRes.ok) {
-              console.error(
-                `[auto-apply] User ${setting.user_id} cover letter generation failed for job ${job.id}`
-              )
+              const errBody = await coverLetterRes.text().catch(() => '')
+              console.error(`[auto-apply] Cover letter failed for job ${job.id}: HTTP ${coverLetterRes.status} — ${errBody.slice(0, 200)}`)
+              await supabase.from('auto_apply_log').insert({
+                user_id: setting.user_id,
+                job_id: job.id,
+                status: 'failed',
+                cover_letter: null,
+                adapted_cv_url: null,
+              })
               continue
             }
 
-            const { cover_letter } = await coverLetterRes.json()
+            const clJson = await coverLetterRes.json()
+            const cover_letter: string = clJson.cover_letter ?? ''
+            console.log(`[auto-apply] Cover letter generated for job ${job.id} (${cover_letter.length} chars)`)
 
             // Guardrail 4: review mode — queue for user approval instead of sending
             const reviewMode = profile?.auto_apply_review_mode !== false // default true
@@ -299,11 +313,11 @@ export async function POST(req: Request) {
               continue
             }
 
-            // Record in applications table
+            // Record in applications table (uses candidate_id not user_id)
             const { error: appError } = await supabase
               .from('applications')
               .insert({
-                user_id: setting.user_id,
+                candidate_id: setting.user_id,
                 job_id: job.id,
                 cover_letter,
                 applied_at: new Date().toISOString(),
