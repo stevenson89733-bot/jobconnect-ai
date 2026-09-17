@@ -57,7 +57,7 @@ export async function POST(req: Request) {
         // Fetch profile
         const { data: profile, error: profileError } = await supabase
           .from('profiles')
-          .select('is_premium, candidate_plan, auto_apply_review_mode, email, full_name, resume_text, skills, experience, headline, bio, cv_url')
+          .select('is_premium, candidate_plan, auto_apply_review_mode, email, full_name, skills, experience, bio, cv_url')
           .eq('user_id', setting.user_id)
           .single()
 
@@ -68,6 +68,7 @@ export async function POST(req: Request) {
           auto_apply_review_mode: profile?.auto_apply_review_mode,
           has_cv_url: !!profile?.cv_url,
           profileError: profileError?.message ?? null,
+          profileErrorDetails: profileError?.details ?? null,
         }))
 
         const isPremium = profile?.is_premium === true || ['pro', 'elite'].includes(profile?.candidate_plan ?? '')
@@ -196,10 +197,8 @@ export async function POST(req: Request) {
               },
               body: JSON.stringify({
                 candidateProfile: {
-                  resume_text: profile?.resume_text,
                   skills: profile?.skills,
                   experience: profile?.experience,
-                  headline: profile?.headline,
                   bio: profile?.bio,
                 },
                 job: {
