@@ -1,9 +1,10 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { X } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export function CookieConsent() {
+  const t = useTranslations('cookieBanner')
   const [show, setShow] = useState(false)
 
   useEffect(() => {
@@ -16,7 +17,6 @@ export function CookieConsent() {
   const handleAccept = () => {
     localStorage.setItem('cookie-consent', 'accepted')
     setShow(false)
-    // Enable Meta Pixel if not already loaded
     if (window.fbq) {
       window.fbq('consent', 'grant')
     }
@@ -25,7 +25,6 @@ export function CookieConsent() {
   const handleDecline = () => {
     localStorage.setItem('cookie-consent', 'declined')
     setShow(false)
-    // Disable Meta Pixel analytics
     if (window.fbq) {
       window.fbq('consent', 'revoke')
     }
@@ -39,9 +38,9 @@ export function CookieConsent() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex-1">
             <p className="text-sm text-slate-300">
-              We use cookies to improve your experience. By continuing, you agree to our{' '}
+              {t('text')}{' '}
               <a href="/privacy" className="text-blue-400 hover:text-blue-300 underline">
-                Privacy Policy
+                {t('privacyLink')}
               </a>
               .
             </p>
@@ -51,13 +50,13 @@ export function CookieConsent() {
               onClick={handleDecline}
               className="px-4 py-2 text-sm font-medium text-slate-300 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors"
             >
-              Decline
+              {t('decline')}
             </button>
             <button
               onClick={handleAccept}
               className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
             >
-              Accept
+              {t('accept')}
             </button>
           </div>
         </div>
