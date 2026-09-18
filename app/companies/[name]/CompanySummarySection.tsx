@@ -1,23 +1,16 @@
-import { getTranslations } from 'next-intl/server'
+import { useTranslations } from 'next-intl'
 import type { CompanyProfileSummary } from '@/lib/companyProfileSummary'
 
-// Server component — no interactivity needed, just rendering the real,
-// sourced overview computed in page.tsx (or an honest empty state). Only
-// the chrome around it is translated — summary.summary itself is
-// AI-generated content, out of scope per the standing i18n boundary.
-export default async function CompanySummarySection({
+export default function CompanySummarySection({
   name,
   summary,
 }: {
   name: string
   summary: CompanyProfileSummary | null
 }) {
-  // null = the fetch itself failed/was skipped (rate-limited with no stale
-  // fallback, etc.) — omit the section entirely rather than showing an
-  // empty state that implies we looked and found nothing.
-  if (!summary) return null
+  const t = useTranslations('companyProfile')
 
-  const t = await getTranslations('companyProfile')
+  if (!summary) return null
 
   return (
     <div className="card mb-6">
