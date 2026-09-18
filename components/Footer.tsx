@@ -63,7 +63,7 @@ export default async function Footer() {
             <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
               <li><Link href="/jobs" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">{tn('browseJobs')}</Link></li>
               <li><Link href="/companies" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">{tn('companies')}</Link></li>
-              <li><Link href="/blog" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">Blog</Link></li>
+              <li><Link href="/blog" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">{t('blog')}</Link></li>
               <li><Link href="/pricing" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">{tn('pricing')}</Link></li>
             </ul>
           </div>
@@ -78,19 +78,19 @@ export default async function Footer() {
             <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">{t('company')}</h3>
             <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
               <li><Link href="/about" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">{t('about')}</Link></li>
-              <li><Link href="/methodology" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">How It Works</Link></li>
-              <li><Link href="/partners" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">Partners</Link></li>
+              <li><Link href="/methodology" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">{t('howItWorks')}</Link></li>
+              <li><Link href="/partners" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">{t('partners')}</Link></li>
               <li><Link href="/contact" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">{t('contact')}</Link></li>
             </ul>
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Explore Markets</h3>
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">{t('exploreMarkets')}</h3>
             <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
-              <li><Link href="/remote-jobs-usa" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">🇺🇸 Remote Jobs USA</Link></li>
-              <li><Link href="/remote-jobs-canada" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">🇨🇦 Remote Jobs Canada</Link></li>
-              <li><Link href="/remote-jobs-france" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">🇫🇷 Remote Jobs France</Link></li>
-              <li><Link href="/remote-jobs-germany" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">🇩🇪 Remote Jobs Germany</Link></li>
-              <li><Link href="/remote-jobs-uk" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">🇬🇧 Remote Jobs UK</Link></li>
+              <li><Link href="/remote-jobs-usa" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">🇺🇸 {t('remoteJobsUSA')}</Link></li>
+              <li><Link href="/remote-jobs-canada" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">🇨🇦 {t('remoteJobsCanada')}</Link></li>
+              <li><Link href="/remote-jobs-france" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">🇫🇷 {t('remoteJobsFrance')}</Link></li>
+              <li><Link href="/remote-jobs-germany" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">🇩🇪 {t('remoteJobsGermany')}</Link></li>
+              <li><Link href="/remote-jobs-uk" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">🇬🇧 {t('remoteJobsUK')}</Link></li>
             </ul>
           </div>
         </div>
@@ -103,7 +103,7 @@ export default async function Footer() {
               rel="noopener noreferrer"
               className="text-slate-400 dark:text-slate-600 hover:text-slate-600 dark:hover:text-slate-400 transition-colors"
             >
-              Company logos by Logo.dev
+              {t('logoAttribution')}
             </a>
           </div>
           <div className="flex items-center gap-4">
@@ -124,7 +124,7 @@ export default async function Footer() {
             <div className="flex gap-4">
               <Link href="/privacy" className="hover:text-slate-700 dark:hover:text-slate-400">{t('privacy')}</Link>
               <Link href="/terms" className="hover:text-slate-700 dark:hover:text-slate-400">{t('terms')}</Link>
-              <Link href="/refund" className="hover:text-slate-700 dark:hover:text-slate-400">Refund</Link>
+              <Link href="/refund" className="hover:text-slate-700 dark:hover:text-slate-400">{t('refund')}</Link>
             </div>
           </div>
         </div>

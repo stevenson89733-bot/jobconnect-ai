@@ -279,24 +279,24 @@ export default function PricingPage() {
           {/* Free plan */}
           <div className="card flex flex-col">
             <div className="mb-6">
-              <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Forever free</div>
+              <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">{t('candidateFreeBadge')}</div>
               <div className="text-4xl font-extrabold text-slate-900 dark:text-white">$0</div>
               <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('candidateFreeDesc')}</div>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
-              {[
-                "Browse all remote jobs worldwide",
-                "Apply to unlimited jobs",
-                "Manual apply — upload CV + cover letter",
-                "AI Match Score 0-100 per job",
-                "Cross-border detector — yes/no/unclear",
-                "Basic job alerts",
-                "Full candidate dashboard",
-                "Application Tracker — auto-tracked",
-                "Career Copilot — basic AI assistant",
-                "Interview Prep text — 5 Q + feedback",
-                "Multilingual candidate profile (11 languages)",
-              ].map((f) => (
+              {([
+                t('candidateFreeFeature1'),
+                t('candidateFreeFeature2'),
+                t('candidateFreeFeature3'),
+                t('candidateFreeFeature4'),
+                t('candidateFreeFeature5'),
+                t('candidateFreeFeature6'),
+                t('candidateFreeFeature7'),
+                t('candidateFreeFeature8'),
+                t('candidateFreeFeature9'),
+                t('candidateFreeFeature10'),
+                t('candidateFreeFeature11'),
+              ] as string[]).map((f) => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
                   <span className="text-green-600 dark:text-green-400 shrink-0">✓</span> {f}
                 </li>
@@ -308,27 +308,27 @@ export default function PricingPage() {
           {/* Premium plan */}
           <div className="card border-primary/50 bg-gradient-to-br from-primary/5 to-white dark:to-card flex flex-col">
             <div className="mb-6">
-              <div className="text-sm font-semibold text-primary dark:text-blue-400 uppercase tracking-wider mb-1">Pro · Most Popular · Cancel anytime</div>
+              <div className="text-sm font-semibold text-primary dark:text-blue-400 uppercase tracking-wider mb-1">{t('candidateProBadge')}</div>
               <div className="flex items-end gap-1">
                 <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$19.99</span>
                 <span className="text-slate-600 dark:text-slate-400 mb-1">/mo</span>
               </div>
-              <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">Everything in Free +</div>
+              <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('everythingInFree')}</div>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
-              {[
-                "AI Resume Builder GPT-4o — tailored per role",
-                "ATS Score 0-100 — keywords · formatting · exp · skills",
-                "AI Cover Letter Generator — personalized by offer",
-                "Resume adapted by country — format per market",
-                "PDF download — resume + cover letter ready",
-                "3 AI improvement tips — concrete suggestions",
-                "LinkedIn Optimizer — profile analysis + generation",
-                "Mobility Skill-Gap A→B — skills gap between markets",
-                "Voice Interview Prep — simulation + feedback",
-                "Auto-Apply — 10 jobs/day — daily auto applications",
-                "Priority support",
-              ].map((f) => (
+              {([
+                t('candidateProFeature1'),
+                t('candidateProFeature2'),
+                t('candidateProFeature3'),
+                t('candidateProFeature4'),
+                t('candidateProFeature5'),
+                t('candidateProFeature6'),
+                t('candidateProFeature7'),
+                t('candidateProFeature8'),
+                t('candidateProFeature9'),
+                t('candidateProFeature10'),
+                t('candidateProFeature11'),
+              ] as string[]).map((f) => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
                   <span className="text-orange-600 dark:text-accent shrink-0">✦</span> {f}
                 </li>
@@ -338,8 +338,8 @@ export default function PricingPage() {
               <div className="p-4 bg-green-50 dark:bg-green-900/30 border border-green-300 dark:border-green-700 rounded-xl text-center">
                 <p className="text-green-700 dark:text-green-400 font-semibold text-sm">
                   {promoType === 'employer'
-                    ? '🎉 Employer access activated! Free job postings for 30 days.'
-                    : '🎉 Premium activated! You have 3 months of free access.'}
+                    ? t('promoEmployerSuccess')
+                    : t('promoCandidateSuccess')}
                 </p>
               </div>
             ) : (
@@ -365,7 +365,7 @@ export default function PricingPage() {
                     onClick={() => setShowPromoField(true)}
                     className="w-full text-center text-xs text-slate-400 dark:text-slate-500 hover:text-primary dark:hover:text-blue-400 transition-colors mt-1 py-1"
                   >
-                    Have a promo code?
+                    {t('havePromoCode')}
                   </button>
                 ) : (
                   <div className="mt-3 space-y-2">
@@ -375,7 +375,7 @@ export default function PricingPage() {
                         value={promoCode}
                         onChange={e => { setPromoCode(e.target.value.toUpperCase()); setPromoError('') }}
                         onKeyDown={e => e.key === 'Enter' && handlePromoRedeem()}
-                        placeholder="PROMO CODE"
+                        placeholder={t('promoCodePlaceholder')}
                         className="flex-1 px-3 py-2 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/40 uppercase tracking-widest"
                         autoFocus
                       />
@@ -384,7 +384,7 @@ export default function PricingPage() {
                         disabled={promoLoading || !promoCode.trim()}
                         className="px-4 py-2 text-xs font-semibold bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-lg disabled:opacity-40 hover:bg-slate-700 dark:hover:bg-slate-100 transition-colors flex-shrink-0"
                       >
-                        {promoLoading ? '…' : 'Apply'}
+                        {promoLoading ? '…' : t('applyPromo')}
                       </button>
                     </div>
                     {promoError && (
@@ -399,21 +399,21 @@ export default function PricingPage() {
           {/* Elite plan */}
           <div className="card flex flex-col">
             <div className="mb-6">
-              <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Elite · Cancel anytime</div>
+              <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">{t('candidateEliteBadge')}</div>
               <div className="flex items-end gap-1">
                 <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$39.99</span>
                 <span className="text-slate-600 dark:text-slate-400 mb-1">/mo</span>
               </div>
-              <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">Everything in Pro +</div>
+              <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('everythingInPro')}</div>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
-              {[
-                "Everything in Pro +",
-                "Auto-Apply — 25 jobs/day",
-                "Priority matching",
-                "Dedicated 24/7 support",
-                "Elite badge on candidate profile",
-              ].map((f) => (
+              {([
+                t('everythingInPro'),
+                t('candidateEliteFeature1'),
+                t('candidateEliteFeature2'),
+                t('candidateEliteFeature3'),
+                t('candidateEliteFeature4'),
+              ] as string[]).map((f) => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
                   <span className="text-purple-600 dark:text-purple-400 shrink-0">✦</span> {f}
                 </li>
@@ -432,7 +432,7 @@ export default function PricingPage() {
                   </svg>
                   {t('redirectingToStripe')}
                 </span>
-              ) : 'Get Elite — $39.99/mo'}
+              ) : t('eliteButton')}
             </button>
           </div>
         </div>
@@ -446,13 +446,13 @@ export default function PricingPage() {
             <span className="text-2xl">🤖</span>
             <div>
               <div className="flex items-center gap-2 mb-0.5">
-                <span className="font-bold text-white text-sm">Auto-Apply</span>
-                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">Pro Feature</span>
+                <span className="font-bold text-white text-sm">{t('autoApplyTitle')}</span>
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">{t('proFeature')}</span>
               </div>
-              <p className="text-xs text-slate-400">Let AI find and apply to remote jobs for you — every day.</p>
+              <p className="text-xs text-slate-400">{t('autoApplyDesc')}</p>
             </div>
           </div>
-          <span className="text-cyan-400 text-sm font-semibold group-hover:translate-x-0.5 transition-transform">Learn more →</span>
+          <span className="text-cyan-400 text-sm font-semibold group-hover:translate-x-0.5 transition-transform">{t('learnMore')}</span>
         </Link>
       </section>
 
@@ -634,14 +634,14 @@ export default function PricingPage() {
         </div>
 
         <div className="mt-10 pt-8 text-center">
-          <p className="text-xs text-slate-400 dark:text-slate-500">More plans coming soon — Enterprise hiring, Featured Listings & Recruiter Marketplace.</p>
+          <p className="text-xs text-slate-400 dark:text-slate-500">{t('comingSoon')}</p>
         </div>
       </section>
 
       {/* ── Trusted by ──────────────────────────────────────────── */}
       <section className="mt-20 pt-12 border-t border-slate-200 dark:border-slate-800">
         <p className="text-center text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-8">
-          Trusted by teams at
+          {t('trustedBy')}
         </p>
         <div className="flex flex-wrap items-center justify-center gap-8">
           {['Anthropic', 'Vercel', 'Stripe', 'Figma', 'Linear', 'Notion'].map((name) => (
