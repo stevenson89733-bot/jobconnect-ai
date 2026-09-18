@@ -296,6 +296,7 @@ export default function PricingPage() {
                 t('candidateFreeFeature9'),
                 t('candidateFreeFeature10'),
                 t('candidateFreeFeature11'),
+                t('candidateFreeFeature12'),
               ] as string[]).map((f) => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
                   <span className="text-green-600 dark:text-green-400 shrink-0">✓</span> {f}
@@ -585,38 +586,39 @@ export default function PricingPage() {
         </div>
         <p className="text-xs text-slate-600 dark:text-slate-400 text-center mt-6">{t('employerPlanLimitNote')}</p>
 
-        {/* Employer Pro plan */}
+        {/* Pro + Enterprise 2-col grid */}
         <div className="mt-8">
           {employerProError && (
             <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/30 border border-red-300 dark:border-red-700 rounded-xl text-red-700 dark:text-red-400 text-sm text-center">
               {employerProError}
             </div>
           )}
-          <div className="card border-[#57C7E3]/40 bg-gradient-to-br from-[#57C7E3]/5 to-white dark:to-card flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
-            <div className="absolute top-0 right-0 bg-[#57C7E3] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-bl-xl">New</div>
-            <div className="flex-1">
-              <div className="text-sm font-semibold uppercase tracking-wider mb-1" style={{ color: '#57C7E3' }}>{t('employerProLabel')}</div>
-              <div className="flex items-end gap-1 mb-1">
-                <span className="text-3xl font-extrabold text-slate-900 dark:text-white">$99</span>
-                <span className="text-slate-600 dark:text-slate-400 mb-0.5">{t('employerProPeriod')}</span>
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Employer Pro */}
+            <div className="card border-[#57C7E3]/40 bg-gradient-to-br from-[#57C7E3]/5 to-white dark:to-card flex flex-col relative overflow-hidden">
+              <div className="absolute top-0 right-0 bg-[#57C7E3] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-bl-xl">POST-PH</div>
+              <div className="mb-6">
+                <div className="text-sm font-semibold uppercase tracking-wider mb-1" style={{ color: '#57C7E3' }}>{t('employerProLabel')}</div>
+                <div className="flex items-end gap-1">
+                  <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$99</span>
+                  <span className="text-slate-600 dark:text-slate-400 mb-1">{t('perMonth')}</span>
+                </div>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">{t('employerProDesc')}</p>
               </div>
-              <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">{t('employerProDesc')}</p>
-              <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-2">
+              <ul className="space-y-3 mb-8 flex-1">
                 {[
                   t('employerProFeature1'), t('employerProFeature2'), t('employerProFeature3'),
                   t('employerProFeature4'), t('employerProFeature5'), t('employerProFeature6'),
                 ].map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+                  <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
                     <span style={{ color: '#57C7E3' }} className="shrink-0">✦</span> {f}
                   </li>
                 ))}
               </ul>
-            </div>
-            <div className="shrink-0 w-full md:w-auto">
               <button
                 onClick={handleEmployerProUpgrade}
                 disabled={employerProLoading}
-                className="w-full md:w-auto font-semibold text-white rounded-full px-8 py-3 text-sm transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                className="w-full font-semibold text-white rounded-xl px-6 py-3 text-sm transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                 style={{ background: '#57C7E3' }}
               >
                 {employerProLoading ? (
@@ -630,11 +632,58 @@ export default function PricingPage() {
                 ) : t('employerProButton')}
               </button>
             </div>
-          </div>
-        </div>
 
-        <div className="mt-10 pt-8 text-center">
-          <p className="text-xs text-slate-400 dark:text-slate-500">{t('comingSoon')}</p>
+            {/* Employer Enterprise */}
+            <div className="card border-dashed border-slate-400 dark:border-slate-600 flex flex-col relative overflow-hidden opacity-90">
+              <div className="absolute top-0 right-0 bg-slate-600 dark:bg-slate-700 text-slate-200 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-bl-xl">PHASE 2</div>
+              <div className="mb-6">
+                <div className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">{t('employerEnterpriseLabel')}</div>
+                <div className="flex items-end gap-1">
+                  <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$299+</span>
+                  <span className="text-slate-600 dark:text-slate-400 mb-1">{t('perMonth')}</span>
+                </div>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">{t('employerEnterpriseDesc')}</p>
+              </div>
+              <ul className="space-y-3 mb-8 flex-1">
+                {[
+                  t('employerEnterpriseFeature1'), t('employerEnterpriseFeature2'), t('employerEnterpriseFeature3'),
+                  t('employerEnterpriseFeature4'), t('employerEnterpriseFeature5'), t('employerEnterpriseFeature6'),
+                  t('employerEnterpriseFeature7'),
+                ].map((f) => (
+                  <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+                    <span className="text-slate-400 dark:text-slate-500 shrink-0">✦</span> {f}
+                  </li>
+                ))}
+              </ul>
+              <button
+                disabled
+                className="w-full font-semibold rounded-xl px-6 py-3 text-sm border border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400 opacity-70 cursor-not-allowed"
+              >
+                {t('comingSoonBtn')}
+              </button>
+            </div>
+          </div>
+
+          {/* Featured Listing add-on */}
+          <div className="mt-6 card border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-white dark:to-card relative overflow-hidden">
+            <div className="absolute top-0 right-0 bg-amber-500 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-bl-xl">ADD-ON</div>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pr-20">
+              <div>
+                <div className="text-sm font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider mb-1">{t('employerFeaturedListingLabel')}</div>
+                <div className="flex items-end gap-1 mb-2">
+                  <span className="text-3xl font-extrabold text-slate-900 dark:text-white">$29–$99</span>
+                  <span className="text-slate-600 dark:text-slate-400 mb-0.5">{t('perListing')}</span>
+                </div>
+                <p className="text-sm text-slate-600 dark:text-slate-400">{t('employerFeaturedListingDesc')}</p>
+              </div>
+              <button
+                disabled
+                className="shrink-0 font-semibold rounded-xl px-6 py-2.5 text-sm border border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400 opacity-70 cursor-not-allowed"
+              >
+                {t('comingSoonBtn')}
+              </button>
+            </div>
+          </div>
         </div>
       </section>
 
