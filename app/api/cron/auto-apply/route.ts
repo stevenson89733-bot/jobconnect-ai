@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
+import OpenAI from 'openai'
 import { submitGreenhouseApplication } from '@/lib/ats/greenhouse'
 import { detectLeverUrl, submitLeverApplication } from '@/lib/ats/lever'
 import {
@@ -8,6 +9,91 @@ import {
   checkDailyLimit,
   DAILY_LIMIT,
 } from '@/lib/autoApplyGuardrails'
+
+// Direct OpenAI call — bypasses the loopback HTTP approach which requires a
+// cookie session that doesn't exist in a cron/server-to-server context.
+// The /api/ai/cover-letter route's resolveProvider() falls to Mistral free
+// tier when unauthenticated, and fails entirely if MISTRAL_API_KEY isn't set.
+async function generateCoverLetterDirect({
+  targetRole,
+  company,
+  jobDescription,
+  skills,
+  experience,
+  bio,
+}: {
+  targetRole: string
+  company: string
+  jobDescription: string
+  skills: string
+  experience: string
+  bio: string
+}): Promise<string | null> {
+  const apiKey = process.env.OPENAI_API_KEY
+  if (!apiKey) {
+    console.error('[auto-apply] OPENAI_API_KEY not set — cannot generate cover letter')
+    return null
+  }
+
+  const strengths = [
+    skills && `Skills: ${skills}`,
+    experience && `Experience: ${experience}`,
+    bio && `About: ${bio}`,
+  ].filter(Boolean).join('\n\n') || 'Not provided'
+
+  const openai = new OpenAI({ apiKey })
+  try {
+    const res = await openai.chat.completions.create({
+      model: 'gpt-4o',
+      messages: [{
+        role: 'user',
+        content: `You are an expert career coach. Write a professional cover letter for this candidate.
+
+Target role: ${targetRole}
+Company: ${company}
+Job description: ${jobDescription ? jobDescription.slice(0, 2000) : 'Not provided'}
+Candidate profile:
+${strengths}
+
+Return a JSON object with this exact structure:
+{
+  "letter": {
+    "greeting": "Dear Hiring Manager,",
+    "opening": "<2-3 sentence opening that states the role and hooks the reader>",
+    "body": "<2 paragraphs: first highlights candidate fit from their real profile above; second connects to the job description>",
+    "closing": "<strong closing paragraph with a clear call to action>"
+  }
+}
+
+Use ONLY facts present in the candidate profile above. Do not invent metrics, employers, or achievements.`,
+      }],
+      max_tokens: 1200,
+      response_format: { type: 'json_object' },
+    })
+
+    const data = JSON.parse(res.choices?.[0]?.message?.content ?? '{}')
+    const letter = data.letter ?? {}
+    const text = [letter.greeting, letter.opening, letter.body, letter.closing]
+      .filter(Boolean).join('\n\n')
+    return text || null
+  } catch (err) {
+    console.error('[auto-apply] OpenAI cover letter generation failed:', err instanceof Error ? err.message : String(err))
+    return null
+  }
+}
+
+// Returns true only for URLs that point to an actual uploaded file.
+// Rejects placeholder/example domains and bare http://example.com paths.
+function isRealCvUrl(url: string | null | undefined): boolean {
+  if (!url) return false
+  try {
+    const { hostname } = new URL(url)
+    const placeholders = ['example.com', 'example.org', 'example.net', 'test.com', 'localhost']
+    return !placeholders.includes(hostname)
+  } catch {
+    return false
+  }
+}
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
@@ -193,24 +279,18 @@ export async function POST(req: Request) {
 
             console.log(`[auto-apply] Job ${job.id} "${job.title}" passed guardrails — generating cover letter`)
 
-            // Generate cover letter
-            const coverLetterUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/ai/cover-letter`
-            const coverLetterRes = await fetch(coverLetterUrl, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                targetRole: job.title,
-                company: job.company_name,
-                jobDescription: job.description ?? '',
-                skills: profile?.skills ?? '',
-                experience: profile?.experience ?? '',
-                bio: profile?.bio ?? '',
-              }),
+            // Direct OpenAI call — no loopback HTTP, no session dependency
+            const cover_letter = await generateCoverLetterDirect({
+              targetRole: job.title,
+              company: job.company_name,
+              jobDescription: job.description ?? '',
+              skills: profile?.skills ?? '',
+              experience: profile?.experience ?? '',
+              bio: profile?.bio ?? '',
             })
 
-            if (!coverLetterRes.ok) {
-              const errBody = await coverLetterRes.text().catch(() => '')
-              console.error(`[auto-apply] Cover letter failed for job ${job.id}: HTTP ${coverLetterRes.status} — ${errBody.slice(0, 200)}`)
+            if (!cover_letter) {
+              console.error(`[auto-apply] Cover letter generation returned null for job ${job.id}`)
               await supabase.from('auto_apply_log').insert({
                 user_id: setting.user_id,
                 job_id: job.id,
@@ -220,13 +300,14 @@ export async function POST(req: Request) {
               })
               continue
             }
-
-            const clJson = await coverLetterRes.json()
-            // Response shape: { letter: { subject, greeting, opening, body, closing } }
-            const letter = clJson.letter ?? {}
-            const cover_letter: string = [letter.greeting, letter.opening, letter.body, letter.closing]
-              .filter(Boolean).join('\n\n') || JSON.stringify(clJson)
             console.log(`[auto-apply] Cover letter generated for job ${job.id} (${cover_letter.length} chars)`)
+
+            // Only use cv_url when it points to a real uploaded file — placeholder
+            // URLs (https://example.com/test-cv.pdf etc.) must not be sent to ATS.
+            const realCvUrl = isRealCvUrl(profile?.cv_url) ? profile!.cv_url : null
+            if (profile?.cv_url && !realCvUrl) {
+              console.log(`[auto-apply] cv_url is a placeholder for user ${setting.user_id} — generating cover letter from profile data only, skipping CV attachment`)
+            }
 
             // Guardrail 4: review mode — queue for user approval instead of sending
             const reviewMode = profile?.auto_apply_review_mode !== false // default true
@@ -236,7 +317,7 @@ export async function POST(req: Request) {
                 job_id: job.id,
                 status: 'pending_review',
                 cover_letter,
-                adapted_cv_url: profile?.cv_url ?? null,
+                adapted_cv_url: realCvUrl,
               })
               applicationsThisRound.push(job)
               totalApplications++
@@ -258,7 +339,7 @@ export async function POST(req: Request) {
                 first_name: firstName,
                 last_name: lastName,
                 email: profile?.email ?? '',
-                cv_url: profile?.cv_url ?? null,
+                cv_url: realCvUrl,
                 cover_letter,
               })
 
@@ -274,7 +355,7 @@ export async function POST(req: Request) {
                 name: profile?.full_name ?? `${firstName} ${lastName}`.trim(),
                 email: profile?.email ?? '',
                 phone: undefined,
-                cvUrl: profile?.cv_url ?? null,
+                cvUrl: realCvUrl,
                 coverLetter: cover_letter,
               })
 
@@ -297,7 +378,7 @@ export async function POST(req: Request) {
                 job_id: job.id,
                 status: atsStatus,
                 cover_letter,
-                adapted_cv_url: profile?.cv_url ?? null,
+                adapted_cv_url: realCvUrl,
               })
 
             if (logError) {
