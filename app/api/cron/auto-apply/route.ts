@@ -221,13 +221,22 @@ export async function POST(req: Request) {
         const windowStart = new Date()
         windowStart.setDate(windowStart.getDate() - 7)
 
+        // Fetch exactly 1 unapplied job — one job per cron run keeps execution
+        // well within the Vercel Hobby 10s function timeout.
+        const { data: candidateApps } = await supabase
+          .from('applications')
+          .select('job_id')
+          .eq('candidate_id', setting.user_id)
+
+        const appliedJobIds = new Set(candidateApps?.map((a) => a.job_id) ?? [])
+
         const { data: jobs, error: jobsError } = await supabase
           .from('jobs')
           .select('id, title, company_name, description, location, apply_url, cross_border_status')
           .eq('is_active', true)
           .gte('created_at', windowStart.toISOString())
           .order('created_at', { ascending: false })
-          .limit(remaining * 20) // fetch more to account for cross-border filtering
+          .limit(20) // fetch a small batch to find one unapplied job
 
         console.log(`[auto-apply] Jobs query returned ${jobs?.length ?? 0} jobs, error: ${jobsError?.message ?? null}`)
 
@@ -236,45 +245,21 @@ export async function POST(req: Request) {
           continue
         }
 
-        if (!jobs || jobs.length === 0) {
-          console.log(`[auto-apply] No matching jobs for user ${setting.user_id}`)
+        const job = jobs?.find((j) => !appliedJobIds.has(j.id)) ?? null
+
+        if (!job) {
+          console.log(`[auto-apply] No unapplied jobs found for user ${setting.user_id}`)
           continue
         }
 
-        // Filter out jobs already applied to (applications table uses candidate_id)
-        const { data: appliedJobs, error: appliedJobsError } = await supabase
-          .from('applications')
-          .select('job_id')
-          .eq('candidate_id', setting.user_id)
-          .in('job_id', jobs.map((j) => j.id))
+        console.log(`[auto-apply] User ${setting.user_id}: processing 1 job — ${job.id} "${job.title}"`)
 
-        console.log(`[auto-apply] Applied jobs lookup: ${appliedJobs?.length ?? 0} already applied, error: ${appliedJobsError?.message ?? null}`)
+        const applicationsThisRound: typeof jobs = []
 
-        const appliedJobIds = new Set(appliedJobs?.map((a) => a.job_id))
-        const unappliedJobs = jobs.filter((j) => !appliedJobIds.has(j.id))
-
-        console.log(`[auto-apply] User ${setting.user_id}: ${jobs.length} jobs fetched, ${appliedJobIds.size} already applied, ${unappliedJobs.length} unapplied`)
-
-        if (unappliedJobs.length === 0) {
-          console.log(`[auto-apply] User ${setting.user_id} already applied to all matching jobs`)
-          continue
-        }
-
-        // Hobby plan: cap at 3 jobs per user per run to stay within serverless timeout
-        const MAX_JOBS_PER_RUN = 3
-        const jobsToProcess = unappliedJobs.slice(0, MAX_JOBS_PER_RUN)
-        if (unappliedJobs.length > MAX_JOBS_PER_RUN) {
-          console.log(`[auto-apply] User ${setting.user_id}: capping at ${MAX_JOBS_PER_RUN} jobs (${unappliedJobs.length} available)`)
-        }
-
-        const applicationsThisRound: typeof unappliedJobs = []
-
-        // Apply to each job
-        for (const job of jobsToProcess) {
-          try {
+        try {
             const jobAny = job as { cross_border_status?: string | null; apply_url?: string | null }
 
-            // Guardrail: cross-border filter (null = unanalyzed = allowed; only 'no' is blocked)
+            // Guardrail: cross-border filter
             const cbCheck = checkCrossBorder(jobAny.cross_border_status)
             if (!cbCheck.allowed) {
               const { error: cbLogErr } = await supabase.from('auto_apply_log').insert({
@@ -285,15 +270,7 @@ export async function POST(req: Request) {
                 adapted_cv_url: null,
               })
               console.log(`[auto-apply] Blocked job ${job.id} (cross_border=${jobAny.cross_border_status}): ${cbCheck.reason}, log_err=${cbLogErr?.message ?? null}`)
-              continue
-            }
-
-            // Guardrail: re-check daily limit (may have consumed slots in this loop)
-            const loopLimitCheck = checkDailyLimit(candidatePlan, alreadySent + applicationsThisRound.length)
-            if (!loopLimitCheck.allowed) {
-              console.log(`[auto-apply] User ${setting.user_id} hit daily limit mid-loop (${alreadySent + applicationsThisRound.length}/${dailyLimit}), stopping`)
-              break
-            }
+            } else {
 
             console.log(`[auto-apply] Job ${job.id} "${job.title}" passed guardrails — generating cover letter`)
 
@@ -416,41 +393,36 @@ export async function POST(req: Request) {
                 `[auto-apply] User ${setting.user_id} log insert failed for job ${job.id}:`,
                 logError.message
               )
-              continue
+            } else {
+              // Record in applications table (uses candidate_id not user_id)
+              const { error: appError } = await supabase
+                .from('applications')
+                .insert({
+                  candidate_id: setting.user_id,
+                  job_id: job.id,
+                  cover_letter,
+                  applied_at: new Date().toISOString(),
+                })
+
+              if (appError) {
+                console.error(
+                  `[auto-apply] User ${setting.user_id} application insert failed for job ${job.id}:`,
+                  appError.message
+                )
+              } else {
+                applicationsThisRound.push(job)
+                totalApplications++
+                console.log(
+                  `[auto-apply] User ${setting.user_id} applied to "${job.title}" at ${job.company_name}`
+                )
+              }
             }
 
-            // Record in applications table (uses candidate_id not user_id)
-            const { error: appError } = await supabase
-              .from('applications')
-              .insert({
-                candidate_id: setting.user_id,
-                job_id: job.id,
-                cover_letter,
-                applied_at: new Date().toISOString(),
-              })
-
-            if (appError) {
-              console.error(
-                `[auto-apply] User ${setting.user_id} application insert failed for job ${job.id}:`,
-                appError.message
-              )
-              continue
-            }
-
-            applicationsThisRound.push(job)
-            totalApplications++
-            console.log(
-              `[auto-apply] User ${setting.user_id} applied to "${job.title}" at ${job.company_name}`
-            )
-
-            // Wait 2 seconds between applications to avoid rate limiting
-            await new Promise((resolve) => setTimeout(resolve, 2000))
+            } // end else (cross-border passed)
           } catch (err) {
             const message = err instanceof Error ? err.message : String(err)
             console.error(`[auto-apply] User ${setting.user_id} error processing job ${job.id}:`, message)
-            continue
           }
-        }
 
         // Send email report
         if (applicationsThisRound.length > 0 && profile?.email && resend) {
