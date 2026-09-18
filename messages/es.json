@@ -303,7 +303,15 @@
     "optional": "(opcional)",
     "crossBorderYes": "🌍 Abierto internacionalmente",
     "crossBorderUnclear": "🌍 Alcance geográfico incierto",
-    "crossBorderNo": "🌍 Solo local/regional"
+    "crossBorderNo": "🌍 Solo local/regional",
+    "heroTagline": "EMPLEOS REMOTOS · IA",
+    "heroH1": "Encuentra trabajo que te acompañe a donde vayas.",
+    "heroBorderless": "Para el profesional sin fronteras.",
+    "heroDesc": "Ofertas remotas adaptadas por IA de empresas que entienden cómo funciona el mundo.",
+    "freshMatches": "{count} nuevas coincidencias hoy",
+    "topMatches": "Mejores coincidencias para ti",
+    "rankedBy": "Clasificado por adecuación de habilidades, flexibilidad de ubicación y señales de contratación verificadas.",
+    "applyWithAI": "✦ Postularse con IA"
   },
   "applicationStatus": {
     "submitted": "Enviada",
@@ -985,7 +993,12 @@
     "autoApplyDesc": "Deja que la IA encuentre y solicite empleos remotos por ti — cada día.",
     "learnMore": "Saber más →",
     "comingSoon": "Más planes próximamente — Contratación Enterprise, Listados Destacados y Marketplace de Reclutadores.",
-    "trustedBy": "De confianza para equipos en"
+    "trustedBy": "De confianza para equipos en",
+    "perMonth": "/mes",
+    "employerGrowthFeature5": "Constructor de página de empresa",
+    "employerGrowthFeature6": "Colaboración en equipo (hasta 5 usuarios)",
+    "employerGrowthFeatureNot1": "Coincidencia de CV con IA",
+    "employerGrowthFeatureNot2": "Puntuación de entrevista en video"
   },
   "countries": {
     "AE": "Emiratos Árabes Unidos",

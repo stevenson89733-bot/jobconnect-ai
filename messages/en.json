@@ -311,7 +311,15 @@
     "optional": "(optional)",
     "crossBorderYes": "🌍 International-Friendly",
     "crossBorderUnclear": "🌍 Scope Unclear",
-    "crossBorderNo": "🌍 Local/Regional Only"
+    "crossBorderNo": "🌍 Local/Regional Only",
+    "heroTagline": "REMOTE JOBS · AI MATCHED",
+    "heroH1": "Find work that travels with you.",
+    "heroBorderless": "For the borderless professional.",
+    "heroDesc": "AI-matched remote roles from companies that understand how the world works.",
+    "freshMatches": "{count} fresh matches today",
+    "topMatches": "Top matches for you",
+    "rankedBy": "Ranked by skill fit, location flexibility, and verified hiring signals.",
+    "applyWithAI": "✦ Apply with AI"
   },
   "applicationStatus": {
     "submitted": "Submitted",
@@ -1031,7 +1039,8 @@
     "employerFeaturedListingButton": "Add Featured — $29-99",
     "employerSuccessTitle": "🎉 Welcome to Growth! You can now post up to 5 active jobs.",
     "goToRecruiterDashboard": "Go to Employer Dashboard →",
-    "employerPlanLimitNote": "Your free plan includes 1 active job posting at a time — deactivate an old one to post a new one, or upgrade for more."
+    "employerPlanLimitNote": "Your free plan includes 1 active job posting at a time — deactivate an old one to post a new one, or upgrade for more.",
+    "perMonth": "/mo"
   },
   "countries": {
     "AE": "United Arab Emirates",

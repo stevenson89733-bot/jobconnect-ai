@@ -297,7 +297,15 @@
     "optional": "（选填）",
     "crossBorderYes": "🌍 国际开放",
     "crossBorderUnclear": "🌍 地理范围不明",
-    "crossBorderNo": "🌍 仅限本地/地区"
+    "crossBorderNo": "🌍 仅限本地/地区",
+    "heroTagline": "远程职位 · AI 匹配",
+    "heroH1": "找到随你而行的工作。",
+    "heroBorderless": "为无边界的职场人士。",
+    "heroDesc": "AI 精准匹配来自理解全球工作方式企业的远程职位。",
+    "freshMatches": "今日 {count} 个新匹配",
+    "topMatches": "为你推荐的职位",
+    "rankedBy": "按技能匹配度、地点灵活性及经过验证的招聘信号排序。",
+    "applyWithAI": "✦ AI 投递"
   },
   "applicationStatus": {
     "submitted": "已提交",
@@ -979,7 +987,12 @@
     "autoApplyDesc": "让 AI 每天为您寻找并申请远程工作。",
     "learnMore": "了解更多 →",
     "comingSoon": "更多计划即将推出 — 企业招聘、精选职位 & 招聘市场。",
-    "trustedBy": "受到以下团队信任"
+    "trustedBy": "受到以下团队信任",
+    "perMonth": "/月",
+    "employerGrowthFeature5": "公司主页构建器",
+    "employerGrowthFeature6": "团队协作（最多 5 名用户）",
+    "employerGrowthFeatureNot1": "AI 简历匹配",
+    "employerGrowthFeatureNot2": "视频面试评分"
   },
   "countries": {
     "AE": "阿拉伯联合酋长国",

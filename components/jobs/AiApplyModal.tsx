@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { useRouter } from 'next/navigation'
 import { ExternalLink } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 type Step = 'preparing' | 'ready'
 type CoverLetterMode = 'write' | 'upload'
@@ -215,6 +216,7 @@ export default function AiApplyModal({
   applyUrl?: string | null
   alreadyApplied?: boolean
 }) {
+  const t = useTranslations('jobs')
   const [open, setOpen]       = useState(false)
   const [mounted, setMounted] = useState(false)
   const router = useRouter()
@@ -469,7 +471,7 @@ export default function AiApplyModal({
           onMouseEnter={e => { e.currentTarget.style.background = 'rgba(87,199,227,0.15)' }}
           onMouseLeave={e => { e.currentTarget.style.background = 'rgba(87,199,227,0.07)' }}
         >
-          ✦ Apply with AI
+          {t('applyWithAI')}
         </button>
       )}
     </span>

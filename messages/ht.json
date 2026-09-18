@@ -297,7 +297,15 @@
     "optional": "(fakiltatif)",
     "crossBorderYes": "🌍 Ouvè entènasyonalman",
     "crossBorderUnclear": "🌍 Pòte jewografik pa klè",
-    "crossBorderNo": "🌍 Lokal/Rejyonal sèlman"
+    "crossBorderNo": "🌍 Lokal/Rejyonal sèlman",
+    "heroTagline": "TRAVAY A DISTANS · IA",
+    "heroH1": "Jwenn travay ki swiv ou toupatou.",
+    "heroBorderless": "Pou pwofesyonèl san fwontyè.",
+    "heroDesc": "Pòs travay a distans matche pa IA nan konpayi ki konprann kijan mond lan travay.",
+    "freshMatches": "{count} nouvo match jodi a",
+    "topMatches": "Meye match pou ou",
+    "rankedBy": "Klase pa konpetans, fleksibilite lokasyon ak siy recritman verifye.",
+    "applyWithAI": "✦ Aplike ak IA"
   },
   "applicationStatus": {
     "submitted": "Soumèt",
@@ -979,7 +987,12 @@
     "autoApplyDesc": "Kite IA jwenn epi aplike pou travay adistans pou ou — chak jou.",
     "learnMore": "Aprann plis →",
     "comingSoon": "Plis plan ap vini byento — Anplwach Enterprise, Lis espesyal & Mache Rekritè.",
-    "trustedBy": "Fè konfyans pa ekip nan"
+    "trustedBy": "Fè konfyans pa ekip nan",
+    "perMonth": "/mwa",
+    "employerGrowthFeature5": "Bati paj konpayi",
+    "employerGrowthFeature6": "Kolaborasyon ekip (jiska 5 itilizatè)",
+    "employerGrowthFeatureNot1": "Matche CV ak IA",
+    "employerGrowthFeatureNot2": "Evalyasyon entèvyou videyo"
   },
   "countries": {
     "AE": "Emira Arab Ini",

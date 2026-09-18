@@ -311,7 +311,7 @@ export default function PricingPage() {
               <div className="text-sm font-semibold text-primary dark:text-blue-400 uppercase tracking-wider mb-1">{t('candidateProBadge')}</div>
               <div className="flex items-end gap-1">
                 <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$19.99</span>
-                <span className="text-slate-600 dark:text-slate-400 mb-1">/mo</span>
+                <span className="text-slate-600 dark:text-slate-400 mb-1">{t('perMonth')}</span>
               </div>
               <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('everythingInFree')}</div>
             </div>
@@ -402,7 +402,7 @@ export default function PricingPage() {
               <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">{t('candidateEliteBadge')}</div>
               <div className="flex items-end gap-1">
                 <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$39.99</span>
-                <span className="text-slate-600 dark:text-slate-400 mb-1">/mo</span>
+                <span className="text-slate-600 dark:text-slate-400 mb-1">{t('perMonth')}</span>
               </div>
               <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('everythingInPro')}</div>
             </div>

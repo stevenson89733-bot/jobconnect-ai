@@ -303,7 +303,15 @@
     "optional": "(facultatif)",
     "crossBorderYes": "🌍 Ouvert à l'international",
     "crossBorderUnclear": "🌍 Portée géographique floue",
-    "crossBorderNo": "🌍 Local/Régional uniquement"
+    "crossBorderNo": "🌍 Local/Régional uniquement",
+    "heroTagline": "EMPLOIS À DISTANCE · IA",
+    "heroH1": "Trouvez un travail qui vous suit partout.",
+    "heroBorderless": "Pour le professionnel sans frontières.",
+    "heroDesc": "Offres à distance adaptées par l'IA, de sociétés qui comprennent comment le monde fonctionne.",
+    "freshMatches": "{count} nouvelles correspondances aujourd'hui",
+    "topMatches": "Meilleures correspondances pour vous",
+    "rankedBy": "Classé par adéquation des compétences, flexibilité géographique et signaux de recrutement vérifiés.",
+    "applyWithAI": "✦ Postuler avec l'IA"
   },
   "applicationStatus": {
     "submitted": "Envoyée",
@@ -985,7 +993,12 @@
     "autoApplyDesc": "Laissez l'IA trouver et postuler à des emplois à distance pour vous — chaque jour.",
     "learnMore": "En savoir plus →",
     "comingSoon": "D'autres plans à venir — Recrutement Enterprise, Annonces en vedette & Marketplace Recruteurs.",
-    "trustedBy": "Utilisé par des équipes chez"
+    "trustedBy": "Utilisé par des équipes chez",
+    "perMonth": "/mois",
+    "employerGrowthFeature5": "Créateur de page entreprise",
+    "employerGrowthFeature6": "Collaboration d'équipe (jusqu'à 5 utilisateurs)",
+    "employerGrowthFeatureNot1": "Correspondance IA de CV",
+    "employerGrowthFeatureNot2": "Évaluation d'entretien vidéo"
   },
   "countries": {
     "AE": "Émirats arabes unis",

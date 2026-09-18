@@ -297,7 +297,15 @@
     "optional": "(optional)",
     "crossBorderYes": "🌍 Weltweit offen",
     "crossBorderUnclear": "🌍 Geografischer Umfang unklar",
-    "crossBorderNo": "🌍 Nur lokal/regional"
+    "crossBorderNo": "🌍 Nur lokal/regional",
+    "heroTagline": "REMOTE-JOBS · KI-MATCHING",
+    "heroH1": "Finde Arbeit, die dich überallhin begleitet.",
+    "heroBorderless": "Für den grenzenlosen Profi.",
+    "heroDesc": "KI-abgestimmte Remote-Stellen von Unternehmen, die verstehen, wie die Welt funktioniert.",
+    "freshMatches": "{count} neue Treffer heute",
+    "topMatches": "Top-Treffer für dich",
+    "rankedBy": "Sortiert nach Kompetenzübereinstimmung, Standortflexibilität und verifizierten Einstellungssignalen.",
+    "applyWithAI": "✦ Mit KI bewerben"
   },
   "applicationStatus": {
     "submitted": "Eingereicht",
@@ -979,7 +987,12 @@
     "autoApplyDesc": "Lassen Sie KI täglich Remote-Jobs für Sie finden und bewerben.",
     "learnMore": "Mehr erfahren →",
     "comingSoon": "Weitere Pläne kommen bald — Enterprise-Hiring, Featured Listings & Recruiter-Marktplatz.",
-    "trustedBy": "Vertraut von Teams bei"
+    "trustedBy": "Vertraut von Teams bei",
+    "perMonth": "/Monat",
+    "employerGrowthFeature5": "Karriereseiten-Builder",
+    "employerGrowthFeature6": "Team-Zusammenarbeit (bis zu 5 Benutzer)",
+    "employerGrowthFeatureNot1": "KI-Lebenslauf-Matching",
+    "employerGrowthFeatureNot2": "Video-Interview-Bewertung"
   },
   "countries": {
     "AE": "Vereinigte Arabische Emirate",

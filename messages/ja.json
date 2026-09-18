@@ -297,7 +297,15 @@
     "optional": "（任意）",
     "crossBorderYes": "🌍 国際対応",
     "crossBorderUnclear": "🌍 勤務地の範囲が不明",
-    "crossBorderNo": "🌍 国内/地域限定"
+    "crossBorderNo": "🌍 国内/地域限定",
+    "heroTagline": "リモート求人 · AI マッチング",
+    "heroH1": "どこへでも連れて行ける仕事を見つけよう。",
+    "heroBorderless": "ボーダレスなプロフェッショナルのために。",
+    "heroDesc": "世界の働き方を理解した企業からのAIマッチングリモート求人。",
+    "freshMatches": "本日 {count} 件の新着マッチ",
+    "topMatches": "あなたへのおすすめ求人",
+    "rankedBy": "スキル適合度・勤務地の柔軟性・採用シグナルで並べ替え。",
+    "applyWithAI": "✦ AIで応募"
   },
   "applicationStatus": {
     "submitted": "応募済み",
@@ -979,7 +987,12 @@
     "autoApplyDesc": "AIが毎日あなたに代わってリモートジョブを探して応募します。",
     "learnMore": "詳しく見る →",
     "comingSoon": "近日公開 — エンタープライズ採用、注目のリスト & リクルーターマーケットプレイス。",
-    "trustedBy": "以下のチームに信頼されています"
+    "trustedBy": "以下のチームに信頼されています",
+    "perMonth": "/月",
+    "employerGrowthFeature5": "キャリアページビルダー",
+    "employerGrowthFeature6": "チームコラボ（最大5ユーザー）",
+    "employerGrowthFeatureNot1": "AI履歴書マッチング",
+    "employerGrowthFeatureNot2": "ビデオ面接スコアリング"
   },
   "countries": {
     "AE": "アラブ首長国連邦",

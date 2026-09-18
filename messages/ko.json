@@ -297,7 +297,15 @@
     "optional": "(선택 사항)",
     "crossBorderYes": "🌍 국제 채용 가능",
     "crossBorderUnclear": "🌍 근무 범위 불명확",
-    "crossBorderNo": "🌍 로컬/지역 한정"
+    "crossBorderNo": "🌍 로컬/지역 한정",
+    "heroTagline": "원격 채용 · AI 매칭",
+    "heroH1": "어디서든 함께하는 일을 찾아보세요.",
+    "heroBorderless": "국경 없는 전문가를 위해.",
+    "heroDesc": "세계의 일하는 방식을 이해하는 기업의 AI 맞춤 원격 채용.",
+    "freshMatches": "오늘 {count}개의 새 매칭",
+    "topMatches": "추천 채용 공고",
+    "rankedBy": "스킬 적합도, 위치 유연성, 검증된 채용 신호 기준으로 정렬.",
+    "applyWithAI": "✦ AI로 지원하기"
   },
   "applicationStatus": {
     "submitted": "제출됨",
@@ -979,7 +987,12 @@
     "autoApplyDesc": "AI가 매일 여러분을 위해 원격 채용을 찾고 지원합니다.",
     "learnMore": "더 알아보기 →",
     "comingSoon": "더 많은 플랜 출시 예정 — 기업 채용, 추천 공고 & 리크루터 마켓플레이스.",
-    "trustedBy": "다음 팀들이 신뢰합니다"
+    "trustedBy": "다음 팀들이 신뢰합니다",
+    "perMonth": "/월",
+    "employerGrowthFeature5": "기업 페이지 빌더",
+    "employerGrowthFeature6": "팀 협업 (최대 5명)",
+    "employerGrowthFeatureNot1": "AI 이력서 매칭",
+    "employerGrowthFeatureNot2": "화상 면접 채점"
   },
   "countries": {
     "AE": "아랍에미리트",

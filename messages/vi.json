@@ -297,7 +297,15 @@
     "optional": "(không bắt buộc)",
     "crossBorderYes": "🌍 Mở rộng quốc tế",
     "crossBorderUnclear": "🌍 Phạm vi địa lý chưa rõ",
-    "crossBorderNo": "🌍 Chỉ địa phương/khu vực"
+    "crossBorderNo": "🌍 Chỉ địa phương/khu vực",
+    "heroTagline": "VIỆC LÀM TỪ XA · AI",
+    "heroH1": "Tìm công việc theo bạn đến mọi nơi.",
+    "heroBorderless": "Dành cho chuyên gia không biên giới.",
+    "heroDesc": "Việc làm từ xa được AI ghép nối từ các công ty hiểu cách thế giới vận hành.",
+    "freshMatches": "{count} kết quả mới hôm nay",
+    "topMatches": "Kết quả phù hợp nhất với bạn",
+    "rankedBy": "Xếp hạng theo mức độ phù hợp kỹ năng, linh hoạt địa điểm và tín hiệu tuyển dụng đã xác minh.",
+    "applyWithAI": "✦ Ứng tuyển bằng AI"
   },
   "applicationStatus": {
     "submitted": "Đã nộp",
@@ -979,7 +987,12 @@
     "autoApplyDesc": "Để AI tìm và ứng tuyển việc làm từ xa cho bạn — mỗi ngày.",
     "learnMore": "Tìm hiểu thêm →",
     "comingSoon": "Sắp có thêm gói — Tuyển dụng Enterprise, Tin nổi bật & Thị trường nhà tuyển dụng.",
-    "trustedBy": "Được tin dùng bởi các nhóm tại"
+    "trustedBy": "Được tin dùng bởi các nhóm tại",
+    "perMonth": "/tháng",
+    "employerGrowthFeature5": "Trang công ty",
+    "employerGrowthFeature6": "Cộng tác nhóm (tối đa 5 người)",
+    "employerGrowthFeatureNot1": "Ghép hồ sơ bằng AI",
+    "employerGrowthFeatureNot2": "Chấm điểm phỏng vấn video"
   },
   "countries": {
     "AE": "Các Tiểu vương quốc Ả Rập Thống nhất",

@@ -235,23 +235,23 @@ export default function JobsClient({
         <div className="rounded-2xl mb-6 overflow-hidden" style={{ background: '#10152A' }}>
           <div className="px-6 sm:px-10 py-10">
             <p className="text-[12px] font-semibold tracking-widest uppercase text-[#57C7E3] mb-3">
-              Remote Jobs · AI Matched
+              {t('heroTagline')}
             </p>
             <h1 className="text-3xl sm:text-4xl font-bold text-white leading-tight mb-1">
-              Find work that travels with you.
+              {t('heroH1')}
             </h1>
             <p className="italic text-[#57C7E3] text-base mb-2">
-              For the borderless professional.
+              {t('heroBorderless')}
             </p>
             <p className="text-slate-400 text-sm mb-6 max-w-lg">
-              AI-matched remote roles from companies that understand how the world works.
+              {t('heroDesc')}
             </p>
 
             {/* Live counter */}
             <div className="flex items-center gap-2 mb-6">
               <span className="w-2 h-2 rounded-full bg-[#57C7E3] animate-pulse shrink-0" />
               <span className="text-[13px] text-slate-300 font-medium">
-                {(total ?? allJobs.length).toLocaleString()} fresh matches today
+                {t('freshMatches', { count: (total ?? allJobs.length).toLocaleString() })}
               </span>
             </div>
 
@@ -310,8 +310,7 @@ export default function JobsClient({
               ))}
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              <span className="text-[12px] text-slate-400 whitespace-nowrap">Sort by</span>
-              <label htmlFor="job-sort" className="sr-only">{t('sortJobsBy')}</label>
+              <label htmlFor="job-sort" className="text-[12px] text-slate-400 whitespace-nowrap">{t('sortJobsBy')}</label>
               <select
                 id="job-sort"
                 value={sort}
@@ -397,9 +396,9 @@ export default function JobsClient({
         {/* ── Section title ──────────────────────────── */}
         {!isPending && allJobs.length > 0 && (
           <div className="mb-5">
-            <h2 className="text-[20px] font-bold" style={{ color: '#10152A' }}>Top matches for you</h2>
+            <h2 className="text-[20px] font-bold" style={{ color: '#10152A' }}>{t('topMatches')}</h2>
             <p className="text-[13px] text-slate-500 mt-0.5">
-              Ranked by skill fit, location flexibility, and verified hiring signals.
+              {t('rankedBy')}
             </p>
           </div>
         )}
