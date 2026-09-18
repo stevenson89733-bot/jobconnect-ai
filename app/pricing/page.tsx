@@ -596,7 +596,6 @@ export default function PricingPage() {
           <div className="grid md:grid-cols-2 gap-6">
             {/* Employer Pro */}
             <div className="card border-[#57C7E3]/40 bg-gradient-to-br from-[#57C7E3]/5 to-white dark:to-card flex flex-col relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-[#57C7E3] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-bl-xl">POST-PH</div>
               <div className="mb-6">
                 <div className="text-sm font-semibold uppercase tracking-wider mb-1" style={{ color: '#57C7E3' }}>{t('employerProLabel')}</div>
                 <div className="flex items-end gap-1">
