@@ -49,8 +49,13 @@ html, body {
   animation: gradient-shift 4s ease infinite;
 }
 
-/* ── Logo fix: suppress white rectangle on light mode ── */
+/* ── Logo fix: no white box on any background ── */
+.logo-link {
+  display: block;
+  line-height: 0;
+}
 .logo-img {
+  background: transparent;
   mix-blend-mode: multiply;
 }
 .dark .logo-img {
