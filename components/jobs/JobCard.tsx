@@ -75,13 +75,19 @@ export default function JobCard({
   const classBadge = getGeoBadge(job.geo_analysis)
   const empBadge = getEmploymentBadge(job.geo_analysis, classBadge)
 
+  const borderAccent =
+    job.cross_border_status === 'yes' ? '#22c55e' :
+    job.cross_border_status === 'unclear' ? '#f97316' :
+    job.is_featured ? '#57C7E3' : undefined
+
   return (
     <motion.div
       whileHover={{ y: -2 }}
       transition={{ duration: 0.15, ease: [0.22, 1, 0.36, 1] }}
-      className={`bg-white rounded-xl border shadow-sm hover:shadow-md transition-shadow p-4 flex flex-col gap-3 ${
-        job.is_featured ? 'border-[#57C7E3]/40' : 'border-slate-200'
+      className={`bg-white dark:bg-card rounded-[12px] border shadow-sm hover:shadow-lg transition-all duration-200 p-4 flex flex-col gap-3 ${
+        job.is_featured ? 'border-[#57C7E3]/40' : 'border-slate-200 dark:border-slate-700/50'
       }`}
+      style={borderAccent ? { borderLeftWidth: 3, borderLeftColor: borderAccent } : undefined}
     >
       {/* Row 1 — Logo · Company · Sector | Remote badge */}
       <div className="flex items-start justify-between gap-2">

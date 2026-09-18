@@ -136,7 +136,7 @@ export default async function Home() {
       <OrganizationJsonLd />
 
       {/* ── 1. HERO ───────────────────────────────────────────── */}
-      <section style={{ background: '#10152A' }}>
+      <section style={{ background: 'linear-gradient(135deg, #0F1623 0%, #1a2a4a 60%, #0F1623 100%)' }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-16">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 
@@ -151,8 +151,9 @@ export default async function Home() {
 
               {/* H1 */}
               <h1 className="font-bold text-white leading-tight tracking-tight mb-2"
-                  style={{ fontSize: 'clamp(36px, 6vw, 64px)' }}>
-                {t('v2_heroH1a')}<br className="hidden sm:block" /> {t('v2_heroH1b')}
+                  style={{ fontSize: 'clamp(3rem, 6vw, 5rem)' }}>
+                {t('v2_heroH1a')}<br className="hidden sm:block" />{' '}
+                <span className="hero-gradient-underline">{t('v2_heroH1b')}</span>
               </h1>
 
               {/* Cyan italic sub */}
@@ -169,18 +170,18 @@ export default async function Home() {
               {/* CTAs */}
               <div className="flex flex-wrap gap-3 justify-center lg:justify-start mb-8">
                 <Link
-                  href="/jobs"
-                  className="inline-flex items-center gap-2 text-white font-bold rounded-full px-7 py-3.5 text-[15px] transition-all hover:brightness-110"
-                  style={{ background: '#57C7E3' }}
+                  href="/register"
+                  className="inline-flex items-center gap-2 text-white font-bold rounded-full px-7 py-3.5 text-[15px] transition-all duration-200 hover:brightness-110 hover:scale-[1.03] shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-400"
+                  style={{ background: 'linear-gradient(135deg, #2E5CF6 0%, #F0663A 100%)' }}
                 >
-                  {t('v2_heroCta1')}
+                  {t('v2_heroCta2')} →
                 </Link>
                 <Link
-                  href="/register"
-                  className="inline-flex items-center gap-2 border font-bold rounded-full px-7 py-3.5 text-[15px] text-white transition-colors hover:bg-white/10"
+                  href="/jobs"
+                  className="inline-flex items-center gap-2 border font-bold rounded-full px-7 py-3.5 text-[15px] text-white transition-all duration-200 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2"
                   style={{ borderColor: 'rgba(255,255,255,0.3)' }}
                 >
-                  {t('v2_heroCta2')}
+                  {t('v2_heroCta1')}
                 </Link>
               </div>
 

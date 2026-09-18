@@ -280,7 +280,7 @@ export default function PricingPage() {
           <div className="card flex flex-col">
             <div className="mb-6">
               <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">{t('candidateFreeBadge')}</div>
-              <div className="text-4xl font-extrabold text-slate-900 dark:text-white">$0</div>
+              <div className="text-5xl font-black text-slate-900 dark:text-white">$0</div>
               <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('candidateFreeDesc')}</div>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
@@ -307,11 +307,12 @@ export default function PricingPage() {
           </div>
 
           {/* Premium plan */}
-          <div className="card border-primary/50 bg-gradient-to-br from-primary/5 to-white dark:to-card flex flex-col">
+          <div className="relative rounded-xl flex flex-col p-[2px]" style={{ background: 'linear-gradient(135deg, #2E5CF6, #57C7E3, #F0663A)' }}>
+            <div className="card border-transparent bg-white dark:bg-card rounded-[10px] flex flex-col flex-1">
             <div className="mb-6">
               <div className="text-sm font-semibold text-primary dark:text-blue-400 uppercase tracking-wider mb-1">{t('candidateProBadge')}</div>
               <div className="flex items-end gap-1">
-                <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$19.99</span>
+                <span className="text-5xl font-black text-slate-900 dark:text-white">$19.99</span>
                 <span className="text-slate-600 dark:text-slate-400 mb-1">{t('perMonth')}</span>
               </div>
               <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('everythingInFree')}</div>
@@ -395,14 +396,15 @@ export default function PricingPage() {
                 )}
               </>
             )}
-          </div>
+            </div>{/* end inner card */}
+          </div>{/* end gradient border wrapper */}
 
           {/* Elite plan */}
           <div className="card flex flex-col">
             <div className="mb-6">
               <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">{t('candidateEliteBadge')}</div>
               <div className="flex items-end gap-1">
-                <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$39.99</span>
+                <span className="text-5xl font-black text-slate-900 dark:text-white">$39.99</span>
                 <span className="text-slate-600 dark:text-slate-400 mb-1">{t('perMonth')}</span>
               </div>
               <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('everythingInPro')}</div>
@@ -527,7 +529,7 @@ export default function PricingPage() {
           <div className="card flex flex-col">
             <div className="mb-6">
               <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">{t('employerFreeLabel')}</div>
-              <div className="text-4xl font-extrabold text-slate-900 dark:text-white">$0</div>
+              <div className="text-5xl font-black text-slate-900 dark:text-white">$0</div>
               <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('employerFreeDesc')}</div>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
@@ -545,7 +547,7 @@ export default function PricingPage() {
             <div className="mb-6">
               <div className="text-sm font-semibold text-primary dark:text-blue-400 uppercase tracking-wider mb-1">{t('employerGrowthLabel')}</div>
               <div className="flex items-end gap-1">
-                <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$49</span>
+                <span className="text-5xl font-black text-slate-900 dark:text-white">$49</span>
                 <span className="text-slate-600 dark:text-slate-400 mb-1">{t('employerGrowthPeriod')}</span>
               </div>
               <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('employerGrowthDesc')}</div>
@@ -599,7 +601,7 @@ export default function PricingPage() {
               <div className="mb-6">
                 <div className="text-sm font-semibold uppercase tracking-wider mb-1" style={{ color: '#57C7E3' }}>{t('employerProLabel')}</div>
                 <div className="flex items-end gap-1">
-                  <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$99</span>
+                  <span className="text-5xl font-black text-slate-900 dark:text-white">$99</span>
                   <span className="text-slate-600 dark:text-slate-400 mb-1">{t('perMonth')}</span>
                 </div>
                 <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">{t('employerProDesc')}</p>
@@ -638,7 +640,7 @@ export default function PricingPage() {
               <div className="mb-6">
                 <div className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">{t('employerEnterpriseLabel')}</div>
                 <div className="flex items-end gap-1">
-                  <span className="text-4xl font-extrabold text-slate-900 dark:text-white">$299+</span>
+                  <span className="text-5xl font-black text-slate-900 dark:text-white">$299+</span>
                   <span className="text-slate-600 dark:text-slate-400 mb-1">{t('perMonth')}</span>
                 </div>
                 <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">{t('employerEnterpriseDesc')}</p>
