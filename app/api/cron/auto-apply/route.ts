@@ -42,12 +42,15 @@ async function generateCoverLetterDirect({
   ].filter(Boolean).join('\n\n') || 'Not provided'
 
   const openai = new OpenAI({ apiKey })
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), 8000)
   try {
-    const res = await openai.chat.completions.create({
-      model: 'gpt-4o',
-      messages: [{
-        role: 'user',
-        content: `You are an expert career coach. Write a professional cover letter for this candidate.
+    const res = await openai.chat.completions.create(
+      {
+        model: 'gpt-4o',
+        messages: [{
+          role: 'user',
+          content: `You are an expert career coach. Write a professional cover letter for this candidate.
 
 Target role: ${targetRole}
 Company: ${company}
@@ -66,17 +69,25 @@ Return a JSON object with this exact structure:
 }
 
 Use ONLY facts present in the candidate profile above. Do not invent metrics, employers, or achievements.`,
-      }],
-      max_tokens: 1200,
-      response_format: { type: 'json_object' },
-    })
-
+        }],
+        max_tokens: 1200,
+        response_format: { type: 'json_object' },
+      },
+      { signal: controller.signal }
+    )
+    clearTimeout(timeout)
     const data = JSON.parse(res.choices?.[0]?.message?.content ?? '{}')
     const letter = data.letter ?? {}
     const text = [letter.greeting, letter.opening, letter.body, letter.closing]
       .filter(Boolean).join('\n\n')
     return text || null
   } catch (err) {
+    clearTimeout(timeout)
+    const isTimeout = err instanceof Error && err.name === 'AbortError'
+    if (isTimeout) {
+      console.error('[auto-apply] OpenAI cover letter timed out after 8s')
+      return 'TIMEOUT'
+    }
     console.error('[auto-apply] OpenAI cover letter generation failed:', err instanceof Error ? err.message : String(err))
     return null
   }
@@ -249,10 +260,17 @@ export async function POST(req: Request) {
           continue
         }
 
+        // Hobby plan: cap at 3 jobs per user per run to stay within serverless timeout
+        const MAX_JOBS_PER_RUN = 3
+        const jobsToProcess = unappliedJobs.slice(0, MAX_JOBS_PER_RUN)
+        if (unappliedJobs.length > MAX_JOBS_PER_RUN) {
+          console.log(`[auto-apply] User ${setting.user_id}: capping at ${MAX_JOBS_PER_RUN} jobs (${unappliedJobs.length} available)`)
+        }
+
         const applicationsThisRound: typeof unappliedJobs = []
 
         // Apply to each job
-        for (const job of unappliedJobs) {
+        for (const job of jobsToProcess) {
           try {
             const jobAny = job as { cross_border_status?: string | null; apply_url?: string | null }
 
@@ -288,6 +306,18 @@ export async function POST(req: Request) {
               experience: profile?.experience ?? '',
               bio: profile?.bio ?? '',
             })
+
+            if (cover_letter === 'TIMEOUT') {
+              console.warn(`[auto-apply] Cover letter timed out for job ${job.id} — skipping`)
+              await supabase.from('auto_apply_log').insert({
+                user_id: setting.user_id,
+                job_id: job.id,
+                status: 'skipped_timeout',
+                cover_letter: null,
+                adapted_cv_url: null,
+              })
+              continue
+            }
 
             if (!cover_letter) {
               console.error(`[auto-apply] Cover letter generation returned null for job ${job.id}`)
