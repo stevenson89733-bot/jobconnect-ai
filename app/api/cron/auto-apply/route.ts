@@ -211,32 +211,19 @@ export async function POST(req: Request) {
           continue
         }
 
-        const remaining = dailyLimit - alreadySent
-
-        // Get recently posted jobs matching criteria
-        const yesterday = new Date()
-        yesterday.setDate(yesterday.getDate() - 1)
-
         // Window: 7 days (Greenhouse jobs are typically older than 24h)
         const windowStart = new Date()
         windowStart.setDate(windowStart.getDate() - 7)
 
-        // Fetch exactly 1 unapplied job — one job per cron run keeps execution
-        // well within the Vercel Hobby 10s function timeout.
-        const { data: candidateApps } = await supabase
-          .from('applications')
-          .select('job_id')
-          .eq('candidate_id', setting.user_id)
-
-        const appliedJobIds = new Set(candidateApps?.map((a) => a.job_id) ?? [])
-
+        // Fetch the single most recent active job, then decide what to do with it.
+        // Every outcome writes to auto_apply_log so the table is never empty after a run.
         const { data: jobs, error: jobsError } = await supabase
           .from('jobs')
           .select('id, title, company_name, description, location, apply_url, cross_border_status')
           .eq('is_active', true)
           .gte('created_at', windowStart.toISOString())
           .order('created_at', { ascending: false })
-          .limit(20) // fetch a small batch to find one unapplied job
+          .limit(1)
 
         console.log(`[auto-apply] Jobs query returned ${jobs?.length ?? 0} jobs, error: ${jobsError?.message ?? null}`)
 
@@ -245,184 +232,140 @@ export async function POST(req: Request) {
           continue
         }
 
-        const job = jobs?.find((j) => !appliedJobIds.has(j.id)) ?? null
+        const job = jobs?.[0] ?? null
+        const applicationsThisRound: NonNullable<typeof jobs> = []
+
+        const logInsert = async (payload: Record<string, unknown>) => {
+          const { error } = await supabase.from('auto_apply_log').insert(payload)
+          if (error) console.error(`[auto-apply] auto_apply_log insert failed for user ${setting.user_id}:`, error.message, JSON.stringify(payload))
+          else console.log(`[auto-apply] auto_apply_log written — user ${setting.user_id} job ${payload.job_id ?? 'none'} status=${payload.status}`)
+        }
 
         if (!job) {
-          console.log(`[auto-apply] No unapplied jobs found for user ${setting.user_id}`)
+          await logInsert({ user_id: setting.user_id, job_id: null, status: 'no_jobs_available', cover_letter: null, adapted_cv_url: null })
           continue
         }
 
-        console.log(`[auto-apply] User ${setting.user_id}: processing 1 job — ${job.id} "${job.title}"`)
-
-        const applicationsThisRound: typeof jobs = []
+        console.log(`[auto-apply] User ${setting.user_id}: processing job ${job.id} "${job.title}"`)
 
         try {
-            const jobAny = job as { cross_border_status?: string | null; apply_url?: string | null }
+          // Check if already applied
+          const { data: existingApp } = await supabase
+            .from('applications')
+            .select('job_id')
+            .eq('candidate_id', setting.user_id)
+            .eq('job_id', job.id)
+            .maybeSingle()
 
-            // Guardrail: cross-border filter
-            const cbCheck = checkCrossBorder(jobAny.cross_border_status)
-            if (!cbCheck.allowed) {
-              const { error: cbLogErr } = await supabase.from('auto_apply_log').insert({
-                user_id: setting.user_id,
-                job_id: job.id,
-                status: cbCheck.reason,
-                cover_letter: null,
-                adapted_cv_url: null,
-              })
-              console.log(`[auto-apply] Blocked job ${job.id} (cross_border=${jobAny.cross_border_status}): ${cbCheck.reason}, log_err=${cbLogErr?.message ?? null}`)
-            } else {
+          if (existingApp) {
+            await logInsert({ user_id: setting.user_id, job_id: job.id, status: 'already_applied', cover_letter: null, adapted_cv_url: null })
+            continue
+          }
 
-            console.log(`[auto-apply] Job ${job.id} "${job.title}" passed guardrails — generating cover letter`)
+          // Cross-border guardrail
+          const jobAny = job as { cross_border_status?: string | null; apply_url?: string | null }
+          const cbCheck = checkCrossBorder(jobAny.cross_border_status)
+          if (!cbCheck.allowed) {
+            await logInsert({ user_id: setting.user_id, job_id: job.id, status: 'blocked_cross_border', cover_letter: null, adapted_cv_url: null })
+            continue
+          }
 
-            // Direct OpenAI call — no loopback HTTP, no session dependency
-            const cover_letter = await generateCoverLetterDirect({
-              targetRole: job.title,
-              company: job.company_name,
-              jobDescription: job.description ?? '',
-              skills: profile?.skills ?? '',
-              experience: profile?.experience ?? '',
-              bio: profile?.bio ?? '',
+          console.log(`[auto-apply] Job ${job.id} "${job.title}" passed guardrails — generating cover letter`)
+
+          const cover_letter = await generateCoverLetterDirect({
+            targetRole: job.title,
+            company: job.company_name,
+            jobDescription: job.description ?? '',
+            skills: profile?.skills ?? '',
+            experience: profile?.experience ?? '',
+            bio: profile?.bio ?? '',
+          })
+
+          if (cover_letter === 'TIMEOUT') {
+            await logInsert({ user_id: setting.user_id, job_id: job.id, status: 'skipped_timeout', cover_letter: null, adapted_cv_url: null })
+            continue
+          }
+
+          if (!cover_letter) {
+            await logInsert({ user_id: setting.user_id, job_id: job.id, status: 'failed', cover_letter: null, adapted_cv_url: null })
+            continue
+          }
+
+          console.log(`[auto-apply] Cover letter generated for job ${job.id} (${cover_letter.length} chars)`)
+
+          // Only use cv_url when it points to a real uploaded file
+          const realCvUrl = isRealCvUrl(profile?.cv_url) ? profile!.cv_url : null
+          if (profile?.cv_url && !realCvUrl) {
+            console.log(`[auto-apply] Placeholder cv_url for user ${setting.user_id} — skipping CV attachment`)
+          }
+
+          // Review mode — queue for user approval instead of sending
+          const reviewMode = profile?.auto_apply_review_mode !== false
+          if (reviewMode) {
+            await logInsert({ user_id: setting.user_id, job_id: job.id, status: 'pending_review', cover_letter, adapted_cv_url: realCvUrl })
+            applicationsThisRound.push(job)
+            totalApplications++
+            console.log(`[auto-apply] Queued for review: user ${setting.user_id} job ${job.id} "${job.title}"`)
+            continue
+          }
+
+          // ATS submission — Greenhouse → Lever → skipped
+          let atsStatus: 'sent' | 'failed' | 'skipped_no_ats_match' = 'skipped_no_ats_match'
+          const applyUrl: string | null = jobAny.apply_url ?? null
+          const nameParts = (profile?.full_name ?? '').trim().split(/\s+/)
+          const firstName = nameParts[0] ?? ''
+          const lastName = nameParts.slice(1).join(' ') || firstName
+
+          if (applyUrl?.includes('greenhouse.io')) {
+            const ghResult = await submitGreenhouseApplication({
+              apply_url: applyUrl,
+              first_name: firstName,
+              last_name: lastName,
+              email: profile?.email ?? '',
+              cv_url: realCvUrl,
+              cover_letter,
             })
+            atsStatus = ghResult.success ? 'sent' : 'failed'
+            if (ghResult.success) console.log(`[auto-apply] Greenhouse OK — id ${ghResult.greenhouse_id} user ${setting.user_id} job ${job.id}`)
+            else console.error(`[auto-apply] Greenhouse failed user ${setting.user_id} job ${job.id}: ${ghResult.error}`)
+          } else if (applyUrl && detectLeverUrl(applyUrl)) {
+            const leverResult = await submitLeverApplication(applyUrl, {
+              name: profile?.full_name ?? `${firstName} ${lastName}`.trim(),
+              email: profile?.email ?? '',
+              phone: undefined,
+              cvUrl: realCvUrl,
+              coverLetter: cover_letter,
+            })
+            atsStatus = leverResult.success ? 'sent' : 'failed'
+            if (leverResult.success) console.log(`[auto-apply] Lever OK — user ${setting.user_id} job ${job.id}`)
+            else console.error(`[auto-apply] Lever failed user ${setting.user_id} job ${job.id}: ${leverResult.error}`)
+          } else {
+            console.log(`[auto-apply] No ATS match for job ${job.id} (url: ${applyUrl ?? 'none'})`)
+          }
 
-            if (cover_letter === 'TIMEOUT') {
-              console.warn(`[auto-apply] Cover letter timed out for job ${job.id} — skipping`)
-              await supabase.from('auto_apply_log').insert({
-                user_id: setting.user_id,
-                job_id: job.id,
-                status: 'skipped_timeout',
-                cover_letter: null,
-                adapted_cv_url: null,
-              })
-              continue
-            }
+          await logInsert({ user_id: setting.user_id, job_id: job.id, status: atsStatus, cover_letter, adapted_cv_url: realCvUrl })
 
-            if (!cover_letter) {
-              console.error(`[auto-apply] Cover letter generation returned null for job ${job.id}`)
-              await supabase.from('auto_apply_log').insert({
-                user_id: setting.user_id,
-                job_id: job.id,
-                status: 'failed',
-                cover_letter: null,
-                adapted_cv_url: null,
-              })
-              continue
-            }
-            console.log(`[auto-apply] Cover letter generated for job ${job.id} (${cover_letter.length} chars)`)
-
-            // Only use cv_url when it points to a real uploaded file — placeholder
-            // URLs (https://example.com/test-cv.pdf etc.) must not be sent to ATS.
-            const realCvUrl = isRealCvUrl(profile?.cv_url) ? profile!.cv_url : null
-            if (profile?.cv_url && !realCvUrl) {
-              console.log(`[auto-apply] cv_url is a placeholder for user ${setting.user_id} — generating cover letter from profile data only, skipping CV attachment`)
-            }
-
-            // Guardrail 4: review mode — queue for user approval instead of sending
-            const reviewMode = profile?.auto_apply_review_mode !== false // default true
-            if (reviewMode) {
-              await supabase.from('auto_apply_log').insert({
-                user_id: setting.user_id,
-                job_id: job.id,
-                status: 'pending_review',
-                cover_letter,
-                adapted_cv_url: realCvUrl,
-              })
+          if (atsStatus === 'sent') {
+            const { error: appError } = await supabase.from('applications').insert({
+              candidate_id: setting.user_id,
+              job_id: job.id,
+              cover_letter,
+              applied_at: new Date().toISOString(),
+            })
+            if (appError) {
+              console.error(`[auto-apply] applications insert failed for user ${setting.user_id} job ${job.id}:`, appError.message)
+            } else {
               applicationsThisRound.push(job)
               totalApplications++
-              console.log(`[auto-apply] Queued for review: user ${setting.user_id} job ${job.id} "${job.title}"`)
-              continue
+              console.log(`[auto-apply] Applied: user ${setting.user_id} → "${job.title}" at ${job.company_name}`)
             }
-
-            // Attempt real ATS submission — Greenhouse → Lever → skipped
-            let atsStatus: 'sent' | 'pending' | 'failed' | 'skipped_no_ats_match' = 'skipped_no_ats_match'
-            const applyUrl: string | null = (job as { apply_url?: string | null }).apply_url ?? null
-
-            const nameParts = (profile?.full_name ?? '').trim().split(/\s+/)
-            const firstName = nameParts[0] ?? ''
-            const lastName = nameParts.slice(1).join(' ') || firstName
-
-            if (applyUrl?.includes('greenhouse.io')) {
-              const ghResult = await submitGreenhouseApplication({
-                apply_url: applyUrl,
-                first_name: firstName,
-                last_name: lastName,
-                email: profile?.email ?? '',
-                cv_url: realCvUrl,
-                cover_letter,
-              })
-
-              if (ghResult.success) {
-                atsStatus = 'sent'
-                console.log(`[auto-apply] Greenhouse OK — id ${ghResult.greenhouse_id} user ${setting.user_id} job ${job.id}`)
-              } else {
-                atsStatus = 'failed'
-                console.error(`[auto-apply] Greenhouse failed user ${setting.user_id} job ${job.id}: ${ghResult.error}`)
-              }
-            } else if (applyUrl && detectLeverUrl(applyUrl)) {
-              const leverResult = await submitLeverApplication(applyUrl, {
-                name: profile?.full_name ?? `${firstName} ${lastName}`.trim(),
-                email: profile?.email ?? '',
-                phone: undefined,
-                cvUrl: realCvUrl,
-                coverLetter: cover_letter,
-              })
-
-              if (leverResult.success) {
-                atsStatus = 'sent'
-                console.log(`[auto-apply] Lever OK — user ${setting.user_id} job ${job.id}`)
-              } else {
-                atsStatus = 'failed'
-                console.error(`[auto-apply] Lever failed user ${setting.user_id} job ${job.id}: ${leverResult.error}`)
-              }
-            } else {
-              console.log(`[auto-apply] No ATS match for job ${job.id} (url: ${applyUrl ?? 'none'}) — skipped`)
-            }
-
-            // Record in auto_apply_log
-            const { error: logError } = await supabase
-              .from('auto_apply_log')
-              .insert({
-                user_id: setting.user_id,
-                job_id: job.id,
-                status: atsStatus,
-                cover_letter,
-                adapted_cv_url: realCvUrl,
-              })
-
-            if (logError) {
-              console.error(
-                `[auto-apply] User ${setting.user_id} log insert failed for job ${job.id}:`,
-                logError.message
-              )
-            } else {
-              // Record in applications table (uses candidate_id not user_id)
-              const { error: appError } = await supabase
-                .from('applications')
-                .insert({
-                  candidate_id: setting.user_id,
-                  job_id: job.id,
-                  cover_letter,
-                  applied_at: new Date().toISOString(),
-                })
-
-              if (appError) {
-                console.error(
-                  `[auto-apply] User ${setting.user_id} application insert failed for job ${job.id}:`,
-                  appError.message
-                )
-              } else {
-                applicationsThisRound.push(job)
-                totalApplications++
-                console.log(
-                  `[auto-apply] User ${setting.user_id} applied to "${job.title}" at ${job.company_name}`
-                )
-              }
-            }
-
-            } // end else (cross-border passed)
-          } catch (err) {
-            const message = err instanceof Error ? err.message : String(err)
-            console.error(`[auto-apply] User ${setting.user_id} error processing job ${job.id}:`, message)
           }
+
+        } catch (err) {
+          const message = err instanceof Error ? err.message : String(err)
+          console.error(`[auto-apply] Unexpected error for user ${setting.user_id} job ${job.id}:`, message)
+          await logInsert({ user_id: setting.user_id, job_id: job.id, status: 'failed', cover_letter: null, adapted_cv_url: null })
+        }
 
         // Send email report
         if (applicationsThisRound.length > 0 && profile?.email && resend) {
