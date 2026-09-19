@@ -610,6 +610,7 @@ export default function PricingPage() {
                 {[
                   t('employerProFeature1'), t('employerProFeature2'), t('employerProFeature3'),
                   t('employerProFeature4'), t('employerProFeature5'), t('employerProFeature6'),
+                  t('employerProFeature7'),
                 ].map((f) => (
                   <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
                     <span style={{ color: '#57C7E3' }} className="shrink-0">✦</span> {f}
