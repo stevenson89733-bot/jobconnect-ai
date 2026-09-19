@@ -168,27 +168,27 @@ export default async function EmployerDashboard() {
       )}
 
       {/* Metrics — real counts only */}
-      <div className="grid grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
-        <div className="card">
-          <div className="flex items-start justify-between mb-3">
-            <span className="text-2xl">📋</span>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex items-center gap-3">
+          <div className="p-2 bg-blue-50 rounded-lg text-blue-500 text-xl">💼</div>
+          <div>
+            <div className="text-2xl font-bold text-gray-800">{activeJobsCount}</div>
+            <div className="text-xs text-gray-500">{t('statActiveJobPosts')}</div>
           </div>
-          <div className="text-3xl font-extrabold text-primary dark:text-blue-400 mb-1">{activeJobsCount}</div>
-          <div className="text-xs text-slate-600 dark:text-slate-400">{t('statActiveJobPosts')}</div>
         </div>
-        <div className="card">
-          <div className="flex items-start justify-between mb-3">
-            <span className="text-2xl">👥</span>
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex items-center gap-3">
+          <div className="p-2 bg-teal-50 rounded-lg text-teal-500 text-xl">📨</div>
+          <div>
+            <div className="text-2xl font-bold text-gray-800">{totalApplicants}</div>
+            <div className="text-xs text-gray-500">{t('statTotalApplicants')}</div>
           </div>
-          <div className="text-3xl font-extrabold text-green-600 dark:text-green-400 mb-1">{totalApplicants}</div>
-          <div className="text-xs text-slate-600 dark:text-slate-400">{t('statTotalApplicants')}</div>
         </div>
-        <div className="card">
-          <div className="flex items-start justify-between mb-3">
-            <span className="text-2xl">📅</span>
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex items-center gap-3">
+          <div className="p-2 bg-purple-50 rounded-lg text-purple-500 text-xl">🎤</div>
+          <div>
+            <div className="text-2xl font-bold text-gray-800">{interviewingCount}</div>
+            <div className="text-xs text-gray-500">{t('statCurrentlyInInterview')}</div>
           </div>
-          <div className="text-3xl font-extrabold text-orange-600 dark:text-accent mb-1">{interviewingCount}</div>
-          <div className="text-xs text-slate-600 dark:text-slate-400">{t('statCurrentlyInInterview')}</div>
         </div>
       </div>
 
