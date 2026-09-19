@@ -11,6 +11,7 @@ import { candidateHasApplicationAt, type OwnReview, type PublicReview } from '@/
 import { getCompanyProfileSummary, type CompanyProfileSummary } from '@/lib/companyProfileSummary'
 import { absoluteUrl } from '@/lib/seo'
 import CompanyClient from './CompanyClient'
+import CompanySummarySection from './CompanySummarySection'
 
 // Cached per company name — no candidate-specific data (that's computed
 // fresh per-request below, same reasoning as app/jobs/page.tsx). Tagged
@@ -182,7 +183,7 @@ export default async function CompanyPage({ params }: { params: { name: string }
       reviews={reviews}
       canReview={canReview}
       ownReview={ownReview}
-      companySummary={companySummary}
+      summaryNode={<CompanySummarySection name={displayName} summary={companySummary} />}
     />
   )
 }
