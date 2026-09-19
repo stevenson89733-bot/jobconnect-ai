@@ -62,7 +62,6 @@ export default function JobCard({
   alreadyApplied: boolean
 }) {
   const [signalsOpen, setSignalsOpen] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
   const t = useTranslations('jobs')
 
   const flag = getFlag(job.location)
@@ -85,9 +84,7 @@ export default function JobCard({
     <motion.div
       whileHover={{ y: -2 }}
       transition={{ duration: 0.15, ease: [0.22, 1, 0.36, 1] }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className={`relative bg-white dark:bg-card rounded-[12px] border shadow-sm hover:shadow-lg transition-all duration-200 p-4 flex flex-col gap-3 ${
+      className={`bg-white dark:bg-card rounded-[12px] border shadow-sm hover:shadow-lg transition-all duration-200 p-4 flex flex-col gap-3 ${
         job.is_featured ? 'border-[#57C7E3]/40' : 'border-slate-200 dark:border-slate-700/50'
       }`}
       style={borderAccent ? { borderLeftWidth: 3, borderLeftColor: borderAccent } : undefined}
@@ -254,36 +251,6 @@ export default function JobCard({
         </button>
 
         <span className="ml-auto text-[12px] text-slate-400">{timeAgo(job.created_at)}</span>
-      </div>
-
-      {/* Hover quick-action overlay */}
-      <div
-        className="absolute inset-0 rounded-[12px] flex items-center justify-center gap-3 transition-opacity duration-200 pointer-events-none"
-        style={{
-          background: 'rgba(16,21,42,0.55)',
-          opacity: isHovered ? 1 : 0,
-          backdropFilter: isHovered ? 'blur(2px)' : 'none',
-        }}
-      >
-        {job.apply_url && (
-          <a
-            href={`/api/redirect?job=${encodeURIComponent(job.id)}&source=${encodeURIComponent(job.source ?? 'direct')}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="pointer-events-auto inline-flex items-center gap-1.5 bg-[#57C7E3] text-white text-[13px] font-semibold px-5 py-2.5 rounded-xl hover:bg-[#3ab5d1] transition-colors shadow-lg"
-          >
-            Apply Now
-          </a>
-        )}
-        <button
-          type="button"
-          onClick={(e) => { e.stopPropagation(); onToggleSave(job.id) }}
-          className="pointer-events-auto inline-flex items-center gap-1.5 bg-white text-slate-700 text-[13px] font-semibold px-5 py-2.5 rounded-xl hover:bg-slate-100 transition-colors shadow-lg border border-slate-200"
-        >
-          <Bookmark className={`w-3.5 h-3.5 ${isSaved ? 'fill-current text-[#57C7E3]' : ''}`} strokeWidth={1.75} />
-          {isSaved ? 'Saved' : 'Save'}
-        </button>
       </div>
     </motion.div>
   )
