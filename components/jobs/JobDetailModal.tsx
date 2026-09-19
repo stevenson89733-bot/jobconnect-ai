@@ -153,7 +153,7 @@ export default function JobDetailModal({ job, onClose, alreadyApplied }: Props) 
 
         {/* Sticky action bar */}
         <div className="shrink-0 border-t border-slate-100 px-6 py-4 flex gap-3">
-          {job.apply_url && (
+          {job.apply_url ? (
             <a
               href={`/api/redirect?job=${encodeURIComponent(job.id)}&source=${encodeURIComponent(job.source ?? 'direct')}`}
               target="_blank"
@@ -164,6 +164,8 @@ export default function JobDetailModal({ job, onClose, alreadyApplied }: Props) 
               Apply Now →
               <ExternalLink className="w-4 h-4" strokeWidth={2} />
             </a>
+          ) : (
+            <span className="flex-1 text-center text-sm text-gray-400 italic py-2.5">Application link not available</span>
           )}
           <Link
             href="/ai-tools/auto-apply"
