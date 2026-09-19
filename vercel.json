@@ -1,0 +1,17 @@
+{
+  "crons": [
+    { "path": "/api/cron/import-remotive",        "schedule": "0 6 * * *" },
+    { "path": "/api/cron/import-himalayas",        "schedule": "0 7 * * *" },
+    { "path": "/api/cron/import-jobicy",           "schedule": "0 8 * * *" },
+    { "path": "/api/cron/import-wwr",              "schedule": "0 9 * * *" },
+    { "path": "/api/cron/import-adzuna?country=gb","schedule": "0 10 * * *" },
+    { "path": "/api/cron/import-adzuna?country=us","schedule": "0 11 * * *" },
+    { "path": "/api/cron/import-adzuna?country=fr","schedule": "0 12 * * *" },
+    { "path": "/api/cron/import-adzuna?country=de","schedule": "0 13 * * *" },
+    { "path": "/api/cron/import-adzuna?country=ca","schedule": "0 14 * * *" },
+    { "path": "/api/cron/import-jooble",           "schedule": "0 15 * * *" },
+    { "path": "/api/cron/import-arbeitnow",        "schedule": "0 16 * * *" },
+    { "path": "/api/cron/import-greenhouse",       "schedule": "0 17 * * *" },
+    { "path": "/api/cron/auto-apply",              "schedule": "0 3 * * *" }
+  ]
+}
