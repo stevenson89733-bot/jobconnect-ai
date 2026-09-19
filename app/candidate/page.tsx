@@ -207,7 +207,7 @@ export default async function CandidateDashboard({
       {searchParams.registered === '1' && <RegistrationPixel />}
       <AutoApplyCard isPro={isPro} />
       <PendingReviewBanner count={pendingReviewCount} previews={pendingReviewPreviews} />
-      <WelcomeHeader firstName={firstName} initials={initials} avatarUrl={profile?.avatar_url ?? null} />
+      <WelcomeHeader firstName={firstName} initials={initials} avatarUrl={profile?.avatar_url ?? null} applicationsCount={applicationsCount} recommendedJobsCount={recommendedJobs.length} />
       <ProfileCompletion profile={profile} />
 
       <ProfileCompletionCard completion={completion} />

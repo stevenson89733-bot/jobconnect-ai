@@ -22,7 +22,68 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600 dark:text-slate-400">
-          <Link href="/jobs" className="hover:text-slate-900 dark:hover:text-white transition-colors">{t('browseJobs')}</Link>
+          {/* Browse Jobs mega-menu */}
+          <div className="relative group">
+            <Link href="/jobs" className="hover:text-slate-900 dark:hover:text-white transition-colors flex items-center gap-1">
+              {t('browseJobs')}
+              <svg className="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </Link>
+            <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 hidden group-hover:block z-50">
+              <div className="w-[680px] rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-card shadow-2xl p-6 grid grid-cols-3 gap-6">
+                {/* Column 1 — Categories */}
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400 mb-3">Job Categories</p>
+                  {[
+                    ['Engineering',   'Engineering'],
+                    ['Marketing',     'Marketing'],
+                    ['Design',        'Design'],
+                    ['Sales',         'Sales'],
+                    ['Finance',       'Finance'],
+                    ['HR',            'HR'],
+                    ['Data Science',  'Data'],
+                  ].map(([label, value]) => (
+                    <Link key={value} href={`/jobs?category=${encodeURIComponent(value)}`} className="block text-sm text-slate-700 dark:text-slate-300 hover:text-[#57C7E3] py-1 transition-colors">
+                      {label}
+                    </Link>
+                  ))}
+                  <Link href="/jobs" className="block text-sm text-[#57C7E3] font-medium mt-2 hover:underline">All categories →</Link>
+                </div>
+                {/* Column 2 — Locations */}
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400 mb-3">Job Locations</p>
+                  {[
+                    ['🇺🇸 USA',          'US'],
+                    ['🇫🇷 France',       'FR'],
+                    ['🇩🇪 Germany',      'DE'],
+                    ['🇬🇧 UK',           'GB'],
+                    ['🇨🇦 Canada',       'CA'],
+                    ['🌍 Global Remote', 'worldwide'],
+                  ].map(([label, value]) => (
+                    <Link key={value} href={`/jobs?country=${value}`} className="block text-sm text-slate-700 dark:text-slate-300 hover:text-[#57C7E3] py-1 transition-colors">
+                      {label}
+                    </Link>
+                  ))}
+                  <Link href="/jobs" className="block text-sm text-[#57C7E3] font-medium mt-2 hover:underline">All locations →</Link>
+                </div>
+                {/* Column 3 — Job Types */}
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400 mb-3">Job Types</p>
+                  {[
+                    ['Remote Full-time', 'Full-time'],
+                    ['Remote Part-time', 'Part-time'],
+                    ['Contract',         'Contract'],
+                    ['Freelance',        'Contract'],
+                  ].map(([label, value]) => (
+                    <Link key={label} href={`/jobs?type=${encodeURIComponent(value)}`} className="block text-sm text-slate-700 dark:text-slate-300 hover:text-[#57C7E3] py-1 transition-colors">
+                      {label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
           <Link href="/companies" className="hover:text-slate-900 dark:hover:text-white transition-colors">{t('companies')}</Link>
           <Link href="/blog" className="hover:text-slate-900 dark:hover:text-white transition-colors">Blog</Link>
 
