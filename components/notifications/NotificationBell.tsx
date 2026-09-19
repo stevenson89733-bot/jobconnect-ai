@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
+import ProLockButton from '@/components/ui/ProLockButton'
 
 interface Notification {
   id: string
@@ -90,6 +91,9 @@ export default function NotificationBell() {
                 </button>
               ))
             )}
+          </div>
+          <div className="px-4 py-3 border-t border-gray-50 flex justify-center">
+            <ProLockButton label="Unlock Pro alerts" size="sm" />
           </div>
         </div>
       )}

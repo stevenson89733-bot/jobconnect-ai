@@ -7,9 +7,11 @@ import ConvertedSalary from '@/components/jobs/ConvertedSalary'
 import Link from 'next/link'
 import { ExternalLink, X } from 'lucide-react'
 import type { Job } from '@/app/jobs/JobsClient'
+import ProLockButton from '@/components/ui/ProLockButton'
 
 interface Props {
   job: Job
+  isOpen?: boolean
   onClose: () => void
   alreadyApplied?: boolean
 }
@@ -21,7 +23,8 @@ function formatDescription(text: string | null) {
   ))
 }
 
-export default function JobDetailModal({ job, onClose, alreadyApplied }: Props) {
+export default function JobDetailModal({ job, isOpen = true, onClose, alreadyApplied }: Props) {
+  if (!isOpen) return null
   const overlayRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -152,7 +155,8 @@ export default function JobDetailModal({ job, onClose, alreadyApplied }: Props) 
         </div>
 
         {/* Sticky action bar */}
-        <div className="shrink-0 border-t border-slate-100 px-6 py-4 flex gap-3">
+        <div className="shrink-0 border-t border-slate-100 px-6 py-4 flex gap-3 flex-wrap">
+          <ProLockButton label="Unlock with Pro" size="md" />
           {job.apply_url ? (
             <a
               href={`/api/redirect?job=${encodeURIComponent(job.id)}&source=${encodeURIComponent(job.source ?? 'direct')}`}

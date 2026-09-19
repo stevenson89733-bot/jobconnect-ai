@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import JobDetailModal from './JobDetailModal'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Bookmark, ExternalLink } from 'lucide-react'
@@ -64,6 +65,7 @@ export default function JobCard({
   onSelect?: (job: Job) => void
 }) {
   const [signalsOpen, setSignalsOpen] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const t = useTranslations('jobs')
 
   const flag = getFlag(job.location)
@@ -107,13 +109,13 @@ export default function JobCard({
             </AvatarFallback>
           </Avatar>
           <div className="min-w-0">
-            <Link
-              href={`/companies/${encodeURIComponent(job.company_name)}`}
-              className="text-[13px] font-semibold text-slate-700 hover:text-[#57C7E3] transition-colors truncate block"
-              onClick={(e) => e.stopPropagation()}
+            <button
+              type="button"
+              className="text-[13px] font-semibold text-slate-700 hover:text-[#57C7E3] transition-colors truncate block text-left"
+              onClick={(e) => { e.stopPropagation(); setShowModal(true) }}
             >
               {job.company_name}
-            </Link>
+            </button>
             <span className="text-[12px] text-slate-400">{categoryLabel}</span>
           </div>
         </div>
@@ -138,7 +140,11 @@ export default function JobCard({
       </div>
 
       {/* Row 2 — Job title */}
-      <h2 className="font-bold text-[18px] leading-snug" style={{ color: '#10152A' }}>
+      <h2
+        className="font-bold text-[18px] leading-snug cursor-pointer hover:text-[#57C7E3] transition-colors"
+        style={{ color: '#10152A' }}
+        onClick={(e) => { e.stopPropagation(); setShowModal(true) }}
+      >
         {job.title}
       </h2>
 
@@ -257,6 +263,8 @@ export default function JobCard({
 
         <span className="ml-auto text-[12px] text-slate-400">{timeAgo(job.created_at)}</span>
       </div>
+
+      <JobDetailModal job={job} isOpen={showModal} onClose={() => setShowModal(false)} />
     </motion.div>
   )
 }

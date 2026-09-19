@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import ProLockButton from '@/components/ui/ProLockButton'
 
 interface Props {
   profile: {
@@ -59,6 +60,9 @@ export default function ProfileCompletion({ profile }: Props) {
             + {f.label}
           </Link>
         ))}
+      </div>
+      <div className="mt-3">
+        <ProLockButton label="Unlock Pro features" size="sm" />
       </div>
     </div>
   )

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getTranslations, getLocale } from 'next-intl/server'
+import ProLockButton from '@/components/ui/ProLockButton'
 import { createClient } from '@/lib/supabase/server'
 import ApplicationStatusControl from '@/components/recruiter/ApplicationStatusControl'
 import PostJobModal from '@/components/recruiter/PostJobModal'
@@ -148,13 +149,7 @@ export default async function EmployerDashboard() {
         </div>
         <div className="flex flex-wrap gap-3 items-center">
           {employerPlan === 'free' && !isAdmin && (
-            <Link
-              href="/pricing#employers"
-              className="flex items-center gap-1.5 font-semibold text-white rounded-full px-4 py-2 text-xs transition-all"
-              style={{ background: '#57C7E3' }}
-            >
-              ✦ Upgrade to Pro
-            </Link>
+            <ProLockButton label="Upgrade to Pro" size="md" />
           )}
           <Link href="/recruiter/profile" className="btn-outline text-sm">{t('editCompanyProfile')}</Link>
           <Link href="/jobs" className="btn-outline text-sm">{t('viewAllJobs')}</Link>
