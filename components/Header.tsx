@@ -135,6 +135,90 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
             </div>
           </div>
 
+          {/* ✦ Pro Features dropdown */}
+          <div className="relative group">
+            <button className="flex items-center gap-1 hover:text-slate-900 dark:hover:text-white transition-colors">
+              <span className="text-[#F0663A]">✦</span> Pro
+              <svg className="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div className="absolute left-0 top-full pt-3 hidden group-hover:block z-50">
+              <div className="grid grid-cols-2 gap-8 p-6 bg-white border border-gray-100 shadow-2xl rounded-2xl min-w-[480px]">
+                {/* Column 1 — Candidate Tools */}
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3">Candidate Tools</p>
+                  <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
+                    <span className="text-lg leading-none mt-0.5">🤖</span>
+                    <span>
+                      <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">Auto-Apply</span>
+                      <span className="block text-xs text-gray-400">Apply to 100+ jobs automatically</span>
+                    </span>
+                  </a>
+                  <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
+                    <span className="text-lg leading-none mt-0.5">✨</span>
+                    <span>
+                      <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">AI Job Match</span>
+                      <span className="block text-xs text-gray-400">AI-ranked jobs tailored to you</span>
+                    </span>
+                  </a>
+                  <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
+                    <span className="text-lg leading-none mt-0.5">📅</span>
+                    <span>
+                      <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">Interview Scheduling</span>
+                      <span className="block text-xs text-gray-400">Smart calendar link for recruiters</span>
+                    </span>
+                  </a>
+                  <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
+                    <span className="text-lg leading-none mt-0.5">🔔</span>
+                    <span>
+                      <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">Interview Alerts</span>
+                      <span className="block text-xs text-gray-400">Never miss a callback</span>
+                    </span>
+                  </a>
+                </div>
+                {/* Column 2 — Employer Tools */}
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3">Employer Tools</p>
+                  <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
+                    <span className="text-lg leading-none mt-0.5">🏢</span>
+                    <span>
+                      <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">Employer Dashboard</span>
+                      <span className="block text-xs text-gray-400">Post jobs & manage applicants</span>
+                    </span>
+                  </a>
+                  <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
+                    <span className="text-lg leading-none mt-0.5">📊</span>
+                    <span>
+                      <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">Talent Analytics</span>
+                      <span className="block text-xs text-gray-400">Track pipeline & conversions</span>
+                    </span>
+                  </a>
+                  <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
+                    <span className="text-lg leading-none mt-0.5">🌐</span>
+                    <span>
+                      <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">Cross-Border Hiring</span>
+                      <span className="block text-xs text-gray-400">Find global remote talent</span>
+                    </span>
+                  </a>
+                  <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
+                    <span className="text-lg leading-none mt-0.5">⚡</span>
+                    <span>
+                      <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">Priority Listing</span>
+                      <span className="block text-xs text-gray-400">Top placement in search results</span>
+                    </span>
+                  </a>
+                </div>
+                {/* CTA footer */}
+                <div className="col-span-2 pt-3 border-t border-gray-100 flex items-center justify-between">
+                  <span className="text-xs text-gray-400">Unlock all Pro features from <strong className="text-slate-700">$19/mo</strong></span>
+                  <a href="/pricing" className="inline-flex items-center gap-1.5 bg-[#F0663A] text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-[#d4522a] transition-colors">
+                    🔒 Upgrade to Pro →
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
           <Link href="/pricing" className="hover:text-slate-900 dark:hover:text-white transition-colors">{t('pricing')}</Link>
         </nav>
 
