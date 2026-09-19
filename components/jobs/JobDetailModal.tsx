@@ -24,20 +24,22 @@ function formatDescription(text: string | null) {
 }
 
 export default function JobDetailModal({ job, isOpen = true, onClose, alreadyApplied }: Props) {
-  if (!isOpen) return null
   const overlayRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    if (!isOpen) return
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
-  }, [onClose])
+  }, [isOpen, onClose])
 
-  // Prevent body scroll while modal is open
   useEffect(() => {
+    if (!isOpen) return
     document.body.style.overflow = 'hidden'
     return () => { document.body.style.overflow = '' }
-  }, [])
+  }, [isOpen])
+
+  if (!isOpen) return null
 
   const sourceName = job.source
     ? job.source.charAt(0).toUpperCase() + job.source.slice(1)
