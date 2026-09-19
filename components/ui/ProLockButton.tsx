@@ -1,19 +1,31 @@
 'use client'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 interface ProLockButtonProps {
   label?: string
-  size?: 'sm' | 'md'
+  size?: 'sm' | 'md' | 'lg'
+  className?: string
 }
 
-export default function ProLockButton({ label = 'Unlock with Pro', size = 'sm' }: ProLockButtonProps) {
+export default function ProLockButton({
+  label = 'Unlock Pro',
+  size = 'sm',
+  className = ''
+}: ProLockButtonProps) {
+  const router = useRouter()
+
+  const sizeClasses = {
+    sm: 'text-xs px-3 py-1.5 gap-1',
+    md: 'text-sm px-4 py-2 gap-1.5',
+    lg: 'text-base px-5 py-2.5 gap-2',
+  }
+
   return (
-    <Link
-      href="/pricing"
-      className={`inline-flex items-center gap-1.5 font-semibold rounded-full border border-[#F0663A] text-[#F0663A] hover:bg-[#F0663A] hover:text-white transition-colors whitespace-nowrap
-        ${size === 'sm' ? 'text-[11px] px-3 py-1' : 'text-sm px-4 py-2'}`}
+    <button
+      onClick={() => router.push('/pricing')}
+      className={`inline-flex items-center font-bold rounded-full bg-[#F0663A] text-white shadow-md hover:bg-[#d4522a] hover:shadow-lg active:scale-95 transition-all duration-150 whitespace-nowrap ${sizeClasses[size]} ${className}`}
     >
       🔒 {label}
-    </Link>
+    </button>
   )
 }
