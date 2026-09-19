@@ -4,14 +4,14 @@ import { useEffect, useRef } from 'react'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { companyInitials, clearbitLogoUrl } from '@/lib/companyDisplay'
 import ConvertedSalary from '@/components/jobs/ConvertedSalary'
-import AiApplyModal from '@/components/jobs/AiApplyModal'
+import Link from 'next/link'
 import { ExternalLink, X } from 'lucide-react'
 import type { Job } from '@/app/jobs/JobsClient'
 
 interface Props {
   job: Job
   onClose: () => void
-  alreadyApplied: boolean
+  alreadyApplied?: boolean
 }
 
 function formatDescription(text: string | null) {
@@ -113,7 +113,12 @@ export default function JobDetailModal({ job, onClose, alreadyApplied }: Props) 
           <div className="flex flex-wrap gap-2">
             {job.cross_border_status === 'yes' && (
               <span className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold px-3 py-1 rounded-full">
-                ✈️ Cross-border friendly
+                ✅ Cross-border Friendly
+              </span>
+            )}
+            {job.cross_border_status === 'unclear' && (
+              <span className="inline-flex items-center gap-1.5 bg-amber-50 text-amber-700 border border-amber-200 text-xs font-semibold px-3 py-1 rounded-full">
+                ⚠ Cross-border Unclear
               </span>
             )}
             {job.is_featured && (
@@ -148,26 +153,24 @@ export default function JobDetailModal({ job, onClose, alreadyApplied }: Props) 
 
         {/* Sticky action bar */}
         <div className="shrink-0 border-t border-slate-100 px-6 py-4 flex gap-3">
-          {job.apply_url ? (
+          {job.apply_url && (
             <a
               href={`/api/redirect?job=${encodeURIComponent(job.id)}&source=${encodeURIComponent(job.source ?? 'direct')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 inline-flex items-center justify-center gap-2 bg-[#57C7E3] text-white font-semibold text-sm px-4 py-2.5 rounded-xl hover:bg-[#3ab5d1] transition-colors"
+              className="flex-1 inline-flex items-center justify-center gap-2 text-white font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
+              style={{ background: '#F0663A' }}
             >
-              Apply on {job.company_name} website
+              Apply Now →
               <ExternalLink className="w-4 h-4" strokeWidth={2} />
             </a>
-          ) : null}
-          <AiApplyModal
-            jobId={job.id}
-            jobTitle={job.title}
-            company={job.company_name}
-            description={job.description}
-            tags={job.tags}
-            applyUrl={job.apply_url ?? undefined}
-            alreadyApplied={alreadyApplied}
-          />
+          )}
+          <Link
+            href="/ai-tools/auto-apply"
+            className="flex-1 inline-flex items-center justify-center gap-2 border-2 border-[#57C7E3] text-[#57C7E3] font-semibold text-sm px-4 py-2.5 rounded-xl hover:bg-[#57C7E3]/10 transition-colors"
+          >
+            ✦ Apply with AI
+          </Link>
         </div>
       </div>
     </div>
