@@ -212,6 +212,8 @@ export default function JobsClient({
     navigate({ q: '', workType: 'All', type: 'All', category: 'All', crossBorder: false, country: '', trueRemote: false })
   }
 
+  const anyFilterActive = query !== '' || workType !== 'All' || jobType !== 'All' || category !== 'All' || crossBorder || country !== '' || trueRemote
+
   const COUNTRY_CHIPS = [
     { flag: '🌍', label: 'All',  value: '' },
     { flag: '🇺🇸', label: 'US',   value: 'USA' },
@@ -330,15 +332,23 @@ export default function JobsClient({
               <button
                 key={wt}
                 onClick={() => { setWorkType(wt); navigate({ workType: wt }) }}
-                className={`text-[12px] px-3 py-1 rounded-full border transition-colors ${
+                className={`text-sm px-4 py-1.5 rounded-full border transition-colors cursor-pointer ${
                   workType === wt
-                    ? 'bg-slate-800 border-slate-800 text-white'
-                    : 'border-slate-200 text-slate-500 hover:border-slate-400 hover:text-slate-700'
+                    ? 'bg-[#57C7E3] border-[#57C7E3] text-white'
+                    : 'border-gray-300 text-gray-600 bg-white hover:border-[#57C7E3]'
                 }`}
               >
                 {workTypeLabel(wt)}
               </button>
             ))}
+            {anyFilterActive && (
+              <button
+                onClick={clearAll}
+                className="text-sm px-4 py-1.5 rounded-full border border-gray-300 text-gray-600 bg-white hover:border-red-400 hover:text-red-500 transition-colors cursor-pointer"
+              >
+                ✕ Clear all
+              </button>
+            )}
             <span className="w-px bg-slate-200 mx-0.5 self-stretch hidden sm:block" />
             {CATEGORIES.map((cat) => (
               <button
