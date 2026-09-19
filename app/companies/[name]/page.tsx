@@ -80,6 +80,20 @@ export default async function CompanyPage({ params }: { params: { name: string }
 
   const displayName = company?.name ?? jobs[0]?.company_name ?? name
 
+  // Employer meeting link — only shown if a pro employer has set one
+  let meetingLink: string | null = null
+  try {
+    const supabase = createClient()
+    const { data: empRow } = await supabase
+      .from('profiles')
+      .select('meeting_link')
+      .ilike('company_name', displayName)
+      .eq('employer_plan', 'pro')
+      .not('meeting_link', 'is', null)
+      .maybeSingle()
+    meetingLink = empRow?.meeting_link ?? null
+  } catch {}
+
   // Real Match % — same computation as the Jobs page (lib/jobMatching.ts),
   // never a second matching system.
   let skillSet = new Set<string>()
@@ -162,6 +176,7 @@ export default async function CompanyPage({ params }: { params: { name: string }
       name={displayName}
       logoUrl={company?.logo_url ?? null}
       website={company?.website ?? null}
+      meetingLink={meetingLink}
       jobs={jobsWithMatch}
       salaryInsights={salaryInsights}
       reviews={reviews}

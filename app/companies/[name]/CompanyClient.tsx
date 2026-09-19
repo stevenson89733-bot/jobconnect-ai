@@ -16,6 +16,7 @@ export default function CompanyClient({
   name,
   logoUrl,
   website,
+  meetingLink,
   jobs,
   salaryInsights,
   reviews,
@@ -26,6 +27,7 @@ export default function CompanyClient({
   name: string
   logoUrl: string | null
   website: string | null
+  meetingLink: string | null
   jobs: Job[]
   salaryInsights: { min: number; max: number; count: number } | null
   reviews: PublicReview[]
@@ -74,6 +76,18 @@ export default function CompanyClient({
               >
                 {website}
               </a>
+            )}
+            {meetingLink && (
+              <div className="mt-3">
+                <a
+                  href={meetingLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#57C7E3]/10 border border-[#57C7E3]/40 text-[#57C7E3] font-semibold text-sm hover:bg-[#57C7E3]/20 transition-colors"
+                >
+                  📅 Schedule an Interview
+                </a>
+              </div>
             )}
           </div>
         </div>

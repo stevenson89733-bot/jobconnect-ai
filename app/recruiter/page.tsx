@@ -3,6 +3,7 @@ import { getTranslations, getLocale } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import ApplicationStatusControl from '@/components/recruiter/ApplicationStatusControl'
 import PostJobModal from '@/components/recruiter/PostJobModal'
+import InterviewLinkEditor from '@/components/recruiter/InterviewLinkEditor'
 import { companyInitials } from '@/lib/companyDisplay'
 import { APPLICATION_STATUSES, APPLICATION_STATUS_BAR_COLOR, type ApplicationStatus } from '@/lib/applicationStatus'
 import { timeAgo } from '@/lib/timeAgo'
@@ -36,6 +37,7 @@ export default async function EmployerDashboard() {
   let companyName = ''
   let isAdmin = false
   let employerPlan = 'free'
+  let meetingLink: string | null = null
   let jobs: JobRow[] = []
   let applications: Application[] = []
 
@@ -45,7 +47,7 @@ export default async function EmployerDashboard() {
 
     if (user) {
       const [{ data: profileRow }, { data: jobRows, error: jobsError }] = await Promise.all([
-        supabase.from('profiles').select('company_name, is_admin, employer_plan').eq('user_id', user.id).maybeSingle(),
+        supabase.from('profiles').select('company_name, is_admin, employer_plan, meeting_link').eq('user_id', user.id).maybeSingle(),
         supabase
           .from('jobs')
           .select('id, title, is_active, created_at')
@@ -56,6 +58,7 @@ export default async function EmployerDashboard() {
       companyName = profileRow?.company_name ?? ''
       isAdmin = profileRow?.is_admin ?? false
       employerPlan = profileRow?.employer_plan ?? 'free'
+      meetingLink = profileRow?.meeting_link ?? null
       if (jobsError) console.error('[recruiter/jobs]', jobsError.message)
       jobs = (jobRows as JobRow[] | null) ?? []
 
@@ -319,6 +322,9 @@ export default async function EmployerDashboard() {
           )}
         </div>
       </div>
+
+      {/* Interview Scheduling Link */}
+      <InterviewLinkEditor initialLink={meetingLink} isPro={employerPlan === 'pro'} />
 
       {/* Browse Candidates */}
       <div className="card flex items-center justify-between flex-wrap gap-4">
