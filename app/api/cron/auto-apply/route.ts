@@ -222,10 +222,12 @@ export async function POST(req: Request) {
           .select('id, title, company_name, description, location, apply_url, cross_border_status')
           .eq('is_active', true)
           .gte('created_at', windowStart.toISOString())
+          .or('apply_url.ilike.%greenhouse%,apply_url.ilike.%lever%')
           .order('created_at', { ascending: false })
           .limit(1)
 
         console.log(`[auto-apply] Jobs query returned ${jobs?.length ?? 0} jobs, error: ${jobsError?.message ?? null}`)
+        if (jobs?.[0]) console.log(`[auto-apply] Fetched job ${jobs[0].id} apply_url=${jobs[0].apply_url}`)
 
         if (jobsError) {
           console.error(`[auto-apply] User ${setting.user_id} jobs error:`, jobsError.message)
