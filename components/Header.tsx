@@ -144,10 +144,10 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
               </svg>
             </button>
             <div className="absolute left-0 top-full pt-3 hidden group-hover:block z-50">
-              <div className="grid grid-cols-2 gap-8 p-6 bg-white border border-gray-100 shadow-2xl rounded-2xl min-w-[480px]">
-                {/* Column 1 — Candidate Tools */}
+              <div className="grid grid-cols-2 gap-8 p-6 bg-white border border-gray-100 shadow-2xl rounded-2xl min-w-[520px]">
+                {/* Column 1 — Elite (Candidates) */}
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3">Candidate Tools</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-1">⭐ Elite — Candidates</p>
                   <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
                     <span className="text-lg leading-none mt-0.5">🤖</span>
                     <span>
@@ -163,13 +163,6 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
                     </span>
                   </a>
                   <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
-                    <span className="text-lg leading-none mt-0.5">📅</span>
-                    <span>
-                      <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">Interview Scheduling</span>
-                      <span className="block text-xs text-gray-400">Smart calendar link for recruiters</span>
-                    </span>
-                  </a>
-                  <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
                     <span className="text-lg leading-none mt-0.5">🔔</span>
                     <span>
                       <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">Interview Alerts</span>
@@ -177,14 +170,21 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
                     </span>
                   </a>
                 </div>
-                {/* Column 2 — Employer Tools */}
+                {/* Column 2 — Pro (Employers) */}
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3">Employer Tools</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-1">🏢 Pro — Employers</p>
                   <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
-                    <span className="text-lg leading-none mt-0.5">🏢</span>
+                    <span className="text-lg leading-none mt-0.5">📅</span>
                     <span>
-                      <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">Employer Dashboard</span>
-                      <span className="block text-xs text-gray-400">Post jobs & manage applicants</span>
+                      <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">Meeting Calendar</span>
+                      <span className="block text-xs text-gray-400">Booking link for candidates</span>
+                    </span>
+                  </a>
+                  <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
+                    <span className="text-lg leading-none mt-0.5">🔗</span>
+                    <span>
+                      <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">Interview Scheduling Link</span>
+                      <span className="block text-xs text-gray-400">Share smart link with applicants</span>
                     </span>
                   </a>
                   <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
@@ -192,13 +192,6 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
                     <span>
                       <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">Talent Analytics</span>
                       <span className="block text-xs text-gray-400">Track pipeline & conversions</span>
-                    </span>
-                  </a>
-                  <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
-                    <span className="text-lg leading-none mt-0.5">🌐</span>
-                    <span>
-                      <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">Cross-Border Hiring</span>
-                      <span className="block text-xs text-gray-400">Find global remote talent</span>
                     </span>
                   </a>
                   <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
@@ -211,9 +204,9 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
                 </div>
                 {/* CTA footer */}
                 <div className="col-span-2 pt-3 border-t border-gray-100 flex items-center justify-between">
-                  <span className="text-xs text-gray-400">Unlock all Pro features from <strong className="text-slate-700">$19/mo</strong></span>
+                  <span className="text-xs text-gray-400">Elite from <strong className="text-slate-700">$29/mo</strong> · Pro from <strong className="text-slate-700">$49/mo</strong></span>
                   <a href="/pricing" className="inline-flex items-center gap-1.5 bg-[#F0663A] text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-[#d4522a] transition-colors">
-                    🔒 Upgrade to Pro →
+                    🔒 See Plans →
                   </a>
                 </div>
               </div>
