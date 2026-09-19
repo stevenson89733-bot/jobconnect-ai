@@ -5,9 +5,11 @@ import ApplicationStatusControl from '@/components/recruiter/ApplicationStatusCo
 import PostJobModal from '@/components/recruiter/PostJobModal'
 import FeaturedCreditsPanel from '@/components/recruiter/FeaturedCreditsPanel'
 import InterviewLinkEditor from '@/components/recruiter/InterviewLinkEditor'
+import ApplicationKanban from '@/components/recruiter/ApplicationKanban'
 import { companyInitials } from '@/lib/companyDisplay'
 import { APPLICATION_STATUSES, APPLICATION_STATUS_BAR_COLOR, type ApplicationStatus } from '@/lib/applicationStatus'
 import { timeAgo } from '@/lib/timeAgo'
+import { Briefcase, Users, CalendarCheck } from 'lucide-react'
 
 type Application = {
   id: string
@@ -167,28 +169,34 @@ export default async function EmployerDashboard() {
         <FeaturedCreditsPanel credits={featuredCredits} jobs={jobs} />
       )}
 
-      {/* Metrics — real counts only */}
+      {/* Metrics */}
       <div className="grid grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
-        <div className="card">
-          <div className="flex items-start justify-between mb-3">
-            <span className="text-2xl">📋</span>
+        <div className="bg-white dark:bg-card rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-5 flex items-center gap-4">
+          <div className="w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-950/40 flex items-center justify-center shrink-0">
+            <Briefcase className="w-5 h-5 text-blue-600 dark:text-blue-400" strokeWidth={1.75} />
           </div>
-          <div className="text-3xl font-extrabold text-primary dark:text-blue-400 mb-1">{activeJobsCount}</div>
-          <div className="text-xs text-slate-600 dark:text-slate-400">{t('statActiveJobPosts')}</div>
+          <div>
+            <div className="text-2xl font-extrabold text-slate-900 dark:text-white">{activeJobsCount}</div>
+            <div className="text-xs text-slate-500 dark:text-slate-400">{t('statActiveJobPosts')}</div>
+          </div>
         </div>
-        <div className="card">
-          <div className="flex items-start justify-between mb-3">
-            <span className="text-2xl">👥</span>
+        <div className="bg-white dark:bg-card rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-5 flex items-center gap-4">
+          <div className="w-11 h-11 rounded-xl bg-[#57C7E3]/10 flex items-center justify-center shrink-0">
+            <Users className="w-5 h-5 text-[#57C7E3]" strokeWidth={1.75} />
           </div>
-          <div className="text-3xl font-extrabold text-green-600 dark:text-green-400 mb-1">{totalApplicants}</div>
-          <div className="text-xs text-slate-600 dark:text-slate-400">{t('statTotalApplicants')}</div>
+          <div>
+            <div className="text-2xl font-extrabold text-slate-900 dark:text-white">{totalApplicants}</div>
+            <div className="text-xs text-slate-500 dark:text-slate-400">{t('statTotalApplicants')}</div>
+          </div>
         </div>
-        <div className="card">
-          <div className="flex items-start justify-between mb-3">
-            <span className="text-2xl">📅</span>
+        <div className="bg-white dark:bg-card rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-5 flex items-center gap-4">
+          <div className="w-11 h-11 rounded-xl bg-purple-50 dark:bg-purple-950/40 flex items-center justify-center shrink-0">
+            <CalendarCheck className="w-5 h-5 text-purple-600 dark:text-purple-400" strokeWidth={1.75} />
           </div>
-          <div className="text-3xl font-extrabold text-orange-600 dark:text-accent mb-1">{interviewingCount}</div>
-          <div className="text-xs text-slate-600 dark:text-slate-400">{t('statCurrentlyInInterview')}</div>
+          <div>
+            <div className="text-2xl font-extrabold text-slate-900 dark:text-white">{interviewingCount}</div>
+            <div className="text-xs text-slate-500 dark:text-slate-400">{t('statCurrentlyInInterview')}</div>
+          </div>
         </div>
       </div>
 
@@ -261,6 +269,25 @@ export default async function EmployerDashboard() {
             ))}
           </div>
         )}
+      </div>
+
+      {/* Kanban view */}
+      <div className="card mb-6">
+        <h2 className="font-semibold text-slate-900 dark:text-white mb-5">Pipeline</h2>
+        <ApplicationKanban
+          applications={applications.map((app) => {
+            const jobRow = Array.isArray(app.jobs) ? app.jobs[0] : app.jobs
+            return {
+              id: app.id,
+              candidateName: app.profiles?.full_name ?? null,
+              candidateEmail: app.profiles?.email ?? null,
+              candidateId: app.candidate_id,
+              jobTitle: jobRow?.title ?? 'Unknown Job',
+              createdAt: app.created_at,
+              status: app.status,
+            }
+          })}
+        />
       </div>
 
       <div className="grid xl:grid-cols-3 gap-6 mb-6">
