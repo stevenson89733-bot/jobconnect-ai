@@ -147,7 +147,7 @@ export default async function EmployerDashboard() {
           </div>
         </div>
         <div className="flex flex-wrap gap-3 items-center">
-          {employerPlan === 'free' && (
+          {employerPlan === 'free' && !isAdmin && (
             <Link
               href="/pricing#employers"
               className="flex items-center gap-1.5 font-semibold text-white rounded-full px-4 py-2 text-xs transition-all"
@@ -332,7 +332,7 @@ export default async function EmployerDashboard() {
       </div>
 
       {/* Interview Scheduling Link */}
-      <InterviewLinkEditor initialLink={meetingLink} isPro={employerPlan === 'pro'} />
+      <InterviewLinkEditor initialLink={meetingLink} isPro={employerPlan === 'pro' || isAdmin} />
 
       {/* Browse Candidates */}
       <div className="card flex items-center justify-between flex-wrap gap-4">
