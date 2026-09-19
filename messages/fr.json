@@ -1575,5 +1575,25 @@
     "s2Text2": "Si vous avez des questions sur un débit, contactez-nous immédiatement à contact@jobconnect-ai.com.",
     "s3Title": "Nous contacter",
     "s3Text": "Pour toute question sur notre politique de remboursement :"
+  },
+  "partnersPage": {
+    "badge": "Outils Recommandés",
+    "title": "Outils Partenaires pour les Professionnels Internationaux",
+    "subtitle": "Travailler à l'international comporte des défis uniques. Ces outils sont utilisés par des milliers de travailleurs à distance pour gérer la paie, la conformité et les paiements transfrontaliers — pour vous concentrer sur votre travail.",
+    "affiliateNote": "Certains liens ci-dessous sont des liens affiliés. Nous pouvons percevoir une petite commission si vous vous inscrivez — sans coût pour vous.",
+    "browseJobs": "Parcourir les emplois à distance →",
+    "browseJobsLabel": "Prêt à trouver votre prochain poste international ?",
+    "deelTagline": "Paie mondiale & conformité",
+    "deelDescription": "Soyez payé dans votre devise locale par des employeurs du monde entier. Deel gère les contrats, les impôts et la conformité dans plus de 150 pays — indispensable pour les travailleurs à distance embauchés à l'international.",
+    "deelCta": "Commencer avec Deel →",
+    "remoteTagline": "Employeur de référence pour les équipes mondiales",
+    "remoteDescription": "Remote.com permet aux entreprises d'embaucher des employés à temps plein à l'étranger sans créer d'entités locales. Si vous obtenez un poste à l'étranger, votre employeur peut vous intégrer rapidement et légalement.",
+    "remoteCta": "Explorer Remote.com →",
+    "wiseTagline": "Transferts d'argent internationaux",
+    "wiseDescription": "Envoyez et recevez des salaires internationaux au taux de change réel du marché. Sans frais cachés — économisez jusqu'à 8 fois par rapport aux virements bancaires traditionnels.",
+    "wiseCta": "Ouvrir un compte Wise →",
+    "payoneerTagline": "Plateforme de paiement mondial",
+    "payoneerDescription": "Recevez des paiements d'employeurs et de plateformes internationaux directement sur un compte Payoneer. Retirez vers votre banque locale ou dépensez avec la carte Payoneer dans plus de 200 pays.",
+    "payoneerCta": "Rejoindre Payoneer →"
   }
 }

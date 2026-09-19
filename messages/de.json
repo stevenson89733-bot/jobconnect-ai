@@ -1569,5 +1569,25 @@
     "s2Text2": "Wenn Sie Bedenken bezüglich einer Gebühr haben, kontaktieren Sie uns umgehend unter contact@jobconnect-ai.com.",
     "s3Title": "Kontakt",
     "s3Text": "Für Fragen zu unserer Rückerstattungsrichtlinie oder zur Anforderung einer Kündigung wenden Sie sich bitte an:"
+  },
+  "partnersPage": {
+    "badge": "Empfohlene Tools",
+    "title": "Partner-Tools für internationale Fachkräfte",
+    "subtitle": "Länderübergreifendes Arbeiten bringt einzigartige Herausforderungen mit sich. Diese Tools werden von tausenden Remote-Arbeitskräften genutzt, um Gehaltsabrechnung, Compliance und grenzüberschreitende Zahlungen zu verwalten.",
+    "affiliateNote": "Einige Links unten sind Affiliate-Links. Wir erhalten möglicherweise eine kleine Provision, wenn Sie sich anmelden — ohne Kosten für Sie.",
+    "browseJobs": "Remote-Jobs durchsuchen →",
+    "browseJobsLabel": "Bereit, Ihre nächste internationale Stelle zu finden?",
+    "deelTagline": "Globale Gehaltsabrechnung & Compliance",
+    "deelDescription": "Lassen Sie sich in Ihrer lokalen Währung von Arbeitgebern weltweit bezahlen. Deel übernimmt Verträge, Steuern und Compliance in mehr als 150 Ländern.",
+    "deelCta": "Mit Deel starten →",
+    "remoteTagline": "Employer of Record für globale Teams",
+    "remoteDescription": "Remote.com ermöglicht es Unternehmen, Vollzeitbeschäftigte grenzüberschreitend einzustellen, ohne lokale Einheiten zu gründen.",
+    "remoteCta": "Remote.com erkunden →",
+    "wiseTagline": "Internationale Geldtransfers",
+    "wiseDescription": "Senden und empfangen Sie internationale Gehaltszahlungen zum echten Mittelkurs. Keine versteckten Gebühren — sparen Sie bis zu 8x im Vergleich zu traditionellen Banküberweisungen.",
+    "wiseCta": "Wise-Konto eröffnen →",
+    "payoneerTagline": "Globale Zahlungsplattform",
+    "payoneerDescription": "Erhalten Sie Zahlungen von internationalen Arbeitgebern direkt auf ein Payoneer-Konto. Heben Sie bei Ihrer Lokalbank ab oder zahlen Sie mit der Payoneer-Karte in über 200 Ländern.",
+    "payoneerCta": "Payoneer beitreten →"
   }
 }

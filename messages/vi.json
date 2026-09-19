@@ -1569,5 +1569,25 @@
     "s2Text2": "Nếu bạn có thắc mắc về khoản phí, vui lòng liên hệ ngay với chúng tôi tại contact@jobconnect-ai.com.",
     "s3Title": "Liên hệ chúng tôi",
     "s3Text": "Để có câu hỏi về chính sách hoàn tiền hoặc yêu cầu hủy, hãy liên hệ:"
+  },
+  "partnersPage": {
+    "badge": "Công Cụ Được Đề Xuất",
+    "title": "Công Cụ Đối Tác cho Chuyên Gia Quốc Tế",
+    "subtitle": "Làm việc xuyên biên giới có những thách thức riêng. Các công cụ này được hàng nghìn lao động từ xa tin dùng để xử lý tiền lương, tuân thủ và thanh toán quốc tế.",
+    "affiliateNote": "Một số liên kết bên dưới là liên kết liên kết. Chúng tôi có thể nhận hoa hồng nhỏ nếu bạn đăng ký — không tốn phí của bạn.",
+    "browseJobs": "Xem việc làm từ xa →",
+    "browseJobsLabel": "Sẵn sàng tìm vai trò quốc tế tiếp theo của bạn?",
+    "deelTagline": "Bảng lương toàn cầu & tuân thủ",
+    "deelDescription": "Nhận lương bằng đồng tiền địa phương từ các nhà tuyển dụng trên toàn thế giới. Deel xử lý hợp đồng, thuế và tuân thủ tại hơn 150 quốc gia.",
+    "deelCta": "Bắt đầu với Deel →",
+    "remoteTagline": "Nhà tuyển dụng đại diện cho các nhóm toàn cầu",
+    "remoteDescription": "Remote.com cho phép các công ty tuyển dụng nhân viên toàn thời gian ở nước ngoài mà không cần thành lập pháp nhân địa phương.",
+    "remoteCta": "Khám phá Remote.com →",
+    "wiseTagline": "Chuyển tiền quốc tế",
+    "wiseDescription": "Gửi và nhận thanh toán lương quốc tế theo tỷ giá thị trường thực. Không có phí ẩn — tiết kiệm đến 8 lần so với chuyển khoản ngân hàng truyền thống.",
+    "wiseCta": "Mở tài khoản Wise →",
+    "payoneerTagline": "Nền tảng thanh toán toàn cầu",
+    "payoneerDescription": "Nhận thanh toán từ các nhà tuyển dụng và sàn giao dịch quốc tế trực tiếp vào tài khoản Payoneer. Rút về ngân hàng địa phương hoặc chi tiêu bằng thẻ Payoneer ở hơn 200 quốc gia.",
+    "payoneerCta": "Tham gia Payoneer →"
   }
 }

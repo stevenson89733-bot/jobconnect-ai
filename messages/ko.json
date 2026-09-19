@@ -1569,5 +1569,25 @@
     "s2Text2": "요금에 대해 궁금한 점이 있으면 contact@jobconnect-ai.com으로 즉시 연락하세요.",
     "s3Title": "문의하기",
     "s3Text": "환불 정책에 대한 질문이나 취소 요청은 다음으로 문의하세요:"
+  },
+  "partnersPage": {
+    "badge": "추천 도구",
+    "title": "국제 전문가를 위한 파트너 도구",
+    "subtitle": "국경을 넘어 일하는 것에는 고유한 도전이 따릅니다. 이 도구들은 수천 명의 원격 근로자들이 급여, 컴플라이언스, 국경 간 결제를 처리하기 위해 신뢰합니다.",
+    "affiliateNote": "아래 일부 링크는 제휴 링크입니다. 가입 시 소액의 수수료를 받을 수 있으며 귀하에게는 비용이 없습니다.",
+    "browseJobs": "원격 채용 공고 보기 →",
+    "browseJobsLabel": "다음 국제 직무를 찾을 준비가 되셨나요?",
+    "deelTagline": "글로벌 급여 및 컴플라이언스",
+    "deelDescription": "전 세계 고용주로부터 현지 통화로 급여를 받으세요. Deel은 150개국 이상에서 계약, 세금, 컴플라이언스를 처리합니다.",
+    "deelCta": "Deel 시작하기 →",
+    "remoteTagline": "글로벌 팀을 위한 고용주 등록",
+    "remoteDescription": "Remote.com을 통해 기업은 현지 법인 설립 없이 해외에서 정규직 직원을 고용할 수 있습니다.",
+    "remoteCta": "Remote.com 탐색 →",
+    "wiseTagline": "국제 송금",
+    "wiseDescription": "실제 중간 시장 환율로 국제 급여를 주고받으세요. 숨겨진 수수료 없음 — 기존 은행 송금보다 최대 8배 절약.",
+    "wiseCta": "Wise 계좌 개설 →",
+    "payoneerTagline": "글로벌 결제 플랫폼",
+    "payoneerDescription": "국제 고용주와 마켓플레이스로부터 Payoneer 계좌로 직접 결제를 받으세요. 현지 은행으로 출금하거나 200개국 이상에서 Payoneer 카드로 사용하세요.",
+    "payoneerCta": "Payoneer 가입 →"
   }
 }

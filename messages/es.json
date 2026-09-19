@@ -1575,5 +1575,25 @@
     "s2Text2": "Si tiene preguntas sobre un cargo, contáctenos inmediatamente en contact@jobconnect-ai.com.",
     "s3Title": "Contáctenos",
     "s3Text": "Para preguntas sobre nuestra política de reembolsos o para solicitar la cancelación, comuníquese con:"
+  },
+  "partnersPage": {
+    "badge": "Herramientas Recomendadas",
+    "title": "Herramientas de Socios para Profesionales Internacionales",
+    "subtitle": "Trabajar a nivel internacional conlleva desafíos únicos. Estas herramientas son utilizadas por miles de trabajadores remotos para gestionar nóminas, cumplimiento y pagos transfronterizos.",
+    "affiliateNote": "Algunos enlaces son de afiliado. Podemos ganar una pequeña comisión si se registra — sin costo para usted.",
+    "browseJobs": "Explorar empleos remotos →",
+    "browseJobsLabel": "¿Listo para encontrar su próximo puesto internacional?",
+    "deelTagline": "Nómina global y cumplimiento",
+    "deelDescription": "Cobre en su moneda local de empleadores de todo el mundo. Deel gestiona contratos, impuestos y cumplimiento en más de 150 países.",
+    "deelCta": "Comenzar con Deel →",
+    "remoteTagline": "Empleador de registro para equipos globales",
+    "remoteDescription": "Remote.com permite a las empresas contratar empleados a tiempo completo en el extranjero sin crear entidades locales.",
+    "remoteCta": "Explorar Remote.com →",
+    "wiseTagline": "Transferencias internacionales de dinero",
+    "wiseDescription": "Envíe y reciba pagos salariales internacionales al tipo de cambio real del mercado. Sin comisiones ocultas — ahorre hasta 8 veces frente a las transferencias bancarias tradicionales.",
+    "wiseCta": "Abrir una cuenta Wise →",
+    "payoneerTagline": "Plataforma de pagos global",
+    "payoneerDescription": "Reciba pagos de empleadores internacionales directamente en una cuenta Payoneer. Retire a su banco local o gaste con la tarjeta Payoneer en más de 200 países.",
+    "payoneerCta": "Unirse a Payoneer →"
   }
 }

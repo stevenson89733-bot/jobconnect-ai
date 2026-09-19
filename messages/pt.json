@@ -1569,5 +1569,25 @@
     "s2Text2": "Se você tiver dúvidas sobre uma cobrança, entre em contato imediatamente em contact@jobconnect-ai.com.",
     "s3Title": "Contate-nos",
     "s3Text": "Para dúvidas sobre nossa política de reembolso ou para solicitar cancelamento, entre em contato:"
+  },
+  "partnersPage": {
+    "badge": "Ferramentas Recomendadas",
+    "title": "Ferramentas Parceiras para Profissionais Internacionais",
+    "subtitle": "Trabalhar internacionalmente traz desafios únicos. Essas ferramentas são usadas por milhares de trabalhadores remotos para gerenciar folha de pagamento, conformidade e pagamentos transfronteiriços.",
+    "affiliateNote": "Alguns links são de afiliados. Podemos receber uma pequena comissão se você se cadastrar — sem custo para você.",
+    "browseJobs": "Explorar empregos remotos →",
+    "browseJobsLabel": "Pronto para encontrar seu próximo cargo internacional?",
+    "deelTagline": "Folha de pagamento global e conformidade",
+    "deelDescription": "Receba em sua moeda local de empregadores em todo o mundo. Deel cuida de contratos, impostos e conformidade em mais de 150 países.",
+    "deelCta": "Começar com a Deel →",
+    "remoteTagline": "Empregador de registro para equipes globais",
+    "remoteDescription": "A Remote.com permite que empresas contratem funcionários em tempo integral no exterior sem criar entidades locais.",
+    "remoteCta": "Explorar a Remote.com →",
+    "wiseTagline": "Transferências internacionais de dinheiro",
+    "wiseDescription": "Envie e receba pagamentos salariais internacionais à taxa de câmbio real do mercado. Sem taxas ocultas — economize até 8x em comparação com transferências bancárias tradicionais.",
+    "wiseCta": "Abrir uma conta Wise →",
+    "payoneerTagline": "Plataforma de pagamentos global",
+    "payoneerDescription": "Receba pagamentos de empregadores e marketplaces internacionais diretamente em uma conta Payoneer. Saque para seu banco local ou gaste com o cartão Payoneer em mais de 200 países.",
+    "payoneerCta": "Entrar no Payoneer →"
   }
 }

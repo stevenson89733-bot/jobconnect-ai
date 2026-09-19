@@ -1591,5 +1591,25 @@
     "s2Text2": "If you have concerns about a charge or believe you were charged in error, please contact us immediately at contact@jobconnect-ai.com.",
     "s3Title": "Contact Us",
     "s3Text": "For questions about our refund policy or to request cancellation, please reach out to:"
+  },
+  "partnersPage": {
+    "badge": "Recommended Tools",
+    "title": "Partner Tools for International Professionals",
+    "subtitle": "Working across borders comes with unique challenges. These tools are trusted by thousands of remote workers to handle payroll, compliance, and cross-border payments — so you can focus on the work.",
+    "affiliateNote": "Some links below are affiliate links. We may earn a small commission if you sign up — at no cost to you.",
+    "browseJobs": "Browse Remote Jobs →",
+    "browseJobsLabel": "Ready to find your next international role?",
+    "deelTagline": "Global payroll & compliance",
+    "deelDescription": "Get paid in your local currency from employers anywhere in the world. Deel handles contracts, taxes, and compliance in 150+ countries — essential for remote workers hired internationally.",
+    "deelCta": "Get Started with Deel →",
+    "remoteTagline": "Employer of record for global teams",
+    "remoteDescription": "Remote.com lets companies hire full-time employees across borders without setting up local entities. If you land a job abroad, your employer can onboard you quickly and legally.",
+    "remoteCta": "Explore Remote.com →",
+    "wiseTagline": "International money transfers",
+    "wiseDescription": "Send and receive international salary payments at the real mid-market exchange rate. No hidden fees — save up to 8x compared to traditional bank transfers.",
+    "wiseCta": "Open a Wise Account →",
+    "payoneerTagline": "Global payment platform",
+    "payoneerDescription": "Receive payments from international employers and marketplaces directly to a Payoneer account. Withdraw to your local bank or spend with the Payoneer card in 200+ countries.",
+    "payoneerCta": "Join Payoneer →"
   }
 }

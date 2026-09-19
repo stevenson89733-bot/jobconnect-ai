@@ -1569,5 +1569,25 @@
     "s2Text2": "如果您对某笔费用有疑问，请立即通过contact@jobconnect-ai.com联系我们。",
     "s3Title": "联系我们",
     "s3Text": "如有关于我们退款政策的问题或要求取消，请联系："
+  },
+  "partnersPage": {
+    "badge": "推荐工具",
+    "title": "面向国际专业人士的合作伙伴工具",
+    "subtitle": "跨境工作面临独特挑战。这些工具受到数千名远程工作者的信赖，用于处理薪资、合规和跨境支付。",
+    "affiliateNote": "以下部分链接为联盟链接。如您注册，我们可能获得少量佣金——对您免费。",
+    "browseJobs": "浏览远程职位 →",
+    "browseJobsLabel": "准备好寻找您的下一个国际职位了吗？",
+    "deelTagline": "全球薪资与合规",
+    "deelDescription": "从全球雇主处以本地货币获得报酬。Deel在150多个国家处理合同、税务和合规事务。",
+    "deelCta": "开始使用Deel →",
+    "remoteTagline": "全球团队的雇主记录",
+    "remoteDescription": "Remote.com让企业无需成立本地实体即可在境外雇用全职员工。",
+    "remoteCta": "探索Remote.com →",
+    "wiseTagline": "国际汇款",
+    "wiseDescription": "以真实中间市场汇率收发国际薪资。无隐藏费用——比传统银行转账节省高达8倍。",
+    "wiseCta": "开设Wise账户 →",
+    "payoneerTagline": "全球支付平台",
+    "payoneerDescription": "直接通过Payoneer账户接收国际雇主和平台的付款。在200多个国家提现至本地银行或使用Payoneer卡消费。",
+    "payoneerCta": "加入Payoneer →"
   }
 }

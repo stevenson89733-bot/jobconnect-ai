@@ -1569,5 +1569,25 @@
     "s2Text2": "Si ou gen enkyetid sou yon frè, tanpri kontakte nou imedyatman nan contact@jobconnect-ai.com.",
     "s3Title": "Kontakte Nou",
     "s3Text": "Pou kesyon sou politik ranbousman nou oswa pou mande anilasyon, tanpri kontakte:"
+  },
+  "partnersPage": {
+    "badge": "Zouti Rekòmande",
+    "title": "Zouti Patenè pou Pwofesyonèl Entènasyonal",
+    "subtitle": "Travay nan lòt peyi gen defi espesyal. Zouti sa yo itilize pa dè milye travayè aleka pou jere salè, konfòmite, ak peman entènasyonal.",
+    "affiliateNote": "Kèk lyen anba yo se lyen afilye. Nou ka touche yon ti komisyon si ou enskri — san frè pou ou.",
+    "browseJobs": "Chèche travay aleka →",
+    "browseJobsLabel": "Pare pou jwenn pwochen travay entènasyonal ou?",
+    "deelTagline": "Salè mondyal ak konfòmite",
+    "deelDescription": "Jwenn salè nan lajan lokal ou nan men anplwayè toupatou nan mond lan. Deel jere kontra, taks, ak konfòmite nan plis pase 150 peyi.",
+    "deelCta": "Kòmanse ak Deel →",
+    "remoteTagline": "Anplwayè anrejistreman pou ekip mondyal",
+    "remoteDescription": "Remote.com pèmèt konpayi yo anplwaye travayè tan plen lòtbòdlo san kreye antite lokal.",
+    "remoteCta": "Eksplore Remote.com →",
+    "wiseTagline": "Transfè lajan entènasyonal",
+    "wiseDescription": "Voye ak resevwa peman salè entènasyonal nan to echanj reyèl la. San frè kache — ekonomize jiska 8x pase vèsman labank tradisyonèl.",
+    "wiseCta": "Ouvri kont Wise →",
+    "payoneerTagline": "Platfòm peman mondyal",
+    "payoneerDescription": "Resevwa peman nan men anplwayè ak platfòm entènasyonal dirèkteman nan kont Payoneer. Retire nan labank lokal ou oswa depanse ak kat Payoneer nan plis pase 200 peyi.",
+    "payoneerCta": "Rantre nan Payoneer →"
   }
 }
