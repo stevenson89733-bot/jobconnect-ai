@@ -30,29 +30,30 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
             </Link>
-            <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 hidden group-hover:block z-50">
-              <div className="w-[680px] rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-card shadow-2xl p-6 grid grid-cols-3 gap-6">
-                {/* Column 1 — Categories */}
+            {/* pt-3 bridges hover gap; left-0 anchors from trigger so no column clips off-screen */}
+            <div className="absolute left-0 top-full pt-3 hidden group-hover:block z-50">
+              <div className="grid grid-cols-3 gap-8 p-6 bg-white border border-gray-100 shadow-2xl rounded-2xl min-w-[620px]">
+                {/* Column 1 — Job Categories */}
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400 mb-3">Job Categories</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3">Job Categories</p>
                   {[
-                    ['Engineering',   'Engineering'],
-                    ['Marketing',     'Marketing'],
-                    ['Design',        'Design'],
-                    ['Sales',         'Sales'],
-                    ['Finance',       'Finance'],
-                    ['HR',            'HR'],
-                    ['Data Science',  'Data'],
+                    ['Engineering',        'Engineering'],
+                    ['Marketing',          'Marketing'],
+                    ['Design',             'Design'],
+                    ['Sales',              'Sales'],
+                    ['Finance & Accounting','Finance'],
+                    ['Data Science',       'Data'],
+                    ['HR & Recruiting',    'HR'],
                   ].map(([label, value]) => (
-                    <Link key={value} href={`/jobs?category=${encodeURIComponent(value)}`} className="block text-sm text-slate-700 dark:text-slate-300 hover:text-[#57C7E3] py-1 transition-colors">
+                    <Link key={value} href={`/jobs?category=${encodeURIComponent(value)}`} className="block text-sm text-slate-700 hover:text-[#57C7E3] py-1 transition-colors">
                       {label}
                     </Link>
                   ))}
                   <Link href="/jobs" className="block text-sm text-[#57C7E3] font-medium mt-2 hover:underline">All categories →</Link>
                 </div>
-                {/* Column 2 — Locations */}
+                {/* Column 2 — Job Locations */}
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400 mb-3">Job Locations</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3">Job Locations</p>
                   {[
                     ['🇺🇸 USA',          'US'],
                     ['🇫🇷 France',       'FR'],
@@ -61,7 +62,7 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
                     ['🇨🇦 Canada',       'CA'],
                     ['🌍 Global Remote', 'worldwide'],
                   ].map(([label, value]) => (
-                    <Link key={value} href={`/jobs?country=${value}`} className="block text-sm text-slate-700 dark:text-slate-300 hover:text-[#57C7E3] py-1 transition-colors">
+                    <Link key={value} href={`/jobs?country=${value}`} className="block text-sm text-slate-700 hover:text-[#57C7E3] py-1 transition-colors">
                       {label}
                     </Link>
                   ))}
@@ -69,14 +70,14 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
                 </div>
                 {/* Column 3 — Job Types */}
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400 mb-3">Job Types</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3">Job Types</p>
                   {[
                     ['Remote Full-time', 'Full-time'],
                     ['Remote Part-time', 'Part-time'],
-                    ['Contract',         'Contract'],
-                    ['Freelance',        'Contract'],
+                    ['Contract',        'Contract'],
+                    ['Freelance',       'Contract'],
                   ].map(([label, value]) => (
-                    <Link key={label} href={`/jobs?type=${encodeURIComponent(value)}`} className="block text-sm text-slate-700 dark:text-slate-300 hover:text-[#57C7E3] py-1 transition-colors">
+                    <Link key={label} href={`/jobs?type=${encodeURIComponent(value)}`} className="block text-sm text-slate-700 hover:text-[#57C7E3] py-1 transition-colors">
                       {label}
                     </Link>
                   ))}
