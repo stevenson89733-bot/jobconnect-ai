@@ -15,6 +15,7 @@ import CrispChat from '@/components/CrispChat'
 import FaqWidget from '@/components/FaqWidget'
 import { CookieConsent } from '@/components/CookieConsent'
 import UtmCapture from '@/components/UtmCapture'
+import CommandPalette from '@/components/search/CommandPalette'
 import { CountryProvider } from '@/components/country/CountryProvider'
 import { COUNTRY_COOKIE, DEFAULT_COUNTRY, isCountryCode } from '@/lib/countries'
 import { isRtlLocale, type Locale } from '@/lib/i18n/config'
@@ -104,6 +105,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <ThemeProvider>
             <CountryProvider initialCountry={initialCountry}>
               {!isLp && <Header userEmail={user?.email} isAdmin={isAdmin} />}
+              <CommandPalette />
               <main>{children}</main>
               {!isLp && <Footer />}
               {!isLp && isCandidate && <CopilotWidget />}
