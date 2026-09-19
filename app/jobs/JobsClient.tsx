@@ -4,6 +4,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import JobCard from '@/components/jobs/JobCard'
 import JobCardSkeleton from '@/components/jobs/JobCardSkeleton'
+import JobDetailModal from '@/components/jobs/JobDetailModal'
 import { useJobInteractions } from '@/lib/useJobInteractions'
 import { CATEGORY_KEY, JOB_TYPE_KEY, WORK_TYPE_KEY } from '@/lib/i18n/jobLabels'
 import type { SortOption } from './page'
@@ -103,6 +104,8 @@ export default function JobsClient({
   function sortLabel(id: SortOption) {
     return id === 'relevance' ? t('sortRelevance') : id === 'date' ? t('sortNewest') : t('sortSalary')
   }
+
+  const [selectedJob, setSelectedJob] = useState<Job | null>(null)
 
   const [query, setQuery] = useState(initialQuery)
   const [workType, setWorkType] = useState(initialWorkType)
@@ -231,6 +234,13 @@ export default function JobsClient({
 
   return (
     <div className="min-h-screen" style={{ background: '#F7F9FD' }}>
+      {selectedJob && (
+        <JobDetailModal
+          job={selectedJob}
+          onClose={() => setSelectedJob(null)}
+          alreadyApplied={appliedIds.has(selectedJob.id)}
+        />
+      )}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
 
         {/* ── Hero Section ──────────────────────────────── */}
@@ -437,6 +447,7 @@ export default function JobsClient({
                   isSaved={savedIds.has(job.id)}
                   onToggleSave={toggleSave}
                   alreadyApplied={appliedIds.has(job.id)}
+                  onSelect={setSelectedJob}
                 />
               ))}
             </div>

@@ -55,11 +55,13 @@ export default function JobCard({
   isSaved,
   onToggleSave,
   alreadyApplied,
+  onSelect,
 }: {
   job: Job
   isSaved: boolean
   onToggleSave: (jobId: string) => void
   alreadyApplied: boolean
+  onSelect?: (job: Job) => void
 }) {
   const [signalsOpen, setSignalsOpen] = useState(false)
   const t = useTranslations('jobs')
@@ -84,7 +86,8 @@ export default function JobCard({
     <motion.div
       whileHover={{ y: -2 }}
       transition={{ duration: 0.15, ease: [0.22, 1, 0.36, 1] }}
-      className={`bg-white dark:bg-card rounded-[12px] border shadow-sm hover:shadow-lg transition-all duration-200 p-4 flex flex-col gap-3 ${
+      onClick={() => onSelect?.(job)}
+      className={`bg-white dark:bg-card rounded-[12px] border shadow-sm hover:shadow-lg transition-all duration-200 p-4 flex flex-col gap-3 ${onSelect ? 'cursor-pointer' : ''} ${
         job.is_featured ? 'border-[#57C7E3]/40' : 'border-slate-200 dark:border-slate-700/50'
       }`}
       style={borderAccent ? { borderLeftWidth: 3, borderLeftColor: borderAccent } : undefined}
@@ -205,7 +208,7 @@ export default function JobCard({
       </AnimatePresence>
 
       {/* Row 5 — Apply · Save · Time */}
-      <div className="flex items-center gap-2 pt-1">
+      <div className="flex items-center gap-2 pt-1" onClick={e => e.stopPropagation()}>
         {job.apply_url ? (
           <>
             <a
