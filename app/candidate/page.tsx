@@ -20,6 +20,7 @@ import AutoApplyCard from '@/components/dashboard/AutoApplyCard'
 import OnboardingModal from '@/components/OnboardingModal'
 import PendingReviewBanner from '@/components/dashboard/PendingReviewBanner'
 import AtsEducationWidget from '@/components/dashboard/AtsEducationWidget'
+import ProfileCompletion from '@/components/dashboard/ProfileCompletion'
 
 export const dynamic = 'force-dynamic'
 
@@ -37,6 +38,8 @@ type Profile = {
   work_preference: string | null
   is_premium: boolean | null
   is_admin: boolean | null
+  cv_url: string | null
+  linkedin_url: string | null
 }
 
 type JobRef = { title: string; company_name: string }
@@ -92,7 +95,7 @@ export default async function CandidateDashboard({
 
       const [{ data: profileData }, { data: allApplications }, { data: appsData }, { data: analysisRow }] = await Promise.all([
         supabase.from('profiles')
-          .select('full_name, title, location, bio, experience, skills, avatar_url, years_experience, portfolio_url, availability, work_preference, is_premium, is_admin')
+          .select('full_name, title, location, bio, experience, skills, avatar_url, years_experience, portfolio_url, availability, work_preference, is_premium, is_admin, cv_url, linkedin_url')
           .eq('user_id', user.id).single(),
         // Full (unjoined, lightweight) set — feeds the count, the response
         // rates, and the avg response time, all from one query rather than
@@ -205,6 +208,7 @@ export default async function CandidateDashboard({
       <AutoApplyCard isPro={isPro} />
       <PendingReviewBanner count={pendingReviewCount} previews={pendingReviewPreviews} />
       <WelcomeHeader firstName={firstName} initials={initials} avatarUrl={profile?.avatar_url ?? null} />
+      <ProfileCompletion profile={profile} />
 
       <ProfileCompletionCard completion={completion} />
 
