@@ -1023,7 +1023,8 @@
     "candidateEliteLabel": "Elite",
     "candidateElitePeriod": "/月",
     "candidateEliteDesc": "随时取消",
-    "candidateEliteFeature5": "安全申请模式 — 优先反欺诈保护"
+    "candidateEliteFeature5": "安全申请模式 — 优先反欺诈保护",
+    "employerFeaturedListingButton": "添加精选职位 — $29–99"
   },
   "countries": {
     "AE": "阿拉伯联合酋长国",

@@ -16,6 +16,8 @@ export default function PricingPage() {
   const [employerError, setEmployerError] = useState('')
   const [employerProLoading, setEmployerProLoading] = useState(false)
   const [employerProError, setEmployerProError] = useState('')
+  const [featuredLoading, setFeaturedLoading] = useState(false)
+  const [featuredError, setFeaturedError] = useState('')
 
   const [showPromoField, setShowPromoField] = useState(false)
   const [promoCode, setPromoCode] = useState('')
@@ -143,6 +145,28 @@ export default function PricingPage() {
     } catch (err) {
       setEmployerError(err instanceof Error ? err.message : 'Checkout failed')
       setEmployerLoading(false)
+    }
+  }
+
+  async function handleFeaturedListing() {
+    setFeaturedLoading(true)
+    setFeaturedError('')
+    try {
+      const res = await fetch('/api/stripe/checkout/featured-listing', { method: 'POST' })
+      if (res.status === 401) {
+        window.location.href = '/login?redirectTo=/pricing'
+        return
+      }
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        setFeaturedError(data.error || 'Failed to create checkout')
+        setFeaturedLoading(false)
+      }
+    } catch (err) {
+      setFeaturedError(err instanceof Error ? err.message : 'Checkout failed')
+      setFeaturedLoading(false)
     }
   }
 
@@ -678,12 +702,18 @@ export default function PricingPage() {
                 </div>
                 <p className="text-sm text-slate-600 dark:text-slate-400">{t('employerFeaturedListingDesc')}</p>
               </div>
-              <button
-                disabled
-                className="shrink-0 font-semibold rounded-xl px-6 py-2.5 text-sm border border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400 opacity-70 cursor-not-allowed"
-              >
-                {t('comingSoonBtn')}
-              </button>
+              <div className="shrink-0 flex flex-col items-end gap-1">
+                {featuredError && (
+                  <p className="text-xs text-red-500 max-w-[200px] text-right">{featuredError}</p>
+                )}
+                <button
+                  onClick={handleFeaturedListing}
+                  disabled={featuredLoading}
+                  className="font-semibold rounded-xl px-6 py-2.5 text-sm bg-amber-500 hover:bg-amber-600 text-white transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {featuredLoading ? '…' : t('employerFeaturedListingButton')}
+                </button>
+              </div>
             </div>
           </div>
         </div>

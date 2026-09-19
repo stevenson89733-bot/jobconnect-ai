@@ -30,12 +30,22 @@ export async function POST(req: Request) {
   // price_1UGMUmBHJVowT7ouBDORCd3s = Employer Pro $99/mo → 'pro'
   // any other employer price (Growth $49/mo)             → 'growth'
   // candidate prices                                     → is_premium: true
-  const EMPLOYER_PRO_PRICE_ID = process.env.STRIPE_EMPLOYER_PRO_PRICE_ID ?? 'price_1UGMUmBHJVowT7ouBDORCd3s'
+  const EMPLOYER_PRO_PRICE_ID      = process.env.STRIPE_EMPLOYER_PRO_PRICE_ID ?? 'price_1UGMUmBHJVowT7ouBDORCd3s'
+  const FEATURED_LISTING_PRICE_ID  = process.env.STRIPE_FEATURED_LISTING_PRICE_ID ?? 'price_featured_placeholder'
 
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session
     const userId  = session.metadata?.supabase_user_id
-    if (userId) {
+
+    // Featured listing one-time purchase — increment credit counter
+    if (userId && session.metadata?.purchase_type === 'featured_listing') {
+      const stripe = new Stripe(stripeKey, { apiVersion: '2022-11-15' })
+      const lineItems = await stripe.checkout.sessions.listLineItems(session.id, { limit: 1 })
+      const purchasedPriceId = lineItems.data[0]?.price?.id
+      if (purchasedPriceId === FEATURED_LISTING_PRICE_ID) {
+        await supabase.rpc('increment_featured_listing_credits', { uid: userId })
+      }
+    } else if (userId) {
       const { data: profile } = await supabase.from('profiles').select('role').eq('user_id', userId).single()
       if (profile?.role === 'employer') {
         // Determine which employer plan was purchased by inspecting the line items price

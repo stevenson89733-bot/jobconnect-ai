@@ -1029,7 +1029,8 @@
     "candidateEliteLabel": "Elite",
     "candidateElitePeriod": "/mes",
     "candidateEliteDesc": "Cancela cuando quieras",
-    "candidateEliteFeature5": "Patrones de aplicación seguros — protección contra fraude prioritaria"
+    "candidateEliteFeature5": "Patrones de aplicación seguros — protección contra fraude prioritaria",
+    "employerFeaturedListingButton": "Añadir anuncio destacado — 29–99 $"
   },
   "countries": {
     "AE": "Emiratos Árabes Unidos",

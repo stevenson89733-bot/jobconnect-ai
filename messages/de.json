@@ -1023,7 +1023,8 @@
     "candidateEliteLabel": "Elite",
     "candidateElitePeriod": "/Monat",
     "candidateEliteDesc": "Jederzeit kündbar",
-    "candidateEliteFeature5": "Sichere Bewerbungsmuster — vorrangiger Betrugsschutz"
+    "candidateEliteFeature5": "Sichere Bewerbungsmuster — vorrangiger Betrugsschutz",
+    "employerFeaturedListingButton": "Featured Listing hinzufügen — 29–99 $"
   },
   "countries": {
     "AE": "Vereinigte Arabische Emirate",

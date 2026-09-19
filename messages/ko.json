@@ -1023,7 +1023,8 @@
     "candidateEliteLabel": "Elite",
     "candidateElitePeriod": "/월",
     "candidateEliteDesc": "언제든지 취소 가능",
-    "candidateEliteFeature5": "안전한 지원 패턴 — 우선 사기 방지"
+    "candidateEliteFeature5": "안전한 지원 패턴 — 우선 사기 방지",
+    "employerFeaturedListingButton": "추천 공고 추가 — $29–99"
   },
   "countries": {
     "AE": "아랍에미리트",

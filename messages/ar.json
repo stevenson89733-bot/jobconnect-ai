@@ -1023,7 +1023,8 @@
     "candidateEliteLabel": "Elite",
     "candidateElitePeriod": "/شهر",
     "candidateEliteDesc": "ألغِ في أي وقت",
-    "candidateEliteFeature5": "أنماط تقديم آمنة — حماية أولوية من الاحتيال"
+    "candidateEliteFeature5": "أنماط تقديم آمنة — حماية أولوية من الاحتيال",
+    "employerFeaturedListingButton": "إضافة إعلان مميز — 29–99$"
   },
   "countries": {
     "AE": "الإمارات العربية المتحدة",

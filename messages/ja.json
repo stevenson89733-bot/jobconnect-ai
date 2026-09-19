@@ -1023,7 +1023,8 @@
     "candidateEliteLabel": "Elite",
     "candidateElitePeriod": "/月",
     "candidateEliteDesc": "いつでもキャンセル可能",
-    "candidateEliteFeature5": "安全な応募パターン — 優先詐欺保護"
+    "candidateEliteFeature5": "安全な応募パターン — 優先詐欺保護",
+    "employerFeaturedListingButton": "注目求人を追加 — $29–99"
   },
   "countries": {
     "AE": "アラブ首長国連邦",

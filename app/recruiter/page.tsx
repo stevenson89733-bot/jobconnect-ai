@@ -3,6 +3,7 @@ import { getTranslations, getLocale } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import ApplicationStatusControl from '@/components/recruiter/ApplicationStatusControl'
 import PostJobModal from '@/components/recruiter/PostJobModal'
+import FeaturedCreditsPanel from '@/components/recruiter/FeaturedCreditsPanel'
 import InterviewLinkEditor from '@/components/recruiter/InterviewLinkEditor'
 import { companyInitials } from '@/lib/companyDisplay'
 import { APPLICATION_STATUSES, APPLICATION_STATUS_BAR_COLOR, type ApplicationStatus } from '@/lib/applicationStatus'
@@ -38,6 +39,7 @@ export default async function EmployerDashboard() {
   let isAdmin = false
   let employerPlan = 'free'
   let meetingLink: string | null = null
+  let featuredCredits = 0
   let jobs: JobRow[] = []
   let applications: Application[] = []
 
@@ -47,7 +49,7 @@ export default async function EmployerDashboard() {
 
     if (user) {
       const [{ data: profileRow }, { data: jobRows, error: jobsError }] = await Promise.all([
-        supabase.from('profiles').select('company_name, is_admin, employer_plan, meeting_link').eq('user_id', user.id).maybeSingle(),
+        supabase.from('profiles').select('company_name, is_admin, employer_plan, meeting_link, featured_listing_credits').eq('user_id', user.id).maybeSingle(),
         supabase
           .from('jobs')
           .select('id, title, is_active, created_at')
@@ -59,6 +61,7 @@ export default async function EmployerDashboard() {
       isAdmin = profileRow?.is_admin ?? false
       employerPlan = profileRow?.employer_plan ?? 'free'
       meetingLink = profileRow?.meeting_link ?? null
+      featuredCredits = profileRow?.featured_listing_credits ?? 0
       if (jobsError) console.error('[recruiter/jobs]', jobsError.message)
       jobs = (jobRows as JobRow[] | null) ?? []
 
@@ -158,6 +161,11 @@ export default async function EmployerDashboard() {
           <PostJobModal companyName={companyName} triggerClassName="btn-primary text-sm" triggerLabel={t('postAJob')} isAdmin={isAdmin} />
         </div>
       </div>
+
+      {/* Featured listing credits banner */}
+      {featuredCredits > 0 && (
+        <FeaturedCreditsPanel credits={featuredCredits} jobs={jobs} />
+      )}
 
       {/* Metrics — real counts only */}
       <div className="grid grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
