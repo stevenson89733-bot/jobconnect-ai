@@ -16,7 +16,7 @@ const NAV_ITEMS = [
   { label: 'Dashboard',    href: '/candidate',             icon: LayoutDashboard },
   { label: 'Jobs',         href: '/jobs',                  icon: Briefcase },
   { label: 'Applications', href: '/candidate/applications',icon: FileText },
-  { label: 'AI Tools',     href: '/candidate/career-coach',icon: Bot },
+  { label: 'AI Tools',     href: '/ai-tools/resume-builder', icon: Bot },
   { label: 'Profile',      href: '/profile',     icon: UserCircle },
 ]
 
@@ -30,7 +30,7 @@ export default function CandidateSidebar() {
       <aside
         className={`hidden md:flex flex-col shrink-0 bg-[#10152A] text-white transition-all duration-200 ${
           collapsed ? 'w-[64px]' : 'w-[220px]'
-        } min-h-screen sticky top-0 h-screen`}
+        } sticky top-16 h-[calc(100vh-4rem)] self-start`}
       >
         {/* Logo area */}
         <div className={`flex items-center h-16 px-4 border-b border-white/10 ${collapsed ? 'justify-center' : 'gap-2'}`}>
