@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { createClient } from '@/lib/supabase/client'
+import { getCandidateFeatures, getEmployerFeatures } from '@/lib/planFeatures'
 
 export default function PricingPage() {
   const router = useRouter()
@@ -308,22 +309,9 @@ export default function PricingPage() {
               <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('candidateFreeDesc')}</div>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
-              {([
-                t('candidateFreeFeature1'),
-                t('candidateFreeFeature2'),
-                t('candidateFreeFeature3'),
-                t('candidateFreeFeature4'),
-                t('candidateFreeFeature5'),
-                t('candidateFreeFeature6'),
-                t('candidateFreeFeature7'),
-                t('candidateFreeFeature8'),
-                t('candidateFreeFeature9'),
-                t('candidateFreeFeature10'),
-                t('candidateFreeFeature11'),
-                t('candidateFreeFeature12'),
-              ] as string[]).map((f) => (
-                <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
-                  <span className="text-green-600 dark:text-green-400 shrink-0">✓</span> {f}
+              {getCandidateFeatures('free').map((f) => (
+                <li key={f.label} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+                  <span className="shrink-0">{f.icon}</span> {f.label}
                 </li>
               ))}
             </ul>
@@ -342,21 +330,9 @@ export default function PricingPage() {
               <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('everythingInFree')}</div>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
-              {([
-                t('candidateProFeature1'),
-                t('candidateProFeature2'),
-                t('candidateProFeature3'),
-                t('candidateProFeature4'),
-                t('candidateProFeature5'),
-                t('candidateProFeature6'),
-                t('candidateProFeature7'),
-                t('candidateProFeature8'),
-                t('candidateProFeature9'),
-                t('candidateProFeature10'),
-                t('candidateProFeature11'),
-              ] as string[]).map((f) => (
-                <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
-                  <span className="text-orange-600 dark:text-accent shrink-0">✦</span> {f}
+              {getCandidateFeatures('pro').map((f) => (
+                <li key={f.label} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+                  <span className="shrink-0">{f.icon}</span> {f.label}
                 </li>
               ))}
             </ul>
@@ -434,15 +410,9 @@ export default function PricingPage() {
               <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('everythingInPro')}</div>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
-              {([
-                t('everythingInPro'),
-                t('candidateEliteFeature1'),
-                t('candidateEliteFeature2'),
-                t('candidateEliteFeature3'),
-                t('candidateEliteFeature4'),
-              ] as string[]).map((f) => (
-                <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
-                  <span className="text-purple-600 dark:text-purple-400 shrink-0">✦</span> {f}
+              {getCandidateFeatures('elite').map((f) => (
+                <li key={f.label} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+                  <span className="shrink-0">{f.icon}</span> {f.label}
                 </li>
               ))}
             </ul>
@@ -557,9 +527,9 @@ export default function PricingPage() {
               <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('employerFreeDesc')}</div>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
-              {[t('employerFreeFeature1'), t('employerFreeFeature2'), t('employerFreeFeature3')].map((f) => (
-                <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
-                  <span className="text-green-600 dark:text-green-400 shrink-0">✓</span> {f}
+              {getEmployerFeatures('employer_free').map((f) => (
+                <li key={f.label} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+                  <span className="shrink-0">{f.icon}</span> {f.label}
                 </li>
               ))}
             </ul>
@@ -577,21 +547,11 @@ export default function PricingPage() {
               <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('employerGrowthDesc')}</div>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
-              {[
-                t('employerGrowthFeature1'), t('employerGrowthFeature2'), t('employerGrowthFeature3'),
-                t('employerGrowthFeature4'), t('employerGrowthFeature5'), t('employerGrowthFeature6'),
-              ].map((f) => (
-                <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
-                  <span className="text-orange-600 dark:text-accent shrink-0">✦</span> {f}
+              {getEmployerFeatures('employer_growth').map((f) => (
+                <li key={f.label} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+                  <span className="shrink-0">{f.icon}</span> {f.label}
                 </li>
               ))}
-              <div className="pt-2 mt-2 border-t border-slate-300 dark:border-slate-600 space-y-2">
-                {[t('employerGrowthFeatureNot1'), t('employerGrowthFeatureNot2')].map((f) => (
-                  <li key={f} className="flex items-center gap-2.5 text-sm text-slate-500 dark:text-slate-400">
-                    <span className="text-slate-400 dark:text-slate-500 shrink-0">✗</span> {f}
-                  </li>
-                ))}
-              </div>
             </ul>
             <button
               onClick={handleEmployerUpgrade}
@@ -631,13 +591,9 @@ export default function PricingPage() {
                 <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">{t('employerProDesc')}</p>
               </div>
               <ul className="space-y-3 mb-8 flex-1">
-                {[
-                  t('employerProFeature1'), t('employerProFeature2'), t('employerProFeature3'),
-                  t('employerProFeature4'), t('employerProFeature5'), t('employerProFeature6'),
-                  t('employerProFeature7'),
-                ].map((f) => (
-                  <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
-                    <span style={{ color: '#57C7E3' }} className="shrink-0">✦</span> {f}
+                {getEmployerFeatures('employer_pro').map((f) => (
+                  <li key={f.label} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+                    <span className="shrink-0">{f.icon}</span> {f.label}
                   </li>
                 ))}
               </ul>
@@ -671,13 +627,9 @@ export default function PricingPage() {
                 <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">{t('employerEnterpriseDesc')}</p>
               </div>
               <ul className="space-y-3 mb-8 flex-1">
-                {[
-                  t('employerEnterpriseFeature1'), t('employerEnterpriseFeature2'), t('employerEnterpriseFeature3'),
-                  t('employerEnterpriseFeature4'), t('employerEnterpriseFeature5'), t('employerEnterpriseFeature6'),
-                  t('employerEnterpriseFeature7'),
-                ].map((f) => (
-                  <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
-                    <span className="text-slate-400 dark:text-slate-500 shrink-0">✦</span> {f}
+                {getEmployerFeatures('employer_enterprise').map((f) => (
+                  <li key={f.label} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+                    <span className="shrink-0">{f.icon}</span> {f.label}
                   </li>
                 ))}
               </ul>
