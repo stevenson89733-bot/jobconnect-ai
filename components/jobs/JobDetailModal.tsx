@@ -184,3 +184,4 @@ export default function JobDetailModal({ job, isOpen = true, onClose, alreadyApp
     </div>
   )
 }
+// rebuild Sat Sep 19 19:41:51 +07 2026
