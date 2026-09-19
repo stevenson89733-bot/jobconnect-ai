@@ -1,9 +1,8 @@
-// Daily application limits per candidate plan.
-// Free users have auto-apply disabled (0). Pro: 3/day. Elite: 5/day.
+// Daily application limits per candidate plan — must match pricing page.
 export const DAILY_LIMIT: Record<string, number> = {
   free: 0,
-  pro: 3,
-  elite: 5,
+  pro: 10,
+  elite: 25,
 }
 
 export const MATCH_THRESHOLD = 75
