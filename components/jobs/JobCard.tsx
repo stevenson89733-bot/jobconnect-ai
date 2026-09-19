@@ -62,6 +62,7 @@ export default function JobCard({
   alreadyApplied: boolean
 }) {
   const [signalsOpen, setSignalsOpen] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
   const t = useTranslations('jobs')
 
   const flag = getFlag(job.location)
@@ -84,7 +85,9 @@ export default function JobCard({
     <motion.div
       whileHover={{ y: -2 }}
       transition={{ duration: 0.15, ease: [0.22, 1, 0.36, 1] }}
-      className={`bg-white dark:bg-card rounded-[12px] border shadow-sm hover:shadow-lg transition-all duration-200 p-4 flex flex-col gap-3 ${
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className={`relative bg-white dark:bg-card rounded-[12px] border shadow-sm hover:shadow-lg transition-all duration-200 p-4 flex flex-col gap-3 ${
         job.is_featured ? 'border-[#57C7E3]/40' : 'border-slate-200 dark:border-slate-700/50'
       }`}
       style={borderAccent ? { borderLeftWidth: 3, borderLeftColor: borderAccent } : undefined}
@@ -252,6 +255,26 @@ export default function JobCard({
 
         <span className="ml-auto text-[12px] text-slate-400">{timeAgo(job.created_at)}</span>
       </div>
+
+      {isHovered && (
+        <div className="absolute bottom-0 left-0 right-0 flex gap-2 p-3 bg-gradient-to-t from-white via-white/95 to-transparent rounded-b-xl transition-opacity duration-200">
+          <a
+            href={job.apply_url ?? '#'}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={e => e.stopPropagation()}
+            className="flex-1 text-center py-1.5 text-sm font-medium bg-[#57C7E3] text-white rounded-lg hover:bg-[#45b5d1] transition-colors"
+          >
+            Apply Now
+          </a>
+          <button
+            onClick={e => { e.stopPropagation(); onToggleSave(job.id) }}
+            className="px-3 py-1.5 text-sm border border-gray-300 rounded-lg hover:border-[#57C7E3] transition-colors"
+          >
+            {isSaved ? 'Saved' : 'Save'}
+          </button>
+        </div>
+      )}
     </motion.div>
   )
 }
