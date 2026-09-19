@@ -87,11 +87,22 @@ export default async function ApplicationsPage() {
         </CardHeader>
         <CardContent>
           {apps.length === 0 ? (
-            <div className="text-center py-12 text-slate-500 dark:text-slate-400">
-              <Inbox className="w-8 h-8 mx-auto mb-3 opacity-50" strokeWidth={1.5} />
-              <p className="text-sm mb-3">No applications yet.</p>
-              <Link href="/jobs" className="text-xs text-primary dark:text-blue-400 hover:underline">
-                Browse jobs →
+            <div className="flex flex-col items-center justify-center py-20 text-center gap-4">
+              <div className="w-20 h-20 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+                <Inbox className="w-9 h-9 text-slate-400 dark:text-slate-500" strokeWidth={1.25} />
+              </div>
+              <div>
+                <p className="text-[17px] font-semibold text-slate-800 dark:text-white mb-1">No applications yet</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400 max-w-xs">
+                  Start applying to jobs that match your skills and watch your pipeline grow here.
+                </p>
+              </div>
+              <Link
+                href="/jobs"
+                className="inline-flex items-center gap-2 bg-[#57C7E3] text-white text-[13px] font-semibold px-5 py-2.5 rounded-xl hover:bg-[#3ab5d1] transition-colors"
+              >
+                <Briefcase className="w-4 h-4" />
+                Browse Jobs
               </Link>
             </div>
           ) : (

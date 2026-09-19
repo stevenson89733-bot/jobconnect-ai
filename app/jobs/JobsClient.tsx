@@ -326,14 +326,23 @@ export default function JobsClient({
 
           {/* Row 2: Advanced chips */}
           <div className="flex flex-wrap gap-1.5">
+            {(workType !== 'All' || jobType !== 'All' || category !== 'All' || crossBorder || trueRemote || country) && (
+              <button
+                onClick={clearAll}
+                className="text-[12px] px-3 py-1 rounded-full border border-red-200 text-red-500 hover:bg-red-50 transition-colors font-medium"
+              >
+                ✕ Clear filters
+              </button>
+            )}
             {WORK_TYPES.map((wt) => (
               <button
                 key={wt}
                 onClick={() => { setWorkType(wt); navigate({ workType: wt }) }}
+                style={workType === wt ? { background: '#57C7E3' } : {}}
                 className={`text-[12px] px-3 py-1 rounded-full border transition-colors ${
                   workType === wt
-                    ? 'bg-slate-800 border-slate-800 text-white'
-                    : 'border-slate-200 text-slate-500 hover:border-slate-400 hover:text-slate-700'
+                    ? 'text-white border-[#57C7E3]'
+                    : 'border-slate-200 text-slate-500 hover:border-[#57C7E3]/50 hover:text-[#57C7E3]'
                 }`}
               >
                 {workTypeLabel(wt)}
@@ -344,10 +353,11 @@ export default function JobsClient({
               <button
                 key={cat}
                 onClick={() => { setCategory(cat); navigate({ category: cat }) }}
+                style={category === cat ? { background: '#57C7E3' } : {}}
                 className={`text-[12px] px-3 py-1 rounded-full border transition-colors ${
                   category === cat
-                    ? 'bg-slate-800 border-slate-800 text-white'
-                    : 'border-slate-200 text-slate-500 hover:border-slate-400 hover:text-slate-700'
+                    ? 'text-white border-[#57C7E3]'
+                    : 'border-slate-200 text-slate-500 hover:border-[#57C7E3]/50 hover:text-[#57C7E3]'
                 }`}
               >
                 {categoryLabel(cat)}
@@ -358,10 +368,11 @@ export default function JobsClient({
               <button
                 key={type}
                 onClick={() => { setJobType(type); navigate({ type }) }}
+                style={jobType === type ? { background: '#57C7E3' } : {}}
                 className={`text-[12px] px-3 py-1 rounded-full border transition-colors ${
                   jobType === type
-                    ? 'bg-slate-800 border-slate-800 text-white'
-                    : 'border-slate-200 text-slate-500 hover:border-slate-400 hover:text-slate-700'
+                    ? 'text-white border-[#57C7E3]'
+                    : 'border-slate-200 text-slate-500 hover:border-[#57C7E3]/50 hover:text-[#57C7E3]'
                 }`}
               >
                 {jobTypeLabel(type)}
