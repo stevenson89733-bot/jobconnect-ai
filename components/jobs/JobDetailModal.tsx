@@ -157,8 +157,11 @@ export default function JobDetailModal({ job, isOpen = true, onClose, alreadyApp
         </div>
 
         {/* Sticky action bar */}
-        <div className="shrink-0 border-t border-slate-100 px-6 py-4 flex gap-3 flex-wrap">
-          <ProLockButton label="Unlock with Pro" size="md" />
+        <div className="shrink-0 border-t border-slate-100 px-6 py-4 flex flex-col gap-3">
+          <div className="mb-3">
+            <ProLockButton size="md" label="Apply faster — unlock Auto-Apply" />
+          </div>
+          <div className="flex gap-3 flex-wrap">
           {job.apply_url ? (
             <a
               href={`/api/redirect?job=${encodeURIComponent(job.id)}&source=${encodeURIComponent(job.source ?? 'direct')}`}
@@ -179,6 +182,7 @@ export default function JobDetailModal({ job, isOpen = true, onClose, alreadyApp
           >
             ✦ Apply with AI
           </Link>
+          </div>
         </div>
       </div>
     </div>

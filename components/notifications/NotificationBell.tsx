@@ -92,8 +92,8 @@ export default function NotificationBell() {
               ))
             )}
           </div>
-          <div className="px-4 py-3 border-t border-gray-50 flex justify-center">
-            <ProLockButton label="Unlock Pro alerts" size="sm" />
+          <div className="p-3 border-t border-gray-100">
+            <ProLockButton label="Get interview alerts" />
           </div>
         </div>
       )}

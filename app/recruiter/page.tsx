@@ -149,7 +149,7 @@ export default async function EmployerDashboard() {
         </div>
         <div className="flex flex-wrap gap-3 items-center">
           {employerPlan === 'free' && !isAdmin && (
-            <ProLockButton label="Upgrade to Pro" size="md" />
+            <ProLockButton label="Unlock Employer Pro" size="md" />
           )}
           <Link href="/recruiter/profile" className="btn-outline text-sm">{t('editCompanyProfile')}</Link>
           <Link href="/jobs" className="btn-outline text-sm">{t('viewAllJobs')}</Link>

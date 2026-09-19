@@ -62,7 +62,7 @@ export default function ProfileCompletion({ profile }: Props) {
         ))}
       </div>
       <div className="mt-3">
-        <ProLockButton label="Unlock Pro features" size="sm" />
+        <ProLockButton label="Unlock AI Job Match" />
       </div>
     </div>
   )
