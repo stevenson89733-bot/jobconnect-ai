@@ -18,7 +18,7 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
       <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
         <Link href="/" className="logo-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', textDecoration: 'none', flexShrink: 0 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/icon-jc.png" alt="" aria-hidden="true" style={{ height: 42, width: 'auto', flexShrink: 0 }} />
+          <img src="/icon-jc.png" alt="" aria-hidden="true" style={{ height: 54, width: 'auto', flexShrink: 0 }} />
           <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
             <span style={{ fontSize: '19px', fontWeight: 800, letterSpacing: '-0.02em', color: '#1E3A5F', whiteSpace: 'nowrap' }}>
               JobConnect<span style={{ color: '#FF6B35' }}>AI</span>
