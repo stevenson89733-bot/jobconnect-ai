@@ -14,9 +14,24 @@ import ConvertedSalary from '@/components/jobs/ConvertedSalary'
 import { getGeoBadge, getEmploymentBadge, GEO_BADGE_CONFIG, EMPLOYMENT_BADGE_CONFIG } from '@/lib/geoBadge'
 
 // Only 'yes' and 'unclear' get a badge — 'no' and null are silent
+// For 'yes': filled ✅ when confidence is 'high', outlined ◻ when 'medium', plain otherwise
 const REMOTE_BADGE: Partial<Record<'yes' | 'no' | 'unclear', { label: string; className: string }>> = {
   yes:     { label: '✅ Cross-border Friendly', className: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
   unclear: { label: '⚠ Unclear',               className: 'bg-amber-50 text-amber-700 border-amber-200' },
+}
+
+function getCrossBorderLabel(status: 'yes' | 'no' | 'unclear' | null, confidence?: 'low' | 'medium' | 'high' | null): string {
+  if (status !== 'yes') return REMOTE_BADGE[status as 'unclear']?.label ?? ''
+  if (confidence === 'high') return '✅ Cross-border Friendly'
+  if (confidence === 'medium') return '◻ Cross-border Friendly'
+  return '✅ Cross-border Friendly'
+}
+
+function getCrossBorderClass(status: 'yes' | 'no' | 'unclear' | null, confidence?: 'low' | 'medium' | 'high' | null): string {
+  if (status !== 'yes') return REMOTE_BADGE[status as 'unclear']?.className ?? ''
+  if (confidence === 'high') return 'bg-emerald-50 text-emerald-700 border-emerald-200'
+  if (confidence === 'medium') return 'bg-amber-50 text-amber-700 border-amber-300'
+  return 'bg-emerald-50 text-emerald-700 border-emerald-200'
 }
 
 const COUNTRY_FLAGS: [RegExp, string][] = [
@@ -76,7 +91,10 @@ export default function JobCard({
   const jobTypeLabel = jobTypeKey ? t(jobTypeKey) : job.job_type
 
   const remoteBadge = job.cross_border_status && job.cross_border_status !== 'no'
-    ? REMOTE_BADGE[job.cross_border_status] ?? null
+    ? {
+        label: getCrossBorderLabel(job.cross_border_status, job.cross_border_confidence),
+        className: getCrossBorderClass(job.cross_border_status, job.cross_border_confidence),
+      }
     : null
   const classBadge = getGeoBadge(job.geo_analysis)
   const empBadge = getEmploymentBadge(job.geo_analysis, classBadge)

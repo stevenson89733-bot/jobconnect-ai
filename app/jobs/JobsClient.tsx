@@ -29,6 +29,8 @@ export type Job = {
   cross_border_status: 'yes' | 'no' | 'unclear' | null
   // Candidate-facing signals explaining the classification — 2-3 short strings.
   cross_border_signals: string[] | null
+  // Keyword-scoring confidence level (lib/crossBorderDetector.ts).
+  cross_border_confidence?: 'low' | 'medium' | 'high' | null
   // GPT-4o-mini geo-compliance classification — null when not yet analyzed.
   geo_analysis: {
     classification: 'true_anywhere' | 'regional_remote' | 'local_remote_only'
