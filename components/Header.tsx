@@ -18,7 +18,7 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
       <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
         <Link href="/" className="logo-link">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo-full.png" alt="JobConnect AI" className="logo-img" style={{ height: 48, width: 'auto' }} />
+          <img src="/logo-full.png" alt="JobConnect AI" className="logo-img" style={{ height: 56, width: 'auto' }} />
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600 dark:text-slate-400">
