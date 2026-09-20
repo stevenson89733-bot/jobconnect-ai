@@ -306,7 +306,9 @@
     "freshMatches": "{count} kết quả mới hôm nay",
     "topMatches": "Kết quả phù hợp nhất với bạn",
     "rankedBy": "Xếp hạng theo mức độ phù hợp kỹ năng, linh hoạt địa điểm và tín hiệu tuyển dụng đã xác minh.",
-    "applyWithAI": "✦ Ứng tuyển bằng AI"
+    "applyWithAI": "✦ Ứng tuyển bằng AI",
+    "filter_intl": "✓ Chỉ việc làm quốc tế",
+    "filter_all": "Tất cả việc làm"
   },
   "applicationStatus": {
     "submitted": "Đã nộp",

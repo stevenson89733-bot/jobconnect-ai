@@ -391,13 +391,13 @@ export default function JobsClient({
             <button
               onClick={() => { const next = !crossBorder; setCrossBorder(next); navigate({ crossBorder: next }) }}
               aria-pressed={crossBorder}
-              className={`text-[12px] px-3 py-1 rounded-full border transition-colors ${
+              className={`text-[12px] px-3 py-1 rounded-full border transition-colors font-semibold ${
                 crossBorder
-                  ? 'bg-teal-600 border-teal-600 text-white'
+                  ? 'bg-emerald-600 border-emerald-600 text-white'
                   : 'border-slate-200 text-slate-500 hover:border-slate-400 hover:text-slate-700'
               }`}
             >
-              {t('crossBorderFilterLabel')}
+              {crossBorder ? t('filter_intl') : t('filter_all')}
             </button>
             <button
               onClick={() => { const next = !trueRemote; setTrueRemote(next); navigate({ trueRemote: next }) }}

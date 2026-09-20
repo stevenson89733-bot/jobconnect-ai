@@ -320,7 +320,9 @@
     "freshMatches": "{count} fresh matches today",
     "topMatches": "Top matches for you",
     "rankedBy": "Ranked by skill fit, location flexibility, and verified hiring signals.",
-    "applyWithAI": "✦ Apply with AI"
+    "applyWithAI": "✦ Apply with AI",
+    "filter_intl": "✓ International-Friendly Only",
+    "filter_all": "All Jobs"
   },
   "applicationStatus": {
     "submitted": "Submitted",

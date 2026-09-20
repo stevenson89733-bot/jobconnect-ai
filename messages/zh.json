@@ -306,7 +306,9 @@
     "freshMatches": "今日 {count} 个新匹配",
     "topMatches": "为你推荐的职位",
     "rankedBy": "按技能匹配度、地点灵活性及经过验证的招聘信号排序。",
-    "applyWithAI": "✦ AI 投递"
+    "applyWithAI": "✦ AI 投递",
+    "filter_intl": "✓ 仅限国际职位",
+    "filter_all": "所有职位"
   },
   "applicationStatus": {
     "submitted": "已提交",

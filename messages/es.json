@@ -312,7 +312,9 @@
     "freshMatches": "{count} nuevas coincidencias hoy",
     "topMatches": "Mejores coincidencias para ti",
     "rankedBy": "Clasificado por adecuación de habilidades, flexibilidad de ubicación y señales de contratación verificadas.",
-    "applyWithAI": "✦ Postularse con IA"
+    "applyWithAI": "✦ Postularse con IA",
+    "filter_intl": "✓ Solo empleos internacionales",
+    "filter_all": "Todos los empleos"
   },
   "applicationStatus": {
     "submitted": "Enviada",

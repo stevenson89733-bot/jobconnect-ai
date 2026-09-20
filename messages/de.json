@@ -306,7 +306,9 @@
     "freshMatches": "{count} neue Treffer heute",
     "topMatches": "Top-Treffer für dich",
     "rankedBy": "Sortiert nach Kompetenzübereinstimmung, Standortflexibilität und verifizierten Einstellungssignalen.",
-    "applyWithAI": "✦ Mit KI bewerben"
+    "applyWithAI": "✦ Mit KI bewerben",
+    "filter_intl": "✓ Nur internationale Stellen",
+    "filter_all": "Alle Stellen"
   },
   "applicationStatus": {
     "submitted": "Eingereicht",

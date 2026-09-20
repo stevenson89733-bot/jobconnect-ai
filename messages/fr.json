@@ -312,7 +312,9 @@
     "freshMatches": "{count} nouvelles correspondances aujourd'hui",
     "topMatches": "Meilleures correspondances pour vous",
     "rankedBy": "Classé par adéquation des compétences, flexibilité géographique et signaux de recrutement vérifiés.",
-    "applyWithAI": "✦ Postuler avec l'IA"
+    "applyWithAI": "✦ Postuler avec l'IA",
+    "filter_intl": "✓ Postes internationaux uniquement",
+    "filter_all": "Tous les postes"
   },
   "applicationStatus": {
     "submitted": "Envoyée",

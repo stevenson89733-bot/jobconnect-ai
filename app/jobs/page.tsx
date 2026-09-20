@@ -75,7 +75,8 @@ export default async function JobsPage({
   const jobType = searchParams.type ?? 'All'
   const category = searchParams.category ?? 'All'
   const sort = parseSort(searchParams.sort)
-  const crossBorder = parseCrossBorder(searchParams.crossBorder)
+  // Default to true (international-friendly only) when not explicitly set
+  const crossBorder = searchParams.crossBorder === undefined ? true : parseCrossBorder(searchParams.crossBorder)
   const country = searchParams.country ?? ''
   const trueRemote = parseTrueRemote(searchParams.trueRemote)
 

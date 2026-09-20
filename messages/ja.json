@@ -306,7 +306,9 @@
     "freshMatches": "本日 {count} 件の新着マッチ",
     "topMatches": "あなたへのおすすめ求人",
     "rankedBy": "スキル適合度・勤務地の柔軟性・採用シグナルで並べ替え。",
-    "applyWithAI": "✦ AIで応募"
+    "applyWithAI": "✦ AIで応募",
+    "filter_intl": "✓ 国際対応求人のみ",
+    "filter_all": "すべての求人"
   },
   "applicationStatus": {
     "submitted": "応募済み",
