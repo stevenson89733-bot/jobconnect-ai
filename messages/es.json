@@ -1028,12 +1028,16 @@
     "employerEnterpriseFeature7": "Contrato personalizado + SLA",
     "employerEnterpriseButton": "Contactar ventas",
     "employerFeaturedListingLabel": "Anuncio destacado",
-    "employerFeaturedListingDesc": "Aumenta la visibilidad de un anuncio específico — aparece al principio de los resultados",
+    "employerFeaturedListingDesc": "Aumenta la visibilidad durante 30 días — precio fijo, sin pujas.",
     "candidateEliteLabel": "Elite",
     "candidateElitePeriod": "/mes",
     "candidateEliteDesc": "Cancela cuando quieras",
     "candidateEliteFeature5": "Patrones de aplicación seguros — protección contra fraude prioritaria",
-    "employerFeaturedListingButton": "Añadir anuncio destacado — 29–99 $"
+    "employerFeaturedListingButton": "Añadir destacado — 49 $",
+    "employerFeaturedListingBenefit1": "Aparece en la parte superior de los resultados",
+    "employerFeaturedListingBenefit2": "Distintivo «Destacado» en la tarjeta de empleo",
+    "employerFeaturedListingBenefit3": "Incluido en las alertas de empleo por correo",
+    "employerFeaturedListingBenefit4": "1 actualización de posición después de 15 días"
   },
   "countries": {
     "AE": "Emiratos Árabes Unidos",

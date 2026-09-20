@@ -1022,12 +1022,16 @@
     "employerEnterpriseFeature7": "Individueller Vertrag + SLA",
     "employerEnterpriseButton": "Vertrieb kontaktieren",
     "employerFeaturedListingLabel": "Hervorgehobene Anzeige",
-    "employerFeaturedListingDesc": "Erhöhen Sie die Sichtbarkeit einer bestimmten Stelle — erscheint ganz oben in den Ergebnissen",
+    "employerFeaturedListingDesc": "Steigern Sie die Sichtbarkeit für 30 Tage — Festpreis, kein Bieten.",
     "candidateEliteLabel": "Elite",
     "candidateElitePeriod": "/Monat",
     "candidateEliteDesc": "Jederzeit kündbar",
     "candidateEliteFeature5": "Sichere Bewerbungsmuster — vorrangiger Betrugsschutz",
-    "employerFeaturedListingButton": "Featured Listing hinzufügen — 29–99 $"
+    "employerFeaturedListingButton": "Featured hinzufügen — 49 $",
+    "employerFeaturedListingBenefit1": "Erscheint ganz oben in den Suchergebnissen",
+    "employerFeaturedListingBenefit2": "Featured-Badge auf der Stellenkarte",
+    "employerFeaturedListingBenefit3": "In Kandidaten-E-Mail-Benachrichtigungen enthalten",
+    "employerFeaturedListingBenefit4": "1 Positionsauffrischung nach 15 Tagen"
   },
   "countries": {
     "AE": "Vereinigte Arabische Emirate",

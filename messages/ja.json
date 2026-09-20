@@ -1022,12 +1022,16 @@
     "employerEnterpriseFeature7": "カスタム契約 + SLA",
     "employerEnterpriseButton": "セールスに問い合わせ",
     "employerFeaturedListingLabel": "注目求人",
-    "employerFeaturedListingDesc": "特定の求人の視認性を高める — 検索結果のトップに表示",
+    "employerFeaturedListingDesc": "30日間の視認性向上 — 固定価格、入札不要。",
     "candidateEliteLabel": "Elite",
     "candidateElitePeriod": "/月",
     "candidateEliteDesc": "いつでもキャンセル可能",
     "candidateEliteFeature5": "安全な応募パターン — 優先詐欺保護",
-    "employerFeaturedListingButton": "注目求人を追加 — $29–99"
+    "employerFeaturedListingButton": "注目掘載を追加 — $49",
+    "employerFeaturedListingBenefit1": "検索結果の上位に表示",
+    "employerFeaturedListingBenefit2": "求人カードに「注目」バッジ表示",
+    "employerFeaturedListingBenefit3": "候補者へのメールアラートに含まれる",
+    "employerFeaturedListingBenefit4": "15日後に1回位置をリフレッシュ"
   },
   "countries": {
     "AE": "アラブ首長国連邦",

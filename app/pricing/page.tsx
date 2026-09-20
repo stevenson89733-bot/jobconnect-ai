@@ -649,10 +649,22 @@ export default function PricingPage() {
               <div>
                 <div className="text-sm font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider mb-1">{t('employerFeaturedListingLabel')}</div>
                 <div className="flex items-end gap-1 mb-2">
-                  <span className="text-3xl font-extrabold text-slate-900 dark:text-white">$29–$99</span>
+                  <span className="text-3xl font-extrabold text-slate-900 dark:text-white">$49</span>
                   <span className="text-slate-600 dark:text-slate-400 mb-0.5">{t('perListing')}</span>
                 </div>
-                <p className="text-sm text-slate-600 dark:text-slate-400">{t('employerFeaturedListingDesc')}</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">{t('employerFeaturedListingDesc')}</p>
+                <ul className="space-y-1">
+                  {[
+                    t('employerFeaturedListingBenefit1'),
+                    t('employerFeaturedListingBenefit2'),
+                    t('employerFeaturedListingBenefit3'),
+                    t('employerFeaturedListingBenefit4'),
+                  ].map((benefit) => (
+                    <li key={benefit} className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+                      <span className="text-amber-500">✓</span> {benefit}
+                    </li>
+                  ))}
+                </ul>
               </div>
               <div className="shrink-0 flex flex-col items-end gap-1">
                 {featuredError && (

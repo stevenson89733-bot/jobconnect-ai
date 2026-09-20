@@ -1022,12 +1022,16 @@
     "employerEnterpriseFeature7": "定制合同 + SLA",
     "employerEnterpriseButton": "联系销售",
     "employerFeaturedListingLabel": "精选招聘",
-    "employerFeaturedListingDesc": "提升特定职位的曝光率 — 显示在搜索结果顶部",
+    "employerFeaturedListingDesc": "提升30天可见度 — 固定价格，无需竞价。",
     "candidateEliteLabel": "Elite",
     "candidateElitePeriod": "/月",
     "candidateEliteDesc": "随时取消",
     "candidateEliteFeature5": "安全申请模式 — 优先反欺诈保护",
-    "employerFeaturedListingButton": "添加精选职位 — $29–99"
+    "employerFeaturedListingButton": "添加精选 — $49",
+    "employerFeaturedListingBenefit1": "出现在搜索结果顶部",
+    "employerFeaturedListingBenefit2": "职位卡片上显示「精选」徽章",
+    "employerFeaturedListingBenefit3": "包含在候选人邮件提醒中",
+    "employerFeaturedListingBenefit4": "15天后可刷新一次位置"
   },
   "countries": {
     "AE": "阿拉伯联合酋长国",

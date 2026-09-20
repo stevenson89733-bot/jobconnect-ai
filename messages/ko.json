@@ -1022,12 +1022,16 @@
     "employerEnterpriseFeature7": "맞춤 계약 + SLA",
     "employerEnterpriseButton": "영업팀 문의",
     "employerFeaturedListingLabel": "추천 채용공고",
-    "employerFeaturedListingDesc": "특정 채용 공고의 가시성 향상 — 검색 결과 상단에 표시",
+    "employerFeaturedListingDesc": "30일간 가시성 향상 — 고정 가격으로 입찰 없이.",
     "candidateEliteLabel": "Elite",
     "candidateElitePeriod": "/월",
     "candidateEliteDesc": "언제든지 취소 가능",
     "candidateEliteFeature5": "안전한 지원 패턴 — 우선 사기 방지",
-    "employerFeaturedListingButton": "추천 공고 추가 — $29–99"
+    "employerFeaturedListingButton": "추청 추가 — $49",
+    "employerFeaturedListingBenefit1": "검색 결과 상단에 표시",
+    "employerFeaturedListingBenefit2": "채용 카드에 ‘추천’ 배지 표시",
+    "employerFeaturedListingBenefit3": "지원자 이메일 알림에 포함",
+    "employerFeaturedListingBenefit4": "15일 후 위치 1회 새로고침"
   },
   "countries": {
     "AE": "아랍에미리트",

@@ -1022,12 +1022,16 @@
     "employerEnterpriseFeature7": "عقد مخصص + SLA",
     "employerEnterpriseButton": "اتصل بالمبيعات",
     "employerFeaturedListingLabel": "قائمة مميزة",
-    "employerFeaturedListingDesc": "عزز ظهور وظيفة محددة — تظهر في أعلى نتائج البحث",
+    "employerFeaturedListingDesc": "عزّز الظهور لمدة 30 يومًا — سعر ثابت، بلا مزايدات.",
     "candidateEliteLabel": "Elite",
     "candidateElitePeriod": "/شهر",
     "candidateEliteDesc": "ألغِ في أي وقت",
     "candidateEliteFeature5": "أنماط تقديم آمنة — حماية أولوية من الاحتيال",
-    "employerFeaturedListingButton": "إضافة إعلان مميز — 29–99$"
+    "employerFeaturedListingButton": "إضافة إلى المميّز — 49 $",
+    "employerFeaturedListingBenefit1": "يظهر في أعلى نتائج البحث",
+    "employerFeaturedListingBenefit2": "شارة «مميّز» على بطاقة الوظيفة",
+    "employerFeaturedListingBenefit3": "مضمّن في تنبيهات البريد الإلكتروني للمرشحين",
+    "employerFeaturedListingBenefit4": "تحديث موضع واحد بعد 15 يومًا"
   },
   "countries": {
     "AE": "الإمارات العربية المتحدة",
