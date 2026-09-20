@@ -1,47 +1,81 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect, useRef, useMemo } from 'react'
+import { createClient } from '@/lib/supabase/client'
 import ProLockButton from '@/components/ui/ProLockButton'
 
 interface Notification {
   id: string
+  type: string
   message: string
-  href: string
   read: boolean
-  time: string
+  created_at: string
 }
 
-const MOCK_NOTIFICATIONS: Notification[] = [
-  { id: '1', message: 'New job match: Senior Developer at Stripe',   href: '/jobs',                     read: false, time: '2 min ago'   },
-  { id: '2', message: 'Your application was viewed by TechCorp',     href: '/candidate/applications',   read: false, time: '1 hour ago'  },
-  { id: '3', message: 'Interview reminder: Tomorrow at 10am',        href: '/candidate/applications',   read: false, time: '3 hours ago' },
-]
+function timeAgo(iso: string): string {
+  const diff = Date.now() - new Date(iso).getTime()
+  const mins = Math.floor(diff / 60000)
+  if (mins < 1) return 'just now'
+  if (mins < 60) return `${mins}m ago`
+  const hrs = Math.floor(mins / 60)
+  if (hrs < 24) return `${hrs}h ago`
+  return `${Math.floor(hrs / 24)}d ago`
+}
 
 export default function NotificationBell() {
-  const [open, setOpen]                   = useState(false)
-  const [notifications, setNotifications] = useState<Notification[]>(MOCK_NOTIFICATIONS)
-  const ref                               = useRef<HTMLDivElement>(null)
-  const router                            = useRouter()
+  const supabase = useMemo(() => createClient(), [])
+  const [open, setOpen] = useState(false)
+  const [notifications, setNotifications] = useState<Notification[]>([])
+  const [userId, setUserId] = useState<string | null>(null)
+  const ref = useRef<HTMLDivElement>(null)
 
   const unread = notifications.filter(n => !n.read).length
 
+  // Load user then fetch notifications
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) setUserId(user.id)
+    })
+  }, [supabase])
+
+  useEffect(() => {
+    if (!userId) return
+
+    supabase
+      .from('notifications')
+      .select('id, type, message, read, created_at')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false })
+      .limit(20)
+      .then(({ data }) => {
+        if (data) setNotifications(data as Notification[])
+      })
+  }, [supabase, userId])
+
+  // Close on outside click
   useEffect(() => {
     const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false)
-      }
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
     }
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
   }, [])
 
-  const markAllRead = () => setNotifications(n => n.map(x => ({ ...x, read: true })))
+  const markAllRead = async () => {
+    if (!userId) return
+    const unreadIds = notifications.filter(n => !n.read).map(n => n.id)
+    if (unreadIds.length === 0) return
+    await supabase
+      .from('notifications')
+      .update({ read: true })
+      .in('id', unreadIds)
+    setNotifications(prev => prev.map(n => ({ ...n, read: true })))
+  }
 
-  const handleClick = (notif: Notification) => {
-    setNotifications(n => n.map(x => x.id === notif.id ? { ...x, read: true } : x))
+  const markOneRead = async (id: string) => {
+    await supabase.from('notifications').update({ read: true }).eq('id', id)
+    setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n))
     setOpen(false)
-    router.push(notif.href)
   }
 
   return (
@@ -56,7 +90,7 @@ export default function NotificationBell() {
         </svg>
         {unread > 0 && (
           <span className="absolute top-1 right-1 h-4 w-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
-            {unread}
+            {unread > 9 ? '9+' : unread}
           </span>
         )}
       </button>
@@ -71,6 +105,7 @@ export default function NotificationBell() {
               </button>
             )}
           </div>
+
           <div className="max-h-72 overflow-y-auto">
             {notifications.length === 0 ? (
               <p className="text-center text-sm text-gray-400 py-8">No notifications yet</p>
@@ -78,20 +113,21 @@ export default function NotificationBell() {
               notifications.map(n => (
                 <button
                   key={n.id}
-                  onClick={() => handleClick(n)}
+                  onClick={() => markOneRead(n.id)}
                   className={`w-full text-left px-4 py-3 border-b border-gray-50 hover:bg-gray-50 transition-colors ${!n.read ? 'bg-[#57C7E3]/5' : ''}`}
                 >
                   <div className="flex items-start gap-2">
-                    <span className={`mt-1.5 h-2 w-2 rounded-full shrink-0 ${!n.read ? 'bg-[#57C7E3]' : ''}`} />
+                    <span className={`mt-1.5 h-2 w-2 rounded-full shrink-0 ${!n.read ? 'bg-[#57C7E3]' : 'bg-transparent'}`} />
                     <div>
                       <p className="text-sm text-gray-700">{n.message}</p>
-                      <p className="text-xs text-gray-400 mt-0.5">{n.time}</p>
+                      <p className="text-xs text-gray-400 mt-0.5">{timeAgo(n.created_at)}</p>
                     </div>
                   </div>
                 </button>
               ))
             )}
           </div>
+
           <div className="p-3 border-t border-gray-100">
             <ProLockButton label="Get interview alerts" />
           </div>
