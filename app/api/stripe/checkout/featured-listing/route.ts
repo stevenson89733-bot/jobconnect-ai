@@ -4,7 +4,6 @@ import Stripe from 'stripe'
 
 export async function POST() {
   const stripeKey = process.env.STRIPE_SECRET_KEY
-  const priceId   = process.env.STRIPE_FEATURED_LISTING_PRICE_ID ?? 'price_featured_placeholder'
   const appUrl    = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
 
   if (!stripeKey) {
@@ -46,7 +45,12 @@ export async function POST() {
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       mode: 'payment',
-      line_items: [{ price: priceId, quantity: 1 }],
+      line_items: [
+        {
+          price: process.env.STRIPE_FEATURED_LISTING_PRICE_ID,
+          quantity: 1,
+        },
+      ],
       success_url: `${appUrl}/recruiter?featured=success`,
       cancel_url:  `${appUrl}/pricing?canceled=true#employers`,
       metadata: { supabase_user_id: user.id, purchase_type: 'featured_listing' },
