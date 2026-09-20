@@ -85,9 +85,6 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
               </div>
             </div>
           </div>
-          <Link href="/companies" className="hover:text-slate-900 dark:hover:text-white transition-colors">{t('companies')}</Link>
-          <Link href="/blog" className="hover:text-slate-900 dark:hover:text-white transition-colors">Blog</Link>
-
           {/* AI Tools dropdown (hover) */}
           <div className="relative group">
             <button className="flex items-center gap-1 hover:text-slate-900 dark:hover:text-white transition-colors">
@@ -275,8 +272,6 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
       {open && (
         <div className="md:hidden bg-white dark:bg-card border-t border-slate-200 dark:border-slate-800 px-6 py-4 flex flex-col gap-4 text-sm">
           <Link href="/jobs" className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>{t('browseJobs')}</Link>
-          <Link href="/companies" className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>{t('companies')}</Link>
-          <Link href="/blog" className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>Blog</Link>
           <Link href="/pricing" className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>{t('pricing')}</Link>
 
           <div className="pt-2 mt-1 border-t border-slate-200 dark:border-slate-800">
