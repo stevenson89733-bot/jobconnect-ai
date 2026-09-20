@@ -1644,5 +1644,32 @@
     "footerNote": "方法論についてご質問がありますか？",
     "contactLink": "お問い合わせ",
     "footerNoteEnd": "— 詳細についてはお気軽にどうぞ。"
+  },
+  "hero": {
+    "headline_1": "あなたに合う仕事を",
+    "headline_2": "見つけよう",
+    "headline_3": "世界中で。",
+    "subline": "CVをアップロード。AIがあなたのプロフィールを分析し、すべての国際求人をスコアリング。リモート・越境・ビザスポンサー付きの本当に合う機会を提示します。",
+    "input_job": "職種、スキル、またはキーワード...",
+    "input_location": "都市、国、または「リモート」",
+    "upload_cv": "CVをアップロード",
+    "run_ai_match": "AIマッチを実行",
+    "filter_label": "クイックフィルター：",
+    "filter_remote": "🌐 フルリモート",
+    "filter_visa": "✈ ビザサポート",
+    "filter_interview": "📅 直接面接",
+    "filter_ai": "🤖 AIマッチ",
+    "trust_verified": "認証済み越境求人",
+    "trust_score": "求人ごとのAIスコア",
+    "trust_booking": "直接面接予約",
+    "trust_reach": "63カ国 · 11言語",
+    "stat_roles": "越境求人",
+    "stat_countries": "国",
+    "stat_languages": "言語",
+    "stat_direct": "ダイレクト",
+    "stat_direct_sub": "やり取り不要",
+    "badge_remote": "✓ フルリモート",
+    "badge_visa": "✈ ビザサポート",
+    "badge_book": "📅 面接を予約"
   }
 }

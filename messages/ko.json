@@ -1644,5 +1644,32 @@
     "footerNote": "방법론에 대해 질문이 있으신가요?",
     "contactLink": "문의하기",
     "footerNoteEnd": "— 자세히 설명해 드리겠습니다."
+  },
+  "hero": {
+    "headline_1": "당신에게 맞는",
+    "headline_2": "일자리를 찾으세요",
+    "headline_3": "전 세계에서.",
+    "subline": "CV를 업로드하세요. AI가 프로필을 분석하고 모든 국제 직무를 평가해 실제로 맞는 기회를 보여줍니다 — 원격 근무, 국경을 초월한 기회, 비자 지원.",
+    "input_job": "직함, 기술 또는 키워드...",
+    "input_location": "도시, 국가 또는 '원격'",
+    "upload_cv": "CV 업로드",
+    "run_ai_match": "AI 매칭 실행",
+    "filter_label": "빠른 필터:",
+    "filter_remote": "🌐 완전 원격",
+    "filter_visa": "✈ 비자 지원",
+    "filter_interview": "📅 직접 인터뷰",
+    "filter_ai": "🤖 AI 매칭",
+    "trust_verified": "검증된 국경 초월 일자리",
+    "trust_score": "직무별 AI 점수",
+    "trust_booking": "직접 인터뷰 예약",
+    "trust_reach": "63개국 · 11개 언어",
+    "stat_roles": "국경 초월 직무",
+    "stat_countries": "국가",
+    "stat_languages": "언어",
+    "stat_direct": "직접",
+    "stat_direct_sub": "번거로운 과정 없음",
+    "badge_remote": "✓ 완전 원격",
+    "badge_visa": "✈ 비자 지원",
+    "badge_book": "📅 인터뷰 예약"
   }
 }

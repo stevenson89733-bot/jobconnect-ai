@@ -4,6 +4,7 @@ import { getTranslations } from 'next-intl/server'
 import { absoluteUrl } from '@/lib/seo'
 import FadeIn from '@/components/dashboard/FadeIn'
 import { CountUpStat } from '@/components/landing/CountUpStat'
+import HeroSection from '@/components/landing/HeroSection'
 
 export const metadata: Metadata = {
   title: 'JobConnect AI — The career copilot for the cross-border generation',
@@ -136,80 +137,7 @@ export default async function Home() {
       <OrganizationJsonLd />
 
       {/* ── 1. HERO ───────────────────────────────────────────── */}
-      <section style={{ background: 'linear-gradient(135deg, #0F1623 0%, #1a2a4a 60%, #0F1623 100%)' }}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-16">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-
-            {/* Left copy */}
-            <div className="flex-1 text-center lg:text-left">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/15 text-[13px] text-slate-300 mb-8"
-                   style={{ background: 'rgba(255,255,255,0.07)' }}>
-                <span className="w-2 h-2 rounded-full animate-pulse shrink-0" style={{ background: '#57C7E3' }} />
-                🌍 {t('v2_heroBadge')}
-              </div>
-
-              {/* H1 */}
-              <h1 className="font-bold text-white leading-tight tracking-tight mb-2"
-                  style={{ fontSize: 'clamp(3rem, 6vw, 5rem)' }}>
-                {t('v2_heroH1a')}<br className="hidden sm:block" />{' '}
-                <span className="hero-gradient-underline">{t('v2_heroH1b')}</span>
-              </h1>
-
-              {/* Cyan italic sub */}
-              <p className="text-base sm:text-lg font-medium italic mb-4" style={{ color: '#57C7E3' }}>
-                {t('v2_heroTagline')}
-              </p>
-
-              {/* Description */}
-              <p className="text-slate-400 mb-8 max-w-lg mx-auto lg:mx-0"
-                 style={{ fontSize: '17px', lineHeight: '1.7' }}>
-                {t('v2_heroDesc')}
-              </p>
-
-              {/* CTAs */}
-              <div className="flex flex-wrap gap-3 justify-center lg:justify-start mb-8">
-                <Link
-                  href="/register"
-                  className="inline-flex items-center gap-2 text-white font-bold rounded-full px-7 py-3.5 text-[15px] transition-all duration-200 hover:brightness-110 hover:scale-[1.03] shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-400"
-                  style={{ background: 'linear-gradient(135deg, #2E5CF6 0%, #F0663A 100%)' }}
-                >
-                  {t('v2_heroCta2')} →
-                </Link>
-                <Link
-                  href="/jobs"
-                  className="inline-flex items-center gap-2 border font-bold rounded-full px-7 py-3.5 text-[15px] text-white transition-all duration-200 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2"
-                  style={{ borderColor: 'rgba(255,255,255,0.3)' }}
-                >
-                  {t('v2_heroCta1')}
-                </Link>
-              </div>
-
-              {/* Auto-Apply teaser */}
-              <Link
-                href="/auto-apply"
-                className="inline-flex items-center gap-2 text-[13px] font-semibold text-cyan-400 hover:text-cyan-300 transition-colors mb-5"
-              >
-                <span className="flex items-center gap-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1">
-                  🤖 <span>{t('v2_heroAutoApply')}</span>
-                  <span className="opacity-60">→</span>
-                </span>
-              </Link>
-
-              {/* Flag row */}
-              <div className="flex items-center gap-3 justify-center lg:justify-start">
-                <span className="flex gap-1 text-2xl">🇺🇸🇬🇧🇩🇪🇫🇷🇨🇦</span>
-                <span className="text-[13px] text-slate-400">{t('v2_heroFlagsLabel')}</span>
-              </div>
-            </div>
-
-            {/* Right — floating job card */}
-            <div className="w-full lg:w-auto lg:flex-shrink-0 flex justify-center lg:justify-end">
-              <HeroJobCard />
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection />
 
       {/* ── 2. STATS ROW ──────────────────────────────────────── */}
       <section style={{ background: '#0c1020' }}>

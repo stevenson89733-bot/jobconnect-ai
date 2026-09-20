@@ -1644,5 +1644,32 @@
     "footerNote": "对我们的方法论有疑问？",
     "contactLink": "联系我们",
     "footerNoteEnd": "——我们很乐意详细解释。"
+  },
+  "hero": {
+    "headline_1": "找到",
+    "headline_2": "适合你的工作",
+    "headline_3": "遍布全球。",
+    "subline": "上传你的简历。我们的AI分析你的档案，评估每一个国际职位，并推送真正适合你的机会——远程、跨境、签证担保。",
+    "input_job": "职位名称、技能或关键词...",
+    "input_location": "城市、国家或「远程」",
+    "upload_cv": "上传简历",
+    "run_ai_match": "AI智能匹配",
+    "filter_label": "快速筛选：",
+    "filter_remote": "🌐 全远程",
+    "filter_visa": "✈ 签证担保",
+    "filter_interview": "📅 直接面试",
+    "filter_ai": "🤖 AI匹配",
+    "trust_verified": "已验证的跨境职位",
+    "trust_score": "每个职位的AI匹配分数",
+    "trust_booking": "直接预约面试",
+    "trust_reach": "63个国家 · 11种语言",
+    "stat_roles": "跨境职位",
+    "stat_countries": "国家",
+    "stat_languages": "语言",
+    "stat_direct": "直接",
+    "stat_direct_sub": "无需来回沟通",
+    "badge_remote": "✓ 全远程",
+    "badge_visa": "✈ 签证担保",
+    "badge_book": "📅 预约面试"
   }
 }

@@ -1650,5 +1650,32 @@
     "footerNote": "Des questions sur notre méthodologie ?",
     "contactLink": "Contactez-nous",
     "footerNoteEnd": "— nous serons heureux d'entrer dans les détails."
+  },
+  "hero": {
+    "headline_1": "Trouvez les emplois qui",
+    "headline_2": "vous correspondent",
+    "headline_3": "partout dans le monde.",
+    "subline": "Importez votre CV. Notre IA analyse votre profil, évalue chaque offre internationale et fait remonter les opportunités qui vous correspondent vraiment — télétravail, transfrontalier, visa sponsorisé.",
+    "input_job": "Intitulé du poste, compétences ou mots-clés...",
+    "input_location": "Ville, pays ou « Télétravail »",
+    "upload_cv": "Importer mon CV",
+    "run_ai_match": "Lancer l'IA",
+    "filter_label": "Filtres rapides :",
+    "filter_remote": "🌐 Full Remote",
+    "filter_visa": "✈ Visa Sponsorisé",
+    "filter_interview": "📅 Entretien Direct",
+    "filter_ai": "🤖 Match IA",
+    "trust_verified": "Offres transfrontalières vérifiées",
+    "trust_score": "Score IA par offre",
+    "trust_booking": "Réservation d'entretien directe",
+    "trust_reach": "63 pays · 11 langues",
+    "stat_roles": "Offres transfrontalières",
+    "stat_countries": "Pays",
+    "stat_languages": "Langues",
+    "stat_direct": "Direct",
+    "stat_direct_sub": "Sans aller-retour",
+    "badge_remote": "✓ Full Remote",
+    "badge_visa": "✈ Visa Sponsorisé",
+    "badge_book": "📅 Réserver un entretien"
   }
 }

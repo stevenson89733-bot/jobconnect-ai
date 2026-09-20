@@ -1650,5 +1650,32 @@
     "footerNote": "¿Preguntas sobre nuestra metodología?",
     "contactLink": "Contáctenos",
     "footerNoteEnd": "— estaremos encantados de entrar en más detalles."
+  },
+  "hero": {
+    "headline_1": "Encuentra empleos que",
+    "headline_2": "te correspondan",
+    "headline_3": "en todo el mundo.",
+    "subline": "Sube tu CV. Nuestra IA analiza tu perfil, evalúa cada oferta internacional y muestra las oportunidades que realmente encajan contigo — remoto, transfronterizo, visa patrocinada.",
+    "input_job": "Cargo, habilidades o palabras clave...",
+    "input_location": "Ciudad, país o 'Remoto'",
+    "upload_cv": "Subir CV",
+    "run_ai_match": "Buscar con IA",
+    "filter_label": "Filtros rápidos:",
+    "filter_remote": "🌐 Full Remote",
+    "filter_visa": "✈ Visa Patrocinada",
+    "filter_interview": "📅 Entrevista Directa",
+    "filter_ai": "🤖 Match IA",
+    "trust_verified": "Empleos transfronterizos verificados",
+    "trust_score": "Puntuación IA por oferta",
+    "trust_booking": "Reserva de entrevista directa",
+    "trust_reach": "63 países · 11 idiomas",
+    "stat_roles": "Empleos transfronterizos",
+    "stat_countries": "Países",
+    "stat_languages": "Idiomas",
+    "stat_direct": "Directo",
+    "stat_direct_sub": "Sin intermediarios",
+    "badge_remote": "✓ Full Remote",
+    "badge_visa": "✈ Visa Patrocinada",
+    "badge_book": "📅 Reservar entrevista"
   }
 }

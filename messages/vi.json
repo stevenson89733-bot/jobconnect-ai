@@ -1644,5 +1644,32 @@
     "footerNote": "Có câu hỏi về phương pháp luận của chúng tôi?",
     "contactLink": "Liên hệ chúng tôi",
     "footerNoteEnd": "— chúng tôi sẵn sàng giải thích chi tiết hơn."
+  },
+  "hero": {
+    "headline_1": "Tìm việc làm",
+    "headline_2": "phù hợp với bạn",
+    "headline_3": "trên toàn cầu.",
+    "subline": "Tải CV lên. AI của chúng tôi phân tích hồ sơ, đánh giá từng vị trí quốc tế và hiển thị những cơ hội thực sự phù hợp — làm từ xa, xuyên biên giới, bảo lãnh visa.",
+    "input_job": "Chức danh, kỹ năng hoặc từ khóa...",
+    "input_location": "Thành phố, quốc gia hoặc 'Từ xa'",
+    "upload_cv": "Tải CV lên",
+    "run_ai_match": "Chạy AI Match",
+    "filter_label": "Bộ lọc nhanh:",
+    "filter_remote": "🌐 Làm việc từ xa",
+    "filter_visa": "✈ Bảo lãnh Visa",
+    "filter_interview": "📅 Phỏng vấn trực tiếp",
+    "filter_ai": "🤖 AI Match",
+    "trust_verified": "Việc làm xuyên biên giới đã xác minh",
+    "trust_score": "Điểm AI cho từng vị trí",
+    "trust_booking": "Đặt lịch phỏng vấn trực tiếp",
+    "trust_reach": "63 quốc gia · 11 ngôn ngữ",
+    "stat_roles": "Vị trí xuyên biên giới",
+    "stat_countries": "Quốc gia",
+    "stat_languages": "Ngôn ngữ",
+    "stat_direct": "Trực tiếp",
+    "stat_direct_sub": "Không qua trung gian",
+    "badge_remote": "✓ Làm từ xa",
+    "badge_visa": "✈ Bảo lãnh Visa",
+    "badge_book": "📅 Đặt lịch phỏng vấn"
   }
 }

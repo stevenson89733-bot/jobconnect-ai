@@ -1665,5 +1665,32 @@
     "footerNote": "Questions about our methodology?",
     "contactLink": "Contact us",
     "footerNoteEnd": "— we are happy to go into more detail."
+  },
+  "hero": {
+    "headline_1": "Find jobs that",
+    "headline_2": "match you",
+    "headline_3": "globally.",
+    "subline": "Upload your CV. Our AI analyzes your profile, scores every international role, and surfaces the opportunities that actually fit — remote, cross-border, visa-sponsored.",
+    "input_job": "Job title, skills, or keywords...",
+    "input_location": "Location, country, or 'Remote'",
+    "upload_cv": "Upload CV",
+    "run_ai_match": "Run AI Match",
+    "filter_label": "Quick Filters:",
+    "filter_remote": "🌐 Full Remote",
+    "filter_visa": "✈ Visa Sponsor",
+    "filter_interview": "📅 Direct Interview",
+    "filter_ai": "🤖 AI Job Match",
+    "trust_verified": "Verified cross-border jobs",
+    "trust_score": "AI Match Score per role",
+    "trust_booking": "Direct interview booking",
+    "trust_reach": "63 countries · 11 languages",
+    "stat_roles": "Cross-border roles",
+    "stat_countries": "Countries",
+    "stat_languages": "Languages",
+    "stat_direct": "Direct",
+    "stat_direct_sub": "No back-and-forth",
+    "badge_remote": "✓ Full Remote",
+    "badge_visa": "✈ Visa Sponsor",
+    "badge_book": "📅 Book Interview"
   }
 }

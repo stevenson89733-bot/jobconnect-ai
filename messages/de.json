@@ -1644,5 +1644,32 @@
     "footerNote": "Fragen zu unserer Methodik?",
     "contactLink": "Kontaktieren Sie uns",
     "footerNoteEnd": "— wir erklären gerne alle Details."
+  },
+  "hero": {
+    "headline_1": "Finde Jobs, die",
+    "headline_2": "zu dir passen",
+    "headline_3": "weltweit.",
+    "subline": "Lade deinen Lebenslauf hoch. Unsere KI analysiert dein Profil, bewertet jede internationale Stelle und zeigt die Möglichkeiten, die wirklich passen — remote, grenzüberschreitend, visumgesponsert.",
+    "input_job": "Berufsbezeichnung, Fähigkeiten oder Schlüsselwörter...",
+    "input_location": "Stadt, Land oder 'Remote'",
+    "upload_cv": "Lebenslauf hochladen",
+    "run_ai_match": "KI-Suche starten",
+    "filter_label": "Schnellfilter:",
+    "filter_remote": "🌐 Full Remote",
+    "filter_visa": "✈ Visum gesponsert",
+    "filter_interview": "📅 Direktes Interview",
+    "filter_ai": "🤖 KI-Match",
+    "trust_verified": "Verifizierte grenzüberschreitende Jobs",
+    "trust_score": "KI-Score pro Stelle",
+    "trust_booking": "Direkte Interviewbuchung",
+    "trust_reach": "63 Länder · 11 Sprachen",
+    "stat_roles": "Grenzüberschreitende Stellen",
+    "stat_countries": "Länder",
+    "stat_languages": "Sprachen",
+    "stat_direct": "Direkt",
+    "stat_direct_sub": "Kein Hin und Her",
+    "badge_remote": "✓ Full Remote",
+    "badge_visa": "✈ Visum gesponsert",
+    "badge_book": "📅 Interview buchen"
   }
 }
