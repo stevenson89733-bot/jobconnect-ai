@@ -68,7 +68,7 @@ function PreviewModal({ log, onClose }: { log: Log; onClose: () => void }) {
         {firstSentence && (
           <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl">
             <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Cover Letter Opening</p>
-            <p className="text-sm text-slate-600 dark:text-slate-400 italic">"{firstSentence}"</p>
+            <p className="text-sm text-slate-600 dark:text-slate-400 italic">&quot;{firstSentence}&quot;</p>
           </div>
         )}
 
