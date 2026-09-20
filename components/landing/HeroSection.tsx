@@ -4,6 +4,35 @@ import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
+function MatchCard({ company, role, score, flag, salary }: {
+  company: string; role: string; score: number; flag: string; salary: string
+}) {
+  const r = 22
+  const circ = 2 * Math.PI * r
+  const dash = (score / 100) * circ
+  return (
+    <div className="bg-white/8 border border-white/10 rounded-2xl px-4 py-3 flex items-center gap-4 backdrop-blur-sm"
+         style={{ background: 'rgba(255,255,255,0.06)' }}>
+      <div className="relative shrink-0 w-14 h-14">
+        <svg width="56" height="56" viewBox="0 0 56 56">
+          <circle cx="28" cy="28" r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="4" />
+          <circle cx="28" cy="28" r={r} fill="none" stroke="#57C7E3" strokeWidth="4"
+            strokeDasharray={`${dash} ${circ}`} strokeLinecap="round"
+            transform="rotate(-90 28 28)" />
+        </svg>
+        <span className="absolute inset-0 flex items-center justify-center text-[11px] font-extrabold text-white">
+          {score}%
+        </span>
+      </div>
+      <div className="min-w-0">
+        <div className="text-[11px] text-slate-400 truncate">{flag} {company}</div>
+        <div className="text-[13px] font-semibold text-white leading-snug truncate">{role}</div>
+        <div className="text-[11px] text-slate-400 mt-0.5">{salary}</div>
+      </div>
+    </div>
+  )
+}
+
 export default function HeroSection() {
   const t = useTranslations('hero')
   const router = useRouter()
@@ -24,14 +53,20 @@ export default function HeroSection() {
     if (activeFilters.includes('remote')) params.set('work_type', 'Remote')
     if (activeFilters.includes('visa')) params.set('visa', '1')
     if (activeFilters.includes('ai')) params.set('ai_match', '1')
+    if (activeFilters.includes('logistics')) params.set('category', 'Logistics')
+    if (activeFilters.includes('supplychain')) params.set('category', 'Supply Chain')
+    if (activeFilters.includes('tech')) params.set('category', 'Engineering')
     router.push(`/jobs?${params.toString()}`)
   }
 
   const filters = [
-    { key: 'remote',    label: t('filter_remote') },
-    { key: 'visa',      label: t('filter_visa') },
-    { key: 'interview', label: t('filter_interview') },
-    { key: 'ai',        label: t('filter_ai') },
+    { key: 'remote',      label: t('filter_remote') },
+    { key: 'visa',        label: t('filter_visa') },
+    { key: 'interview',   label: t('filter_interview') },
+    { key: 'ai',          label: t('filter_ai') },
+    { key: 'logistics',   label: '#Logistics' },
+    { key: 'supplychain', label: '#SupplyChain' },
+    { key: 'tech',        label: '#Tech' },
   ]
 
   return (
@@ -67,7 +102,7 @@ export default function HeroSection() {
               onChange={e => setJobQuery(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSearch()}
               placeholder={t('input_job')}
-              className="flex-1 bg-white/8 border border-white/15 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-[#57C7E3]/60 transition-colors"
+              className="flex-1 border border-white/15 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-[#57C7E3]/60 transition-colors"
               style={{ background: 'rgba(255,255,255,0.06)' }}
             />
             <input
@@ -76,7 +111,7 @@ export default function HeroSection() {
               onChange={e => setLocation(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSearch()}
               placeholder={t('input_location')}
-              className="flex-1 sm:max-w-[220px] bg-white/8 border border-white/15 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-[#57C7E3]/60 transition-colors"
+              className="flex-1 sm:max-w-[220px] border border-white/15 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-[#57C7E3]/60 transition-colors"
               style={{ background: 'rgba(255,255,255,0.06)' }}
             />
           </div>
@@ -116,20 +151,31 @@ export default function HeroSection() {
           ))}
         </div>
 
-        {/* Trust row */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 border-t border-white/8 pt-8"
-             style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
-          {[
-            { icon: '✅', text: t('trust_verified') },
-            { icon: '✦',  text: t('trust_score') },
-            { icon: '📅', text: t('trust_booking') },
-            { icon: '🌍', text: t('trust_reach') },
-          ].map(({ icon, text }) => (
-            <div key={text} className="flex items-start gap-2">
-              <span className="text-[#57C7E3] text-sm mt-0.5 shrink-0">{icon}</span>
-              <span className="text-[12px] text-slate-400 leading-snug">{text}</span>
-            </div>
-          ))}
+        {/* Match Score Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
+          <MatchCard company="Stripe" role="Backend Engineer" score={94} flag="🇺🇸" salary="$120k – $160k" />
+          <MatchCard company="Figma" role="Product Designer" score={87} flag="🇩🇪" salary="€90k – €120k" />
+          <MatchCard company="Shopify" role="Growth Manager" score={81} flag="🇨🇦" salary="$95k – $130k" />
+        </div>
+
+        {/* Stat row */}
+        <div className="w-full border-t border-slate-800/80 pt-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          <div>
+            <div className="text-2xl sm:text-3xl font-extrabold text-white">10k+</div>
+            <div className="text-xs sm:text-sm text-slate-400 mt-1">{t('stat_roles')}</div>
+          </div>
+          <div>
+            <div className="text-2xl sm:text-3xl font-extrabold text-white">63</div>
+            <div className="text-xs sm:text-sm text-slate-400 mt-1">{t('stat_countries')}</div>
+          </div>
+          <div>
+            <div className="text-2xl sm:text-3xl font-extrabold text-white">11</div>
+            <div className="text-xs sm:text-sm text-slate-400 mt-1">{t('stat_languages')}</div>
+          </div>
+          <div>
+            <div className="text-2xl sm:text-3xl font-extrabold text-[#57C7E3]">{t('stat_direct')}</div>
+            <div className="text-xs sm:text-sm text-slate-400 mt-1">{t('stat_direct_sub')}</div>
+          </div>
         </div>
       </div>
     </section>
