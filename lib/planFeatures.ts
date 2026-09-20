@@ -35,7 +35,7 @@ export const CANDIDATE_FEATURES: PlanFeature[] = [
   { icon: '🛡️', label: 'Safe Application Patterns — fraud detection', plans: ['free', 'pro', 'elite'] },
 
   // Pro + Elite only
-  { icon: '📝', label: 'AI Resume Builder GPT-4o — tailored per role',    plans: ['pro', 'elite'] },
+  { icon: '📝', label: 'AI Resume Builder — tailored per role',            plans: ['pro', 'elite'] },
   { icon: '📈', label: 'ATS Score 0-100 — keywords · format · skills',    plans: ['pro', 'elite'] },
   { icon: '✉️', label: 'AI Cover Letter Generator — personalized',        plans: ['pro', 'elite'] },
   { icon: '🗺️', label: 'Resume adapted by country — format per market',   plans: ['pro', 'elite'] },
