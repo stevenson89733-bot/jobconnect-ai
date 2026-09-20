@@ -201,7 +201,7 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
                 </div>
                 {/* CTA footer */}
                 <div className="col-span-2 pt-3 border-t border-gray-100 flex items-center justify-between">
-                  <span className="text-xs text-gray-400">Elite from <strong className="text-slate-700">$29/mo</strong> · Pro from <strong className="text-slate-700">$49/mo</strong></span>
+                  <span className="text-xs text-gray-400">Elite from <strong className="text-slate-700">$39.99/mo</strong> · Pro from <strong className="text-slate-700">$19.99/mo</strong></span>
                   <a href="/pricing" className="inline-flex items-center gap-1.5 bg-[#F0663A] text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-[#d4522a] transition-colors">
                     🔒 See Plans →
                   </a>
