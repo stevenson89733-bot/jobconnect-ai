@@ -308,7 +308,8 @@
     "rankedBy": "Classificado por adequação de habilidades, flexibilidade de localização e sinais verificados de contratação.",
     "applyWithAI": "✦ Candidatar com IA",
     "filter_intl": "✓ Apenas vagas internacionais",
-    "filter_all": "Todas as vagas"
+    "filter_all": "Todas as vagas",
+    "crossBorderAnalyzing": "Nosso detector está analisando as vagas — volte em algumas horas."
   },
   "applicationStatus": {
     "submitted": "Enviada",

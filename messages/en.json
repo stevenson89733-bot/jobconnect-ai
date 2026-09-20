@@ -322,7 +322,8 @@
     "rankedBy": "Ranked by skill fit, location flexibility, and verified hiring signals.",
     "applyWithAI": "✦ Apply with AI",
     "filter_intl": "✓ International-Friendly Only",
-    "filter_all": "All Jobs"
+    "filter_all": "All Jobs",
+    "crossBorderAnalyzing": "Our detector is analysing live listings — check back in a few hours."
   },
   "applicationStatus": {
     "submitted": "Submitted",

@@ -308,7 +308,8 @@
     "rankedBy": "Sortiert nach Kompetenzübereinstimmung, Standortflexibilität und verifizierten Einstellungssignalen.",
     "applyWithAI": "✦ Mit KI bewerben",
     "filter_intl": "✓ Nur internationale Stellen",
-    "filter_all": "Alle Stellen"
+    "filter_all": "Alle Stellen",
+    "crossBorderAnalyzing": "Unser Detektor analysiert aktuelle Stellen — schau in ein paar Stunden nochmal vorbei."
   },
   "applicationStatus": {
     "submitted": "Eingereicht",

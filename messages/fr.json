@@ -314,7 +314,8 @@
     "rankedBy": "Classé par adéquation des compétences, flexibilité géographique et signaux de recrutement vérifiés.",
     "applyWithAI": "✦ Postuler avec l'IA",
     "filter_intl": "✓ Postes internationaux uniquement",
-    "filter_all": "Tous les postes"
+    "filter_all": "Tous les postes",
+    "crossBorderAnalyzing": "Notre détecteur analyse les offres en cours — revenez dans quelques heures."
   },
   "applicationStatus": {
     "submitted": "Envoyée",

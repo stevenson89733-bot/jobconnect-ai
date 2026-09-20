@@ -308,7 +308,8 @@
     "rankedBy": "Xếp hạng theo mức độ phù hợp kỹ năng, linh hoạt địa điểm và tín hiệu tuyển dụng đã xác minh.",
     "applyWithAI": "✦ Ứng tuyển bằng AI",
     "filter_intl": "✓ Chỉ việc làm quốc tế",
-    "filter_all": "Tất cả việc làm"
+    "filter_all": "Tất cả việc làm",
+    "crossBorderAnalyzing": "Bộ phát hiện của chúng tôi đang phân tích các tin tuyển dụng — hãy quay lại sau vài giờ."
   },
   "applicationStatus": {
     "submitted": "Đã nộp",
