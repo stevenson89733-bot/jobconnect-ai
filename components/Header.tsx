@@ -16,9 +16,17 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
   return (
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-background/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
       <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
-        <Link href="/" className="logo-link">
+        <Link href="/" className="logo-link flex items-center gap-2.5 select-none">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo-full.png" alt="JobConnect AI" className="logo-img" style={{ height: 56, width: 'auto' }} />
+          <img src="/logo-full.png" alt="" aria-hidden="true" className="logo-img" style={{ height: 44, width: 'auto' }} />
+          <div className="flex flex-col leading-tight">
+            <span className="text-[17px] font-extrabold tracking-tight text-slate-900 dark:text-white" style={{ letterSpacing: '-0.02em' }}>
+              JobConnect<span style={{ color: '#57C7E3' }}>AI</span>
+            </span>
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400" style={{ letterSpacing: '0.12em' }}>
+              Connecting Talent · Building Futures
+            </span>
+          </div>
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600 dark:text-slate-400">
