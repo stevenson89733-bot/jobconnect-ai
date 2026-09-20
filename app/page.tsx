@@ -139,25 +139,6 @@ export default async function Home() {
       {/* ── 1. HERO ───────────────────────────────────────────── */}
       <HeroSection />
 
-      {/* ── 2. STATS ROW ──────────────────────────────────────── */}
-      <section style={{ background: '#0c1020' }}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0 md:divide-x divide-white/10">
-            {[
-              { value: '2,400+', label: t('v2_statJobs') },
-              { value: '94%',    label: t('v2_statAccuracy') },
-              { value: '5',      label: t('v2_statMarkets') },
-              { value: 'Free',   label: t('v2_statFree') },
-            ].map(({ value, label }) => (
-              <div key={label} className="text-center px-6">
-                <div className="font-black text-4xl sm:text-5xl text-white mb-1">{value}</div>
-                <div className="text-[12px] font-semibold uppercase tracking-widest text-slate-400">{label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── 3. COPILOT SECTION ────────────────────────────────── */}
       <FadeIn>
         <section style={{ background: '#F7F9FD' }}>
