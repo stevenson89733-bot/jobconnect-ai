@@ -129,7 +129,7 @@ export async function POST(req: Request) {
     console.log('[auto-apply] Querying auto_apply_settings WHERE is_active = true')
     const { data: settings, error: settingsError } = await supabase
       .from('auto_apply_settings')
-      .select('user_id, max_applications_per_day, min_match_score')
+      .select('user_id, max_applications_per_day, min_match_score, review_before_send, daily_apply_limit')
       .eq('is_active', true)
 
     console.log('[auto-apply] Settings query result:', JSON.stringify({ count: settings?.length ?? 0, error: settingsError?.message ?? null }))
@@ -196,18 +196,21 @@ export async function POST(req: Request) {
 
         const alreadySent = todayLogs?.length || 0
         const candidatePlan = profile?.candidate_plan ?? 'free'
-        const dailyLimit = DAILY_LIMIT[candidatePlan] ?? 0
+        const planLimit = DAILY_LIMIT[candidatePlan] ?? 0
 
-        console.log(`[auto-apply] User ${setting.user_id} plan=${candidatePlan} dailyLimit=${dailyLimit} alreadySent=${alreadySent}`)
+        // Per-user setting takes precedence over plan limit when set
+        const userDailyLimit = setting.daily_apply_limit ?? planLimit
+        const effectiveDailyLimit = Math.min(userDailyLimit, planLimit === 0 ? 0 : userDailyLimit)
 
-        if (dailyLimit === 0) {
+        console.log(`[auto-apply] User ${setting.user_id} plan=${candidatePlan} planLimit=${planLimit} userLimit=${userDailyLimit} alreadySent=${alreadySent}`)
+
+        if (planLimit === 0) {
           console.log(`[auto-apply] User ${setting.user_id} plan "${candidatePlan}" has auto-apply disabled`)
           continue
         }
 
-        const dailyLimitCheck = checkDailyLimit(candidatePlan, alreadySent)
-        if (!dailyLimitCheck.allowed) {
-          console.log(`[auto-apply] User ${setting.user_id} reached daily limit (${alreadySent}/${dailyLimit})`)
+        if (alreadySent >= effectiveDailyLimit) {
+          console.log(`[auto-apply] User ${setting.user_id} reached daily limit (${alreadySent}/${effectiveDailyLimit})`)
           continue
         }
 
@@ -302,7 +305,8 @@ export async function POST(req: Request) {
           }
 
           // Review mode — queue for user approval instead of sending
-          const reviewMode = profile?.auto_apply_review_mode !== false
+          // setting.review_before_send defaults to true when not yet set (safe default)
+          const reviewMode = setting.review_before_send !== false
           if (reviewMode) {
             await logInsert({ user_id: setting.user_id, job_id: job.id, status: 'pending_review', cover_letter, adapted_cv_url: realCvUrl })
             applicationsThisRound.push(job)
