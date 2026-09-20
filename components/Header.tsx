@@ -16,16 +16,16 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
   return (
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-background/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
       <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
-        <Link href="/" className="logo-link flex items-center gap-3 shrink-0">
+        <Link href="/" className="logo-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', textDecoration: 'none', flexShrink: 0 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.svg" alt="" aria-hidden="true" style={{ height: 40, width: 40 }} />
-          <div>
-            <div className="text-[20px] font-extrabold leading-none tracking-tight text-slate-900 dark:text-white">
-              JobConnect<span style={{ color: '#57C7E3' }}>AI</span>
-            </div>
-            <div className="text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 mt-0.5">
+          <img src="/logo.svg" alt="" aria-hidden="true" style={{ height: 38, width: 38, flexShrink: 0 }} />
+          <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+            <span style={{ fontSize: '19px', fontWeight: 800, letterSpacing: '-0.02em', color: '#1E3A5F', whiteSpace: 'nowrap' }}>
+              JobConnect<span style={{ color: '#FF6B35' }}>AI</span>
+            </span>
+            <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#2563EB', marginTop: '3px', whiteSpace: 'nowrap' }}>
               Connecting Talent · Building Futures
-            </div>
+            </span>
           </div>
         </Link>
 
