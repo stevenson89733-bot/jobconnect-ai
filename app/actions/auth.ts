@@ -25,6 +25,17 @@ export async function signUp(formData: FormData) {
   const role        = formData.get('role')        as 'candidate' | 'employer'
   const companyName = formData.get('companyName') as string | null
 
+  // Block non-standard / disposable email domains
+  const BLOCKED_TLDS = ['.local', '.test', '.example', '.invalid', '.localhost', '.internal', '.lan', '.localdomain']
+  const BLOCKED_DOMAINS = ['mailinator.com', 'guerrillamail.com', 'tempmail.com', 'throwam.com', 'sharklasers.com', 'yopmail.com', 'trashmail.com', 'dispostable.com', 'maildrop.cc', 'spamgourmet.com']
+  const emailLower = email.toLowerCase()
+  const emailDomain = emailLower.split('@')[1] ?? ''
+  const blockedTld = BLOCKED_TLDS.some(tld => emailLower.endsWith(tld))
+  const blockedDomain = BLOCKED_DOMAINS.includes(emailDomain)
+  if (blockedTld || blockedDomain) {
+    redirect(`/register?error=${encodeURIComponent(t('signupFailed'))}`)
+  }
+
   // Create the auth user. This call is the real bottleneck in the signup
   // flow (measured ~2.2s in production vs. ~150ms for the profile write
   // below) because Supabase Auth dispatches the confirmation email
