@@ -16,6 +16,7 @@ import CareerProgressChart from '@/components/analytics/CareerProgressChart'
 import MarketSalaryInsights from '@/components/analytics/MarketSalaryInsights'
 import AnalyticsAIInsights from '@/components/analytics/AnalyticsAIInsights'
 import type { CareerAnalysis } from '@/lib/ai/careerCoach'
+import { effectiveIsPremium } from '@/lib/adminAccess'
 
 export const dynamic = 'force-dynamic'
 
@@ -45,7 +46,7 @@ export default async function AnalyticsPage() {
   if (!user) return <UpsellGate />
 
   const profileRow = await getCandidateProfile(supabase, user.id)
-  if (!profileRow?.is_premium) return <UpsellGate />
+  if (!effectiveIsPremium(profileRow ?? {})) return <UpsellGate />
 
   const [{ data: applications }, { data: savedJobs }, { data: analysisHistory }] = await Promise.all([
     supabase.from('applications').select('created_at, status, status_updated_at').eq('candidate_id', user.id),
@@ -97,7 +98,7 @@ export default async function AnalyticsPage() {
       <MarketSalaryInsights benchmark={salaryBenchmark} />
 
       <AnalyticsAIInsights
-        isPremium={!!profileRow.is_premium}
+        isPremium={effectiveIsPremium(profileRow)}
         analysis={(analysisRow?.analysis_json as CareerAnalysis | undefined) ?? null}
         generatedAt={analysisRow?.generated_at ?? null}
       />

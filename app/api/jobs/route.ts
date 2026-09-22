@@ -9,6 +9,7 @@ import { applyJobFilters, normalizeJobCompany, parseSort, parseCrossBorder, pars
 import { employerPlanLimit } from '@/lib/employerPlan'
 import { classifyCrossBorder } from '@/lib/ai/crossBorder'
 import { analyzeGeoCompliance } from '@/lib/ai/geoAnalysis'
+import { effectiveIsUnlimitedPosting, effectiveEmployerPlan } from '@/lib/adminAccess'
 
 const PAGE_SIZE = 8
 
@@ -91,13 +92,13 @@ export async function POST(req: Request) {
   // active postings (not a lifetime cap), so deactivating an old listing
   // frees up a real slot rather than permanently using up their one shot.
   // Bypass limit for unlimited accounts (admin/owner).
-  if (!profile?.is_admin && !profile.is_unlimited_posting) {
+  if (!effectiveIsUnlimitedPosting(profile)) {
     const { count: activeCount } = await supabase
       .from('jobs')
       .select('*', { count: 'exact', head: true })
       .eq('posted_by', user.id)
       .eq('is_active', true)
-    const limit = employerPlanLimit(profile.employer_plan)
+    const limit = employerPlanLimit(effectiveEmployerPlan(profile))
     if ((activeCount ?? 0) >= limit) {
       return NextResponse.json(
         { error: t('employerPlanLimitReached', { limit }), code: 'PLAN_LIMIT_REACHED' },

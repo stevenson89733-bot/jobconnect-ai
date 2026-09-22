@@ -3,6 +3,7 @@ import { getTranslations, getLocale } from 'next-intl/server'
 import ProLockButton from '@/components/ui/ProLockButton'
 import { createClient } from '@/lib/supabase/server'
 import ApplicationStatusControl from '@/components/recruiter/ApplicationStatusControl'
+import { effectiveEmployerPlan } from '@/lib/adminAccess'
 import PostJobModal from '@/components/recruiter/PostJobModal'
 import FeaturedCreditsPanel from '@/components/recruiter/FeaturedCreditsPanel'
 import InterviewLinkEditor from '@/components/recruiter/InterviewLinkEditor'
@@ -60,7 +61,7 @@ export default async function EmployerDashboard() {
 
       companyName = profileRow?.company_name ?? ''
       isAdmin = profileRow?.is_admin ?? false
-      employerPlan = profileRow?.employer_plan ?? 'free'
+      employerPlan = effectiveEmployerPlan(profileRow ?? {})
       meetingLink = profileRow?.meeting_link ?? null
       featuredCredits = profileRow?.featured_listing_credits ?? 0
       if (jobsError) console.error('[recruiter/jobs]', jobsError.message)

@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { getCandidateProfile } from '@/lib/profile'
 import { absoluteUrl } from '@/lib/seo'
 import CoverLetterClient from './CoverLetterClient'
+import { effectiveIsPremium } from '@/lib/adminAccess'
 
 export const dynamic = 'force-dynamic'
 
@@ -45,7 +46,7 @@ export default async function CoverLetterPage({
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
       const profile = await getCandidateProfile(supabase, user.id)
-      isPremium = profile?.is_premium ?? false
+      isPremium = effectiveIsPremium(profile ?? {})
       initialTargetRole = profile?.title?.trim() ?? ''
       // Combine real bio + skills into a starting point for "strengths" —
       // still just a prefill, fully editable, same pattern as the Resume

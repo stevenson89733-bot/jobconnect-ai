@@ -1,6 +1,7 @@
 'use server'
 import { createClient } from '@/lib/supabase/server'
 import { rateLimit } from '@/lib/rateLimit'
+import { effectiveIsPremium } from '@/lib/adminAccess'
 import {
   generateCvImprovement,
   generateCvContent,
@@ -23,11 +24,11 @@ export async function improveCv(cvText: string): Promise<CvImproveResult> {
 
   const { data: profile } = await supabase
     .from('profiles')
-    .select('is_premium')
+    .select('is_premium, is_admin')
     .eq('user_id', user.id)
     .single()
 
-  if (!profile?.is_premium) {
+  if (!effectiveIsPremium(profile ?? {})) {
     return { ok: false, error: 'CV Builder is a Premium feature. Upgrade to access it.' }
   }
 
@@ -60,11 +61,11 @@ export async function generateCv(input: CvGenerateInput): Promise<CvGenerateActi
 
   const { data: profile } = await supabase
     .from('profiles')
-    .select('is_premium')
+    .select('is_premium, is_admin')
     .eq('user_id', user.id)
     .single()
 
-  if (!profile?.is_premium) {
+  if (!effectiveIsPremium(profile ?? {})) {
     return { ok: false, error: 'CV Builder is a Premium feature. Upgrade to access it.' }
   }
 

@@ -99,7 +99,7 @@ export default function AutoApplySettingsPage() {
   const router = useRouter()
   const supabase = createClient()
   const [user, setUser] = useState<{ id: string } | null>(null)
-  const [profile, setProfile] = useState<{ is_premium: boolean } | null>(null)
+  const [profile, setProfile] = useState<{ is_premium: boolean; is_admin?: boolean } | null>(null)
   const [settings, setSettings] = useState<{
     is_active: boolean
     max_applications_per_day: number
@@ -120,12 +120,12 @@ export default function AutoApplySettingsPage() {
 
       const { data: profileData } = await supabase
         .from('profiles')
-        .select('is_premium')
+        .select('is_premium, is_admin')
         .eq('user_id', user.id)
         .single()
       setProfile(profileData)
 
-      if (!profileData?.is_premium) { setLoading(false); return }
+      if (!profileData?.is_premium && !profileData?.is_admin) { setLoading(false); return }
 
       const { data: settingsData } = await supabase
         .from('auto_apply_settings')
@@ -218,7 +218,7 @@ export default function AutoApplySettingsPage() {
     )
   }
 
-  if (!profile?.is_premium) {
+  if (!profile?.is_premium && !profile?.is_admin) {
     return (
       <div className="max-w-3xl mx-auto px-6 py-16">
         <div className="card border-l-4 border-amber-500 bg-amber-50 dark:bg-amber-900/20">

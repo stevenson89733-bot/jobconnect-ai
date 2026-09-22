@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import CareerCoachClient from '@/components/career-coach/CareerCoachClient'
 import type { CareerAnalysis } from '@/lib/ai/careerCoach'
+import { effectiveIsPremium } from '@/lib/adminAccess'
 
 export const dynamic = 'force-dynamic'
 
@@ -47,7 +48,7 @@ export default async function CareerCoachPage() {
     supabase.from('applications').select('job_id').eq('candidate_id', user.id),
   ])
 
-  if (!profileRow?.is_premium) return <UpsellGate />
+  if (!effectiveIsPremium(profileRow ?? {})) return <UpsellGate />
 
   const hasSkills = !!(profileRow.skills ?? '').trim()
   const appliedIds = new Set((appliedJobIds ?? []).map((r) => r.job_id as string))

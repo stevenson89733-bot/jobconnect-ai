@@ -2,6 +2,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { getTranslations } from 'next-intl/server'
 import { rateLimit } from '@/lib/rateLimit'
+import { effectiveIsPremium } from '@/lib/adminAccess'
 import { generateCareerAnalysis, CareerCoachError, type CareerAnalysis } from '@/lib/ai/careerCoach'
 
 export type CareerAnalysisResult =
@@ -22,11 +23,11 @@ export async function refreshCareerAnalysis(): Promise<CareerAnalysisResult> {
 
   const { data: profileRow } = await supabase
     .from('profiles')
-    .select('is_premium, title, bio, experience, skills, education, location, years_experience, work_preference')
+    .select('is_premium, is_admin, title, bio, experience, skills, education, location, years_experience, work_preference')
     .eq('user_id', user.id)
     .single()
 
-  if (!profileRow?.is_premium) {
+  if (!effectiveIsPremium(profileRow ?? {})) {
     return { ok: false, error: t('careerCoachPremiumOnly') }
   }
 

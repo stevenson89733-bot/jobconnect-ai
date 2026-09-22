@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { getCandidateProfile } from '@/lib/profile'
 import { absoluteUrl } from '@/lib/seo'
 import InterviewPrepClient from './InterviewPrepClient'
+import { effectiveIsPremium } from '@/lib/adminAccess'
 
 export const dynamic = 'force-dynamic'
 
@@ -46,7 +47,7 @@ export default async function InterviewPrepPage({
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
       const profile = await getCandidateProfile(supabase, user.id)
-      isPremium = profile?.is_premium ?? false
+      isPremium = effectiveIsPremium(profile ?? {})
       initialTargetRole = profile?.title?.trim() ?? ''
       initialExperience = profile?.experience?.trim() ?? ''
       initialSkills = profile?.skills?.trim() ?? ''

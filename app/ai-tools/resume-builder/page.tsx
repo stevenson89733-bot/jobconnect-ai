@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { getCandidateProfile } from '@/lib/profile'
 import { buildContactInfo, formatContactLine } from '@/lib/resumeContact'
 import { absoluteUrl } from '@/lib/seo'
+import { effectiveIsPremium } from '@/lib/adminAccess'
 import ResumeBuilderClient from './ResumeBuilderClient'
 
 export const dynamic = 'force-dynamic'
@@ -50,7 +51,7 @@ export default async function ResumeBuilderPage({
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
       const profile = await getCandidateProfile(supabase, user.id)
-      isPremium = profile?.is_premium ?? false
+      isPremium = effectiveIsPremium(profile ?? {})
       initialTargetRole = profile?.title?.trim() ?? ''
       initialExperience = profile?.experience?.trim() ?? ''
       initialSkills = profile?.skills?.trim() ?? ''

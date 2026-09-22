@@ -2,6 +2,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { getTranslations } from 'next-intl/server'
 import { rateLimit } from '@/lib/rateLimit'
+import { effectiveIsPremium } from '@/lib/adminAccess'
 import { generateResumeAnalysis, ResumeAnalysisError, type ResumeAnalysis, type ResumeDocumentInput } from '@/lib/ai/resumeAnalysis'
 
 export type ResumeAnalysisResult =
@@ -22,11 +23,11 @@ export async function analyzeResume(doc: ResumeDocumentInput): Promise<ResumeAna
 
   const { data: profileRow } = await supabase
     .from('profiles')
-    .select('is_premium')
+    .select('is_premium, is_admin')
     .eq('user_id', user.id)
     .single()
 
-  if (!profileRow?.is_premium) {
+  if (!effectiveIsPremium(profileRow ?? {})) {
     return { ok: false, error: t('resumeAnalysisPremiumOnly') }
   }
 

@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { getCandidateProfile } from '@/lib/profile'
 import { absoluteUrl } from '@/lib/seo'
 import SkillGapClient from './SkillGapClient'
+import { effectiveIsPremium } from '@/lib/adminAccess'
 
 export const dynamic = 'force-dynamic'
 
@@ -41,7 +42,7 @@ export default async function SkillGapPage({
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
       const profile = await getCandidateProfile(supabase, user.id)
-      isPremium = profile?.is_premium ?? false
+      isPremium = effectiveIsPremium(profile ?? {})
       initialSkills = profile?.skills?.trim() ?? ''
       initialExperience = profile?.experience?.trim() ?? ''
       initialTargetRole = profile?.title?.trim() ?? ''
