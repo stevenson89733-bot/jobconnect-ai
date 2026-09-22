@@ -49,6 +49,7 @@ export default async function CareerCoachPage() {
   ])
 
   if (!effectiveIsPremium(profileRow ?? {})) return <UpsellGate />
+  if (!profileRow) return <UpsellGate />
 
   const hasSkills = !!(profileRow.skills ?? '').trim()
   const appliedIds = new Set((appliedJobIds ?? []).map((r) => r.job_id as string))

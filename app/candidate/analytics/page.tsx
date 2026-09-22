@@ -47,6 +47,7 @@ export default async function AnalyticsPage() {
 
   const profileRow = await getCandidateProfile(supabase, user.id)
   if (!effectiveIsPremium(profileRow ?? {})) return <UpsellGate />
+  if (!profileRow) return <UpsellGate />
 
   const [{ data: applications }, { data: savedJobs }, { data: analysisHistory }] = await Promise.all([
     supabase.from('applications').select('created_at, status, status_updated_at').eq('candidate_id', user.id),
@@ -98,7 +99,7 @@ export default async function AnalyticsPage() {
       <MarketSalaryInsights benchmark={salaryBenchmark} />
 
       <AnalyticsAIInsights
-        isPremium={effectiveIsPremium(profileRow)}
+        isPremium={effectiveIsPremium(profileRow ?? {})}
         analysis={(analysisRow?.analysis_json as CareerAnalysis | undefined) ?? null}
         generatedAt={analysisRow?.generated_at ?? null}
       />

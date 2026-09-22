@@ -31,6 +31,8 @@ export async function refreshCareerAnalysis(): Promise<CareerAnalysisResult> {
     return { ok: false, error: t('careerCoachPremiumOnly') }
   }
 
+  if (!profileRow) return { ok: false, error: t('careerCoachPremiumOnly') }
+
   const skills = (profileRow.skills ?? '').trim()
   if (!skills) {
     return { ok: false, error: t('careerCoachNeedSkills') }
