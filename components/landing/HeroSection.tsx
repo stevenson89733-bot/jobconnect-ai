@@ -40,23 +40,28 @@ export default function HeroSection() {
   const [location, setLocation] = useState('')
   const [activeFilters, setActiveFilters] = useState<string[]>([])
 
+  const buildParams = (filters: string[]) => {
+    const params = new URLSearchParams()
+    if (jobQuery) params.set('q', jobQuery)
+    if (location) params.set('country', location)
+    if (filters.includes('remote')) params.set('workType', 'Remote')
+    if (filters.includes('visa')) params.set('workType', 'Remote') // visa jobs are remote — refine when visa col indexed
+    if (filters.includes('logistics')) params.set('category', 'Logistics')
+    if (filters.includes('supplychain')) params.set('category', 'Supply Chain')
+    if (filters.includes('tech')) params.set('category', 'Engineering')
+    return params
+  }
+
   const toggleFilter = (key: string) => {
-    setActiveFilters(prev =>
-      prev.includes(key) ? prev.filter(k => k !== key) : [...prev, key]
-    )
+    const next = activeFilters.includes(key)
+      ? activeFilters.filter(k => k !== key)
+      : [...activeFilters, key]
+    setActiveFilters(next)
+    router.push(`/jobs?${buildParams(next).toString()}`)
   }
 
   const handleSearch = () => {
-    const params = new URLSearchParams()
-    if (jobQuery) params.set('q', jobQuery)
-    if (location) params.set('location', location)
-    if (activeFilters.includes('remote')) params.set('work_type', 'Remote')
-    if (activeFilters.includes('visa')) params.set('visa', '1')
-    if (activeFilters.includes('ai')) params.set('ai_match', '1')
-    if (activeFilters.includes('logistics')) params.set('category', 'Logistics')
-    if (activeFilters.includes('supplychain')) params.set('category', 'Supply Chain')
-    if (activeFilters.includes('tech')) params.set('category', 'Engineering')
-    router.push(`/jobs?${params.toString()}`)
+    router.push(`/jobs?${buildParams(activeFilters).toString()}`)
   }
 
   const filters = [
