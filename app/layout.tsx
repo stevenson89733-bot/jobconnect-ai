@@ -25,6 +25,7 @@ const inter = Inter({
   weight: ['300', '400', '500', '600', '700', '800', '900'],
   variable: '--font-inter',
   display: 'swap',
+  preload: false,
 })
 
 // Heading font — geometric, distinctive, strong at heavy weights.
@@ -35,6 +36,7 @@ const sora = Sora({
   weight: ['600', '700', '800'],
   variable: '--font-sora',
   display: 'swap',
+  preload: false,
 })
 
 // Fallback-only (see tailwind.config.js) — Inter has no Arabic glyphs, this
@@ -44,6 +46,7 @@ const notoSansArabic = Noto_Sans_Arabic({
   weight: ['400', '500', '600', '700'],
   variable: '--font-noto-arabic',
   display: 'swap',
+  preload: false,
 })
 
 export const metadata = {
