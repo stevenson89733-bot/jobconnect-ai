@@ -1,3 +1,5 @@
+export const maxDuration = 10
+
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
