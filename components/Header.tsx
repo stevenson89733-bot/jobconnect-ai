@@ -87,12 +87,12 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
           </div>
           {/* AI Tools dropdown (hover) */}
           <div className="relative group">
-            <button className="flex items-center gap-1 hover:text-slate-900 dark:hover:text-white transition-colors">
+            <Link href="/ai-tools" className="flex items-center gap-1 hover:text-slate-900 dark:hover:text-white transition-colors">
               <span className="text-orange-600 dark:text-accent">✦</span> {t('aiTools')}
               <svg className="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
-            </button>
+            </Link>
             {/* pt-2 bridges the gap so the menu stays open while moving the cursor */}
             <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 hidden group-hover:block">
               <div className="w-64 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-card shadow-lg dark:shadow-black/40 p-1.5">
@@ -275,9 +275,9 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
           <Link href="/pricing" className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>{t('pricing')}</Link>
 
           <div className="pt-2 mt-1 border-t border-slate-200 dark:border-slate-800">
-            <span className="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-2">
+            <Link href="/ai-tools" onClick={() => setOpen(false)} className="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white mb-2 transition-colors">
               <span className="text-orange-600 dark:text-accent">✦</span> {t('aiTools')}
-            </span>
+            </Link>
             <Link href="/ai-tools/resume-builder" className="block text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white mb-2" onClick={() => setOpen(false)}>📄 {t('resumeBuilder')}</Link>
             <Link href="/ai-tools/cover-letter" className="block text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white mb-2" onClick={() => setOpen(false)}>✉️ {t('coverLetter')}</Link>
             <Link href="/ai-tools/interview-prep" className="block text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white mb-2" onClick={() => setOpen(false)}>🎤 {t('interviewPrep')}</Link>
