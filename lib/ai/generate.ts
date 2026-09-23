@@ -26,7 +26,7 @@ const AI_GENERATION_WINDOW_MS = 60 * 60 * 1000
  *
  * A single entry point per tool (generateResume / generateCoverLetter) reads
  * `is_premium` SERVER-SIDE and routes the request:
- *   - premium → OpenAI (gpt-4o, existing OPENAI_API_KEY)
+ *   - premium → OpenAI (gpt-4o-mini, existing OPENAI_API_KEY)
  *   - free    → Mistral (mistral-small-latest, MISTRAL_API_KEY), through the
  *               OpenAI SDK against Mistral's OpenAI-compatible endpoint.
  *
@@ -101,7 +101,7 @@ async function resolveProvider(): Promise<Provider & { contact: ContactInfo; use
   if (isPremium) {
     const apiKey = process.env.OPENAI_API_KEY
     if (!apiKey) throw new AiError('OpenAI not configured', 503)
-    return { client: new OpenAI({ apiKey }), model: 'gpt-4o', tier: 'premium', contact, userId }
+    return { client: new OpenAI({ apiKey }), model: 'gpt-4o-mini', tier: 'premium', contact, userId }
   }
 
   const apiKey = process.env.MISTRAL_API_KEY
