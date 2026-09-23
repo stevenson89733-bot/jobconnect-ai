@@ -10,6 +10,10 @@ import InterviewLinkEditor from '@/components/recruiter/InterviewLinkEditor'
 import { companyInitials } from '@/lib/companyDisplay'
 import { APPLICATION_STATUSES, APPLICATION_STATUS_BAR_COLOR, type ApplicationStatus } from '@/lib/applicationStatus'
 import { timeAgo } from '@/lib/timeAgo'
+import AnalyticsDashboard from '@/components/recruiter/AnalyticsDashboard'
+import AIScreeningPanel from '@/components/recruiter/AIScreeningPanel'
+import BulkImportPanel from '@/components/recruiter/BulkImportPanel'
+import TeamManagementPanel from '@/components/recruiter/TeamManagementPanel'
 
 type Application = {
   id: string
@@ -329,6 +333,42 @@ export default async function EmployerDashboard() {
 
       {/* Interview Scheduling Link */}
       <InterviewLinkEditor initialLink={meetingLink} isPro={employerPlan === 'pro' || isAdmin} />
+
+      {/* Advanced Analytics — Pro only */}
+      {(employerPlan === 'pro' || isAdmin) && (
+        <div className="mb-6">
+          <AnalyticsDashboard
+            applications={applications.map(a => ({
+              id: a.id,
+              status: a.status,
+              created_at: a.created_at,
+              job_id: a.job_id,
+            }))}
+            jobs={jobs}
+          />
+        </div>
+      )}
+
+      {/* AI Candidate Screening — Pro only */}
+      <div className="mb-6">
+        <AIScreeningPanel
+          jobs={jobs.filter(j => j.is_active)}
+          isPro={employerPlan === 'pro' || isAdmin}
+        />
+      </div>
+
+      {/* Bulk Import Contacts — Growth+ */}
+      <div className="mb-6">
+        <BulkImportPanel isGrowth={employerPlan !== 'free' || isAdmin} />
+      </div>
+
+      {/* Team Collaboration — Growth+ */}
+      <div className="mb-6">
+        <TeamManagementPanel
+          isGrowth={employerPlan !== 'free' || isAdmin}
+          isPro={employerPlan === 'pro' || isAdmin}
+        />
+      </div>
 
       {/* Browse Candidates */}
       <div className="card flex items-center justify-between flex-wrap gap-4">

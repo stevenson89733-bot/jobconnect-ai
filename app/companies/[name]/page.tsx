@@ -81,18 +81,19 @@ export default async function CompanyPage({ params }: { params: { name: string }
 
   const displayName = company?.name ?? jobs[0]?.company_name ?? name
 
-  // Employer meeting link — only shown if a pro employer has set one
+  // Employer profile data — meeting link (pro only), logo, size, description
   let meetingLink: string | null = null
+  let employerProfile: { company_logo_url?: string | null; company_size?: string | null; company_description?: string | null; company_website?: string | null } | null = null
   try {
     const supabase = createClient()
     const { data: empRows } = await supabase
       .from('profiles')
-      .select('meeting_link, employer_plan, is_admin')
+      .select('meeting_link, employer_plan, is_admin, company_logo_url, company_size, company_description, company_website')
       .ilike('company_name', displayName)
-      .not('meeting_link', 'is', null)
-    // Show meeting link for pro plan employers OR admins (who bypass plan gates)
-    const empRow = empRows?.find(r => r.employer_plan === 'pro' || r.is_admin === true) ?? null
+    // Prefer pro/admin employer row for gated data
+    const empRow = empRows?.find(r => r.employer_plan === 'pro' || r.is_admin === true) ?? empRows?.[0] ?? null
     meetingLink = empRow?.meeting_link ?? null
+    employerProfile = empRow ?? null
   } catch {}
 
   // Real Match % — same computation as the Jobs page (lib/jobMatching.ts),
@@ -175,8 +176,10 @@ export default async function CompanyPage({ params }: { params: { name: string }
   return (
     <CompanyClient
       name={displayName}
-      logoUrl={company?.logo_url ?? null}
-      website={company?.website ?? null}
+      logoUrl={company?.logo_url ?? employerProfile?.company_logo_url ?? null}
+      website={company?.website ?? employerProfile?.company_website ?? null}
+      companySize={employerProfile?.company_size ?? null}
+      companyDescription={employerProfile?.company_description ?? null}
       meetingLink={meetingLink}
       jobs={jobsWithMatch}
       salaryInsights={salaryInsights}

@@ -20,12 +20,14 @@ export default async function WelcomeHeader({
   avatarUrl,
   applicationsCount = 0,
   recommendedJobsCount = 0,
+  isElite = false,
 }: {
   firstName: string
   initials: string
   avatarUrl: string | null
   applicationsCount?: number
   recommendedJobsCount?: number
+  isElite?: boolean
 }) {
   const t = await getTranslations('candidate')
   const now = new Date()
@@ -43,15 +45,29 @@ export default async function WelcomeHeader({
       {/* Date + greeting */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <Avatar className="w-14 h-14 text-xl">
-            {avatarUrl && <AvatarImage src={avatarUrl} alt={firstName} />}
-            <AvatarFallback>{initials}</AvatarFallback>
-          </Avatar>
+          <div className="relative">
+            <Avatar className="w-14 h-14 text-xl">
+              {avatarUrl && <AvatarImage src={avatarUrl} alt={firstName} />}
+              <AvatarFallback>{initials}</AvatarFallback>
+            </Avatar>
+            {isElite && (
+              <span className="absolute -bottom-1 -right-1 text-xs bg-gradient-to-r from-amber-400 to-yellow-500 text-black font-bold px-1.5 py-0.5 rounded-full leading-none shadow-sm">
+                ⭐ Elite
+              </span>
+            )}
+          </div>
           <div>
             <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mb-0.5">{dateLabel}</p>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-              {greeting}, {firstName} 👋
-            </h1>
+            <div className="flex items-center gap-2">
+              <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+                {greeting}, {firstName} 👋
+              </h1>
+              {isElite && (
+                <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-gradient-to-r from-amber-400 to-yellow-500 text-black shadow-sm">
+                  ⭐ Elite
+                </span>
+              )}
+            </div>
           </div>
         </div>
         <div className="flex gap-3">

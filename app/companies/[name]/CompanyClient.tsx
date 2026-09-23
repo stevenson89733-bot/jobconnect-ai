@@ -16,6 +16,8 @@ export default function CompanyClient({
   name,
   logoUrl,
   website,
+  companySize,
+  companyDescription,
   meetingLink,
   jobs,
   salaryInsights,
@@ -27,6 +29,8 @@ export default function CompanyClient({
   name: string
   logoUrl: string | null
   website: string | null
+  companySize: string | null
+  companyDescription: string | null
   meetingLink: string | null
   jobs: Job[]
   salaryInsights: { min: number; max: number; count: number } | null
@@ -67,6 +71,9 @@ export default function CompanyClient({
                 {isHiring ? `● ${t('activelyHiring')}` : t('notCurrentlyHiring')}
               </Badge>
             </div>
+            {companySize && (
+              <p className="text-xs text-slate-500 dark:text-slate-400 mb-0.5">{companySize} employees</p>
+            )}
             {website && (
               <a
                 href={website}
@@ -76,6 +83,9 @@ export default function CompanyClient({
               >
                 {website}
               </a>
+            )}
+            {companyDescription && (
+              <p className="text-sm text-slate-600 dark:text-slate-400 mt-2 whitespace-pre-line">{companyDescription}</p>
             )}
             {meetingLink && (
               <div className="mt-3">
