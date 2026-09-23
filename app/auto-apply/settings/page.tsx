@@ -16,7 +16,7 @@ type Log = {
   jobs: { title: string; company_name: string } | null
 }
 
-function PreviewModal({ log, onClose }: { log: Log; onClose: () => void }) {
+function PreviewModal({ log, onClose, onApprove, approving }: { log: Log; onClose: () => void; onApprove: (log: Log) => void; approving: boolean }) {
   const firstSentence = log.cover_letter
     ? log.cover_letter.split(/(?<=[.!?])\s+/)[0] ?? log.cover_letter.slice(0, 160)
     : null
@@ -72,7 +72,7 @@ function PreviewModal({ log, onClose }: { log: Log; onClose: () => void }) {
           </div>
         )}
 
-        <div className="flex gap-3 pt-1">
+        <div className="flex flex-wrap gap-3 pt-1 items-center">
           <span
             className={`text-xs font-semibold px-3 py-1 rounded-full ${
               log.status === 'sent'
@@ -84,11 +84,20 @@ function PreviewModal({ log, onClose }: { log: Log; onClose: () => void }) {
           >
             {log.status === 'sent' ? '✓ Sent' : log.status === 'pending_review' ? '⏳ Pending Review' : log.status}
           </span>
-          <span className="text-xs text-slate-400 flex items-center">
+          <span className="text-xs text-slate-400">
             {new Date(log.applied_at).toLocaleString('en-US', {
               month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
             })}
           </span>
+          {log.status === 'pending_review' && (
+            <button
+              onClick={() => onApprove(log)}
+              disabled={approving}
+              className="ml-auto text-sm font-semibold bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-white px-4 py-1.5 rounded-lg transition-colors"
+            >
+              {approving ? 'Marking…' : '✓ Approve & Mark Sent'}
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -112,6 +121,7 @@ export default function AutoApplySettingsPage() {
   const [saving, setSaving] = useState(false)
   const [previewLog, setPreviewLog] = useState<Log | null>(null)
   const [generating, setGenerating] = useState<string | null>(null) // log_id being generated
+  const [approving, setApproving] = useState<string | null>(null)   // log_id being approved
 
   useEffect(() => {
     const loadData = async () => {
@@ -210,6 +220,23 @@ export default function AutoApplySettingsPage() {
     }
   }
 
+  const handleApprove = async (log: Log) => {
+    setApproving(log.id)
+    try {
+      const res = await fetch('/api/auto-apply/approve', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ log_id: log.id }),
+      })
+      if (res.ok) {
+        setLogs(prev => prev.map(l => l.id === log.id ? { ...l, status: 'sent' } : l))
+        setPreviewLog(null)
+      }
+    } finally {
+      setApproving(null)
+    }
+  }
+
   const handleSaveSettings = async () => {
     if (!settings || !user) return
     setSaving(true)
@@ -266,7 +293,7 @@ export default function AutoApplySettingsPage() {
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-16">
-      {previewLog && <PreviewModal log={previewLog} onClose={() => setPreviewLog(null)} />}
+      {previewLog && <PreviewModal log={previewLog} onClose={() => setPreviewLog(null)} onApprove={handleApprove} approving={approving === previewLog.id} />}
 
       <div className="mb-8">
         <h1 className="text-4xl font-extrabold text-slate-900 dark:text-white mb-2">Auto-Apply Settings</h1>

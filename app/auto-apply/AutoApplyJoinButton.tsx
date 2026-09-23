@@ -1,8 +1,15 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function AutoApplyJoinButton() {
   const [state, setState] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
+
+  // Persist joined state across page reloads
+  useEffect(() => {
+    try {
+      if (localStorage.getItem('auto_apply_joined') === '1') setState('done')
+    } catch {}
+  }, [])
 
   async function join() {
     setState('loading')
@@ -10,6 +17,7 @@ export default function AutoApplyJoinButton() {
       const res = await fetch('/api/auto-apply/waitlist', { method: 'POST' })
       if (res.ok) {
         setState('done')
+        try { localStorage.setItem('auto_apply_joined', '1') } catch {}
         window.dispatchEvent(new Event('waitlist-joined'))
       } else {
         setState('error')

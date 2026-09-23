@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import OpenAI from 'openai'
+import { effectiveCandidatePlan } from '@/lib/adminAccess'
 
 export const maxDuration = 10
 
@@ -8,6 +9,17 @@ export async function POST(req: Request) {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+  // Plan gate — only Pro/Elite/admin can generate cover letters
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('is_admin, is_premium, candidate_plan, full_name, skills, experience, bio')
+    .eq('user_id', user.id)
+    .single()
+
+  const plan = effectiveCandidatePlan(profile ?? {})
+  const allowed = profile?.is_admin || profile?.is_premium || ['pro', 'elite'].includes(plan)
+  if (!allowed) return NextResponse.json({ error: 'Pro plan required' }, { status: 403 })
 
   const { log_id } = await req.json()
   if (!log_id) return NextResponse.json({ error: 'Missing log_id' }, { status: 400 })
@@ -21,18 +33,13 @@ export async function POST(req: Request) {
     .single()
 
   if (!log) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  if (!log.job_id) return NextResponse.json({ error: 'No job associated with this log entry' }, { status: 400 })
   if (log.cover_letter) return NextResponse.json({ cover_letter: log.cover_letter })
 
   const { data: job } = await supabase
     .from('jobs')
     .select('title, company_name, description')
     .eq('id', log.job_id)
-    .single()
-
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('full_name, skills, experience, bio')
-    .eq('user_id', user.id)
     .single()
 
   const apiKey = process.env.OPENAI_API_KEY
