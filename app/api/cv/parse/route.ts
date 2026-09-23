@@ -134,6 +134,7 @@ Rules:
         { role: 'user', content: truncatedText },
       ],
       temperature: 0,
+      max_tokens: 1500,
       response_format: { type: 'json_object' },
     })
 
