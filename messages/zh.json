@@ -872,7 +872,8 @@
     "tooManyExtractJobRequests": "请求过多，请稍后再试。",
     "extractJobTextTooShort": "请粘贴更多职位描述内容 — 寥寥数语不足以提取真实字段。",
     "invalidInterviewDate": "该面试日期无效，请重新选择。",
-    "extractJobInvalidUrl": "URL 无效。请输入有效的 http/https 地址。"
+    "extractJobInvalidUrl": "URL 无效。请输入有效的 http/https 地址。",
+    "botDetected": "安全验证失败。请刷新页面后重试。"
   },
   "copilot": {
     "openLabel": "打开职业副驾",

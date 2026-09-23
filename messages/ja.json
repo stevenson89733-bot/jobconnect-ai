@@ -872,7 +872,8 @@
     "tooManyExtractJobRequests": "リクエストが多すぎます。しばらくしてから再度お試しください。",
     "extractJobTextTooShort": "求人内容をもう少し貼り付けてください — 数語では実際の項目を抽出するには不十分です。",
     "invalidInterviewDate": "この面接日時は無効です。もう一度選択してください。",
-    "extractJobInvalidUrl": "無効なURLです。有効なhttp/httpsアドレスを入力してください。"
+    "extractJobInvalidUrl": "無効なURLです。有効なhttp/httpsアドレスを入力してください。",
+    "botDetected": "セキュリティチェックに失敗しました。ページを更新して再試行してください。"
   },
   "copilot": {
     "openLabel": "キャリアコパイロットを開く",

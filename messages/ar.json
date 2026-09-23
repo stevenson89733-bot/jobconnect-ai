@@ -872,7 +872,8 @@
     "tooManyExtractJobRequests": "عدد كبير جدًا من الطلبات. يرجى المحاولة مرة أخرى بعد قليل.",
     "extractJobTextTooShort": "الصق المزيد من وصف الوظيفة — بضع كلمات لا تكفي لاستخراج حقول حقيقية.",
     "invalidInterviewDate": "تاريخ المقابلة هذا غير صالح. يرجى اختياره مرة أخرى.",
-    "extractJobInvalidUrl": "عنوان URL غير صالح. يرجى إدخال عنوان http/https صحيح."
+    "extractJobInvalidUrl": "عنوان URL غير صالح. يرجى إدخال عنوان http/https صحيح.",
+    "botDetected": "فشل فحص الأمان. يرجى تحديث الصفحة والمحاولة مرة أخرى."
   },
   "copilot": {
     "openLabel": "فتح المساعد الوظيفي",

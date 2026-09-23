@@ -878,7 +878,8 @@
     "tooManyExtractJobRequests": "Trop de requêtes. Merci de réessayer dans un instant.",
     "extractJobTextTooShort": "Collez davantage de la description du poste — quelques mots ne suffisent pas pour extraire de vrais champs.",
     "invalidInterviewDate": "Cette date d'entretien n'est pas valide. Veuillez la choisir à nouveau.",
-    "extractJobInvalidUrl": "URL invalide. Veuillez entrer une adresse http/https valide."
+    "extractJobInvalidUrl": "URL invalide. Veuillez entrer une adresse http/https valide.",
+    "botDetected": "Vérification de sécurité échouée. Veuillez rafraîchir et réessayer."
   },
   "copilot": {
     "openLabel": "Ouvrir le Copilote de Carrière",

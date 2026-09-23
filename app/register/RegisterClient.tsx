@@ -6,6 +6,7 @@ import { signUp } from '@/app/actions/auth'
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 import PasswordInput from '@/components/PasswordInput'
+import Turnstile from '@/components/Turnstile'
 
 
 function RegisterForm() {
@@ -136,6 +137,8 @@ function RegisterForm() {
                 className="w-full bg-background border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
               />
             </div>
+
+            <Turnstile />
 
             <button
               type="submit"

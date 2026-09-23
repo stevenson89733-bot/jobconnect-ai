@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 import { rateLimit, getClientIp } from '@/lib/rateLimit'
+import { verifyTurnstile } from '@/lib/turnstile'
 
 // ── Step 6: Save user to Supabase on signup with role ─────────────────────────
 export async function signUp(formData: FormData) {
@@ -15,6 +16,10 @@ export async function signUp(formData: FormData) {
   const { ok } = rateLimit(`signup:${getClientIp()}`, 5, 10 * 60 * 1000)
   if (!ok) redirect(`/register?error=${encodeURIComponent(t('tooManySignupAttempts'))}`)
   const tRateLimit = Date.now()
+
+  const turnstileToken = formData.get('cf-turnstile-response') as string | null
+  const humanVerified = await verifyTurnstile(turnstileToken)
+  if (!humanVerified) redirect(`/register?error=${encodeURIComponent(t('botDetected'))}`)
 
   const supabase = createClient()
 
@@ -91,6 +96,10 @@ export async function signIn(formData: FormData) {
   const { ok } = rateLimit(`signin:${getClientIp()}`, 8, 5 * 60 * 1000)
   if (!ok) redirect(`/login?error=${encodeURIComponent(t('tooManySigninAttempts'))}`)
   const tRateLimit = Date.now()
+
+  const turnstileToken = formData.get('cf-turnstile-response') as string | null
+  const humanVerified = await verifyTurnstile(turnstileToken)
+  if (!humanVerified) redirect(`/login?error=${encodeURIComponent(t('botDetected'))}`)
 
   const supabase = createClient()
 

@@ -886,7 +886,8 @@
     "tooManyExtractJobRequests": "Too many requests. Please try again in a bit.",
     "extractJobTextTooShort": "Paste more of the job description — a few words isn't enough to extract real fields.",
     "invalidInterviewDate": "That interview date isn't valid. Please pick it again.",
-    "extractJobInvalidUrl": "Invalid URL. Please enter a valid http/https address."
+    "extractJobInvalidUrl": "Invalid URL. Please enter a valid http/https address.",
+    "botDetected": "Security check failed. Please refresh and try again."
   },
   "copilot": {
     "openLabel": "Open Career Copilot",
