@@ -544,7 +544,7 @@ export default function PricingPage() {
                 <span className="text-5xl font-black text-slate-900 dark:text-white">$49</span>
                 <span className="text-slate-600 dark:text-slate-400 mb-1">{t('employerGrowthPeriod')}</span>
               </div>
-              <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('employerGrowthDesc')}</div>
+              <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('everythingInFree')}</div>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
               {getEmployerExclusiveFeatures('employer_growth').map((f) => (
@@ -588,7 +588,7 @@ export default function PricingPage() {
                   <span className="text-5xl font-black text-slate-900 dark:text-white">$99</span>
                   <span className="text-slate-600 dark:text-slate-400 mb-1">{t('perMonth')}</span>
                 </div>
-                <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">{t('employerProDesc')}</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">{t('everythingInGrowth')}</p>
               </div>
               <ul className="space-y-3 mb-8 flex-1">
                 {getEmployerExclusiveFeatures('employer_pro').map((f) => (
@@ -624,7 +624,7 @@ export default function PricingPage() {
                   <span className="text-5xl font-black text-slate-900 dark:text-white">$299+</span>
                   <span className="text-slate-600 dark:text-slate-400 mb-1">{t('perMonth')}</span>
                 </div>
-                <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">{t('employerEnterpriseDesc')}</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">{t('everythingInPro')}</p>
               </div>
               <ul className="space-y-3 mb-8 flex-1">
                 {getEmployerExclusiveFeatures('employer_enterprise').map((f) => (
