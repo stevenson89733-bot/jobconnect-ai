@@ -111,6 +111,7 @@ export default function AutoApplySettingsPage() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [previewLog, setPreviewLog] = useState<Log | null>(null)
+  const [generating, setGenerating] = useState<string | null>(null) // log_id being generated
 
   useEffect(() => {
     const loadData = async () => {
@@ -188,6 +189,25 @@ export default function AutoApplySettingsPage() {
       .single()
     if (updated) setSettings(s => s ? { ...s, is_active: updated.is_active } : s)
     setSaving(false)
+  }
+
+  const handleGenerateCoverLetter = async (log: Log) => {
+    setGenerating(log.id)
+    try {
+      const res = await fetch('/api/auto-apply/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ log_id: log.id }),
+      })
+      const data = await res.json()
+      if (data.cover_letter) {
+        const updated = { ...log, cover_letter: data.cover_letter }
+        setLogs(prev => prev.map(l => l.id === log.id ? updated : l))
+        setPreviewLog(updated)
+      }
+    } finally {
+      setGenerating(null)
+    }
   }
 
   const handleSaveSettings = async () => {
@@ -425,12 +445,21 @@ export default function AutoApplySettingsPage() {
                       : log.status === 'pending_review' ? '⏳ Review'
                       : '✗ ' + log.status}
                   </span>
-                  {(log.cover_letter || log.match_score != null) && (
+                  {log.status === 'pending_review' && !log.cover_letter && (
+                    <button
+                      onClick={() => handleGenerateCoverLetter(log)}
+                      disabled={generating === log.id}
+                      className="block mt-1 text-[11px] font-semibold text-cyan-500 hover:text-cyan-700 transition-colors disabled:opacity-50"
+                    >
+                      {generating === log.id ? '⏳ Generating…' : '✦ Generate & Review →'}
+                    </button>
+                  )}
+                  {log.cover_letter && (
                     <button
                       onClick={() => setPreviewLog(log)}
                       className="block mt-1 text-[11px] text-cyan-500 hover:text-cyan-700 transition-colors"
                     >
-                      View details →
+                      View cover letter →
                     </button>
                   )}
                 </div>
