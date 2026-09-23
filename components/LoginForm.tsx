@@ -1,21 +1,18 @@
 'use client'
 import Link from 'next/link'
-import { useState, useTransition } from 'react'
+import { useTransition } from 'react'
 import { useTranslations } from 'next-intl'
 import { signIn } from '@/app/actions/auth'
 import PasswordInput from '@/components/PasswordInput'
-import HCaptcha from '@/components/HCaptcha'
 
 export default function LoginForm({ error }: { error?: string }) {
   const t = useTranslations('auth.login')
   const tc = useTranslations('common')
   const [isPending, startTransition] = useTransition()
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const fd = new FormData(e.currentTarget)
-    if (captchaToken) fd.set('hcaptcha-token', captchaToken)
     startTransition(() => { signIn(fd) })
   }
 
@@ -64,11 +61,6 @@ export default function LoginForm({ error }: { error?: string }) {
                 className="w-full bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
               />
             </div>
-
-            <HCaptcha
-              onVerify={(token) => setCaptchaToken(token)}
-              onExpire={() => setCaptchaToken(null)}
-            />
 
             <button
               type="submit"

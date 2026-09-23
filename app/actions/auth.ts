@@ -16,8 +16,6 @@ export async function signUp(formData: FormData) {
   if (!ok) redirect(`/register?error=${encodeURIComponent(t('tooManySignupAttempts'))}`)
   const tRateLimit = Date.now()
 
-  const captchaToken = formData.get('hcaptcha-token') as string | null
-
   const supabase = createClient()
 
   const email       = formData.get('email')       as string
@@ -48,7 +46,6 @@ export async function signUp(formData: FormData) {
     password,
     options: {
       data: { first_name: firstName, last_name: lastName, role },
-      ...(captchaToken ? { captchaToken } : {}),
     },
   })
   const tSignUp = Date.now()
@@ -95,18 +92,12 @@ export async function signIn(formData: FormData) {
   if (!ok) redirect(`/login?error=${encodeURIComponent(t('tooManySigninAttempts'))}`)
   const tRateLimit = Date.now()
 
-  const captchaToken = formData.get('hcaptcha-token') as string | null
-
   const supabase = createClient()
 
   const email    = formData.get('email')    as string
   const password = formData.get('password') as string
 
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-    options: captchaToken ? { captchaToken } : undefined,
-  })
+  const { error } = await supabase.auth.signInWithPassword({ email, password })
   const tSignIn = Date.now()
 
   if (error) {

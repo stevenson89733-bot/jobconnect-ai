@@ -6,13 +6,11 @@ import { signUp } from '@/app/actions/auth'
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 import PasswordInput from '@/components/PasswordInput'
-import HCaptcha from '@/components/HCaptcha'
 
 
 function RegisterForm() {
   const [role, setRole] = useState<'candidate' | 'employer'>('candidate')
   const [isPending, startTransition] = useTransition()
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
   const searchParams = useSearchParams()
   const error = searchParams.get('error')
   const t = useTranslations('auth.register')
@@ -22,7 +20,6 @@ function RegisterForm() {
     e.preventDefault()
     const fd = new FormData(e.currentTarget)
     fd.set('role', role)
-    if (captchaToken) fd.set('hcaptcha-token', captchaToken)
     startTransition(() => { signUp(fd) })
   }
 
@@ -139,11 +136,6 @@ function RegisterForm() {
                 className="w-full bg-background border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
               />
             </div>
-
-            <HCaptcha
-              onVerify={(token) => setCaptchaToken(token)}
-              onExpire={() => setCaptchaToken(null)}
-            />
 
             <button
               type="submit"
