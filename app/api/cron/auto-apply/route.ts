@@ -11,6 +11,7 @@ import {
   checkDailyLimit,
   DAILY_LIMIT,
 } from '@/lib/autoApplyGuardrails'
+import { effectiveCandidatePlan } from '@/lib/adminAccess'
 
 // Direct OpenAI call — bypasses the loopback HTTP approach which requires a
 // cookie session that doesn't exist in a cron/server-to-server context.
@@ -156,7 +157,7 @@ export async function POST(req: Request) {
         // Fetch profile
         const { data: profile, error: profileError } = await supabase
           .from('profiles')
-          .select('is_premium, candidate_plan, auto_apply_review_mode, email, full_name, skills, experience, bio, cv_url')
+          .select('is_premium, is_admin, candidate_plan, auto_apply_review_mode, email, full_name, skills, experience, bio, cv_url')
           .eq('user_id', setting.user_id)
           .single()
 
@@ -170,9 +171,10 @@ export async function POST(req: Request) {
           profileErrorDetails: profileError?.details ?? null,
         }))
 
-        const isPremium = profile?.is_premium === true || ['pro', 'elite'].includes(profile?.candidate_plan ?? '')
+        const candidatePlan = effectiveCandidatePlan(profile ?? {})
+        const isPremium = profile?.is_premium === true || profile?.is_admin === true || ['pro', 'elite'].includes(candidatePlan)
         if (!isPremium) {
-          console.log(`[auto-apply] User ${setting.user_id} not premium (is_premium=${profile?.is_premium} plan=${profile?.candidate_plan}), skipping`)
+          console.log(`[auto-apply] User ${setting.user_id} not premium (is_premium=${profile?.is_premium} plan=${candidatePlan}), skipping`)
           continue
         }
 
@@ -197,14 +199,13 @@ export async function POST(req: Request) {
         }
 
         const alreadySent = todayLogs?.length || 0
-        const candidatePlan = profile?.candidate_plan ?? 'free'
         const planLimit = DAILY_LIMIT[candidatePlan] ?? 0
 
         // Per-user setting takes precedence over plan limit when set
         const userDailyLimit = setting.daily_apply_limit ?? planLimit
         const effectiveDailyLimit = Math.min(userDailyLimit, planLimit === 0 ? 0 : userDailyLimit)
 
-        console.log(`[auto-apply] User ${setting.user_id} plan=${candidatePlan} planLimit=${planLimit} userLimit=${userDailyLimit} alreadySent=${alreadySent}`)
+        console.log(`[auto-apply] User ${setting.user_id} plan=${candidatePlan} planLimit=${planLimit} userLimit=${userDailyLimit} alreadySent=${alreadySent} isAdmin=${profile?.is_admin}`)
 
         if (planLimit === 0) {
           console.log(`[auto-apply] User ${setting.user_id} plan "${candidatePlan}" has auto-apply disabled`)

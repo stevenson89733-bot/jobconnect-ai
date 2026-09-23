@@ -85,13 +85,13 @@ export default async function CompanyPage({ params }: { params: { name: string }
   let meetingLink: string | null = null
   try {
     const supabase = createClient()
-    const { data: empRow } = await supabase
+    const { data: empRows } = await supabase
       .from('profiles')
-      .select('meeting_link')
+      .select('meeting_link, employer_plan, is_admin')
       .ilike('company_name', displayName)
-      .eq('employer_plan', 'pro')
       .not('meeting_link', 'is', null)
-      .maybeSingle()
+    // Show meeting link for pro plan employers OR admins (who bypass plan gates)
+    const empRow = empRows?.find(r => r.employer_plan === 'pro' || r.is_admin === true) ?? null
     meetingLink = empRow?.meeting_link ?? null
   } catch {}
 

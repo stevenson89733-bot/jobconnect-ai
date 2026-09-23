@@ -10,8 +10,8 @@ export default async function CoverLetterHistoryPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  const { data: profile } = await supabase.from('profiles').select('is_premium').eq('user_id', user.id).single()
-  if (!profile?.is_premium) redirect('/ai-tools/cover-letter')
+  const { data: profile } = await supabase.from('profiles').select('is_premium, is_admin').eq('user_id', user.id).single()
+  if (!profile?.is_premium && !profile?.is_admin) redirect('/ai-tools/cover-letter')
 
   const result = await listCoverLetterDrafts()
   const drafts = result.ok ? result.drafts : []

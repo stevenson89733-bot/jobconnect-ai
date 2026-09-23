@@ -14,8 +14,8 @@ export async function POST(req: Request) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const { data: profile } = await supabase.from('profiles').select('is_premium, full_name').eq('user_id', user.id).single()
-  if (!profile?.is_premium) {
+  const { data: profile } = await supabase.from('profiles').select('is_premium, is_admin, full_name').eq('user_id', user.id).single()
+  if (!profile?.is_premium && !profile?.is_admin) {
     return NextResponse.json({ error: 'CV export is a Premium feature.' }, { status: 403 })
   }
 

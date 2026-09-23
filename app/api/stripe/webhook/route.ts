@@ -56,7 +56,10 @@ export async function POST(req: Request) {
         const plan = purchasedPriceId === EMPLOYER_PRO_PRICE_ID ? 'pro' : 'growth'
         await supabase.from('profiles').update({ employer_plan: plan }).eq('user_id', userId)
       } else {
-        await supabase.from('profiles').update({ is_premium: true }).eq('user_id', userId)
+        // Set candidate_plan from session metadata so plan-aware features
+        // (auto-apply daily limits, etc.) work correctly.
+        const candidatePlan = session.metadata?.plan === 'elite' ? 'elite' : 'pro'
+        await supabase.from('profiles').update({ is_premium: true, candidate_plan: candidatePlan }).eq('user_id', userId)
       }
     }
   }
@@ -73,7 +76,7 @@ export async function POST(req: Request) {
     if (profile?.role === 'employer') {
       await supabase.from('profiles').update({ employer_plan: 'free' }).eq('stripe_customer_id', customerId)
     } else {
-      await supabase.from('profiles').update({ is_premium: false }).eq('stripe_customer_id', customerId)
+      await supabase.from('profiles').update({ is_premium: false, candidate_plan: 'free' }).eq('stripe_customer_id', customerId)
     }
   }
 
@@ -89,7 +92,7 @@ export async function POST(req: Request) {
       // customer.subscription.deleted event above, once dunning is
       // actually exhausted. Candidate behavior is unchanged from before.
       if (profile?.role !== 'employer') {
-        await supabase.from('profiles').update({ is_premium: false }).eq('stripe_customer_id', customerId)
+        await supabase.from('profiles').update({ is_premium: false, candidate_plan: 'free' }).eq('stripe_customer_id', customerId)
       }
     }
   }
