@@ -56,7 +56,7 @@ export async function POST(req: Request) {
       .eq('is_active', true)
       .gte('created_at', windowStart.toISOString())
       .order('created_at', { ascending: false })
-      .limit(50)
+      .limit(15)
 
     if (jobsError) {
       console.error('[auto-apply] jobs error:', jobsError.message)
@@ -105,22 +105,16 @@ export async function POST(req: Request) {
           continue
         }
 
-        // Jobs already queued or applied by this user (ever) — avoid duplicates
-        const { data: doneJobIds } = await supabase
-          .from('auto_apply_log')
-          .select('job_id')
-          .eq('user_id', setting.user_id)
-          .not('job_id', 'is', null)
+        // Jobs already queued or applied — fetch both in parallel to save time
+        const [{ data: doneJobIds }, { data: appliedJobIds }] = await Promise.all([
+          supabase.from('auto_apply_log').select('job_id').eq('user_id', setting.user_id).not('job_id', 'is', null),
+          supabase.from('applications').select('job_id').eq('candidate_id', setting.user_id),
+        ])
 
-        const doneSet = new Set((doneJobIds ?? []).map(r => r.job_id))
-
-        // Also exclude jobs the user applied to directly
-        const { data: appliedJobIds } = await supabase
-          .from('applications')
-          .select('job_id')
-          .eq('candidate_id', setting.user_id)
-
-        for (const r of appliedJobIds ?? []) doneSet.add(r.job_id)
+        const doneSet = new Set([
+          ...(doneJobIds ?? []).map(r => r.job_id),
+          ...(appliedJobIds ?? []).map(r => r.job_id),
+        ])
 
         let queued = 0
         const queuedJobs: typeof jobs = []
