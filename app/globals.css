@@ -51,8 +51,10 @@ html, body {
 
 /* ── Logo fix: no white box on any background ── */
 .logo-link {
-  display: block;
+  display: inline-flex;
+  align-items: center;
   line-height: 0;
+  overflow: visible;
 }
 .logo-img {
   background: transparent;
