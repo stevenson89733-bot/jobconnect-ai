@@ -1,11 +1,22 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { Webhooks } from '@paddle/paddle-node-sdk'
 
 export async function POST(req: Request) {
   const paddleApiKey = process.env.PADDLE_API_KEY
+  const webhookSecret = process.env.PADDLE_WEBHOOK_SECRET
 
-  if (!paddleApiKey) {
+  if (!paddleApiKey || !webhookSecret) {
     return NextResponse.json({ error: 'Paddle not configured' }, { status: 503 })
+  }
+
+  // Verify Paddle webhook signature before processing
+  const rawBody = await req.text()
+  const signature = req.headers.get('Paddle-Signature') ?? ''
+  const validator = new Webhooks()
+  const isValid = await validator.isSignatureValid(rawBody, webhookSecret, signature)
+  if (!isValid) {
+    return NextResponse.json({ error: 'Invalid signature' }, { status: 401 })
   }
 
   // Use service role key to bypass RLS — webhook has no user session
@@ -15,7 +26,7 @@ export async function POST(req: Request) {
   )
 
   try {
-    const body = await req.json()
+    const body = JSON.parse(rawBody)
     const event = body
 
     // Paddle webhook events:
