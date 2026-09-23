@@ -5,9 +5,13 @@
 
 export function effectiveCandidatePlan(profile: {
   is_admin?: boolean | null
+  is_premium?: boolean | null
   candidate_plan?: string | null
 }): string {
   if (profile.is_admin) return 'elite'
+  if (profile.candidate_plan && profile.candidate_plan !== 'free') return profile.candidate_plan
+  // Legacy: is_premium=true without an explicit plan → treat as pro
+  if (profile.is_premium) return 'pro'
   return profile.candidate_plan ?? 'free'
 }
 
