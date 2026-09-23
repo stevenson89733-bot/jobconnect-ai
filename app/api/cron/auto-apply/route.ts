@@ -221,8 +221,9 @@ export async function POST(req: Request) {
         const windowStart = new Date()
         windowStart.setDate(windowStart.getDate() - 7)
 
-        // Fetch the single most recent active job, then decide what to do with it.
-        // Every outcome writes to auto_apply_log so the table is never empty after a run.
+        const remaining = effectiveDailyLimit - alreadySent
+        const fetchLimit = Math.min(remaining * 3, 30) // fetch 3x to account for skips
+
         const { data: jobs, error: jobsError } = await supabase
           .from('jobs')
           .select('id, title, company_name, description, location, apply_url, cross_border_status')
@@ -230,7 +231,7 @@ export async function POST(req: Request) {
           .gte('created_at', windowStart.toISOString())
           .or('apply_url.ilike.%greenhouse%,apply_url.ilike.%lever%')
           .order('created_at', { ascending: false })
-          .limit(1)
+          .limit(fetchLimit)
 
         console.log(`[auto-apply] Jobs query returned ${jobs?.length ?? 0} jobs, error: ${jobsError?.message ?? null}`)
         if (jobs?.[0]) console.log(`[auto-apply] Fetched job ${jobs[0].id} apply_url=${jobs[0].apply_url}`)
@@ -240,8 +241,9 @@ export async function POST(req: Request) {
           continue
         }
 
-        const job = jobs?.[0] ?? null
+        const jobList = jobs ?? []
         const applicationsThisRound: NonNullable<typeof jobs> = []
+        let sentThisRound = 0
 
         const logInsert = async (payload: Record<string, unknown>) => {
           const { error } = await supabase.from('auto_apply_log').insert(payload)
@@ -249,10 +251,14 @@ export async function POST(req: Request) {
           else console.log(`[auto-apply] auto_apply_log written — user ${setting.user_id} job ${payload.job_id ?? 'none'} status=${payload.status}`)
         }
 
-        if (!job) {
+        if (jobList.length === 0) {
           await logInsert({ user_id: setting.user_id, job_id: null, status: 'no_jobs_available', cover_letter: null, adapted_cv_url: null })
           continue
         }
+
+        for (const job of jobList) {
+          // Stop once we've hit the daily limit for this run
+          if (alreadySent + sentThisRound >= effectiveDailyLimit) break
 
         console.log(`[auto-apply] User ${setting.user_id}: processing job ${job.id} "${job.title}"`)
 
@@ -313,6 +319,7 @@ export async function POST(req: Request) {
           if (reviewMode) {
             await logInsert({ user_id: setting.user_id, job_id: job.id, status: 'pending_review', cover_letter, adapted_cv_url: realCvUrl })
             applicationsThisRound.push(job)
+            sentThisRound++
             totalApplications++
             console.log(`[auto-apply] Queued for review: user ${setting.user_id} job ${job.id} "${job.title}"`)
             continue
@@ -365,6 +372,7 @@ export async function POST(req: Request) {
               console.error(`[auto-apply] applications insert failed for user ${setting.user_id} job ${job.id}:`, appError.message)
             } else {
               applicationsThisRound.push(job)
+              sentThisRound++
               totalApplications++
               console.log(`[auto-apply] Applied: user ${setting.user_id} → "${job.title}" at ${job.company_name}`)
             }
@@ -375,6 +383,7 @@ export async function POST(req: Request) {
           console.error(`[auto-apply] Unexpected error for user ${setting.user_id} job ${job.id}:`, message)
           await logInsert({ user_id: setting.user_id, job_id: job.id, status: 'failed', cover_letter: null, adapted_cv_url: null })
         }
+        } // end for (const job of jobList)
 
         // Send email report
         if (applicationsThisRound.length > 0 && profile?.email && resend) {

@@ -3,6 +3,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import Link from 'next/link'
 import AutoApplyJoinButton from './AutoApplyJoinButton'
 import WaitlistCounter from './WaitlistCounter'
+import { effectiveCandidatePlan } from '@/lib/adminAccess'
 
 export const dynamic = 'force-dynamic'
 
@@ -18,10 +19,11 @@ export default async function AutoApplyPage() {
       isSignedIn = true
       const { data } = await supabase
         .from('profiles')
-        .select('is_admin, is_premium')
+        .select('is_admin, is_premium, candidate_plan')
         .eq('user_id', user.id)
         .single()
-      isPro = data?.is_admin === true || data?.is_premium === true
+      const plan = effectiveCandidatePlan(data ?? {})
+      isPro = data?.is_admin === true || data?.is_premium === true || ['pro', 'elite'].includes(plan)
     }
   } catch { /* render as signed-out */ }
 
