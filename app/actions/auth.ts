@@ -3,7 +3,6 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 import { rateLimit, getClientIp } from '@/lib/rateLimit'
-import { verifyTurnstile } from '@/lib/turnstile'
 
 // ── Step 6: Save user to Supabase on signup with role ─────────────────────────
 export async function signUp(formData: FormData) {
@@ -17,9 +16,7 @@ export async function signUp(formData: FormData) {
   if (!ok) redirect(`/register?error=${encodeURIComponent(t('tooManySignupAttempts'))}`)
   const tRateLimit = Date.now()
 
-  const turnstileToken = formData.get('cf-turnstile-response') as string | null
-  const humanVerified = await verifyTurnstile(turnstileToken)
-  if (!humanVerified) redirect(`/register?error=${encodeURIComponent(t('botDetected'))}`)
+  const captchaToken = formData.get('hcaptcha-token') as string | null
 
   const supabase = createClient()
 
@@ -51,6 +48,7 @@ export async function signUp(formData: FormData) {
     password,
     options: {
       data: { first_name: firstName, last_name: lastName, role },
+      ...(captchaToken ? { captchaToken } : {}),
     },
   })
   const tSignUp = Date.now()
@@ -97,16 +95,18 @@ export async function signIn(formData: FormData) {
   if (!ok) redirect(`/login?error=${encodeURIComponent(t('tooManySigninAttempts'))}`)
   const tRateLimit = Date.now()
 
-  const turnstileToken = formData.get('cf-turnstile-response') as string | null
-  const humanVerified = await verifyTurnstile(turnstileToken)
-  if (!humanVerified) redirect(`/login?error=${encodeURIComponent(t('botDetected'))}`)
+  const captchaToken = formData.get('hcaptcha-token') as string | null
 
   const supabase = createClient()
 
   const email    = formData.get('email')    as string
   const password = formData.get('password') as string
 
-  const { error } = await supabase.auth.signInWithPassword({ email, password })
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+    options: captchaToken ? { captchaToken } : undefined,
+  })
   const tSignIn = Date.now()
 
   if (error) {
