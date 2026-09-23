@@ -1,3 +1,5 @@
+export const maxDuration = 10
+
 import { generateCoverLetter } from '@/lib/ai/generate'
 
 export async function POST(req: Request) {

@@ -1,3 +1,5 @@
+export const maxDuration = 10
+
 import { NextResponse } from 'next/server'
 import { getTranslations } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'

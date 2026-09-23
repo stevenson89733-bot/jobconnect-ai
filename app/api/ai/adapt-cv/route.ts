@@ -1,3 +1,5 @@
+export const maxDuration = 10
+
 import { NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { createClient } from '@/lib/supabase/server'
