@@ -97,6 +97,27 @@ export function getEmployerFeatures(plan: EmployerPlanKey): EmployerFeature[] {
   return EMPLOYER_FEATURES.filter(f => f.plans.includes(plan))
 }
 
+// ── Helper: get ONLY the new features introduced by a plan (not inherited) ────
+// Used on pricing cards to show "Includes everything in X, plus:" + diff only.
+const CANDIDATE_PREV: Record<PlanKey, PlanKey | null> = { free: null, pro: 'free', elite: 'pro' }
+export function getCandidateExclusiveFeatures(plan: PlanKey): PlanFeature[] {
+  const prev = CANDIDATE_PREV[plan]
+  if (!prev) return getCandidateFeatures(plan)
+  return CANDIDATE_FEATURES.filter(f => f.plans.includes(plan) && !f.plans.includes(prev))
+}
+
+const EMPLOYER_PREV: Record<EmployerPlanKey, EmployerPlanKey | null> = {
+  employer_free: null,
+  employer_growth: 'employer_free',
+  employer_pro: 'employer_growth',
+  employer_enterprise: 'employer_pro',
+}
+export function getEmployerExclusiveFeatures(plan: EmployerPlanKey): EmployerFeature[] {
+  const prev = EMPLOYER_PREV[plan]
+  if (!prev) return getEmployerFeatures(plan)
+  return EMPLOYER_FEATURES.filter(f => f.plans.includes(plan) && !f.plans.includes(prev))
+}
+
 // ── Plan metadata ─────────────────────────────────────────────────────────────
 export const CANDIDATE_PLANS = [
   { key: 'free'  as PlanKey, name: 'Free',  price: '$0',     color: 'green'  },

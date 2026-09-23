@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { createClient } from '@/lib/supabase/client'
-import { getCandidateFeatures, getEmployerFeatures } from '@/lib/planFeatures'
+import { getCandidateFeatures, getCandidateExclusiveFeatures, getEmployerFeatures, getEmployerExclusiveFeatures } from '@/lib/planFeatures'
 
 export default function PricingPage() {
   const router = useRouter()
@@ -330,7 +330,7 @@ export default function PricingPage() {
               <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('everythingInFree')}</div>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
-              {getCandidateFeatures('pro').map((f) => (
+              {getCandidateExclusiveFeatures('pro').map((f) => (
                 <li key={f.label} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
                   <span className="shrink-0">{f.icon}</span> {f.label}
                 </li>
@@ -410,7 +410,7 @@ export default function PricingPage() {
               <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('everythingInPro')}</div>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
-              {getCandidateFeatures('elite').map((f) => (
+              {getCandidateExclusiveFeatures('elite').map((f) => (
                 <li key={f.label} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
                   <span className="shrink-0">{f.icon}</span> {f.label}
                 </li>
@@ -547,7 +547,7 @@ export default function PricingPage() {
               <div className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t('employerGrowthDesc')}</div>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
-              {getEmployerFeatures('employer_growth').map((f) => (
+              {getEmployerExclusiveFeatures('employer_growth').map((f) => (
                 <li key={f.label} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
                   <span className="shrink-0">{f.icon}</span> {f.label}
                 </li>
@@ -591,7 +591,7 @@ export default function PricingPage() {
                 <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">{t('employerProDesc')}</p>
               </div>
               <ul className="space-y-3 mb-8 flex-1">
-                {getEmployerFeatures('employer_pro').map((f) => (
+                {getEmployerExclusiveFeatures('employer_pro').map((f) => (
                   <li key={f.label} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
                     <span className="shrink-0">{f.icon}</span> {f.label}
                   </li>
@@ -627,7 +627,7 @@ export default function PricingPage() {
                 <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">{t('employerEnterpriseDesc')}</p>
               </div>
               <ul className="space-y-3 mb-8 flex-1">
-                {getEmployerFeatures('employer_enterprise').map((f) => (
+                {getEmployerExclusiveFeatures('employer_enterprise').map((f) => (
                   <li key={f.label} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
                     <span className="shrink-0">{f.icon}</span> {f.label}
                   </li>
