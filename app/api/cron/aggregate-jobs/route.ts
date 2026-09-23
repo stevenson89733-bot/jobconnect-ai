@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { fetchJobs as fetchCareerjet } from '@/lib/aggregators/careerjet'
-import { fetchJobs as fetchRemotivo }  from '@/lib/aggregators/wellfound'  // Remotive public API
 import { fetchJobs as fetchNodesk }    from '@/lib/aggregators/nodesk'
 import { fetchJobs as fetchRemoteco }  from '@/lib/aggregators/remoteco'
 
@@ -16,15 +15,14 @@ export async function GET(req: Request) {
 
   const supabase = createAdminClient()
 
-  const [careerjetResult, remotiveResult, nodeskResult, remotecoResult] =
+  const [careerjetResult, nodeskResult, remotecoResult] =
     await Promise.allSettled([
       fetchCareerjet(),
-      fetchRemotivo(),
       fetchNodesk(),
       fetchRemoteco(),
     ])
 
-  const counts = { careerjet: 0, remotive2: 0, nodesk: 0, remoteco: 0 }
+  const counts = { careerjet: 0, nodesk: 0, remoteco: 0 }
 
   async function upsertJobs(
     source: keyof typeof counts,
@@ -84,7 +82,6 @@ export async function GET(req: Request) {
 
   await Promise.all([
     upsertJobs('careerjet',  careerjetResult),
-    upsertJobs('remotive2',  remotiveResult),
     upsertJobs('nodesk',     nodeskResult),
     upsertJobs('remoteco',   remotecoResult),
   ])
