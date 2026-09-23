@@ -284,6 +284,23 @@ export async function POST(req: Request) {
             continue
           }
 
+          // Only use cv_url when it points to a real uploaded file
+          const realCvUrl = isRealCvUrl(profile?.cv_url) ? profile!.cv_url : null
+
+          // Review mode — queue immediately without generating cover letter.
+          // Cover letter is generated on-demand when the user clicks "Review"
+          // in the settings page. This keeps the cron well under the 10s limit.
+          const reviewMode = setting.review_before_send !== false
+          if (reviewMode) {
+            await logInsert({ user_id: setting.user_id, job_id: job.id, status: 'pending_review', cover_letter: null, adapted_cv_url: realCvUrl })
+            applicationsThisRound.push(job)
+            sentThisRound++
+            totalApplications++
+            console.log(`[auto-apply] Queued for review: user ${setting.user_id} job ${job.id} "${job.title}"`)
+            continue
+          }
+
+          // Auto-send mode — generate cover letter then submit to ATS
           console.log(`[auto-apply] Job ${job.id} "${job.title}" passed guardrails — generating cover letter`)
 
           const cover_letter = await generateCoverLetterDirect({
@@ -306,24 +323,6 @@ export async function POST(req: Request) {
           }
 
           console.log(`[auto-apply] Cover letter generated for job ${job.id} (${cover_letter.length} chars)`)
-
-          // Only use cv_url when it points to a real uploaded file
-          const realCvUrl = isRealCvUrl(profile?.cv_url) ? profile!.cv_url : null
-          if (profile?.cv_url && !realCvUrl) {
-            console.log(`[auto-apply] Placeholder cv_url for user ${setting.user_id} — skipping CV attachment`)
-          }
-
-          // Review mode — queue for user approval instead of sending
-          // setting.review_before_send defaults to true when not yet set (safe default)
-          const reviewMode = setting.review_before_send !== false
-          if (reviewMode) {
-            await logInsert({ user_id: setting.user_id, job_id: job.id, status: 'pending_review', cover_letter, adapted_cv_url: realCvUrl })
-            applicationsThisRound.push(job)
-            sentThisRound++
-            totalApplications++
-            console.log(`[auto-apply] Queued for review: user ${setting.user_id} job ${job.id} "${job.title}"`)
-            continue
-          }
 
           // ATS submission — Greenhouse → Lever → skipped
           let atsStatus: 'sent' | 'failed' | 'skipped_no_ats_match' = 'skipped_no_ats_match'
