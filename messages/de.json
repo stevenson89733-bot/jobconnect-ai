@@ -1539,7 +1539,7 @@
     "s3EliteText": "Alles im PRO-Plan, plus Auto-Apply (25 Jobs/Tag), Prioritäts-Matching, 24/7 dedizierter Support und Elite-Profilabzeichen.",
     "s4Title": "4. Abonnement & Abrechnung",
     "s4Item1": "Abonnements verlängern sich automatisch monatlich",
-    "s4Item2": "Die Abrechnung erfolgt sicher über Paddle",
+    "s4Item2": "Die Abrechnung erfolgt sicher über Stripe",
     "s4Item3": "Sie können Ihr Abonnement jederzeit ohne Strafgebühren kündigen",
     "s4Item4": "Die Kündigung tritt am Ende des aktuellen Abrechnungszeitraums in Kraft",
     "s4Item5": "Rückerstattungen werden für nicht genutzte Teile eines Abonnementmonats nicht gewährt",

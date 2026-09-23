@@ -1545,7 +1545,7 @@
     "s3EliteText": "Tout le PRO, plus Auto-Apply (25/jour), Matching prioritaire, Support dédié 24/7 et Badge Elite.",
     "s4Title": "4. Abonnement et facturation",
     "s4Item1": "Les abonnements se renouvellent automatiquement chaque mois",
-    "s4Item2": "La facturation est traitée via Paddle",
+    "s4Item2": "La facturation est traitée via Stripe",
     "s4Item3": "Vous pouvez résilier à tout moment sans pénalité",
     "s4Item4": "La résiliation prend effet à la fin du cycle de facturation",
     "s4Item5": "Aucun remboursement pour la partie non utilisée du mois",

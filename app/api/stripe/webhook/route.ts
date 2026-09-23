@@ -29,8 +29,7 @@ export async function POST(req: Request) {
   )
 
   // Employer plan is determined by which price the checkout used.
-  // Both env vars must be set in production; missing = treat as unconfigured.
-  const EMPLOYER_PRO_PRICE_ID     = process.env.STRIPE_EMPLOYER_PRO_PRICE_ID
+  const EMPLOYER_PRO_PRICE_ID     = 'price_1UGMUmBHJVowT7ouBDORCd3s' // Employer Pro $99/mo
   const FEATURED_LISTING_PRICE_ID = process.env.STRIPE_FEATURED_LISTING_PRICE_ID
 
   if (event.type === 'checkout.session.completed') {
@@ -54,7 +53,7 @@ export async function POST(req: Request) {
         const stripe = new Stripe(stripeKey, { apiVersion: '2022-11-15' })
         const lineItems = await stripe.checkout.sessions.listLineItems(session.id, { limit: 1 })
         const purchasedPriceId = lineItems.data[0]?.price?.id
-        const plan = EMPLOYER_PRO_PRICE_ID && purchasedPriceId === EMPLOYER_PRO_PRICE_ID ? 'pro' : 'growth'
+        const plan = purchasedPriceId === EMPLOYER_PRO_PRICE_ID ? 'pro' : 'growth'
         await supabase.from('profiles').update({ employer_plan: plan }).eq('user_id', userId)
       } else {
         await supabase.from('profiles').update({ is_premium: true }).eq('user_id', userId)

@@ -1539,7 +1539,7 @@
     "s3EliteText": "Tudo do PRO, mais Auto-Apply (25 empregos/dia), Correspondência prioritária, Suporte dedicado 24/7 e Badge Elite.",
     "s4Title": "4. Assinatura e faturamento",
     "s4Item1": "As assinaturas são renovadas automaticamente mensalmente",
-    "s4Item2": "O faturamento é processado com segurança através do Paddle",
+    "s4Item2": "O faturamento é processado com segurança através do Stripe",
     "s4Item3": "Você pode cancelar sua assinatura a qualquer momento sem penalidades",
     "s4Item4": "O cancelamento entra em vigor no final do ciclo de faturamento atual",
     "s4Item5": "Reembolsos não são fornecidos por partes não utilizadas de um mês",

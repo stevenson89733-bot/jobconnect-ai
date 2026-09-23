@@ -1545,7 +1545,7 @@
     "s3EliteText": "Todo lo de PRO, más Auto-Apply (25 empleos/día), Matching prioritario, Soporte dedicado 24/7 y Badge Elite.",
     "s4Title": "4. Suscripción y facturación",
     "s4Item1": "Las suscripciones se renuevan automáticamente mensualmente",
-    "s4Item2": "La facturación se procesa de forma segura a través de Paddle",
+    "s4Item2": "La facturación se procesa de forma segura a través de Stripe",
     "s4Item3": "Puede cancelar su suscripción en cualquier momento sin penalizaciones",
     "s4Item4": "La cancelación tiene efecto al final del ciclo de facturación actual",
     "s4Item5": "No se ofrecen reembolsos por partes no utilizadas de un mes de suscripción",
