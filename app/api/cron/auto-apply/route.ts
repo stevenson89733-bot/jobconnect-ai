@@ -46,11 +46,11 @@ async function generateCoverLetterDirect({
 
   const openai = new OpenAI({ apiKey })
   const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), 8000)
+  const timeout = setTimeout(() => controller.abort(), 4000)
   try {
     const res = await openai.chat.completions.create(
       {
-        model: 'gpt-4o',
+        model: 'gpt-4o-mini',
         messages: [{
           role: 'user',
           content: `You are an expert career coach. Write a professional cover letter for this candidate.
@@ -73,7 +73,7 @@ Return a JSON object with this exact structure:
 
 Use ONLY facts present in the candidate profile above. Do not invent metrics, employers, or achievements.`,
         }],
-        max_tokens: 1200,
+        max_tokens: 600,
         response_format: { type: 'json_object' },
       },
       { signal: controller.signal }
