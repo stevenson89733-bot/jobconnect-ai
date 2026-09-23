@@ -3,6 +3,54 @@ import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { getTranslations } from 'next-intl/server'
 import { APPLICATION_STATUSES, type ApplicationStatus } from '@/lib/applicationStatus'
+import { Resend } from 'resend'
+
+async function sendInterviewAlert({
+  candidateEmail,
+  candidateName,
+  jobTitle,
+  companyName,
+  scheduledAt,
+  scheduledTimezone,
+}: {
+  candidateEmail: string
+  candidateName: string
+  jobTitle: string
+  companyName: string
+  scheduledAt?: string | null
+  scheduledTimezone?: string | null
+}) {
+  const resendKey = process.env.RESEND_API_KEY
+  if (!resendKey) return
+  const resend = new Resend(resendKey)
+
+  let timeBlock = ''
+  if (scheduledAt) {
+    const d = new Date(scheduledAt)
+    const formatted = d.toLocaleString('en-US', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+      hour: '2-digit', minute: '2-digit', timeZoneName: 'short',
+      ...(scheduledTimezone ? { timeZone: scheduledTimezone } : {}),
+    })
+    timeBlock = `<p>📅 <strong>Scheduled:</strong> ${formatted}</p>`
+  }
+
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://jobconnect-ai.com'
+
+  await resend.emails.send({
+    from: 'JobConnect AI <noreply@jobconnect-ai.com>',
+    to: candidateEmail,
+    subject: `🎉 Interview invitation — ${jobTitle} at ${companyName}`,
+    html: `
+      <p>Hi ${candidateName || 'there'},</p>
+      <p>Great news! <strong>${companyName}</strong> has invited you to an interview for the <strong>${jobTitle}</strong> position.</p>
+      ${timeBlock}
+      <p>Log in to your dashboard to see all the details and prepare:</p>
+      <p><a href="${baseUrl}/candidate/applications" style="background:#2563eb;color:#fff;padding:10px 20px;border-radius:8px;text-decoration:none;display:inline-block">View My Applications</a></p>
+      <p style="color:#999;font-size:12px">Good luck! — The JobConnect AI team</p>
+    `,
+  }).catch(e => console.error('[interview-alert/resend]', e))
+}
 
 export type UpdateApplicationStatusResult = { ok: true } | { ok: false; error: string }
 
@@ -28,7 +76,7 @@ export async function updateApplicationStatus(
     .from('applications')
     .update({ status })
     .eq('id', applicationId)
-    .select('id')
+    .select('id, candidate_id, job_id')
     .maybeSingle()
 
   if (error) {
@@ -41,6 +89,22 @@ export async function updateApplicationStatus(
   // than a false "success" with nothing changed.
   if (!data) {
     return { ok: false, error: t('onlyUpdateOwnJobApplications') }
+  }
+
+  // Interview alert email — fire-and-forget, never blocks the response
+  if (status === 'interview' && data.candidate_id && data.job_id) {
+    const [{ data: candidate }, { data: job }] = await Promise.all([
+      supabase.from('profiles').select('email, full_name').eq('user_id', data.candidate_id).single(),
+      supabase.from('jobs').select('title, company_name').eq('id', data.job_id).single(),
+    ])
+    if (candidate?.email && job?.title) {
+      await sendInterviewAlert({
+        candidateEmail: candidate.email,
+        candidateName: candidate.full_name ?? '',
+        jobTitle: job.title,
+        companyName: job.company_name ?? '',
+      })
+    }
   }
 
   revalidatePath('/recruiter')
@@ -144,6 +208,22 @@ export async function inviteCandidateToInterview(
       console.error('[applications/invite]', error.message)
       return { ok: false, error: t('couldNotUpdateApplication') }
     }
+  }
+
+  // Interview alert email
+  const [{ data: candidate }, { data: jobInfo }] = await Promise.all([
+    supabase.from('profiles').select('email, full_name').eq('user_id', candidateId).single(),
+    supabase.from('jobs').select('title, company_name').eq('id', jobId).single(),
+  ])
+  if (candidate?.email && jobInfo?.title) {
+    await sendInterviewAlert({
+      candidateEmail: candidate.email,
+      candidateName: candidate.full_name ?? '',
+      jobTitle: jobInfo.title,
+      companyName: jobInfo.company_name ?? '',
+      scheduledAt: scheduled,
+      scheduledTimezone: zone,
+    })
   }
 
   revalidatePath('/candidates')

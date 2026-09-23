@@ -133,8 +133,9 @@ export default function JobsClient({
   // A fresh server render (new `jobs` prop) means the filters changed —
   // reset the accumulated infinite-scroll list to exactly that new page 1
   // rather than appending onto the stale, differently-filtered set.
+  // Featured jobs always float to the top within each loaded page.
   useEffect(() => {
-    setAllJobs(jobs)
+    setAllJobs([...jobs].sort((a, b) => (b.is_featured ? 1 : 0) - (a.is_featured ? 1 : 0)))
     setNextPage(2)
     setHasMore(totalPages > 1)
   }, [jobs, totalPages])
@@ -182,7 +183,8 @@ export default function JobsClient({
       const res = await fetch(`/api/jobs?${params.toString()}`)
       if (!res.ok) throw new Error('failed')
       const data = await res.json()
-      setAllJobs((prev) => [...prev, ...(data.jobs ?? [])])
+      const newJobs: Job[] = data.jobs ?? []
+      setAllJobs((prev) => [...prev, ...[...newJobs].sort((a, b) => (b.is_featured ? 1 : 0) - (a.is_featured ? 1 : 0))])
       setNextPage((p) => p + 1)
       setHasMore(nextPage < (data.totalPages ?? 1))
     } catch {
