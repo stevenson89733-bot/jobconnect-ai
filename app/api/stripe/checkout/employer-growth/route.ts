@@ -4,10 +4,10 @@ import Stripe from 'stripe'
 
 export async function POST() {
   const stripeKey = process.env.STRIPE_SECRET_KEY
-  const priceId   = process.env.STRIPE_EMPLOYER_GROWTH_PRICE_ID ?? 'price_1UGMTkBHJVowT7ouXXXXXXXX' // Employer Growth $49/mo
+  const priceId   = process.env.STRIPE_EMPLOYER_GROWTH_PRICE_ID
   const appUrl    = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
 
-  if (!stripeKey) {
+  if (!stripeKey || !priceId) {
     return NextResponse.json({ error: 'Stripe not configured' }, { status: 503 })
   }
 
