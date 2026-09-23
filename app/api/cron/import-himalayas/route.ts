@@ -22,21 +22,16 @@ export async function GET(req: Request) {
 
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     const data = await res.json()
-    const jobs = Array.isArray(data) ? data : data.jobs || []
+    const allJobs = Array.isArray(data) ? data : data.jobs || []
+    const jobs = allJobs.filter((j: { applyUrl?: string; title?: string }) => j.applyUrl && j.title).slice(0, 30)
+
+    // Batch dedup: one IN query instead of 2 per job.
+    const urls = jobs.map((j: { applyUrl: string }) => j.applyUrl)
+    const { data: existing } = await supabase.from('jobs').select('apply_url').in('apply_url', urls)
+    const existingUrls = new Set((existing ?? []).map((r: { apply_url: string }) => r.apply_url))
 
     for (const j of jobs) {
-      if (!j.applyUrl || !j.title) continue
-
-      const { data: byUrl } = await supabase
-        .from('jobs').select('id').eq('apply_url', j.applyUrl).limit(1)
-      if (byUrl?.[0]) { deduplicated++; continue }
-
-      const { data: byTitle } = await supabase
-        .from('jobs').select('id')
-        .ilike('title', j.title.trim())
-        .ilike('company_name', (j.company?.name || 'Unknown').trim())
-        .limit(1)
-      if (byTitle?.[0]) { deduplicated++; continue }
+      if (existingUrls.has(j.applyUrl)) { deduplicated++; continue }
 
       const { error } = await supabase.from('jobs').insert({
         title: j.title,

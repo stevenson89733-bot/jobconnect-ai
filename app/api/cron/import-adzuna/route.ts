@@ -9,7 +9,7 @@ import { fetchAdzunaJobs, adzunaSourceKey, ADZUNA_COUNTRIES, type AdzunaCountryC
 
 export const maxDuration = 10
 
-const LIMIT = 5
+const LIMIT = 20
 const VALID_COUNTRIES = new Set<string>(ADZUNA_COUNTRIES.map((c) => c.code))
 
 export async function GET(req: Request) {
@@ -33,17 +33,14 @@ export async function GET(req: Request) {
 
   try {
     const jobs = await fetchAdzunaJobs({ country: country as AdzunaCountryCode, resultsPerPage: LIMIT, timeoutMs: 6000 })
-    for (const j of jobs) {
-      const { data: byUrl } = await supabase
-        .from('jobs').select('id').eq('apply_url', j.redirect_url).limit(1)
-      if (byUrl?.[0]) { deduplicated++; continue }
 
-      const { data: byTitle } = await supabase
-        .from('jobs').select('id')
-        .ilike('title', j.title.trim())
-        .ilike('company_name', j.company_name.trim())
-        .limit(1)
-      if (byTitle?.[0]) { deduplicated++; continue }
+    // Batch dedup: one IN query instead of 2 per job.
+    const urls = jobs.map((j) => j.redirect_url)
+    const { data: existing } = await supabase.from('jobs').select('apply_url').in('apply_url', urls)
+    const existingUrls = new Set((existing ?? []).map((r: { apply_url: string }) => r.apply_url))
+
+    for (const j of jobs) {
+      if (existingUrls.has(j.redirect_url)) { deduplicated++; continue }
 
       const salaryLabel =
         j.salary_min && j.salary_max

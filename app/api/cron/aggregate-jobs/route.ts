@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { fetchJobs as fetchCareerjet } from '@/lib/aggregators/careerjet'
-import { fetchJobs as fetchWellfound } from '@/lib/aggregators/wellfound'
+import { fetchJobs as fetchRemotivo }  from '@/lib/aggregators/wellfound'  // Remotive public API
 import { fetchJobs as fetchNodesk }    from '@/lib/aggregators/nodesk'
 import { fetchJobs as fetchRemoteco }  from '@/lib/aggregators/remoteco'
 
-export const maxDuration = 60
+// Vercel Hobby cron limit is 10s — keep all fetches parallel and tight.
+export const maxDuration = 10
 
 export async function GET(req: Request) {
   const secret = process.env.CRON_SECRET
@@ -15,15 +16,15 @@ export async function GET(req: Request) {
 
   const supabase = createAdminClient()
 
-  const [careerjetResult, wellfoundResult, nodeskResult, remotecoResult] =
+  const [careerjetResult, remotiveResult, nodeskResult, remotecoResult] =
     await Promise.allSettled([
       fetchCareerjet(),
-      fetchWellfound(),
+      fetchRemotivo(),
       fetchNodesk(),
       fetchRemoteco(),
     ])
 
-  const counts = { careerjet: 0, wellfound: 0, nodesk: 0, remoteco: 0 }
+  const counts = { careerjet: 0, remotive2: 0, nodesk: 0, remoteco: 0 }
 
   async function upsertJobs(
     source: keyof typeof counts,
@@ -34,8 +35,20 @@ export async function GET(req: Request) {
       return
     }
 
-    for (const job of result.value) {
-      if (!job.title || !job.url) continue
+    const jobs = result.value.filter((j) => j.title && j.url)
+    if (jobs.length === 0) return
+
+    // Batch dedup: fetch all existing URLs in one query instead of 2 per job.
+    const urls = jobs.map((j) => j.url)
+    const { data: existing } = await supabase
+      .from('jobs')
+      .select('apply_url')
+      .in('apply_url', urls)
+
+    const existingUrls = new Set((existing ?? []).map((r) => r.apply_url as string))
+
+    for (const job of jobs) {
+      if (existingUrls.has(job.url)) continue
 
       const { error } = await supabase.from('jobs').upsert(
         {
@@ -54,11 +67,11 @@ export async function GET(req: Request) {
           tags:         [],
           is_active:    true,
           posted_by:    null,
-          is_cross_border:        job.is_cross_border ?? false,
-          cross_border_status:    job.is_cross_border ? 'yes' : null,
+          is_cross_border:         job.is_cross_border ?? false,
+          cross_border_status:     job.is_cross_border ? 'yes' : null,
           cross_border_confidence: job.is_cross_border ? 'medium' : 'low',
         },
-        { onConflict: 'apply_url', ignoreDuplicates: false }
+        { onConflict: 'apply_url', ignoreDuplicates: true }
       )
 
       if (error) {
@@ -70,10 +83,10 @@ export async function GET(req: Request) {
   }
 
   await Promise.all([
-    upsertJobs('careerjet', careerjetResult),
-    upsertJobs('wellfound', wellfoundResult),
-    upsertJobs('nodesk',    nodeskResult),
-    upsertJobs('remoteco',  remotecoResult),
+    upsertJobs('careerjet',  careerjetResult),
+    upsertJobs('remotive2',  remotiveResult),
+    upsertJobs('nodesk',     nodeskResult),
+    upsertJobs('remoteco',   remotecoResult),
   ])
 
   console.log('[aggregate-jobs] done', counts)

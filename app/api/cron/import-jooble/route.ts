@@ -3,7 +3,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 
 export const maxDuration = 10
 
-const LIMIT = 10
+const LIMIT = 20
 
 export async function GET(req: Request) {
   const secret = process.env.CRON_SECRET
@@ -35,26 +35,20 @@ export async function GET(req: Request) {
     const payload = await res.json() as { totalCount?: number; jobs?: Record<string, unknown>[] }
     const jobs = (payload.jobs ?? []).slice(0, LIMIT)
 
-    for (const j of jobs as Array<{
-      title?: string; company?: string; location?: string
-      snippet?: string; link?: string; type?: string; updated?: string
-    }>) {
-      const applyUrl = j.link ?? ''
-      const title    = j.title ?? ''
+    type JoobleJob = { title?: string; company?: string; location?: string; snippet?: string; link?: string; type?: string }
+    const validJobs = (jobs as JoobleJob[]).filter((j) => j.link && j.title)
+
+    // Batch dedup: one IN query instead of 2 per job.
+    const urls = validJobs.map((j) => j.link as string)
+    const { data: existing } = await supabase.from('jobs').select('apply_url').in('apply_url', urls)
+    const existingUrls = new Set((existing ?? []).map((r: { apply_url: string }) => r.apply_url))
+
+    for (const j of validJobs) {
+      const applyUrl = j.link as string
+      const title    = j.title as string
       const company  = j.company ?? ''
 
-      if (!applyUrl || !title) continue
-
-      const { data: byUrl } = await supabase
-        .from('jobs').select('id').eq('apply_url', applyUrl).limit(1)
-      if (byUrl?.[0]) { deduplicated++; continue }
-
-      const { data: byTitle } = await supabase
-        .from('jobs').select('id')
-        .ilike('title', title.trim())
-        .ilike('company_name', company.trim())
-        .limit(1)
-      if (byTitle?.[0]) { deduplicated++; continue }
+      if (existingUrls.has(applyUrl)) { deduplicated++; continue }
 
       const { error } = await supabase.from('jobs').insert({
         title,

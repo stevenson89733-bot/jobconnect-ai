@@ -23,17 +23,14 @@ export async function GET(req: Request) {
 
   try {
     const jobs = await fetchArbeitnowJobs({ limit: LIMIT })
-    for (const j of jobs) {
-      const { data: byUrl } = await supabase
-        .from('jobs').select('id').eq('apply_url', j.url).limit(1)
-      if (byUrl?.[0]) { deduplicated++; continue }
 
-      const { data: byTitle } = await supabase
-        .from('jobs').select('id')
-        .ilike('title', j.title.trim())
-        .ilike('company_name', j.company_name.trim())
-        .limit(1)
-      if (byTitle?.[0]) { deduplicated++; continue }
+    // Batch dedup: one IN query instead of 2 per job.
+    const urls = jobs.map((j) => j.url)
+    const { data: existing } = await supabase.from('jobs').select('apply_url').in('apply_url', urls)
+    const existingUrls = new Set((existing ?? []).map((r: { apply_url: string }) => r.apply_url))
+
+    for (const j of jobs) {
+      if (existingUrls.has(j.url)) { deduplicated++; continue }
 
       const { error } = await supabase.from('jobs').insert({
         title: j.title,

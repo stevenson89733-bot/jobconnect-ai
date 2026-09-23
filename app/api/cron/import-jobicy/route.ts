@@ -64,19 +64,15 @@ export async function GET(req: Request) {
 
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     const xml = await res.text()
-    const jobs = parseXML(xml)
+    const jobs = parseXML(xml).slice(0, 20)
+
+    // Batch dedup: one IN query instead of 2 per job.
+    const urls = jobs.map((j) => j.link)
+    const { data: existing } = await supabase.from('jobs').select('apply_url').in('apply_url', urls)
+    const existingUrls = new Set((existing ?? []).map((r: { apply_url: string }) => r.apply_url))
 
     for (const j of jobs) {
-      const { data: byUrl } = await supabase
-        .from('jobs').select('id').eq('apply_url', j.link).limit(1)
-      if (byUrl?.[0]) { deduplicated++; continue }
-
-      const { data: byTitle } = await supabase
-        .from('jobs').select('id')
-        .ilike('title', j.title.trim())
-        .ilike('company_name', j.company.trim())
-        .limit(1)
-      if (byTitle?.[0]) { deduplicated++; continue }
+      if (existingUrls.has(j.link)) { deduplicated++; continue }
 
       const { error } = await supabase.from('jobs').insert({
         title: j.title,
