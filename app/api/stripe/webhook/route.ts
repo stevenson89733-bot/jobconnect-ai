@@ -64,6 +64,30 @@ export async function POST(req: Request) {
     }
   }
 
+  // Plan upgrade/downgrade mid-cycle (e.g. free → Pro via Stripe portal)
+  if (event.type === 'customer.subscription.updated') {
+    const sub        = event.data.object as Stripe.Subscription
+    const customerId = typeof sub.customer === 'string' ? sub.customer : sub.customer.id
+    const status     = sub.status // 'active' | 'past_due' | 'canceled' | etc.
+    const priceId    = sub.items.data[0]?.price?.id
+
+    const { data: profile } = await supabase.from('profiles').select('role').eq('stripe_customer_id', customerId).single()
+    if (profile?.role === 'employer') {
+      if (status === 'active') {
+        const plan = priceId === EMPLOYER_PRO_PRICE_ID ? 'pro' : 'growth'
+        await supabase.from('profiles').update({ employer_plan: plan }).eq('stripe_customer_id', customerId)
+      }
+    } else {
+      if (status === 'active') {
+        const ELITE_PRICE_ID = process.env.STRIPE_CANDIDATE_ELITE_PRICE_ID
+        const candidatePlan  = priceId === ELITE_PRICE_ID ? 'elite' : 'pro'
+        await supabase.from('profiles').update({ is_premium: true, candidate_plan: candidatePlan }).eq('stripe_customer_id', customerId)
+      } else if (status === 'past_due') {
+        // Do not revoke yet — Stripe will retry (dunning). Only revoke on deleted.
+      }
+    }
+  }
+
   // Real period-end signal for both plans: cancel_at_period_end keeps the
   // subscription 'active' until the period actually ends, at which point
   // Stripe transitions it to canceled and fires this event — so reacting
