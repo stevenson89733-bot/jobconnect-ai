@@ -29,7 +29,7 @@ export async function POST(req: Request) {
   )
 
   // Employer plan is determined by which price the checkout used.
-  const EMPLOYER_PRO_PRICE_ID     = 'price_1UGMUmBHJVowT7ouBDORCd3s' // Employer Pro $99/mo
+  const EMPLOYER_PRO_PRICE_ID     = process.env.STRIPE_EMPLOYER_PRO_PRICE_ID ?? 'price_1UGMUmBHJVowT7ouBDORCd3s'
   const FEATURED_LISTING_PRICE_ID = process.env.STRIPE_FEATURED_LISTING_PRICE_ID
 
   if (event.type === 'checkout.session.completed') {

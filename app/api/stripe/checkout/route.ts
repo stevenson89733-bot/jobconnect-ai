@@ -4,7 +4,7 @@ import Stripe from 'stripe'
 
 export async function POST() {
   const stripeKey = process.env.STRIPE_SECRET_KEY
-  const priceId   = 'price_1UEXI0BHJVowT7ouy1bAbbpK' // Candidate Pro $19.99/mo
+  const priceId   = process.env.STRIPE_CANDIDATE_PRO_PRICE_ID ?? 'price_1UEXI0BHJVowT7ouy1bAbbpK'
   const appUrl    = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
 
   if (!stripeKey) {
