@@ -125,13 +125,13 @@ export async function POST(req: Request) {
           // Skip explicitly non-international jobs
           if ((job as { cross_border_status?: string | null }).cross_border_status === 'no') continue
 
-          const { error: logError } = await supabase.from('auto_apply_log').insert({
+          const { error: logError } = await supabase.from('auto_apply_log').upsert({
             user_id: setting.user_id,
             job_id: job.id,
             status: 'pending_review',
             cover_letter: null,
             adapted_cv_url: null,
-          })
+          }, { onConflict: 'user_id,job_id', ignoreDuplicates: true })
 
           if (logError) {
             console.error(`[auto-apply] log insert failed user=${setting.user_id} job=${job.id}:`, logError.message)
