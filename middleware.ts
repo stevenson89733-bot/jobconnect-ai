@@ -7,6 +7,7 @@ import { LOCALE_COOKIE, detectLocaleFromAcceptLanguage } from '@/lib/i18n/config
  * the request is redirected to /login (carrying the refreshed session cookies).
  */
 const PROTECTED_PREFIXES = ['/dashboard', '/candidate', '/recruiter', '/admin']
+const ADMIN_PREFIXES = ['/admin']
 const AUTH_PATHS = ['/login', '/register']
 
 /**
@@ -62,6 +63,26 @@ async function updateSession(request: NextRequest) {
   const isProtected = PROTECTED_PREFIXES.some(
     (p) => pathname === p || pathname.startsWith(p + '/')
   )
+
+  const isAdmin = ADMIN_PREFIXES.some(
+    (p) => pathname === p || pathname.startsWith(p + '/')
+  )
+
+  // Admin routes: check is_admin flag in addition to session
+  if (user && isAdmin) {
+    try {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('is_admin')
+        .eq('user_id', user.id)
+        .single()
+      if (!profile?.is_admin) {
+        return NextResponse.redirect(new URL('/dashboard', request.url))
+      }
+    } catch {
+      return NextResponse.redirect(new URL('/dashboard', request.url))
+    }
+  }
 
   if (!user && isProtected) {
     const loginUrl = request.nextUrl.clone()

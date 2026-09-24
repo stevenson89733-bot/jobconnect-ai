@@ -70,7 +70,7 @@ export async function POST(req: Request) {
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://jobconnect-ai.vercel.app'
     const acceptUrl = `${baseUrl}/api/recruiter/team/accept?token=${token}`
     const companyName = profile?.company_name ?? 'Your employer'
-    await resend.emails.send({
+    const { error: emailError } = await resend.emails.send({
       from: 'JobConnect AI <noreply@jobconnect-ai.com>',
       to: email,
       subject: `You've been invited to join ${companyName} on JobConnect AI`,
@@ -81,7 +81,11 @@ export async function POST(req: Request) {
         <p><a href="${acceptUrl}" style="background:#2563eb;color:#fff;padding:10px 20px;border-radius:8px;text-decoration:none;display:inline-block">Accept Invitation</a></p>
         <p style="color:#999;font-size:12px">If you didn't expect this email, you can safely ignore it.</p>
       `,
-    }).catch(e => console.error('[team-invite/resend]', e))
+    })
+    if (emailError) {
+      console.error('[team-invite/resend]', emailError)
+      return NextResponse.json({ error: 'Invitation created but email delivery failed. Please try again.' }, { status: 500 })
+    }
   }
 
   return NextResponse.json({ ok: true, id: member?.id })
