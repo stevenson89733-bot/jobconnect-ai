@@ -90,9 +90,12 @@ export async function POST(req: Request) {
     // Opportunistic 90-day retention purge (see supabase/copilot_conversations.sql
     // for why this runs here instead of a pg_cron job) — runs as the
     // candidate's own session, same RLS as every other read/write here.
-    const cutoff = new Date(Date.now() - RETENTION_MS).toISOString()
-    const { error: purgeError } = await supabase.from('copilot_conversations').delete().eq('user_id', user.id).lt('created_at', cutoff)
-    if (purgeError) console.error('[copilot/chat] retention purge failed:', purgeError.message)
+    // Only purge ~2% of requests to avoid a DB write on every message
+    if (Math.random() < 0.02) {
+      const cutoff = new Date(Date.now() - RETENTION_MS).toISOString()
+      supabase.from('copilot_conversations').delete().eq('user_id', user.id).lt('created_at', cutoff)
+        .then(({ error }) => { if (error) console.error('[copilot/chat] retention purge failed:', error.message) })
+    }
 
     return NextResponse.json({ reply: classification.reply, intent: classification.intent, redirect })
   } catch (err) {

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
 
 type Profile = Record<string, string | number | null>
@@ -48,7 +49,7 @@ export default async function PublicProfileView({ profile }: { profile: Profile 
           <div className="w-16 h-16 rounded-2xl overflow-hidden bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center text-white text-2xl font-bold shrink-0">
             {avatarUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={avatarUrl} alt={name} className="w-full h-full object-cover" />
+              <Image src={avatarUrl} alt={name} width={80} height={80} className="w-full h-full object-cover" />
             ) : (
               initial
             )}

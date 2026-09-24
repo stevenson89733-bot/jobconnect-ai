@@ -17,7 +17,7 @@ const buckets = new Map<string, Bucket>()
 
 // Opportunistic cleanup so the map doesn't grow unbounded over the life of a warm instance.
 function sweepExpired(now: number) {
-  if (buckets.size < 500) return
+  if (buckets.size < 200) return
   for (const [key, bucket] of buckets) {
     if (now > bucket.resetAt) buckets.delete(key)
   }

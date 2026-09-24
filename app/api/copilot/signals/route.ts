@@ -52,7 +52,8 @@ export async function GET() {
       .from('jobs')
       .select('id, tags, created_at')
       .eq('is_active', true)
-      .gte('created_at', new Date(Date.now() - RECENT_JOB_WINDOW_MS).toISOString()),
+      .gte('created_at', new Date(Date.now() - RECENT_JOB_WINDOW_MS).toISOString())
+      .limit(200),
   ])
 
   const signals: CopilotSignal[] = []

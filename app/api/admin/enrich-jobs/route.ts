@@ -4,10 +4,6 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { rateLimit, getClientIp } from '@/lib/rateLimit'
 import { analyzeGeoCompliance } from '@/lib/ai/geoAnalysis'
-function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
-
 // CRITIQUE : is_admin === true requis — retourne 403 sinon.
 // Enrichit par batch de 10 les jobs remote sans geo_analysis.
 
@@ -41,25 +37,16 @@ export async function POST(req: Request) {
     return NextResponse.json({ enriched: 0, remaining: 0 })
   }
 
-  let enriched = 0
-  for (const job of jobs) {
-    try {
-      const geoResult = await analyzeGeoCompliance(
-        job.title,
-        job.description ?? '',
-        job.location ?? '',
-      )
-      const { error: updateError } = await admin
-        .from('jobs')
-        .update({ geo_analysis: geoResult })
-        .eq('id', job.id)
-      if (!updateError) enriched++
-      else console.error('[enrich-jobs] update failed:', updateError.message)
-    } catch (err) {
-      console.error('[enrich-jobs] analysis failed for job', job.id, err instanceof Error ? err.message : err)
-    }
-        await sleep(1500)
-  }
+  const results = await Promise.allSettled(
+    jobs.map(job =>
+      analyzeGeoCompliance(job.title, job.description ?? '', job.location ?? '')
+        .then(geoResult => admin.from('jobs').update({ geo_analysis: geoResult }).eq('id', job.id))
+    )
+  )
+  let enriched = results.filter(r => r.status === 'fulfilled').length
+  results.forEach((r, i) => {
+    if (r.status === 'rejected') console.error('[enrich-jobs] failed for job', jobs[i].id, r.reason)
+  })
 
   // Compte les jobs restants à enrichir
   const { count: remaining } = await admin

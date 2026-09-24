@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
 import InterviewInviteButton, { type EmployerJobOption } from '@/components/candidates/InterviewInviteButton'
 
@@ -52,8 +53,7 @@ function CandidateCardItem({
       <div className="flex items-center gap-3 mb-3">
         <div className="w-11 h-11 rounded-full overflow-hidden bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center text-white text-sm font-bold shrink-0">
           {candidate.avatar_url ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={candidate.avatar_url} alt={name} className="w-full h-full object-cover" />
+            <Image src={candidate.avatar_url} alt={name} width={44} height={44} className="w-full h-full object-cover" />
           ) : (
             initialsOf(name)
           )}

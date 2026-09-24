@@ -37,6 +37,7 @@ export async function GET() {
     .from('applications')
     .select('job_id')
     .eq('candidate_id', user.id)
+    .limit(500)
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json(data?.map(a => a.job_id) ?? [])

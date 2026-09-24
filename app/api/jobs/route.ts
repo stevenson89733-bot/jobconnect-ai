@@ -40,17 +40,15 @@ export async function GET(req: Request) {
 
   query = applyJobFilters(query, { q, workType, jobType, category, sort, crossBorder, country, trueRemote })
 
-  const { data: jobs, count, error } = await query.range(from, to)
+  const [{ data: jobs, count, error }, { data: { user } }] = await Promise.all([
+    query.range(from, to),
+    supabase.auth.getUser(),
+  ])
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
-  // Real Match % (see app/jobs/page.tsx for the full reasoning) — plain
-  // array/set comparison against the candidate's real profile skills, no
-  // LLM call, so no rate limiting is warranted; null (badge omitted) for
-  // logged-out users or empty profiles, never a fabricated score.
   let skillSet = new Set<string>()
   let candidateProfile: Awaited<ReturnType<typeof getCandidateProfile>> = null
-  const { data: { user } } = await supabase.auth.getUser()
   if (user) {
     candidateProfile = await getCandidateProfile(supabase, user.id)
     skillSet = parseSkillSet(candidateProfile?.skills)
@@ -152,38 +150,40 @@ export async function POST(req: Request) {
   // "not yet classified" state a pre-migration row would have) rather than
   // erroring the whole request over a non-critical enrichment step.
   if (job.work_type === 'remote') {
-    try {
-      const classification = await classifyCrossBorder(job.title, job.description ?? '')
+    const [crossResult, geoResult] = await Promise.allSettled([
+      classifyCrossBorder(job.title, job.description ?? ''),
+      analyzeGeoCompliance(job.title, job.description ?? '', job.location ?? ''),
+    ])
+
+    if (crossResult.status === 'fulfilled') {
+      const c = crossResult.value
       const { data: updated, error: updateError } = await supabase
         .from('jobs')
         .update({
-          cross_border_status: classification.status,
-          cross_border_reason: classification.reason,
-          cross_border_signals: classification.signals.length > 0 ? classification.signals : null,
+          cross_border_status: c.status,
+          cross_border_reason: c.reason,
+          cross_border_signals: c.signals.length > 0 ? c.signals : null,
         })
         .eq('id', job.id)
         .select()
         .single()
       if (!updateError && updated) Object.assign(job, updated)
       else if (updateError) console.error('[jobs/cross-border] update failed:', updateError.message)
-    } catch (err) {
-      console.error('[jobs/cross-border] classification failed:', err instanceof Error ? err.message : err)
+    } else {
+      console.error('[jobs/cross-border] classification failed:', crossResult.reason)
     }
 
-    // Geo-compliance analysis — same pattern as cross-border: synchronous,
-    // failure-safe, never blocks the actual job posting response.
-    try {
-      const geoResult = await analyzeGeoCompliance(job.title, job.description ?? '', job.location ?? '')
+    if (geoResult.status === 'fulfilled') {
       const { data: geoUpdated, error: geoError } = await supabase
         .from('jobs')
-        .update({ geo_analysis: geoResult })
+        .update({ geo_analysis: geoResult.value })
         .eq('id', job.id)
         .select()
         .single()
       if (!geoError && geoUpdated) Object.assign(job, geoUpdated)
       else if (geoError) console.error('[jobs/geo-analysis] update failed:', geoError.message)
-    } catch (err) {
-      console.error('[jobs/geo-analysis] analysis failed:', err instanceof Error ? err.message : err)
+    } else {
+      console.error('[jobs/geo-analysis] analysis failed:', geoResult.reason)
     }
   }
 
