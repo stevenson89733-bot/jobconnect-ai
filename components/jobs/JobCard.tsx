@@ -72,12 +72,14 @@ export default function JobCard({
   onToggleSave,
   alreadyApplied,
   onSelect,
+  profileComplete,
 }: {
   job: Job
   isSaved: boolean
   onToggleSave: (jobId: string) => void
   alreadyApplied: boolean
   onSelect?: (job: Job) => void
+  profileComplete?: boolean
 }) {
   const [signalsOpen, setSignalsOpen] = useState(false)
   const [showModal, setShowModal] = useState(false)
@@ -148,8 +150,8 @@ export default function JobCard({
             <button
               type="button"
               title={job.cross_border_status === 'yes' ? t('crossBorderYes') : job.cross_border_status === 'unclear' ? t('crossBorderUnclear') : t('crossBorderNo')}
-              onClick={(e) => { e.stopPropagation(); if (job.cross_border_signals?.length) setSignalsOpen(o => !o) }}
-              className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold border whitespace-nowrap ${remoteBadge.className} ${job.cross_border_signals?.length ? 'cursor-pointer' : 'cursor-default'}`}
+              onClick={(e) => { e.stopPropagation(); if (Array.isArray(job.cross_border_signals) && (job.cross_border_signals as string[]).length) setSignalsOpen(o => !o) }}
+              className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold border whitespace-nowrap ${remoteBadge.className} ${Array.isArray(job.cross_border_signals) && (job.cross_border_signals as string[]).length ? 'cursor-pointer' : 'cursor-default'}`}
             >
               {remoteBadge.label}
             </button>
@@ -213,9 +215,9 @@ export default function JobCard({
         })()}
       </div>
 
-      {/* Cross-border signals dropdown */}
+      {/* Cross-border signals dropdown (legacy flat array) */}
       <AnimatePresence>
-        {signalsOpen && job.cross_border_signals && job.cross_border_signals.length > 0 && (
+        {signalsOpen && Array.isArray(job.cross_border_signals) && !('positive' in (job.cross_border_signals as object)) && (job.cross_border_signals as string[]).length > 0 && (
           <motion.ul
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
@@ -223,7 +225,7 @@ export default function JobCard({
             transition={{ duration: 0.15 }}
             className="overflow-hidden bg-slate-50 border border-slate-200 rounded-lg p-2 space-y-1"
           >
-            {job.cross_border_signals.map((s, i) => (
+            {(job.cross_border_signals as string[]).map((s, i) => (
               <li key={i} className="text-[11px] text-slate-600 flex items-start gap-1.5">
                 <span className="mt-1 w-1 h-1 rounded-full bg-slate-400 shrink-0 inline-block" />
                 {s}
@@ -232,6 +234,34 @@ export default function JobCard({
           </motion.ul>
         )}
       </AnimatePresence>
+
+      {/* Pourquoi tu matches — only for cross-border jobs with structured signals */}
+      {(() => {
+        if (!job.is_cross_border) return null
+        if (!profileComplete) return null
+        const s = job.cross_border_signals
+        if (!s || Array.isArray(s) || (!s.positive?.length && !s.warnings?.length)) return null
+        const positive = s.positive.slice(0, 3)
+        const warnings = s.warnings.slice(0, 2)
+        if (!positive.length && !warnings.length) return null
+        return (
+          <div className="pt-1">
+            <p className="text-[12px] font-semibold mb-1.5" style={{ color: '#57C7E3' }}>Pourquoi tu matches</p>
+            <div className="flex flex-wrap gap-1">
+              {positive.map((label) => (
+                <span key={label} className="text-[10px] font-semibold px-2 py-0.5 rounded-full text-white" style={{ background: '#F0663A' }}>
+                  {label}
+                </span>
+              ))}
+              {warnings.map((label) => (
+                <span key={label} className="text-[10px] font-semibold px-2 py-0.5 rounded-full text-white" style={{ background: '#F59E0B' }}>
+                  ⚠ {label}
+                </span>
+              ))}
+            </div>
+          </div>
+        )
+      })()}
 
       {/* Row 5 — Apply · Save · Time */}
       <div className="flex items-center gap-2 pt-1" onClick={e => e.stopPropagation()}>

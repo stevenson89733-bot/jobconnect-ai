@@ -26,9 +26,10 @@ export type Job = {
   // Real GPT-4o-mini classification (lib/ai/crossBorder.ts) of whether this
   // remote posting is genuinely open worldwide. All 3 statuses render a badge
   // with distinct colours; null = not yet classified (non-remote or pre-migration).
+  is_cross_border?: boolean | null
   cross_border_status: 'yes' | 'no' | 'unclear' | null
-  // Candidate-facing signals explaining the classification — 2-3 short strings.
-  cross_border_signals: string[] | null
+  // Candidate-facing signals explaining the classification.
+  cross_border_signals: { positive: string[]; warnings: string[] } | string[] | null
   // Keyword-scoring confidence level (lib/crossBorderDetector.ts).
   cross_border_confidence?: 'low' | 'medium' | 'high' | null
   // GPT-4o-mini geo-compliance classification — null when not yet analyzed.

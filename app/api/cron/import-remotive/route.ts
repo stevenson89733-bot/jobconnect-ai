@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { fetchRemotiveJobs, mapRemotiveCategory, mapRemotiveJobType, parseRemotiveSalary } from '@/lib/remotive'
-import { detectCrossBorder } from '@/lib/crossBorderDetector'
+import { scoreCrossBorder } from '@/lib/scoring/crossBorderScore'
 
 export const maxDuration = 60
 
@@ -24,7 +24,7 @@ export async function GET(req: Request) {
   const rows = rawJobs.map((j) => {
     const description = j.description.replace(/<[^>]*>/g, '')
     const location    = j.candidate_required_location ?? 'Remote'
-    const { isCrossBorder, confidence } = detectCrossBorder(description, j.title)
+    const { isCrossBorder, confidence, signals } = scoreCrossBorder(j.title, description, location)
     const { min: salaryMin, max: salaryMax } = parseRemotiveSalary(j.salary)
 
     return {
@@ -38,6 +38,7 @@ export async function GET(req: Request) {
       posted_at:               new Date(j.publication_date).toISOString(),
       is_cross_border:         isCrossBorder,
       cross_border_confidence: confidence,
+      cross_border_signals:    signals,
       work_type:               'remote',
       job_type:                mapRemotiveJobType(j.job_type),
       category:                mapRemotiveCategory(j.category),

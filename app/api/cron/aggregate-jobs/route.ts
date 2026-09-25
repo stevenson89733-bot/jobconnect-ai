@@ -3,6 +3,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { fetchJobs as fetchCareerjet } from '@/lib/aggregators/careerjet'
 import { fetchJobs as fetchNodesk }    from '@/lib/aggregators/nodesk'
 import { fetchJobs as fetchRemoteco }  from '@/lib/aggregators/remoteco'
+import { scoreCrossBorder } from '@/lib/scoring/crossBorderScore'
 
 // Vercel Hobby cron limit is 10s — keep all fetches parallel and tight.
 export const maxDuration = 60
@@ -48,6 +49,8 @@ export async function GET(req: Request) {
     for (const job of jobs) {
       if (existingUrls.has(job.url)) continue
 
+      const cbScore = scoreCrossBorder(job.title, job.description ?? '', job.location ?? '')
+
       const { error } = await supabase.from('jobs').upsert(
         {
           title:        job.title,
@@ -65,9 +68,10 @@ export async function GET(req: Request) {
           tags:         [],
           is_active:    true,
           posted_by:    null,
-          is_cross_border:         job.is_cross_border ?? false,
-          cross_border_status:     job.is_cross_border ? 'yes' : null,
-          cross_border_confidence: job.is_cross_border ? 'medium' : 'low',
+          is_cross_border:         cbScore.isCrossBorder,
+          cross_border_status:     cbScore.isCrossBorder ? 'yes' : null,
+          cross_border_confidence: cbScore.confidence,
+          cross_border_signals:    cbScore.signals,
         },
         { onConflict: 'apply_url', ignoreDuplicates: true }
       )
