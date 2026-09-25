@@ -40,8 +40,9 @@ export async function signUp(formData: FormData) {
   const tSignUp = Date.now()
 
   if (error || !data.user) {
-    console.log(`[signup timing] role=${role} rateLimit=${tRateLimit - t0}ms signUp=${tSignUp - tRateLimit}ms FAILED total=${tSignUp - t0}ms error=${error?.message}`)
-    redirect(`/register?error=${encodeURIComponent(error?.message ?? t('signupFailed'))}`)
+    const errMsg = (typeof error?.message === 'string' && error.message) ? error.message : t('signupFailed')
+    console.log(`[signup timing] role=${role} rateLimit=${tRateLimit - t0}ms signUp=${tSignUp - tRateLimit}ms FAILED total=${tSignUp - t0}ms error=${JSON.stringify(error)}`)
+    redirect(`/register?error=${encodeURIComponent(errMsg)}`)
   }
 
   // handle_new_user() (supabase/schema.sql) already inserts a baseline
