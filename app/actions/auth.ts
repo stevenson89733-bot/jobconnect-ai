@@ -1,5 +1,6 @@
 'use server'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { redirect } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 import { rateLimit, getClientIp } from '@/lib/rateLimit'
@@ -53,7 +54,8 @@ export async function signUp(formData: FormData) {
   // were never actually persisted. upsert() merges onto that existing row
   // instead of erroring, so this is now the only thing that actually saves
   // the real company_name for employers.
-  const { error: profileError } = await supabase.from('profiles').upsert({
+  const adminClient = createAdminClient()
+  const { error: profileError } = await adminClient.from('profiles').upsert({
     user_id:      data.user!.id,
     email,
     full_name:    `${firstName} ${lastName}`.trim(),
