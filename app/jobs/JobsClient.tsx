@@ -7,6 +7,7 @@ import JobCardSkeleton from '@/components/jobs/JobCardSkeleton'
 import JobDetailModal from '@/components/jobs/JobDetailModal'
 import { useJobInteractions } from '@/lib/useJobInteractions'
 import { CATEGORY_KEY, JOB_TYPE_KEY, WORK_TYPE_KEY } from '@/lib/i18n/jobLabels'
+import { createClient } from '@/lib/supabase/client'
 import type { SortOption } from './page'
 
 export type Job = {
@@ -128,6 +129,23 @@ export default function JobsClient({
   const [hasMore, setHasMore] = useState(totalPages > 1)
   const [loadingMore, setLoadingMore] = useState(false)
   const sentinelRef = useRef<HTMLDivElement>(null)
+
+  const [profileComplete, setProfileComplete] = useState(false)
+
+  useEffect(() => {
+    const supabase = createClient()
+    supabase.auth.getUser().then(({ data }) => {
+      if (!data.user) return
+      supabase
+        .from('profiles')
+        .select('profile_complete')
+        .eq('id', data.user.id)
+        .single()
+        .then(({ data: p }) => {
+          if (p?.profile_complete) setProfileComplete(true)
+        })
+    })
+  }, [])
 
   const { appliedIds, savedIds, toggleSave } = useJobInteractions('/jobs')
 
@@ -455,6 +473,7 @@ export default function JobsClient({
                   onToggleSave={toggleSave}
                   alreadyApplied={appliedIds.has(job.id)}
                   onSelect={setSelectedJob}
+                  profileComplete={profileComplete}
                 />
               ))}
             </div>
