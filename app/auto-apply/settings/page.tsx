@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 
 const DAILY_LIMIT_OPTIONS = [3, 5, 10, 20] as const
+const MIN_SCORE_OPTIONS = [50, 60, 70, 80] as const
 
 type Log = {
   id: string
@@ -396,19 +397,27 @@ export default function AutoApplySettingsPage() {
 
           {/* Minimum Match Score */}
           <div>
-            <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-              Minimum match score: <span className="text-cyan-600">{settings?.min_match_score}%</span>
+            <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-3">
+              Score minimum pour candidature automatique
             </label>
-            <input
-              type="range"
-              min="40"
-              max="90"
-              value={settings?.min_match_score || 60}
-              onChange={(e) => setSettings(s => s ? { ...s, min_match_score: parseInt(e.target.value) } : s)}
-              className="w-full"
-            />
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-              Only apply to jobs with match scores above this threshold.
+            <div className="flex gap-2">
+              {MIN_SCORE_OPTIONS.map((n) => (
+                <button
+                  key={n}
+                  onClick={() => setSettings(s => s ? { ...s, min_match_score: n } : s)}
+                  className={`flex-1 py-2.5 rounded-xl border text-sm font-bold transition-all ${
+                    settings?.min_match_score === n
+                      ? 'border-[#F0663A] text-white shadow-md'
+                      : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-[#F0663A]/50'
+                  }`}
+                  style={settings?.min_match_score === n ? { background: '#F0663A' } : {}}
+                >
+                  {n}%
+                </button>
+              ))}
+            </div>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
+              Aucune candidature ne sera envoyée si le score est inférieur à ce seuil.
             </p>
           </div>
 

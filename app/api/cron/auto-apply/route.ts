@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     // 1. Active auto-apply users
     const { data: settings, error: settingsError } = await supabase
       .from('auto_apply_settings')
-      .select('user_id, review_before_send, daily_apply_limit')
+      .select('user_id, review_before_send, daily_apply_limit, min_match_score')
       .eq('is_active', true)
 
     if (settingsError) {
@@ -119,11 +119,33 @@ export async function POST(req: Request) {
         let queued = 0
         const queuedJobs: typeof jobs = []
 
+        const minScore = setting.min_match_score ?? 60
+
         for (const job of jobs) {
           if (alreadySent + queued >= effectiveDailyLimit) break
           if (doneSet.has(job.id)) continue
           // Skip explicitly non-international jobs
           if ((job as { cross_border_status?: string | null }).cross_border_status === 'no') continue
+
+          // If a prior log exists with a known match_score below threshold, skip
+          const { data: priorLog } = await supabase
+            .from('auto_apply_log')
+            .select('match_score')
+            .eq('user_id', setting.user_id)
+            .eq('job_id', job.id)
+            .not('match_score', 'is', null)
+            .maybeSingle()
+
+          if (priorLog?.match_score != null && priorLog.match_score < minScore) {
+            console.log(`[auto-apply] skip user=${setting.user_id} job=${job.id} score=${priorLog.match_score} < threshold=${minScore}`)
+            await supabase.from('auto_apply_log').upsert({
+              user_id: setting.user_id,
+              job_id: job.id,
+              status: 'below_threshold',
+              match_score: priorLog.match_score,
+            }, { onConflict: 'user_id,job_id', ignoreDuplicates: false })
+            continue
+          }
 
           const { error: logError } = await supabase.from('auto_apply_log').upsert({
             user_id: setting.user_id,
