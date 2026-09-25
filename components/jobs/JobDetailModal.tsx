@@ -177,7 +177,7 @@ export default function JobDetailModal({ job, isOpen = true, onClose, alreadyApp
             <span className="flex-1 text-center text-sm text-gray-400 italic py-2.5">Application link not available</span>
           )}
           <Link
-            href="/ai-tools/auto-apply"
+            href="/auto-apply"
             className="flex-1 inline-flex items-center justify-center gap-2 border-2 border-[#57C7E3] text-[#57C7E3] font-semibold text-sm px-4 py-2.5 rounded-xl hover:bg-[#57C7E3]/10 transition-colors"
           >
             ✦ Apply with AI
