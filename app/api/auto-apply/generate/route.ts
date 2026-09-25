@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import OpenAI from 'openai'
 import { effectiveCandidatePlan } from '@/lib/adminAccess'
 
-export const maxDuration = 10
+export const maxDuration = 60
 
 export async function POST(req: Request) {
   const supabase = createClient()

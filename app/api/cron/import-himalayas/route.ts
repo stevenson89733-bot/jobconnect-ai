@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 
-export const maxDuration = 10
+export const maxDuration = 60
 
 export async function GET(req: Request) {
   const secret = process.env.CRON_SECRET

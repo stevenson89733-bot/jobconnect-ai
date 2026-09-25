@@ -4,7 +4,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 // Vercel Hobby cron limit is 10s.
 // Strategy: fetch all companies in parallel (Promise.allSettled), cap 5 jobs
 // per company, then batch-dedup by URL before inserting.
-export const maxDuration = 10
+export const maxDuration = 60
 
 const GREENHOUSE_COMPANIES = [
   'gitlab', 'automattic', 'zapier', 'buffer', 'doist',

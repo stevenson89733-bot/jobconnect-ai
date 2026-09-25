@@ -7,7 +7,7 @@ import type { ResumeContent } from '@/components/resume-builder/ResumePreview'
 import type { ResumeLabels } from '@/lib/resumeExport/labels'
 
 export const runtime = 'nodejs'
-export const maxDuration = 10
+export const maxDuration = 60
 
 export async function POST(req: Request) {
   const supabase = createClient()

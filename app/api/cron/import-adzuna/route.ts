@@ -7,7 +7,7 @@ import { fetchAdzunaJobs, adzunaSourceKey, ADZUNA_COUNTRIES, type AdzunaCountryC
 // Retourne toujours 200 — même sur timeout externe — pour que le cron
 // reste vert indépendamment de la disponibilité de la source.
 
-export const maxDuration = 10
+export const maxDuration = 60
 
 const LIMIT = 20
 const VALID_COUNTRIES = new Set<string>(ADZUNA_COUNTRIES.map((c) => c.code))

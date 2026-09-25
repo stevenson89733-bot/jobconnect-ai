@@ -5,7 +5,7 @@ import { fetchJobs as fetchNodesk }    from '@/lib/aggregators/nodesk'
 import { fetchJobs as fetchRemoteco }  from '@/lib/aggregators/remoteco'
 
 // Vercel Hobby cron limit is 10s — keep all fetches parallel and tight.
-export const maxDuration = 10
+export const maxDuration = 60
 
 export async function GET(req: Request) {
   const secret = process.env.CRON_SECRET

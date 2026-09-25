@@ -1,4 +1,4 @@
-export const maxDuration = 10
+export const maxDuration = 30
 import { NextResponse } from 'next/server'
 import { unstable_cache } from 'next/cache'
 import { fetchExchangeRates } from '@/lib/exchangeRates'

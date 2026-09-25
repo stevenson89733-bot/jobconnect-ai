@@ -1,4 +1,4 @@
-export const maxDuration = 10
+export const maxDuration = 60
 
 import { NextResponse } from 'next/server'
 import { getTranslations } from 'next-intl/server'

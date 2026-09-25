@@ -6,7 +6,7 @@ import { fetchRemotiveJobs, mapRemotiveCategory, mapRemotiveJobType, parseRemoti
 // Route utilisée uniquement pour l'import manuel via PostJobModal admin.
 // Le cron automatique est désactivé — Remotive dépasse le timeout Vercel Hobby (10s).
 
-export const maxDuration = 10
+export const maxDuration = 60
 
 export async function GET(req: Request) {
   const secret = process.env.CRON_SECRET

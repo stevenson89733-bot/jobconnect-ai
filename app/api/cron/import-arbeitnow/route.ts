@@ -6,7 +6,7 @@ import { fetchArbeitnowJobs, mapArbeitnowJobType } from '@/lib/arbeitnow'
 // Conçu pour tenir dans le timeout Vercel Hobby (10s) :
 // pas d'enrichissement IA, 15 offres max par appel.
 
-export const maxDuration = 10
+export const maxDuration = 60
 
 const LIMIT = 15
 

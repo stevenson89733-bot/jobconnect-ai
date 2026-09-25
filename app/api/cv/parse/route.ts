@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import OpenAI from 'openai'
 
 export const runtime = 'nodejs'
-export const maxDuration = 10
+export const maxDuration = 60
 
 // pdfjs-dist (used by unpdf) calls DOMMatrix which Node.js doesn't expose globally.
 // A minimal polyfill is sufficient for text extraction (no canvas rendering).

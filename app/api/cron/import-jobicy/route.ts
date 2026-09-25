@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 
-export const maxDuration = 10
+export const maxDuration = 60
 
 function parseXML(xml: string) {
   const jobs: any[] = []
