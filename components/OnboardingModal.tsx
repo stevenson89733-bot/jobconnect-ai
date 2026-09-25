@@ -263,7 +263,7 @@ export default function OnboardingModal({ defaultNext = '/candidate' }: Props) {
               <button
                 type="button"
                 disabled={isPending}
-                onClick={() => submitComplete('/candidate')}
+                onClick={() => submitComplete('/candidate?registered=1')}
                 className="w-full text-center text-[13px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors py-2"
               >
                 Skip for now → Go to dashboard

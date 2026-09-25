@@ -50,7 +50,7 @@ export default async function OnboardingPage() {
         </div>
       </div>
 
-      <OnboardingModal defaultNext="/candidate" />
+      <OnboardingModal defaultNext="/candidate?registered=1" />
     </div>
   )
 }
