@@ -8,6 +8,7 @@ type JobRow = {
   title: string
   location: string
   is_featured: boolean
+  featured_until: string | null
   created_at: string
 }
 
@@ -51,7 +52,7 @@ export default async function EmployerDashboardPage() {
   // Section 1 — jobs
   const { data: jobRows } = await supabase
     .from('jobs')
-    .select('id, title, location, is_featured, created_at')
+    .select('id, title, location, is_featured, featured_until, created_at')
     .eq('posted_by', user.id)
     .order('created_at', { ascending: false })
 
@@ -106,7 +107,10 @@ export default async function EmployerDashboardPage() {
     appCountByJob[log.job_id] = (appCountByJob[log.job_id] ?? 0) + 1
   }
 
-  const hasFeatured = jobs.some((j) => j.is_featured)
+  const now = new Date()
+  const isFeaturedActive = (job: JobRow) =>
+    job.is_featured && (job.featured_until == null || new Date(job.featured_until) > now)
+  const hasFeatured = jobs.some(isFeaturedActive)
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-10 space-y-8">
@@ -136,7 +140,7 @@ export default async function EmployerDashboardPage() {
                     <td className="px-4 py-3 text-slate-600 dark:text-slate-400">{job.location}</td>
                     <td className="px-4 py-3 text-slate-700 dark:text-slate-300">{appCountByJob[job.id] ?? 0}</td>
                     <td className="px-4 py-3">
-                      {job.is_featured ? (
+                      {isFeaturedActive(job) ? (
                         <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-700">
                           Actif
                         </span>
@@ -229,6 +233,11 @@ export default async function EmployerDashboardPage() {
             </p>
             <p className="text-xs text-green-700 dark:text-green-400 mb-4">
               Vos offres apparaissent en tête de liste avec une mise en avant visuelle.
+              {jobs.filter(isFeaturedActive).some((j) => j.featured_until) && (
+                <> Expire le{' '}
+                  {new Date(jobs.filter(isFeaturedActive).find((j) => j.featured_until)!.featured_until!).toLocaleDateString('fr-FR')}.
+                </>
+              )}
             </p>
             <Link
               href="/employer/featured"
