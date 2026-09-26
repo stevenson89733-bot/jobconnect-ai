@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
-export default function ExtractProfileButton({ cvUrl, isPremium }: { cvUrl: string; isPremium: boolean }) {
+export default function ExtractProfileButton({ cvUrl, isPremium }: { cvUrl: string | null; isPremium: boolean }) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [toast, setToast] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
@@ -32,6 +32,7 @@ export default function ExtractProfileButton({ cvUrl, isPremium }: { cvUrl: stri
     }
   }
 
+  // Free plan → lock button always visible, links to pricing
   if (!isPremium) {
     return (
       <Link
@@ -44,6 +45,24 @@ export default function ExtractProfileButton({ cvUrl, isPremium }: { cvUrl: stri
     )
   }
 
+  // Pro plan, no CV yet → disabled with hint
+  if (!cvUrl) {
+    return (
+      <div className="flex flex-col items-start gap-1">
+        <button
+          type="button"
+          disabled
+          className="flex items-center gap-2 font-semibold text-white rounded-xl px-5 py-2.5 text-sm shrink-0 opacity-50 cursor-not-allowed"
+          style={{ background: '#F0663A' }}
+        >
+          ✨ Analyser mon CV
+        </button>
+        <p className="text-xs text-slate-500">Upload un CV d&apos;abord via &ldquo;Import CV&rdquo;</p>
+      </div>
+    )
+  }
+
+  // Pro plan + CV present → active
   return (
     <div className="flex flex-col items-start gap-2">
       <button

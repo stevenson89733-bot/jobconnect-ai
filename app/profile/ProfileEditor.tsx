@@ -150,7 +150,7 @@ export default function ProfileEditor({
               <Upload size={15} />
               Import CV
             </button>
-            {cvUrl && <ExtractProfileButton cvUrl={cvUrl} isPremium={isPremium} />}
+            <ExtractProfileButton cvUrl={cvUrl ?? null} isPremium={isPremium} />
           </div>
         </div>
       </div>
