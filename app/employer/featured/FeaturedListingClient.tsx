@@ -105,7 +105,7 @@ export default function FeaturedListingClient({
                         </span>
                         {job.featured_until && (
                           <span className="text-xs text-slate-500">
-                            jusqu'au {new Date(job.featured_until).toLocaleDateString('fr-FR')}
+                            jusqu&apos;au {new Date(job.featured_until).toLocaleDateString('fr-FR')}
                           </span>
                         )}
                       </>
@@ -166,7 +166,7 @@ export default function FeaturedListingClient({
         <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 mb-5">
           <li>✓ Apparaît en tête de liste sur /jobs</li>
           <li>✓ Badge Featured visible par les candidats</li>
-          <li>✓ Actif 30 jours à partir de l'activation</li>
+          <li>✓ Actif 30 jours à partir de l&apos;activation</li>
         </ul>
         <button
           onClick={handleBuy}
