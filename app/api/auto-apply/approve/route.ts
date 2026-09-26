@@ -54,6 +54,14 @@ export async function POST(req: Request) {
     })
     atsResult = result
   } else if (applyUrl && detectAshbyUrl(applyUrl)) {
+    if (!process.env.ASHBY_API_KEY) {
+      await supabase
+        .from('auto_apply_log')
+        .update({ status: 'skipped', ats_provider: 'ashby' })
+        .eq('id', log_id)
+        .eq('user_id', user.id)
+      return NextResponse.json({ ok: false, reason: 'ashby_key_not_configured' })
+    }
     atsProvider = 'ashby'
     atsResult = await submitAshbyApplication({
       applyUrl,
