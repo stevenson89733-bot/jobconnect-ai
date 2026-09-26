@@ -4,7 +4,8 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 const navItems = [
-  { label: 'Dashboard',  href: '/recruiter',           icon: '🏠' },
+  { label: 'Dashboard',  href: '/employer/dashboard',  icon: '📊' },
+  { label: 'Recruiter',  href: '/recruiter',           icon: '🏠' },
   { label: 'Post a Job', href: '/recruiter?post=true',  icon: '➕' },
   { label: 'Candidates', href: '/recruiter',            icon: '👥' },
   { label: 'Profile',    href: '/recruiter/profile',    icon: '🏢' },
