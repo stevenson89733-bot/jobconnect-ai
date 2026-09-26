@@ -4,6 +4,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { redirect } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 import { rateLimit, getClientIp } from '@/lib/rateLimit'
+import { sendWelcomeEmail } from '@/lib/email/resend'
 
 // ── Step 6: Save user to Supabase on signup with role ─────────────────────────
 export async function signUp(formData: FormData) {
@@ -71,6 +72,13 @@ export async function signUp(formData: FormData) {
   console.log(
     `[signup timing] role=${role} rateLimit=${tRateLimit - t0}ms signUp=${tSignUp - tRateLimit}ms profileUpsert=${tProfile - tSignUp}ms total=${tProfile - t0}ms`
   )
+
+  // Fire-and-forget welcome email — must not block redirect
+  if (role === 'candidate') {
+    sendWelcomeEmail({ to: email, firstName }).catch((err) =>
+      console.error('[welcome-email]', err?.message)
+    )
+  }
 
   // Step 8: redirect by role — candidates go through onboarding first
   redirect(role === 'employer' ? '/recruiter' : '/onboarding')
