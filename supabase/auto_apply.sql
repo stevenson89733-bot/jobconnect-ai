@@ -21,6 +21,8 @@ create table if not exists public.auto_apply_log (
   cover_letter text,
   adapted_cv_url text,
   applied_at timestamptz not null default now(),
+  ats_provider text,
+  ats_application_id text,
   constraint auto_apply_status_check check (status in ('sent', 'failed', 'skipped'))
 );
 
