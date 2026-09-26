@@ -2,8 +2,9 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
-export default function ExtractProfileButton({ cvUrl }: { cvUrl: string }) {
+export default function ExtractProfileButton({ cvUrl, isPremium }: { cvUrl: string; isPremium: boolean }) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [toast, setToast] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
@@ -29,6 +30,18 @@ export default function ExtractProfileButton({ cvUrl }: { cvUrl: string }) {
     } finally {
       setLoading(false)
     }
+  }
+
+  if (!isPremium) {
+    return (
+      <Link
+        href="/pricing"
+        className="flex items-center gap-2 font-semibold text-white rounded-xl px-5 py-2.5 text-sm shrink-0 transition-all hover:opacity-90"
+        style={{ background: '#F0663A', opacity: 0.75 }}
+      >
+        🔒 Analyser mon CV <span className="text-xs font-normal opacity-80">Pro</span>
+      </Link>
+    )
   }
 
   return (

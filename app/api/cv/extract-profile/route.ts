@@ -4,6 +4,7 @@ export const maxDuration = 60
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { effectiveCandidatePlan } from '@/lib/adminAccess'
 import OpenAI from 'openai'
 
 // pdfjs-dist polyfill (same as /api/cv/parse)
@@ -38,6 +39,18 @@ export async function POST(req: Request) {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('is_admin, is_premium, candidate_plan')
+    .eq('user_id', user.id)
+    .single()
+
+  const plan = effectiveCandidatePlan(profile ?? {})
+  const allowed = profile?.is_admin || profile?.is_premium || ['pro', 'elite'].includes(plan)
+  if (!allowed) {
+    return NextResponse.json({ error: 'Pro plan required', upgrade: true }, { status: 403 })
+  }
 
   const apiKey = process.env.OPENAI_API_KEY
   if (!apiKey) return NextResponse.json({ error: 'AI not configured' }, { status: 503 })
