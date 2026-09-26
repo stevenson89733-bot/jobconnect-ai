@@ -9,7 +9,7 @@ const FIELDS = [
   'full_name', 'title', 'location', 'bio', 'experience', 'skills', 'education',
   'linkedin_url', 'github_url', 'avatar_url', 'years_experience', 'phone',
   'portfolio_url', 'availability', 'work_preference', 'is_premium',
-  'projects', 'certificates', 'languages',
+  'projects', 'certificates', 'languages', 'cv_url',
 ] as const
 
 export default async function ProfilePage() {
@@ -63,6 +63,7 @@ export default async function ProfilePage() {
   }
 
   const avatarUrl = profile?.avatar_url ? String(profile.avatar_url) : null
+  const cvUrl = profile?.cv_url ? String(profile.cv_url) : null
   const isPremium = !!profile?.is_premium
 
   return (
@@ -77,6 +78,7 @@ export default async function ProfilePage() {
       initialProjects={parseProjects(profile?.projects)}
       initialCertificates={parseCertificates(profile?.certificates)}
       initialLanguages={parseLanguages(profile?.languages)}
+      cvUrl={cvUrl}
     />
   )
 }

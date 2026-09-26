@@ -10,6 +10,7 @@ import EditableSection from '@/components/profile/EditableSection'
 import Timeline from '@/components/profile/Timeline'
 import CareerCoachSummary from '@/components/shared/CareerCoachSummary'
 import CvImportModal from '@/components/profile/CvImportModal'
+import ExtractProfileButton from '@/components/cv/ExtractProfileButton'
 import type { Project, Certificate, Language } from '@/lib/profileSections'
 
 // Code-split: none of these four are needed for initial paint (Projects/
@@ -60,6 +61,7 @@ export default function ProfileEditor({
   initialProjects,
   initialCertificates,
   initialLanguages,
+  cvUrl,
 }: {
   // Candidate-only subset — company_name/company_website/company_description
   // are employer-only fields (see app/recruiter/profile/EmployerProfileEditor.tsx),
@@ -74,6 +76,7 @@ export default function ProfileEditor({
   initialProjects: Project[]
   initialCertificates: Certificate[]
   initialLanguages: Language[]
+  cvUrl?: string | null
 }) {
   const t = useTranslations('profile')
 
@@ -137,15 +140,18 @@ export default function ProfileEditor({
             <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">{t('title')}</h1>
             <p className="text-slate-600 dark:text-slate-400">{t('subtitle')}</p>
           </div>
-          <button
-            type="button"
-            onClick={() => setCvModalOpen(true)}
-            className="flex items-center gap-2 font-semibold text-white rounded-xl px-5 py-2.5 text-sm shrink-0 transition-all hover:opacity-90"
-            style={{ background: '#57C7E3' }}
-          >
-            <Upload size={15} />
-            Import CV
-          </button>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => setCvModalOpen(true)}
+              className="flex items-center gap-2 font-semibold text-white rounded-xl px-5 py-2.5 text-sm shrink-0 transition-all hover:opacity-90"
+              style={{ background: '#57C7E3' }}
+            >
+              <Upload size={15} />
+              Import CV
+            </button>
+            {cvUrl && <ExtractProfileButton cvUrl={cvUrl} />}
+          </div>
         </div>
       </div>
 
