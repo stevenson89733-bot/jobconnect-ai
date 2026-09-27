@@ -7,7 +7,6 @@ import JobCardSkeleton from '@/components/jobs/JobCardSkeleton'
 import JobDetailModal from '@/components/jobs/JobDetailModal'
 import { useJobInteractions } from '@/lib/useJobInteractions'
 import { CATEGORY_KEY, JOB_TYPE_KEY, WORK_TYPE_KEY } from '@/lib/i18n/jobLabels'
-import { createClient } from '@/lib/supabase/client'
 import type { SortOption } from './page'
 
 export type Job = {
@@ -75,6 +74,7 @@ export default function JobsClient({
   initialTrueRemote = false,
   totalPages = 1,
   total,
+  profileComplete: profileCompleteProp = false,
 }: {
   jobs: Job[]
   initialQuery?: string
@@ -87,6 +87,7 @@ export default function JobsClient({
   initialTrueRemote?: boolean
   totalPages?: number
   total?: number
+  profileComplete?: boolean
 }) {
   const router = useRouter()
   const pathname = usePathname()
@@ -130,22 +131,7 @@ export default function JobsClient({
   const [loadingMore, setLoadingMore] = useState(false)
   const sentinelRef = useRef<HTMLDivElement>(null)
 
-  const [profileComplete, setProfileComplete] = useState(false)
-
-  useEffect(() => {
-    const supabase = createClient()
-    supabase.auth.getUser().then(({ data }) => {
-      if (!data.user) return
-      supabase
-        .from('profiles')
-        .select('title, skills')
-        .eq('user_id', data.user.id)
-        .single()
-        .then(({ data: p }) => {
-          if (p?.title?.trim() && p?.skills?.trim()) setProfileComplete(true)
-        })
-    })
-  }, [])
+  const profileComplete = profileCompleteProp
 
   const { appliedIds, savedIds, toggleSave } = useJobInteractions('/jobs')
 

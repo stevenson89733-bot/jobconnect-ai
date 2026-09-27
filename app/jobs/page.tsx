@@ -109,6 +109,10 @@ export default async function JobsPage({
     }
   })
 
+  const profileComplete = !!(
+    candidateProfile?.title?.trim() && candidateProfile?.skills?.trim()
+  )
+
   return (
     <JobsClient
       jobs={jobsWithMatch}
@@ -122,6 +126,7 @@ export default async function JobsPage({
       initialTrueRemote={trueRemote}
       totalPages={totalPages}
       total={total}
+      profileComplete={profileComplete}
     />
   )
 }
