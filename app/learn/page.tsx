@@ -1,44 +1,47 @@
-import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { effectiveCandidatePlan } from '@/lib/adminAccess'
+import DownloadGuideButton from '@/components/learn/DownloadGuideButton'
 
 const GUIDES = [
   {
     id: 'negociation',
+    slug: 'salary-negotiation',
     title: 'Négociation Salariale Internationale',
     description: 'Tactiques éprouvées pour négocier dans 12 pays différents',
     meta: 'PDF · 24 pages',
     badge: 'Pro',
     badgeColor: 'bg-blue-100 text-blue-700',
-    href: '#',
+    requiresPlan: 'pro' as const,
   },
   {
     id: 'linkedin',
+    slug: 'linkedin-expats',
     title: 'LinkedIn pour Expatriés',
     description: 'Optimiser son profil pour les recruteurs remote',
     meta: 'PDF · 18 pages',
     badge: 'Pro',
     badgeColor: 'bg-blue-100 text-blue-700',
-    href: '#',
+    requiresPlan: 'pro' as const,
   },
   {
     id: 'entretien',
+    slug: 'remote-interview',
     title: 'Maîtriser l\'Entretien Remote',
     description: 'De la préparation à l\'offre en 30 jours',
     meta: 'PDF · 32 pages',
     badge: 'Pro',
     badgeColor: 'bg-blue-100 text-blue-700',
-    href: '#',
+    requiresPlan: 'pro' as const,
   },
   {
     id: 'contrats',
+    slug: 'international-contracts',
     title: 'Contrats & Compliance Internationale',
     description: 'Comprendre votre contrat dans 8 juridictions clés',
     meta: 'PDF · 40 pages',
     badge: 'Elite',
     badgeColor: 'bg-purple-100 text-purple-700',
-    href: '#',
-    eliteOnly: true,
+    requiresPlan: 'elite' as const,
   },
 ]
 
@@ -119,7 +122,7 @@ export default async function LearnPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {GUIDES.map((guide) => {
-              const unlocked = guide.eliteOnly ? isElite : isPro
+              const unlocked = guide.requiresPlan === 'elite' ? isElite : isPro
               return (
                 <div
                   key={guide.id}
@@ -143,23 +146,11 @@ export default async function LearnPage() {
                     )}
                   </div>
 
-                  {unlocked ? (
-                    <a
-                      href={guide.href}
-                      className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-white rounded-xl px-4 py-2 transition-all hover:opacity-90"
-                      style={{ background: '#F0663A' }}
-                    >
-                      Télécharger →
-                    </a>
-                  ) : (
-                    <Link
-                      href="/pricing"
-                      className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-white rounded-xl px-4 py-2 transition-all hover:opacity-90"
-                      style={{ background: '#F0663A', opacity: 0.75 }}
-                    >
-                      Débloquer avec Pro — $19.99/mois
-                    </Link>
-                  )}
+                  <DownloadGuideButton
+                    slug={guide.slug}
+                    unlocked={unlocked}
+                    requiresPlan={guide.requiresPlan}
+                  />
                 </div>
               )
             })}
