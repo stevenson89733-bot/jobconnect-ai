@@ -131,7 +131,17 @@ export default function JobsClient({
   const [loadingMore, setLoadingMore] = useState(false)
   const sentinelRef = useRef<HTMLDivElement>(null)
 
-  const profileComplete = profileCompleteProp
+  const [profileComplete, setProfileComplete] = useState(profileCompleteProp)
+
+  // Client-side fallback: server prop may be false when cookies aren't
+  // available during ISR or when the profile is fetched after hydration.
+  useEffect(() => {
+    if (profileCompleteProp) return
+    fetch('/api/me/match-ready')
+      .then((r) => r.ok ? r.json() : null)
+      .then((data) => { if (data?.profileComplete) setProfileComplete(true) })
+      .catch(() => {})
+  }, [profileCompleteProp])
 
   const { appliedIds, savedIds, toggleSave } = useJobInteractions('/jobs')
 

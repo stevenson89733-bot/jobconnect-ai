@@ -88,7 +88,7 @@ export default function JobCard({
   const [matchLoading, setMatchLoading] = useState(false)
   const t = useTranslations('jobs')
 
-  const showMatchSection = profileComplete && job.matchScore != null && job.matchScore >= 40
+  const showMatchSection = profileComplete && job.matchScore != null && job.matchScore >= 30
 
   async function handleMatchExpand() {
     if (matchData) { setMatchOpen(o => !o); return }
@@ -202,7 +202,7 @@ export default function JobCard({
 
       {/* Row 3 — Match pill + job type */}
       <div className="flex items-center gap-2 flex-wrap">
-        {job.matchScore != null && job.matchScore >= 40 && (
+        {job.matchScore != null && job.matchScore >= 30 && (
           <span className="inline-flex items-center gap-1.5 bg-[#57C7E3]/10 text-[#57C7E3] border border-[#57C7E3]/30 text-[12px] font-semibold px-3 py-1 rounded-full">
             ✦ {job.matchScore}% match · AI ranked
           </span>

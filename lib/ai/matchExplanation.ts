@@ -88,7 +88,7 @@ export async function matchExplanation(
   job: JobInput,
   matchScore: number
 ): Promise<MatchExplanation | null> {
-  if (matchScore < 40) return null
+  if (matchScore < 30) return null
   if (!isProfileSufficient(profile)) return null
 
   const apiKey = process.env.OPENAI_API_KEY
