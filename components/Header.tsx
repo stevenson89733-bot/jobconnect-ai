@@ -210,7 +210,6 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
             </div>
           </div>
           <Link href="/pricing" className="hover:text-slate-900 dark:hover:text-white transition-colors">{t('pricing')}</Link>
-          <Link href="/learn" className="hover:text-slate-900 dark:hover:text-white transition-colors">Apprendre</Link>
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
@@ -274,7 +273,6 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
         <div className="md:hidden bg-white dark:bg-card border-t border-slate-200 dark:border-slate-800 px-6 py-4 flex flex-col gap-4 text-sm">
           <Link href="/jobs" className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>{t('browseJobs')}</Link>
           <Link href="/pricing" className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>{t('pricing')}</Link>
-          <Link href="/learn" className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" onClick={() => setOpen(false)}>Apprendre</Link>
 
           <div className="pt-2 mt-1 border-t border-slate-200 dark:border-slate-800">
             <Link href="/ai-tools" onClick={() => setOpen(false)} className="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white mb-2 transition-colors">

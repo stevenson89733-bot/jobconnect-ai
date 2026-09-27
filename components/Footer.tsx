@@ -65,6 +65,7 @@ export default async function Footer() {
               <li><Link href="/companies" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">{tn('companies')}</Link></li>
               <li><Link href="/blog" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">{t('blog')}</Link></li>
               <li><Link href="/pricing" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">{tn('pricing')}</Link></li>
+              <li><Link href="/learn" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">Apprendre</Link></li>
             </ul>
           </div>
           <div>
