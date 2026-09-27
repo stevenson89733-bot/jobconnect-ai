@@ -310,7 +310,11 @@
     "applyWithAI": "✦ تقديم بالذكاء الاصطناعي",
     "filter_intl": "✓ الوظائف الدولية فقط",
     "filter_all": "جميع الوظائف",
-    "crossBorderAnalyzing": "يحلّل كاشفنا الوظائف الحالية — عُد خلال بضع ساعات."
+    "crossBorderAnalyzing": "يحلّل كاشفنا الوظائف الحالية — عُد خلال بضع ساعات.",
+    "matchWhyTitle": "لماذا تتطابق",
+    "matchExpandCta": "اعرف سبب التطابق",
+    "matchStrengths": "نقاط القوة",
+    "matchGaps": "نقاط الانتباه"
   },
   "applicationStatus": {
     "submitted": "تم الإرسال",

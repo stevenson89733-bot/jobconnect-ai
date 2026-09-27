@@ -310,7 +310,11 @@
     "applyWithAI": "✦ AI로 지원하기",
     "filter_intl": "✓ 국제 채용만 보기",
     "filter_all": "모든 채용",
-    "crossBorderAnalyzing": "탐지기가 현재 채용 공고를 분석 중입니다 — 몇 시간 후에 다시 확인해 주세요."
+    "crossBorderAnalyzing": "탐지기가 현재 채용 공고를 분석 중입니다 — 몇 시간 후에 다시 확인해 주세요.",
+    "matchWhyTitle": "매칭 이유",
+    "matchExpandCta": "매칭 이유 보기",
+    "matchStrengths": "강점",
+    "matchGaps": "주의 사항"
   },
   "applicationStatus": {
     "submitted": "제출됨",

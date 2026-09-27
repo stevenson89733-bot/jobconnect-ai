@@ -324,7 +324,11 @@
     "applyWithAI": "✦ Apply with AI",
     "filter_intl": "✓ International-Friendly Only",
     "filter_all": "All Jobs",
-    "crossBorderAnalyzing": "Our detector is analysing live listings — check back in a few hours."
+    "crossBorderAnalyzing": "Our detector is analysing live listings — check back in a few hours.",
+    "matchWhyTitle": "Why you match",
+    "matchExpandCta": "See why you match",
+    "matchStrengths": "Strengths",
+    "matchGaps": "Points of attention"
   },
   "applicationStatus": {
     "submitted": "Submitted",

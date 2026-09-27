@@ -310,7 +310,11 @@
     "applyWithAI": "✦ Mit KI bewerben",
     "filter_intl": "✓ Nur internationale Stellen",
     "filter_all": "Alle Stellen",
-    "crossBorderAnalyzing": "Unser Detektor analysiert aktuelle Stellen — schau in ein paar Stunden nochmal vorbei."
+    "crossBorderAnalyzing": "Unser Detektor analysiert aktuelle Stellen — schau in ein paar Stunden nochmal vorbei.",
+    "matchWhyTitle": "Warum du passt",
+    "matchExpandCta": "Warum du passt ansehen",
+    "matchStrengths": "Stärken",
+    "matchGaps": "Aufmerksamkeitspunkte"
   },
   "applicationStatus": {
     "submitted": "Eingereicht",

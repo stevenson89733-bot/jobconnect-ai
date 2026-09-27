@@ -310,7 +310,11 @@
     "applyWithAI": "✦ AI 投递",
     "filter_intl": "✓ 仅限国际职位",
     "filter_all": "所有职位",
-    "crossBorderAnalyzing": "我们的检测器正在分析职位列表——请几小时后再回来查看。"
+    "crossBorderAnalyzing": "我们的检测器正在分析职位列表——请几小时后再回来查看。",
+    "matchWhyTitle": "为什么您匹配",
+    "matchExpandCta": "查看匹配原因",
+    "matchStrengths": "优势",
+    "matchGaps": "注意事项"
   },
   "applicationStatus": {
     "submitted": "已提交",

@@ -316,7 +316,11 @@
     "applyWithAI": "✦ Postuler avec l'IA",
     "filter_intl": "✓ Postes internationaux uniquement",
     "filter_all": "Tous les postes",
-    "crossBorderAnalyzing": "Notre détecteur analyse les offres en cours — revenez dans quelques heures."
+    "crossBorderAnalyzing": "Notre détecteur analyse les offres en cours — revenez dans quelques heures.",
+    "matchWhyTitle": "Pourquoi tu matches",
+    "matchExpandCta": "Voir pourquoi tu matches",
+    "matchStrengths": "Points forts",
+    "matchGaps": "Points d attention"
   },
   "applicationStatus": {
     "submitted": "Envoyée",

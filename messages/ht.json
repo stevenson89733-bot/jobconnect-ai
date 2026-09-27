@@ -307,7 +307,11 @@
     "freshMatches": "{count} nouvo match jodi a",
     "topMatches": "Meye match pou ou",
     "rankedBy": "Klase pa konpetans, fleksibilite lokasyon ak siy recritman verifye.",
-    "applyWithAI": "✦ Aplike ak IA"
+    "applyWithAI": "✦ Aplike ak IA",
+    "matchWhyTitle": "Poukisa ou matche",
+    "matchExpandCta": "Wè poukisa ou matche",
+    "matchStrengths": "Fòs",
+    "matchGaps": "Pwen atansyon"
   },
   "applicationStatus": {
     "submitted": "Soumèt",

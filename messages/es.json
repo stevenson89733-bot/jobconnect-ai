@@ -316,7 +316,11 @@
     "applyWithAI": "✦ Postularse con IA",
     "filter_intl": "✓ Solo empleos internacionales",
     "filter_all": "Todos los empleos",
-    "crossBorderAnalyzing": "Nuestro detector está analizando las ofertas activas — vuelve en unas horas."
+    "crossBorderAnalyzing": "Nuestro detector está analizando las ofertas activas — vuelve en unas horas.",
+    "matchWhyTitle": "Por qué encajas",
+    "matchExpandCta": "Ver por qué encajas",
+    "matchStrengths": "Fortalezas",
+    "matchGaps": "Puntos de atención"
   },
   "applicationStatus": {
     "submitted": "Enviada",

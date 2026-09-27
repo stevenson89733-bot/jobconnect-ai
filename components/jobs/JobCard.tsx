@@ -3,7 +3,7 @@ import { useState } from 'react'
 import JobDetailModal from './JobDetailModal'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
-import { Bookmark, ExternalLink } from 'lucide-react'
+import { Bookmark, ExternalLink, ChevronDown } from 'lucide-react'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import AiApplyModal from '@/components/jobs/AiApplyModal'
 import { companyInitials, clearbitLogoUrl } from '@/lib/companyDisplay'
@@ -83,7 +83,39 @@ export default function JobCard({
 }) {
   const [signalsOpen, setSignalsOpen] = useState(false)
   const [showModal, setShowModal] = useState(false)
+  const [matchOpen, setMatchOpen] = useState(false)
+  const [matchData, setMatchData] = useState<{ strengths: string[]; gaps: string[] } | null>(null)
+  const [matchLoading, setMatchLoading] = useState(false)
   const t = useTranslations('jobs')
+
+  const showMatchSection = profileComplete && job.matchScore != null && job.matchScore >= 40
+
+  async function handleMatchExpand() {
+    if (matchData) { setMatchOpen(o => !o); return }
+    setMatchOpen(true)
+    setMatchLoading(true)
+    try {
+      const res = await fetch('/api/ai/match-explanation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ job_id: job.id, match_score: job.matchScore }),
+      })
+      if (res.ok) {
+        const data = await res.json()
+        if (data.strengths || data.gaps) {
+          setMatchData({ strengths: data.strengths ?? [], gaps: data.gaps ?? [] })
+        } else {
+          setMatchOpen(false)
+        }
+      } else {
+        setMatchOpen(false)
+      }
+    } catch {
+      setMatchOpen(false)
+    } finally {
+      setMatchLoading(false)
+    }
+  }
 
   const flag = getFlag(job.location)
   const locationClean = job.location.replace(/^remote\s*[·\-]?\s*/i, '').trim()
@@ -180,7 +212,70 @@ export default function JobCard({
             {jobTypeLabel}
           </span>
         )}
+        {showMatchSection && (
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); handleMatchExpand() }}
+            className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#57C7E3] hover:text-[#3ab5d1] transition-colors"
+          >
+            {t('matchExpandCta')}
+            <ChevronDown className={`w-3 h-3 transition-transform ${matchOpen ? 'rotate-180' : ''}`} strokeWidth={2.5} />
+          </button>
+        )}
       </div>
+
+      {/* Match explanation — collapsible, only on user expand */}
+      <AnimatePresence>
+        {matchOpen && showMatchSection && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.15 }}
+            className="overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 space-y-2">
+              {matchLoading ? (
+                <div className="space-y-2 animate-pulse">
+                  <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded w-3/4" />
+                  <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded w-1/2" />
+                  <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded w-2/3" />
+                </div>
+              ) : matchData && (
+                <>
+                  {matchData.strengths.length > 0 && (
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-wide text-emerald-600 mb-1">{t('matchStrengths')}</p>
+                      <ul className="space-y-1">
+                        {matchData.strengths.map((s, i) => (
+                          <li key={i} className="flex items-start gap-1.5 text-[11px] text-slate-700 dark:text-slate-300">
+                            <span className="text-emerald-500 mt-0.5 shrink-0">✓</span>
+                            {s}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {matchData.gaps.length > 0 && (
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-wide text-orange-500 mb-1">{t('matchGaps')}</p>
+                      <ul className="space-y-1">
+                        {matchData.gaps.map((g, i) => (
+                          <li key={i} className="flex items-start gap-1.5 text-[11px] text-slate-700 dark:text-slate-300">
+                            <span className="text-orange-400 mt-0.5 shrink-0">⚠</span>
+                            {g}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Row 4 — Salary · Flag · Location · Geo badges */}
       <div className="flex items-center gap-2 text-[13px] text-slate-500 flex-wrap">

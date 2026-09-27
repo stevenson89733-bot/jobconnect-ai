@@ -310,7 +310,11 @@
     "applyWithAI": "✦ AIで応募",
     "filter_intl": "✓ 国際対応求人のみ",
     "filter_all": "すべての求人",
-    "crossBorderAnalyzing": "当社の検出器が求人を分析中です — 数時間後にまたご確認ください。"
+    "crossBorderAnalyzing": "当社の検出器が求人を分析中です — 数時間後にまたご確認ください。",
+    "matchWhyTitle": "マッチする理由",
+    "matchExpandCta": "マッチする理由を見る",
+    "matchStrengths": "強み",
+    "matchGaps": "注意点"
   },
   "applicationStatus": {
     "submitted": "応募済み",
