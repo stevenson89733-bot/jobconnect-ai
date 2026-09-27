@@ -138,11 +138,11 @@ export default function JobsClient({
       if (!data.user) return
       supabase
         .from('profiles')
-        .select('profile_complete')
-        .eq('id', data.user.id)
+        .select('title, skills')
+        .eq('user_id', data.user.id)
         .single()
         .then(({ data: p }) => {
-          if (p?.profile_complete) setProfileComplete(true)
+          if (p?.title?.trim() && p?.skills?.trim()) setProfileComplete(true)
         })
     })
   }, [])
