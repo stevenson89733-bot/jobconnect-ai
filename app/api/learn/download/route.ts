@@ -36,6 +36,14 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: 'upgrade_required' }, { status: 403 })
   }
 
+  // Log the download (fire-and-forget)
+  adminClient
+    .from('guide_downloads')
+    .insert({ user_id: user.id, guide_slug: guide })
+    .then(({ error: logErr }) => {
+      if (logErr) console.error('[learn/download] log error:', logErr.message)
+    })
+
   const { data, error } = await adminClient.storage
     .from('learn-guides')
     .createSignedUrl(`guides/${guide}.pdf`, 300)
