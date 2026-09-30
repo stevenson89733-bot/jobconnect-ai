@@ -33,12 +33,16 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts')
 //     (its own XHR calls) and its realtime relay (client.relay.crisp.chat,
 //     wss:// for the websocket + https:// fallback) — scoped to exactly
 //     these two Crisp domains, nothing broader.
+//   - Google Fonts (styles/landing.css, /lp preview page only) loads its
+//     stylesheet from fonts.googleapis.com and the actual font files it
+//     references from fonts.gstatic.com — both required for @import url(...)
+//     to work instead of silently failing closed.
 const csp = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' https://client.crisp.chat https://connect.facebook.net",
-  "style-src 'self' 'unsafe-inline' https://client.crisp.chat",
+  "style-src 'self' 'unsafe-inline' https://client.crisp.chat https://fonts.googleapis.com",
   "img-src 'self' data: https:",
-  "font-src 'self' data:",
+  "font-src 'self' data: https://fonts.gstatic.com",
   "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://client.crisp.chat wss://client.relay.crisp.chat https://client.relay.crisp.chat https://connect.facebook.net https://www.facebook.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
