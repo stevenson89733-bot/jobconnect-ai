@@ -5,7 +5,7 @@ import LoginForm from '@/components/LoginForm'
 
 export const dynamic = 'force-dynamic'
 
-export default async function Login({ searchParams }: { searchParams: { error?: string } }) {
+export default async function Login({ searchParams }: { searchParams: { error?: string; message?: string } }) {
   let isLoggedIn = false
   try {
     const supabase = createClient()
@@ -17,7 +17,7 @@ export default async function Login({ searchParams }: { searchParams: { error?: 
 
   return (
     <Suspense>
-      <LoginForm error={searchParams.error} />
+      <LoginForm error={searchParams.error} message={searchParams.message} />
     </Suspense>
   )
 }

@@ -416,12 +416,6 @@ export default async function PricingPage({
         <div className="flex flex-wrap items-center justify-center gap-8">
           {['Anthropic', 'Vercel', 'Stripe', 'Figma', 'Linear', 'Notion'].map((name) => (
             <div key={name} className="flex items-center gap-2 opacity-60 hover:opacity-100 transition-opacity">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`https://logo.clearbit.com/${name.toLowerCase()}.com`}
-                alt={name}
-                className="w-6 h-6 rounded object-contain"
-              />
               <span className="text-sm font-semibold text-slate-600 dark:text-slate-400">{name}</span>
             </div>
           ))}

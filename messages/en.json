@@ -73,7 +73,8 @@
       "forgotPassword": "Forgot password?",
       "signIn": "Sign in",
       "noAccount": "Don't have an account?",
-      "createOne": "Create one"
+      "createOne": "Create one",
+      "passwordUpdated": "Your password has been updated. Sign in with your new password."
     },
     "register": {
       "createAccount": "Create your account",
@@ -94,6 +95,25 @@
       "termsAgreement": "By creating an account you agree to our <terms>Terms</terms> and <privacy>Privacy Policy</privacy>.",
       "alreadyHaveAccount": "Already have an account?",
       "signIn": "Sign in"
+    },
+    "forgotPassword": {
+      "title": "Reset your password",
+      "subtitle": "Enter your email and we'll send you a link to reset it.",
+      "email": "Email",
+      "sendResetLink": "Send reset link",
+      "sending": "Sending…",
+      "checkEmailTitle": "Check your email",
+      "checkEmailBody": "If an account exists for that email, we just sent a password reset link to it.",
+      "backToLogin": "Back to sign in"
+    },
+    "updatePassword": {
+      "title": "Set a new password",
+      "subtitle": "Choose a new password for your account.",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
+      "updatePassword": "Update password",
+      "updating": "Updating…",
+      "passwordsDoNotMatch": "Passwords do not match."
     }
   },
   "home": {
@@ -892,7 +912,9 @@
     "extractJobTextTooShort": "Paste more of the job description — a few words isn't enough to extract real fields.",
     "invalidInterviewDate": "That interview date isn't valid. Please pick it again.",
     "extractJobInvalidUrl": "Invalid URL. Please enter a valid http/https address.",
-    "botDetected": "Security check failed. Please refresh and try again."
+    "botDetected": "Security check failed. Please refresh and try again.",
+    "tooManyPasswordResetAttempts": "Too many reset attempts. Please try again in a few minutes.",
+    "passwordResetLinkInvalid": "This reset link is invalid or has expired. Please request a new one."
   },
   "copilot": {
     "openLabel": "Open Career Copilot",

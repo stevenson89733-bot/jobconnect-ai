@@ -133,3 +133,36 @@ export async function signOut() {
   await supabase.auth.signOut()
   redirect('/login')
 }
+
+// Sends the reset email, then always redirects to the same "check your
+// email" state regardless of whether the address matched an account — not
+// revealing account existence to an anonymous caller is the point.
+export async function requestPasswordReset(formData: FormData) {
+  const t = await getTranslations('errors')
+  const { ok } = rateLimit(`pwreset:${getClientIp()}`, 5, 10 * 60 * 1000)
+  if (!ok) redirect(`/forgot-password?error=${encodeURIComponent(t('tooManyPasswordResetAttempts'))}`)
+
+  const supabase = createClient()
+  const email = formData.get('email') as string
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://jobconnect-ai.com'
+
+  await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${appUrl}/auth/callback?next=/update-password`,
+  })
+
+  redirect('/forgot-password?sent=1')
+}
+
+// Only reachable with the session /auth/callback established from a valid
+// recovery link — updateUser() operates on that session, not a password arg.
+export async function updatePassword(formData: FormData) {
+  const supabase = createClient()
+  const password = formData.get('password') as string
+
+  const { error } = await supabase.auth.updateUser({ password })
+  if (error) {
+    redirect(`/update-password?error=${encodeURIComponent(error.message)}`)
+  }
+
+  redirect('/login?message=password_updated')
+}

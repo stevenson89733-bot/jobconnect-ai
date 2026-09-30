@@ -256,8 +256,12 @@ export default function AiApplyModal({
     return () => { document.body.style.overflow = '' }
   }, [open])
 
-  // ── Load profile once on mount ─────────────────────────────────────────────
+  // ── Load profile once the modal is actually opened ──────────────────────────
+  // Gated on `open` (not mount) because this component is rendered once per
+  // job card — an unconditional fetch here fired N profile requests per page
+  // load (one per card), including for anonymous visitors who never apply.
   useEffect(() => {
+    if (!open || profileLoaded) return
     async function loadProfile() {
       try {
         const res = await fetch('/api/candidate/profile')
@@ -290,7 +294,7 @@ export default function AiApplyModal({
       }
     }
     loadProfile()
-  }, [])
+  }, [open, profileLoaded])
 
   // ── Pipeline triggers when modal opens AND user is Pro ─────────────────────
   useEffect(() => {
