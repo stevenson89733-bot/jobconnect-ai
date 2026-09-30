@@ -1,7 +1,5 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 export async function sendWelcomeEmail(params: {
   to: string
   firstName: string
@@ -9,6 +7,7 @@ export async function sendWelcomeEmail(params: {
   if (!process.env.RESEND_API_KEY) {
     return { success: false, error: 'RESEND_API_KEY not configured' }
   }
+  const resend = new Resend(process.env.RESEND_API_KEY)
 
   const { to, firstName } = params
 
@@ -131,6 +130,7 @@ function interviewEmailHtml(params: InterviewReminderParams & { h1: string; body
 
 export async function sendInterviewReminder24h(params: InterviewReminderParams): Promise<{ success: boolean; error?: string }> {
   if (!process.env.RESEND_API_KEY) return { success: false, error: 'RESEND_API_KEY not configured' }
+  const resend = new Resend(process.env.RESEND_API_KEY)
 
   const html = interviewEmailHtml({
     ...params,
@@ -154,6 +154,7 @@ export async function sendInterviewReminder24h(params: InterviewReminderParams):
 
 export async function sendInterviewReminder2h(params: InterviewReminderParams): Promise<{ success: boolean; error?: string }> {
   if (!process.env.RESEND_API_KEY) return { success: false, error: 'RESEND_API_KEY not configured' }
+  const resend = new Resend(process.env.RESEND_API_KEY)
 
   const html = interviewEmailHtml({
     ...params,
