@@ -15,12 +15,12 @@ export function LandingFooter() {
       </a>
       <p>AI-powered careers for a world without borders.</p>
       <nav className="landing-foot-links" aria-label="Footer navigation">
-        <a href="#jobs">Jobs</a>
+        <a href="/jobs">Jobs</a>
         <a href="#tools">AI tools</a>
         <a href="#how">About</a>
         <a href="/privacy">Privacy</a>
       </nav>
-      <small>© 2025 JobConnect AI. All rights reserved.</small>
+      <small>© 2026 JobConnect AI. All rights reserved.</small>
     </footer>
   );
 }

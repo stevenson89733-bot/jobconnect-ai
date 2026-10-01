@@ -1,4 +1,5 @@
 // components/landing/ToolsSection.tsx
+import Link from "next/link";
 import { Icon, IconName } from "./LandingIcons";
 
 const TOOLS = [
@@ -27,7 +28,7 @@ const TOOLS = [
 
 export function ToolsSection() {
   return (
-    <section className="landing-tools" id="tools">
+    <section id="tools" className="landing-tools">
       <div className="landing-tools-intro">
         <span className="landing-kicker landing-kicker--light">
           YOUR CAREER, SUPERCHARGED
@@ -41,9 +42,9 @@ export function ToolsSection() {
           Practical AI tools that work together to help you make better career
           decisions.
         </p>
-        <a href="#jobs">
+        <Link href="/jobs">
           Explore all AI tools <Icon name="arrow" size={16} />
-        </a>
+        </Link>
       </div>
 
       <div className="landing-tools-list">
@@ -57,9 +58,9 @@ export function ToolsSection() {
               <h3>{tool.title}</h3>
               <p>{tool.copy}</p>
             </div>
-            <button type="button" aria-label={`Learn more about ${tool.title}`}>
+            <Link href="/jobs" aria-label={`Learn more about ${tool.title}`} className="landing-tool-arrow">
               <Icon name="arrow" size={18} />
-            </button>
+            </Link>
           </article>
         ))}
       </div>

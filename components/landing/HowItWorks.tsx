@@ -24,7 +24,7 @@ const STEPS = [
 
 export function HowItWorks() {
   return (
-    <section className="landing-how" id="how">
+    <section id="how" className="landing-how">
       <div className="landing-section-head">
         <span className="landing-kicker">A BETTER WAY TO JOB SEARCH</span>
         <h2>Your next move, made simpler.</h2>

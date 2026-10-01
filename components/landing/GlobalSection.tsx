@@ -1,7 +1,7 @@
 // components/landing/GlobalSection.tsx
 export function GlobalSection() {
   return (
-    <section className="landing-global" id="companies">
+    <section id="companies" className="landing-global">
       <div>
         <span className="landing-kicker">BUILT FOR A BORDERLESS WORLD</span>
         <h2>
