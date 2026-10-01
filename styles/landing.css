@@ -835,6 +835,7 @@
   .landing-menu-btn { display: flex; }
   .landing-text-btn { display: none; }
   .landing-primary-btn--small { display: none; }
+  .landing-header-actions > *:not(.landing-menu-btn) { display: none; }
   .landing-nav-links {
     background: #fff;
     border-bottom: 1px solid #e6eaf0;
