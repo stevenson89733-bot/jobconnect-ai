@@ -1,7 +1,7 @@
 // components/landing/TrustStrip.tsx
 export function TrustStrip() {
   return (
-    <section className="landing-trust" aria-label="Platform partners">
+    <section className="landing-trust" id="jobs" aria-label="Platform partners">
       <p>Connecting ambitious people with teams at</p>
       <div className="landing-company-cloud">
         <span><b>◎</b> ORBIT</span>

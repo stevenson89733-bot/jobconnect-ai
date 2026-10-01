@@ -32,10 +32,10 @@ export function LandingNav() {
       </nav>
 
       <div className="landing-header-actions">
-        <Link href="/login" className="landing-text-btn">
+        <Link href="/auth/login" className="landing-text-btn">
           Log in
         </Link>
-        <Link href="/register" className="landing-primary-btn landing-primary-btn--small">
+        <Link href="/auth/signup" className="landing-primary-btn landing-primary-btn--small">
           Get started <Icon name="arrow" size={16} />
         </Link>
         <button

@@ -1,6 +1,7 @@
 "use client";
 // components/landing/LpHeroSection.tsx
 import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Icon } from "./LandingIcons";
 
 const JOB_MATCHES = [
@@ -12,19 +13,17 @@ const JOB_MATCHES = [
 const FILTERS = ["Best match", "Remote", "Visa support", "New today"] as const;
 
 export function LpHeroSection() {
+  const router = useRouter();
   const [query, setQuery] = useState("");
   const [location, setLocation] = useState("");
-  const [searchMessage, setSearchMessage] = useState("");
   const [activeFilter, setActiveFilter] = useState<string>("Best match");
 
   function handleSearch(e: FormEvent) {
     e.preventDefault();
-    const detail = [query, location].filter(Boolean).join(" in ");
-    setSearchMessage(
-      detail
-        ? `Finding the strongest matches for ${detail}…`
-        : "Building your personalized job matches…"
-    );
+    const params = new URLSearchParams();
+    if (query.trim()) params.set("q", query.trim());
+    if (location.trim()) params.set("country", location.trim());
+    router.push(`/jobs${params.toString() ? `?${params.toString()}` : ""}`);
   }
 
   return (
@@ -77,12 +76,6 @@ export function LpHeroSection() {
               <Icon name="sparkles" size={15} /> Find my matches
             </button>
           </form>
-
-          {searchMessage && (
-            <p className="landing-search-message" role="status">
-              {searchMessage}
-            </p>
-          )}
 
           <div className="landing-hero-proof">
             <div className="landing-avatar-stack" aria-hidden="true">
