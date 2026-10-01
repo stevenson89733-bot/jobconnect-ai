@@ -45,7 +45,7 @@ export const metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const pathname = headers().get('x-pathname') ?? ''
-  const isLp = pathname === '/lp' || pathname.startsWith('/lp/')
+  const isLp = pathname === '/' || pathname === '/lp' || pathname.startsWith('/lp/')
 
   let user = null
   let isAdmin = false
