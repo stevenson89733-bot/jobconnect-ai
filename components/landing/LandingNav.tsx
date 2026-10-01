@@ -101,6 +101,34 @@ export function LandingNav({ userEmail, isAdmin }: LandingNavProps) {
                 <span className="landing-dropdown-desc">AI applies to jobs for you daily</span>
               </span>
             </Link>
+            <Link href="/pricing" className="landing-dropdown-item">
+              <span className="landing-dropdown-emoji">✨</span>
+              <span>
+                <span className="landing-dropdown-title">
+                  AI Job Match
+                  <span className="landing-pro-badge">Pro</span>
+                </span>
+                <span className="landing-dropdown-desc">AI-ranked jobs tailored to you</span>
+              </span>
+            </Link>
+            <Link href="/pricing" className="landing-dropdown-item">
+              <span className="landing-dropdown-emoji">🔔</span>
+              <span>
+                <span className="landing-dropdown-title">
+                  Interview Alerts
+                  <span className="landing-pro-badge">Pro</span>
+                </span>
+                <span className="landing-dropdown-desc">Never miss a callback</span>
+              </span>
+            </Link>
+            <div className="landing-dropdown-divider" />
+            <Link href="/pricing" className="landing-dropdown-item landing-dropdown-item--cta">
+              <span className="landing-dropdown-emoji">🔒</span>
+              <span>
+                <span className="landing-dropdown-title">See all Pro plans →</span>
+                <span className="landing-dropdown-desc">Elite from $39.99/mo · Pro from $19.99/mo</span>
+              </span>
+            </Link>
           </div>
         </div>
 
