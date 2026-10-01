@@ -7,8 +7,9 @@ import { ToolsSection }  from "@/components/landing/ToolsSection";
 import { GlobalSection } from "@/components/landing/GlobalSection";
 import { CTASection }    from "@/components/landing/CTASection";
 import { LandingFooter } from "@/components/landing/LandingFooter";
+import { createClient }  from "@/lib/supabase/server";
 import type { Metadata } from "next";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl }   from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "JobConnect AI — AI-Powered Global Career Matching",
@@ -30,10 +31,23 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  let isAdmin = false;
+  if (user) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+    isAdmin = profile?.role === "admin";
+  }
+
   return (
     <div className="landing-shell">
-      <LandingNav />
+      <LandingNav userEmail={user?.email ?? null} isAdmin={isAdmin} />
       <main>
         <LpHeroSection />
         <TrustStrip />
