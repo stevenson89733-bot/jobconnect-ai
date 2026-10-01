@@ -8,6 +8,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import CountrySelector from "@/components/country/CountrySelector";
 import { signOut } from "@/app/actions/auth";
+import NotificationBell from "@/components/notifications/NotificationBell";
 
 interface LandingNavProps {
   userEmail?: string | null;
@@ -115,6 +116,7 @@ export function LandingNav({ userEmail, isAdmin }: LandingNavProps) {
 
         {userEmail ? (
           <>
+            <NotificationBell />
             <Link href="/dashboard" className="landing-text-btn">Dashboard</Link>
             <Link href="/profile" className="landing-text-btn">Profile</Link>
             {isAdmin && (
