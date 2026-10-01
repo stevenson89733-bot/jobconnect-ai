@@ -9,6 +9,7 @@ import { CTASection }    from "@/components/landing/CTASection";
 import { LandingFooter } from "@/components/landing/LandingFooter";
 import CrispChat         from "@/components/CrispChat";
 import CopilotWidget     from "@/components/copilot/CopilotWidget";
+import FaqWidget         from "@/components/FaqWidget";
 import { createClient }  from "@/lib/supabase/server";
 import type { Metadata } from "next";
 import { absoluteUrl }   from "@/lib/seo";
@@ -63,6 +64,7 @@ export default async function HomePage() {
       <LandingFooter />
       <CrispChat />
       {isCandidate && <CopilotWidget />}
+      <FaqWidget />
     </div>
   );
 }
