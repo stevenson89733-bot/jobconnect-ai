@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useState, useCallback, useRef } from 'react'
-import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Sparkles, X, Send } from 'lucide-react'
@@ -208,7 +207,6 @@ function ChatPanel() {
 }
 
 export default function CopilotWidget() {
-  const pathname = usePathname()
   const t = useTranslations('copilot')
   const [signals, setSignals] = useState<CopilotSignal[] | null>(null)
   const [open, setOpen] = useState(false)
@@ -240,7 +238,7 @@ export default function CopilotWidget() {
   // to hide the whole widget, including the Chat tab, for the rest of the
   // browser tab's life with no way to bring it back short of closing the
   // tab. The header's close button now only closes the panel (see below).
-  if (pathname === '/' || !signals || signals.length === 0) return null
+  if (!signals || signals.length === 0) return null
 
   const hasRealUpdate = signals.some((s) => s.type !== 'idle')
 
