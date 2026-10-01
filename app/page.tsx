@@ -8,6 +8,7 @@ import { GlobalSection } from "@/components/landing/GlobalSection";
 import { CTASection }    from "@/components/landing/CTASection";
 import { LandingFooter } from "@/components/landing/LandingFooter";
 import CrispChat         from "@/components/CrispChat";
+import CopilotWidget     from "@/components/copilot/CopilotWidget";
 import { createClient }  from "@/lib/supabase/server";
 import type { Metadata } from "next";
 import { absoluteUrl }   from "@/lib/seo";
@@ -37,13 +38,15 @@ export default async function HomePage() {
   const { data: { user } } = await supabase.auth.getUser();
 
   let isAdmin = false;
+  let isCandidate = false;
   if (user) {
     const { data: profile } = await supabase
       .from("profiles")
-      .select("is_admin")
+      .select("is_admin, role")
       .eq("user_id", user.id)
       .single();
     isAdmin = profile?.is_admin === true;
+    isCandidate = profile?.role === "candidate";
   }
 
   return (
@@ -59,6 +62,7 @@ export default async function HomePage() {
       </main>
       <LandingFooter />
       <CrispChat />
+      {isCandidate && <CopilotWidget />}
     </div>
   );
 }
