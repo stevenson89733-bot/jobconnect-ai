@@ -7,6 +7,7 @@ import { ToolsSection }  from "@/components/landing/ToolsSection";
 import { GlobalSection } from "@/components/landing/GlobalSection";
 import { CTASection }    from "@/components/landing/CTASection";
 import { LandingFooter } from "@/components/landing/LandingFooter";
+import CrispChat         from "@/components/CrispChat";
 import { createClient }  from "@/lib/supabase/server";
 import type { Metadata } from "next";
 import { absoluteUrl }   from "@/lib/seo";
@@ -39,10 +40,10 @@ export default async function HomePage() {
   if (user) {
     const { data: profile } = await supabase
       .from("profiles")
-      .select("role")
-      .eq("id", user.id)
+      .select("is_admin")
+      .eq("user_id", user.id)
       .single();
-    isAdmin = profile?.role === "admin";
+    isAdmin = profile?.is_admin === true;
   }
 
   return (
@@ -57,6 +58,7 @@ export default async function HomePage() {
         <CTASection />
       </main>
       <LandingFooter />
+      <CrispChat />
     </div>
   );
 }
