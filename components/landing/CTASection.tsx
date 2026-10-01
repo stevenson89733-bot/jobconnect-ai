@@ -20,7 +20,7 @@ export function CTASection() {
           Create your profile and let JobConnect AI find the roles you were
           meant to see.
         </p>
-        <Link href="/auth/signup" className="landing-primary-btn">
+        <Link href="/register" className="landing-primary-btn">
           Find my matches <Icon name="arrow" size={17} />
         </Link>
         <span>No credit card required · Free to get started</span>
