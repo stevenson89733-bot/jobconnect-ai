@@ -1237,11 +1237,7 @@
 
 /* ── Dark-mode nav overrides ─────────────────────────────── */
 @media (prefers-color-scheme: dark) {
-  .landing-shell { background: #0d1117; }
-  .landing-topbar {
-    background: rgba(13, 17, 23, 0.92);
-    border-bottom-color: #1e2a3c;
-  }
+  .landing-topbar { border-bottom-color: #1e2a3c; }
   .landing-nav-item,
   .landing-text-btn { color: #9aabcb; }
   .landing-nav-item:hover,
@@ -1270,7 +1266,7 @@
   .landing-mobile-menu button { border-bottom-color: #1e2a3c; color: #9aabcb; }
   .landing-mobile-divider { border-top-color: #1e2a3c; }
   /* Footer dark */
-  .lf-wrap { background: #0d1117; border-top-color: #1e2a3c; }
+  .lf-wrap { border-top-color: #1e2a3c; }
   .lf-col-heading { color: #dce5f5; }
   .lf-col ul li a { color: #6b7a93; }
   .lf-col ul li a:hover { color: #5b8cf7; }
