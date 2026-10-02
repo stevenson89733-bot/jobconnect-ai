@@ -27,7 +27,7 @@ export function LandingNav({ userEmail, isAdmin }: LandingNavProps) {
           height={42}
           width={168}
           priority
-          style={{ height: 42, width: "auto" }}
+          className="h-[42px] w-auto block dark:brightness-0 dark:invert"
         />
       </Link>
 

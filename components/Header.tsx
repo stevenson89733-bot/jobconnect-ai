@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { signOut } from '@/app/actions/auth'
@@ -17,8 +18,14 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-background/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
       <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
         <Link href="/" className="logo-link" style={{ display: 'inline-flex', alignItems: 'center', flexShrink: 0, overflow: 'visible' }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo-full-cropped.png" alt="JobConnect AI" style={{ height: 44, width: 'auto', display: 'block', objectFit: 'contain' }} />
+          <Image
+            src="/images/logo-jobconnect.png"
+            alt="JobConnect AI"
+            height={42}
+            width={168}
+            priority
+            className="h-[42px] w-auto block dark:brightness-0 dark:invert"
+          />
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600 dark:text-slate-400">
@@ -32,10 +39,10 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
             </Link>
             {/* pt-3 bridges hover gap; left-0 anchors from trigger so no column clips off-screen */}
             <div className="absolute left-0 top-full pt-3 hidden group-hover:block z-50">
-              <div className="grid grid-cols-3 gap-8 p-6 bg-white border border-gray-100 shadow-2xl rounded-2xl min-w-[620px]">
+              <div className="grid grid-cols-3 gap-8 p-6 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-700 shadow-2xl dark:shadow-black/40 rounded-2xl min-w-[620px]">
                 {/* Column 1 — Job Categories */}
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3">Job Categories</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 dark:text-slate-500 mb-3">Job Categories</p>
                   {[
                     ['Engineering',        'Engineering'],
                     ['Marketing',          'Marketing'],
@@ -45,7 +52,7 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
                     ['Data Science',       'Data'],
                     ['HR & Recruiting',    'HR'],
                   ].map(([label, value]) => (
-                    <Link key={value} href={`/jobs?category=${encodeURIComponent(value)}`} className="block text-sm text-slate-700 hover:text-[#57C7E3] py-1 transition-colors">
+                    <Link key={value} href={`/jobs?category=${encodeURIComponent(value)}`} className="block text-sm text-slate-700 dark:text-slate-300 hover:text-[#57C7E3] py-1 transition-colors">
                       {label}
                     </Link>
                   ))}
@@ -53,7 +60,7 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
                 </div>
                 {/* Column 2 — Job Locations */}
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3">Job Locations</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 dark:text-slate-500 mb-3">Job Locations</p>
                   {[
                     ['🇺🇸 USA',          'US'],
                     ['🇫🇷 France',       'FR'],
@@ -62,7 +69,7 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
                     ['🇨🇦 Canada',       'CA'],
                     ['🌍 Global Remote', 'worldwide'],
                   ].map(([label, value]) => (
-                    <Link key={value} href={`/jobs?country=${value}`} className="block text-sm text-slate-700 hover:text-[#57C7E3] py-1 transition-colors">
+                    <Link key={value} href={`/jobs?country=${value}`} className="block text-sm text-slate-700 dark:text-slate-300 hover:text-[#57C7E3] py-1 transition-colors">
                       {label}
                     </Link>
                   ))}
@@ -70,14 +77,14 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
                 </div>
                 {/* Column 3 — Job Types */}
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3">Job Types</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 dark:text-slate-500 mb-3">Job Types</p>
                   {[
                     ['Remote Full-time', 'Full-time'],
                     ['Remote Part-time', 'Part-time'],
                     ['Contract',        'Contract'],
                     ['Freelance',       'Contract'],
                   ].map(([label, value]) => (
-                    <Link key={label} href={`/jobs?type=${encodeURIComponent(value)}`} className="block text-sm text-slate-700 hover:text-[#57C7E3] py-1 transition-colors">
+                    <Link key={label} href={`/jobs?type=${encodeURIComponent(value)}`} className="block text-sm text-slate-700 dark:text-slate-300 hover:text-[#57C7E3] py-1 transition-colors">
                       {label}
                     </Link>
                   ))}
@@ -141,67 +148,67 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
               </svg>
             </button>
             <div className="absolute left-0 top-full pt-3 hidden group-hover:block z-50">
-              <div className="grid grid-cols-2 gap-8 p-6 bg-white border border-gray-100 shadow-2xl rounded-2xl min-w-[520px]">
+              <div className="grid grid-cols-2 gap-8 p-6 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-700 shadow-2xl dark:shadow-black/40 rounded-2xl min-w-[520px]">
                 {/* Column 1 — Elite (Candidates) */}
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-1">⭐ Elite — Candidates</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 dark:text-slate-500 mb-1">⭐ Elite — Candidates</p>
                   <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
                     <span className="text-lg leading-none mt-0.5">🤖</span>
                     <span>
-                      <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">Auto-Apply</span>
-                      <span className="block text-xs text-gray-400">Apply to 100+ jobs automatically</span>
+                      <span className="block text-sm font-medium text-slate-800 dark:text-slate-200 group-hover/item:text-[#F0663A] transition-colors">Auto-Apply</span>
+                      <span className="block text-xs text-gray-400 dark:text-slate-500">Apply to 100+ jobs automatically</span>
                     </span>
                   </a>
                   <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
                     <span className="text-lg leading-none mt-0.5">✨</span>
                     <span>
-                      <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">AI Job Match</span>
-                      <span className="block text-xs text-gray-400">AI-ranked jobs tailored to you</span>
+                      <span className="block text-sm font-medium text-slate-800 dark:text-slate-200 group-hover/item:text-[#F0663A] transition-colors">AI Job Match</span>
+                      <span className="block text-xs text-gray-400 dark:text-slate-500">AI-ranked jobs tailored to you</span>
                     </span>
                   </a>
                   <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
                     <span className="text-lg leading-none mt-0.5">🔔</span>
                     <span>
-                      <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">Interview Alerts</span>
-                      <span className="block text-xs text-gray-400">Never miss a callback</span>
+                      <span className="block text-sm font-medium text-slate-800 dark:text-slate-200 group-hover/item:text-[#F0663A] transition-colors">Interview Alerts</span>
+                      <span className="block text-xs text-gray-400 dark:text-slate-500">Never miss a callback</span>
                     </span>
                   </a>
                 </div>
                 {/* Column 2 — Pro (Employers) */}
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-1">🏢 Pro — Employers</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 dark:text-slate-500 mb-1">🏢 Pro — Employers</p>
                   <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
                     <span className="text-lg leading-none mt-0.5">📅</span>
                     <span>
-                      <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">Meeting Calendar</span>
-                      <span className="block text-xs text-gray-400">Booking link for candidates</span>
+                      <span className="block text-sm font-medium text-slate-800 dark:text-slate-200 group-hover/item:text-[#F0663A] transition-colors">Meeting Calendar</span>
+                      <span className="block text-xs text-gray-400 dark:text-slate-500">Booking link for candidates</span>
                     </span>
                   </a>
                   <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
                     <span className="text-lg leading-none mt-0.5">🔗</span>
                     <span>
-                      <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">Interview Scheduling Link</span>
-                      <span className="block text-xs text-gray-400">Share smart link with applicants</span>
+                      <span className="block text-sm font-medium text-slate-800 dark:text-slate-200 group-hover/item:text-[#F0663A] transition-colors">Interview Scheduling Link</span>
+                      <span className="block text-xs text-gray-400 dark:text-slate-500">Share smart link with applicants</span>
                     </span>
                   </a>
                   <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
                     <span className="text-lg leading-none mt-0.5">📊</span>
                     <span>
-                      <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">Talent Analytics</span>
-                      <span className="block text-xs text-gray-400">Track pipeline & conversions</span>
+                      <span className="block text-sm font-medium text-slate-800 dark:text-slate-200 group-hover/item:text-[#F0663A] transition-colors">Talent Analytics</span>
+                      <span className="block text-xs text-gray-400 dark:text-slate-500">Track pipeline & conversions</span>
                     </span>
                   </a>
                   <a href="/pricing" className="flex items-start gap-2 py-2 group/item">
                     <span className="text-lg leading-none mt-0.5">⚡</span>
                     <span>
-                      <span className="block text-sm font-medium text-slate-800 group-hover/item:text-[#F0663A] transition-colors">Priority Listing</span>
-                      <span className="block text-xs text-gray-400">Top placement in search results</span>
+                      <span className="block text-sm font-medium text-slate-800 dark:text-slate-200 group-hover/item:text-[#F0663A] transition-colors">Priority Listing</span>
+                      <span className="block text-xs text-gray-400 dark:text-slate-500">Top placement in search results</span>
                     </span>
                   </a>
                 </div>
                 {/* CTA footer */}
-                <div className="col-span-2 pt-3 border-t border-gray-100 flex items-center justify-between">
-                  <span className="text-xs text-gray-400">Elite from <strong className="text-slate-700">$39.99/mo</strong> · Pro from <strong className="text-slate-700">$19.99/mo</strong></span>
+                <div className="col-span-2 pt-3 border-t border-gray-100 dark:border-slate-700 flex items-center justify-between">
+                  <span className="text-xs text-gray-400 dark:text-slate-500">Elite from <strong className="text-slate-700 dark:text-slate-300">$39.99/mo</strong> · Pro from <strong className="text-slate-700 dark:text-slate-300">$19.99/mo</strong></span>
                   <a href="/pricing" className="inline-flex items-center gap-1.5 bg-[#F0663A] text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-[#d4522a] transition-colors">
                     🔒 See Plans →
                   </a>
