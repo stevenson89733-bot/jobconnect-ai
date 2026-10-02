@@ -2,7 +2,6 @@
 // components/landing/LandingNav.tsx
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Icon } from "./LandingIcons";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -15,20 +14,46 @@ interface LandingNavProps {
   isAdmin?: boolean;
 }
 
+function JobConnectLogo() {
+  return (
+    <svg
+      width="auto"
+      height="42"
+      viewBox="0 0 338 76"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-label="JobConnect AI"
+      style={{ display: "block" }}
+    >
+      {/* C — orange filled arc */}
+      <path d="M58 12 A29 29 0 1 0 58 64 L52 57 A20 20 0 1 1 52 19 Z" fill="#F0663A" />
+      {/* J crossbar */}
+      <rect x="28" y="8" width="22" height="10" rx="4" fill="#1a2e5a" />
+      {/* J stem */}
+      <rect x="34" y="8" width="10" height="40" rx="2.5" fill="#1a2e5a" />
+      {/* J hook */}
+      <path d="M34 48 Q34 63 23 63 Q15 63 14 57 L20 55 Q21 58 23 58 Q28 58 28 48 Z" fill="#1a2e5a" />
+      {/* Person head */}
+      <circle cx="46" cy="40" r="4.5" fill="#F0663A" />
+      {/* Person shoulders */}
+      <path d="M38 54 Q42 48 46 46 Q50 48 54 54" stroke="#1a2e5a" strokeWidth="3.5" strokeLinecap="round" fill="none" />
+      {/* JobConnect text */}
+      <text x="78" y="50" fontFamily="'Montserrat', 'Inter', system-ui, sans-serif" fontWeight="800" fontSize="34" letterSpacing="-0.5" fill="currentColor">JobConnect</text>
+      {/* AI text */}
+      <text x="326" y="50" fontFamily="'Montserrat', 'Inter', system-ui, sans-serif" fontWeight="900" fontSize="34" letterSpacing="-0.5" fill="#F0663A">AI</text>
+      {/* Tagline */}
+      <text x="79" y="65" fontFamily="'Inter', system-ui, sans-serif" fontWeight="600" fontSize="6.5" letterSpacing="1.0" fill="#F0663A">CONNECTING TALENT. BUILDING FUTURES.</text>
+    </svg>
+  );
+}
+
 export function LandingNav({ userEmail, isAdmin }: LandingNavProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <header className="landing-topbar">
       <Link className="landing-brand" href="/" aria-label="JobConnect AI">
-        <Image
-          src="/images/logo-jobconnect.png"
-          alt="JobConnect AI"
-          height={42}
-          width={168}
-          priority
-          style={{ height: 42, width: "auto" }}
-        />
+        <JobConnectLogo />
       </Link>
 
       {/* Desktop nav */}

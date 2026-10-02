@@ -33,7 +33,9 @@
   align-items: center;
   display: inline-flex;
   gap: 10px;
+  color: #1a2e5a;
 }
+.dark .landing-brand { color: #ffffff; }
 
 .landing-nav-links {
   display: flex;
