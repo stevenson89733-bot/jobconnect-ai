@@ -1240,7 +1240,7 @@
 
 /* ── Dark-mode nav overrides ─────────────────────────────── */
 @media (prefers-color-scheme: dark) {
-  .landing-topbar { background: rgba(15, 25, 40, 0.92); border-bottom-color: #1e2a3c; }
+  .landing-topbar { background: rgba(20, 34, 64, 0.88); border-bottom-color: #2a3a5c; }
   .landing-nav-item,
   .landing-text-btn { color: #9aabcb; }
   .landing-nav-item:hover,
@@ -1286,7 +1286,7 @@
 
 
 /* ── Dark-mode nav overrides (Tailwind .dark class) ─────── */
-.dark .landing-topbar { background: rgba(15, 25, 40, 0.92); border-bottom-color: #1e2a3c; }
+.dark .landing-topbar { background: rgba(20, 34, 64, 0.88); border-bottom-color: #2a3a5c; }
 .dark .landing-nav-item,
 .dark .landing-text-btn { color: #9aabcb; }
 .dark .landing-nav-item:hover,

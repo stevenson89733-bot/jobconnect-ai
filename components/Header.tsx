@@ -15,7 +15,7 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
   const tc = useTranslations('common')
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 dark:bg-background/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+    <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
       <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
         <Link href="/" className="logo-link" style={{ display: 'inline-flex', alignItems: 'center', flexShrink: 0, overflow: 'visible' }}>
           <Image
@@ -24,7 +24,7 @@ export default function Header({ userEmail, isAdmin }: { userEmail?: string | nu
             height={42}
             width={168}
             priority
-            className="h-[42px] w-auto block dark:brightness-0 dark:invert"
+            className="h-[42px] w-auto block"
           />
         </Link>
 
