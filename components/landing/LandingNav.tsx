@@ -2,7 +2,6 @@
 // components/landing/LandingNav.tsx
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Icon } from "./LandingIcons";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -21,14 +20,55 @@ export function LandingNav({ userEmail, isAdmin }: LandingNavProps) {
   return (
     <header className="landing-topbar">
       <Link className="landing-brand" href="/" aria-label="JobConnect AI">
-        <Image
-          src="/images/logo-jobconnect.png"
-          alt="JobConnect AI"
-          height={42}
-          width={168}
-          priority
-          className="h-[42px] w-auto block"
-        />
+        <svg
+          viewBox="0 0 186 38"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          className="landing-logo-svg"
+        >
+          {/* Spark icon */}
+          <path
+            d="M8 6 L10.6 13.4 L18 16 L10.6 18.6 L8 26 L5.4 18.6 L-2 16 L5.4 13.4 Z"
+            transform="translate(2,0)"
+            fill="#3b6ff5"
+          />
+          {/* "JobConnect" wordmark */}
+          <text
+            x="26"
+            y="26"
+            fontFamily="'Inter', 'Helvetica Neue', Arial, sans-serif"
+            fontWeight="700"
+            fontSize="22"
+            letterSpacing="-0.5"
+            fill="currentColor"
+          >
+            JobConnect
+          </text>
+          {/* "AI" badge */}
+          <rect x="152" y="8" width="30" height="20" rx="5" fill="#3b6ff5" />
+          <text
+            x="167"
+            y="23"
+            fontFamily="'Inter', 'Helvetica Neue', Arial, sans-serif"
+            fontWeight="800"
+            fontSize="12"
+            letterSpacing="0.5"
+            fill="#fff"
+            textAnchor="middle"
+          >
+            AI
+          </text>
+          {/* Accent underline beneath "JobConnect" */}
+          <path
+            d="M26 30 Q77 34 126 30"
+            stroke="#3b6ff5"
+            strokeWidth="2"
+            strokeLinecap="round"
+            fill="none"
+            opacity="0.55"
+          />
+        </svg>
       </Link>
 
       {/* Desktop nav */}

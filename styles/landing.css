@@ -31,11 +31,19 @@
 
 .landing-brand {
   align-items: center;
-  display: inline-flex;
-  gap: 10px;
   color: #1a2e5a;
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: 0;
+  text-decoration: none;
 }
-.dark .landing-brand { color: #ffffff; }
+.dark .landing-brand { color: #e8edf5; }
+
+.landing-logo-svg {
+  display: block;
+  height: 38px;
+  width: auto;
+}
 
 .landing-nav-links {
   display: flex;
