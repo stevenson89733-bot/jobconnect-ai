@@ -6,7 +6,8 @@ import Script from 'next/script'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
 import { Analytics } from '@vercel/analytics/react'
-import Header from '../components/Header'
+import '@/styles/landing.css'
+import { LandingNav } from '@/components/landing/LandingNav'
 import Footer from '../components/Footer'
 import { ThemeProvider } from '../components/ThemeProvider'
 import { createClient } from '@/lib/supabase/server'
@@ -45,7 +46,7 @@ export const metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const pathname = headers().get('x-pathname') ?? ''
-  const isLp = pathname === '/' || pathname === '/lp' || pathname.startsWith('/lp/')
+  const isLp = pathname === '/lp' || pathname.startsWith('/lp/')
 
   let user = null
   let isAdmin = false
@@ -96,7 +97,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <NextIntlClientProvider messages={messages} locale={locale}>
           <ThemeProvider>
             <CountryProvider initialCountry={initialCountry}>
-              {!isLp && <Header userEmail={user?.email} isAdmin={isAdmin} />}
+              <LandingNav userEmail={user?.email} isAdmin={isAdmin} />
               <CommandPalette />
               <main>{children}</main>
               {!isLp && <Footer />}
