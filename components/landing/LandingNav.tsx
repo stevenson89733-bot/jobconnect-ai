@@ -2,6 +2,7 @@
 // components/landing/LandingNav.tsx
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Icon } from "./LandingIcons";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -20,61 +21,25 @@ export function LandingNav({ userEmail, isAdmin }: LandingNavProps) {
   return (
     <header className="landing-topbar">
       <Link className="landing-brand" href="/" aria-label="JobConnect AI">
-        <svg
-          viewBox="0 0 252 44"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+        <Image
+          src="/icon-jc.svg"
+          alt=""
+          width={38}
+          height={38}
+          priority
+          className="landing-logo-icon"
           aria-hidden="true"
-          className="landing-logo-svg"
-        >
-          {/* ── JC icon: 28×28, vertically centered with text block ── */}
-          <rect x="0" y="8" width="28" height="28" rx="7" fill="#3b6ff5" />
-          {/* head */}
-          <circle cx="14" cy="18" r="4" fill="white" />
-          {/* shoulders */}
-          <path d="M4 36 C4 27 24 27 24 36Z" fill="white" />
-
-          {/* ── "JobConnect" wordmark (line 1) ── */}
-          <text
-            x="38"
-            y="25"
-            fontFamily="'Inter', 'Helvetica Neue', Arial, sans-serif"
-            fontWeight="700"
-            fontSize="19"
-            letterSpacing="-0.4"
-            fill="currentColor"
-          >
-            JobConnect
-          </text>
-
-          {/* ── "AI" badge (inline with wordmark) ── */}
-          <rect x="150" y="11" width="28" height="16" rx="4" fill="#3b6ff5" />
-          <text
-            x="164"
-            y="23"
-            fontFamily="'Inter', 'Helvetica Neue', Arial, sans-serif"
-            fontWeight="800"
-            fontSize="10"
-            letterSpacing="0.6"
-            fill="#fff"
-            textAnchor="middle"
-          >
-            AI
-          </text>
-
-          {/* ── Tagline (line 2) ── */}
-          <text
-            x="38"
-            y="37"
-            fontFamily="'Inter', 'Helvetica Neue', Arial, sans-serif"
-            fontWeight="600"
-            fontSize="7"
-            letterSpacing="1.05"
-            className="landing-logo-tagline"
-          >
+        />
+        <span className="landing-logo-text">
+          <span className="landing-logo-wordmark">
+            <span className="landing-logo-job">Job</span>
+            <span className="landing-logo-connect">Connect</span>
+            <span className="landing-logo-ai">AI</span>
+          </span>
+          <span className="landing-logo-tagline">
             CONNECTING TALENT. BUILDING FUTURES.
-          </text>
-        </svg>
+          </span>
+        </span>
       </Link>
 
       {/* Desktop nav */}

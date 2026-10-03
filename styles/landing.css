@@ -31,25 +31,69 @@
 
 .landing-brand {
   align-items: center;
-  color: #1a2e5a;
   display: inline-flex;
   flex-shrink: 0;
-  gap: 0;
+  gap: 10px;
   text-decoration: none;
 }
 .dark .landing-brand { color: #e8edf5; }
 
-.landing-logo-svg {
+.landing-logo-icon {
   display: block;
-  height: 40px;
-  width: auto;
+  flex-shrink: 0;
+  height: 36px;
+  width: 36px;
+}
+
+.landing-logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1;
+}
+
+.landing-logo-wordmark {
+  align-items: baseline;
+  display: flex;
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  gap: 0;
+  letter-spacing: -0.4px;
+}
+
+.landing-logo-job {
+  color: #111827;
+}
+.dark .landing-logo-job {
+  color: #f1f5f9;
+}
+
+.landing-logo-connect {
+  color: #2563eb;
+}
+
+.landing-logo-ai {
+  color: #FF6B35;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  margin-left: 5px;
+  position: relative;
+  top: -1px;
 }
 
 .landing-logo-tagline {
-  fill: #6b82ad;
+  color: #6b82ad;
+  display: block;
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 7px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  white-space: nowrap;
 }
 .dark .landing-logo-tagline {
-  fill: #7a90b8;
+  color: #7a90b8;
 }
 
 .landing-nav-links {
