@@ -4,7 +4,6 @@ import { HowItWorks }    from "@/components/landing/HowItWorks";
 import { ToolsSection }  from "@/components/landing/ToolsSection";
 import { GlobalSection } from "@/components/landing/GlobalSection";
 import { CTASection }    from "@/components/landing/CTASection";
-import { LandingFooter } from "@/components/landing/LandingFooter";
 import type { Metadata } from "next";
 import { absoluteUrl }   from "@/lib/seo";
 
@@ -39,7 +38,6 @@ export default function HomePage() {
         <GlobalSection />
         <CTASection />
       </main>
-      <LandingFooter />
     </div>
   );
 }
