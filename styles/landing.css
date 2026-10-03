@@ -63,18 +63,21 @@
 }
 
 .landing-logo-job {
-  color: #111827;
+  color: #000000 !important;
 }
 .dark .landing-logo-job {
-  color: #f1f5f9;
+  color: #ffffff !important;
 }
 
 .landing-logo-connect {
-  color: #2563eb;
+  color: #2563eb !important;
+}
+.dark .landing-logo-connect {
+  color: #3b82f6 !important;
 }
 
 .landing-logo-ai {
-  color: #FF6B35;
+  color: #f97316 !important;
   font-size: 15px;
   font-weight: 800;
   letter-spacing: 0.2px;
