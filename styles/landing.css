@@ -105,8 +105,8 @@
 .landing-hero {
   background: #0c1830;
   color: #fff;
-  min-height: 765px;
-  padding: 94px max(24px, calc((100vw - 1240px) / 2)) 76px;
+  min-height: 780px;
+  padding: 100px max(32px, calc((100vw - 1440px) / 2)) 84px;
   position: relative;
 }
 .landing-hero::before {
@@ -144,19 +144,21 @@
 
 /* Two-column hero layout */
 .landing-hero-inner {
-  align-items: flex-start;
+  align-items: center;
   display: flex;
-  gap: 48px;
+  gap: clamp(40px, 4.5vw, 80px);
   justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1380px;
   position: relative;
   z-index: 2;
 }
 
 .landing-hero-content {
-  flex: 0 0 auto;
-  max-width: 560px;
+  flex: 1 1 0;
+  max-width: clamp(500px, 48%, 640px);
+  min-width: 0;
   position: relative;
-  width: 50%;
 }
 
 .landing-eyebrow {
@@ -324,10 +326,11 @@
   border-radius: 16px;
   box-shadow: 0 45px 80px rgba(0, 0, 0, 0.36);
   color: #17243a;
-  flex: 1 1 auto;
-  max-width: 570px;
+  flex: 0 0 auto;
+  max-width: 560px;
   overflow: hidden;
   transform: perspective(1200px) rotateY(-2deg);
+  width: clamp(440px, 44%, 560px);
 }
 .landing-preview-head {
   align-items: center;
@@ -816,13 +819,21 @@
 .landing-foot-links a { color: #68768b; font-size: 12px; text-decoration: none; }
 .landing-footer small { color: #abb3bf; font-size: 10px; }
 
+/* ── Large screens (≥ 1440px) ─────────────────────────────── */
+@media (min-width: 1440px) {
+  .landing-hero { min-height: 840px; padding-top: 112px; padding-bottom: 96px; }
+  .landing-hero h1 { font-size: clamp(68px, 5vw, 84px); margin: 28px 0 28px; }
+  .landing-hero-copy { font-size: 19px; line-height: 1.65; }
+  .landing-hero-inner { gap: 80px; }
+}
+
 /* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 1050px) {
   .landing-nav-links { gap: 20px; }
   .landing-nav-links a:nth-last-child(-n+2) { display: none; }
   .landing-hero { min-height: auto; padding-bottom: 70px; }
   .landing-hero-inner { gap: 30px; }
-  .landing-hero-content { width: 50%; }
+  .landing-hero-content { max-width: none; }
   .landing-search-panel { grid-template-columns: 1fr; }
   .landing-search-field { border-bottom: 1px solid rgba(255, 255, 255, 0.12); border-right: 0; }
   .landing-match-btn { min-height: 49px; margin-top: 6px; }
