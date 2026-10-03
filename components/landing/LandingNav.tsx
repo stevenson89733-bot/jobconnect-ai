@@ -21,40 +21,40 @@ export function LandingNav({ userEmail, isAdmin }: LandingNavProps) {
     <header className="landing-topbar">
       <Link className="landing-brand" href="/" aria-label="JobConnect AI">
         <svg
-          viewBox="0 0 256 46"
+          viewBox="0 0 252 44"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
           className="landing-logo-svg"
         >
-          {/* ── JC icon: blue rounded square + person silhouette ── */}
-          <rect x="0" y="3" width="40" height="40" rx="10" fill="#3b6ff5" />
+          {/* ── JC icon: 28×28, vertically centered with text block ── */}
+          <rect x="0" y="8" width="28" height="28" rx="7" fill="#3b6ff5" />
           {/* head */}
-          <circle cx="20" cy="15" r="6" fill="white" />
-          {/* shoulders / body */}
-          <path d="M7 40 C7 28 33 28 33 40Z" fill="white" />
+          <circle cx="14" cy="18" r="4" fill="white" />
+          {/* shoulders */}
+          <path d="M4 36 C4 27 24 27 24 36Z" fill="white" />
 
-          {/* ── "JobConnect" wordmark ── */}
+          {/* ── "JobConnect" wordmark (line 1) ── */}
           <text
-            x="50"
-            y="26"
+            x="38"
+            y="25"
             fontFamily="'Inter', 'Helvetica Neue', Arial, sans-serif"
             fontWeight="700"
-            fontSize="20"
+            fontSize="19"
             letterSpacing="-0.4"
             fill="currentColor"
           >
             JobConnect
           </text>
 
-          {/* ── "AI" badge ── */}
-          <rect x="162" y="10" width="30" height="18" rx="5" fill="#3b6ff5" />
+          {/* ── "AI" badge (inline with wordmark) ── */}
+          <rect x="150" y="11" width="28" height="16" rx="4" fill="#3b6ff5" />
           <text
-            x="177"
+            x="164"
             y="23"
             fontFamily="'Inter', 'Helvetica Neue', Arial, sans-serif"
             fontWeight="800"
-            fontSize="11"
+            fontSize="10"
             letterSpacing="0.6"
             fill="#fff"
             textAnchor="middle"
@@ -62,14 +62,14 @@ export function LandingNav({ userEmail, isAdmin }: LandingNavProps) {
             AI
           </text>
 
-          {/* ── Tagline ── */}
+          {/* ── Tagline (line 2) ── */}
           <text
-            x="50"
-            y="40"
+            x="38"
+            y="37"
             fontFamily="'Inter', 'Helvetica Neue', Arial, sans-serif"
             fontWeight="600"
             fontSize="7"
-            letterSpacing="1.1"
+            letterSpacing="1.05"
             className="landing-logo-tagline"
           >
             CONNECTING TALENT. BUILDING FUTURES.
