@@ -73,7 +73,7 @@ export default async function AIToolsIndexPage() {
 
   return (
     <main className="min-h-screen bg-background py-12 px-4">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className="mb-10">
           <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
             {t('aiTools')}

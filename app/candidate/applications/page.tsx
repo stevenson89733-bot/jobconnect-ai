@@ -64,7 +64,7 @@ export default async function ApplicationsPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-10 space-y-8">
+    <div className="max-w-5xl mx-auto px-6 py-10 space-y-8">
       <div className="flex items-center gap-3">
         <Link href="/candidate" className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">
           <ArrowLeft className="w-4 h-4" />

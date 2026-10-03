@@ -139,7 +139,7 @@ export default async function AdminPage() {
   const [stats, users] = await Promise.all([fetchStats(), fetchUsers()])
 
   return (
-    <section className="max-w-5xl mx-auto py-10 px-6">
+    <section className="max-w-7xl mx-auto py-10 px-6">
 
       {/* ── Header ── */}
       <div className="mb-8">

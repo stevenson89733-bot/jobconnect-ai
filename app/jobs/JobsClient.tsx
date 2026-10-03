@@ -260,7 +260,7 @@ export default function JobsClient({
           alreadyApplied={appliedIds.has(selectedJob.id)}
         />
       )}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
 
         {/* ── Hero Section ──────────────────────────────── */}
         <div className="rounded-2xl mb-6 overflow-hidden" style={{ background: '#10152A' }}>

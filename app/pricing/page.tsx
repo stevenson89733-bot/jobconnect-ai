@@ -27,7 +27,7 @@ export default async function PricingPage({
   void Spinner
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-16">
+    <div className="max-w-5xl mx-auto px-6 py-16">
       <div className="text-center mb-10">
         <h1 className="text-[32px] md:text-5xl font-extrabold text-slate-900 dark:text-white mb-3">{t('pageTitle')}</h1>
         <p className="text-slate-600 dark:text-slate-400 text-lg">{t('pageSubtitle')}</p>

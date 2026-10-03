@@ -78,7 +78,7 @@ export default async function AnalyticsPage() {
   const salaryBenchmark = await computeSalaryBenchmark(supabase, profileRow.title)
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-10 space-y-8">
+    <div className="max-w-7xl mx-auto px-6 py-10 space-y-8">
       <div>
         <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-1">{t('pageTitle')}</h1>
         <p className="text-slate-600 dark:text-slate-400 text-sm">
