@@ -383,16 +383,21 @@
 
 /* Dashboard preview */
 .landing-dashboard {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background: #f7f9fc;
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(200, 212, 230, 0.7);
   border-radius: 16px;
-  box-shadow: 0 45px 80px rgba(0, 0, 0, 0.36);
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.04),
+    0 20px 40px rgba(0, 0, 0, 0.14),
+    0 0 0 1px rgba(255, 255, 255, 0.5) inset;
   color: #17243a;
   flex: 0 0 auto;
-  max-width: 560px;
+  max-width: 520px;
   overflow: hidden;
-  transform: perspective(1200px) rotateY(-2deg);
-  width: clamp(440px, 44%, 560px);
+  /* No 3D transform — perspective/rotateY causes GPU subpixel blur */
+  width: clamp(400px, 44%, 520px);
 }
 .landing-preview-head {
   align-items: center;
@@ -420,7 +425,11 @@
   color: #7b8799;
   cursor: pointer;
 }
-.landing-preview-body { padding: 20px; }
+.landing-preview-body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 20px;
+}
 .landing-profile-strip {
   align-items: center;
   display: flex;
