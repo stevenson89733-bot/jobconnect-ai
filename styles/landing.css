@@ -23,7 +23,7 @@
   display: flex;
   height: 72px;
   justify-content: space-between;
-  padding: 0 max(32px, calc((100vw - 1380px) / 2));
+  padding: 0 max(32px, calc((100vw - 1500px) / 2));
   position: sticky;
   top: 0;
   z-index: 20;
@@ -168,7 +168,7 @@
   background: #0c1830;
   color: #fff;
   min-height: 780px;
-  padding: 100px max(32px, calc((100vw - 1380px) / 2)) 84px;
+  padding: 100px max(32px, calc((100vw - 1500px) / 2)) 84px;
   position: relative;
 }
 .landing-hero::before {
@@ -211,7 +211,7 @@
   gap: clamp(40px, 4.5vw, 80px);
   justify-content: space-between;
   margin: 0 auto;
-  max-width: 1380px;
+  max-width: 1500px;
   position: relative;
   z-index: 2;
 }
@@ -575,7 +575,7 @@
 .landing-trust {
   background: #fff;
   border-bottom: 1px solid #e9edf2;
-  padding: 30px max(32px, calc((100vw - 1380px) / 2));
+  padding: 30px max(32px, calc((100vw - 1500px) / 2));
   text-align: center;
 }
 .landing-trust p {
@@ -594,7 +594,7 @@
 
 /* ── How it works ─────────────────────────────────────────── */
 .landing-how {
-  padding: 110px max(32px, calc((100vw - 1380px) / 2));
+  padding: 110px max(32px, calc((100vw - 1500px) / 2));
 }
 .landing-section-head {
   margin: auto;
@@ -678,7 +678,7 @@
   display: grid;
   gap: 90px;
   grid-template-columns: 0.85fr 1.15fr;
-  padding: 110px max(32px, calc((100vw - 1380px) / 2));
+  padding: 110px max(32px, calc((100vw - 1500px) / 2));
 }
 .landing-kicker--light { color: #80a1ff; }
 .landing-tools-intro h2 {
@@ -765,7 +765,7 @@
   display: grid;
   gap: 80px;
   grid-template-columns: 1fr 1fr;
-  padding: 105px max(32px, calc((100vw - 1380px) / 2));
+  padding: 105px max(32px, calc((100vw - 1500px) / 2));
 }
 .landing-global h2 {
   color: #13223b;
@@ -810,7 +810,7 @@
 
 /* ── CTA section ──────────────────────────────────────────── */
 .landing-cta-wrap {
-  padding: 0 max(32px, calc((100vw - 1380px) / 2));
+  padding: 0 max(32px, calc((100vw - 1500px) / 2));
 }
 .landing-cta {
   background: linear-gradient(135deg, #315bea, #634ed5);
@@ -876,8 +876,8 @@
   display: flex;
   gap: 28px;
   margin: auto;
-  max-width: 1380px;
-  padding: 58px max(32px, calc((100vw - 1380px) / 2)) 40px;
+  max-width: 1500px;
+  padding: 58px max(32px, calc((100vw - 1500px) / 2)) 40px;
 }
 .landing-footer-brand { margin-right: 3px; }
 .landing-footer p {

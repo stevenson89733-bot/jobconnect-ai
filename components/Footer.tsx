@@ -49,14 +49,22 @@ export default async function Footer() {
 
   return (
     <footer className="border-t border-slate-200 dark:border-slate-800 mt-24 bg-white dark:bg-background">
-      <div className="max-w-7xl mx-auto px-6 pt-12 pb-44 bg-transparent">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 mb-10">
-          <div className="sm:col-span-2 md:col-span-1">
-            <Link href="/" className="inline-block">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo-full.png" alt="JobConnect AI" height={52} style={{ objectFit: 'contain', background: 'transparent', display: 'block' }} />
+      <div className="max-w-screen-2xl mx-auto px-6 lg:px-12 xl:px-16 pt-12 pb-10 bg-transparent">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-10">
+          <div className="sm:col-span-2 lg:col-span-1">
+            <Link href="/" className="inline-flex items-center gap-2.5 text-slate-900 dark:text-white no-underline">
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-[#2563eb] flex-shrink-0">
+                <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5" aria-hidden="true">
+                  <circle cx="10" cy="7" r="3" fill="white"/>
+                  <path d="M3 18c0-5.5 14-5.5 14 0" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+              </span>
+              <span className="font-bold text-base leading-none">
+                <span className="text-black dark:text-white">Job</span><span className="text-[#2563eb]">Connect</span>
+                <span className="text-[#f97316] ml-1 text-sm">AI</span>
+              </span>
             </Link>
-            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mt-2">{t('tagline')}</p>
+            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mt-3">{t('tagline')}</p>
           </div>
           <div>
             <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">{t('product')}</h3>
@@ -96,7 +104,7 @@ export default async function Footer() {
             </ul>
           </div>
         </div>
-        <div className="border-t border-slate-200 dark:border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-600 dark:text-slate-400">
+        <div className="border-t border-slate-200 dark:border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-600 dark:text-slate-400 w-full">
           <div className="flex flex-wrap items-center gap-3">
             <p>{t('copyright', { year: new Date().getFullYear() })}</p>
             <a

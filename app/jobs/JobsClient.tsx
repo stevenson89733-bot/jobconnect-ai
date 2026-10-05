@@ -260,7 +260,7 @@ export default function JobsClient({
           alreadyApplied={appliedIds.has(selectedJob.id)}
         />
       )}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 py-8">
 
         {/* ── Hero Section ──────────────────────────────── */}
         <div className="rounded-2xl mb-6 overflow-hidden" style={{ background: '#10152A' }}>
@@ -444,7 +444,7 @@ export default function JobsClient({
 
         {/* ── Job Cards ────────────────────────────────────── */}
         {isPending ? (
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4">
             {Array.from({ length: 6 }).map((_, i) => <JobCardSkeleton key={i} />)}
           </div>
         ) : allJobs.length === 0 ? (
@@ -460,7 +460,7 @@ export default function JobsClient({
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4">
               {allJobs.map((job) => (
                 <JobCard
                   key={job.id}
@@ -475,7 +475,7 @@ export default function JobsClient({
             </div>
 
             {loadingMore && (
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4 mt-4">
                 {Array.from({ length: 3 }).map((_, i) => <JobCardSkeleton key={i} />)}
               </div>
             )}
