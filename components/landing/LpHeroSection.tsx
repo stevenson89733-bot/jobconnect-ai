@@ -2,6 +2,7 @@
 // components/landing/LpHeroSection.tsx
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Icon } from "./LandingIcons";
 
 const JOB_MATCHES = [
@@ -10,13 +11,19 @@ const JOB_MATCHES = [
   { company: "HORIZON", role: "Growth Marketing Lead", meta: "Toronto · Hybrid", score: 87, color: "orange" },
 ] as const;
 
-const FILTERS = ["Best match", "Remote", "Visa support", "New today"] as const;
-
 export function LpHeroSection() {
+  const t = useTranslations("landing");
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [location, setLocation] = useState("");
-  const [activeFilter, setActiveFilter] = useState<string>("Best match");
+  const [activeFilter, setActiveFilter] = useState<string>(t("filterBestMatch"));
+
+  const FILTERS = [
+    t("filterBestMatch"),
+    t("filterRemote"),
+    t("filterVisaSupport"),
+    t("filterNewToday"),
+  ];
 
   function handleSearch(e: FormEvent) {
     e.preventDefault();
@@ -36,44 +43,41 @@ export function LpHeroSection() {
         <div className="landing-hero-content">
           <div className="landing-eyebrow">
             <Icon name="sparkles" size={15} />
-            The AI career copilot for global talent
+            {t("eyebrow")}
           </div>
 
           <h1 className="landing-hero-h1">
-            Find work that fits{" "}
-            <span>who you are.</span>
+            {t("h1Part1")}{" "}
+            <span>{t("h1Span")}</span>
           </h1>
 
-          <p className="landing-hero-copy">
-            Stop searching through thousands of roles. Let AI uncover the
-            opportunities that match your skills, ambitions, and lifestyle.
-          </p>
+          <p className="landing-hero-copy">{t("copy")}</p>
 
           <form className="landing-search-panel" onSubmit={handleSearch}>
             <label className="landing-search-field">
               <Icon name="search" size={18} />
               <span className="landing-search-field-inner">
-                <small className="landing-search-label">WHAT</small>
+                <small className="landing-search-label">{t("searchLabelWhat")}</small>
                 <input
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Role, skill, or company"
+                  placeholder={t("searchPlaceholderWhat")}
                 />
               </span>
             </label>
             <label className="landing-search-field">
               <Icon name="globe" size={18} />
               <span className="landing-search-field-inner">
-                <small className="landing-search-label">WHERE</small>
+                <small className="landing-search-label">{t("searchLabelWhere")}</small>
                 <input
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  placeholder="City, country, or remote"
+                  placeholder={t("searchPlaceholderWhere")}
                 />
               </span>
             </label>
             <button className="landing-match-btn" type="submit">
-              <Icon name="sparkles" size={15} /> Find my matches
+              <Icon name="sparkles" size={15} /> {t("searchBtn")}
             </button>
           </form>
 
@@ -85,8 +89,8 @@ export function LpHeroSection() {
               <span>+</span>
             </div>
             <div className="landing-proof-text">
-              <strong>12,000+ professionals</strong>
-              <span>found their next move with us</span>
+              <strong>{t("proofCount")}</strong>
+              <span>{t("proofText")}</span>
             </div>
             <div className="landing-proof-divider" aria-hidden="true" />
             <div className="landing-rating">
@@ -104,7 +108,7 @@ export function LpHeroSection() {
               <span className="landing-window-dot" />
               <span className="landing-window-dot" />
             </div>
-            <span>YOUR DAILY MATCHES</span>
+            <span>{t("dashboardTitle")}</span>
             <button aria-label="More options" type="button">•••</button>
           </div>
 
@@ -112,11 +116,11 @@ export function LpHeroSection() {
             <div className="landing-profile-strip">
               <div className="landing-profile-avatar">AM</div>
               <div className="landing-profile-info">
-                <strong>Good morning, Alex</strong>
-                <span>We found 24 new roles for you</span>
+                <strong>{t("dashboardGreeting")}</strong>
+                <span>{t("dashboardNewRoles")}</span>
               </div>
               <span className="landing-live-badge">
-                <i aria-hidden="true" /> Live matches
+                <i aria-hidden="true" /> {t("dashboardLiveBadge")}
               </span>
             </div>
 
@@ -128,7 +132,7 @@ export function LpHeroSection() {
                   className={`landing-filter-btn${activeFilter === f ? " active" : ""}`}
                   onClick={() => setActiveFilter(f)}
                 >
-                  {f === "Best match" && <Icon name="sparkles" size={13} />}
+                  {f === t("filterBestMatch") && <Icon name="sparkles" size={13} />}
                   {f}
                 </button>
               ))}
@@ -147,7 +151,7 @@ export function LpHeroSection() {
                   </div>
                   <div className="landing-job-score">
                     <strong>{job.score}%</strong>
-                    <span>match</span>
+                    <span>{t("matchLabel")}</span>
                   </div>
                   <button type="button" className="landing-job-action" aria-label={`View ${job.role}`}>
                     <Icon name="chevron" size={17} />
@@ -158,10 +162,10 @@ export function LpHeroSection() {
 
             <div className="landing-preview-footer">
               <span>
-                <Icon name="check" size={14} /> Updated for your profile
+                <Icon name="check" size={14} /> {t("updatedProfile")}
               </span>
               <button type="button">
-                See all matches <Icon name="arrow" size={14} />
+                {t("seeAllMatches")} <Icon name="arrow" size={14} />
               </button>
             </div>
           </div>

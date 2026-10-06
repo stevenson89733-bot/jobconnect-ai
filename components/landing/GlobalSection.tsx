@@ -1,32 +1,33 @@
 // components/landing/GlobalSection.tsx
-export function GlobalSection() {
+import { getTranslations } from "next-intl/server";
+
+export async function GlobalSection() {
+  const t = await getTranslations("landing");
+
   return (
     <section id="companies" className="landing-global">
       <div>
-        <span className="landing-kicker">BUILT FOR A BORDERLESS WORLD</span>
+        <span className="landing-kicker">{t("globalKicker")}</span>
         <h2>
-          Your talent goes further
+          {t("globalH2Part1")}
           <br />
-          than your postcode.
+          {t("globalH2Part2")}
         </h2>
       </div>
       <div className="landing-global-copy">
-        <p>
-          Discover remote, relocation-friendly, and visa-sponsored roles from
-          companies that value global talent.
-        </p>
+        <p>{t("globalP")}</p>
         <dl className="landing-global-stats">
           <div>
-            <dt>63</dt>
-            <dd>Countries</dd>
+            <dt>{t("globalStat1Value")}</dt>
+            <dd>{t("globalStat1Label")}</dd>
           </div>
           <div>
-            <dt>10k+</dt>
-            <dd>Open roles</dd>
+            <dt>{t("globalStat2Value")}</dt>
+            <dd>{t("globalStat2Label")}</dd>
           </div>
           <div>
-            <dt>24/7</dt>
-            <dd>New matches</dd>
+            <dt>{t("globalStat3Value")}</dt>
+            <dd>{t("globalStat3Label")}</dd>
           </div>
         </dl>
       </div>

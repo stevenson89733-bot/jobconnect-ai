@@ -1,8 +1,11 @@
 // components/landing/CTASection.tsx
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { Icon } from "./LandingIcons";
 
-export function CTASection() {
+export async function CTASection() {
+  const t = await getTranslations("landing");
+
   return (
     <div className="landing-cta-wrap">
       <section className="landing-cta">
@@ -12,18 +15,15 @@ export function CTASection() {
           <Icon name="sparkles" size={25} />
         </div>
         <h2>
-          Your next chapter could
+          {t("ctaH2Part1")}
           <br />
-          start today.
+          {t("ctaH2Part2")}
         </h2>
-        <p>
-          Create your profile and let JobConnect AI find the roles you were
-          meant to see.
-        </p>
+        <p>{t("ctaP")}</p>
         <Link href="/register" className="landing-primary-btn">
-          Find my matches <Icon name="arrow" size={17} />
+          {t("ctaBtn")} <Icon name="arrow" size={17} />
         </Link>
-        <span>No credit card required · Free to get started</span>
+        <span>{t("ctaSub")}</span>
       </section>
     </div>
   );

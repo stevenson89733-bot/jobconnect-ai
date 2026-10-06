@@ -1,49 +1,49 @@
 // components/landing/ToolsSection.tsx
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { Icon, IconName } from "./LandingIcons";
 
-const TOOLS = [
-  {
-    icon: "file" as IconName,
-    eyebrow: "CV INTELLIGENCE",
-    title: "Turn your CV into an advantage",
-    copy: "Get instant feedback, keyword insights, and tailored recommendations for every application.",
-    accent: "blue",
-  },
-  {
-    icon: "target" as IconName,
-    eyebrow: "SMART MATCHING",
-    title: "Only see roles that fit",
-    copy: "Our matching engine scores your experience, goals, and location against every opportunity.",
-    accent: "purple",
-  },
-  {
-    icon: "wand" as IconName,
-    eyebrow: "CAREER COPILOT",
-    title: "Apply with more confidence",
-    copy: "Create stronger applications and prepare for interviews with an AI coach that knows your profile.",
-    accent: "coral",
-  },
-];
+export async function ToolsSection() {
+  const t = await getTranslations("landing");
 
-export function ToolsSection() {
+  const TOOLS: { icon: IconName; eyebrow: string; title: string; copy: string; accent: string }[] = [
+    {
+      icon: "file",
+      eyebrow: t("tool1Eyebrow"),
+      title: t("tool1Title"),
+      copy: t("tool1Copy"),
+      accent: "blue",
+    },
+    {
+      icon: "target",
+      eyebrow: t("tool2Eyebrow"),
+      title: t("tool2Title"),
+      copy: t("tool2Copy"),
+      accent: "purple",
+    },
+    {
+      icon: "wand",
+      eyebrow: t("tool3Eyebrow"),
+      title: t("tool3Title"),
+      copy: t("tool3Copy"),
+      accent: "coral",
+    },
+  ];
+
   return (
     <section id="tools" className="landing-tools">
       <div className="landing-tools-intro">
         <span className="landing-kicker landing-kicker--light">
-          YOUR CAREER, SUPERCHARGED
+          {t("toolsKicker")}
         </span>
         <h2>
-          More than a job board.
+          {t("toolsH2Part1")}
           <br />
-          <span>A smarter way forward.</span>
+          <span>{t("toolsH2Span")}</span>
         </h2>
-        <p>
-          Practical AI tools that work together to help you make better career
-          decisions.
-        </p>
+        <p>{t("toolsP")}</p>
         <Link href="/jobs">
-          Explore all AI tools <Icon name="arrow" size={16} />
+          {t("toolsExploreLink")} <Icon name="arrow" size={16} />
         </Link>
       </div>
 
