@@ -102,7 +102,9 @@
       "forgotPassword": "パスワードをお忘れですか？",
       "signIn": "サインイン",
       "noAccount": "アカウントをお持ちでないですか？",
-      "createOne": "作成する"
+      "createOne": "作成する",
+      "passwordUpdated": "パスワードが更新されました。新しいパスワードでサインインしてください。",
+      "signingIn": "サインイン中…"
     },
     "register": {
       "createAccount": "アカウントを作成",
@@ -123,6 +125,16 @@
       "termsAgreement": "アカウントを作成すると、<terms>利用規約</terms>および<privacy>プライバシーポリシー</privacy>に同意したものとみなされます。",
       "alreadyHaveAccount": "すでにアカウントをお持ちですか？",
       "signIn": "サインイン"
+    },
+    "forgotPassword": {
+      "title": "パスワードをリセット",
+      "subtitle": "メールアドレスを入力してください。リセットリンクをお送りします。",
+      "email": "メールアドレス",
+      "sendResetLink": "リセットリンクを送信",
+      "sending": "送信中…",
+      "checkEmailTitle": "メールを確認してください",
+      "checkEmailBody": "そのメールアドレスのアカウントが存在する場合、パスワードリセットリンクをお送りしました。",
+      "backToLogin": "サインインに戻る"
     }
   },
   "home": {

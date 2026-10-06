@@ -102,7 +102,9 @@
       "forgotPassword": "Passwort vergessen?",
       "signIn": "Anmelden",
       "noAccount": "Noch kein Konto?",
-      "createOne": "Jetzt erstellen"
+      "createOne": "Jetzt erstellen",
+      "passwordUpdated": "Dein Passwort wurde aktualisiert. Melde dich mit deinem neuen Passwort an.",
+      "signingIn": "Anmeldung läuft…"
     },
     "register": {
       "createAccount": "Konto erstellen",
@@ -123,6 +125,16 @@
       "termsAgreement": "Mit der Kontoerstellung akzeptierst du unsere <terms>Nutzungsbedingungen</terms> und unsere <privacy>Datenschutzerklärung</privacy>.",
       "alreadyHaveAccount": "Du hast bereits ein Konto?",
       "signIn": "Anmelden"
+    },
+    "forgotPassword": {
+      "title": "Passwort zurücksetzen",
+      "subtitle": "Gib deine E-Mail-Adresse ein und wir senden dir einen Link zum Zurücksetzen.",
+      "email": "E-Mail",
+      "sendResetLink": "Reset-Link senden",
+      "sending": "Wird gesendet…",
+      "checkEmailTitle": "Sieh in deiner E-Mail nach",
+      "checkEmailBody": "Falls ein Konto für diese E-Mail existiert, haben wir soeben einen Passwort-Reset-Link gesendet.",
+      "backToLogin": "Zurück zur Anmeldung"
     }
   },
   "home": {

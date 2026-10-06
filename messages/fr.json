@@ -102,7 +102,9 @@
       "forgotPassword": "Mot de passe oublié ?",
       "signIn": "Se connecter",
       "noAccount": "Vous n'avez pas de compte ?",
-      "createOne": "Créez-en un"
+      "createOne": "Créez-en un",
+      "passwordUpdated": "Votre mot de passe a été mis à jour. Connectez-vous avec votre nouveau mot de passe.",
+      "signingIn": "Connexion en cours…"
     },
     "register": {
       "createAccount": "Créez votre compte",
@@ -123,6 +125,16 @@
       "termsAgreement": "En créant un compte, vous acceptez nos <terms>Conditions d'utilisation</terms> et notre <privacy>Politique de confidentialité</privacy>.",
       "alreadyHaveAccount": "Vous avez déjà un compte ?",
       "signIn": "Se connecter"
+    },
+    "forgotPassword": {
+      "title": "Réinitialiser votre mot de passe",
+      "subtitle": "Entrez votre e-mail et nous vous enverrons un lien pour le réinitialiser.",
+      "email": "E-mail",
+      "sendResetLink": "Envoyer le lien de réinitialisation",
+      "sending": "Envoi en cours…",
+      "checkEmailTitle": "Vérifiez vos e-mails",
+      "checkEmailBody": "Si un compte existe pour cet e-mail, nous venons d'y envoyer un lien de réinitialisation.",
+      "backToLogin": "Retour à la connexion"
     }
   },
   "home": {

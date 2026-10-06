@@ -102,7 +102,9 @@
       "forgotPassword": "¿Olvidaste tu contraseña?",
       "signIn": "Iniciar sesión",
       "noAccount": "¿No tienes una cuenta?",
-      "createOne": "Crea una"
+      "createOne": "Crea una",
+      "passwordUpdated": "Tu contraseña ha sido actualizada. Inicia sesión con tu nueva contraseña.",
+      "signingIn": "Iniciando sesión…"
     },
     "register": {
       "createAccount": "Crea tu cuenta",
@@ -123,6 +125,16 @@
       "termsAgreement": "Al crear una cuenta, aceptas nuestros <terms>Términos</terms> y nuestra <privacy>Política de privacidad</privacy>.",
       "alreadyHaveAccount": "¿Ya tienes una cuenta?",
       "signIn": "Iniciar sesión"
+    },
+    "forgotPassword": {
+      "title": "Restablecer tu contraseña",
+      "subtitle": "Ingresa tu correo y te enviaremos un enlace para restablecerla.",
+      "email": "Correo electrónico",
+      "sendResetLink": "Enviar enlace de restablecimiento",
+      "sending": "Enviando…",
+      "checkEmailTitle": "Revisa tu correo",
+      "checkEmailBody": "Si existe una cuenta para ese correo, acabamos de enviarle un enlace de restablecimiento.",
+      "backToLogin": "Volver al inicio de sesión"
     }
   },
   "home": {

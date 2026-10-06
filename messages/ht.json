@@ -102,7 +102,9 @@
       "forgotPassword": "Ou bliye modpas ou?",
       "signIn": "Konekte",
       "noAccount": "Ou pa gen yon kont?",
-      "createOne": "Kreye youn"
+      "createOne": "Kreye youn",
+      "passwordUpdated": "Modpas ou mete ajou. Konekte ak nouvo modpas ou.",
+      "signingIn": "Koneksyon an kap fèt…"
     },
     "register": {
       "createAccount": "Kreye kont ou",
@@ -123,6 +125,16 @@
       "termsAgreement": "Lè w kreye yon kont, ou aksepte <terms>Kondisyon Itilizasyon</terms> ak <privacy>Politik Konfidansyalite</privacy> nou yo.",
       "alreadyHaveAccount": "Ou gen tan gen yon kont?",
       "signIn": "Konekte"
+    },
+    "forgotPassword": {
+      "title": "Reyinisyalize modpas ou",
+      "subtitle": "Antre imèl ou epi nou pral voye yon lyen pou reyinisyalize li.",
+      "email": "Imèl",
+      "sendResetLink": "Voye lyen reyinisyalizasyon",
+      "sending": "Ap voye…",
+      "checkEmailTitle": "Verifye imèl ou",
+      "checkEmailBody": "Si yon kont egziste pou imèl sa a, nou fèk voye yon lyen reyinisyalizasyon.",
+      "backToLogin": "Retounen nan koneksyon"
     }
   },
   "home": {

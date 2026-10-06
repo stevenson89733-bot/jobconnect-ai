@@ -102,7 +102,9 @@
       "forgotPassword": "Quên mật khẩu?",
       "signIn": "Đăng nhập",
       "noAccount": "Chưa có tài khoản?",
-      "createOne": "Tạo tài khoản"
+      "createOne": "Tạo tài khoản",
+      "passwordUpdated": "Mật khẩu của bạn đã được cập nhật. Đăng nhập bằng mật khẩu mới.",
+      "signingIn": "Đang đăng nhập…"
     },
     "register": {
       "createAccount": "Tạo tài khoản của bạn",
@@ -123,6 +125,16 @@
       "termsAgreement": "Khi tạo tài khoản, bạn đồng ý với <terms>Điều khoản Sử dụng</terms> và <privacy>Chính sách Quyền riêng tư</privacy> của chúng tôi.",
       "alreadyHaveAccount": "Đã có tài khoản?",
       "signIn": "Đăng nhập"
+    },
+    "forgotPassword": {
+      "title": "Đặt lại mật khẩu",
+      "subtitle": "Nhập email của bạn và chúng tôi sẽ gửi liên kết đặt lại mật khẩu.",
+      "email": "Email",
+      "sendResetLink": "Gửi liên kết đặt lại",
+      "sending": "Đang gửi…",
+      "checkEmailTitle": "Kiểm tra email của bạn",
+      "checkEmailBody": "Nếu tài khoản tồn tại với email đó, chúng tôi vừa gửi liên kết đặt lại mật khẩu.",
+      "backToLogin": "Quay lại đăng nhập"
     }
   },
   "home": {

@@ -102,7 +102,9 @@
       "forgotPassword": "Esqueceu a senha?",
       "signIn": "Entrar",
       "noAccount": "Não tem uma conta?",
-      "createOne": "Crie uma"
+      "createOne": "Crie uma",
+      "passwordUpdated": "Sua senha foi atualizada. Entre com sua nova senha.",
+      "signingIn": "Entrando…"
     },
     "register": {
       "createAccount": "Crie sua conta",
@@ -123,6 +125,16 @@
       "termsAgreement": "Ao criar uma conta, você concorda com nossos <terms>Termos de Uso</terms> e nossa <privacy>Política de Privacidade</privacy>.",
       "alreadyHaveAccount": "Já tem uma conta?",
       "signIn": "Entrar"
+    },
+    "forgotPassword": {
+      "title": "Redefinir sua senha",
+      "subtitle": "Digite seu e-mail e enviaremos um link para redefini-la.",
+      "email": "E-mail",
+      "sendResetLink": "Enviar link de redefinição",
+      "sending": "Enviando…",
+      "checkEmailTitle": "Verifique seu e-mail",
+      "checkEmailBody": "Se uma conta existir para esse e-mail, acabamos de enviar um link de redefinição.",
+      "backToLogin": "Voltar para o login"
     }
   },
   "home": {

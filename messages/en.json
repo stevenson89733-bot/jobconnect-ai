@@ -103,7 +103,8 @@
       "signIn": "Sign in",
       "noAccount": "Don't have an account?",
       "createOne": "Create one",
-      "passwordUpdated": "Your password has been updated. Sign in with your new password."
+      "passwordUpdated": "Your password has been updated. Sign in with your new password.",
+      "signingIn": "Signing in…"
     },
     "register": {
       "createAccount": "Create your account",

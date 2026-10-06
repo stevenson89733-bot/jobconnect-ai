@@ -102,7 +102,9 @@
       "forgotPassword": "忘记密码？",
       "signIn": "登录",
       "noAccount": "还没有账户？",
-      "createOne": "立即注册"
+      "createOne": "立即注册",
+      "passwordUpdated": "您的密码已更新，请使用新密码登录。",
+      "signingIn": "登录中…"
     },
     "register": {
       "createAccount": "创建您的账户",
@@ -123,6 +125,16 @@
       "termsAgreement": "创建账户即表示您同意我们的<terms>服务条款</terms>和<privacy>隐私政策</privacy>。",
       "alreadyHaveAccount": "已经有账户了？",
       "signIn": "登录"
+    },
+    "forgotPassword": {
+      "title": "重置密码",
+      "subtitle": "输入您的邮箱，我们将向您发送重置链接。",
+      "email": "邮箱",
+      "sendResetLink": "发送重置链接",
+      "sending": "发送中…",
+      "checkEmailTitle": "请查收邮件",
+      "checkEmailBody": "如果该邮箱存在账户，我们刚刚已发送密码重置链接。",
+      "backToLogin": "返回登录"
     }
   },
   "home": {
