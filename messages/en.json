@@ -901,7 +901,8 @@
     "photoInvalidType": "Please upload a JPG, PNG, or WEBP image.",
     "photoTooLarge": "Image must be smaller than 5MB.",
     "photoMustBeSignedIn": "You must be signed in to upload a photo.",
-    "photoUploadFailed": "Upload failed — please try again."
+    "photoUploadFailed": "Upload failed — please try again.",
+    "importCv": "Import CV"
   },
   "legal": {
     "privacy": {

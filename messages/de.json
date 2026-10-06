@@ -880,7 +880,8 @@
     "photoInvalidType": "Bitte lade ein JPG-, PNG- oder WEBP-Bild hoch.",
     "photoTooLarge": "Das Bild muss kleiner als 5 MB sein.",
     "photoMustBeSignedIn": "Du musst angemeldet sein, um ein Foto hochzuladen.",
-    "photoUploadFailed": "Upload fehlgeschlagen — bitte versuche es erneut."
+    "photoUploadFailed": "Upload fehlgeschlagen — bitte versuche es erneut.",
+    "importCv": "CV importieren"
   },
   "legal": {
     "privacy": {

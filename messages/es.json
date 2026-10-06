@@ -886,7 +886,8 @@
     "photoInvalidType": "Sube una imagen JPG, PNG o WEBP.",
     "photoTooLarge": "La imagen debe pesar menos de 5 MB.",
     "photoMustBeSignedIn": "Debes iniciar sesión para subir una foto.",
-    "photoUploadFailed": "Error al subir — inténtalo de nuevo."
+    "photoUploadFailed": "Error al subir — inténtalo de nuevo.",
+    "importCv": "Importar CV"
   },
   "legal": {
     "privacy": {

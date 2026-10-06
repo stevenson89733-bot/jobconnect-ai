@@ -880,7 +880,8 @@
     "photoInvalidType": "请上传 JPG、PNG 或 WEBP 格式的图片。",
     "photoTooLarge": "图片大小必须小于 5MB。",
     "photoMustBeSignedIn": "您必须登录后才能上传照片。",
-    "photoUploadFailed": "上传失败——请重试。"
+    "photoUploadFailed": "上传失败——请重试。",
+    "importCv": "导入简历"
   },
   "legal": {
     "privacy": {

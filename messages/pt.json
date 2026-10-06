@@ -880,7 +880,8 @@
     "photoInvalidType": "Envie uma imagem JPG, PNG ou WEBP.",
     "photoTooLarge": "A imagem deve ter menos de 5 MB.",
     "photoMustBeSignedIn": "Você precisa estar conectado para enviar uma foto.",
-    "photoUploadFailed": "Falha no envio — tente novamente."
+    "photoUploadFailed": "Falha no envio — tente novamente.",
+    "importCv": "Importar CV"
   },
   "legal": {
     "privacy": {

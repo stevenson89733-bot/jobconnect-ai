@@ -880,7 +880,8 @@
     "photoInvalidType": "يرجى رفع صورة بصيغة JPG أو PNG أو WEBP.",
     "photoTooLarge": "يجب أن يكون حجم الصورة أقل من 5 ميغابايت.",
     "photoMustBeSignedIn": "يجب تسجيل الدخول لرفع صورة.",
-    "photoUploadFailed": "فشل الرفع — يرجى المحاولة مرة أخرى."
+    "photoUploadFailed": "فشل الرفع — يرجى المحاولة مرة أخرى.",
+    "importCv": "استيراد السيرة الذاتية"
   },
   "legal": {
     "privacy": {

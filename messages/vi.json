@@ -880,7 +880,8 @@
     "photoInvalidType": "Vui lòng tải lên ảnh JPG, PNG hoặc WEBP.",
     "photoTooLarge": "Ảnh phải nhỏ hơn 5MB.",
     "photoMustBeSignedIn": "Bạn phải đăng nhập để tải ảnh lên.",
-    "photoUploadFailed": "Tải lên thất bại — vui lòng thử lại."
+    "photoUploadFailed": "Tải lên thất bại — vui lòng thử lại.",
+    "importCv": "Nhập CV"
   },
   "legal": {
     "privacy": {

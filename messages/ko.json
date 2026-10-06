@@ -880,7 +880,8 @@
     "photoInvalidType": "JPG, PNG 또는 WEBP 이미지를 업로드해 주세요.",
     "photoTooLarge": "이미지는 5MB보다 작아야 합니다.",
     "photoMustBeSignedIn": "사진을 업로드하려면 로그인해야 합니다.",
-    "photoUploadFailed": "업로드에 실패했습니다 — 다시 시도해 주세요."
+    "photoUploadFailed": "업로드에 실패했습니다 — 다시 시도해 주세요.",
+    "importCv": "CV 가져오기"
   },
   "legal": {
     "privacy": {

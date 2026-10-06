@@ -880,7 +880,8 @@
     "photoInvalidType": "JPG、PNG、またはWEBP形式の画像をアップロードしてください。",
     "photoTooLarge": "画像は5MB未満にしてください。",
     "photoMustBeSignedIn": "写真をアップロードするにはサインインが必要です。",
-    "photoUploadFailed": "アップロードに失敗しました — もう一度お試しください。"
+    "photoUploadFailed": "アップロードに失敗しました — もう一度お試しください。",
+    "importCv": "CVをインポート"
   },
   "legal": {
     "privacy": {

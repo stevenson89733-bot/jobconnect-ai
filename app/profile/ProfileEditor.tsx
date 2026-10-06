@@ -148,7 +148,7 @@ export default function ProfileEditor({
               style={{ background: '#57C7E3' }}
             >
               <Upload size={15} />
-              Import CV
+              {t('importCv')}
             </button>
             <ExtractProfileButton cvUrl={cvUrl ?? null} isPremium={isPremium} />
           </div>

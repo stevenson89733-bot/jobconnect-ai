@@ -880,7 +880,8 @@
     "photoInvalidType": "Tanpri voye yon imaj JPG, PNG, oswa WEBP.",
     "photoTooLarge": "Imaj la dwe pi piti pase 5MB.",
     "photoMustBeSignedIn": "Ou dwe konekte pou voye yon foto.",
-    "photoUploadFailed": "Voye echwe — tanpri eseye ankò."
+    "photoUploadFailed": "Voye echwe — tanpri eseye ankò.",
+    "importCv": "Enpòte CV"
   },
   "legal": {
     "privacy": {
