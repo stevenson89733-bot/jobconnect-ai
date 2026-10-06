@@ -1218,7 +1218,15 @@
     "candidateDashboard": "Tableau de Bord Candidat",
     "candidateDashboardDesc": "Suivez vos candidatures, consultez vos correspondances IA, gérez votre profil",
     "employerDashboard": "Tableau de Bord Employeur",
-    "employerDashboardDesc": "Publiez des offres, examinez les candidats, gérez votre processus de recrutement"
+    "employerDashboardDesc": "Publiez des offres, examinez les candidats, gérez votre processus de recrutement",
+    "recommendedTools": "Outils recommandés",
+    "recommendedToolsSubtitle": "Pour les professionnels internationaux",
+    "viewAll": "Voir tout →",
+    "affiliateNote": "Liens affiliés — nous pouvons percevoir une commission sans frais pour vous",
+    "toolDeelDesc": "Paie mondiale dans plus de 150 pays",
+    "toolRemoteDesc": "Embauchez ou soyez embauché à l'étranger",
+    "toolWiseDesc": "Virements internationaux au taux réel",
+    "toolPayoneerDesc": "Recevez votre salaire dans plus de 200 pays"
   },
   "aboutPage": {
     "heroTitle": "Connecter les talents mondiaux aux entreprises qui recrutent sans frontières",

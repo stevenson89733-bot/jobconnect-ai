@@ -1212,7 +1212,15 @@
     "candidateDashboard": "Painel do Candidato",
     "candidateDashboardDesc": "Acompanhe candidaturas, veja correspondências de IA, gerencie seu perfil",
     "employerDashboard": "Painel do Empregador",
-    "employerDashboardDesc": "Publique vagas, avalie candidatos, gerencie seu processo de contratação"
+    "employerDashboardDesc": "Publique vagas, avalie candidatos, gerencie seu processo de contratação",
+    "recommendedTools": "Ferramentas recomendadas",
+    "recommendedToolsSubtitle": "Para profissionais internacionais",
+    "viewAll": "Ver tudo →",
+    "affiliateNote": "Links de afiliados — podemos ganhar uma comissão sem custo para você",
+    "toolDeelDesc": "Folha de pagamento global em mais de 150 países",
+    "toolRemoteDesc": "Contrate ou seja contratado além-fronteiras",
+    "toolWiseDesc": "Transferências internacionais à taxa real",
+    "toolPayoneerDesc": "Receba pagamentos em mais de 200 países"
   },
   "aboutPage": {
     "heroTitle": "Conectando talentos globais com empresas que contratam além das fronteiras",

@@ -1212,7 +1212,15 @@
     "candidateDashboard": "Bảng điều khiển Ứng viên",
     "candidateDashboardDesc": "Theo dõi đơn ứng tuyển, xem kết quả phù hợp AI, quản lý hồ sơ của bạn",
     "employerDashboard": "Bảng điều khiển Nhà tuyển dụng",
-    "employerDashboardDesc": "Đăng tin tuyển dụng, xem xét ứng viên, quản lý quy trình tuyển dụng"
+    "employerDashboardDesc": "Đăng tin tuyển dụng, xem xét ứng viên, quản lý quy trình tuyển dụng",
+    "recommendedTools": "Công cụ được đề xuất",
+    "recommendedToolsSubtitle": "Dành cho các chuyên gia quốc tế",
+    "viewAll": "Xem tất cả →",
+    "affiliateNote": "Liên kết liên kết — chúng tôi có thể kiếm hoa hồng mà không tốn phí cho bạn",
+    "toolDeelDesc": "Bảng lương toàn cầu ở hơn 150 quốc gia",
+    "toolRemoteDesc": "Tuyển dụng hoặc được tuyển dụng qua biên giới",
+    "toolWiseDesc": "Chuyển khoản quốc tế theo tỷ giá thực",
+    "toolPayoneerDesc": "Nhận thanh toán ở hơn 200 quốc gia"
   },
   "aboutPage": {
     "heroTitle": "Kết nối nhân tài toàn cầu với các công ty tuyển dụng xuyên biên giới",

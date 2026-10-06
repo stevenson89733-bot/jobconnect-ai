@@ -1212,7 +1212,15 @@
     "candidateDashboard": "求职者控制台",
     "candidateDashboardDesc": "追踪申请进度、查看 AI 匹配职位、管理您的资料",
     "employerDashboard": "雇主控制台",
-    "employerDashboardDesc": "发布职位、审核候选人、管理您的招聘流程"
+    "employerDashboardDesc": "发布职位、审核候选人、管理您的招聘流程",
+    "recommendedTools": "推荐工具",
+    "recommendedToolsSubtitle": "面向国际专业人士",
+    "viewAll": "查看全部 →",
+    "affiliateNote": "联盟链接——我们可能获得佣金，但不会对您收取任何费用",
+    "toolDeelDesc": "覆盖150+国家的全球薪酬服务",
+    "toolRemoteDesc": "跨境招聘或求职",
+    "toolWiseDesc": "按真实汇率进行国际转账",
+    "toolPayoneerDesc": "在200+国家收取款项"
   },
   "aboutPage": {
     "heroTitle": "连接全球人才与跨境招聘企业",

@@ -1212,7 +1212,15 @@
     "candidateDashboard": "候補者ダッシュボード",
     "candidateDashboardDesc": "応募状況を追跡し、AIマッチを確認し、プロフィールを管理",
     "employerDashboard": "採用担当者ダッシュボード",
-    "employerDashboardDesc": "求人を掲載し、候補者を確認し、採用プロセスを管理"
+    "employerDashboardDesc": "求人を掲載し、候補者を確認し、採用プロセスを管理",
+    "recommendedTools": "おすすめツール",
+    "recommendedToolsSubtitle": "国際的なプロフェッショナルのために",
+    "viewAll": "すべて見る →",
+    "affiliateNote": "アフィリエイトリンク — 手数料をいただく場合がありますが、お客様に費用は発生しません",
+    "toolDeelDesc": "150カ国以上でのグローバル給与計算",
+    "toolRemoteDesc": "国境を越えて採用・就職する",
+    "toolWiseDesc": "実勢レートでの国際送金",
+    "toolPayoneerDesc": "200カ国以上で報酬を受け取る"
   },
   "aboutPage": {
     "heroTitle": "グローバルな才能と国境を越えて採用する企業をつなぐ",

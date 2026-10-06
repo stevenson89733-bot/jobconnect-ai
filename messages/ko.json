@@ -1212,7 +1212,15 @@
     "candidateDashboard": "구직자 대시보드",
     "candidateDashboardDesc": "지원 내역 추적, AI 매치 확인, 프로필 관리",
     "employerDashboard": "채용 담당자 대시보드",
-    "employerDashboardDesc": "채용 공고 등록, 구직자 검토, 채용 파이프라인 관리"
+    "employerDashboardDesc": "채용 공고 등록, 구직자 검토, 채용 파이프라인 관리",
+    "recommendedTools": "추천 도구",
+    "recommendedToolsSubtitle": "국제 전문가를 위한",
+    "viewAll": "전체 보기 →",
+    "affiliateNote": "제휴 링크 — 귀하에게 비용 없이 수수료를 받을 수 있습니다",
+    "toolDeelDesc": "150개국 이상의 글로벌 급여 서비스",
+    "toolRemoteDesc": "국경을 넘어 채용하거나 취업하세요",
+    "toolWiseDesc": "실제 환율로 국제 송금",
+    "toolPayoneerDesc": "200개국 이상에서 급여 수령"
   },
   "aboutPage": {
     "heroTitle": "글로벌 인재와 국경을 초월해 채용하는 기업을 연결합니다",

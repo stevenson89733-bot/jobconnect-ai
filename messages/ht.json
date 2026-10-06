@@ -1219,7 +1219,15 @@
     "candidateDashboard": "Tablo Bò Kandida",
     "candidateDashboardDesc": "Swiv aplikasyon yo, gade match AI yo, jere pwofil ou",
     "employerDashboard": "Tablo Bò Anplwayè",
-    "employerDashboardDesc": "Poste travay, egzamine kandida, jere pwosesis anbochaj ou"
+    "employerDashboardDesc": "Poste travay, egzamine kandida, jere pwosesis anbochaj ou",
+    "recommendedTools": "Zouti Rekòmande",
+    "recommendedToolsSubtitle": "Pou pwofesyonèl entènasyonal",
+    "viewAll": "Wè tout →",
+    "affiliateNote": "Lyen afiliye — nou ka touche komisyon san okenn frè pou ou",
+    "toolDeelDesc": "Pèman mondyal nan plis pase 150 peyi",
+    "toolRemoteDesc": "Anplwaye oswa jwenn travay atravè fwontyè",
+    "toolWiseDesc": "Transfè entènasyonal nan to reyèl",
+    "toolPayoneerDesc": "Resevwa pèman nan plis pase 200 peyi"
   },
   "aboutPage": {
     "heroTitle": "Konekte talan mondyal ak konpayi ki rekrite atravè fwontyè",

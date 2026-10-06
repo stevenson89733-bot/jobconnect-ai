@@ -1242,7 +1242,15 @@
     "candidateDashboard": "Candidate Dashboard",
     "candidateDashboardDesc": "Track applications, view AI matches, manage your profile",
     "employerDashboard": "Employer Dashboard",
-    "employerDashboardDesc": "Post jobs, review candidates, manage your hiring pipeline"
+    "employerDashboardDesc": "Post jobs, review candidates, manage your hiring pipeline",
+    "recommendedTools": "Recommended Tools",
+    "recommendedToolsSubtitle": "For international professionals",
+    "viewAll": "View all →",
+    "affiliateNote": "Affiliate links — we may earn a commission at no cost to you",
+    "toolDeelDesc": "Global payroll in 150+ countries",
+    "toolRemoteDesc": "Hire or get hired across borders",
+    "toolWiseDesc": "Real-rate international transfers",
+    "toolPayoneerDesc": "Receive pay in 200+ countries"
   },
   "aboutPage": {
     "heroTitle": "Connecting global talent with companies that hire across borders",

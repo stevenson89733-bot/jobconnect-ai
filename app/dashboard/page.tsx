@@ -1,17 +1,18 @@
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
 
-const RECOMMENDED_TOOLS = [
-  { name: 'Deel', emoji: '🌍', desc: 'Global payroll in 150+ countries', href: 'https://www.deel.com/?ref=jobconnectai', color: '#15d8a2' },
-  { name: 'Remote.com', emoji: '🏢', desc: 'Hire or get hired across borders', href: 'https://remote.com/?ref=jobconnectai', color: '#6b63ff' },
-  { name: 'Wise', emoji: '💸', desc: 'Real-rate international transfers', href: 'https://wise.com/invite/jobconnectai', color: '#00b9ff' },
-  { name: 'Payoneer', emoji: '💳', desc: 'Receive pay in 200+ countries', href: 'https://www.payoneer.com/ref/jobconnectai', color: '#ff4800' },
-]
-
 // Pilot page for the light/dark theme system: every hard-coded dark color is
 // paired as "light default + dark: variant". Other pages are not yet converted.
 export default async function Dashboard() {
   const t = await getTranslations('dashboardHub')
+
+  const RECOMMENDED_TOOLS = [
+    { name: 'Deel', emoji: '🌍', desc: t('toolDeelDesc'), href: 'https://www.deel.com/?ref=jobconnectai' },
+    { name: 'Remote.com', emoji: '🏢', desc: t('toolRemoteDesc'), href: 'https://remote.com/?ref=jobconnectai' },
+    { name: 'Wise', emoji: '💸', desc: t('toolWiseDesc'), href: 'https://wise.com/invite/jobconnectai' },
+    { name: 'Payoneer', emoji: '💳', desc: t('toolPayoneerDesc'), href: 'https://www.payoneer.com/ref/jobconnectai' },
+  ]
+
   return (
     <div className="max-w-7xl mx-auto px-6 py-20">
       <div className="text-center mb-10">
@@ -41,10 +42,10 @@ export default async function Dashboard() {
       <div className="max-w-2xl mx-auto bg-white dark:bg-card rounded-2xl border border-slate-200 dark:border-slate-700/50 p-6">
         <div className="flex items-center justify-between mb-5">
           <div>
-            <h2 className="font-semibold text-slate-900 dark:text-white text-sm">Recommended Tools</h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">For international professionals</p>
+            <h2 className="font-semibold text-slate-900 dark:text-white text-sm">{t('recommendedTools')}</h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{t('recommendedToolsSubtitle')}</p>
           </div>
-          <Link href="/partners" className="text-xs text-primary dark:text-blue-400 hover:underline">View all →</Link>
+          <Link href="/partners" className="text-xs text-primary dark:text-blue-400 hover:underline">{t('viewAll')}</Link>
         </div>
         <div className="grid grid-cols-2 gap-3">
           {RECOMMENDED_TOOLS.map((tool) => (
@@ -63,7 +64,7 @@ export default async function Dashboard() {
             </a>
           ))}
         </div>
-        <p className="text-xs text-slate-400 dark:text-slate-600 mt-4 text-center">Affiliate links — we may earn a commission at no cost to you</p>
+        <p className="text-xs text-slate-400 dark:text-slate-600 mt-4 text-center">{t('affiliateNote')}</p>
       </div>
     </div>
   )

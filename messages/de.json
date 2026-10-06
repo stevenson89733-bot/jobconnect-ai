@@ -1212,7 +1212,15 @@
     "candidateDashboard": "Kandidaten-Dashboard",
     "candidateDashboardDesc": "Bewerbungen verfolgen, KI-Matches ansehen, Profil verwalten",
     "employerDashboard": "Arbeitgeber-Dashboard",
-    "employerDashboardDesc": "Jobs veröffentlichen, Kandidat:innen prüfen, Recruiting-Pipeline verwalten"
+    "employerDashboardDesc": "Jobs veröffentlichen, Kandidat:innen prüfen, Recruiting-Pipeline verwalten",
+    "recommendedTools": "Empfohlene Tools",
+    "recommendedToolsSubtitle": "Für internationale Fachleute",
+    "viewAll": "Alle anzeigen →",
+    "affiliateNote": "Affiliate-Links — wir können eine Provision ohne Kosten für Sie verdienen",
+    "toolDeelDesc": "Globale Gehaltsabrechnung in 150+ Ländern",
+    "toolRemoteDesc": "Über Grenzen hinweg einstellen oder eingestellt werden",
+    "toolWiseDesc": "Internationale Überweisungen zum echten Kurs",
+    "toolPayoneerDesc": "Zahlungen in 200+ Ländern empfangen"
   },
   "aboutPage": {
     "heroTitle": "Globale Talente mit Unternehmen verbinden, die grenzüberschreitend einstellen",

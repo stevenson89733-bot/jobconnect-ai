@@ -1212,7 +1212,15 @@
     "candidateDashboard": "لوحة تحكم المرشّح",
     "candidateDashboardDesc": "تتبع الطلبات، شاهد تطابقات الذكاء الاصطناعي، أدر ملفك الشخصي",
     "employerDashboard": "لوحة تحكم صاحب العمل",
-    "employerDashboardDesc": "انشر الوظائف، راجع المرشحين، أدر مسار التوظيف الخاص بك"
+    "employerDashboardDesc": "انشر الوظائف، راجع المرشحين، أدر مسار التوظيف الخاص بك",
+    "recommendedTools": "الأدوات الموصى بها",
+    "recommendedToolsSubtitle": "للمهنيين الدوليين",
+    "viewAll": "عرض الكل →",
+    "affiliateNote": "روابط تابعة — قد نكسب عمولة دون أي تكلفة عليك",
+    "toolDeelDesc": "رواتب عالمية في أكثر من 150 دولة",
+    "toolRemoteDesc": "وظِّف أو احصل على وظيفة عبر الحدود",
+    "toolWiseDesc": "تحويلات دولية بالسعر الحقيقي",
+    "toolPayoneerDesc": "استلم المدفوعات في أكثر من 200 دولة"
   },
   "aboutPage": {
     "heroTitle": "ربط المواهب العالمية بالشركات التي توظف عبر الحدود",

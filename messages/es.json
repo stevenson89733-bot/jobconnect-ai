@@ -1218,7 +1218,15 @@
     "candidateDashboard": "Panel de Candidato",
     "candidateDashboardDesc": "Sigue tus postulaciones, mira coincidencias de IA, gestiona tu perfil",
     "employerDashboard": "Panel de Empleador",
-    "employerDashboardDesc": "Publica empleos, revisa candidatos, gestiona tu proceso de contratación"
+    "employerDashboardDesc": "Publica empleos, revisa candidatos, gestiona tu proceso de contratación",
+    "recommendedTools": "Herramientas recomendadas",
+    "recommendedToolsSubtitle": "Para profesionales internacionales",
+    "viewAll": "Ver todo →",
+    "affiliateNote": "Enlaces de afiliados — podemos ganar una comisión sin costo para ti",
+    "toolDeelDesc": "Nómina global en más de 150 países",
+    "toolRemoteDesc": "Contrata o consigue empleo sin fronteras",
+    "toolWiseDesc": "Transferencias internacionales al tipo de cambio real",
+    "toolPayoneerDesc": "Recibe pagos en más de 200 países"
   },
   "aboutPage": {
     "heroTitle": "Conectando talento global con empresas que contratan sin fronteras",
