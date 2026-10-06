@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { Icon } from "./LandingIcons";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -16,6 +17,7 @@ interface LandingNavProps {
 }
 
 export function LandingNav({ userEmail, isAdmin }: LandingNavProps) {
+  const t = useTranslations("nav");
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -36,40 +38,58 @@ export function LandingNav({ userEmail, isAdmin }: LandingNavProps) {
             <span className="landing-logo-connect">Connect</span>
             <span className="landing-logo-ai">AI</span>
           </span>
-          <span className="landing-logo-tagline">
-            CONNECTING TALENT. BUILDING FUTURES.
-          </span>
+          <span className="landing-logo-tagline">{t("tagline")}</span>
         </span>
       </Link>
 
       {/* Desktop nav */}
       <nav className="landing-nav-links" aria-label="Main navigation">
-        {/* Browse Jobs */}
+        {/* Jobs */}
         <div className="landing-nav-dropdown">
           <Link href="/jobs" className="landing-nav-item">
-            Jobs
+            {t("jobs")}
             <svg className="landing-nav-chevron" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
           </Link>
           <div className="landing-mega-menu">
             <div className="landing-mega-col">
-              <p className="landing-mega-label">Job Categories</p>
-              {[["Engineering","Engineering"],["Marketing","Marketing"],["Design","Design"],["Sales","Sales"],["Data Science","Data"],["Finance","Finance"],["HR & Recruiting","HR"]].map(([label, val]) => (
+              <p className="landing-mega-label">{t("jobCategories")}</p>
+              {([
+                [t("catEngineering"), "Engineering"],
+                [t("catMarketing"),   "Marketing"],
+                [t("catDesign"),      "Design"],
+                [t("catSales"),       "Sales"],
+                [t("catDataScience"), "Data"],
+                [t("catFinance"),     "Finance"],
+                [t("catHr"),          "HR"],
+              ] as [string, string][]).map(([label, val]) => (
                 <Link key={val} href={`/jobs?category=${encodeURIComponent(val)}`} className="landing-mega-link">{label}</Link>
               ))}
-              <Link href="/jobs" className="landing-mega-link landing-mega-link--accent">All categories →</Link>
+              <Link href="/jobs" className="landing-mega-link landing-mega-link--accent">{t("allCategories")}</Link>
             </div>
             <div className="landing-mega-col">
-              <p className="landing-mega-label">Job Locations</p>
-              {[["🇺🇸 USA","US"],["🇫🇷 France","FR"],["🇩🇪 Germany","DE"],["🇬🇧 UK","GB"],["🇨🇦 Canada","CA"],["🌍 Global Remote","worldwide"]].map(([label, val]) => (
+              <p className="landing-mega-label">{t("jobLocations")}</p>
+              {[
+                ["🇺🇸 USA",          "US"],
+                ["🇫🇷 France",       "FR"],
+                ["🇩🇪 Germany",      "DE"],
+                ["🇬🇧 UK",           "GB"],
+                ["🇨🇦 Canada",       "CA"],
+                ["🌍 Global Remote", "worldwide"],
+              ].map(([label, val]) => (
                 <Link key={val} href={`/jobs?country=${val}`} className="landing-mega-link">{label}</Link>
               ))}
-              <Link href="/jobs" className="landing-mega-link landing-mega-link--accent">All locations →</Link>
+              <Link href="/jobs" className="landing-mega-link landing-mega-link--accent">{t("allLocations")}</Link>
             </div>
             <div className="landing-mega-col">
-              <p className="landing-mega-label">Job Types</p>
-              {[["Remote Full-time","Full-time"],["Remote Part-time","Part-time"],["Contract","Contract"],["Freelance","Contract"]].map(([label, val]) => (
+              <p className="landing-mega-label">{t("jobTypes")}</p>
+              {([
+                [t("typeRemoteFullTime"), "Full-time"],
+                [t("typeRemotePartTime"), "Part-time"],
+                [t("typeContract"),       "Contract"],
+                [t("typeFreelance"),      "Contract"],
+              ] as [string, string][]).map(([label, val]) => (
                 <Link key={label} href={`/jobs?type=${encodeURIComponent(val)}`} className="landing-mega-link">{label}</Link>
               ))}
             </div>
@@ -79,21 +99,21 @@ export function LandingNav({ userEmail, isAdmin }: LandingNavProps) {
         {/* AI Tools */}
         <div className="landing-nav-dropdown">
           <Link href="/ai-tools" className="landing-nav-item">
-            <span className="landing-nav-accent">✦</span> AI Tools
+            <span className="landing-nav-accent">✦</span> {t("aiTools")}
             <svg className="landing-nav-chevron" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
           </Link>
           <div className="landing-dropdown-menu">
-            {[
-              ["/ai-tools/resume-builder","📄","Resume Builder","AI-optimized for every role"],
-              ["/ai-tools/cover-letter","✉️","Cover Letter","Tailored to each application"],
-              ["/ai-tools/interview-prep","🎤","Interview Prep","Practice with AI feedback"],
-              ["/ai-tools/linkedin-optimizer","🔗","LinkedIn Optimizer","Stand out to recruiters"],
-              ["/ai-tools/skill-gap","🧭","Skill Gap Analysis","Know what to learn next"],
-              ["/ai-tools/cv-builder","📋","CV Builder","Professional CV in minutes"],
-            ].map(([href, emoji, title, desc]) => (
-              <Link key={href as string} href={href as string} className="landing-dropdown-item">
+            {([
+              ["/ai-tools/resume-builder", "📄", t("resumeBuilder"),      t("navResumeBuilderDesc")],
+              ["/ai-tools/cover-letter",   "✉️", t("coverLetter"),        t("navCoverLetterDesc")],
+              ["/ai-tools/interview-prep", "🎤", t("interviewPrep"),      t("interviewPrepDesc")],
+              ["/ai-tools/linkedin-optimizer","🔗",t("linkedinOptimizer"),t("linkedinOptimizerDesc")],
+              ["/ai-tools/skill-gap",      "🧭", t("skillGap"),           t("skillGapDesc")],
+              ["/ai-tools/cv-builder",     "📋", t("cvBuilder"),          t("cvBuilderDesc")],
+            ] as [string, string, string, string][]).map(([href, emoji, title, desc]) => (
+              <Link key={href} href={href} className="landing-dropdown-item">
                 <span className="landing-dropdown-emoji">{emoji}</span>
                 <span>
                   <span className="landing-dropdown-title">{title}</span>
@@ -106,45 +126,45 @@ export function LandingNav({ userEmail, isAdmin }: LandingNavProps) {
               <span className="landing-dropdown-emoji">🤖</span>
               <span>
                 <span className="landing-dropdown-title">
-                  Auto-Apply
+                  {t("autoApply")}
                   <span className="landing-pro-badge">Pro</span>
                 </span>
-                <span className="landing-dropdown-desc">AI applies to jobs for you daily</span>
+                <span className="landing-dropdown-desc">{t("autoApplyDesc")}</span>
               </span>
             </Link>
             <Link href="/pricing" className="landing-dropdown-item">
               <span className="landing-dropdown-emoji">✨</span>
               <span>
                 <span className="landing-dropdown-title">
-                  AI Job Match
+                  {t("aiJobMatch")}
                   <span className="landing-pro-badge">Pro</span>
                 </span>
-                <span className="landing-dropdown-desc">AI-ranked jobs tailored to you</span>
+                <span className="landing-dropdown-desc">{t("aiJobMatchDesc")}</span>
               </span>
             </Link>
             <Link href="/pricing" className="landing-dropdown-item">
               <span className="landing-dropdown-emoji">🔔</span>
               <span>
                 <span className="landing-dropdown-title">
-                  Interview Alerts
+                  {t("interviewAlerts")}
                   <span className="landing-pro-badge">Pro</span>
                 </span>
-                <span className="landing-dropdown-desc">Never miss a callback</span>
+                <span className="landing-dropdown-desc">{t("interviewAlertsDesc")}</span>
               </span>
             </Link>
             <div className="landing-dropdown-divider" />
             <Link href="/pricing" className="landing-dropdown-item landing-dropdown-item--cta">
               <span className="landing-dropdown-emoji">🔒</span>
               <span>
-                <span className="landing-dropdown-title">See all Pro plans →</span>
-                <span className="landing-dropdown-desc">Elite from $39.99/mo · Pro from $19.99/mo</span>
+                <span className="landing-dropdown-title">{t("seeAllProPlans")}</span>
+                <span className="landing-dropdown-desc">{t("proPlansDesc")}</span>
               </span>
             </Link>
           </div>
         </div>
 
         {/* Pricing */}
-        <Link href="/pricing" className="landing-nav-item">Pricing</Link>
+        <Link href="/pricing" className="landing-nav-item">{t("pricing")}</Link>
       </nav>
 
       {/* Right actions */}
@@ -156,20 +176,20 @@ export function LandingNav({ userEmail, isAdmin }: LandingNavProps) {
         {userEmail ? (
           <>
             <NotificationBell />
-            <Link href="/dashboard" className="landing-text-btn">Dashboard</Link>
-            <Link href="/profile" className="landing-text-btn">Profile</Link>
+            <Link href="/dashboard" className="landing-text-btn">{t("dashboard")}</Link>
+            <Link href="/profile" className="landing-text-btn">{t("profile")}</Link>
             {isAdmin && (
-              <Link href="/admin" className="landing-text-btn landing-text-btn--admin">🛡️ Admin</Link>
+              <Link href="/admin" className="landing-text-btn landing-text-btn--admin">🛡️ {t("admin")}</Link>
             )}
             <form action={signOut} style={{ display: "inline" }}>
-              <button type="submit" className="landing-outline-btn">Sign out</button>
+              <button type="submit" className="landing-outline-btn">{t("signOut")}</button>
             </form>
           </>
         ) : (
           <>
-            <Link href="/login" className="landing-text-btn">Log in</Link>
+            <Link href="/login" className="landing-text-btn">{t("logIn")}</Link>
             <Link href="/register" className="landing-primary-btn landing-primary-btn--small">
-              Get started <Icon name="arrow" size={16} />
+              {t("getStarted")} <Icon name="arrow" size={16} />
             </Link>
           </>
         )}
@@ -187,21 +207,21 @@ export function LandingNav({ userEmail, isAdmin }: LandingNavProps) {
       {/* Mobile menu */}
       {menuOpen && (
         <div className="landing-mobile-menu">
-          <Link href="/jobs" onClick={() => setMenuOpen(false)}>Browse Jobs</Link>
-          <Link href="/ai-tools" onClick={() => setMenuOpen(false)}>✦ AI Tools</Link>
-          <Link href="/pricing" onClick={() => setMenuOpen(false)}>Pricing</Link>
+          <Link href="/jobs" onClick={() => setMenuOpen(false)}>{t("browseJobs")}</Link>
+          <Link href="/ai-tools" onClick={() => setMenuOpen(false)}>✦ {t("aiTools")}</Link>
+          <Link href="/pricing" onClick={() => setMenuOpen(false)}>{t("pricing")}</Link>
           <div className="landing-mobile-divider" />
           {userEmail ? (
             <>
-              <Link href="/dashboard" onClick={() => setMenuOpen(false)}>Dashboard</Link>
-              <Link href="/profile" onClick={() => setMenuOpen(false)}>Profile</Link>
-              {isAdmin && <Link href="/admin" onClick={() => setMenuOpen(false)}>🛡️ Admin</Link>}
-              <form action={signOut}><button type="submit">Sign out</button></form>
+              <Link href="/dashboard" onClick={() => setMenuOpen(false)}>{t("dashboard")}</Link>
+              <Link href="/profile" onClick={() => setMenuOpen(false)}>{t("profile")}</Link>
+              {isAdmin && <Link href="/admin" onClick={() => setMenuOpen(false)}>🛡️ {t("admin")}</Link>}
+              <form action={signOut}><button type="submit">{t("signOut")}</button></form>
             </>
           ) : (
             <>
-              <Link href="/login" onClick={() => setMenuOpen(false)}>Log in</Link>
-              <Link href="/register" className="landing-primary-btn" onClick={() => setMenuOpen(false)}>Get started</Link>
+              <Link href="/login" onClick={() => setMenuOpen(false)}>{t("logIn")}</Link>
+              <Link href="/register" className="landing-primary-btn" onClick={() => setMenuOpen(false)}>{t("getStarted")}</Link>
             </>
           )}
         </div>
