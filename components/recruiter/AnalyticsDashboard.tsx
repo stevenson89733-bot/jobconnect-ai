@@ -1,5 +1,6 @@
 'use client'
 import { useMemo } from 'react'
+import { useTranslations } from 'next-intl'
 import type { ApplicationStatus } from '@/lib/applicationStatus'
 
 type Application = {
@@ -17,6 +18,8 @@ export default function AnalyticsDashboard({
   applications: Application[]
   jobs: Job[]
 }) {
+  const t = useTranslations('recruiter')
+
   const statusCounts = useMemo(() => {
     const map: Record<string, number> = {}
     for (const a of applications) {
@@ -52,12 +55,12 @@ export default function AnalyticsDashboard({
 
   const maxTrend = Math.max(1, ...trend.map(d => d.count))
 
-  const FUNNEL: { status: ApplicationStatus; label: string; color: string }[] = [
-    { status: 'submitted', label: 'Submitted', color: 'bg-blue-400' },
-    { status: 'viewed',    label: 'Viewed',    color: 'bg-indigo-400' },
-    { status: 'interview', label: 'Interview', color: 'bg-emerald-400' },
-    { status: 'offer',     label: 'Offer',     color: 'bg-amber-400' },
-    { status: 'rejected',  label: 'Rejected',  color: 'bg-red-400' },
+  const FUNNEL: { status: ApplicationStatus; labelKey: string; color: string }[] = [
+    { status: 'submitted', labelKey: 'funnelSubmitted', color: 'bg-blue-400' },
+    { status: 'viewed',    labelKey: 'funnelViewed',    color: 'bg-indigo-400' },
+    { status: 'interview', labelKey: 'funnelInterview', color: 'bg-emerald-400' },
+    { status: 'offer',     labelKey: 'funnelOffer',     color: 'bg-amber-400' },
+    { status: 'rejected',  labelKey: 'funnelRejected',  color: 'bg-red-400' },
   ]
   const total = applications.length || 1
 
@@ -65,20 +68,20 @@ export default function AnalyticsDashboard({
     <div className="card space-y-6">
       <div className="flex items-center gap-2">
         <span className="text-xl">📈</span>
-        <h2 className="font-semibold text-slate-900 dark:text-white">Analytics Dashboard</h2>
+        <h2 className="font-semibold text-slate-900 dark:text-white">{t('analyticsTitle')}</h2>
         <span className="ml-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-400">Pro</span>
       </div>
 
       {/* Funnel */}
       <div>
-        <h3 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">Application Funnel</h3>
+        <h3 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">{t('analyticsFunnelTitle')}</h3>
         <div className="space-y-2">
-          {FUNNEL.map(({ status, label, color }) => {
+          {FUNNEL.map(({ status, labelKey, color }) => {
             const count = statusCounts[status] ?? 0
             const pct = Math.round((count / total) * 100)
             return (
               <div key={status} className="flex items-center gap-3">
-                <span className="w-20 text-xs text-slate-600 dark:text-slate-400 shrink-0">{label}</span>
+                <span className="w-20 text-xs text-slate-600 dark:text-slate-400 shrink-0">{t(labelKey as Parameters<typeof t>[0])}</span>
                 <div className="flex-1 bg-slate-100 dark:bg-slate-800 rounded-full h-2">
                   <div className={`${color} h-2 rounded-full transition-all`} style={{ width: `${pct}%` }} />
                 </div>
@@ -91,7 +94,7 @@ export default function AnalyticsDashboard({
 
       {/* 7-day trend */}
       <div>
-        <h3 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">Applications — Last 7 Days</h3>
+        <h3 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">{t('analyticsTrendTitle')}</h3>
         <div className="flex items-end gap-1.5 h-16">
           {trend.map(({ label, count }) => (
             <div key={label} className="flex-1 flex flex-col items-center gap-1">
@@ -108,14 +111,14 @@ export default function AnalyticsDashboard({
       {/* Per-job breakdown */}
       {perJob.length > 0 && (
         <div>
-          <h3 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">By Job Posting</h3>
+          <h3 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">{t('analyticsByJobTitle')}</h3>
           <div className="divide-y divide-slate-100 dark:divide-slate-800">
             {perJob.slice(0, 5).map(j => (
               <div key={j.title} className="flex items-center justify-between py-2">
                 <span className="text-sm text-slate-700 dark:text-slate-300 truncate mr-4">{j.title}</span>
                 <div className="flex items-center gap-3 shrink-0 text-xs text-slate-500 dark:text-slate-400">
-                  <span>{j.count} applied</span>
-                  {j.interviewed > 0 && <span className="text-emerald-600 dark:text-emerald-400">{j.interviewed} interview</span>}
+                  <span>{t('analyticsApplied', { count: j.count })}</span>
+                  {j.interviewed > 0 && <span className="text-emerald-600 dark:text-emerald-400">{t('analyticsInterview', { count: j.interviewed })}</span>}
                 </div>
               </div>
             ))}

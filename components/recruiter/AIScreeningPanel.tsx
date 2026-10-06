@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Ranking = { id: string; name: string; title: string; score: number; reason: string }
 
@@ -10,6 +11,7 @@ export default function AIScreeningPanel({
   jobs: { id: string; title: string }[]
   isPro: boolean
 }) {
+  const t = useTranslations('recruiter')
   const [selectedJob, setSelectedJob] = useState('')
   const [loading, setLoading] = useState(false)
   const [rankings, setRankings] = useState<Ranking[]>([])
@@ -30,11 +32,11 @@ export default function AIScreeningPanel({
         body: JSON.stringify({ job_id: selectedJob }),
       })
       const data = await res.json()
-      if (!res.ok) { setError(data.error || 'Failed to screen candidates'); return }
+      if (!res.ok) { setError(data.error || t('aiScreeningFailed')); return }
       setRankings(data.rankings ?? [])
       setRan(true)
     } catch {
-      setError('Network error — please try again')
+      setError(t('aiScreeningNetworkError'))
     } finally {
       setLoading(false)
     }
@@ -44,11 +46,11 @@ export default function AIScreeningPanel({
     <div className="card space-y-4">
       <div className="flex items-center gap-2">
         <span className="text-xl">🤖</span>
-        <h2 className="font-semibold text-slate-900 dark:text-white">AI Candidate Screening</h2>
+        <h2 className="font-semibold text-slate-900 dark:text-white">{t('aiScreeningTitle')}</h2>
         <span className="ml-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-400">Pro</span>
       </div>
       <p className="text-sm text-slate-500 dark:text-slate-400">
-        Rank applicants by fit for a job posting. Scored 0–100 with a one-sentence rationale.
+        {t('aiScreeningDesc')}
       </p>
 
       <div className="flex gap-3">
@@ -57,7 +59,7 @@ export default function AIScreeningPanel({
           onChange={e => setSelectedJob(e.target.value)}
           className="flex-1 bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-primary"
         >
-          <option value="">Select a job posting…</option>
+          <option value="">{t('aiScreeningSelectPlaceholder')}</option>
           {jobs.map(j => <option key={j.id} value={j.id}>{j.title}</option>)}
         </select>
         <button
@@ -65,14 +67,14 @@ export default function AIScreeningPanel({
           disabled={!selectedJob || loading}
           className="btn-primary text-sm py-2 px-4 disabled:opacity-50"
         >
-          {loading ? 'Screening…' : 'Screen Candidates'}
+          {loading ? t('aiScreeningScreening') : t('aiScreeningButton')}
         </button>
       </div>
 
       {error && <p className="text-sm text-red-500">{error}</p>}
 
       {ran && rankings.length === 0 && !loading && (
-        <p className="text-sm text-slate-500 dark:text-slate-400">No applications to screen for this job.</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400">{t('aiScreeningNoResults')}</p>
       )}
 
       {rankings.length > 0 && (

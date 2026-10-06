@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 type Member = {
   id: string
@@ -17,6 +18,7 @@ export default function TeamManagementPanel({
   isGrowth: boolean
   isPro: boolean
 }) {
+  const t = useTranslations('recruiter')
   const [members, setMembers] = useState<Member[]>([])
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
@@ -41,14 +43,14 @@ export default function TeamManagementPanel({
       <div className="card">
         <div className="flex items-center gap-3 mb-3">
           <span className="text-xl">👥</span>
-          <h2 className="font-semibold text-slate-900 dark:text-white">Team Collaboration</h2>
+          <h2 className="font-semibold text-slate-900 dark:text-white">{t('teamTitle')}</h2>
           <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400">Growth</span>
         </div>
         <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-          Invite up to 5 team members to collaborate on your recruiting dashboard.
+          {t('teamLockedDesc')}
         </p>
         <Link href="/pricing#employers" className="btn-primary text-sm py-2 px-4 inline-flex">
-          ✦ Upgrade to Growth
+          {t('teamUpgradeBtn')}
         </Link>
       </div>
     )
@@ -67,15 +69,14 @@ export default function TeamManagementPanel({
         body: JSON.stringify({ email: email.trim() }),
       })
       const data = await res.json()
-      if (!res.ok) { setError(data.error || 'Failed to send invite'); return }
-      setSuccess(`Invitation sent to ${email.trim()}`)
+      if (!res.ok) { setError(data.error || t('teamInviteFailed')); return }
+      setSuccess(t('teamInviteSent', { email: email.trim() }))
       setEmail('')
-      // Refresh list
       const listRes = await fetch('/api/recruiter/team')
       const listData = await listRes.json()
       setMembers(listData.members ?? [])
     } catch {
-      setError('Network error — please try again')
+      setError(t('teamNetworkError'))
     } finally {
       setLoading(false)
     }
@@ -90,13 +91,13 @@ export default function TeamManagementPanel({
     <div className="card space-y-5">
       <div className="flex items-center gap-2">
         <span className="text-xl">👥</span>
-        <h2 className="font-semibold text-slate-900 dark:text-white">Team Collaboration</h2>
+        <h2 className="font-semibold text-slate-900 dark:text-white">{t('teamTitle')}</h2>
         <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${isPro ? 'bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-400' : 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400'}`}>
           {isPro ? 'Pro' : 'Growth'}
         </span>
         {maxMembers && (
           <span className="ml-auto text-xs text-slate-500 dark:text-slate-400">
-            {members.length}/{maxMembers} members
+            {t('teamMembersCount', { current: members.length, max: maxMembers })}
           </span>
         )}
       </div>
@@ -104,7 +105,7 @@ export default function TeamManagementPanel({
       <form onSubmit={invite} className="flex gap-3">
         <input
           type="email"
-          placeholder="colleague@company.com"
+          placeholder={t('teamPlaceholder')}
           value={email}
           onChange={e => setEmail(e.target.value)}
           className="flex-1 bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-primary"
@@ -115,20 +116,20 @@ export default function TeamManagementPanel({
           disabled={loading || !email.trim() || (maxMembers !== null && members.length >= maxMembers)}
           className="btn-primary text-sm py-2 px-4 disabled:opacity-50"
         >
-          {loading ? 'Sending…' : 'Invite'}
+          {loading ? t('teamInviting') : t('teamInvite')}
         </button>
       </form>
 
       {error && <p className="text-sm text-red-500">{error}</p>}
       {success && <p className="text-sm text-emerald-600 dark:text-emerald-400">{success}</p>}
       {maxMembers !== null && members.length >= maxMembers && (
-        <p className="text-xs text-amber-600 dark:text-amber-400">Team limit reached. <Link href="/pricing#employers" className="underline">Upgrade to Pro</Link> for unlimited members.</p>
+        <p className="text-xs text-amber-600 dark:text-amber-400">{t('teamLimitReached')} <Link href="/pricing#employers" className="underline">{t('teamLimitUpgrade')}</Link></p>
       )}
 
       {fetching ? (
-        <p className="text-sm text-slate-500 dark:text-slate-400">Loading team…</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400">{t('teamLoading')}</p>
       ) : members.length === 0 ? (
-        <p className="text-sm text-slate-500 dark:text-slate-400">No team members yet. Invite colleagues above.</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400">{t('teamEmpty')}</p>
       ) : (
         <div className="divide-y divide-slate-100 dark:divide-slate-800">
           {members.map(m => (
@@ -144,12 +145,12 @@ export default function TeamManagementPanel({
                   ? 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400'
                   : 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400'
               }`}>
-                {m.status === 'active' ? 'Active' : 'Pending'}
+                {m.status === 'active' ? t('teamStatusActive') : t('teamStatusPending')}
               </span>
               <button
                 onClick={() => remove(m.id)}
                 className="text-xs text-red-400 hover:text-red-600 transition-colors ml-1"
-                title="Remove member"
+                title={t('teamRemoveMember')}
               >
                 ✕
               </button>

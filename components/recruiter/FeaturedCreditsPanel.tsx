@@ -2,10 +2,12 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { useTranslations } from 'next-intl'
 
 type JobOption = { id: string; title: string; is_active: boolean }
 
 export default function FeaturedCreditsPanel({ credits, jobs }: { credits: number; jobs: JobOption[] }) {
+  const t = useTranslations('recruiter')
   const router = useRouter()
   const activeJobs = jobs.filter((j) => j.is_active)
   const [selectedJobId, setSelectedJobId] = useState(activeJobs[0]?.id ?? '')
@@ -20,9 +22,8 @@ export default function FeaturedCreditsPanel({ credits, jobs }: { credits: numbe
     try {
       const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
-      if (!user) { setError('Not authenticated'); setLoading(false); return }
+      if (!user) { setError(t('featuredNotAuthenticated')); setLoading(false); return }
 
-      // Decrement credit and set job as featured in one transaction-like sequence
       const { error: jobErr } = await supabase
         .from('jobs')
         .update({ is_featured: true })
@@ -41,7 +42,7 @@ export default function FeaturedCreditsPanel({ credits, jobs }: { credits: numbe
       setSuccess(true)
       router.refresh()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed')
+      setError(err instanceof Error ? err.message : t('featuredFailed'))
       setLoading(false)
     }
   }
@@ -51,7 +52,7 @@ export default function FeaturedCreditsPanel({ credits, jobs }: { credits: numbe
       <div className="mb-6 rounded-2xl border border-amber-500/30 bg-amber-500/5 p-4 flex items-center gap-3">
         <span className="text-2xl">⭐</span>
         <p className="text-sm font-semibold text-amber-700 dark:text-amber-400">
-          Job featured successfully! It will appear at the top of search results.
+          {t('featuredSuccessMsg')}
         </p>
       </div>
     )
@@ -63,16 +64,16 @@ export default function FeaturedCreditsPanel({ credits, jobs }: { credits: numbe
         <span className="text-2xl">⭐</span>
         <div>
           <p className="font-semibold text-amber-700 dark:text-amber-400 text-sm">
-            You have {credits} featured listing credit{credits !== 1 ? 's' : ''}
+            {t('featuredCreditsTitle', { count: credits })}
           </p>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            Apply a credit to boost one of your active jobs to the top of search results.
+            {t('featuredCreditsDesc')}
           </p>
         </div>
       </div>
       {activeJobs.length === 0 ? (
         <p className="text-xs text-slate-500 dark:text-slate-400">
-          Post an active job first to apply your featured credit.
+          {t('featuredNoJobsMsg')}
         </p>
       ) : (
         <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
@@ -90,7 +91,7 @@ export default function FeaturedCreditsPanel({ credits, jobs }: { credits: numbe
             disabled={loading || !selectedJobId}
             className="shrink-0 font-semibold rounded-xl px-5 py-2 text-sm bg-amber-500 hover:bg-amber-600 text-white transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            {loading ? '…' : '⭐ Feature this job'}
+            {loading ? '…' : t('featuredButton')}
           </button>
         </div>
       )}
