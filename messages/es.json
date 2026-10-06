@@ -357,13 +357,17 @@
     "topMatches": "Mejores coincidencias para ti",
     "rankedBy": "Clasificado por adecuación de habilidades, flexibilidad de ubicación y señales de contratación verificadas.",
     "applyWithAI": "✦ Postularse con IA",
-    "filter_intl": "✓ Solo empleos internacionales",
+    "filter_intl": "✓ Solo apto para internacional",
     "filter_all": "Todos los empleos",
-    "crossBorderAnalyzing": "Nuestro detector está analizando las ofertas activas — vuelve en unas horas.",
+    "crossBorderAnalyzing": "Nuestro detector está analizando las ofertas en vivo — vuelve en unas horas.",
     "matchWhyTitle": "Por qué encajas",
     "matchExpandCta": "Ver por qué encajas",
     "matchStrengths": "Fortalezas",
-    "matchGaps": "Puntos de atención"
+    "matchGaps": "Puntos de atención",
+    "aiCopilotPlaceholder": "Pregunta al Copiloto IA: Encuéntrame un trabajo remoto en Alemania…",
+    "clearAll": "✕ Borrar todo",
+    "sortMatchScore": "Puntuación de coincidencia",
+    "trueRemote": "Remoto real"
   },
   "applicationStatus": {
     "submitted": "Enviada",

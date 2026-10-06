@@ -351,13 +351,17 @@
     "topMatches": "Kết quả phù hợp nhất với bạn",
     "rankedBy": "Xếp hạng theo mức độ phù hợp kỹ năng, linh hoạt địa điểm và tín hiệu tuyển dụng đã xác minh.",
     "applyWithAI": "✦ Ứng tuyển bằng AI",
-    "filter_intl": "✓ Chỉ việc làm quốc tế",
+    "filter_intl": "✓ Chỉ mở cho quốc tế",
     "filter_all": "Tất cả việc làm",
     "crossBorderAnalyzing": "Bộ phát hiện của chúng tôi đang phân tích các tin tuyển dụng — hãy quay lại sau vài giờ.",
     "matchWhyTitle": "Tại sao bạn phù hợp",
     "matchExpandCta": "Xem lý do phù hợp",
     "matchStrengths": "Điểm mạnh",
-    "matchGaps": "Điểm cần chú ý"
+    "matchGaps": "Điểm cần chú ý",
+    "aiCopilotPlaceholder": "Hỏi AI Copilot: Tìm cho tôi công việc từ xa ở Đức…",
+    "clearAll": "✕ Xóa tất cả",
+    "sortMatchScore": "Điểm phù hợp",
+    "trueRemote": "Thực sự từ xa"
   },
   "applicationStatus": {
     "submitted": "Đã nộp",

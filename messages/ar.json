@@ -351,13 +351,17 @@
     "topMatches": "أفضل التطابقات لك",
     "rankedBy": "مرتبة حسب ملاءمة المهارات ومرونة الموقع وإشارات التوظيف الموثقة.",
     "applyWithAI": "✦ تقديم بالذكاء الاصطناعي",
-    "filter_intl": "✓ الوظائف الدولية فقط",
+    "filter_intl": "✓ المفتوح دولياً فقط",
     "filter_all": "جميع الوظائف",
-    "crossBorderAnalyzing": "يحلّل كاشفنا الوظائف الحالية — عُد خلال بضع ساعات.",
+    "crossBorderAnalyzing": "يحلل الكاشف الخاص بنا الإعلانات المباشرة — تحقق مرة أخرى في غضون ساعات قليلة.",
     "matchWhyTitle": "لماذا تتطابق",
     "matchExpandCta": "اعرف سبب التطابق",
     "matchStrengths": "نقاط القوة",
-    "matchGaps": "نقاط الانتباه"
+    "matchGaps": "نقاط الانتباه",
+    "aiCopilotPlaceholder": "اسأل المساعد الذكي: ابحث لي عن وظيفة عن بُعد في ألمانيا…",
+    "clearAll": "✕ مسح الكل",
+    "sortMatchScore": "درجة التطابق",
+    "trueRemote": "عن بُعد فعلاً"
   },
   "applicationStatus": {
     "submitted": "تم الإرسال",

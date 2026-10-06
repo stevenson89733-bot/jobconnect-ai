@@ -351,13 +351,17 @@
     "topMatches": "추천 채용 공고",
     "rankedBy": "스킬 적합도, 위치 유연성, 검증된 채용 신호 기준으로 정렬.",
     "applyWithAI": "✦ AI로 지원하기",
-    "filter_intl": "✓ 국제 채용만 보기",
+    "filter_intl": "✓ 국제 지원 가능만",
     "filter_all": "모든 채용",
-    "crossBorderAnalyzing": "탐지기가 현재 채용 공고를 분석 중입니다 — 몇 시간 후에 다시 확인해 주세요.",
+    "crossBorderAnalyzing": "감지기가 실시간 공고를 분석 중입니다 — 몇 시간 후에 다시 확인하세요.",
     "matchWhyTitle": "매칭 이유",
     "matchExpandCta": "매칭 이유 보기",
     "matchStrengths": "강점",
-    "matchGaps": "주의 사항"
+    "matchGaps": "주의 사항",
+    "aiCopilotPlaceholder": "AI 코파일럿에게 물어보세요: 독일에서 원격 일자리를 찾아줘…",
+    "clearAll": "✕ 전체 지우기",
+    "sortMatchScore": "매칭 점수",
+    "trueRemote": "진짜 원격"
   },
   "applicationStatus": {
     "submitted": "제출됨",

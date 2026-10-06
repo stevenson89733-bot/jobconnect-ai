@@ -351,13 +351,17 @@
     "topMatches": "为你推荐的职位",
     "rankedBy": "按技能匹配度、地点灵活性及经过验证的招聘信号排序。",
     "applyWithAI": "✦ AI 投递",
-    "filter_intl": "✓ 仅限国际职位",
+    "filter_intl": "✓ 仅显示对国际开放的职位",
     "filter_all": "所有职位",
-    "crossBorderAnalyzing": "我们的检测器正在分析职位列表——请几小时后再回来查看。",
+    "crossBorderAnalyzing": "我们的检测器正在分析实时职位——请几小时后再回来查看。",
     "matchWhyTitle": "为什么您匹配",
     "matchExpandCta": "查看匹配原因",
     "matchStrengths": "优势",
-    "matchGaps": "注意事项"
+    "matchGaps": "注意事项",
+    "aiCopilotPlaceholder": "向 AI 副驾驶提问：在德国帮我找一份远程工作……",
+    "clearAll": "✕ 清除全部",
+    "sortMatchScore": "匹配分数",
+    "trueRemote": "真正的远程"
   },
   "applicationStatus": {
     "submitted": "已提交",

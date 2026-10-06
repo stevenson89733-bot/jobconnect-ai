@@ -354,7 +354,14 @@
     "matchWhyTitle": "Poukisa ou matche",
     "matchExpandCta": "Wè poukisa ou matche",
     "matchStrengths": "Fòs",
-    "matchGaps": "Pwen atansyon"
+    "matchGaps": "Pwen atansyon",
+    "filter_intl": "✓ Entènasyonal sèlman",
+    "filter_all": "Tout travay",
+    "crossBorderAnalyzing": "Detektè nou an ap analize annons an dirèk — tounen nan kèk èdtan.",
+    "aiCopilotPlaceholder": "Mande Kopilòt AI a: Jwenn yon travay aleka nan Almay…",
+    "clearAll": "✕ Efase tout",
+    "sortMatchScore": "Nòt match",
+    "trueRemote": "Vrèman aleka"
   },
   "applicationStatus": {
     "submitted": "Soumèt",

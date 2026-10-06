@@ -351,13 +351,17 @@
     "topMatches": "あなたへのおすすめ求人",
     "rankedBy": "スキル適合度・勤務地の柔軟性・採用シグナルで並べ替え。",
     "applyWithAI": "✦ AIで応募",
-    "filter_intl": "✓ 国際対応求人のみ",
+    "filter_intl": "✓ 国際対応のみ",
     "filter_all": "すべての求人",
-    "crossBorderAnalyzing": "当社の検出器が求人を分析中です — 数時間後にまたご確認ください。",
+    "crossBorderAnalyzing": "検出システムがライブ求人を分析中です — 数時間後にもう一度ご確認ください。",
     "matchWhyTitle": "マッチする理由",
     "matchExpandCta": "マッチする理由を見る",
     "matchStrengths": "強み",
-    "matchGaps": "注意点"
+    "matchGaps": "注意点",
+    "aiCopilotPlaceholder": "AIコパイロットに質問：ドイツでリモートの仕事を見つけて…",
+    "clearAll": "✕ すべてクリア",
+    "sortMatchScore": "マッチスコア",
+    "trueRemote": "完全リモート"
   },
   "applicationStatus": {
     "submitted": "応募済み",

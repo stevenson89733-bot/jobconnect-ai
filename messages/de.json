@@ -351,13 +351,17 @@
     "topMatches": "Top-Treffer für dich",
     "rankedBy": "Sortiert nach Kompetenzübereinstimmung, Standortflexibilität und verifizierten Einstellungssignalen.",
     "applyWithAI": "✦ Mit KI bewerben",
-    "filter_intl": "✓ Nur internationale Stellen",
-    "filter_all": "Alle Stellen",
-    "crossBorderAnalyzing": "Unser Detektor analysiert aktuelle Stellen — schau in ein paar Stunden nochmal vorbei.",
+    "filter_intl": "✓ Nur international zugänglich",
+    "filter_all": "Alle Jobs",
+    "crossBorderAnalyzing": "Unser Detektor analysiert Live-Angebote — schau in ein paar Stunden wieder vorbei.",
     "matchWhyTitle": "Warum du passt",
     "matchExpandCta": "Warum du passt ansehen",
     "matchStrengths": "Stärken",
-    "matchGaps": "Aufmerksamkeitspunkte"
+    "matchGaps": "Aufmerksamkeitspunkte",
+    "aiCopilotPlaceholder": "Frage den KI-Copiloten: Finde mir einen Remote-Job in Deutschland…",
+    "clearAll": "✕ Alle löschen",
+    "sortMatchScore": "Match-Score",
+    "trueRemote": "Echtes Remote"
   },
   "applicationStatus": {
     "submitted": "Eingereicht",

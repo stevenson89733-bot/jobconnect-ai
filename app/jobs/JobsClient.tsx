@@ -246,7 +246,7 @@ export default function JobsClient({
   ]
 
   const SORT_LABELS: Record<SortOption, string> = {
-    relevance: 'Match Score',
+    relevance: t('sortMatchScore'),
     date: t('sortNewest'),
     salary: t('sortSalary'),
   }
@@ -291,7 +291,7 @@ export default function JobsClient({
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#57C7E3] text-base select-none pointer-events-none">✦</span>
               <input
                 type="text"
-                placeholder="Ask the AI Copilot: Find me a remote job in Germany..."
+                placeholder={t('aiCopilotPlaceholder')}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && navigate({ q: query })}
@@ -375,7 +375,7 @@ export default function JobsClient({
                 onClick={clearAll}
                 className="text-sm px-4 py-1.5 rounded-full border border-gray-300 text-gray-600 bg-white hover:border-red-400 hover:text-red-500 transition-colors cursor-pointer"
               >
-                ✕ Clear all
+                {t('clearAll')}
               </button>
             )}
             <span className="w-px bg-slate-200 mx-0.5 self-stretch hidden sm:block" />
@@ -427,7 +427,7 @@ export default function JobsClient({
                   : 'border-slate-200 text-slate-500 hover:border-slate-400 hover:text-slate-700'
               }`}
             >
-              True Remote
+              {t('trueRemote')}
             </button>
           </div>
         </div>
