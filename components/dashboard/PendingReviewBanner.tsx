@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   count: number
@@ -8,6 +9,7 @@ type Props = {
 }
 
 export default function PendingReviewBanner({ count, previews }: Props) {
+  const t = useTranslations('candidate')
   if (count === 0) return null
 
   return (
@@ -17,10 +19,10 @@ export default function PendingReviewBanner({ count, previews }: Props) {
           <span className="text-2xl">📋</span>
           <div>
             <p className="font-semibold text-amber-900 dark:text-amber-200">
-              {count} application{count === 1 ? '' : 's'} ready for your review
+              {t('pendingReviewTitle', { count })}
             </p>
             <p className="text-xs text-amber-700 dark:text-amber-400 mt-0.5">
-              Auto-Apply drafted these for you. Review and approve before they&apos;re sent.
+              {t('pendingReviewSubtitle')}
             </p>
           </div>
         </div>
@@ -28,7 +30,7 @@ export default function PendingReviewBanner({ count, previews }: Props) {
           href="/candidate/applications?filter=pending_review"
           className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold transition-colors"
         >
-          Review now →
+          {t('pendingReviewCta')}
         </Link>
       </div>
 
@@ -40,7 +42,7 @@ export default function PendingReviewBanner({ count, previews }: Props) {
                 <span className="text-sm font-medium text-slate-900 dark:text-white">{p.title}</span>
                 <span className="text-xs text-slate-500 dark:text-slate-400">{p.company}</span>
                 {p.matchScore !== null && (
-                  <span className="text-xs font-semibold text-green-700 dark:text-green-400 ml-auto">{p.matchScore}% match</span>
+                  <span className="text-xs font-semibold text-green-700 dark:text-green-400 ml-auto">{t('pendingReviewMatchScore', { score: p.matchScore })}</span>
                 )}
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 italic">&ldquo;{p.coverLetterExcerpt}&rdquo;</p>

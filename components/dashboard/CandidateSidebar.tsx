@@ -1,17 +1,20 @@
 'use client'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-
-const navItems = [
-  { label: 'Dashboard', href: '/candidate', icon: '🏠' },
-  { label: 'Jobs', href: '/jobs', icon: '💼' },
-  { label: 'Applications', href: '/candidate/applications', icon: '📋' },
-  { label: 'AI Tools', href: '/ai-tools/resume-builder', icon: '🤖' },
-  { label: 'Profile', href: '/profile', icon: '👤' },
-]
+import { useTranslations } from 'next-intl'
 
 export default function CandidateSidebar() {
+  const t = useTranslations('candidate')
   const pathname = usePathname()
+
+  const navItems = [
+    { label: t('navDashboard'), href: '/candidate', icon: '🏠' },
+    { label: t('navJobs'), href: '/jobs', icon: '💼' },
+    { label: t('navApplications'), href: '/candidate/applications', icon: '📋' },
+    { label: t('navAiTools'), href: '/ai-tools/resume-builder', icon: '🤖' },
+    { label: t('navProfile'), href: '/profile', icon: '👤' },
+  ]
+
   return (
     <aside className="hidden md:flex flex-col w-56 min-h-screen bg-[#10152A] text-white fixed left-0 top-0 pt-16 z-40">
       {navItems.map(item => (

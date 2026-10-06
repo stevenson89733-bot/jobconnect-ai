@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import ProLockButton from '@/components/ui/ProLockButton'
 
 interface Props {
@@ -14,15 +15,16 @@ interface Props {
 }
 
 export default function ProfileCompletion({ profile }: Props) {
+  const t = useTranslations('candidate')
   if (!profile) return null
 
   const fields = [
-    { key: 'full_name',    label: 'Full name',    value: profile.full_name },
-    { key: 'title',        label: 'Job title',    value: profile.title },
-    { key: 'skills',       label: 'Skills',       value: profile.skills },
-    { key: 'cv_url',       label: 'CV / Resume',  value: profile.cv_url },
-    { key: 'linkedin_url', label: 'LinkedIn URL', value: profile.linkedin_url },
-    { key: 'bio',          label: 'Bio',          value: profile.bio },
+    { key: 'full_name',    label: t('profileCompletionFieldName'),     value: profile.full_name },
+    { key: 'title',        label: t('profileCompletionFieldTitle'),    value: profile.title },
+    { key: 'skills',       label: t('profileCompletionFieldSkills'),   value: profile.skills },
+    { key: 'cv_url',       label: t('profileCompletionFieldCv'),       value: profile.cv_url },
+    { key: 'linkedin_url', label: t('profileCompletionFieldLinkedin'), value: profile.linkedin_url },
+    { key: 'bio',          label: t('profileCompletionFieldBio'),      value: profile.bio },
   ]
 
   const filled = fields.filter(f => f.value).length
@@ -32,7 +34,7 @@ export default function ProfileCompletion({ profile }: Props) {
   if (pct === 100) {
     return (
       <div className="mb-6 flex items-center gap-2 bg-green-50 border border-green-200 rounded-xl px-4 py-3 text-green-700 text-sm font-medium">
-        ✅ Profile complete — you get priority job matching
+        {t('profileComplete')}
       </div>
     )
   }
@@ -40,7 +42,7 @@ export default function ProfileCompletion({ profile }: Props) {
   return (
     <div className="mb-6 bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-sm font-semibold text-gray-700">Profile completion</span>
+        <span className="text-sm font-semibold text-gray-700">{t('profileCompletionLabel')}</span>
         <span className="text-sm font-bold text-[#57C7E3]">{pct}%</span>
       </div>
       <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-3">
@@ -49,7 +51,7 @@ export default function ProfileCompletion({ profile }: Props) {
           style={{ width: `${pct}%` }}
         />
       </div>
-      <p className="text-xs text-gray-500 mb-2">Complete your profile to get better job matches:</p>
+      <p className="text-xs text-gray-500 mb-2">{t('profileCompletionSubtitle')}</p>
       <div className="flex flex-wrap gap-2">
         {missing.map(f => (
           <Link
@@ -62,7 +64,7 @@ export default function ProfileCompletion({ profile }: Props) {
         ))}
       </div>
       <div className="mt-3">
-        <ProLockButton label="Unlock AI Job Match" />
+        <ProLockButton label={t('profileCompletionUnlockAI')} />
       </div>
     </div>
   )
