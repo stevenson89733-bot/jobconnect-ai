@@ -1081,7 +1081,18 @@
     "candidateEliteDesc": "Anile nenpòt ki lè",
     "candidateEliteFeature5": "Modèl aplikasyon ki asire — pwoteksyon kont fwod priyoritè",
     "employerFeaturedListingButton": "Ajoute yon anons vedette — $29–99",
-    "everythingInGrowth": "Tout sa ki nan Growth +"
+    "everythingInGrowth": "Tout sa ki nan Growth +",
+    "candidatePremiumFeature8": "Ecart Konpetans Mobilite A→B — ecart konpetans ant mache",
+    "candidatePremiumFeature9": "Preparasyon Entèvyou Vwa — simasyon + kòmantè",
+    "candidatePremiumFeature10": "Aplike Otomatikman — 10 travay/jou — aplikasyon otomatik chak jou",
+    "candidatePremiumFeature11": "Sipò priyoritè",
+    "employerProPeriod": "/mwa",
+    "employerMarketplaceLabel": "Mache Rekrute + Frè Siksè",
+    "employerMarketplaceDesc": "Solisyon rekritman etikèt blan",
+    "employerFeaturedListingBenefit1": "Parèt nan tèt rezilta rechèch",
+    "employerFeaturedListingBenefit2": "Badge \"Vedèt\" sou kat travay",
+    "employerFeaturedListingBenefit3": "Enkli nan alèt imèl kandida",
+    "employerFeaturedListingBenefit4": "1 refrechisman pozisyon apre 15 jou"
   },
   "countries": {
     "AE": "Emira Arab Ini",
