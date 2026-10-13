@@ -32,7 +32,10 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts')
 //     stylesheet (same origin), and connect-src for both that same origin
 //     (its own XHR calls) and its realtime relay (client.relay.crisp.chat,
 //     wss:// for the websocket + https:// fallback) — scoped to exactly
-//     these two Crisp domains, nothing broader.
+//     these two Crisp domains, nothing broader. Its widget stylesheet also
+//     pulls its own Noto Sans / Hack font files from client.crisp.chat, so
+//     font-src allows that same origin too (otherwise the console fills with
+//     blocked-font errors and the widget falls back to a system font).
 //   - Google Fonts (styles/landing.css, /lp preview page only) loads its
 //     stylesheet from fonts.googleapis.com and the actual font files it
 //     references from fonts.gstatic.com — both required for @import url(...)
@@ -42,7 +45,7 @@ const csp = [
   "script-src 'self' 'unsafe-inline' https://client.crisp.chat https://connect.facebook.net",
   "style-src 'self' 'unsafe-inline' https://client.crisp.chat https://fonts.googleapis.com",
   "img-src 'self' data: https:",
-  "font-src 'self' data: https://fonts.gstatic.com",
+  "font-src 'self' data: https://fonts.gstatic.com https://client.crisp.chat",
   "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://client.crisp.chat wss://client.relay.crisp.chat https://client.relay.crisp.chat https://connect.facebook.net https://www.facebook.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
