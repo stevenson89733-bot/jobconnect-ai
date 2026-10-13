@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { matchExplanation } from '@/lib/ai/matchExplanation'
 import { rateLimit, getClientIp } from '@/lib/rateLimit'
+import { recordFirstJobMatch } from '@/lib/referral/server'
 
 export const maxDuration = 30
 
@@ -42,7 +43,7 @@ export async function POST(req: Request) {
   const [{ data: profile }, { data: job }] = await Promise.all([
     adminClient
       .from('profiles')
-      .select('title, skills, years_experience, location, work_preference')
+      .select('role, title, skills, years_experience, location, work_preference')
       .eq('user_id', user.id)
       .single(),
     adminClient
@@ -60,5 +61,19 @@ export async function POST(req: Request) {
     return NextResponse.json({ strengths: null, gaps: null })
   }
 
-  return NextResponse.json({ strengths: result.strengths, gaps: result.gaps })
+  // Qualifying action for referrals (job_match_generated): only a successful
+  // AI generation for a candidate counts. Awaited (not fire-and-forget) so
+  // Vercel can't freeze the function before the activation is written; any
+  // error is swallowed so it never fails the response.
+  let referralPrompt = false
+  if (profile?.role === 'candidate') {
+    try {
+      const { isFirstMatch } = await recordFirstJobMatch(adminClient, user.id)
+      referralPrompt = isFirstMatch
+    } catch (err) {
+      console.error('[referral] job match hook failed:', err instanceof Error ? err.message : err)
+    }
+  }
+
+  return NextResponse.json({ strengths: result.strengths, gaps: result.gaps, referralPrompt })
 }

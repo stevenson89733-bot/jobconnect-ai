@@ -86,7 +86,9 @@ export default function JobCard({
   const [matchOpen, setMatchOpen] = useState(false)
   const [matchData, setMatchData] = useState<{ strengths: string[]; gaps: string[] } | null>(null)
   const [matchLoading, setMatchLoading] = useState(false)
+  const [referralNudge, setReferralNudge] = useState(false)
   const t = useTranslations('jobs')
+  const tRef = useTranslations('referral')
 
   const showMatchSection = profileComplete && job.matchScore != null && job.matchScore >= 30
 
@@ -104,6 +106,8 @@ export default function JobCard({
         const data = await res.json()
         if (data.strengths || data.gaps) {
           setMatchData({ strengths: data.strengths ?? [], gaps: data.gaps ?? [] })
+          // Server returns true only on the user's very first AI Job Match.
+          if (data.referralPrompt === true) setReferralNudge(true)
         } else {
           setMatchOpen(false)
         }
@@ -269,6 +273,14 @@ export default function JobCard({
                         ))}
                       </ul>
                     </div>
+                  )}
+                  {referralNudge && (
+                    <p className="pt-1 text-[11px] text-slate-600 dark:text-slate-400">
+                      {tRef('nudge')}{' '}
+                      <Link href="/candidate/referrals" className="font-semibold text-primary hover:underline">
+                        {tRef('nudgeCta')}
+                      </Link>
+                    </p>
                   )}
                 </>
               )}

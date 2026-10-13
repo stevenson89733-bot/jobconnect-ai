@@ -5,6 +5,9 @@ import { redirect } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 import { rateLimit, getClientIp } from '@/lib/rateLimit'
 import { sendWelcomeEmail } from '@/lib/email/resend'
+import { cookies } from 'next/headers'
+import { REFERRAL_COOKIE, hashIp } from '@/lib/referral/core'
+import { attributeReferralAtSignup } from '@/lib/referral/server'
 
 // ── Step 6: Save user to Supabase on signup with role ─────────────────────────
 export async function signUp(formData: FormData) {
@@ -72,6 +75,25 @@ export async function signUp(formData: FormData) {
   console.log(
     `[signup timing] role=${role} rateLimit=${tRateLimit - t0}ms signUp=${tSignUp - tRateLimit}ms profileUpsert=${tProfile - tSignUp}ms total=${tProfile - t0}ms`
   )
+
+  // Referral attribution — captured here (not in /auth/callback) because the
+  // confirmation link may be opened on another device without the cookie.
+  // Candidates only; any failure is logged and never blocks signup.
+  if (role === 'candidate') {
+    try {
+      const visitId = cookies().get(REFERRAL_COOKIE)?.value
+      if (visitId) {
+        await attributeReferralAtSignup(adminClient, {
+          newUserId: data.user!.id,
+          visitId,
+          signupIpHash: hashIp(getClientIp()),
+        })
+        cookies().delete(REFERRAL_COOKIE)
+      }
+    } catch (err) {
+      console.error('[referral] signup attribution failed:', err instanceof Error ? err.message : err)
+    }
+  }
 
   // Fire-and-forget welcome email — must not block redirect
   if (role === 'candidate') {

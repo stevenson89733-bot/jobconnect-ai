@@ -13,6 +13,7 @@ export default function CandidateSidebar() {
     { label: t('navApplications'), href: '/candidate/applications', icon: '📋' },
     { label: t('navAiTools'), href: '/ai-tools/resume-builder', icon: '🤖' },
     { label: t('navProfile'), href: '/profile', icon: '👤' },
+    { label: t('navReferrals'), href: '/candidate/referrals', icon: '🎁' },
   ]
 
   return (

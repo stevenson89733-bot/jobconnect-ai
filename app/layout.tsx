@@ -16,6 +16,8 @@ import CrispChat from '@/components/CrispChat'
 import FaqWidget from '@/components/FaqWidget'
 import { CookieConsent } from '@/components/CookieConsent'
 import UtmCapture from '@/components/UtmCapture'
+import ReferralCapture from '@/components/referral/ReferralCapture'
+import { Suspense } from 'react'
 import CommandPalette from '@/components/search/CommandPalette'
 import { CountryProvider } from '@/components/country/CountryProvider'
 import { COUNTRY_COOKIE, DEFAULT_COUNTRY, isCountryCode } from '@/lib/countries'
@@ -105,6 +107,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               {!isLp && <FaqWidget />}
               {!isLp && <CrispChat />}
               <UtmCapture />
+              <Suspense fallback={null}>
+                <ReferralCapture />
+              </Suspense>
               <CookieConsent />
             </CountryProvider>
           </ThemeProvider>
