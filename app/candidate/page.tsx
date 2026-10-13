@@ -21,6 +21,10 @@ import OnboardingModal from '@/components/OnboardingModal'
 import PendingReviewBanner from '@/components/dashboard/PendingReviewBanner'
 import AtsEducationWidget from '@/components/dashboard/AtsEducationWidget'
 import ProfileCompletion from '@/components/dashboard/ProfileCompletion'
+import ReferralCard from '@/components/referral/ReferralCard'
+import ReturnTracker from '@/components/referral/ReturnTracker'
+import { createAdminClient } from '@/lib/supabase/admin'
+import { buildReferralUrl, daysSince } from '@/lib/referral/core'
 
 export const dynamic = 'force-dynamic'
 
@@ -41,6 +45,7 @@ type Profile = {
   candidate_plan: string | null
   cv_url: string | null
   linkedin_url: string | null
+  role: string | null
 }
 
 type JobRef = { title: string; company_name: string }
@@ -88,6 +93,12 @@ export default async function CandidateDashboard({
   let avgResponseTime: AvgResponseTime = { avgDays: null, sampleSize: 0 }
   let pendingReviewCount = 0
   let pendingReviewPreviews: { company: string; title: string; matchScore: number | null; coverLetterExcerpt: string }[] = []
+  // Referral invite: candidates only, after their first AI Job Match, unless
+  // snoozed (14 days). Read-only here — every referral write goes through
+  // /api/referral/* so a server render never mutates referral state.
+  let referralUrl: string | null = null
+  // Referred users not yet counted as returned → days since their signup.
+  let referralReturnDays: number | null = null
 
   try {
     const { data: { user } } = await supabase.auth.getUser()
@@ -96,7 +107,7 @@ export default async function CandidateDashboard({
 
       const [{ data: profileData }, { data: allApplications }, { data: appsData }, { data: analysisRow }] = await Promise.all([
         supabase.from('profiles')
-          .select('full_name, title, location, bio, experience, skills, avatar_url, years_experience, portfolio_url, availability, work_preference, is_premium, is_admin, candidate_plan, cv_url, linkedin_url')
+          .select('full_name, title, location, bio, experience, skills, avatar_url, years_experience, portfolio_url, availability, work_preference, is_premium, is_admin, candidate_plan, cv_url, linkedin_url, role')
           .eq('user_id', user.id).single(),
         // Full (unjoined, lightweight) set — feeds the count, the response
         // rates, and the avg response time, all from one query rather than
@@ -139,6 +150,21 @@ export default async function CandidateDashboard({
       atsScore = analysisJson?.atsScore?.score ?? null
       profileStrength = analysisJson?.profileStrength?.score ?? null
       analysisGeneratedAt = analysisRow?.generated_at ?? null
+
+      if (profile?.role === 'candidate') {
+        try {
+          const admin = createAdminClient()
+          const [{ data: refRow }, { data: attr }] = await Promise.all([
+            admin.from('referral_codes').select('code, first_job_match_at, prompt_dismissed_until, disabled_at').eq('user_id', user.id).maybeSingle(),
+            admin.from('referral_attributions').select('registered_at, returned_7d_at').eq('referred_user_id', user.id).maybeSingle(),
+          ])
+          const snoozed = !!refRow?.prompt_dismissed_until && new Date(refRow.prompt_dismissed_until) > new Date()
+          if (refRow?.first_job_match_at && !refRow.disabled_at && !snoozed) referralUrl = buildReferralUrl(refRow.code)
+          if (attr && !attr.returned_7d_at) referralReturnDays = daysSince(attr.registered_at)
+        } catch {
+          // Referral tables unavailable — dashboard renders without the card
+        }
+      }
 
       // Pending review count + previews for the banner
       try {
@@ -238,6 +264,9 @@ export default async function CandidateDashboard({
       </FadeIn>
 
       <AIAssistantCard />
+
+      {referralUrl && <ReferralCard url={referralUrl} />}
+      {referralReturnDays !== null && <ReturnTracker daysSince={referralReturnDays} />}
 
       <JobRecommendations jobs={recommendedJobs} />
 
