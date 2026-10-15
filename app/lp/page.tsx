@@ -1,7 +1,6 @@
 // app/lp/page.tsx  — nouvelle landing Figma
 // Pour basculer en homepage : copier le contenu dans app/page.tsx
 import "@/styles/landing.css";
-import { LandingNav }    from "@/components/landing/LandingNav";
 import { LpHeroSection } from "@/components/landing/LpHeroSection";
 import { TrustStrip }    from "@/components/landing/TrustStrip";
 import { HowItWorks }    from "@/components/landing/HowItWorks";
@@ -20,7 +19,6 @@ export const metadata = {
 export default function LandingPreviewPage() {
   return (
     <div className="landing-shell">
-      <LandingNav />
       <main>
         <LpHeroSection />
         <TrustStrip />
