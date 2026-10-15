@@ -1267,7 +1267,7 @@
   transition: transform 0.18s, border-color 0.18s;
   width: 36px;
 }
-.lf-social-icon:hover { border-color: #2f5bea; transform: translateY(-2px); }
+.lf-social-icon:hover { border-color: #315bea; transform: translateY(-2px); }
 
 .lf-cols {
   display: grid;
@@ -1296,7 +1296,7 @@
   text-decoration: none;
   transition: color 0.18s;
 }
-.lf-col ul li a:hover { color: #2f5bea; }
+.lf-col ul li a:hover { color: #315bea; }
 
 .lf-bottom {
   align-items: center;
@@ -1332,7 +1332,7 @@
   text-decoration: none;
   transition: color 0.18s;
 }
-.lf-legal a:hover { color: #2f5bea; }
+.lf-legal a:hover { color: #315bea; }
 
 /* ── Footer responsive ────────────────────────────────────── */
 @media (max-width: 900px) {
@@ -1382,19 +1382,19 @@
   html:not(.light) .landing-mobile-menu button { border-bottom-color: #1e2a3c; color: #9aabcb; }
   html:not(.light) .landing-mobile-divider { border-top-color: #1e2a3c; }
   /* Footer dark */
-  .lf-wrap { border-top-color: #1e2a3c; }
-  .lf-col-heading { color: #dce5f5; }
-  .lf-col ul li a { color: #6b7a93; }
-  .lf-col ul li a:hover { color: #5b8cf7; }
-  .lf-tagline { color: #6b7a93; }
-  .lf-social-icon { background: #161c27; border-color: #2a3550; }
-  .lf-social-icon:hover { border-color: #5b8cf7; }
-  .lf-bottom { border-top-color: #1e2a3c; }
-  .lf-bottom-left,
-  .lf-legal a,
-  .lf-attr { color: #485568; }
-  .lf-legal a:hover,
-  .lf-attr:hover { color: #9aabcb; }
+  html:not(.light) .lf-wrap { background: #0c1830; border-top-color: rgba(255, 255, 255, 0.08); }
+  html:not(.light) .lf-col-heading { color: #dce5f5; }
+  html:not(.light) .lf-col ul li a { color: #6b7a93; }
+  html:not(.light) .lf-col ul li a:hover { color: #5b8cf7; }
+  html:not(.light) .lf-tagline { color: #6b7a93; }
+  html:not(.light) .lf-social-icon { background: #161c27; border-color: #2a3550; }
+  html:not(.light) .lf-social-icon:hover { border-color: #5b8cf7; }
+  html:not(.light) .lf-bottom { border-top-color: #1e2a3c; }
+  html:not(.light) .lf-bottom-left,
+  html:not(.light) .lf-legal a,
+  html:not(.light) .lf-attr { color: #485568; }
+  html:not(.light) .lf-legal a:hover,
+  html:not(.light) .lf-attr:hover { color: #9aabcb; }
 }
 
 
@@ -1431,7 +1431,8 @@
 .dark .landing-mobile-menu a,
 .dark .landing-mobile-menu button { border-bottom-color: #1e2a3c; color: #9aabcb; }
 .dark .landing-mobile-divider { border-top-color: #1e2a3c; }
-.dark .lf-wrap { border-top-color: #1e2a3c; }
+/* Navy like the nav — the light #f8f9fc background made the #dce5f5 headings unreadable */
+.dark .lf-wrap { background: #0c1830; border-top-color: rgba(255, 255, 255, 0.08); }
 .dark .lf-col-heading { color: #dce5f5; }
 .dark .lf-col ul li a { color: #6b7a93; }
 .dark .lf-col ul li a:hover { color: #5b8cf7; }

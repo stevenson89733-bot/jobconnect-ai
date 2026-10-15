@@ -49,21 +49,6 @@ html, body {
   animation: gradient-shift 4s ease infinite;
 }
 
-/* ── Logo fix: no white box on any background ── */
-.logo-link {
-  display: inline-flex;
-  align-items: center;
-  line-height: 0;
-  overflow: visible;
-}
-.logo-img {
-  background: transparent;
-  mix-blend-mode: multiply;
-}
-.dark .logo-img {
-  mix-blend-mode: normal;
-}
-
 /* Adjust Crisp widget z-index to prevent footer overlap */
 .crisp-client {
   z-index: 10 !important;
