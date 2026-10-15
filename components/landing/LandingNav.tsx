@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Icon } from "./LandingIcons";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -19,15 +20,24 @@ interface LandingNavProps {
 export function LandingNav({ userEmail, isAdmin }: LandingNavProps) {
   const t = useTranslations("nav");
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname() ?? "";
+  // Highlights the current top-level section (brand blue + underline).
+  const isActive = (prefix: string) => pathname === prefix || pathname.startsWith(prefix + "/");
+  const itemClass = (prefix: string) =>
+    isActive(prefix) ? "landing-nav-item landing-nav-item--active" : "landing-nav-item";
+  const mobileClass = (prefix: string) => (isActive(prefix) ? "landing-nav-item--active" : undefined);
+  const current = (prefix: string) => (isActive(prefix) ? ("page" as const) : undefined);
 
   return (
     <header className="landing-topbar">
       <Link className="landing-brand" href="/" aria-label="JobConnect AI">
+        {/* Brand mark (JC + person) trimmed from logo-full-cropped.png at 4x
+            for HiDPI; transparent, no blend mode, readable on white and navy. */}
         <Image
-          src="/icon-jc.svg"
+          src="/logo-mark.png"
           alt=""
-          width={38}
-          height={38}
+          width={43}
+          height={36}
           priority
           className="landing-logo-icon"
           aria-hidden="true"
@@ -46,7 +56,7 @@ export function LandingNav({ userEmail, isAdmin }: LandingNavProps) {
       <nav className="landing-nav-links" aria-label="Main navigation">
         {/* Jobs */}
         <div className="landing-nav-dropdown">
-          <Link href="/jobs" className="landing-nav-item">
+          <Link href="/jobs" className={itemClass("/jobs")} aria-current={current("/jobs")}>
             {t("jobs")}
             <svg className="landing-nav-chevron" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -98,7 +108,7 @@ export function LandingNav({ userEmail, isAdmin }: LandingNavProps) {
 
         {/* AI Tools */}
         <div className="landing-nav-dropdown">
-          <Link href="/ai-tools" className="landing-nav-item">
+          <Link href="/ai-tools" className={itemClass("/ai-tools")} aria-current={current("/ai-tools")}>
             <span className="landing-nav-accent">✦</span> {t("aiTools")}
             <svg className="landing-nav-chevron" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -164,7 +174,7 @@ export function LandingNav({ userEmail, isAdmin }: LandingNavProps) {
         </div>
 
         {/* Pricing */}
-        <Link href="/pricing" className="landing-nav-item">{t("pricing")}</Link>
+        <Link href="/pricing" className={itemClass("/pricing")} aria-current={current("/pricing")}>{t("pricing")}</Link>
       </nav>
 
       {/* Right actions */}
@@ -207,9 +217,11 @@ export function LandingNav({ userEmail, isAdmin }: LandingNavProps) {
       {/* Mobile menu */}
       {menuOpen && (
         <div className="landing-mobile-menu">
-          <Link href="/jobs" onClick={() => setMenuOpen(false)}>{t("browseJobs")}</Link>
-          <Link href="/ai-tools" onClick={() => setMenuOpen(false)}>✦ {t("aiTools")}</Link>
-          <Link href="/pricing" onClick={() => setMenuOpen(false)}>{t("pricing")}</Link>
+          <Link href="/jobs" className={mobileClass("/jobs")} aria-current={current("/jobs")} onClick={() => setMenuOpen(false)}>{t("browseJobs")}</Link>
+          <Link href="/ai-tools" className={mobileClass("/ai-tools")} aria-current={current("/ai-tools")} onClick={() => setMenuOpen(false)}>
+            <span className="landing-nav-accent">✦</span> {t("aiTools")}
+          </Link>
+          <Link href="/pricing" className={mobileClass("/pricing")} aria-current={current("/pricing")} onClick={() => setMenuOpen(false)}>{t("pricing")}</Link>
           <div className="landing-mobile-divider" />
           {userEmail ? (
             <>

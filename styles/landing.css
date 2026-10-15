@@ -17,10 +17,11 @@
 /* ── Nav / Topbar ─────────────────────────────────────────── */
 .landing-topbar {
   align-items: center;
-  background: rgba(255, 255, 255, 0.92);
+  background: #fff;
   backdrop-filter: blur(16px);
   border-bottom: 1px solid #e7ebf1;
   display: flex;
+  font-family: "DM Sans", sans-serif;
   height: 72px;
   justify-content: space-between;
   padding: 0 max(32px, calc((100vw - 1500px) / 2));
@@ -42,7 +43,8 @@
   display: block;
   flex-shrink: 0;
   height: 36px;
-  width: 36px;
+  mix-blend-mode: normal;
+  width: auto;
 }
 
 .landing-logo-text {
@@ -111,7 +113,7 @@
   transition: color 0.2s;
 }
 .landing-nav-links a:hover {
-  color: #2f5bea;
+  color: #315bea;
 }
 
 .landing-header-actions {
@@ -1001,9 +1003,25 @@
   transition: color 0.2s;
   white-space: nowrap;
 }
-.landing-nav-item:hover { color: #2f5bea; }
+.landing-nav-item:hover { color: #315bea; }
 
-.landing-nav-accent { color: #2f5bea; font-size: 12px; }
+/* Current section (Jobs / AI Tools / Pricing) */
+/* scoped under .landing-nav-links to outrank `.landing-nav-links a` */
+.landing-nav-links .landing-nav-item--active { color: #315bea; position: relative; }
+.landing-nav-item--active::after {
+  background: #315bea;
+  border-radius: 2px;
+  bottom: -8px;
+  content: "";
+  height: 2px;
+  left: 0;
+  position: absolute;
+  right: 0;
+}
+.landing-mobile-menu a.landing-nav-item--active { color: #315bea; }
+.landing-mobile-menu a.landing-nav-item--active::after { display: none; }
+
+.landing-nav-accent { color: #f97316; font-size: 12px; }
 
 .landing-nav-chevron {
   height: 14px;
@@ -1160,7 +1178,7 @@
   padding: 8px 14px;
   transition: border-color 0.2s, color 0.2s;
 }
-.landing-outline-btn:hover { border-color: #2f5bea; color: #2f5bea; }
+.landing-outline-btn:hover { border-color: #315bea; color: #315bea; }
 
 .landing-text-btn--admin { color: #8b5cf6; }
 
@@ -1194,6 +1212,15 @@
 }
 .landing-mobile-menu a:last-child,
 .landing-mobile-menu button:last-child { border-bottom: 0; }
+/* The generic `.landing-mobile-menu a` reset above (and its dark variants)
+   was stripping the CTA's brand-blue fill — restore it. */
+.landing-topbar .landing-mobile-menu a.landing-primary-btn {
+  background: #315bea;
+  border-bottom: 0;
+  color: #fff;
+  margin-top: 12px;
+  text-align: center;
+}
 .landing-mobile-divider {
   border-top: 2px solid #edf0f6;
   margin: 6px 0;
@@ -1322,34 +1349,38 @@
 
 /* ── Dark-mode nav overrides ─────────────────────────────── */
 @media (prefers-color-scheme: dark) {
-  .landing-topbar { background: rgba(20, 34, 64, 0.88); border-bottom-color: #2a3a5c; }
-  .landing-nav-item,
-  .landing-text-btn { color: #9aabcb; }
-  .landing-nav-item:hover,
-  .landing-text-btn:hover { color: #5b8cf7; }
-  .landing-mega-menu,
-  .landing-dropdown-menu {
+  /* Pre-hydration fallback only — html:not(.light) so an explicit light
+     choice (next-themes .light class) always wins over the OS setting. */
+  html:not(.light) .landing-topbar { background: #0c1830; border-bottom-color: rgba(255, 255, 255, 0.08); }
+  html:not(.light) .landing-nav-item,
+  html:not(.light) .landing-text-btn { color: #9aabcb; }
+  html:not(.light) .landing-nav-item:hover,
+  html:not(.light) .landing-text-btn:hover { color: #5b8cf7; }
+  html:not(.light) .landing-nav-item--active { color: #5b8cf7; }
+  html:not(.light) .landing-nav-item--active::after { background: #5b8cf7; }
+  html:not(.light) .landing-mega-menu,
+  html:not(.light) .landing-dropdown-menu {
     background: #161c27;
     border-color: #1e2a3c;
     box-shadow: 0 24px 64px rgba(0,0,0,0.45);
   }
-  .landing-mega-link { color: #9aabcb; }
-  .landing-mega-link:hover { background: #1e2a3c; color: #5b8cf7; }
-  .landing-mega-col { border-right-color: #1e2a3c; }
-  .landing-dropdown-item { color: #9aabcb; }
-  .landing-dropdown-item:hover { background: #1e2a3c; }
-  .landing-dropdown-desc,
-  .landing-mega-label { color: #5e7092; }
-  .landing-dropdown-divider { border-top-color: #1e2a3c; }
-  .landing-outline-btn { border-color: #2a3550; color: #9aabcb; }
-  .landing-outline-btn:hover { border-color: #5b8cf7; color: #5b8cf7; }
-  .landing-mobile-menu {
+  html:not(.light) .landing-mega-link { color: #9aabcb; }
+  html:not(.light) .landing-mega-link:hover { background: #1e2a3c; color: #5b8cf7; }
+  html:not(.light) .landing-mega-col { border-right-color: #1e2a3c; }
+  html:not(.light) .landing-dropdown-item { color: #9aabcb; }
+  html:not(.light) .landing-dropdown-item:hover { background: #1e2a3c; }
+  html:not(.light) .landing-dropdown-desc,
+  html:not(.light) .landing-mega-label { color: #5e7092; }
+  html:not(.light) .landing-dropdown-divider { border-top-color: #1e2a3c; }
+  html:not(.light) .landing-outline-btn { border-color: #2a3550; color: #9aabcb; }
+  html:not(.light) .landing-outline-btn:hover { border-color: #5b8cf7; color: #5b8cf7; }
+  html:not(.light) .landing-mobile-menu {
     background: #161c27;
     border-top-color: #1e2a3c;
   }
-  .landing-mobile-menu a,
-  .landing-mobile-menu button { border-bottom-color: #1e2a3c; color: #9aabcb; }
-  .landing-mobile-divider { border-top-color: #1e2a3c; }
+  html:not(.light) .landing-mobile-menu a,
+  html:not(.light) .landing-mobile-menu button { border-bottom-color: #1e2a3c; color: #9aabcb; }
+  html:not(.light) .landing-mobile-divider { border-top-color: #1e2a3c; }
   /* Footer dark */
   .lf-wrap { border-top-color: #1e2a3c; }
   .lf-col-heading { color: #dce5f5; }
@@ -1368,11 +1399,15 @@
 
 
 /* ── Dark-mode nav overrides (Tailwind .dark class) ─────── */
-.dark .landing-topbar { background: rgba(20, 34, 64, 0.88); border-bottom-color: #2a3a5c; }
+.dark .landing-topbar { background: #0c1830; border-bottom-color: rgba(255, 255, 255, 0.08); }
 .dark .landing-nav-item,
 .dark .landing-text-btn { color: #9aabcb; }
 .dark .landing-nav-item:hover,
 .dark .landing-text-btn:hover { color: #5b8cf7; }
+/* #315bea is too dark to read on #0c1830 — dark mode uses the lighter brand blue */
+.dark .landing-nav-item--active,
+.dark .landing-mobile-menu a.landing-nav-item--active { color: #5b8cf7; }
+.dark .landing-nav-item--active::after { background: #5b8cf7; }
 .dark .landing-mega-menu,
 .dark .landing-dropdown-menu {
   background: #161c27;
