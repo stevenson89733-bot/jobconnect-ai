@@ -152,7 +152,7 @@ export default async function LearnPage() {
                       <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{guide.description}</p>
                     </div>
                     {!unlocked && (
-                      <span style={{ color: '#F0663A' }} className="text-xl shrink-0">🔒</span>
+                      <span style={{ color: '#f97316' }} className="text-xl shrink-0">🔒</span>
                     )}
                   </div>
 

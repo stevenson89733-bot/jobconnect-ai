@@ -356,7 +356,7 @@ export default function JobCard({
             <p className="text-[12px] font-semibold mb-1.5" style={{ color: '#57C7E3' }}>Pourquoi tu matches</p>
             <div className="flex flex-wrap gap-1">
               {positive.map((label) => (
-                <span key={label} className="text-[10px] font-semibold px-2 py-0.5 rounded-full text-white" style={{ background: '#F0663A' }}>
+                <span key={label} className="text-[10px] font-semibold px-2 py-0.5 rounded-full text-white" style={{ background: '#f97316' }}>
                   {label}
                 </span>
               ))}

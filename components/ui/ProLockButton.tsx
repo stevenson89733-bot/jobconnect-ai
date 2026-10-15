@@ -23,7 +23,7 @@ export default function ProLockButton({
   return (
     <button
       onClick={() => router.push('/pricing')}
-      className={`inline-flex items-center font-bold rounded-full bg-[#F0663A] text-white shadow-md hover:bg-[#d4522a] hover:shadow-lg active:scale-95 transition-all duration-150 whitespace-nowrap ${sizeClasses[size]} ${className}`}
+      className={`inline-flex items-center font-bold rounded-full bg-[#f97316] text-white shadow-md hover:bg-[#d4611a] hover:shadow-lg active:scale-95 transition-all duration-150 whitespace-nowrap ${sizeClasses[size]} ${className}`}
     >
       🔒 {label}
     </button>

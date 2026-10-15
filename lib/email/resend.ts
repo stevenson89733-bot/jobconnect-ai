@@ -23,7 +23,7 @@ export async function sendWelcomeEmail(params: {
         <tr>
           <td style="background:#0F1623;padding:28px 32px;border-radius:12px 12px 0 0">
             <p style="margin:0;font-size:20px;font-weight:700;color:#ffffff;letter-spacing:-0.3px">JobConnect AI</p>
-            <p style="margin:6px 0 0;font-size:13px;color:#2E5CF6;font-weight:500">Global AI Career Operating System</p>
+            <p style="margin:6px 0 0;font-size:13px;color:#315bea;font-weight:500">Global AI Career Operating System</p>
           </td>
         </tr>
 
@@ -35,7 +35,7 @@ export async function sendWelcomeEmail(params: {
               Ton compte est activé. Tu peux maintenant explorer des offres d'emploi internationales, configurer ton profil et activer la candidature automatique.
             </p>
             <a href="https://jobconnect-ai.com/candidate"
-               style="display:inline-block;background:#F0663A;color:#ffffff;text-decoration:none;font-size:15px;font-weight:600;padding:14px 28px;border-radius:8px;margin-bottom:28px">
+               style="display:inline-block;background:#f97316;color:#ffffff;text-decoration:none;font-size:15px;font-weight:600;padding:14px 28px;border-radius:8px;margin-bottom:28px">
               Voir les offres →
             </a>
             <p style="margin:0 0 32px;font-size:14px;line-height:1.6;color:#6B7280">
@@ -92,7 +92,7 @@ function interviewEmailHtml(params: InterviewReminderParams & { h1: string; body
         <tr>
           <td style="background:#0F1623;padding:28px 32px;border-radius:12px 12px 0 0">
             <p style="margin:0;font-size:20px;font-weight:700;color:#ffffff;letter-spacing:-0.3px">JobConnect AI</p>
-            <p style="margin:6px 0 0;font-size:13px;color:#2E5CF6;font-weight:500">Global AI Career Operating System</p>
+            <p style="margin:6px 0 0;font-size:13px;color:#315bea;font-weight:500">Global AI Career Operating System</p>
           </td>
         </tr>
 
@@ -104,11 +104,11 @@ function interviewEmailHtml(params: InterviewReminderParams & { h1: string; body
               Tu as un entretien prévu pour le poste de <strong>${jobTitle}</strong> chez <strong>${companyName}</strong>.
             </p>
             <!-- Info box -->
-            <div style="background:#EEF2FE;border-left:4px solid #2E5CF6;padding:14px 18px;border-radius:0 8px 8px 0;margin-bottom:24px">
+            <div style="background:#EEF2FE;border-left:4px solid #315bea;padding:14px 18px;border-radius:0 8px 8px 0;margin-bottom:24px">
               <p style="margin:0;font-size:15px;font-weight:600;color:#1E3A8A">📅 ${interviewDate}</p>
             </div>
             <a href="${meetingLink}"
-               style="display:inline-block;background:#F0663A;color:#ffffff;text-decoration:none;font-size:15px;font-weight:600;padding:14px 28px;border-radius:8px;margin-bottom:28px">
+               style="display:inline-block;background:#f97316;color:#ffffff;text-decoration:none;font-size:15px;font-weight:600;padding:14px 28px;border-radius:8px;margin-bottom:28px">
               Rejoindre l'entretien →
             </a>
             <p style="margin:0 0 32px;font-size:14px;line-height:1.6;color:#6B7280">

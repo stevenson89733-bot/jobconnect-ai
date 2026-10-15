@@ -407,10 +407,10 @@ export default function AutoApplySettingsPage() {
                   onClick={() => setSettings(s => s ? { ...s, min_match_score: n } : s)}
                   className={`flex-1 py-2.5 rounded-xl border text-sm font-bold transition-all ${
                     settings?.min_match_score === n
-                      ? 'border-[#F0663A] text-white shadow-md'
-                      : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-[#F0663A]/50'
+                      ? 'border-[#f97316] text-white shadow-md'
+                      : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-[#f97316]/50'
                   }`}
-                  style={settings?.min_match_score === n ? { background: '#F0663A' } : {}}
+                  style={settings?.min_match_score === n ? { background: '#f97316' } : {}}
                 >
                   {n}%
                 </button>

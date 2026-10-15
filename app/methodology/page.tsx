@@ -87,7 +87,7 @@ export default async function MethodologyPage() {
         {/* Signal cards */}
         {(
           [
-            { key: 'sig1', color: '#F0663A' },
+            { key: 'sig1', color: '#f97316' },
             { key: 'sig2', color: '#57C7E3' },
             { key: 'sig3', color: '#a78bfa' },
             { key: 'sig4', color: '#34d399' },

@@ -41,7 +41,7 @@ html, body {
   100% { background-position: 0% 50%; }
 }
 .hero-gradient-underline {
-  background: linear-gradient(90deg, #57C7E3, #2E5CF6, #F0663A, #57C7E3);
+  background: linear-gradient(90deg, #57C7E3, #315bea, #f97316, #57C7E3);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;

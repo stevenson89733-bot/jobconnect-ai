@@ -30,7 +30,7 @@ export default function DownloadGuideButton({ slug, unlocked, requiresPlan, labe
       <a
         href="/pricing"
         className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-white rounded-xl px-4 py-2 transition-all hover:opacity-90"
-        style={{ background: '#F0663A', opacity: 0.75 }}
+        style={{ background: '#f97316', opacity: 0.75 }}
       >
         {requiresPlan === 'elite' ? labels.unlockElite : labels.unlockPro}
       </a>
@@ -67,7 +67,7 @@ export default function DownloadGuideButton({ slug, unlocked, requiresPlan, labe
         onClick={handleDownload}
         disabled={loading}
         className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-white rounded-xl px-4 py-2 transition-all hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed"
-        style={{ background: '#F0663A' }}
+        style={{ background: '#f97316' }}
       >
         {loading ? labels.loading : labels.download}
       </button>
