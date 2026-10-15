@@ -187,13 +187,13 @@ export default function FaqWidget() {
           {/* ── Header ── */}
           <div
             className="relative flex items-center justify-between px-4 py-3 flex-shrink-0 cursor-pointer select-none"
-            style={{ background: 'linear-gradient(135deg, #2E5CF6 0%, #1E3FCC 100%)' }}
+            style={{ background: 'linear-gradient(135deg, #315bea 0%, #1E3FCC 100%)' }}
             onClick={() => isCollapsed && setIsCollapsed(false)}
           >
             <div className="flex items-center gap-3 min-w-0">
-              <div className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center overflow-hidden flex-shrink-0 ring-2 ring-white/20">
+              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden flex-shrink-0 ring-2 ring-white/20">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo.png" alt="JobConnect AI" className="w-8 h-8 object-contain" />
+                <img src="/logo-mark.png" alt="JobConnect AI" className="w-7 h-7 object-contain" />
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
@@ -309,7 +309,7 @@ export default function FaqWidget() {
                     {msg.type === 'bot' && (
                       <div className="w-7 h-7 rounded-full bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center overflow-hidden flex-shrink-0 shadow-sm">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src="/logo.png" alt="" className="w-5 h-5 object-contain" />
+                        <img src="/logo-mark.png" alt="" className="w-5 h-5 object-contain" />
                       </div>
                     )}
                     <div className={`flex flex-col gap-0.5 max-w-[78%] ${msg.type === 'user' ? 'items-end' : 'items-start'}`}>

@@ -1,59 +1,34 @@
-export default function Logo({ height = 44 }: { height?: number }) {
+import Image from 'next/image'
+
+/**
+ * JobConnect AI brand lockup — the same mark + HTML wordmark as LandingNav,
+ * shared by the footers so the logo is identical everywhere.
+ * - Mark: /logo-mark.png (JC + person, transparent, 4x for HiDPI), 36px
+ *   tall, never blended — readable on white and on the #0c1830 navy.
+ * - Wordmark: HTML spans styled by styles/landing.css (.landing-logo-*),
+ *   so "Job" flips to white in dark mode instead of disappearing like the
+ *   old full-logo PNG did.
+ * Server-safe (no hooks); wrap it in a <Link> at the call site.
+ */
+export default function Logo({ tagline }: { tagline?: string }) {
   return (
-    <svg
-      viewBox="0 0 800 150"
-      xmlns="http://www.w3.org/2000/svg"
-      height={height}
-      style={{ objectFit: 'contain', width: 'auto', display: 'block', backgroundColor: 'transparent' }}
-    >
-      {/* JC Icon */}
-      <g transform="translate(10, 20)">
-        {/* J shape - blue */}
-        <path
-          d="M 20 10 Q 45 10 45 35 Q 45 55 20 55 Q 10 55 10 48"
-          fill="none"
-          stroke="#2563EB"
-          strokeWidth="8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        {/* Person icon - blue */}
-        <circle cx="28" cy="25" r="6" fill="#2563EB" />
-        <ellipse cx="28" cy="43" rx="10" ry="13" fill="#2563EB" />
-        {/* C shape - orange */}
-        <path
-          d="M 60 10 Q 80 10 80 35 Q 80 55 60 55"
-          fill="none"
-          stroke="#FF6B35"
-          strokeWidth="8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </g>
-
-      {/* JobConnect text - blue */}
-      <text
-        x="120"
-        y="65"
-        fontFamily="Helvetica, Arial, sans-serif"
-        fontSize="50"
-        fontWeight="bold"
-        fill="#2563EB"
-      >
-        JobConnect
-      </text>
-
-      {/* AI text - orange */}
-      <text
-        x="620"
-        y="65"
-        fontFamily="Helvetica, Arial, sans-serif"
-        fontSize="50"
-        fontWeight="bold"
-        fill="#FF6B35"
-      >
-        AI
-      </text>
-    </svg>
+    <span className="landing-brand">
+      <Image
+        src="/logo-mark.png"
+        alt=""
+        width={43}
+        height={36}
+        className="landing-logo-icon"
+        aria-hidden="true"
+      />
+      <span className="landing-logo-text">
+        <span className="landing-logo-wordmark">
+          <span className="landing-logo-job">Job</span>
+          <span className="landing-logo-connect">Connect</span>
+          <span className="landing-logo-ai">AI</span>
+        </span>
+        {tagline && <span className="landing-logo-tagline">{tagline}</span>}
+      </span>
+    </span>
   )
 }

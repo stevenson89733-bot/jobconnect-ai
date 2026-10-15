@@ -1,6 +1,6 @@
 // components/landing/LandingFooter.tsx
 import Link from "next/link";
-import Image from "next/image";
+import Logo from "@/components/Logo";
 
 type IconProps = { size?: number; color?: string };
 
@@ -52,13 +52,7 @@ export function LandingFooter() {
         <div className="lf-top">
           <div className="lf-brand-col">
             <Link href="/" aria-label="JobConnect AI">
-              <Image
-                src="/images/logo-jobconnect.png"
-                alt="JobConnect AI"
-                height={36}
-                width={144}
-                style={{ height: 36, width: "auto" }}
-              />
+              <Logo />
             </Link>
             <p className="lf-tagline">AI-powered careers for a world without borders.</p>
             <div className="lf-social">

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
+import Logo from '@/components/Logo'
 
 type IconProps = { size?: number; color?: string }
 
@@ -48,21 +49,12 @@ export default async function Footer() {
   const tn = await getTranslations('nav')
 
   return (
-    <footer className="border-t border-slate-200 dark:border-slate-800 mt-24 bg-white dark:bg-background">
+    <footer className="border-t border-slate-200 dark:border-white/10 mt-24 bg-white dark:bg-[#0c1830]">
       <div className="max-w-screen-2xl mx-auto px-6 lg:px-12 xl:px-16 pt-12 pb-10 bg-transparent">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-10">
           <div className="sm:col-span-2 lg:col-span-1">
-            <Link href="/" className="inline-flex items-center gap-2.5 text-slate-900 dark:text-white no-underline">
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-[#2563eb] flex-shrink-0">
-                <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5" aria-hidden="true">
-                  <circle cx="10" cy="7" r="3" fill="white"/>
-                  <path d="M3 18c0-5.5 14-5.5 14 0" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
-              </span>
-              <span className="font-bold text-base leading-none">
-                <span className="text-black dark:text-white">Job</span><span className="text-[#2563eb]">Connect</span>
-                <span className="text-[#f97316] ml-1 text-sm">AI</span>
-              </span>
+            <Link href="/" aria-label="JobConnect AI" className="inline-flex no-underline">
+              <Logo />
             </Link>
             <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mt-3">{t('tagline')}</p>
           </div>
