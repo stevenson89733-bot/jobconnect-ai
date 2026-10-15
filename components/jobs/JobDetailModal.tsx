@@ -168,7 +168,7 @@ export default function JobDetailModal({ job, isOpen = true, onClose, alreadyApp
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 inline-flex items-center justify-center gap-2 text-white font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
-              style={{ background: '#F0663A' }}
+              style={{ background: '#f97316' }}
             >
               Apply Now →
               <ExternalLink className="w-4 h-4" strokeWidth={2} />

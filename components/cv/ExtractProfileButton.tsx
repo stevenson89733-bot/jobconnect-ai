@@ -38,7 +38,7 @@ export default function ExtractProfileButton({ cvUrl, isPremium }: { cvUrl: stri
       <Link
         href="/pricing"
         className="flex items-center gap-2 font-semibold text-white rounded-xl px-5 py-2.5 text-sm shrink-0 transition-all hover:opacity-90"
-        style={{ background: '#F0663A', opacity: 0.75 }}
+        style={{ background: '#f97316', opacity: 0.75 }}
       >
         🔒 Analyser mon CV <span className="text-xs font-normal opacity-80">Pro</span>
       </Link>
@@ -53,7 +53,7 @@ export default function ExtractProfileButton({ cvUrl, isPremium }: { cvUrl: stri
           type="button"
           disabled
           className="flex items-center gap-2 font-semibold text-white rounded-xl px-5 py-2.5 text-sm shrink-0 opacity-50 cursor-not-allowed"
-          style={{ background: '#F0663A' }}
+          style={{ background: '#f97316' }}
         >
           ✨ Analyser mon CV
         </button>
@@ -70,7 +70,7 @@ export default function ExtractProfileButton({ cvUrl, isPremium }: { cvUrl: stri
         onClick={handleExtract}
         disabled={loading}
         className="flex items-center gap-2 font-semibold text-white rounded-xl px-5 py-2.5 text-sm shrink-0 transition-all hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed"
-        style={{ background: '#F0663A' }}
+        style={{ background: '#f97316' }}
       >
         {loading ? 'Analyse en cours...' : '✨ Analyser mon CV'}
       </button>

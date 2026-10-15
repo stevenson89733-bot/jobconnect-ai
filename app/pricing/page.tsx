@@ -132,7 +132,7 @@ export default async function PricingPage({
           </div>
 
           {/* Pro */}
-          <div className="relative rounded-xl flex flex-col p-[2px]" style={{ background: 'linear-gradient(135deg, #2E5CF6, #57C7E3, #F0663A)' }}>
+          <div className="relative rounded-xl flex flex-col p-[2px]" style={{ background: 'linear-gradient(135deg, #315bea, #57C7E3, #f97316)' }}>
             <div className="card border-transparent bg-white dark:bg-card rounded-[10px] flex flex-col flex-1">
               <div className="mb-6">
                 <div className="text-sm font-semibold text-primary dark:text-blue-400 uppercase tracking-wider mb-1">{t('candidateProBadge')}</div>
