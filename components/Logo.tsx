@@ -8,11 +8,13 @@ import Image from 'next/image'
  * - Wordmark: HTML spans styled by styles/landing.css (.landing-logo-*),
  *   so "Job" flips to white in dark mode instead of disappearing like the
  *   old full-logo PNG did.
+ * `onDark` forces the light wordmark (as in dark mode) for surfaces that are
+ * dark in both themes, e.g. the onboarding backdrop.
  * Server-safe (no hooks); wrap it in a <Link> at the call site.
  */
-export default function Logo({ tagline }: { tagline?: string }) {
+export default function Logo({ tagline, onDark = false }: { tagline?: string; onDark?: boolean }) {
   return (
-    <span className="landing-brand">
+    <span className={onDark ? 'landing-brand landing-brand--on-dark' : 'landing-brand'}>
       <Image
         src="/logo-mark.png"
         alt=""

@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import Logo from '@/components/Logo'
 import { useState, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
 import { updatePassword } from '@/app/actions/auth'
@@ -7,7 +8,6 @@ import PasswordInput from '@/components/PasswordInput'
 
 export default function UpdatePasswordForm({ error }: { error?: string }) {
   const t = useTranslations('auth.updatePassword')
-  const tc = useTranslations('common')
   const [isPending, startTransition] = useTransition()
   const [matchError, setMatchError] = useState('')
 
@@ -26,9 +26,8 @@ export default function UpdatePasswordForm({ error }: { error?: string }) {
     <section className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-6 py-16">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2 font-bold text-xl mb-6">
-            <span className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-white text-sm font-black">J</span>
-            <span className="text-slate-900 dark:text-white">{tc('brand')} <span className="text-primary dark:text-blue-400">{tc('brandSuffix')}</span></span>
+          <Link href="/" className="inline-flex mb-6">
+            <Logo />
           </Link>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white mt-4">{t('title')}</h1>
           <p className="text-slate-600 dark:text-slate-400 mt-1 text-sm">{t('subtitle')}</p>

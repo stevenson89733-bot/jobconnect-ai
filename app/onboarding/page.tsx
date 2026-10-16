@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import OnboardingModal from '@/components/OnboardingModal'
+import Logo from '@/components/Logo'
 
 export const dynamic = 'force-dynamic'
 
@@ -43,11 +44,8 @@ export default async function OnboardingPage() {
 
       {/* Brand mark */}
       <div className="absolute top-6 left-1/2 -translate-x-1/2 text-center">
-        <div className="inline-flex items-center gap-2 font-bold text-lg text-white">
-          <span className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm font-black"
-                style={{ background: '#57C7E3' }}>J</span>
-          <span>JobConnect <span style={{ color: '#57C7E3' }}>AI</span></span>
-        </div>
+        {/* Backdrop is always #10152A, so force the light wordmark in both themes */}
+        <Logo onDark />
       </div>
 
       <OnboardingModal defaultNext="/candidate?registered=1" />
