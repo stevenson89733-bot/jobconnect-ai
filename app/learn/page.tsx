@@ -46,7 +46,7 @@ export default async function LearnPage() {
     },
     {
       id: 'entretien',
-      slug: 'remote-interview',
+      slug: 'remote-interview-prep-playbook',
       title: t('guides.interviewTitle'),
       description: t('guides.interviewDesc'),
       meta: t('guides.interviewMeta'),

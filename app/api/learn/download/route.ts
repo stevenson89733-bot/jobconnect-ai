@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { effectiveCandidatePlan } from '@/lib/adminAccess'
 
-const PRO_GUIDES = new Set(['salary-negotiation', 'linkedin-expats', 'remote-interview'])
+const PRO_GUIDES = new Set(['salary-negotiation', 'linkedin-expats', 'remote-interview-prep-playbook'])
 const ELITE_GUIDES = new Set(['international-contracts'])
 
 export async function GET(req: Request) {
