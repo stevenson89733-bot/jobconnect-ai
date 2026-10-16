@@ -187,7 +187,7 @@ export default function FaqWidget() {
           {/* ── Header ── */}
           <div
             className="relative flex items-center justify-between px-4 py-3 flex-shrink-0 cursor-pointer select-none"
-            style={{ background: 'linear-gradient(135deg, #315bea 0%, #1E3FCC 100%)' }}
+            style={{ background: 'linear-gradient(135deg, #315bea 0%, #2750d4 100%)' }}
             onClick={() => isCollapsed && setIsCollapsed(false)}
           >
             <div className="flex items-center gap-3 min-w-0">
