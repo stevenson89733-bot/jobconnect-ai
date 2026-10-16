@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import Logo from '@/components/Logo'
 import { useState, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
 import { signUp } from '@/app/actions/auth'
@@ -14,7 +15,6 @@ function RegisterForm() {
   const searchParams = useSearchParams()
   const error = searchParams.get('error')
   const t = useTranslations('auth.register')
-  const tc = useTranslations('common')
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -27,9 +27,8 @@ function RegisterForm() {
     <section className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-6 py-16">
       <div className="w-full max-w-lg">
         <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2 font-bold text-xl">
-            <span className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-white text-sm font-black">J</span>
-            <span className="text-slate-900 dark:text-white">{tc('brand')} <span className="text-primary dark:text-blue-400">{tc('brandSuffix')}</span></span>
+          <Link href="/" className="inline-flex">
+            <Logo />
           </Link>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white mt-4">{t('createAccount')}</h1>
           <p className="text-slate-600 dark:text-slate-400 mt-1 text-sm">{t('getStarted')}</p>

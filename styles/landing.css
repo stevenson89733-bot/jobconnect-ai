@@ -101,6 +101,11 @@
   color: #7a90b8;
 }
 
+/* <Logo onDark /> — always-dark surfaces: same colours as the dark-mode nav */
+.landing-brand--on-dark .landing-logo-job { color: #ffffff !important; }
+.landing-brand--on-dark .landing-logo-connect { color: #3b82f6 !important; }
+.landing-brand--on-dark .landing-logo-tagline { color: #7a90b8; }
+
 .landing-nav-links {
   display: flex;
   gap: 34px;
