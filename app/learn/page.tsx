@@ -50,9 +50,9 @@ export default async function LearnPage() {
       title: t('guides.interviewTitle'),
       description: t('guides.interviewDesc'),
       meta: t('guides.interviewMeta'),
-      badge: 'Pro',
-      badgeColor: 'bg-blue-100 text-blue-700',
-      requiresPlan: 'pro' as const,
+      badge: 'Elite',
+      badgeColor: 'bg-purple-100 text-purple-700',
+      requiresPlan: 'elite' as const,
     },
     {
       id: 'contrats',
