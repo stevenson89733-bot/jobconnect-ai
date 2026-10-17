@@ -15,6 +15,8 @@ type Log = {
   match_score: number | null
   cv_section: string | null
   jobs: { title: string; company_name: string } | null
+  _atsSubmitted?: boolean
+  _atsProvider?: string | null
 }
 
 function PreviewModal({ log, onClose, onApprove, approving }: { log: Log; onClose: () => void; onApprove: (log: Log) => void; approving: boolean }) {
@@ -230,8 +232,19 @@ export default function AutoApplySettingsPage() {
         body: JSON.stringify({ log_id: log.id }),
       })
       if (res.ok) {
-        setLogs(prev => prev.map(l => l.id === log.id ? { ...l, status: 'sent' } : l))
+        const body = await res.json().catch(() => ({}))
+        const atsSubmitted = body?.ats?.submitted ?? true
+        const atsProvider = body?.ats?.provider ?? null
+        const needsManual = !atsSubmitted && atsProvider !== null
+        setLogs(prev => prev.map(l =>
+          l.id === log.id
+            ? { ...l, status: 'sent', _atsSubmitted: atsSubmitted, _atsProvider: atsProvider }
+            : l
+        ))
         setPreviewLog(null)
+        if (needsManual) {
+          alert(`Application marquée comme envoyée, mais la soumission ${atsProvider ? `(${atsProvider})` : 'ATS'} a échoué — postulez manuellement via le lien d'origine.`)
+        }
       }
     } finally {
       setApproving(null)
