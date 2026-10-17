@@ -40,6 +40,14 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts')
 //     stylesheet from fonts.googleapis.com and the actual font files it
 //     references from fonts.gstatic.com — both required for @import url(...)
 //     to work instead of silently failing closed.
+//   - Meta Pixel (app/layout.tsx) needs script-src for its loader
+//     (connect.facebook.net). Its normal transport is a GET image beacon to
+//     www.facebook.com/tr (covered by img-src https:), but when the event URL
+//     grows past ~2 KB (long ad-click query strings: fbclid + UTM, sent twice
+//     as dl and rl) fbevents.js sends NO image and instead POSTs a form into
+//     a hidden iframe — so frame-src and form-action need www.facebook.com
+//     too, or that event is silently dropped. Scoped to exactly that one
+//     origin, nothing broader.
 const csp = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' https://client.crisp.chat https://connect.facebook.net",
@@ -49,7 +57,8 @@ const csp = [
   "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://client.crisp.chat wss://client.relay.crisp.chat https://client.relay.crisp.chat https://connect.facebook.net https://www.facebook.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
-  "form-action 'self'",
+  "frame-src 'self' https://www.facebook.com",
+  "form-action 'self' https://www.facebook.com",
 ].join('; ')
 
 const securityHeaders = [
