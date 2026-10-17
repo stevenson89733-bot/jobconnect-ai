@@ -20,10 +20,6 @@ module.exports = {
         // onto the existing text-slate-600 used everywhere else in the
         // app (out of scope for this lot).
         body: '#55627A',
-        brand: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-        }
       },
       fontFamily: {
         // Noto Sans Arabic as a fallback, not a swap — Inter has no Arabic
