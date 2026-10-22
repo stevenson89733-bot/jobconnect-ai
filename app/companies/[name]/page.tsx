@@ -10,6 +10,8 @@ import { JOB_SELECT_FIELDS, normalizeJobCompany } from '@/lib/jobsQuery'
 import { candidateHasApplicationAt, type OwnReview, type PublicReview } from '@/lib/reviews'
 import { getCompanyProfileSummary, type CompanyProfileSummary } from '@/lib/companyProfileSummary'
 import { absoluteUrl } from '@/lib/seo'
+import { toCompanySlug } from '@/lib/companyDisplay'
+import { redirect } from 'next/navigation'
 import CompanyClient from './CompanyClient'
 import CompanySummarySection from './CompanySummarySection'
 
@@ -59,7 +61,7 @@ export async function generateMetadata({ params }: { params: { name: string } })
   const description = jobs.length > 0
     ? `${jobs.length} open remote position${jobs.length === 1 ? '' : 's'} at ${displayName}. See real salaries, job details, and candidate reviews.`
     : `Company profile and candidate reviews for ${displayName} on JobConnect AI.`
-  const url = absoluteUrl(`/companies/${encodeURIComponent(displayName)}`)
+  const url = absoluteUrl(`/companies/${toCompanySlug(displayName)}`)
 
   return {
     title,
@@ -80,6 +82,10 @@ export default async function CompanyPage({ params }: { params: { name: string }
   if (jobs.length === 0 && !company) notFound()
 
   const displayName = company?.name ?? jobs[0]?.company_name ?? name
+  const expectedSlug = toCompanySlug(displayName)
+  if (name !== expectedSlug && jobs.length > 0) {
+    redirect(`/companies/${expectedSlug}`)
+  }
 
   // Employer profile data — meeting link (pro only), logo, size, description
   let meetingLink: string | null = null

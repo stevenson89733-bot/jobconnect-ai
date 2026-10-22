@@ -36,3 +36,13 @@ export function clearbitLogoUrl(companyName: string): string | null {
   if (slug.length < 2) return null
   return `https://img.logo.dev/${slug}.com?token=${LOGO_DEV_TOKEN}`
 }
+
+export function toCompanySlug(name: string): string {
+  return name
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}

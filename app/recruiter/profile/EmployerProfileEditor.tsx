@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { updateProfile } from '@/app/actions/profile'
 import EditableSection from '@/components/profile/EditableSection'
+import { toCompanySlug } from '@/lib/companyDisplay'
 
 const inputClass =
   'w-full bg-white dark:bg-background border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors'
@@ -29,7 +30,7 @@ export default function EmployerProfileEditor({ initial }: { initial: CompanyFie
   const [editing, setEditing] = useState(false)
 
   const companyPageSlug = company.company_name
-    ? `/companies/${encodeURIComponent(company.company_name.toLowerCase().replace(/\s+/g, '-'))}`
+    ? `/companies/${toCompanySlug(company.company_name)}`
     : null
 
   return (

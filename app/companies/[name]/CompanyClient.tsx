@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import JobCard from '@/components/jobs/JobCard'
-import { companyInitials, clearbitLogoUrl } from '@/lib/companyDisplay'
+import { companyInitials, clearbitLogoUrl, toCompanySlug } from '@/lib/companyDisplay'
 import { useJobInteractions } from '@/lib/useJobInteractions'
 import type { Job } from '@/app/jobs/JobsClient'
 import ReviewsSection from './ReviewsSection'
@@ -39,7 +39,7 @@ export default function CompanyClient({
   ownReview: OwnReview | null
   summaryNode: ReactNode
 }) {
-  const { appliedIds, savedIds, toggleSave } = useJobInteractions(`/companies/${encodeURIComponent(name)}`)
+  const { appliedIds, savedIds, toggleSave } = useJobInteractions(`/companies/${toCompanySlug(name)}`)
   const isHiring = jobs.length > 0
   const t = useTranslations('companyProfile')
 

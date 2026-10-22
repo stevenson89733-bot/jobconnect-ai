@@ -3,6 +3,7 @@ import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { getTranslations } from 'next-intl/server'
 import { candidateHasApplicationAt, MAX_REVIEW_TEXT_LENGTH } from '@/lib/reviews'
+import { toCompanySlug } from '@/lib/companyDisplay'
 
 export type SubmitReviewResult = { ok: true } | { ok: false; error: string }
 
@@ -69,7 +70,7 @@ export async function submitCompanyReview(input: {
     return { ok: false, error: t('couldNotSubmitReview') }
   }
 
-  revalidatePath(`/companies/${encodeURIComponent(companyName)}`)
+  revalidatePath(`/companies/${toCompanySlug(companyName)}`)
   return { ok: true }
 }
 
@@ -103,6 +104,6 @@ export async function moderateCompanyReview(
   }
 
   revalidatePath('/admin/reviews')
-  if (data?.company_name) revalidatePath(`/companies/${encodeURIComponent(data.company_name)}`)
+  if (data?.company_name) revalidatePath(`/companies/${toCompanySlug(data.company_name)}`)
   return { ok: true }
 }

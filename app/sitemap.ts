@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { createPublicClient } from '@/lib/supabase/public'
 import { SITE_URL } from '@/lib/seo'
+import { toCompanySlug } from '@/lib/companyDisplay'
 import { LANDING_MARKETS } from '@/lib/seo/landing-data'
 import { BLOG_POSTS } from '@/lib/blog/posts'
 
@@ -40,7 +41,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     const uniqueNames = [...new Set((data ?? []).map((j) => j.company_name).filter(Boolean))]
     companyEntries = uniqueNames.map((name) => ({
-      url: `${SITE_URL}/companies/${encodeURIComponent(name)}`,
+      url: `${SITE_URL}/companies/${toCompanySlug(name)}`,
       lastModified: new Date(),
       priority: 0.6,
     }))
