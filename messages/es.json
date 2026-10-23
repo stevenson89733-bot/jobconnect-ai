@@ -1776,8 +1776,7 @@
             "Te comprometes a NO:",
             [
               "Usar la Plataforma con fines fraudulentos, ilícitos o no autorizados",
-              "Aplicar ingeniería inversa, hacer scraping o extraer el código fuente o los modelos de IA sin autorización por escrito",
-              "Subir código malicioso, credenciales falsas o historiales laborales engañosos",
+              "Subir código malicioso",
               "Intentar eludir los límites de uso, los controles de autenticación o los sistemas de pago"
             ],
             "**Perfiles honestos y credenciales auténticas**",
@@ -1785,7 +1784,7 @@
               "Todo el historial laboral, las habilidades, las cualificaciones y la situación de autorización de trabajo deben ser exactos y veraces.",
               "Se prohíbe crear perfiles para cualquier persona que no seas tú, enviar credenciales falsificadas o tergiversar tu identidad."
             ],
-            "**Uso responsable de Auto-Apply / ProAI**",
+            "**Uso responsable de Auto-Apply**",
             [
               "Las funciones automatizadas deben usarse únicamente para apoyar tu búsqueda de empleo real, para puestos para los que estés cualificado.",
               "No debes usar bots ni herramientas de envío masivo para enviar spam a empleadores, saturar sistemas ATS de terceros o infringir los términos de portales de empleo de terceros."

@@ -1777,8 +1777,7 @@
             "Ou dakò pou PA:",
             [
               "Itilize Platfòm nan pou bi fwod, ilegal oswa san otorizasyon",
-              "Dekonpoze, fè scraping oswa ekstrè kòd sous oswa modèl IA yo san otorizasyon alekri",
-              "Telechaje kòd malveyan, fo diplòm oswa istwa travay ki twonpe moun",
+              "Telechaje kòd malveyan",
               "Eseye kontoune limit itilizasyon, kontwòl otantifikasyon oswa sistèm peman"
             ],
             "**Pwofil onèt ak kalifikasyon otantik**",
@@ -1786,7 +1785,7 @@
               "Tout istwa travay, konpetans, kalifikasyon ak estati otorizasyon travay dwe egzat e vre.",
               "Li entèdi pou w kreye pwofil pou yon lòt moun ki pa ou menm, pou w soumèt fo kalifikasyon, oswa pou w bay manti sou idantite w."
             ],
-            "**Itilizasyon responsab Auto-Apply / ProAI**",
+            "**Itilizasyon responsab Auto-Apply**",
             [
               "Fonksyon otomatik yo dwe itilize sèlman pou sipòte vrè rechèch travay ou, pou pòs ou kalifye pou yo.",
               "Ou pa dwe itilize bot oswa zouti soumisyon an mas pou voye spam bay patwon, satire sistèm ATS lòt konpayi, oswa vyole kondisyon lòt sit travay."

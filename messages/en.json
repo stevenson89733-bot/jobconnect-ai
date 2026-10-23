@@ -1800,8 +1800,7 @@
             "You agree NOT to:",
             [
               "Use the Platform for fraudulent, unlawful, or unauthorized purposes",
-              "Reverse-engineer, scrape, or extract source code or AI models without written authorization",
-              "Upload malicious code, false credentials, or deceptive employment histories",
+              "Upload malicious code",
               "Attempt to bypass rate limits, authentication controls, or payment systems"
             ],
             "**Honest Profiles & Authentic Credentials**",
@@ -1809,7 +1808,7 @@
               "All employment history, skills, qualifications, and work-authorization statuses must be accurate and truthful.",
               "You are prohibited from creating profiles for anyone other than yourself, submitting falsified credentials, or misrepresenting your identity."
             ],
-            "**Responsible Use of Auto-Apply / ProAI**",
+            "**Responsible Use of Auto-Apply**",
             [
               "Automated features must be used solely to support your genuine job search for roles you are qualified to pursue.",
               "You must not use bots or bulk submission tools to spam employers, flood third-party ATS systems, or violate the terms of third-party job boards."

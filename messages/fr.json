@@ -1776,8 +1776,7 @@
             "Vous vous engagez à NE PAS :",
             [
               "utiliser la Plateforme à des fins frauduleuses, illégales ou non autorisées ;",
-              "désassembler, extraire par scraping ou copier le code source ou les modèles d'IA sans autorisation écrite ;",
-              "téléverser du code malveillant, de faux diplômes ou un parcours professionnel trompeur ;",
+              "téléverser du code malveillant ;",
               "tenter de contourner les limites d'utilisation, les contrôles d'authentification ou les systèmes de paiement."
             ],
             "**Profils honnêtes et qualifications authentiques**",
@@ -1785,7 +1784,7 @@
               "L'ensemble du parcours professionnel, des compétences, des qualifications et des statuts d'autorisation de travail doit être exact et véridique.",
               "Il vous est interdit de créer un profil pour une autre personne que vous-même, de soumettre de fausses qualifications ou de mentir sur votre identité."
             ],
-            "**Utilisation responsable de l'Auto-Apply / ProAI**",
+            "**Utilisation responsable de l'Auto-Apply**",
             [
               "Les fonctionnalités automatisées doivent être utilisées uniquement pour soutenir votre recherche d'emploi réelle, pour des postes auxquels vous êtes qualifié(e) pour postuler.",
               "Vous ne devez pas utiliser de bots ou d'outils d'envoi en masse pour spammer des employeurs, saturer des systèmes ATS tiers ou enfreindre les conditions de sites d'emploi tiers."
