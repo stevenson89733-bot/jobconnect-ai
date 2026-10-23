@@ -9,8 +9,10 @@ import { Fragment, type ReactNode } from 'react'
  * Shape: { title, lastUpdated, intro: string[], sections: { id?, title, blocks }[] }
  * (`id` makes a section linkable, e.g. /terms#acceptable-use)
  * where each block is a paragraph (string) or a bulleted list (string[]).
- * Inline markup inside any string: **bold**, [label](/path) and bare email
- * addresses (auto-linked with mailto:).
+ * Inline markup inside any string: **bold**, [label](/path), bare email
+ * addresses (auto-linked with mailto:) and international phone numbers
+ * starting with "+" (auto-linked with tel:, forced LTR so they read correctly
+ * inside right-to-left text).
  */
 export type LegalDoc = {
   title: string
@@ -19,7 +21,8 @@ export type LegalDoc = {
   sections: { id?: string; title: string; blocks: (string | string[])[] }[]
 }
 
-const INLINE = /(\*\*[^*]+\*\*|\[[^\]]+\]\([^)\s]+\)|[\w.+-]+@[\w-]+(?:\.[\w-]+)+)/g
+const PHONE = /^\+\d[\d ()-]{6,}\d$/
+const INLINE = /(\*\*[^*]+\*\*|\[[^\]]+\]\([^)\s]+\)|[\w.+-]+@[\w-]+(?:\.[\w-]+)+|\+\d[\d ()-]{6,}\d)/g
 
 function inline(text: string): ReactNode[] {
   return text.split(INLINE).map((part, i) => {
@@ -33,6 +36,9 @@ function inline(text: string): ReactNode[] {
     }
     if (/^[\w.+-]+@[\w-]+(?:\.[\w-]+)+$/.test(part)) {
       return <a key={i} href={`mailto:${part}`} className="text-blue-400 underline hover:text-white">{part}</a>
+    }
+    if (PHONE.test(part)) {
+      return <a key={i} href={`tel:${part.replace(/[^\d+]/g, '')}`} dir="ltr" className="text-blue-400 underline hover:text-white">{part}</a>
     }
     return <Fragment key={i}>{part}</Fragment>
   })
