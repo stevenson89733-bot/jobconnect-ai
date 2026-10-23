@@ -6,8 +6,8 @@ import ContactForm from './ContactForm'
 // standby — not actively monitored 24/7 — so the copy says so honestly
 // rather than implying round-the-clock support.
 const CONTACT_EMAIL = 'contact@jobconnect-ai.com'
-const CONTACT_PHONE_DISPLAY = '+84 37 3697 948'
-const CONTACT_PHONE_TEL = '+84373697948'
+const CONTACT_PHONE_DISPLAY = '+1 (551) 284-6132'
+const CONTACT_PHONE_TEL = '+15512846132'
 
 export default async function Contact() {
   const t = await getTranslations('contactPage')
@@ -35,7 +35,8 @@ export default async function Contact() {
             className="flex items-center gap-3 text-sm text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-blue-400 transition-colors"
           >
             <Phone className="w-4 h-4 shrink-0" strokeWidth={1.75} />
-            <span>{CONTACT_PHONE_DISPLAY}</span>
+            {/* dir="ltr" keeps the number in order inside right-to-left locales */}
+            <span dir="ltr">{CONTACT_PHONE_DISPLAY}</span>
           </a>
         </div>
       </div>
