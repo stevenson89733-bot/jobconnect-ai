@@ -1749,7 +1749,9 @@
           "title": "2. Gói đăng ký, thanh toán và hoàn tiền",
           "blocks": [
             [
-              "**Gói dịch vụ:** Miễn phí, Pro (19,99 USD/tháng) và Elite (39,99 USD/tháng).",
+              "**Gói dành cho ứng viên:** Miễn phí, Pro (19,99 USD/tháng) và Elite (39,99 USD/tháng).",
+              "**Gói dành cho nhà tuyển dụng:** Miễn phí (1 tin tuyển dụng đang hoạt động), Growth (49 USD/tháng) và Pro (99 USD/tháng).",
+              "**Tin tuyển dụng nổi bật:** 49 USD mỗi tin — mua một lần, giúp tin tuyển dụng được làm nổi bật trong 30 ngày và không tự động gia hạn.",
               "**Thanh toán:** Gói đăng ký tự động gia hạn hằng tháng qua Stripe. Bạn có thể hủy bất cứ lúc nào trước kỳ thanh toán tiếp theo.",
               "**Hoàn tiền:** Nhìn chung không hoàn tiền, trừ khi pháp luật yêu cầu hoặc theo [Chính sách hoàn tiền](/refund) của chúng tôi (jobconnect-ai.com/refund)."
             ]

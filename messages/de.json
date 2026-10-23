@@ -1749,7 +1749,9 @@
           "title": "2. Abonnements, Zahlungen & Rückerstattungen",
           "blocks": [
             [
-              "**Tarife:** Free, Pro (19,99 $/Monat) und Elite (39,99 $/Monat).",
+              "**Tarife für Kandidaten:** Free, Pro (19,99 $/Monat) und Elite (39,99 $/Monat).",
+              "**Tarife für Arbeitgeber:** Free (1 aktive Stellenanzeige), Growth (49 $/Monat) und Pro (99 $/Monat).",
+              "**Hervorgehobene Anzeigen:** 49 $ pro Anzeige — ein einmaliger Kauf, der eine Stellenanzeige 30 Tage lang hervorhebt und sich nicht verlängert.",
               "**Abrechnung:** Abonnements verlängern sich automatisch monatlich über Stripe. Eine Kündigung ist jederzeit vor dem nächsten Abrechnungszeitraum möglich.",
               "**Rückerstattungen:** Grundsätzlich nicht erstattungsfähig, sofern nicht gesetzlich vorgeschrieben oder gemäß unserer [Rückerstattungsrichtlinie](/refund) (jobconnect-ai.com/refund)."
             ]

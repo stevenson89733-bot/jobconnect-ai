@@ -1749,7 +1749,9 @@
           "title": "2. Assinaturas, pagamentos e reembolsos",
           "blocks": [
             [
-              "**Planos:** Gratuito, Pro (US$ 19,99/mês) e Elite (US$ 39,99/mês).",
+              "**Planos para candidatos:** Gratuito, Pro (US$ 19,99/mês) e Elite (US$ 39,99/mês).",
+              "**Planos para empregadores:** Gratuito (1 vaga ativa), Growth (US$ 49/mês) e Pro (US$ 99/mês).",
+              "**Vagas em destaque:** US$ 49 por vaga — uma compra única que destaca uma vaga por 30 dias e não é renovada.",
               "**Cobrança:** as assinaturas são renovadas automaticamente todo mês via Stripe. Cancele a qualquer momento antes do próximo ciclo de cobrança.",
               "**Reembolsos:** em geral não reembolsáveis, exceto quando exigido por lei ou conforme a nossa [Política de Reembolso](/refund) (jobconnect-ai.com/refund)."
             ]
