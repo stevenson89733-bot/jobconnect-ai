@@ -2027,8 +2027,6 @@
     "searchPlaceholderWhat": "직책, 기술 또는 회사",
     "searchPlaceholderWhere": "도시, 국가 또는 원격",
     "searchBtn": "내 채용 공고 찾기",
-    "proofCount": "12,000명 이상의 전문가",
-    "proofText": "가 저희와 함께 다음 커리어를 찾았습니다",
     "dashboardTitle": "오늘의 매칭",
     "dashboardGreeting": "안녕하세요, Alex",
     "dashboardNewRoles": "당신에게 맞는 새 포지션 24개를 찾았습니다",
@@ -2040,7 +2038,6 @@
     "matchLabel": "매칭",
     "updatedProfile": "프로필 기반으로 업데이트됨",
     "seeAllMatches": "모든 매칭 보기",
-    "trustIntro": "열정적인 인재와 팀을 연결합니다",
     "howKicker": "더 나은 구직 방법",
     "howH2": "다음 커리어, 더 쉽게.",
     "howP": "프로필 작성부터 오퍼 수락까지, JobConnect AI가 당신의 시간이 가치 있는 기회에 집중할 수 있도록 돕습니다.",
@@ -2078,7 +2075,11 @@
     "ctaH2Part2": "오늘부터 시작됩니다.",
     "ctaP": "프로필을 만들고 JobConnect AI가 당신을 위한 포지션을 찾도록 맡겨보세요.",
     "ctaBtn": "내 채용 공고 찾기",
-    "ctaSub": "신용카드 불필요 · 무료로 시작"
+    "ctaSub": "신용카드 불필요 · 무료로 시작",
+    "statJobsLabel": "오늘의 채용 공고",
+    "statCountries": "63개국",
+    "statLanguages": "11개 언어",
+    "statZeroLabel": "조작된 결과"
   },
   "referral": {
     "title": "더 나은 커리어 기회를 찾는 사람 5명을 알고 계신가요? JobConnect Ai를 공유해 보세요.",

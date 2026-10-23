@@ -2033,8 +2033,6 @@
     "searchPlaceholderWhat": "Rol, habilidad o empresa",
     "searchPlaceholderWhere": "Ciudad, país o remoto",
     "searchBtn": "Encontrar mis ofertas",
-    "proofCount": "12.000+ profesionales",
-    "proofText": "encontraron su próximo empleo con nosotros",
     "dashboardTitle": "TUS COINCIDENCIAS DEL DÍA",
     "dashboardGreeting": "Buenos días, Alex",
     "dashboardNewRoles": "Encontramos 24 nuevos puestos para ti",
@@ -2046,7 +2044,6 @@
     "matchLabel": "coincidencia",
     "updatedProfile": "Actualizado para tu perfil",
     "seeAllMatches": "Ver todas las coincidencias",
-    "trustIntro": "Conectando talentos ambiciosos con equipos en",
     "howKicker": "UNA MEJOR FORMA DE BUSCAR EMPLEO",
     "howH2": "Tu próximo movimiento, más sencillo.",
     "howP": "Desde el perfil hasta la oferta, JobConnect AI te ayuda a enfocarte en las oportunidades que valen tu tiempo.",
@@ -2084,7 +2081,11 @@
     "ctaH2Part2": "comenzar hoy.",
     "ctaP": "Crea tu perfil y deja que JobConnect AI encuentre las ofertas que estaban destinadas para ti.",
     "ctaBtn": "Encontrar mis ofertas",
-    "ctaSub": "Sin tarjeta de crédito · Gratis para empezar"
+    "ctaSub": "Sin tarjeta de crédito · Gratis para empezar",
+    "statJobsLabel": "empleos hoy",
+    "statCountries": "63 países",
+    "statLanguages": "11 idiomas",
+    "statZeroLabel": "resultados inventados"
   },
   "referral": {
     "title": "¿Conoces a 5 personas que buscan mejores oportunidades profesionales? Comparte JobConnect Ai con ellas.",

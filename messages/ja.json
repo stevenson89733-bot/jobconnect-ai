@@ -2027,8 +2027,6 @@
     "searchPlaceholderWhat": "職種・スキル・企業名",
     "searchPlaceholderWhere": "都市・国・リモート",
     "searchBtn": "求人を探す",
-    "proofCount": "12,000人以上のプロフェッショナル",
-    "proofText": "が私たちと共に次のキャリアを見つけました",
     "dashboardTitle": "本日のマッチング",
     "dashboardGreeting": "おはようございます、Alex",
     "dashboardNewRoles": "あなたに合う新着求人を24件見つけました",
@@ -2040,7 +2038,6 @@
     "matchLabel": "マッチ",
     "updatedProfile": "プロフィールに基づいて更新済み",
     "seeAllMatches": "すべてのマッチを見る",
-    "trustIntro": "意欲ある人材と一流チームをつなぐ",
     "howKicker": "よりスマートな求職方法",
     "howH2": "次のキャリアへ、もっとシンプルに。",
     "howP": "プロフィール作成からオファー受領まで、JobConnect AIが本当に価値のある機会に集中できるよう支援します。",
@@ -2078,7 +2075,11 @@
     "ctaH2Part2": "今日から始められる。",
     "ctaP": "プロフィールを作成して、JobConnect AIがあなたのための求人を見つけるのに任せましょう。",
     "ctaBtn": "求人を探す",
-    "ctaSub": "クレジットカード不要 · 無料で始める"
+    "ctaSub": "クレジットカード不要 · 無料で始める",
+    "statJobsLabel": "本日の求人",
+    "statCountries": "63か国",
+    "statLanguages": "11言語",
+    "statZeroLabel": "捏造された結果"
   },
   "referral": {
     "title": "より良いキャリアの機会を探している人を5人知っていますか？JobConnect Ai をシェアしましょう。",

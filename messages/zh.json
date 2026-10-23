@@ -2027,8 +2027,6 @@
     "searchPlaceholderWhat": "职位、技能或公司",
     "searchPlaceholderWhere": "城市、国家或远程",
     "searchBtn": "查找我的职位",
-    "proofCount": "12,000+ 位专业人士",
-    "proofText": "通过我们找到了下一份工作",
     "dashboardTitle": "今日推荐职位",
     "dashboardGreeting": "早上好，Alex",
     "dashboardNewRoles": "我们为你找到了 24 个新职位",
@@ -2040,7 +2038,6 @@
     "matchLabel": "匹配度",
     "updatedProfile": "已为你的档案更新",
     "seeAllMatches": "查看所有匹配",
-    "trustIntro": "连接有抱负的人才与各大团队",
     "howKicker": "更好的求职方式",
     "howH2": "你的下一步，更简单。",
     "howP": "从创建档案到获得 offer，JobConnect AI 帮你专注于值得投入时间的机会。",
@@ -2078,7 +2075,11 @@
     "ctaH2Part2": "从今天开始。",
     "ctaP": "创建你的档案，让 JobConnect AI 找到为你量身定制的职位。",
     "ctaBtn": "查找我的职位",
-    "ctaSub": "无需信用卡 · 免费开始"
+    "ctaSub": "无需信用卡 · 免费开始",
+    "statJobsLabel": "今日职位",
+    "statCountries": "63 个国家",
+    "statLanguages": "11 种语言",
+    "statZeroLabel": "虚构结果"
   },
   "referral": {
     "title": "认识 5 位正在寻找更好职业机会的人吗？与他们分享 JobConnect Ai。",

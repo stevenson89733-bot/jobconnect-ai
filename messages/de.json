@@ -2027,8 +2027,6 @@
     "searchPlaceholderWhat": "Rolle, Fähigkeit oder Unternehmen",
     "searchPlaceholderWhere": "Stadt, Land oder remote",
     "searchBtn": "Meine Stellen finden",
-    "proofCount": "12.000+ Fachkräfte",
-    "proofText": "haben mit uns ihren nächsten Job gefunden",
     "dashboardTitle": "DEINE TAGES-MATCHES",
     "dashboardGreeting": "Guten Morgen, Alex",
     "dashboardNewRoles": "Wir haben 24 neue Stellen für dich gefunden",
@@ -2040,7 +2038,6 @@
     "matchLabel": "Match",
     "updatedProfile": "Für dein Profil aktualisiert",
     "seeAllMatches": "Alle Matches sehen",
-    "trustIntro": "Verbindet ehrgeizige Talente mit Teams bei",
     "howKicker": "EIN BESSERER WEG ZUR JOBSUCHE",
     "howH2": "Dein nächster Schritt, einfacher.",
     "howP": "Vom Profil bis zum Angebot hilft dir JobConnect AI, dich auf die Möglichkeiten zu konzentrieren, die deine Zeit wert sind.",
@@ -2078,7 +2075,11 @@
     "ctaH2Part2": "heute beginnen.",
     "ctaP": "Erstelle dein Profil und lass JobConnect AI die Stellen finden, die für dich bestimmt sind.",
     "ctaBtn": "Meine Stellen finden",
-    "ctaSub": "Keine Kreditkarte erforderlich · Kostenlos starten"
+    "ctaSub": "Keine Kreditkarte erforderlich · Kostenlos starten",
+    "statJobsLabel": "Jobs heute",
+    "statCountries": "63 Länder",
+    "statLanguages": "11 Sprachen",
+    "statZeroLabel": "erfundene Ergebnisse"
   },
   "referral": {
     "title": "Kennst du 5 Menschen, die nach besseren Karrierechancen suchen? Teile JobConnect Ai mit ihnen.",

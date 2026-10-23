@@ -2057,8 +2057,6 @@
     "searchPlaceholderWhat": "Role, skill, or company",
     "searchPlaceholderWhere": "City, country, or remote",
     "searchBtn": "Find my matches",
-    "proofCount": "12,000+ professionals",
-    "proofText": "found their next move with us",
     "dashboardTitle": "YOUR DAILY MATCHES",
     "dashboardGreeting": "Good morning, Alex",
     "dashboardNewRoles": "We found 24 new roles for you",
@@ -2070,7 +2068,6 @@
     "matchLabel": "match",
     "updatedProfile": "Updated for your profile",
     "seeAllMatches": "See all matches",
-    "trustIntro": "Connecting ambitious people with teams at",
     "howKicker": "A BETTER WAY TO JOB SEARCH",
     "howH2": "Your next move, made simpler.",
     "howP": "From profile to offer, JobConnect AI helps you focus on the opportunities worth your time.",
@@ -2108,7 +2105,11 @@
     "ctaH2Part2": "start today.",
     "ctaP": "Create your profile and let JobConnect AI find the roles you were meant to see.",
     "ctaBtn": "Find my matches",
-    "ctaSub": "No credit card required · Free to get started"
+    "ctaSub": "No credit card required · Free to get started",
+    "statJobsLabel": "jobs today",
+    "statCountries": "63 countries",
+    "statLanguages": "11 languages",
+    "statZeroLabel": "invented results"
   },
   "referral": {
     "title": "Know 5 people looking for better career opportunities? Share JobConnect Ai with them.",
