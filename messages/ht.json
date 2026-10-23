@@ -91,7 +91,8 @@
     "logoAttribution": "Logo konpayi pa Logo.dev",
     "refund": "Ranbousman",
     "faq": "FAQ",
-    "learn": "Aprann"
+    "learn": "Aprann",
+    "acceptableUse": "Itilizasyon akseptab"
   },
   "auth": {
     "login": {
@@ -1770,6 +1771,7 @@
           ]
         },
         {
+          "id": "acceptable-use",
           "title": "4. Politik itilizasyon akseptab",
           "blocks": [
             "Ou dakò pou PA:",
@@ -1778,6 +1780,22 @@
               "Dekonpoze, fè scraping oswa ekstrè kòd sous oswa modèl IA yo san otorizasyon alekri",
               "Telechaje kòd malveyan, fo diplòm oswa istwa travay ki twonpe moun",
               "Eseye kontoune limit itilizasyon, kontwòl otantifikasyon oswa sistèm peman"
+            ],
+            "**Pwofil onèt ak kalifikasyon otantik**",
+            [
+              "Tout istwa travay, konpetans, kalifikasyon ak estati otorizasyon travay dwe egzat e vre.",
+              "Li entèdi pou w kreye pwofil pou yon lòt moun ki pa ou menm, pou w soumèt fo kalifikasyon, oswa pou w bay manti sou idantite w."
+            ],
+            "**Itilizasyon responsab Auto-Apply / ProAI**",
+            [
+              "Fonksyon otomatik yo dwe itilize sèlman pou sipòte vrè rechèch travay ou, pou pòs ou kalifye pou yo.",
+              "Ou pa dwe itilize bot oswa zouti soumisyon an mas pou voye spam bay patwon, satire sistèm ATS lòt konpayi, oswa vyole kondisyon lòt sit travay."
+            ],
+            "**Sekirite platfòm ak sekirite teknik**",
+            [
+              "Pa dekonpoze, dekonpile oswa ekstrè kòd sous, pwa modèl IA oswa achitekti prompt JobConnect AI.",
+              "Pa itilize scraper oswa crawler pou ekstrè done kandida oswa patwon san pèmisyon alekri.",
+              "Pa enjekte chaj malveyan oswa enstriksyon prompt injection ki fèt pou manipile filt IA oswa algoritm matching yo."
             ]
           ]
         },

@@ -129,6 +129,7 @@ export function LandingFooter() {
           <div className="lf-legal">
             <Link href="/privacy">Privacy</Link>
             <Link href="/terms">Terms</Link>
+            <Link href="/terms#acceptable-use">Acceptable Use</Link>
             <Link href="/refund">Refund</Link>
           </div>
         </div>

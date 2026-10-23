@@ -91,7 +91,8 @@
     "logoAttribution": "Logos de empresas por Logo.dev",
     "refund": "Reembolso",
     "faq": "Perguntas frequentes",
-    "learn": "Aprender"
+    "learn": "Aprender",
+    "acceptableUse": "Uso aceitável"
   },
   "auth": {
     "login": {
@@ -1763,6 +1764,7 @@
           ]
         },
         {
+          "id": "acceptable-use",
           "title": "4. Política de uso aceitável",
           "blocks": [
             "Você concorda em NÃO:",
@@ -1771,6 +1773,22 @@
               "Fazer engenharia reversa, scraping ou extrair o código-fonte ou os modelos de IA sem autorização por escrito",
               "Enviar código malicioso, credenciais falsas ou históricos profissionais enganosos",
               "Tentar burlar limites de uso, controles de autenticação ou sistemas de pagamento"
+            ],
+            "**Perfis honestos e credenciais autênticas**",
+            [
+              "Todo histórico profissional, habilidades, qualificações e situação de autorização de trabalho devem ser precisos e verdadeiros.",
+              "É proibido criar perfis para qualquer pessoa que não seja você, enviar credenciais falsificadas ou deturpar sua identidade."
+            ],
+            "**Uso responsável do Auto-Apply / ProAI**",
+            [
+              "Os recursos automatizados devem ser usados apenas para apoiar sua busca real de emprego, para vagas às quais você esteja qualificado para concorrer.",
+              "Você não deve usar bots ou ferramentas de envio em massa para enviar spam a empregadores, sobrecarregar sistemas ATS de terceiros ou violar os termos de sites de emprego de terceiros."
+            ],
+            "**Segurança da plataforma e segurança técnica**",
+            [
+              "Não faça engenharia reversa, não descompile nem extraia o código-fonte, os pesos dos modelos de IA ou a arquitetura de prompts do JobConnect AI.",
+              "Não use scrapers ou crawlers para extrair dados de candidatos ou empregadores sem permissão por escrito.",
+              "Não injete cargas maliciosas nem instruções de injeção de prompt destinadas a manipular filtros de IA ou algoritmos de correspondência."
             ]
           ]
         },

@@ -126,6 +126,7 @@ export default async function Footer() {
             <div className="flex gap-4">
               <Link href="/privacy" className="hover:text-slate-700 dark:hover:text-slate-400">{t('privacy')}</Link>
               <Link href="/terms" className="hover:text-slate-700 dark:hover:text-slate-400">{t('terms')}</Link>
+              <Link href="/terms#acceptable-use" className="hover:text-slate-700 dark:hover:text-slate-400">{t('acceptableUse')}</Link>
               <Link href="/refund" className="hover:text-slate-700 dark:hover:text-slate-400">{t('refund')}</Link>
             </div>
           </div>

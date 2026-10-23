@@ -6,7 +6,8 @@ import { Fragment, type ReactNode } from 'react'
  * messages, read with `t.raw()` so legal wording never goes through ICU
  * parsing (apostrophes, braces, "$" stay literal in every locale).
  *
- * Shape: { title, lastUpdated, intro: string[], sections: { title, blocks }[] }
+ * Shape: { title, lastUpdated, intro: string[], sections: { id?, title, blocks }[] }
+ * (`id` makes a section linkable, e.g. /terms#acceptable-use)
  * where each block is a paragraph (string) or a bulleted list (string[]).
  * Inline markup inside any string: **bold**, [label](/path) and bare email
  * addresses (auto-linked with mailto:).
@@ -15,7 +16,7 @@ export type LegalDoc = {
   title: string
   lastUpdated: string
   intro: string[]
-  sections: { title: string; blocks: (string | string[])[] }[]
+  sections: { id?: string; title: string; blocks: (string | string[])[] }[]
 }
 
 const INLINE = /(\*\*[^*]+\*\*|\[[^\]]+\]\([^)\s]+\)|[\w.+-]+@[\w-]+(?:\.[\w-]+)+)/g
@@ -50,7 +51,7 @@ export default function LegalDocument({ doc }: { doc: LegalDoc }) {
 
         <div className="space-y-8 text-slate-300 leading-relaxed">
           {doc.sections.map((section) => (
-            <section key={section.title}>
+            <section key={section.title} id={section.id} className="scroll-mt-24">
               <h2 className="text-2xl font-semibold text-white mb-4">{section.title}</h2>
               <div className="space-y-3">
                 {section.blocks.map((block, i) =>
