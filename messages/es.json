@@ -1755,7 +1755,9 @@
           "title": "2. Suscripciones, pagos y reembolsos",
           "blocks": [
             [
-              "**Planes:** Gratis, Pro (19,99 USD/mes) y Elite (39,99 USD/mes).",
+              "**Planes para candidatos:** Gratis, Pro (19,99 USD/mes) y Elite (39,99 USD/mes).",
+              "**Planes para empleadores:** Gratis (1 oferta de empleo activa), Growth (49 USD/mes) y Pro (99 USD/mes).",
+              "**Ofertas destacadas:** 49 USD por oferta: una compra única que destaca una oferta de empleo durante 30 días y no se renueva.",
               "**Facturación:** las suscripciones se renuevan automáticamente cada mes a través de Stripe. Puedes cancelar en cualquier momento antes del siguiente ciclo de facturación.",
               "**Reembolsos:** por lo general no son reembolsables, salvo cuando lo exija la ley o según nuestra [Política de reembolsos](/refund) (jobconnect-ai.com/refund)."
             ]

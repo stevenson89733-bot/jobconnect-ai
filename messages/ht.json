@@ -1756,7 +1756,9 @@
           "title": "2. Abònman, peman ak ranbousman",
           "blocks": [
             [
-              "**Plan:** Gratis, Pro ($19.99/mwa) ak Elite ($39.99/mwa).",
+              "**Plan kandida:** Gratis, Pro ($19.99/mwa) ak Elite ($39.99/mwa).",
+              "**Plan patwon:** Gratis (1 anons travay aktif), Growth ($49/mwa) ak Pro ($99/mwa).",
+              "**Anons an vedèt (Featured Listing):** $49 pou chak anons — yon acha yon sèl fwa ki mete yon anons travay an avan pandan 30 jou epi ki pa renouvle.",
               "**Faktirasyon:** Abònman yo renouvle otomatikman chak mwa atravè Stripe. Ou ka anile nenpòt ki lè anvan pwochen sik faktirasyon an.",
               "**Ranbousman:** An jeneral, pa gen ranbousman, eksepte lè lalwa egzije l oswa dapre [Politik Ranbousman](/refund) nou an (jobconnect-ai.com/refund)."
             ]

@@ -1779,7 +1779,9 @@
           "title": "2. Subscriptions, Payments & Refunds",
           "blocks": [
             [
-              "**Plans:** Free, Pro ($19.99/month), and Elite ($39.99/month).",
+              "**Candidate Plans:** Free, Pro ($19.99/month), and Elite ($39.99/month).",
+              "**Employer Plans:** Free (1 active job posting), Growth ($49/month), and Pro ($99/month).",
+              "**Featured Listings:** $49 per listing — a one-time purchase that boosts a job listing for 30 days and does not renew.",
               "**Billing:** Subscriptions renew automatically monthly via Stripe. Cancel anytime before the next billing cycle.",
               "**Refunds:** Generally non-refundable except where required by law or per our [Refund Policy](/refund) (jobconnect-ai.com/refund)."
             ]

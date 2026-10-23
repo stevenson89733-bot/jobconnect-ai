@@ -1755,7 +1755,9 @@
           "title": "2. Abonnements, paiements et remboursements",
           "blocks": [
             [
-              "**Formules :** Gratuite, Pro (19,99 $/mois) et Elite (39,99 $/mois).",
+              "**Formules candidats :** Gratuite, Pro (19,99 $/mois) et Elite (39,99 $/mois).",
+              "**Formules recruteurs :** Gratuite (1 offre d'emploi active), Growth (49 $/mois) et Pro (99 $/mois).",
+              "**Annonces mises en avant :** 49 $ par annonce — un achat unique qui met une offre en avant pendant 30 jours, sans renouvellement.",
               "**Facturation :** les abonnements sont renouvelés automatiquement chaque mois via Stripe. Vous pouvez résilier à tout moment avant le prochain cycle de facturation.",
               "**Remboursements :** en principe non remboursables, sauf lorsque la loi l'exige ou conformément à notre [Politique de remboursement](/refund) (jobconnect-ai.com/refund)."
             ]
