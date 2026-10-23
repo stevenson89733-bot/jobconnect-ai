@@ -91,7 +91,8 @@
     "logoAttribution": "Unternehmenslogos von Logo.dev",
     "refund": "Rückerstattung",
     "faq": "FAQ",
-    "learn": "Lernen"
+    "learn": "Lernen",
+    "acceptableUse": "Zulässige Nutzung"
   },
   "auth": {
     "login": {
@@ -1763,6 +1764,7 @@
           ]
         },
         {
+          "id": "acceptable-use",
           "title": "4. Richtlinie zur zulässigen Nutzung",
           "blocks": [
             "Sie verpflichten sich, Folgendes NICHT zu tun:",
@@ -1771,6 +1773,22 @@
               "Quellcode oder KI-Modelle ohne schriftliche Genehmigung zurückentwickeln, per Scraping auslesen oder extrahieren",
               "Schadcode, falsche Qualifikationsnachweise oder irreführende Berufslaufbahnen hochladen",
               "Versuchen, Nutzungslimits, Authentifizierungskontrollen oder Zahlungssysteme zu umgehen"
+            ],
+            "**Ehrliche Profile & echte Qualifikationen**",
+            [
+              "Alle Angaben zu beruflichem Werdegang, Fähigkeiten, Qualifikationen und Arbeitserlaubnis müssen zutreffend und wahrheitsgemäß sein.",
+              "Es ist untersagt, Profile für andere Personen als sich selbst anzulegen, gefälschte Qualifikationsnachweise einzureichen oder falsche Angaben zur eigenen Identität zu machen."
+            ],
+            "**Verantwortungsvolle Nutzung von Auto-Apply / ProAI**",
+            [
+              "Automatisierte Funktionen dürfen ausschließlich zur Unterstützung Ihrer ernsthaften Jobsuche für Stellen genutzt werden, für die Sie qualifiziert sind.",
+              "Sie dürfen keine Bots oder Massenversand-Tools verwenden, um Arbeitgeber mit Spam zu überhäufen, ATS-Systeme Dritter zu überlasten oder gegen die Bedingungen von Jobbörsen Dritter zu verstoßen."
+            ],
+            "**Plattform- & technische Sicherheit**",
+            [
+              "Quellcode, KI-Modellgewichte oder die Prompt-Architektur von JobConnect AI dürfen nicht zurückentwickelt, dekompiliert oder extrahiert werden.",
+              "Keine Scraper oder Crawler verwenden, um ohne schriftliche Genehmigung Kandidaten- oder Arbeitgeberdaten auszulesen.",
+              "Keine schädlichen Inhalte oder Prompt-Injection-Anweisungen einschleusen, die KI-Filter oder Matching-Algorithmen manipulieren sollen."
             ]
           ]
         },

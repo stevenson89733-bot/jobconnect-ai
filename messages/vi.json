@@ -91,7 +91,8 @@
     "logoAttribution": "Logo công ty bởi Logo.dev",
     "refund": "Hoàn tiền",
     "faq": "FAQ",
-    "learn": "Học hỏi"
+    "learn": "Học hỏi",
+    "acceptableUse": "Sử dụng được chấp nhận"
   },
   "auth": {
     "login": {
@@ -1763,6 +1764,7 @@
           ]
         },
         {
+          "id": "acceptable-use",
           "title": "4. Chính sách sử dụng được chấp nhận",
           "blocks": [
             "Bạn đồng ý KHÔNG:",
@@ -1771,6 +1773,22 @@
               "Dịch ngược, thu thập dữ liệu tự động (scraping) hoặc trích xuất mã nguồn hay mô hình AI khi chưa có sự cho phép bằng văn bản",
               "Tải lên mã độc, bằng cấp giả hoặc lịch sử làm việc gây hiểu lầm",
               "Tìm cách vượt qua giới hạn sử dụng, cơ chế xác thực hoặc hệ thống thanh toán"
+            ],
+            "**Hồ sơ trung thực và bằng cấp xác thực**",
+            [
+              "Mọi thông tin về quá trình làm việc, kỹ năng, bằng cấp và tình trạng giấy phép lao động phải chính xác và trung thực.",
+              "Nghiêm cấm việc tạo hồ sơ cho bất kỳ ai khác ngoài chính bạn, nộp bằng cấp giả mạo hoặc khai sai danh tính."
+            ],
+            "**Sử dụng Auto-Apply / ProAI có trách nhiệm**",
+            [
+              "Các tính năng tự động chỉ được sử dụng để hỗ trợ việc tìm việc thực sự của bạn, cho những vị trí mà bạn đủ điều kiện ứng tuyển.",
+              "Bạn không được dùng bot hoặc công cụ gửi hàng loạt để spam nhà tuyển dụng, làm quá tải hệ thống ATS của bên thứ ba hoặc vi phạm điều khoản của các trang tuyển dụng khác."
+            ],
+            "**Bảo mật nền tảng và bảo mật kỹ thuật**",
+            [
+              "Không dịch ngược, dịch ngược mã (decompile) hoặc trích xuất mã nguồn, trọng số mô hình AI hay kiến trúc prompt của JobConnect AI.",
+              "Không sử dụng công cụ thu thập dữ liệu (scraper) hoặc trình thu thập web (crawler) để trích xuất dữ liệu ứng viên hoặc nhà tuyển dụng khi chưa có sự cho phép bằng văn bản.",
+              "Không chèn mã độc hoặc chỉ dẫn prompt injection nhằm thao túng bộ lọc AI hoặc thuật toán so khớp."
             ]
           ]
         },
