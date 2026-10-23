@@ -43,7 +43,7 @@ export async function sendWelcomeEmail(params: {
             </p>
             <hr style="border:none;border-top:1px solid #E5E7EB;margin:0 0 24px">
             <p style="margin:0;font-size:12px;color:#9CA3AF;line-height:1.6">
-              © 2026 JobConnect AI · jobconnect-ai.com · Tu reçois cet email car tu viens de créer un compte.
+              © 2026 SJL Technologies LLC · jobconnect-ai.com · Tu reçois cet email car tu viens de créer un compte.
             </p>
           </td>
         </tr>
@@ -116,7 +116,7 @@ function interviewEmailHtml(params: InterviewReminderParams & { h1: string; body
             </p>
             <hr style="border:none;border-top:1px solid #E5E7EB;margin:0 0 24px">
             <p style="margin:0;font-size:12px;color:#9CA3AF;line-height:1.6">
-              © 2026 JobConnect AI · jobconnect-ai.com
+              © 2026 SJL Technologies LLC · jobconnect-ai.com
             </p>
           </td>
         </tr>

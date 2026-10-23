@@ -199,7 +199,7 @@ export default function LpVietnamPage() {
       </section>
 
       <footer>
-        <span>© 2026 JobConnect AI</span>
+        <span>© 2026 SJL Technologies LLC</span>
         <span><a href="https://jobconnect-ai.com" style={{ color: 'inherit', textDecoration: 'none' }}>jobconnect-ai.com</a></span>
       </footer>
     </>

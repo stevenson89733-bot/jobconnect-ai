@@ -76,7 +76,7 @@
     "employerDashboard": "Bảng điều khiển nhà tuyển dụng",
     "about": "Về chúng tôi",
     "contact": "Liên hệ",
-    "copyright": "© {year} JobConnect AI. Bảo lưu mọi quyền.",
+    "copyright": "© {year} SJL Technologies LLC. Bảo lưu mọi quyền.",
     "privacy": "Quyền riêng tư",
     "terms": "Điều khoản",
     "blog": "Blog",
@@ -1186,7 +1186,8 @@
     "employerFeaturedListingBenefit2": "Huy hiệu «Nổi bật» trên thẻ việc làm",
     "employerFeaturedListingBenefit3": "Được đưa vào thông báo email cho ứng viên",
     "employerFeaturedListingBenefit4": "1 lần làm mới vị trí sau 15 ngày",
-    "everythingInGrowth": "Tất cả tính năng Growth +"
+    "everythingInGrowth": "Tất cả tính năng Growth +",
+    "checkoutConsent": "Khi tiếp tục, bạn đồng ý với <terms>Điều khoản dịch vụ</terms> và <privacy>Chính sách quyền riêng tư</privacy> của chúng tôi."
   },
   "countries": {
     "AE": "Các Tiểu vương quốc Ả Rập Thống nhất",
@@ -1325,7 +1326,7 @@
   },
   "aboutPage": {
     "heroTitle": "Kết nối nhân tài toàn cầu với các công ty tuyển dụng xuyên biên giới",
-    "heroSubtitle": "Nền tảng việc làm từ xa được hỗ trợ bởi AI, xây dựng cho thế hệ không biên giới. Ra mắt năm 2026 từ Thành phố Hồ Chí Minh, Việt Nam.",
+    "heroSubtitle": "Nền tảng việc làm từ xa được hỗ trợ bởi AI, xây dựng cho thế hệ không biên giới. Thành lập tại Thành phố Hồ Chí Minh, Việt Nam. Đăng ký pháp nhân tại Wyoming, Hoa Kỳ.",
     "stat1Value": "63",
     "stat1Label": "quốc gia",
     "stat2Value": "11",
@@ -1335,7 +1336,7 @@
     "stat4Value": "969+",
     "stat4Label": "ghép nối mỗi ngày",
     "storyTitle": "Câu chuyện bắt đầu",
-    "storyText": "JobConnect AI được xây dựng một mình bởi Stevenson Jean-Louis — một lập trình viên đặt tại TP.HCM, Việt Nam. Ý tưởng rất đơn giản: tuyển dụng từ xa vẫn còn nhiều vấn đề. JobConnect AI tồn tại để lấp đầy khoảng cách đó bằng các công cụ AI trung thực — không có điểm số thổi phồng, không có kết quả ghép nối giả mạo.",
+    "storyText": "JobConnect AI được xây dựng một mình bởi Stevenson Jean-Louis — thành lập tại TP.HCM, Việt Nam, và đăng ký pháp nhân tại Wyoming, Hoa Kỳ. Ý tưởng rất đơn giản: tuyển dụng từ xa vẫn còn nhiều vấn đề. JobConnect AI tồn tại để lấp đầy khoảng cách đó bằng các công cụ AI trung thực — không có điểm số thổi phồng, không có kết quả ghép nối giả mạo.",
     "value1Title": "Minh bạch",
     "value1Text": "Không có ghép nối giả tạo. Mỗi tin tuyển dụng là thật, mỗi điểm AI phản ánh đánh giá thực sự về hồ sơ của bạn.",
     "value2Title": "Quyền riêng tư",
@@ -1633,102 +1634,182 @@
     "contactUs": "Liên hệ với chúng tôi"
   },
   "privacyPage": {
-    "title": "Chính sách Bảo mật",
-    "lastUpdated": "Cập nhật lần cuối: Tháng 9 năm 2026",
-    "s1Title": "1. Giới thiệu",
-    "s1Text": "JobConnect AI (\"chúng tôi\") cam kết bảo vệ quyền riêng tư của bạn. Chính sách này giải thích cách chúng tôi thu thập, sử dụng, tiết lộ và bảo vệ thông tin của bạn khi bạn sử dụng dịch vụ của chúng tôi.",
-    "s2Title": "2. Thông tin chúng tôi thu thập",
-    "s2SubPersonal": "Thông tin cá nhân",
-    "s2Item1": "Địa chỉ email và thông tin đăng nhập tài khoản",
-    "s2Item2": "Họ tên đầy đủ, thông tin hồ sơ và vị trí",
-    "s2Item3": "Hồ sơ xin việc, thư xin việc và kinh nghiệm làm việc",
-    "s2Item4": "Lịch sử ứng tuyển và sở thích công việc",
-    "s2Item5": "Thông tin thanh toán (được xử lý an toàn qua Stripe)",
-    "s2SubAuto": "Dữ liệu được thu thập tự động",
-    "s2Item6": "Loại trình duyệt, địa chỉ IP và thông tin thiết bị",
-    "s2Item7": "Các trang đã truy cập và thời gian trên nền tảng của chúng tôi",
-    "s2Item8": "Nguồn giới thiệu và mô hình tương tác (qua Meta Pixel)",
-    "s3Title": "3. Nhà cung cấp dịch vụ bên thứ ba",
-    "s3Intro": "Chúng tôi sử dụng các nhà cung cấp dịch vụ sau để vận hành nền tảng:",
-    "s4Title": "4. Cách chúng tôi sử dụng dữ liệu của bạn",
-    "s4Item1": "Cung cấp và cải thiện các công cụ so khớp việc làm và AI",
-    "s4Item2": "Xử lý thanh toán và quản lý đăng ký",
-    "s4Item3": "Gửi email giao dịch và vận hành",
-    "s4Item4": "Phân tích mô hình sử dụng để nâng cao trải nghiệm người dùng",
-    "s4Item5": "Tuân thủ nghĩa vụ pháp lý",
-    "s4Item6": "Ngăn chặn gian lận và duy trì bảo mật nền tảng",
-    "s5Title": "5. Quyền riêng tư của bạn (GDPR và người dùng EU)",
-    "s5Intro": "Nếu bạn ở EU hoặc Vương quốc Anh, bạn có các quyền sau:",
-    "s5r1Title": "Quyền truy cập",
-    "s5r1Text": "Yêu cầu bản sao dữ liệu cá nhân của bạn mà chúng tôi lưu giữ.",
-    "s5r2Title": "Quyền chỉnh sửa",
-    "s5r2Text": "Chỉnh sửa dữ liệu cá nhân không chính xác hoặc không đầy đủ.",
-    "s5r3Title": "Quyền xóa",
-    "s5r3Text": "Yêu cầu xóa dữ liệu cá nhân của bạn, tùy thuộc vào nghĩa vụ pháp lý.",
-    "s5r4Title": "Quyền di chuyển dữ liệu",
-    "s5r4Text": "Nhận dữ liệu ở định dạng có cấu trúc và chuyển sang nhà cung cấp khác.",
-    "s5r5Title": "Quyền phản đối",
-    "s5r5Text": "Phản đối việc xử lý cho mục đích tiếp thị hoặc phân tích.",
-    "s5Contact": "Để thực hiện các quyền này, hãy liên hệ chúng tôi tại contact@jobconnect-ai.com",
-    "s6Title": "6. Lưu giữ dữ liệu",
-    "s6Text": "Chúng tôi lưu giữ dữ liệu cá nhân miễn là tài khoản của bạn còn hoạt động. Sau khi xóa tài khoản, dữ liệu bị xóa vĩnh viễn trong 30 ngày, trừ khi có nghĩa vụ pháp lý.",
-    "s7Title": "7. Chia sẻ và bán dữ liệu",
-    "s7Text": "Chúng tôi KHÔNG bán dữ liệu cá nhân của bạn cho bên thứ ba. Chỉ chia sẻ với các nhà cung cấp dịch vụ hỗ trợ vận hành nền tảng.",
-    "s8Title": "8. Bảo mật dữ liệu",
-    "s8Text": "Chúng tôi triển khai các biện pháp bảo mật tiêu chuẩn ngành bao gồm mã hóa, tường lửa và xác thực an toàn.",
-    "s9Title": "9. Cookie và Phân tích",
-    "s9Text": "Chúng tôi sử dụng cookie để nâng cao trải nghiệm và phân tích mức độ sử dụng qua Meta Pixel. Bạn có thể kiểm soát tùy chọn cookie thông qua biểu ngữ đồng ý.",
-    "s10Title": "10. Liên hệ chúng tôi",
-    "s10Text": "Nếu bạn có câu hỏi về Chính sách Bảo mật hoặc muốn thực hiện quyền riêng tư, hãy liên hệ:",
-    "s11Title": "11. Tuân thủ",
-    "s11Text": "Chính sách này tuân thủ GDPR của EU, Luật Bảo vệ Dữ liệu Vương quốc Anh 2018 và các luật bảo vệ dữ liệu hiện hành khác.",
-    "s12Title": "12. Thay đổi chính sách",
-    "s12Text": "Chúng tôi có thể cập nhật Chính sách này định kỳ. Chúng tôi sẽ thông báo cho bạn về các thay đổi quan trọng qua email."
+    "doc": {
+      "title": "Chính sách quyền riêng tư",
+      "lastUpdated": "Cập nhật lần cuối: tháng 10 năm 2026",
+      "intro": [
+        "JobConnect AI là sản phẩm của **SJL Technologies LLC**, công ty trách nhiệm hữu hạn được thành lập tại Bang Wyoming, Hợp chủng quốc Hoa Kỳ."
+      ],
+      "sections": [
+        {
+          "title": "1. Thông tin chúng tôi thu thập",
+          "blocks": [
+            [
+              "**Dữ liệu tài khoản và hồ sơ:** Họ tên, email, mật khẩu, vị trí, mong muốn về công việc, thông tin thanh toán",
+              "**Tài liệu nghề nghiệp:** CV, quá trình làm việc, kỹ năng, thư xin việc, liên kết LinkedIn/GitHub",
+              "**Dữ liệu kỹ thuật:** Địa chỉ IP, loại trình duyệt, mã định danh thiết bị, cookie, dữ liệu sử dụng"
+            ]
+          ]
+        },
+        {
+          "title": "2. Cách chúng tôi sử dụng thông tin của bạn",
+          "blocks": [
+            [
+              "Cung cấp và cải thiện tính năng so khớp bằng AI, công cụ nghề nghiệp và phân tích CV",
+              "Thực hiện các đơn ứng tuyển tự động do bạn cho phép",
+              "Xử lý thanh toán và ngăn chặn gian lận",
+              "Gửi cập nhật dịch vụ, thông báo phỏng vấn và phản hồi hỗ trợ"
+            ],
+            "**Chúng tôi KHÔNG bán dữ liệu cá nhân hoặc CV của bạn cho bên thứ ba hay các công ty môi giới dữ liệu.**"
+          ]
+        },
+        {
+          "title": "3. Chia sẻ và tiết lộ",
+          "blocks": [
+            "Chúng tôi chỉ chia sẻ dữ liệu với:",
+            [
+              "**Nhà tuyển dụng và chuyên viên tuyển dụng:** Khi bạn chọn sử dụng so khớp việc làm hoặc Auto-Apply",
+              "**Nhà cung cấp dịch vụ:** Supabase (cơ sở dữ liệu/xác thực), Stripe (thanh toán), Resend (email), Crisp Chat (hỗ trợ), Meta Pixel (phân tích), OpenAI (xử lý bằng AI đối với CV, hồ sơ và nội dung được tạo), Vercel (lưu trữ và phân tích) — theo nghĩa vụ bảo mật nghiêm ngặt",
+              "**Yêu cầu pháp lý:** Khi pháp luật hoặc lệnh của tòa án yêu cầu"
+            ]
+          ]
+        },
+        {
+          "title": "4. Quyền riêng tư tại California (CCPA/CPRA)",
+          "blocks": [
+            "Cư dân California có quyền:",
+            [
+              "Biết và truy cập dữ liệu cá nhân đã được thu thập về mình",
+              "Yêu cầu xóa dữ liệu cá nhân của mình",
+              "Yêu cầu chỉnh sửa dữ liệu không chính xác",
+              "Từ chối việc bán hoặc chia sẻ dữ liệu (chúng tôi không bán dữ liệu)",
+              "Không bị phân biệt đối xử khi thực hiện các quyền theo CCPA"
+            ],
+            "Để thực hiện các quyền này: privacy@jobconnect-ai.com"
+          ]
+        },
+        {
+          "title": "5. Quyền tại EU/Vương quốc Anh (GDPR)",
+          "blocks": [
+            "Cư dân EU/Vương quốc Anh có quyền truy cập, chỉnh sửa, xóa, hạn chế xử lý, chuyển dữ liệu hoặc phản đối việc xử lý dữ liệu cá nhân của mình. Liên hệ: privacy@jobconnect-ai.com"
+          ]
+        },
+        {
+          "title": "6. Bảo mật và lưu trữ dữ liệu",
+          "blocks": [
+            "Mã hóa theo tiêu chuẩn ngành khi truyền tải và khi lưu trữ. Dữ liệu được lưu giữ trong thời gian tài khoản còn hoạt động và sẽ bị xóa trong vòng 30 ngày sau khi tài khoản bị xóa, trừ khi pháp luật có yêu cầu khác."
+          ]
+        },
+        {
+          "title": "7. Quyền riêng tư của trẻ em",
+          "blocks": [
+            "Dịch vụ không dành cho người dưới 16 tuổi. Chúng tôi không cố ý thu thập dữ liệu của trẻ vị thành niên."
+          ]
+        },
+        {
+          "title": "8. Thay đổi",
+          "blocks": [
+            "Các thay đổi quan trọng được thông báo qua email. Việc tiếp tục sử dụng đồng nghĩa với việc chấp nhận."
+          ]
+        },
+        {
+          "title": "9. Liên hệ",
+          "blocks": [
+            "**SJL Technologies LLC** — Wyoming, Hoa Kỳ",
+            "Email: privacy@jobconnect-ai.com"
+          ]
+        }
+      ]
+    }
   },
   "termsPage": {
-    "title": "Điều khoản Dịch vụ",
-    "lastUpdated": "Cập nhật lần cuối: Tháng 9 năm 2026",
-    "s1Title": "1. Chấp nhận điều khoản",
-    "s1Text": "Bằng cách truy cập và sử dụng JobConnect AI, bạn chấp nhận và đồng ý bị ràng buộc bởi các Điều khoản Dịch vụ này.",
-    "s2Title": "2. Mô tả dịch vụ",
-    "s2Text": "JobConnect AI là nền tảng SaaS cho việc so khớp việc làm từ xa, tối ưu hóa hồ sơ bằng AI và ứng tuyển việc làm.",
-    "s3Title": "3. Gói giá",
-    "s3FreeName": "Gói MIỄN PHÍ",
-    "s3FreeText": "Miễn phí mãi mãi với các tính năng tìm kiếm việc làm và theo dõi ứng tuyển cơ bản.",
-    "s3ProName": "Gói PRO — $19,99/tháng",
-    "s3ProText": "Công cụ tạo CV bằng AI, Trình tạo thư xin việc, Tự động ứng tuyển (10 việc/ngày), Tối ưu LinkedIn và Hỗ trợ ưu tiên.",
-    "s3EliteName": "Gói ELITE — $39,99/tháng",
-    "s3EliteText": "Tất cả trong PRO, cộng thêm Tự động ứng tuyển (25 việc/ngày), So khớp ưu tiên, Hỗ trợ chuyên dụng 24/7 và Huy hiệu Elite.",
-    "s4Title": "4. Đăng ký và thanh toán",
-    "s4Item1": "Đăng ký tự động gia hạn hàng tháng",
-    "s4Item2": "Thanh toán được xử lý an toàn qua Stripe",
-    "s4Item3": "Bạn có thể hủy đăng ký bất kỳ lúc nào mà không bị phạt",
-    "s4Item4": "Việc hủy có hiệu lực vào cuối chu kỳ thanh toán hiện tại",
-    "s4Item5": "Không hoàn tiền cho phần chưa sử dụng của tháng đăng ký",
-    "s5Title": "5. Không đảm bảo việc làm",
-    "s5Text": "JobConnect AI không đảm bảo việc làm hoặc tuyển dụng.",
-    "s6Title": "6. Chính sách sử dụng chấp nhận được",
-    "s6Intro": "Bạn đồng ý không sử dụng JobConnect AI để:",
-    "s6Item1": "Đăng nội dung việc làm phân biệt đối xử, xúc phạm hoặc bất hợp pháp",
-    "s6Item2": "Quấy rối, đe dọa hoặc lạm dụng người dùng khác",
-    "s6Item3": "Ứng tuyển gian lận hoặc khai báo sai trình độ",
-    "s6Item4": "Spam, lừa đảo hoặc phân phối phần mềm độc hại",
-    "s6Item5": "Vi phạm bất kỳ luật hoặc quy định hiện hành nào",
-    "s6Item6": "Cố gắng truy cập trái phép vào hệ thống của chúng tôi",
-    "s7Title": "7. Nội dung người dùng",
-    "s7Text": "Bạn giữ quyền sở hữu tất cả nội dung bạn gửi. Bằng cách sử dụng Dịch vụ, bạn cấp cho chúng tôi giấy phép sử dụng nội dung của bạn.",
-    "s8Title": "8. Chấm dứt tài khoản",
-    "s8Text": "Chúng tôi có quyền tạm ngừng hoặc chấm dứt tài khoản của bạn nếu bạn vi phạm các Điều khoản này.",
-    "s9Title": "9. Giới hạn trách nhiệm",
-    "s9Text": "ĐẾN MỨC TỐI ĐA ĐƯỢC PHÁP LUẬT CHO PHÉP: JobConnect AI được cung cấp mà không có bất kỳ bảo đảm nào. Chúng tôi không chịu trách nhiệm về thiệt hại gián tiếp hoặc do hậu quả.",
-    "s10Title": "10. Sở hữu trí tuệ",
-    "s10Text": "Tất cả nội dung của JobConnect AI được bảo vệ bởi luật bản quyền và nhãn hiệu quốc tế.",
-    "s11Title": "11. Luật điều chỉnh",
-    "s11Text": "Các Điều khoản Dịch vụ này được điều chỉnh theo luật pháp của Singapore.",
-    "s12Title": "12. Thay đổi điều khoản",
-    "s12Text": "Chúng tôi có thể sửa đổi các Điều khoản này bất kỳ lúc nào. Các thay đổi quan trọng sẽ được thông báo qua email.",
-    "s13Title": "13. Liên hệ",
-    "s13Text": "Để có câu hỏi về các Điều khoản này, hãy liên hệ:"
+    "doc": {
+      "title": "Điều khoản dịch vụ",
+      "lastUpdated": "Cập nhật lần cuối: tháng 10 năm 2026",
+      "intro": [
+        "Chào mừng bạn đến với JobConnect AI (\"Công ty\", \"chúng tôi\" hoặc \"của chúng tôi\"), một sản phẩm của **SJL Technologies LLC**, công ty trách nhiệm hữu hạn được thành lập tại Bang Wyoming, Hợp chủng quốc Hoa Kỳ. Các Điều khoản dịch vụ này (\"Điều khoản\") điều chỉnh việc bạn truy cập và sử dụng https://jobconnect-ai.com cùng toàn bộ dịch vụ, phần mềm và công cụ hỗ trợ bởi AI có liên quan (gọi chung là \"Nền tảng\").",
+        "Khi truy cập hoặc sử dụng JobConnect AI, bạn đồng ý chịu sự ràng buộc của các Điều khoản này. Nếu không đồng ý, vui lòng không truy cập hoặc sử dụng Nền tảng."
+      ],
+      "sections": [
+        {
+          "title": "1. Điều kiện sử dụng và đăng ký tài khoản",
+          "blocks": [
+            [
+              "**Độ tuổi:** Bạn phải từ 18 tuổi trở lên để sử dụng JobConnect AI.",
+              "**Tính chính xác của tài khoản:** Bạn đồng ý cung cấp thông tin chính xác, đầy đủ và cập nhật khi đăng ký.",
+              "**Bảo mật:** Bạn chịu trách nhiệm bảo mật thông tin đăng nhập của mình và mọi hoạt động diễn ra trên tài khoản của bạn."
+            ]
+          ]
+        },
+        {
+          "title": "2. Gói đăng ký, thanh toán và hoàn tiền",
+          "blocks": [
+            [
+              "**Gói dịch vụ:** Miễn phí, Pro (19,99 USD/tháng) và Elite (39,99 USD/tháng).",
+              "**Thanh toán:** Gói đăng ký tự động gia hạn hằng tháng qua Stripe. Bạn có thể hủy bất cứ lúc nào trước kỳ thanh toán tiếp theo.",
+              "**Hoàn tiền:** Nhìn chung không hoàn tiền, trừ khi pháp luật yêu cầu hoặc theo [Chính sách hoàn tiền](/refund) của chúng tôi (jobconnect-ai.com/refund)."
+            ]
+          ]
+        },
+        {
+          "title": "3. Tính năng AI và tuyên bố miễn trừ về Auto-Apply",
+          "blocks": [
+            [
+              "**Nội dung do AI tạo ra:** Nền tảng sử dụng AI và thuật toán tự động để tạo CV, viết thư xin việc, so khớp kỹ năng và cung cấp các công cụ nghề nghiệp.",
+              "**Không đảm bảo việc làm:** JobConnect AI không đảm bảo bạn sẽ được phỏng vấn, được tuyển dụng hay có việc làm.",
+              "**Nghĩa vụ kiểm tra của người dùng:** Bạn hoàn toàn chịu trách nhiệm xem xét và xác minh mọi nội dung do AI tạo ra trước khi gửi cho nhà tuyển dụng.",
+              "**Nộp hồ sơ tự động (Auto-Apply):** Khi bật Auto-Apply, bạn cho phép rõ ràng JobConnect AI thay mặt bạn nộp hồ sơ ứng tuyển. Chúng tôi không chịu trách nhiệm về việc bị hệ thống ATS từ chối, lỗi khi gửi hồ sơ hoặc trễ hạn."
+            ]
+          ]
+        },
+        {
+          "title": "4. Chính sách sử dụng được chấp nhận",
+          "blocks": [
+            "Bạn đồng ý KHÔNG:",
+            [
+              "Sử dụng Nền tảng cho mục đích gian lận, bất hợp pháp hoặc trái phép",
+              "Dịch ngược, thu thập dữ liệu tự động (scraping) hoặc trích xuất mã nguồn hay mô hình AI khi chưa có sự cho phép bằng văn bản",
+              "Tải lên mã độc, bằng cấp giả hoặc lịch sử làm việc gây hiểu lầm",
+              "Tìm cách vượt qua giới hạn sử dụng, cơ chế xác thực hoặc hệ thống thanh toán"
+            ]
+          ]
+        },
+        {
+          "title": "5. Giới hạn trách nhiệm",
+          "blocks": [
+            "**TRONG PHẠM VI TỐI ĐA MÀ PHÁP LUẬT HIỆN HÀNH CHO PHÉP, JOBCONNECT AI VÀ SJL TECHNOLOGIES LLC KHÔNG CHỊU TRÁCH NHIỆM ĐỐI VỚI BẤT KỲ THIỆT HẠI GIÁN TIẾP, NGẪU NHIÊN, ĐẶC BIỆT, HỆ QUẢ HOẶC MANG TÍNH TRỪNG PHẠT NÀO. TỔNG TRÁCH NHIỆM CỦA CHÚNG TÔI SẼ KHÔNG VƯỢT QUÁ SỐ TIỀN LỚN HƠN GIỮA 100 USD VÀ TỔNG SỐ TIỀN BẠN ĐÃ THANH TOÁN TRONG MƯỜI HAI (12) THÁNG TRƯỚC KHI PHÁT SINH KHIẾU NẠI.**"
+          ]
+        },
+        {
+          "title": "6. Giải quyết tranh chấp, trọng tài bắt buộc và từ bỏ quyền khởi kiện tập thể",
+          "blocks": [
+            [
+              "**Trọng tài có giá trị ràng buộc:** Mọi tranh chấp sẽ được giải quyết bằng trọng tài cá nhân có giá trị ràng buộc theo quy tắc của Hiệp hội Trọng tài Hoa Kỳ (AAA).",
+              "**Từ bỏ quyền khởi kiện tập thể:** BẠN TỪ BỎ MỌI QUYỀN KHỞI KIỆN HOẶC THAM GIA VÀO VỤ KIỆN TẬP THỂ HAY THỦ TỤC ĐẠI DIỆN CHỐNG LẠI JOBCONNECT AI."
+            ]
+          ]
+        },
+        {
+          "title": "7. Luật điều chỉnh",
+          "blocks": [
+            "Các Điều khoản này được điều chỉnh và giải thích theo pháp luật của **Bang Wyoming, Hợp chủng quốc Hoa Kỳ**, không xét đến các nguyên tắc xung đột pháp luật của bang này."
+          ]
+        },
+        {
+          "title": "8. Thay đổi Điều khoản",
+          "blocks": [
+            "Các thay đổi quan trọng sẽ được thông báo qua email. Việc bạn tiếp tục sử dụng sau khi thay đổi có hiệu lực đồng nghĩa với việc chấp nhận các thay đổi đó."
+          ]
+        },
+        {
+          "title": "9. Liên hệ",
+          "blocks": [
+            "**SJL Technologies LLC** — Wyoming, Hoa Kỳ",
+            "Email: contact@jobconnect-ai.com"
+          ]
+        }
+      ]
+    }
   },
   "refundPage": {
     "title": "Chính sách Hoàn tiền",

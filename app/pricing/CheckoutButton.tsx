@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import CheckoutConsent from '@/components/legal/CheckoutConsent'
 
 const Spinner = () => (
   <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
@@ -58,6 +59,7 @@ export function CheckoutButton({
           </span>
         ) : label}
       </button>
+      <CheckoutConsent />
     </div>
   )
 }

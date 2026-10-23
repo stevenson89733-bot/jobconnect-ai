@@ -116,7 +116,7 @@ export function LandingFooter() {
         {/* Bottom bar */}
         <div className="lf-bottom">
           <div className="lf-bottom-left">
-            <span>© {year} JobConnect AI. All rights reserved.</span>
+            <span>© {year} SJL Technologies LLC. All rights reserved.</span>
             <a
               href="https://logo.dev"
               target="_blank"
