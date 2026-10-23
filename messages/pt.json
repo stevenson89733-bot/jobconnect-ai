@@ -2027,8 +2027,6 @@
     "searchPlaceholderWhat": "Cargo, habilidade ou empresa",
     "searchPlaceholderWhere": "Cidade, país ou remoto",
     "searchBtn": "Encontrar minhas vagas",
-    "proofCount": "12.000+ profissionais",
-    "proofText": "encontraram sua próxima vaga conosco",
     "dashboardTitle": "SUAS CORRESPONDÊNCIAS DO DIA",
     "dashboardGreeting": "Bom dia, Alex",
     "dashboardNewRoles": "Encontramos 24 novas vagas para você",
@@ -2040,7 +2038,6 @@
     "matchLabel": "correspondência",
     "updatedProfile": "Atualizado para seu perfil",
     "seeAllMatches": "Ver todas as correspondências",
-    "trustIntro": "Conectando talentos ambiciosos com equipes em",
     "howKicker": "UMA MANEIRA MELHOR DE BUSCAR EMPREGO",
     "howH2": "Seu próximo passo, mais simples.",
     "howP": "Do perfil à oferta, o JobConnect AI ajuda você a se concentrar nas oportunidades que valem seu tempo.",
@@ -2078,7 +2075,11 @@
     "ctaH2Part2": "começar hoje.",
     "ctaP": "Crie seu perfil e deixe o JobConnect AI encontrar as vagas que foram feitas para você.",
     "ctaBtn": "Encontrar minhas vagas",
-    "ctaSub": "Sem cartão de crédito · Gratuito para começar"
+    "ctaSub": "Sem cartão de crédito · Gratuito para começar",
+    "statJobsLabel": "vagas hoje",
+    "statCountries": "63 países",
+    "statLanguages": "11 idiomas",
+    "statZeroLabel": "resultados inventados"
   },
   "referral": {
     "title": "Conhece 5 pessoas em busca de melhores oportunidades de carreira? Compartilhe o JobConnect Ai com elas.",

@@ -2,7 +2,7 @@
 // components/landing/LpHeroSection.tsx
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Icon } from "./LandingIcons";
 
 const JOB_MATCHES = [
@@ -11,8 +11,11 @@ const JOB_MATCHES = [
   { company: "HORIZON", role: "Growth Marketing Lead", meta: "Toronto · Hybrid", score: 87, color: "orange" },
 ] as const;
 
-export function LpHeroSection() {
+// activeJobCount: live listing count from the DB (lib/jobStats), already
+// rounded down for display; null/undefined hides that stat — never a made-up number.
+export function LpHeroSection({ activeJobCount }: { activeJobCount?: number | null }) {
   const t = useTranslations("landing");
+  const locale = useLocale();
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [location, setLocation] = useState("");
@@ -81,21 +84,25 @@ export function LpHeroSection() {
             </button>
           </form>
 
+          {/* Only verifiable facts: live DB count, real coverage, our promise. */}
           <div className="landing-hero-proof">
-            <div className="landing-avatar-stack" aria-hidden="true">
-              <span>AK</span>
-              <span>MS</span>
-              <span>JL</span>
-              <span>+</span>
-            </div>
+            {typeof activeJobCount === "number" && activeJobCount > 0 && (
+              <>
+                <div className="landing-proof-text">
+                  <strong>{activeJobCount.toLocaleString(locale)}+</strong>
+                  <span>{t("statJobsLabel")}</span>
+                </div>
+                <div className="landing-proof-divider" aria-hidden="true" />
+              </>
+            )}
             <div className="landing-proof-text">
-              <strong>{t("proofCount")}</strong>
-              <span>{t("proofText")}</span>
+              <strong>{t("statCountries")}</strong>
+              <span>{t("statLanguages")}</span>
             </div>
             <div className="landing-proof-divider" aria-hidden="true" />
-            <div className="landing-rating">
-              <strong>4.9</strong>
-              <span className="landing-rating-stars" aria-label="5 stars">★★★★★</span>
+            <div className="landing-proof-text">
+              <strong>0</strong>
+              <span>{t("statZeroLabel")}</span>
             </div>
           </div>
         </div>

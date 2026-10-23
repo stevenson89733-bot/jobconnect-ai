@@ -2033,8 +2033,6 @@
     "searchPlaceholderWhat": "Rôle, compétence ou entreprise",
     "searchPlaceholderWhere": "Ville, pays ou remote",
     "searchBtn": "Trouver mes offres",
-    "proofCount": "12 000+ professionnels",
-    "proofText": "ont trouvé leur prochain poste avec nous",
     "dashboardTitle": "VOS MATCHS DU JOUR",
     "dashboardGreeting": "Bonjour, Alex",
     "dashboardNewRoles": "Nous avons trouvé 24 nouveaux postes pour vous",
@@ -2046,7 +2044,6 @@
     "matchLabel": "match",
     "updatedProfile": "Mis à jour pour votre profil",
     "seeAllMatches": "Voir tous les matchs",
-    "trustIntro": "Connecter des talents ambitieux avec des équipes chez",
     "howKicker": "UNE MEILLEURE FAÇON DE CHERCHER",
     "howH2": "Votre prochain poste, simplifié.",
     "howP": "Du profil à l'offre, JobConnect AI vous aide à vous concentrer sur les opportunités qui en valent la peine.",
@@ -2084,7 +2081,11 @@
     "ctaH2Part2": "commencer aujourd'hui.",
     "ctaP": "Créez votre profil et laissez JobConnect AI trouver les offres faites pour vous.",
     "ctaBtn": "Trouver mes offres",
-    "ctaSub": "Aucune carte bancaire requise · Gratuit pour commencer"
+    "ctaSub": "Aucune carte bancaire requise · Gratuit pour commencer",
+    "statJobsLabel": "offres aujourd'hui",
+    "statCountries": "63 pays",
+    "statLanguages": "11 langues",
+    "statZeroLabel": "résultats inventés"
   },
   "referral": {
     "title": "Vous connaissez 5 personnes à la recherche de meilleures opportunités de carrière ? Partagez JobConnect Ai avec elles.",

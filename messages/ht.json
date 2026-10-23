@@ -1978,8 +1978,6 @@
     "searchPlaceholderWhat": "Wòl, konpetans oswa konpayi",
     "searchPlaceholderWhere": "Vil, peyi oswa aleka",
     "searchBtn": "Jwenn match mwen yo",
-    "proofCount": "12,000+ pwofesyonèl",
-    "proofText": "te jwenn travay yo nan men nou",
     "dashboardTitle": "MATCH OU YO JOU A",
     "dashboardGreeting": "Bonjou, Alex",
     "dashboardNewRoles": "Nou jwenn 24 nouvo wòl pou ou",
@@ -1991,7 +1989,6 @@
     "matchLabel": "match",
     "updatedProfile": "Mete ajou pou pwofil ou",
     "seeAllMatches": "Wè tout match yo",
-    "trustIntro": "Konekte talan ambisye ak ekip nan",
     "howKicker": "YON PI BON FASON POU CHÈCHE TRAVAY",
     "howH2": "Pwochen etap ou, pi senp.",
     "howP": "Depi kreye pwofil jiska resevwa ofè, JobConnect AI ede ou konsantre sou opòtinite ki vo tan ou.",
@@ -2029,7 +2026,11 @@
     "ctaH2Part2": "kòmanse jodi a.",
     "ctaP": "Kreye pwofil ou epi kite JobConnect AI jwenn wòl yo te fè pou ou.",
     "ctaBtn": "Jwenn match mwen yo",
-    "ctaSub": "Pa bezwen kat kredi · Gratis pou kòmanse"
+    "ctaSub": "Pa bezwen kat kredi · Gratis pou kòmanse",
+    "statJobsLabel": "travay jodi a",
+    "statCountries": "63 peyi",
+    "statLanguages": "11 lang",
+    "statZeroLabel": "rezilta envante"
   },
   "referral": {
     "title": "Ou konnen 5 moun k ap chèche pi bon opòtinite karyè? Pataje JobConnect Ai avèk yo.",

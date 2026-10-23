@@ -2027,8 +2027,6 @@
     "searchPlaceholderWhat": "Vị trí, kỹ năng hoặc công ty",
     "searchPlaceholderWhere": "Thành phố, quốc gia hoặc từ xa",
     "searchBtn": "Tìm việc phù hợp",
-    "proofCount": "Hơn 12.000 chuyên gia",
-    "proofText": "đã tìm được công việc tiếp theo cùng chúng tôi",
     "dashboardTitle": "KẾT QUẢ PHÙ HỢP HÔM NAY",
     "dashboardGreeting": "Chào buổi sáng, Alex",
     "dashboardNewRoles": "Chúng tôi tìm thấy 24 vị trí mới cho bạn",
@@ -2040,7 +2038,6 @@
     "matchLabel": "phù hợp",
     "updatedProfile": "Đã cập nhật theo hồ sơ của bạn",
     "seeAllMatches": "Xem tất cả kết quả",
-    "trustIntro": "Kết nối nhân tài tham vọng với các đội nhóm tại",
     "howKicker": "CÁCH TÌM VIỆC TỐT HƠN",
     "howH2": "Bước tiếp theo của bạn, đơn giản hơn.",
     "howP": "Từ tạo hồ sơ đến nhận offer, JobConnect AI giúp bạn tập trung vào những cơ hội xứng đáng với thời gian của bạn.",
@@ -2078,7 +2075,11 @@
     "ctaH2Part2": "bắt đầu hôm nay.",
     "ctaP": "Tạo hồ sơ của bạn và để JobConnect AI tìm những vị trí dành cho bạn.",
     "ctaBtn": "Tìm việc phù hợp",
-    "ctaSub": "Không cần thẻ tín dụng · Miễn phí để bắt đầu"
+    "ctaSub": "Không cần thẻ tín dụng · Miễn phí để bắt đầu",
+    "statJobsLabel": "việc làm hôm nay",
+    "statCountries": "63 quốc gia",
+    "statLanguages": "11 ngôn ngữ",
+    "statZeroLabel": "kết quả bịa đặt"
   },
   "referral": {
     "title": "Bạn biết 5 người đang tìm kiếm cơ hội nghề nghiệp tốt hơn? Hãy chia sẻ JobConnect Ai với họ.",
