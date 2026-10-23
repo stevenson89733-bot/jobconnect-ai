@@ -76,7 +76,7 @@
     "employerDashboard": "Tablo Bò Anplwayè",
     "about": "Sou nou",
     "contact": "Kontak",
-    "copyright": "© {year} JobConnect AI. Tout dwa rezève.",
+    "copyright": "© {year} SJL Technologies LLC. Tout dwa rezève.",
     "privacy": "Konfidansyalite",
     "terms": "Kondisyon",
     "blog": "Blòg",
@@ -1193,7 +1193,8 @@
     "employerFeaturedListingBenefit1": "Parèt nan tèt rezilta rechèch",
     "employerFeaturedListingBenefit2": "Badge \"Vedèt\" sou kat travay",
     "employerFeaturedListingBenefit3": "Enkli nan alèt imèl kandida",
-    "employerFeaturedListingBenefit4": "1 refrechisman pozisyon apre 15 jou"
+    "employerFeaturedListingBenefit4": "1 refrechisman pozisyon apre 15 jou",
+    "checkoutConsent": "Lè ou kontinye, ou dakò ak <terms>Kondisyon Itilizasyon</terms> nou yo ak <privacy>Politik Konfidansyalite</privacy> nou an."
   },
   "countries": {
     "AE": "Emira Arab Ini",
@@ -1332,7 +1333,7 @@
   },
   "aboutPage": {
     "heroTitle": "Konekte talan mondyal ak konpayi ki rekrite atravè fwontyè",
-    "heroSubtitle": "Platfòm travay adistans avèk IA, konstwi pou jenerasyon san fwontyè. Lanse 2026 depi Vil Ho Chi Minh, Vyetnam.",
+    "heroSubtitle": "Platfòm travay adistans avèk IA, konstwi pou jenerasyon san fwontyè. Fonde nan Vil Ho Chi Minh, Vyetnam. Enkòpore nan Wyoming, Etazini.",
     "stat1Value": "63",
     "stat1Label": "peyi",
     "stat2Value": "11",
@@ -1342,7 +1343,7 @@
     "stat4Value": "969+",
     "stat4Label": "match chak jou",
     "storyTitle": "Kijan sa te kòmanse",
-    "storyText": "JobConnect AI te bati pou kont li pa Stevenson Jean-Louis — yon devlopè ki baze nan Vil Ho Chi Minh, Vyetnam. Lide a te senp: rekritman adistans toujou kase. JobConnect AI egziste pou bouche twou sa a ak zouti IA onèt — pa gen pwen gonflé, pa gen match fo.",
+    "storyText": "JobConnect AI te bati pou kont li pa Stevenson Jean-Louis — fonde nan Vil Ho Chi Minh, Vyetnam, epi enkòpore nan Wyoming, Etazini. Lide a te senp: rekritman adistans toujou kase. JobConnect AI egziste pou bouche twou sa a ak zouti IA onèt — pa gen pwen gonflé, pa gen match fo.",
     "value1Title": "Transparan",
     "value1Text": "Pa gen match fabrike. Chak travay reyèl, chak pwen IA reflete yon evalyasyon reyèl pwofil ou.",
     "value2Title": "Vi prive",
@@ -1640,102 +1641,182 @@
     "contactUs": "Kontakte nou"
   },
   "privacyPage": {
-    "title": "Règleman Konfidansyalite",
-    "lastUpdated": "Dènyè mizajou: Septanm 2026",
-    "s1Title": "1. Entwodiksyon",
-    "s1Text": "JobConnect AI (\"nou\") angaje yo pou pwoteje konfidansyalite ou. Règleman sa a eksplike kijan nou kolekte, itilize, divige, ak pwoteje enfòmasyon ou lè ou itilize sèvis nou yo.",
-    "s2Title": "2. Enfòmasyon Nou Kolekte",
-    "s2SubPersonal": "Enfòmasyon Pèsonèl",
-    "s2Item1": "Adrès imèl ak enfòmasyon koneksyon kont",
-    "s2Item2": "Non konplè, enfòmasyon pwofil, ak kote ou ye",
-    "s2Item3": "CV, lèt motivasyon, ak eksperyans travay",
-    "s2Item4": "Istwa aplikasyon ak preferans travay",
-    "s2Item5": "Enfòmasyon peman (pwosese an sekirite pa Stripe)",
-    "s2SubAuto": "Done Ki Kolekte Otomatikman",
-    "s2Item6": "Tip navigatè, adrès IP, ak enfòmasyon aparèy",
-    "s2Item7": "Paj vizite ak tan pase sou platfòm nou an",
-    "s2Item8": "Sous referans ak modèl entèraksyon (via Meta Pixel)",
-    "s3Title": "3. Founisè Sèvis Twazyèm Pati",
-    "s3Intro": "Nou itilize founisè sèvis sa yo pou opere platfòm nou an:",
-    "s4Title": "4. Kijan Nou Itilize Done Ou",
-    "s4Item1": "Founi ak amelyore zouti matche travay ak AI nou yo",
-    "s4Item2": "Pwosese peman ak jere abònman",
-    "s4Item3": "Voye imèl tranzaksyonèl ak operasyonèl",
-    "s4Item4": "Analize modèl itilizasyon pou amelyore eksperyans itilizatè",
-    "s4Item5": "Respekte obligasyon legal",
-    "s4Item6": "Anpeche fwòd ak kenbe sekirite platfòm",
-    "s5Title": "5. Dwa Konfidansyalite Ou (GDPR ak Itilizatè UE)",
-    "s5Intro": "Si ou nan Inyon Ewopeyen osinon Wayòm Ini, ou gen dwa sa yo:",
-    "s5r1Title": "Dwa Aksè",
-    "s5r1Text": "Mande yon kopi done pèsonèl ou nou genyen.",
-    "s5r2Title": "Dwa Koreksyon",
-    "s5r2Text": "Korije done pèsonèl ki pa egzak oswa ki pa konplè.",
-    "s5r3Title": "Dwa Efasman",
-    "s5r3Text": "Mande efasman done pèsonèl ou, dapre obligasyon legal.",
-    "s5r4Title": "Dwa Pòtabilite Done",
-    "s5r4Text": "Resevwa done ou nan yon fòma estriktiré epi transfere yo bay yon lòt founisè.",
-    "s5r5Title": "Dwa Objeksyon",
-    "s5r5Text": "Fè objeksyon kont pwosesis pou objektif maketing oswa analitik.",
-    "s5Contact": "Pou egzèse dwa sa yo, kontakte nou nan contact@jobconnect-ai.com",
-    "s6Title": "6. Konsèvasyon Done",
-    "s6Text": "Nou konsève done pèsonèl ou pou peryòd kont ou aktif la. Apre efasman kont, done ou yo retire pèmanantman nan sistèm nou yo nan 30 jou, sof si nou oblije legalman konsève yo.",
-    "s7Title": "7. Pataj ak Vann Done",
-    "s7Text": "Nou PA vann done pèsonèl ou bay twazyèm pati. Nou sèlman pataje done ak founisè sèvis ki ede nou opere platfòm nan.",
-    "s8Title": "8. Sekirite Done",
-    "s8Text": "Nou aplike mezi sekirite estanda nan endistri ki gen ladan chifreman, paredife, ak otantifikasyon sekirize.",
-    "s9Title": "9. Cookie ak Analitik",
-    "s9Text": "Nou itilize cookie pou amelyore eksperyans ou epi analize itilizasyon pa Meta Pixel. Ou ka kontwole preferans cookie pa banyè konsantman nou an.",
-    "s10Title": "10. Kontakte Nou",
-    "s10Text": "Si ou gen kesyon sou Règleman Konfidansyalite sa a oswa vle egzèse dwa ou yo, kontakte nou nan:",
-    "s11Title": "11. Konpliyans",
-    "s11Text": "Règleman sa a konfòm ak GDPR UE, Lwa Pwoteksyon Done Wayòm Uni 2018, ak lòt lwa pwoteksyon done ki aplikab.",
-    "s12Title": "12. Chanjman nan Règleman Sa A",
-    "s12Text": "Nou ka mete ajou Règleman Konfidansyalite sa a peryodikman. Nou pral avèti ou sou chanjman enpòtan pa imèl."
+    "doc": {
+      "title": "Politik Konfidansyalite",
+      "lastUpdated": "Dènye mizajou: oktòb 2026",
+      "intro": [
+        "JobConnect AI se yon pwodui **SJL Technologies LLC**, yon konpayi responsablite limite ki enkòpore nan Eta Wyoming, Etazini."
+      ],
+      "sections": [
+        {
+          "title": "1. Enfòmasyon nou kolekte",
+          "blocks": [
+            [
+              "**Done kont ak pwofil:** Non, imèl, modpas, kote w ye, preferans travay, enfòmasyon faktirasyon",
+              "**Dokiman karyè:** CV, istwa travay, konpetans, lèt motivasyon, lyen LinkedIn/GitHub",
+              "**Done teknik:** Adrès IP, kalite navigatè, idantifyan aparèy, cookies, done itilizasyon"
+            ]
+          ]
+        },
+        {
+          "title": "2. Kijan nou itilize enfòmasyon ou",
+          "blocks": [
+            [
+              "Bay ak amelyore matching IA, zouti karyè ak analiz CV",
+              "Egzekite aplikasyon otomatik ou otorize",
+              "Trete peman ak anpeche fwod",
+              "Voye mizajou sèvis, alèt entèvyou ak repons sipò"
+            ],
+            "**Nou PA vann done pèsonèl ou ni CV ou bay lòt moun oswa koutye done.**"
+          ]
+        },
+        {
+          "title": "3. Pataj ak divilgasyon",
+          "blocks": [
+            "Nou pataje done sèlman ak:",
+            [
+              "**Patwon ak rekritè:** Lè ou chwazi matching travay oswa Auto-Apply",
+              "**Founisè sèvis:** Supabase (baz done/otantifikasyon), Stripe (peman), Resend (imèl), Crisp Chat (sipò), Meta Pixel (estatistik), OpenAI (tretman IA pou CV, pwofil ak kontni jenere), Vercel (ebèjman ak estatistik) — anba konfidansyalite strik",
+              "**Obligasyon legal:** Lè lalwa oswa yon lòd tribinal egzije l"
+            ]
+          ]
+        },
+        {
+          "title": "4. Dwa konfidansyalite Kalifòni (CCPA/CPRA)",
+          "blocks": [
+            "Moun ki rete Kalifòni gen dwa pou:",
+            [
+              "Konnen ak jwenn aksè ak done pèsonèl nou kolekte sou yo",
+              "Mande pou efase done pèsonèl yo",
+              "Mande pou korije done ki pa egzat",
+              "Refize vant oswa pataj (nou pa vann done)",
+              "Pa sibi diskriminasyon paske yo egzèse dwa CCPA yo"
+            ],
+            "Pou egzèse dwa sa yo: privacy@jobconnect-ai.com"
+          ]
+        },
+        {
+          "title": "5. Dwa UE/Wayòm Ini (GDPR)",
+          "blocks": [
+            "Moun ki rete nan UE/Wayòm Ini gen dwa pou jwenn aksè, korije, efase, limite, transfere oswa opoze tretman done pèsonèl yo. Kontak: privacy@jobconnect-ai.com"
+          ]
+        },
+        {
+          "title": "6. Sekirite ak konsèvasyon done",
+          "blocks": [
+            "Chifreman dapre estanda endistri a, pandan transmisyon ak pandan estokaj. Nou kenbe done yo pandan kont lan aktif; nou efase yo nan 30 jou apre ou efase kont lan, sof si lalwa egzije otreman."
+          ]
+        },
+        {
+          "title": "7. Konfidansyalite timoun",
+          "blocks": [
+            "Sèvis la pa fèt pou moun ki gen mwens pase 16 an. Nou pa kolekte konsyamman done sou minè."
+          ]
+        },
+        {
+          "title": "8. Chanjman",
+          "blocks": [
+            "N ap anonse chanjman enpòtan yo pa imèl. Si ou kontinye itilize sèvis la, sa vle di ou aksepte yo."
+          ]
+        },
+        {
+          "title": "9. Kontak",
+          "blocks": [
+            "**SJL Technologies LLC** — Wyoming, Etazini",
+            "Imèl: privacy@jobconnect-ai.com"
+          ]
+        }
+      ]
+    }
   },
   "termsPage": {
-    "title": "Kondisyon Sèvis",
-    "lastUpdated": "Dènyè mizajou: Septanm 2026",
-    "s1Title": "1. Akseptasyon Kondisyon Yo",
-    "s1Text": "Lè ou aksede epi itilize JobConnect AI, ou aksepte epi dakò pou obligè pa Kondisyon Sèvis sa yo.",
-    "s2Title": "2. Deskripsyon Sèvis",
-    "s2Text": "JobConnect AI se yon platfòm SaaS pou matche travay aleka, optimize CV ak AI, ak aplikasyon travay.",
-    "s3Title": "3. Plan Pri",
-    "s3FreeName": "Plan GRATIS",
-    "s3FreeText": "Gratis pou toujou ak fonksyon debaz pou chèche travay ak swiv aplikasyon.",
-    "s3ProName": "Plan PRO — $19.99/mwa",
-    "s3ProText": "Bati CV ak AI, Jeneratè lèt motivasyon, Auto-Apply (10 travay/jou), Optimize LinkedIn, ak Sipò priyoritè.",
-    "s3EliteName": "Plan ELITE — $39.99/mwa",
-    "s3EliteText": "Tout nan PRO, plis Auto-Apply (25 travay/jou), Matche priyoritè, Sipò dedye 24/7, ak Badj pwofil Elite.",
-    "s4Title": "4. Abònman ak Faktirasyon",
-    "s4Item1": "Abònman renouvle otomatikman chak mwa",
-    "s4Item2": "Faktirasyon pwosese an sekirite pa Stripe",
-    "s4Item3": "Ou ka anile abònman ou nenpòt ki lè san penalite",
-    "s4Item4": "Anilasyon pran efè nan fen sik faktirasyon aktyèl la",
-    "s4Item5": "Ranbousman pa founi pou pati ki pa itilize nan yon mwa abònman",
-    "s5Title": "5. Pa Gen Garanti Plas Travay",
-    "s5Text": "JobConnect AI pa garanti plas travay oswa anplwa.",
-    "s6Title": "6. Politik Itilizasyon Akseptab",
-    "s6Intro": "Ou dakò pou pa itilize JobConnect AI pou:",
-    "s6Item1": "Pibliye kontni travay diskriminatwa, ofansif, oswa ilegal",
-    "s6Item2": "Asèlman, menas, oswa abi sou lòt itilizatè",
-    "s6Item3": "Aplikasyon fwodè oswa fo reprezantasyon kalifikasyon",
-    "s6Item4": "Spam, phishing, oswa distribisyon malwè",
-    "s6Item5": "Vyole nenpòt lwa oswa règleman ki aplikab",
-    "s6Item6": "Eseye jwenn aksè san otorizasyon nan sistèm nou yo",
-    "s7Title": "7. Kontni Itilizatè",
-    "s7Text": "Ou kenbe pwopriyete tout kontni ou soumèt. Lè ou itilize Sèvis nou an, ou ban nou yon lisans pou itilize kontni ou pou founi Sèvis la.",
-    "s8Title": "8. Rezilye Kont",
-    "s8Text": "Nou rezève dwa pou sispann oswa rezilye kont ou si ou vyole Kondisyon sa yo.",
-    "s9Title": "9. Limitasyon Responsablite",
-    "s9Text": "NAN LIMIT MAKSIMÒM KI PÈMÈT PA LA LWA: JobConnect AI founi san okenn garanti. Nou pa responsab pou domaj endirèk oswa konsekan.",
-    "s10Title": "10. Pwopriyete Entelektyèl",
-    "s10Text": "Tout kontni ak fonksyon JobConnect AI pwoteje pa lwa entènasyonal sou dwa dotè ak mak komèsyal.",
-    "s11Title": "11. Lwa Aplikab",
-    "s11Text": "Kondisyon Sèvis sa yo gouvène ak entèprete dapre lwa Singapou.",
-    "s12Title": "12. Chanjman nan Kondisyon",
-    "s12Text": "Nou ka modifye Kondisyon sa yo nenpòt ki lè. Chanjman enpòtan pral kominike pa imèl.",
-    "s13Title": "13. Kontakte Nou",
-    "s13Text": "Pou kesyon sou Kondisyon sa yo, kontakte nou nan:"
+    "doc": {
+      "title": "Kondisyon Itilizasyon",
+      "lastUpdated": "Dènye mizajou: oktòb 2026",
+      "intro": [
+        "Byenvini sou JobConnect AI (\"Konpayi an\", \"nou\", oswa \"pa nou\"), yon pwodui **SJL Technologies LLC**, yon konpayi responsablite limite ki enkòpore nan Eta Wyoming, Etazini. Kondisyon Itilizasyon sa yo (\"Kondisyon yo\") jere aksè ou ak itilizasyon ou nan https://jobconnect-ai.com ak tout sèvis, lojisyèl ak zouti IA ki asosye ak li (ansanm, \"Platfòm nan\").",
+        "Lè ou antre sou JobConnect AI oswa ou itilize l, ou dakò pou Kondisyon sa yo mare w. Si ou pa dakò, pa antre sou Platfòm nan ni itilize l."
+      ],
+      "sections": [
+        {
+          "title": "1. Kalifikasyon ak enskripsyon kont",
+          "blocks": [
+            [
+              "**Laj:** Ou dwe gen omwen 18 an pou itilize JobConnect AI.",
+              "**Enfòmasyon kont:** Ou dakò pou bay enfòmasyon ki egzat, konplè e ajou lè w ap enskri.",
+              "**Sekirite:** Se ou ki responsab pou kenbe idantifyan ou yo an sekrè ak pou tout aktivite ki fèt sou kont ou."
+            ]
+          ]
+        },
+        {
+          "title": "2. Abònman, peman ak ranbousman",
+          "blocks": [
+            [
+              "**Plan:** Gratis, Pro ($19.99/mwa) ak Elite ($39.99/mwa).",
+              "**Faktirasyon:** Abònman yo renouvle otomatikman chak mwa atravè Stripe. Ou ka anile nenpòt ki lè anvan pwochen sik faktirasyon an.",
+              "**Ranbousman:** An jeneral, pa gen ranbousman, eksepte lè lalwa egzije l oswa dapre [Politik Ranbousman](/refund) nou an (jobconnect-ai.com/refund)."
+            ]
+          ]
+        },
+        {
+          "title": "3. Fonksyon IA ak avètisman sou Auto-Apply",
+          "blocks": [
+            [
+              "**Kontni IA jenere:** Platfòm nan itilize IA ak algoritm otomatik pou kreye CV, ekri lèt motivasyon, matche konpetans ak zouti karyè.",
+              "**Pa gen garanti travay:** JobConnect AI pa garanti entèvyou, rezilta rekritman, ni travay.",
+              "**Obligasyon pou verifye:** Se ou sèl ki responsab pou revize ak verifye tout kontni IA jenere anvan ou voye l bay patwon yo.",
+              "**Soumisyon otomatik (Auto-Apply):** Lè ou aktive Auto-Apply, ou bay JobConnect AI pèmisyon klè pou soumèt aplikasyon nan non ou. Nou pa responsab pou rejè ATS, erè soumisyon, oswa dat limit ki rate."
+            ]
+          ]
+        },
+        {
+          "title": "4. Politik itilizasyon akseptab",
+          "blocks": [
+            "Ou dakò pou PA:",
+            [
+              "Itilize Platfòm nan pou bi fwod, ilegal oswa san otorizasyon",
+              "Dekonpoze, fè scraping oswa ekstrè kòd sous oswa modèl IA yo san otorizasyon alekri",
+              "Telechaje kòd malveyan, fo diplòm oswa istwa travay ki twonpe moun",
+              "Eseye kontoune limit itilizasyon, kontwòl otantifikasyon oswa sistèm peman"
+            ]
+          ]
+        },
+        {
+          "title": "5. Limit responsablite",
+          "blocks": [
+            "**NAN LIMIT MAKSIMÒM LALWA APLIKAB PÈMÈT, JOBCONNECT AI AK SJL TECHNOLOGIES LLC PA P RESPONSAB POU OKENN DOMAJ ENDIRÈK, ENSIDANTÈL, ESPESYAL, KONSEKITIF OSWA PINITIF. RESPONSABLITE TOTAL NOU PA P DEPASE PI GWO MONTAN ANT $100 USD OSWA TOTAL KÒB OU TE PEYE NAN DOUZ (12) MWA KI VIN ANVAN REKLAMASYON AN.**"
+          ]
+        },
+        {
+          "title": "6. Rezolisyon diskisyon, abitraj obligatwa ak renonsyasyon aksyon kolektif",
+          "blocks": [
+            [
+              "**Abitraj obligatwa:** Nenpòt diskisyon ap rezoud pa yon abitraj endividyèl obligatwa dapre règ American Arbitration Association (AAA).",
+              "**Renonsyasyon aksyon kolektif:** OU RENONSE A TOUT DWA POU W POTE OSWA PATISIPE NAN YON AKSYON KOLEKTIF OSWA YON PWOSEDI REPREZANTATIF KONT JOBCONNECT AI."
+            ]
+          ]
+        },
+        {
+          "title": "7. Lalwa ki aplikab",
+          "blocks": [
+            "Kondisyon sa yo jere epi entèprete dapre lwa **Eta Wyoming, Etazini**, san konsidere prensip konfli lwa li yo."
+          ]
+        },
+        {
+          "title": "8. Chanjman nan Kondisyon yo",
+          "blocks": [
+            "N ap anonse chanjman enpòtan yo pa imèl. Si ou kontinye itilize Platfòm nan apre chanjman yo antre an vigè, sa vle di ou aksepte yo."
+          ]
+        },
+        {
+          "title": "9. Kontak",
+          "blocks": [
+            "**SJL Technologies LLC** — Wyoming, Etazini",
+            "Imèl: contact@jobconnect-ai.com"
+          ]
+        }
+      ]
+    }
   },
   "refundPage": {
     "title": "Politik Ranbousman",

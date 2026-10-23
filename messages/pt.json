@@ -76,7 +76,7 @@
     "employerDashboard": "Painel do Empregador",
     "about": "Sobre",
     "contact": "Contato",
-    "copyright": "© {year} JobConnect AI. Todos os direitos reservados.",
+    "copyright": "© {year} SJL Technologies LLC. Todos os direitos reservados.",
     "privacy": "Privacidade",
     "terms": "Termos",
     "blog": "Blog",
@@ -1186,7 +1186,8 @@
     "employerFeaturedListingBenefit2": "Badge «Destaque» no card da vaga",
     "employerFeaturedListingBenefit3": "Incluído nos alertas de e-mail para candidatos",
     "employerFeaturedListingBenefit4": "1 atualização de posição após 15 dias",
-    "everythingInGrowth": "Tudo do Growth +"
+    "everythingInGrowth": "Tudo do Growth +",
+    "checkoutConsent": "Ao continuar, você concorda com nossos <terms>Termos de Serviço</terms> e nossa <privacy>Política de Privacidade</privacy>."
   },
   "countries": {
     "AE": "Emirados Árabes Unidos",
@@ -1325,7 +1326,7 @@
   },
   "aboutPage": {
     "heroTitle": "Conectando talentos globais com empresas que contratam além das fronteiras",
-    "heroSubtitle": "Plataforma de emprego remoto com IA, construída para a geração sem fronteiras. Lançada em 2026 em Ho Chi Minh City, Vietnã.",
+    "heroSubtitle": "Plataforma de emprego remoto com IA, construída para a geração sem fronteiras. Fundada em Ho Chi Minh City, Vietnã. Constituída em Wyoming, EUA.",
     "stat1Value": "63",
     "stat1Label": "países",
     "stat2Value": "11",
@@ -1335,7 +1336,7 @@
     "stat4Value": "969+",
     "stat4Label": "correspondências/dia",
     "storyTitle": "Como começou",
-    "storyText": "JobConnect AI foi construído solo por Stevenson Jean-Louis — desenvolvedor baseado em Ho Chi Minh City, Vietnã. A ideia era simples: a contratação remota ainda está quebrada. JobConnect AI existe para fechar essa lacuna com ferramentas de IA honestas — sem pontuações infladas, sem correspondências falsas.",
+    "storyText": "JobConnect AI foi construído solo por Stevenson Jean-Louis — fundado em Ho Chi Minh City, Vietnã, e constituído em Wyoming, EUA. A ideia era simples: a contratação remota ainda está quebrada. JobConnect AI existe para fechar essa lacuna com ferramentas de IA honestas — sem pontuações infladas, sem correspondências falsas.",
     "value1Title": "Transparência",
     "value1Text": "Sem correspondências fabricadas. Cada vaga é real, cada pontuação de IA reflete uma avaliação genuína do seu perfil.",
     "value2Title": "Privacidade",
@@ -1633,102 +1634,182 @@
     "contactUs": "Fale conosco"
   },
   "privacyPage": {
-    "title": "Política de Privacidade",
-    "lastUpdated": "Última atualização: setembro de 2026",
-    "s1Title": "1. Introdução",
-    "s1Text": "A JobConnect AI (\"nós\") está comprometida em proteger sua privacidade. Esta Política explica como coletamos, usamos, divulgamos e protegemos suas informações quando você usa nossos serviços.",
-    "s2Title": "2. Informações que coletamos",
-    "s2SubPersonal": "Informações pessoais",
-    "s2Item1": "Endereço de e-mail e credenciais de conta",
-    "s2Item2": "Nome completo, informações de perfil e localização",
-    "s2Item3": "Currículos, cartas de apresentação e experiência profissional",
-    "s2Item4": "Histórico de candidaturas e preferências de emprego",
-    "s2Item5": "Informações de pagamento (processadas com segurança pelo Stripe)",
-    "s2SubAuto": "Dados coletados automaticamente",
-    "s2Item6": "Tipo de navegador, endereço IP e informações do dispositivo",
-    "s2Item7": "Páginas visitadas e tempo gasto em nossa plataforma",
-    "s2Item8": "Fonte de referência e padrões de interação (via Meta Pixel)",
-    "s3Title": "3. Prestadores de serviços terceiros",
-    "s3Intro": "Usamos os seguintes prestadores de serviços para operar nossa plataforma:",
-    "s4Title": "4. Como usamos seus dados",
-    "s4Item1": "Fornecer e melhorar nossas ferramentas de correspondência de empregos e IA",
-    "s4Item2": "Processar pagamentos e gerenciar assinaturas",
-    "s4Item3": "Enviar e-mails transacionais e operacionais",
-    "s4Item4": "Analisar padrões de uso para melhorar a experiência do usuário",
-    "s4Item5": "Cumprir obrigações legais",
-    "s4Item6": "Prevenir fraudes e manter a segurança da plataforma",
-    "s5Title": "5. Seus direitos de privacidade (RGPD e usuários da UE)",
-    "s5Intro": "Se você estiver na União Europeia ou no Reino Unido, você tem os seguintes direitos:",
-    "s5r1Title": "Direito de acesso",
-    "s5r1Text": "Solicite uma cópia dos seus dados pessoais que mantemos.",
-    "s5r2Title": "Direito de retificação",
-    "s5r2Text": "Corrija dados pessoais imprecisos ou incompletos.",
-    "s5r3Title": "Direito ao apagamento",
-    "s5r3Text": "Solicite a exclusão de seus dados pessoais, sujeito a obrigações legais.",
-    "s5r4Title": "Direito à portabilidade de dados",
-    "s5r4Text": "Receba seus dados em formato estruturado e transfira-os para outro provedor.",
-    "s5r5Title": "Direito de oposição",
-    "s5r5Text": "Opor-se ao tratamento para fins de marketing ou análise.",
-    "s5Contact": "Para exercer esses direitos, entre em contato em contact@jobconnect-ai.com",
-    "s6Title": "6. Retenção de dados",
-    "s6Text": "Retemos seus dados enquanto sua conta estiver ativa. Após exclusão da conta, os dados são removidos em 30 dias, salvo obrigação legal.",
-    "s7Title": "7. Compartilhamento e venda de dados",
-    "s7Text": "NÃO vendemos seus dados a terceiros. Compartilhamos apenas com prestadores que auxiliam na operação da plataforma.",
-    "s8Title": "8. Segurança de dados",
-    "s8Text": "Implementamos medidas de segurança padrão do setor, incluindo criptografia, firewalls e autenticação segura.",
-    "s9Title": "9. Cookies e análises",
-    "s9Text": "Usamos cookies para melhorar sua experiência e analisar o uso através do Meta Pixel. Você pode controlar preferências de cookies pelo banner de consentimento.",
-    "s10Title": "10. Contate-nos",
-    "s10Text": "Se você tiver dúvidas sobre esta Política ou desejar exercer seus direitos, entre em contato:",
-    "s11Title": "11. Conformidade",
-    "s11Text": "Esta Política está em conformidade com o RGPD da UE, a Lei de Proteção de Dados do Reino Unido de 2018 e outras leis aplicáveis.",
-    "s12Title": "12. Alterações nesta política",
-    "s12Text": "Podemos atualizar esta Política periodicamente. Notificaremos alterações significativas por e-mail."
+    "doc": {
+      "title": "Política de Privacidade",
+      "lastUpdated": "Última atualização: outubro de 2026",
+      "intro": [
+        "O JobConnect AI é um produto da **SJL Technologies LLC**, uma sociedade de responsabilidade limitada constituída no Estado de Wyoming, Estados Unidos da América."
+      ],
+      "sections": [
+        {
+          "title": "1. Informações que coletamos",
+          "blocks": [
+            [
+              "**Dados de conta e perfil:** nome, e-mail, senha, localização, preferências de trabalho, dados de cobrança",
+              "**Materiais de carreira:** currículos, histórico profissional, habilidades, cartas de apresentação, links do LinkedIn/GitHub",
+              "**Dados técnicos:** endereço IP, tipo de navegador, identificadores do dispositivo, cookies, dados de uso"
+            ]
+          ]
+        },
+        {
+          "title": "2. Como usamos suas informações",
+          "blocks": [
+            [
+              "Fornecer e aprimorar a correspondência por IA, as ferramentas de carreira e a análise de currículos",
+              "Executar as candidaturas automatizadas autorizadas por você",
+              "Processar pagamentos e prevenir fraudes",
+              "Enviar atualizações do serviço, alertas de entrevista e respostas do suporte"
+            ],
+            "**NÃO vendemos seus dados pessoais nem seus currículos a terceiros ou corretores de dados.**"
+          ]
+        },
+        {
+          "title": "3. Compartilhamento e divulgação",
+          "blocks": [
+            "Compartilhamos dados apenas com:",
+            [
+              "**Empregadores e recrutadores:** quando você ativa a correspondência de vagas ou o Auto-Apply",
+              "**Prestadores de serviços:** Supabase (banco de dados/autenticação), Stripe (pagamentos), Resend (e-mail), Crisp Chat (suporte), Meta Pixel (análise), OpenAI (processamento por IA de currículos, perfis e conteúdo gerado), Vercel (hospedagem e análise) — sob estrita confidencialidade",
+              "**Exigências legais:** quando exigido por lei ou ordem judicial"
+            ]
+          ]
+        },
+        {
+          "title": "4. Direitos de privacidade na Califórnia (CCPA/CPRA)",
+          "blocks": [
+            "Residentes da Califórnia têm o direito de:",
+            [
+              "Saber quais dados pessoais foram coletados sobre eles e acessá-los",
+              "Solicitar a exclusão de seus dados pessoais",
+              "Solicitar a correção de dados imprecisos",
+              "Recusar a venda ou o compartilhamento (não vendemos dados)",
+              "Não sofrer discriminação por exercer seus direitos previstos na CCPA"
+            ],
+            "Para exercer esses direitos: privacy@jobconnect-ai.com"
+          ]
+        },
+        {
+          "title": "5. Direitos UE/Reino Unido (GDPR)",
+          "blocks": [
+            "Residentes da UE e do Reino Unido têm o direito de acessar, retificar, apagar, restringir, portar ou se opor ao tratamento de seus dados pessoais. Contato: privacy@jobconnect-ai.com"
+          ]
+        },
+        {
+          "title": "6. Segurança e retenção de dados",
+          "blocks": [
+            "Criptografia padrão do setor em trânsito e em repouso. Os dados são mantidos enquanto a conta estiver ativa e excluídos em até 30 dias após a exclusão da conta, salvo exigência legal."
+          ]
+        },
+        {
+          "title": "7. Privacidade de menores",
+          "blocks": [
+            "O Serviço não se destina a pessoas com menos de 16 anos. Não coletamos intencionalmente dados de menores."
+          ]
+        },
+        {
+          "title": "8. Alterações",
+          "blocks": [
+            "Alterações relevantes são comunicadas por e-mail. O uso continuado constitui aceitação."
+          ]
+        },
+        {
+          "title": "9. Contato",
+          "blocks": [
+            "**SJL Technologies LLC** — Wyoming, EUA",
+            "E-mail: privacy@jobconnect-ai.com"
+          ]
+        }
+      ]
+    }
   },
   "termsPage": {
-    "title": "Termos de Serviço",
-    "lastUpdated": "Última atualização: setembro de 2026",
-    "s1Title": "1. Aceitação dos termos",
-    "s1Text": "Ao acessar e usar a JobConnect AI, você aceita e concorda em cumprir estes Termos de Serviço.",
-    "s2Title": "2. Descrição do serviço",
-    "s2Text": "A JobConnect AI é uma plataforma SaaS para correspondência de empregos remotos, otimização de currículo com IA e candidaturas.",
-    "s3Title": "3. Planos de preços",
-    "s3FreeName": "Plano GRATUITO",
-    "s3FreeText": "Sempre gratuito com recursos básicos de busca de emprego e rastreamento de candidaturas.",
-    "s3ProName": "Plano PRO — $19,99/mês",
-    "s3ProText": "Construtor de CV com IA, Gerador de carta, Auto-Apply (10 empregos/dia), Otimizador do LinkedIn e Suporte prioritário.",
-    "s3EliteName": "Plano ELITE — $39,99/mês",
-    "s3EliteText": "Tudo do PRO, mais Auto-Apply (25 empregos/dia), Correspondência prioritária, Suporte dedicado 24/7 e Badge Elite.",
-    "s4Title": "4. Assinatura e faturamento",
-    "s4Item1": "As assinaturas são renovadas automaticamente mensalmente",
-    "s4Item2": "O faturamento é processado com segurança através do Stripe",
-    "s4Item3": "Você pode cancelar sua assinatura a qualquer momento sem penalidades",
-    "s4Item4": "O cancelamento entra em vigor no final do ciclo de faturamento atual",
-    "s4Item5": "Reembolsos não são fornecidos por partes não utilizadas de um mês",
-    "s5Title": "5. Sem garantia de colocação",
-    "s5Text": "A JobConnect AI não garante colocação profissional ou emprego.",
-    "s6Title": "6. Política de uso aceitável",
-    "s6Intro": "Você concorda em não usar a JobConnect AI para:",
-    "s6Item1": "Publicar conteúdo discriminatório, ofensivo ou ilegal",
-    "s6Item2": "Assédio, ameaças ou abuso de outros usuários",
-    "s6Item3": "Candidaturas fraudulentas ou deturpação de qualificações",
-    "s6Item4": "Spam, phishing ou distribuição de malware",
-    "s6Item5": "Violar leis ou regulamentos aplicáveis",
-    "s6Item6": "Tentar obter acesso não autorizado aos nossos sistemas",
-    "s7Title": "7. Conteúdo do usuário",
-    "s7Text": "Você mantém a propriedade de todo o conteúdo que enviar. Ao usar o Serviço, nos concede uma licença para usar seu conteúdo.",
-    "s8Title": "8. Encerramento de conta",
-    "s8Text": "Nos reservamos o direito de suspender ou encerrar sua conta se você violar estes Termos.",
-    "s9Title": "9. Limitação de responsabilidade",
-    "s9Text": "NA MÁXIMA EXTENSÃO PERMITIDA POR LEI: A JobConnect AI é fornecida SEM garantias. Não somos responsáveis por danos indiretos ou consequentes.",
-    "s10Title": "10. Propriedade intelectual",
-    "s10Text": "Todo o conteúdo da JobConnect AI está protegido por leis internacionais de direitos autorais e marcas registradas.",
-    "s11Title": "11. Lei aplicável",
-    "s11Text": "Estes Termos são regidos pelas leis de Singapura.",
-    "s12Title": "12. Alterações nos termos",
-    "s12Text": "Podemos modificar estes Termos a qualquer momento. Alterações significativas serão comunicadas por e-mail.",
-    "s13Title": "13. Contato",
-    "s13Text": "Para dúvidas sobre estes Termos, entre em contato:"
+    "doc": {
+      "title": "Termos de Serviço",
+      "lastUpdated": "Última atualização: outubro de 2026",
+      "intro": [
+        "Bem-vindo ao JobConnect AI (\"Empresa\", \"nós\" ou \"nosso\"), um produto da **SJL Technologies LLC**, uma sociedade de responsabilidade limitada constituída no Estado de Wyoming, Estados Unidos da América. Estes Termos de Serviço (\"Termos\") regem o seu acesso e uso de https://jobconnect-ai.com e de todos os serviços, softwares e ferramentas com IA associados (em conjunto, a \"Plataforma\").",
+        "Ao acessar ou usar o JobConnect AI, você concorda em ficar vinculado a estes Termos. Se não concordar, não acesse nem use a Plataforma."
+      ],
+      "sections": [
+        {
+          "title": "1. Elegibilidade e cadastro de conta",
+          "blocks": [
+            [
+              "**Idade mínima:** você deve ter pelo menos 18 anos para usar o JobConnect AI.",
+              "**Exatidão da conta:** você concorda em fornecer informações precisas, completas e atualizadas durante o cadastro.",
+              "**Segurança:** você é responsável por manter a confidencialidade das suas credenciais e por todas as atividades realizadas na sua conta."
+            ]
+          ]
+        },
+        {
+          "title": "2. Assinaturas, pagamentos e reembolsos",
+          "blocks": [
+            [
+              "**Planos:** Gratuito, Pro (US$ 19,99/mês) e Elite (US$ 39,99/mês).",
+              "**Cobrança:** as assinaturas são renovadas automaticamente todo mês via Stripe. Cancele a qualquer momento antes do próximo ciclo de cobrança.",
+              "**Reembolsos:** em geral não reembolsáveis, exceto quando exigido por lei ou conforme a nossa [Política de Reembolso](/refund) (jobconnect-ai.com/refund)."
+            ]
+          ]
+        },
+        {
+          "title": "3. Recursos de IA e aviso sobre o Auto-Apply",
+          "blocks": [
+            [
+              "**Conteúdo gerado por IA:** a Plataforma usa IA e algoritmos automatizados para criação de currículos, geração de cartas de apresentação, correspondência de habilidades e ferramentas de carreira.",
+              "**Sem garantia de emprego:** o JobConnect AI não garante entrevistas, resultados de contratação nem emprego.",
+              "**Obrigação de revisão:** você é o único responsável por revisar e verificar todo conteúdo gerado por IA antes de enviá-lo a empregadores.",
+              "**Envios automatizados (Auto-Apply):** ao ativar o Auto-Apply, você concede expressamente ao JobConnect AI permissão para enviar candidaturas em seu nome. Não nos responsabilizamos por rejeições de ATS, erros de envio ou prazos perdidos."
+            ]
+          ]
+        },
+        {
+          "title": "4. Política de uso aceitável",
+          "blocks": [
+            "Você concorda em NÃO:",
+            [
+              "Usar a Plataforma para fins fraudulentos, ilícitos ou não autorizados",
+              "Fazer engenharia reversa, scraping ou extrair o código-fonte ou os modelos de IA sem autorização por escrito",
+              "Enviar código malicioso, credenciais falsas ou históricos profissionais enganosos",
+              "Tentar burlar limites de uso, controles de autenticação ou sistemas de pagamento"
+            ]
+          ]
+        },
+        {
+          "title": "5. Limitação de responsabilidade",
+          "blocks": [
+            "**NA MÁXIMA EXTENSÃO PERMITIDA PELA LEI APLICÁVEL, O JOBCONNECT AI E A SJL TECHNOLOGIES LLC NÃO SERÃO RESPONSÁVEIS POR QUAISQUER DANOS INDIRETOS, INCIDENTAIS, ESPECIAIS, CONSEQUENCIAIS OU PUNITIVOS. NOSSA RESPONSABILIDADE TOTAL AGREGADA NÃO EXCEDERÁ O MAIOR VALOR ENTRE US$ 100 OU O VALOR TOTAL PAGO POR VOCÊ NOS DOZE (12) MESES ANTERIORES À RECLAMAÇÃO.**"
+          ]
+        },
+        {
+          "title": "6. Resolução de disputas, arbitragem obrigatória e renúncia a ações coletivas",
+          "blocks": [
+            [
+              "**Arbitragem vinculante:** qualquer disputa será resolvida por arbitragem individual vinculante, segundo as regras da American Arbitration Association (AAA).",
+              "**Renúncia a ações coletivas:** VOCÊ RENUNCIA A QUALQUER DIREITO DE AJUIZAR OU PARTICIPAR DE AÇÃO COLETIVA OU PROCESSO REPRESENTATIVO CONTRA O JOBCONNECT AI."
+            ]
+          ]
+        },
+        {
+          "title": "7. Lei aplicável",
+          "blocks": [
+            "Estes Termos são regidos e interpretados de acordo com as leis do **Estado de Wyoming, Estados Unidos da América**, sem considerar seus princípios de conflito de leis."
+          ]
+        },
+        {
+          "title": "8. Alterações dos Termos",
+          "blocks": [
+            "Alterações relevantes serão comunicadas por e-mail. O uso continuado após a entrada em vigor das alterações constitui aceitação."
+          ]
+        },
+        {
+          "title": "9. Contato",
+          "blocks": [
+            "**SJL Technologies LLC** — Wyoming, EUA",
+            "E-mail: contact@jobconnect-ai.com"
+          ]
+        }
+      ]
+    }
   },
   "refundPage": {
     "title": "Política de Reembolso",

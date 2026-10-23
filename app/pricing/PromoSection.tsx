@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import CheckoutConsent from '@/components/legal/CheckoutConsent'
 
 export function PromoSection({
   upgradeLabel,
@@ -86,6 +87,7 @@ export function PromoSection({
           </span>
         ) : upgradeLabel}
       </button>
+      <CheckoutConsent />
 
       {!showField ? (
         <button
