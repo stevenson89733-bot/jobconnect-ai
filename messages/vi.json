@@ -1770,8 +1770,7 @@
             "Bạn đồng ý KHÔNG:",
             [
               "Sử dụng Nền tảng cho mục đích gian lận, bất hợp pháp hoặc trái phép",
-              "Dịch ngược, thu thập dữ liệu tự động (scraping) hoặc trích xuất mã nguồn hay mô hình AI khi chưa có sự cho phép bằng văn bản",
-              "Tải lên mã độc, bằng cấp giả hoặc lịch sử làm việc gây hiểu lầm",
+              "Tải lên mã độc",
               "Tìm cách vượt qua giới hạn sử dụng, cơ chế xác thực hoặc hệ thống thanh toán"
             ],
             "**Hồ sơ trung thực và bằng cấp xác thực**",
@@ -1779,7 +1778,7 @@
               "Mọi thông tin về quá trình làm việc, kỹ năng, bằng cấp và tình trạng giấy phép lao động phải chính xác và trung thực.",
               "Nghiêm cấm việc tạo hồ sơ cho bất kỳ ai khác ngoài chính bạn, nộp bằng cấp giả mạo hoặc khai sai danh tính."
             ],
-            "**Sử dụng Auto-Apply / ProAI có trách nhiệm**",
+            "**Sử dụng Auto-Apply có trách nhiệm**",
             [
               "Các tính năng tự động chỉ được sử dụng để hỗ trợ việc tìm việc thực sự của bạn, cho những vị trí mà bạn đủ điều kiện ứng tuyển.",
               "Bạn không được dùng bot hoặc công cụ gửi hàng loạt để spam nhà tuyển dụng, làm quá tải hệ thống ATS của bên thứ ba hoặc vi phạm điều khoản của các trang tuyển dụng khác."

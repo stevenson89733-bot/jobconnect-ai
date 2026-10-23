@@ -1770,8 +1770,7 @@
             "Sie verpflichten sich, Folgendes NICHT zu tun:",
             [
               "Die Plattform für betrügerische, rechtswidrige oder unbefugte Zwecke nutzen",
-              "Quellcode oder KI-Modelle ohne schriftliche Genehmigung zurückentwickeln, per Scraping auslesen oder extrahieren",
-              "Schadcode, falsche Qualifikationsnachweise oder irreführende Berufslaufbahnen hochladen",
+              "Schadcode hochladen",
               "Versuchen, Nutzungslimits, Authentifizierungskontrollen oder Zahlungssysteme zu umgehen"
             ],
             "**Ehrliche Profile & echte Qualifikationen**",
@@ -1779,7 +1778,7 @@
               "Alle Angaben zu beruflichem Werdegang, Fähigkeiten, Qualifikationen und Arbeitserlaubnis müssen zutreffend und wahrheitsgemäß sein.",
               "Es ist untersagt, Profile für andere Personen als sich selbst anzulegen, gefälschte Qualifikationsnachweise einzureichen oder falsche Angaben zur eigenen Identität zu machen."
             ],
-            "**Verantwortungsvolle Nutzung von Auto-Apply / ProAI**",
+            "**Verantwortungsvolle Nutzung von Auto-Apply**",
             [
               "Automatisierte Funktionen dürfen ausschließlich zur Unterstützung Ihrer ernsthaften Jobsuche für Stellen genutzt werden, für die Sie qualifiziert sind.",
               "Sie dürfen keine Bots oder Massenversand-Tools verwenden, um Arbeitgeber mit Spam zu überhäufen, ATS-Systeme Dritter zu überlasten oder gegen die Bedingungen von Jobbörsen Dritter zu verstoßen."
