@@ -885,7 +885,16 @@
     "photoTooLarge": "Das Bild muss kleiner als 5 MB sein.",
     "photoMustBeSignedIn": "Du musst angemeldet sein, um ein Foto hochzuladen.",
     "photoUploadFailed": "Upload fehlgeschlagen — bitte versuche es erneut.",
-    "importCv": "CV importieren"
+    "importCv": "CV importieren",
+    "deleteAccountTitle": "Konto löschen",
+    "deleteAccountDesc": "Löschen Sie Ihr Konto und alle zugehörigen Daten dauerhaft.",
+    "deleteAccountBtn": "Mein Konto löschen",
+    "deleteAccountConfirmTitle": "Konto löschen?",
+    "deleteAccountConfirmText": "Dies wird Ihr Konto, Profil und alle Bewerbungen dauerhaft löschen. Dies kann nicht rückgängig gemacht werden.",
+    "deleteAccountConfirmBtn": "Ja, alles löschen",
+    "deleteAccountCancel": "Abbrechen",
+    "deleteAccountDeleting": "Wird gelöscht…",
+    "deleteAccountError": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
   },
   "legal": {
     "privacy": {

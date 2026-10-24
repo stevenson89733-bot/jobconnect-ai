@@ -891,7 +891,16 @@
     "photoTooLarge": "L'image doit faire moins de 5 Mo.",
     "photoMustBeSignedIn": "Vous devez être connecté(e) pour importer une photo.",
     "photoUploadFailed": "Échec de l'envoi — veuillez réessayer.",
-    "importCv": "Importer CV"
+    "importCv": "Importer CV",
+    "deleteAccountTitle": "Supprimer le compte",
+    "deleteAccountDesc": "Supprimer définitivement votre compte et toutes les données associées.",
+    "deleteAccountBtn": "Supprimer mon compte",
+    "deleteAccountConfirmTitle": "Supprimer votre compte ?",
+    "deleteAccountConfirmText": "Cela supprimera définitivement votre compte, profil et toutes vos candidatures. Cette action est irréversible.",
+    "deleteAccountConfirmBtn": "Oui, tout supprimer",
+    "deleteAccountCancel": "Annuler",
+    "deleteAccountDeleting": "Suppression…",
+    "deleteAccountError": "Une erreur est survenue. Veuillez réessayer."
   },
   "legal": {
     "privacy": {

@@ -885,7 +885,16 @@
     "photoTooLarge": "Ảnh phải nhỏ hơn 5MB.",
     "photoMustBeSignedIn": "Bạn phải đăng nhập để tải ảnh lên.",
     "photoUploadFailed": "Tải lên thất bại — vui lòng thử lại.",
-    "importCv": "Nhập CV"
+    "importCv": "Nhập CV",
+    "deleteAccountTitle": "Xóa tài khoản",
+    "deleteAccountDesc": "Xóa vĩnh viễn tài khoản và tất cả dữ liệu liên quan.",
+    "deleteAccountBtn": "Xóa tài khoản của tôi",
+    "deleteAccountConfirmTitle": "Xóa tài khoản của bạn?",
+    "deleteAccountConfirmText": "Thao tác này sẽ xóa vĩnh viễn tài khoản, hồ sơ và tất cả đơn ứng tuyển của bạn. Không thể hoàn tác.",
+    "deleteAccountConfirmBtn": "Có, xóa tất cả",
+    "deleteAccountCancel": "Hủy",
+    "deleteAccountDeleting": "Đang xóa…",
+    "deleteAccountError": "Đã xảy ra lỗi. Vui lòng thử lại."
   },
   "legal": {
     "privacy": {

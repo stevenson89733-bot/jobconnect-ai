@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import { FileText, Upload } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { updateProfile, type ProfileFields } from '@/app/actions/profile'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import EditableSection from '@/components/profile/EditableSection'
 import Timeline from '@/components/profile/Timeline'
@@ -124,6 +125,28 @@ export default function ProfileEditor({
 
   const skillTags = skills.split(',').map((s) => s.trim()).filter(Boolean)
   const [cvModalOpen, setCvModalOpen] = useState(false)
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+  const [deleteError, setDeleteError] = useState<string | null>(null)
+  const router = useRouter()
+
+  async function handleDeleteAccount() {
+    setDeleting(true)
+    setDeleteError(null)
+    try {
+      const res = await fetch('/api/user/delete-account', { method: 'POST' })
+      if (res.ok) {
+        router.push('/')
+        router.refresh()
+      } else {
+        setDeleteError(t('deleteAccountError'))
+      }
+    } catch {
+      setDeleteError(t('deleteAccountError'))
+    } finally {
+      setDeleting(false)
+    }
+  }
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-10 space-y-6">
@@ -372,6 +395,48 @@ export default function ProfileEditor({
         </div>
         <Link href="/ai-tools/resume-builder"><Button variant="primary" size="sm">{t('openResumeBuilder')}</Button></Link>
       </div>
+
+      {/* Delete Account — GDPR right to erasure */}
+      <div className="card p-6 border-red-200 dark:border-red-800/40">
+        <h2 className="font-semibold text-red-600 dark:text-red-400 mb-1">{t('deleteAccountTitle')}</h2>
+        <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">{t('deleteAccountDesc')}</p>
+        <button
+          type="button"
+          onClick={() => setDeleteConfirmOpen(true)}
+          className="text-sm font-semibold text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 border border-red-300 dark:border-red-700 rounded-lg px-4 py-2 transition-colors hover:bg-red-50 dark:hover:bg-red-900/20"
+        >
+          {t('deleteAccountBtn')}
+        </button>
+      </div>
+
+      {/* Delete confirmation modal */}
+      {deleteConfirmOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={() => !deleting && setDeleteConfirmOpen(false)}>
+          <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-sm p-6 space-y-4" onClick={(e) => e.stopPropagation()}>
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white">{t('deleteAccountConfirmTitle')}</h3>
+            <p className="text-sm text-slate-600 dark:text-slate-400">{t('deleteAccountConfirmText')}</p>
+            {deleteError && <p className="text-sm text-red-600">{deleteError}</p>}
+            <div className="flex gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setDeleteConfirmOpen(false)}
+                disabled={deleting}
+                className="flex-1 text-sm font-semibold border border-slate-300 dark:border-slate-600 rounded-lg px-4 py-2.5 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors disabled:opacity-50"
+              >
+                {t('deleteAccountCancel')}
+              </button>
+              <button
+                type="button"
+                onClick={handleDeleteAccount}
+                disabled={deleting}
+                className="flex-1 text-sm font-semibold bg-red-600 hover:bg-red-700 text-white rounded-lg px-4 py-2.5 transition-colors disabled:opacity-50"
+              >
+                {deleting ? t('deleteAccountDeleting') : t('deleteAccountConfirmBtn')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -885,7 +885,16 @@
     "photoTooLarge": "Imaj la dwe pi piti pase 5MB.",
     "photoMustBeSignedIn": "Ou dwe konekte pou voye yon foto.",
     "photoUploadFailed": "Voye echwe — tanpri eseye ankò.",
-    "importCv": "Enpòte CV"
+    "importCv": "Enpòte CV",
+    "deleteAccountTitle": "Efase Kont",
+    "deleteAccountDesc": "Efase kont ou ak tout done ki asosye avèk li pou tout tan.",
+    "deleteAccountBtn": "Efase kont mwen",
+    "deleteAccountConfirmTitle": "Efase kont ou?",
+    "deleteAccountConfirmText": "Sa a pral efase kont ou, pwofil ou, ak tout aplikasyon ou pou tout tan. Sa pa ka defèt.",
+    "deleteAccountConfirmBtn": "Wi, efase tout bagay",
+    "deleteAccountCancel": "Anile",
+    "deleteAccountDeleting": "Ap efase…",
+    "deleteAccountError": "Yon erè rive. Tanpri eseye ankò."
   },
   "legal": {
     "privacy": {

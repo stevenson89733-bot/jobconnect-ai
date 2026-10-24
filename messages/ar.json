@@ -885,7 +885,16 @@
     "photoTooLarge": "يجب أن يكون حجم الصورة أقل من 5 ميغابايت.",
     "photoMustBeSignedIn": "يجب تسجيل الدخول لرفع صورة.",
     "photoUploadFailed": "فشل الرفع — يرجى المحاولة مرة أخرى.",
-    "importCv": "استيراد السيرة الذاتية"
+    "importCv": "استيراد السيرة الذاتية",
+    "deleteAccountTitle": "حذف الحساب",
+    "deleteAccountDesc": "حذف حسابك وجميع البيانات المرتبطة به نهائيًا.",
+    "deleteAccountBtn": "حذف حسابي",
+    "deleteAccountConfirmTitle": "حذف حسابك؟",
+    "deleteAccountConfirmText": "سيؤدي هذا إلى حذف حسابك وملفك الشخصي وجميع طلباتك نهائيًا. لا يمكن التراجع عن هذا الإجراء.",
+    "deleteAccountConfirmBtn": "نعم، احذف كل شيء",
+    "deleteAccountCancel": "إلغاء",
+    "deleteAccountDeleting": "جارٍ الحذف…",
+    "deleteAccountError": "حدث خطأ. يرجى المحاولة مرة أخرى."
   },
   "legal": {
     "privacy": {

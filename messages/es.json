@@ -891,7 +891,16 @@
     "photoTooLarge": "La imagen debe pesar menos de 5 MB.",
     "photoMustBeSignedIn": "Debes iniciar sesión para subir una foto.",
     "photoUploadFailed": "Error al subir — inténtalo de nuevo.",
-    "importCv": "Importar CV"
+    "importCv": "Importar CV",
+    "deleteAccountTitle": "Eliminar cuenta",
+    "deleteAccountDesc": "Eliminar permanentemente tu cuenta y todos los datos asociados.",
+    "deleteAccountBtn": "Eliminar mi cuenta",
+    "deleteAccountConfirmTitle": "¿Eliminar tu cuenta?",
+    "deleteAccountConfirmText": "Esto eliminará permanentemente tu cuenta, perfil y todas tus solicitudes. Esta acción no se puede deshacer.",
+    "deleteAccountConfirmBtn": "Sí, eliminar todo",
+    "deleteAccountCancel": "Cancelar",
+    "deleteAccountDeleting": "Eliminando…",
+    "deleteAccountError": "Ocurrió un error. Por favor, inténtalo de nuevo."
   },
   "legal": {
     "privacy": {
