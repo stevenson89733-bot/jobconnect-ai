@@ -523,6 +523,7 @@
     "bulkImportSuccess": "{count, plural, other {✓ # 件の連絡先を正常にインポートしました}}",
     "bulkImportFailed": "インポートに失敗しました",
     "bulkImportNetworkError": "ネットワークエラー — 再試行してください",
+    "employerConsentCheckbox": "JobConnect AI を通じてこれらの応募を処理するために必要な同意を得たことを確認します。",
     "featuredSuccessMsg": "求人が正常に掲載されました！検索結果の最上部に表示されます。",
     "featuredCreditsTitle": "{count, plural, other {フィーチャーリスティングクレジットが # 件あります}}",
     "featuredCreditsDesc": "クレジットを使用してアクティブな求人を検索結果の最上部に表示。",

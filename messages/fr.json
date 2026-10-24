@@ -529,6 +529,7 @@
     "bulkImportSuccess": "{count, plural, one {✓ # contact importé avec succès} other {✓ # contacts importés avec succès}}",
     "bulkImportFailed": "Importation échouée",
     "bulkImportNetworkError": "Erreur réseau — veuillez réessayer",
+    "employerConsentCheckbox": "Je confirme avoir obtenu le consentement nécessaire pour traiter ces candidatures via JobConnect AI.",
     "featuredSuccessMsg": "Offre mise en avant ! Elle apparaîtra en tête des résultats.",
     "featuredCreditsTitle": "{count, plural, one {Vous avez # crédit de mise en avant} other {Vous avez # crédits de mise en avant}}",
     "featuredCreditsDesc": "Utilisez un crédit pour propulser une offre active en tête des résultats.",

@@ -544,6 +544,7 @@
     "bulkImportSuccess": "{count, plural, one {✓ # contact imported successfully} other {✓ # contacts imported successfully}}",
     "bulkImportFailed": "Import failed",
     "bulkImportNetworkError": "Network error — please try again",
+    "employerConsentCheckbox": "I confirm I have obtained the necessary consent to process these applications via JobConnect AI.",
     "featuredSuccessMsg": "Job featured successfully! It will appear at the top of search results.",
     "featuredCreditsTitle": "{count, plural, one {You have # featured listing credit} other {You have # featured listing credits}}",
     "featuredCreditsDesc": "Apply a credit to boost one of your active jobs to the top of search results.",

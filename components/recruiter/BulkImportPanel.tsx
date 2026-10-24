@@ -9,6 +9,7 @@ export default function BulkImportPanel({ isGrowth }: { isGrowth: boolean }) {
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<{ imported: number } | null>(null)
   const [error, setError] = useState('')
+  const [consentChecked, setConsentChecked] = useState(false)
 
   if (!isGrowth) {
     return (
@@ -62,7 +63,19 @@ export default function BulkImportPanel({ isGrowth }: { isGrowth: boolean }) {
         {t('bulkImportCsvDesc')}
       </p>
 
-      <label className={`flex items-center justify-center gap-3 border-2 border-dashed rounded-xl p-6 cursor-pointer transition-colors ${loading ? 'opacity-50 pointer-events-none' : 'border-slate-300 dark:border-slate-700 hover:border-primary'}`}>
+      <label className="flex items-start gap-3 cursor-pointer select-none">
+        <input
+          type="checkbox"
+          checked={consentChecked}
+          onChange={e => setConsentChecked(e.target.checked)}
+          className="mt-0.5 h-4 w-4 shrink-0 accent-primary"
+        />
+        <span className="text-sm text-slate-600 dark:text-slate-400">
+          {t('employerConsentCheckbox')}
+        </span>
+      </label>
+
+      <label className={`flex items-center justify-center gap-3 border-2 border-dashed rounded-xl p-6 transition-colors ${!consentChecked || loading ? 'opacity-50 pointer-events-none cursor-not-allowed' : 'border-slate-300 dark:border-slate-700 hover:border-primary cursor-pointer'}`}>
         <span className="text-2xl">📎</span>
         <span className="text-sm text-slate-600 dark:text-slate-400">
           {loading ? t('bulkImportImporting') : t('bulkImportUpload')}
@@ -73,7 +86,7 @@ export default function BulkImportPanel({ isGrowth }: { isGrowth: boolean }) {
           accept=".csv,text/csv"
           className="hidden"
           onChange={handleUpload}
-          disabled={loading}
+          disabled={loading || !consentChecked}
         />
       </label>
 
