@@ -79,7 +79,7 @@ export default function SecurityPage() {
               All data stored in our PostgreSQL database (Supabase) is encrypted at rest.
             </Item>
             <Item label="Row-Level Security (RLS)">
-              Each employer client accesses only its own data. Supabase RLS policies enforce strict tenant isolation: Company A cannot access Company B's candidates or analyses.
+              Each employer client accesses only its own data. Supabase RLS policies enforce strict tenant isolation: Company A cannot access Company B&apos;s candidates or analyses.
             </Item>
             <Item label="Secure authentication">
               Candidate and recruiter accounts are protected via JWT-based tokens and secure session management (Supabase Auth).
@@ -106,7 +106,7 @@ export default function SecurityPage() {
           {/* 3 — Candidate Rights */}
           <Section id="candidate-rights" icon="👤" title="Candidate Rights">
             <Item label="Right to erasure (Art. 17 GDPR)">
-              Candidates may request permanent deletion of their profile, applications, uploaded CVs, and all associated data at any time. This is enforced via a self-service "Delete my account" function in the candidate dashboard, which triggers a full cascade deletion including Storage files and the authentication record.
+              Candidates may request permanent deletion of their profile, applications, uploaded CVs, and all associated data at any time. This is enforced via a self-service &ldquo;Delete my account&rdquo; function in the candidate dashboard, which triggers a full cascade deletion including Storage files and the authentication record.
             </Item>
             <Item label="Data portability">
               Candidates can export their profile data on request.
@@ -126,7 +126,7 @@ export default function SecurityPage() {
                 JobConnect AI — Security &amp; Data Protection Summary
               </p>
               <NumItem n={1} label="Tenant isolation">
-                Each client's data is strictly isolated via Row-Level Security. No cross-client data access is possible at the database level.
+                Each client&apos;s data is strictly isolated via Row-Level Security. No cross-client data access is possible at the database level.
               </NumItem>
               <NumItem n={2} label="Encrypted everywhere">
                 Data in transit (TLS/HTTPS) and at rest (AES-256) at all times.
