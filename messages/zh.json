@@ -885,7 +885,16 @@
     "photoTooLarge": "图片大小必须小于 5MB。",
     "photoMustBeSignedIn": "您必须登录后才能上传照片。",
     "photoUploadFailed": "上传失败——请重试。",
-    "importCv": "导入简历"
+    "importCv": "导入简历",
+    "deleteAccountTitle": "删除账户",
+    "deleteAccountDesc": "永久删除您的账户及所有相关数据。",
+    "deleteAccountBtn": "删除我的账户",
+    "deleteAccountConfirmTitle": "删除您的账户？",
+    "deleteAccountConfirmText": "这将永久删除您的账户、个人资料和所有申请。此操作无法撤销。",
+    "deleteAccountConfirmBtn": "是的，删除所有内容",
+    "deleteAccountCancel": "取消",
+    "deleteAccountDeleting": "正在删除…",
+    "deleteAccountError": "发生错误，请重试。"
   },
   "legal": {
     "privacy": {

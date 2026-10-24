@@ -885,7 +885,16 @@
     "photoTooLarge": "A imagem deve ter menos de 5 MB.",
     "photoMustBeSignedIn": "Você precisa estar conectado para enviar uma foto.",
     "photoUploadFailed": "Falha no envio — tente novamente.",
-    "importCv": "Importar CV"
+    "importCv": "Importar CV",
+    "deleteAccountTitle": "Excluir conta",
+    "deleteAccountDesc": "Excluir permanentemente sua conta e todos os dados associados.",
+    "deleteAccountBtn": "Excluir minha conta",
+    "deleteAccountConfirmTitle": "Excluir sua conta?",
+    "deleteAccountConfirmText": "Isso excluirá permanentemente sua conta, perfil e todas as suas candidaturas. Isso não pode ser desfeito.",
+    "deleteAccountConfirmBtn": "Sim, excluir tudo",
+    "deleteAccountCancel": "Cancelar",
+    "deleteAccountDeleting": "Excluindo…",
+    "deleteAccountError": "Ocorreu um erro. Por favor, tente novamente."
   },
   "legal": {
     "privacy": {
