@@ -92,7 +92,8 @@
     "refund": "환불",
     "faq": "FAQ",
     "learn": "배우기",
-    "acceptableUse": "허용되는 이용"
+    "acceptableUse": "허용되는 이용",
+    "security": "보안"
   },
   "auth": {
     "login": {

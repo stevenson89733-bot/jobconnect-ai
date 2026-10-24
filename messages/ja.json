@@ -92,7 +92,8 @@
     "refund": "返金",
     "faq": "よくある質問",
     "learn": "学ぶ",
-    "acceptableUse": "許容される利用"
+    "acceptableUse": "許容される利用",
+    "security": "セキュリティ"
   },
   "auth": {
     "login": {
