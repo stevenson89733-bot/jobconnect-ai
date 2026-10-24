@@ -362,7 +362,8 @@
     "aiCopilotPlaceholder": "AIコパイロットに質問：ドイツでリモートの仕事を見つけて…",
     "clearAll": "✕ すべてクリア",
     "sortMatchScore": "マッチスコア",
-    "trueRemote": "完全リモート"
+    "trueRemote": "完全リモート",
+    "crossBorderUnclearTooltip": "この雇用主が海外からの採用を行っているか確認できませんでした。求人内容を確認するか、直接お問い合わせください。"
   },
   "applicationStatus": {
     "submitted": "応募済み",

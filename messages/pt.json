@@ -362,7 +362,8 @@
     "aiCopilotPlaceholder": "Pergunte ao Copiloto IA: Encontre-me um emprego remoto na Alemanha…",
     "clearAll": "✕ Limpar tudo",
     "sortMatchScore": "Pontuação de correspondência",
-    "trueRemote": "Remoto real"
+    "trueRemote": "Remoto real",
+    "crossBorderUnclearTooltip": "Não conseguimos confirmar se este empregador contrata internacionalmente. Confira a descrição da vaga ou entre em contato diretamente."
   },
   "applicationStatus": {
     "submitted": "Enviada",

@@ -383,7 +383,8 @@
     "matchWhyTitle": "Why you match",
     "matchExpandCta": "See why you match",
     "matchStrengths": "Strengths",
-    "matchGaps": "Points of attention"
+    "matchGaps": "Points of attention",
+    "crossBorderUnclearTooltip": "We couldn't confirm if this employer hires internationally. Check the job description or contact them directly."
   },
   "applicationStatus": {
     "submitted": "Submitted",

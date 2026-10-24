@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import JobDetailModal from './JobDetailModal'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
@@ -82,6 +82,23 @@ export default function JobCard({
   profileComplete?: boolean
 }) {
   const [signalsOpen, setSignalsOpen] = useState(false)
+  // Tooltip explaining the "⚠ Unclear" cross-border badge (that badge only).
+  // Hover/focus opens it on desktop; tap toggles it on touch screens; a tap
+  // outside or Escape closes it.
+  const [unclearTipOpen, setUnclearTipOpen] = useState(false)
+  const unclearTipRef = useRef<HTMLSpanElement>(null)
+  const unclearTipId = useId()
+  // Last pointer used on the badge: a mouse click shouldn't toggle (hover
+  // already handles it), a touch tap should.
+  const unclearTipPointer = useRef<string>('mouse')
+  useEffect(() => {
+    if (!unclearTipOpen) return
+    const close = (e: PointerEvent) => {
+      if (!unclearTipRef.current?.contains(e.target as Node)) setUnclearTipOpen(false)
+    }
+    document.addEventListener('pointerdown', close)
+    return () => document.removeEventListener('pointerdown', close)
+  }, [unclearTipOpen])
   const [showModal, setShowModal] = useState(false)
   const [matchOpen, setMatchOpen] = useState(false)
   const [matchData, setMatchData] = useState<{ strengths: string[]; gaps: string[] } | null>(null)
@@ -182,10 +199,42 @@ export default function JobCard({
               ⭐ Featured
             </span>
           )}
-          {remoteBadge && (
+          {remoteBadge && job.cross_border_status === 'unclear' && (
+            <span ref={unclearTipRef} className="relative inline-flex">
+              <button
+                type="button"
+                aria-label={`${remoteBadge.label}. ${t('crossBorderUnclearTooltip')}`}
+                aria-describedby={unclearTipId}
+                aria-expanded={unclearTipOpen}
+                onPointerEnter={(e) => { if (e.pointerType === 'mouse') setUnclearTipOpen(true) }}
+                onPointerLeave={(e) => { if (e.pointerType === 'mouse') setUnclearTipOpen(false) }}
+                onPointerDown={(e) => { unclearTipPointer.current = e.pointerType }}
+                onFocus={(e) => { if (e.currentTarget.matches(':focus-visible')) setUnclearTipOpen(true) }}
+                onBlur={() => setUnclearTipOpen(false)}
+                onKeyDown={(e) => { if (e.key === 'Escape') setUnclearTipOpen(false) }}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // Touch tap or keyboard Enter/Space (detail 0) toggles; mouse uses hover.
+                  if (e.detail === 0 || unclearTipPointer.current !== 'mouse') setUnclearTipOpen(o => !o)
+                  if (Array.isArray(job.cross_border_signals) && (job.cross_border_signals as string[]).length) setSignalsOpen(o => !o)
+                }}
+                className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold border whitespace-nowrap cursor-help ${remoteBadge.className}`}
+              >
+                {remoteBadge.label}
+              </button>
+              <span
+                id={unclearTipId}
+                role="tooltip"
+                className={`absolute end-0 top-full mt-1.5 z-20 w-60 rounded-lg bg-slate-900 dark:bg-slate-800 px-3 py-2 text-[11px] leading-snug font-normal text-white shadow-lg whitespace-normal ${unclearTipOpen ? 'block' : 'hidden'}`}
+              >
+                {t('crossBorderUnclearTooltip')}
+              </span>
+            </span>
+          )}
+          {remoteBadge && job.cross_border_status !== 'unclear' && (
             <button
               type="button"
-              title={job.cross_border_status === 'yes' ? t('crossBorderYes') : job.cross_border_status === 'unclear' ? t('crossBorderUnclear') : t('crossBorderNo')}
+              title={job.cross_border_status === 'yes' ? t('crossBorderYes') : t('crossBorderNo')}
               onClick={(e) => { e.stopPropagation(); if (Array.isArray(job.cross_border_signals) && (job.cross_border_signals as string[]).length) setSignalsOpen(o => !o) }}
               className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold border whitespace-nowrap ${remoteBadge.className} ${Array.isArray(job.cross_border_signals) && (job.cross_border_signals as string[]).length ? 'cursor-pointer' : 'cursor-default'}`}
             >

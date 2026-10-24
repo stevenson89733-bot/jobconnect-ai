@@ -362,7 +362,8 @@
     "aiCopilotPlaceholder": "Mande Kopilòt AI a: Jwenn yon travay aleka nan Almay…",
     "clearAll": "✕ Efase tout",
     "sortMatchScore": "Nòt match",
-    "trueRemote": "Vrèman aleka"
+    "trueRemote": "Vrèman aleka",
+    "crossBorderUnclearTooltip": "Nou pa t ka konfime si patwon sa a anboche moun entènasyonalman. Tcheke deskripsyon travay la oswa kontakte l dirèkteman."
   },
   "applicationStatus": {
     "submitted": "Soumèt",

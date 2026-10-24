@@ -368,7 +368,8 @@
     "aiCopilotPlaceholder": "Demandez au Copilote IA : Trouvez-moi un emploi remote en Allemagne…",
     "clearAll": "✕ Tout effacer",
     "sortMatchScore": "Score de correspondance",
-    "trueRemote": "Vraiment remote"
+    "trueRemote": "Vraiment remote",
+    "crossBorderUnclearTooltip": "Nous n'avons pas pu confirmer si cet employeur recrute à l'international. Consultez la description du poste ou contactez-le directement."
   },
   "applicationStatus": {
     "submitted": "Envoyée",

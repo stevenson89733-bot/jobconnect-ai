@@ -362,7 +362,8 @@
     "aiCopilotPlaceholder": "向 AI 副驾驶提问：在德国帮我找一份远程工作……",
     "clearAll": "✕ 清除全部",
     "sortMatchScore": "匹配分数",
-    "trueRemote": "真正的远程"
+    "trueRemote": "真正的远程",
+    "crossBorderUnclearTooltip": "我们无法确认该雇主是否招聘海外人才。请查看职位描述或直接联系雇主。"
   },
   "applicationStatus": {
     "submitted": "已提交",
