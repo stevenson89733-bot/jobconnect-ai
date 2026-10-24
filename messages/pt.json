@@ -458,7 +458,8 @@
     "navApplications": "Candidaturas",
     "navAiTools": "Ferramentas de IA",
     "navProfile": "Perfil",
-    "navReferrals": "Indicações"
+    "navReferrals": "Indicações",
+    "autoApplyDisclaimer": "As candidaturas são enviadas pelo link de cada empregador. Integração direta com ATS em breve."
   },
   "recruiter": {
     "dashboardTitle": "Painel do Empregador",

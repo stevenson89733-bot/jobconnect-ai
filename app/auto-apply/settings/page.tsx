@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { createClient } from '@/lib/supabase/client'
 
 const DAILY_LIMIT_OPTIONS = [3, 5, 10, 20] as const
@@ -109,6 +110,7 @@ function PreviewModal({ log, onClose, onApprove, approving }: { log: Log; onClos
 
 export default function AutoApplySettingsPage() {
   const router = useRouter()
+  const t = useTranslations('candidate')
   const supabase = createClient()
   const [user, setUser] = useState<{ id: string } | null>(null)
   const [profile, setProfile] = useState<{ is_premium: boolean; is_admin?: boolean } | null>(null)
@@ -441,6 +443,10 @@ export default function AutoApplySettingsPage() {
           >
             {saving ? 'Saving...' : 'Save Settings'}
           </button>
+
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-4 text-center">
+            {t('autoApplyDisclaimer')}
+          </p>
         </div>
       </div>
 

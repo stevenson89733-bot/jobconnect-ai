@@ -4,10 +4,12 @@ import Link from 'next/link'
 import AutoApplyJoinButton from './AutoApplyJoinButton'
 import WaitlistCounter from './WaitlistCounter'
 import { effectiveCandidatePlan } from '@/lib/adminAccess'
+import { getTranslations } from 'next-intl/server'
 
 export const dynamic = 'force-dynamic'
 
 export default async function AutoApplyPage() {
+  const t = await getTranslations('candidate')
   const supabase = createClient()
 
   let isPro = false
@@ -82,6 +84,10 @@ export default async function AutoApplyPage() {
               Sign in to enable Auto-Apply
             </Link>
           )}
+
+          <p className="text-xs text-slate-500 mt-6 max-w-md mx-auto">
+            {t('autoApplyDisclaimer')}
+          </p>
 
           <WaitlistCounter initial={waitlistCount} />
         </div>

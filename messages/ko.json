@@ -458,7 +458,8 @@
     "navApplications": "지원 현황",
     "navAiTools": "AI 도구",
     "navProfile": "프로필",
-    "navReferrals": "추천"
+    "navReferrals": "추천",
+    "autoApplyDisclaimer": "지원서는 각 고용주의 지원 링크를 통해 제출됩니다. ATS 직접 통합이 곧 제공됩니다."
   },
   "recruiter": {
     "dashboardTitle": "채용 담당자 대시보드",
