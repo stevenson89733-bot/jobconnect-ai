@@ -523,6 +523,7 @@
     "bulkImportSuccess": "{count, plural, other {✓ # 개의 연락처를 성공적으로 가져왔습니다}}",
     "bulkImportFailed": "가져오기 실패",
     "bulkImportNetworkError": "네트워크 오류 — 다시 시도하세요",
+    "employerConsentCheckbox": "JobConnect AI를 통해 이 지원서를 처리하는 데 필요한 동의를 얻었음을 확인합니다.",
     "featuredSuccessMsg": "채용공고가 성공적으로 노출되었습니다! 검색 결과 상단에 표시됩니다.",
     "featuredCreditsTitle": "{count, plural, other {피처드 리스팅 크레딧 # 개 보유}}",
     "featuredCreditsDesc": "크레딧을 사용해 활성 채용공고를 검색 결과 상단으로 올리세요.",

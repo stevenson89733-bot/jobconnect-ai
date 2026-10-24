@@ -523,6 +523,7 @@
     "bulkImportSuccess": "{count, plural, one {✓ # Kontakt erfolgreich importiert} other {✓ # Kontakte erfolgreich importiert}}",
     "bulkImportFailed": "Import fehlgeschlagen",
     "bulkImportNetworkError": "Netzwerkfehler — bitte erneut versuchen",
+    "employerConsentCheckbox": "Ich bestätige, dass ich die erforderliche Einwilligung zur Verarbeitung dieser Bewerbungen über JobConnect AI eingeholt habe.",
     "featuredSuccessMsg": "Job erfolgreich hervorgehoben! Er erscheint ganz oben in den Suchergebnissen.",
     "featuredCreditsTitle": "{count, plural, one {Sie haben # Featured-Listing-Guthaben} other {Sie haben # Featured-Listing-Guthaben}}",
     "featuredCreditsDesc": "Verwenden Sie ein Guthaben, um einen aktiven Job an die Spitze der Suchergebnisse zu setzen.",

@@ -523,6 +523,7 @@
     "bulkImportSuccess": "{count, plural, one {✓ # contato importado com sucesso} other {✓ # contatos importados com sucesso}}",
     "bulkImportFailed": "Falha na importação",
     "bulkImportNetworkError": "Erro de rede — tente novamente",
+    "employerConsentCheckbox": "Confirmo que obtive o consentimento necessário para processar estas candidaturas via JobConnect AI.",
     "featuredSuccessMsg": "Vaga destacada com sucesso! Aparecerá no topo dos resultados.",
     "featuredCreditsTitle": "{count, plural, one {Você tem # crédito de anúncio destacado} other {Você tem # créditos de anúncio destacado}}",
     "featuredCreditsDesc": "Use um crédito para impulsionar uma vaga ativa ao topo dos resultados.",

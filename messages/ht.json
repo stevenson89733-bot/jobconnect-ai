@@ -523,6 +523,7 @@
     "bulkImportSuccess": "{count, plural, one {✓ # kontakt enpòte ak siksè} other {✓ # kontakt enpòte ak siksè}}",
     "bulkImportFailed": "Enpòtasyon echwe",
     "bulkImportNetworkError": "Erè rezo — tanpri eseye ankò",
+    "employerConsentCheckbox": "Mwen konfime mwen te jwenn konsantman nesesè pou trete aplikasyon sa yo via JobConnect AI.",
     "featuredSuccessMsg": "Travay mete an valè ak siksè! Li pral parèt anlè rezilta rechèch.",
     "featuredCreditsTitle": "{count, plural, one {Ou gen # kredi lis mete an valè} other {Ou gen # kredi lis mete an valè}}",
     "featuredCreditsDesc": "Itilize yon kredi pou monte yon travay aktif nan tèt rezilta rechèch.",

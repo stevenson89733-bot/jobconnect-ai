@@ -523,6 +523,7 @@
     "bulkImportSuccess": "{count, plural, other {✓ Đã nhập thành công # liên hệ}}",
     "bulkImportFailed": "Nhập thất bại",
     "bulkImportNetworkError": "Lỗi mạng — vui lòng thử lại",
+    "employerConsentCheckbox": "Tôi xác nhận đã có được sự đồng ý cần thiết để xử lý các đơn ứng tuyển này qua JobConnect AI.",
     "featuredSuccessMsg": "Tin tuyển dụng đã được đặt nổi bật! Sẽ xuất hiện ở đầu kết quả tìm kiếm.",
     "featuredCreditsTitle": "{count, plural, other {Bạn có # tín dụng tin nổi bật}}",
     "featuredCreditsDesc": "Dùng tín dụng để đẩy một tin tuyển dụng đang hoạt động lên đầu kết quả.",

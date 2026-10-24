@@ -523,6 +523,7 @@
     "bulkImportSuccess": "{count, plural, other {✓ 成功导入 # 个联系人}}",
     "bulkImportFailed": "导入失败",
     "bulkImportNetworkError": "网络错误——请重试",
+    "employerConsentCheckbox": "我确认已获得通过 JobConnect AI 处理这些申请所需的同意。",
     "featuredSuccessMsg": "职位已成功置顶！将出现在搜索结果顶部。",
     "featuredCreditsTitle": "{count, plural, other {您有 # 个精选列表积分}}",
     "featuredCreditsDesc": "使用积分将一个活跃职位推至搜索结果顶部。",

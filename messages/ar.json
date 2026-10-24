@@ -523,6 +523,7 @@
     "bulkImportSuccess": "{count, plural, one {✓ تم استيراد # جهة اتصال بنجاح} other {✓ تم استيراد # جهات اتصال بنجاح}}",
     "bulkImportFailed": "فشل الاستيراد",
     "bulkImportNetworkError": "خطأ في الشبكة — يرجى المحاولة مرة أخرى",
+    "employerConsentCheckbox": "أؤكد أنني حصلت على الموافقة اللازمة لمعالجة هذه الطلبات عبر JobConnect AI.",
     "featuredSuccessMsg": "تم تمييز الوظيفة بنجاح! ستظهر في أعلى نتائج البحث.",
     "featuredCreditsTitle": "{count, plural, one {لديك # رصيد قائمة مميزة} other {لديك # أرصدة قائمة مميزة}}",
     "featuredCreditsDesc": "استخدم رصيداً لرفع وظيفة نشطة إلى أعلى نتائج البحث.",
