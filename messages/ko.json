@@ -362,7 +362,8 @@
     "aiCopilotPlaceholder": "AI 코파일럿에게 물어보세요: 독일에서 원격 일자리를 찾아줘…",
     "clearAll": "✕ 전체 지우기",
     "sortMatchScore": "매칭 점수",
-    "trueRemote": "진짜 원격"
+    "trueRemote": "진짜 원격",
+    "crossBorderUnclearTooltip": "이 고용주가 해외 인재를 채용하는지 확인할 수 없었습니다. 채용 공고 내용을 확인하거나 고용주에게 직접 문의하세요."
   },
   "applicationStatus": {
     "submitted": "제출됨",

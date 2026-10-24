@@ -362,7 +362,8 @@
     "aiCopilotPlaceholder": "Hỏi AI Copilot: Tìm cho tôi công việc từ xa ở Đức…",
     "clearAll": "✕ Xóa tất cả",
     "sortMatchScore": "Điểm phù hợp",
-    "trueRemote": "Thực sự từ xa"
+    "trueRemote": "Thực sự từ xa",
+    "crossBorderUnclearTooltip": "Chúng tôi không thể xác nhận nhà tuyển dụng này có tuyển dụng quốc tế hay không. Hãy xem mô tả công việc hoặc liên hệ trực tiếp với họ."
   },
   "applicationStatus": {
     "submitted": "Đã nộp",

@@ -362,7 +362,8 @@
     "aiCopilotPlaceholder": "Frage den KI-Copiloten: Finde mir einen Remote-Job in Deutschland…",
     "clearAll": "✕ Alle löschen",
     "sortMatchScore": "Match-Score",
-    "trueRemote": "Echtes Remote"
+    "trueRemote": "Echtes Remote",
+    "crossBorderUnclearTooltip": "Wir konnten nicht bestätigen, ob dieser Arbeitgeber international einstellt. Prüfen Sie die Stellenbeschreibung oder kontaktieren Sie das Unternehmen direkt."
   },
   "applicationStatus": {
     "submitted": "Eingereicht",

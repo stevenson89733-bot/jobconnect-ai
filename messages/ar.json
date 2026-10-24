@@ -362,7 +362,8 @@
     "aiCopilotPlaceholder": "اسأل المساعد الذكي: ابحث لي عن وظيفة عن بُعد في ألمانيا…",
     "clearAll": "✕ مسح الكل",
     "sortMatchScore": "درجة التطابق",
-    "trueRemote": "عن بُعد فعلاً"
+    "trueRemote": "عن بُعد فعلاً",
+    "crossBorderUnclearTooltip": "لم نتمكن من التأكد مما إذا كان صاحب العمل هذا يوظّف دوليًا. راجع وصف الوظيفة أو تواصل معه مباشرةً."
   },
   "applicationStatus": {
     "submitted": "تم الإرسال",
