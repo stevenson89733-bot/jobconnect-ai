@@ -92,7 +92,8 @@
     "refund": "Hoàn tiền",
     "faq": "FAQ",
     "learn": "Học hỏi",
-    "acceptableUse": "Sử dụng được chấp nhận"
+    "acceptableUse": "Sử dụng được chấp nhận",
+    "security": "Bảo mật"
   },
   "auth": {
     "login": {

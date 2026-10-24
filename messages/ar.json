@@ -92,7 +92,8 @@
     "refund": "استرداد",
     "faq": "الأسئلة الشائعة",
     "learn": "تعلّم",
-    "acceptableUse": "الاستخدام المقبول"
+    "acceptableUse": "الاستخدام المقبول",
+    "security": "الأمان"
   },
   "auth": {
     "login": {

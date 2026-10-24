@@ -92,7 +92,8 @@
     "refund": "Remboursement",
     "faq": "FAQ",
     "learn": "Apprendre",
-    "acceptableUse": "Utilisation acceptable"
+    "acceptableUse": "Utilisation acceptable",
+    "security": "Sécurité"
   },
   "auth": {
     "login": {

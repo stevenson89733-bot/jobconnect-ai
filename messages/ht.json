@@ -92,7 +92,8 @@
     "refund": "Ranbousman",
     "faq": "FAQ",
     "learn": "Aprann",
-    "acceptableUse": "Itilizasyon akseptab"
+    "acceptableUse": "Itilizasyon akseptab",
+    "security": "Sekirite"
   },
   "auth": {
     "login": {

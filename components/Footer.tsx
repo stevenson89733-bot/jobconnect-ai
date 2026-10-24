@@ -128,6 +128,7 @@ export default async function Footer() {
               <Link href="/terms" className="hover:text-slate-700 dark:hover:text-slate-400">{t('terms')}</Link>
               <Link href="/terms#acceptable-use" className="hover:text-slate-700 dark:hover:text-slate-400">{t('acceptableUse')}</Link>
               <Link href="/refund" className="hover:text-slate-700 dark:hover:text-slate-400">{t('refund')}</Link>
+              <Link href="/security" className="hover:text-slate-700 dark:hover:text-slate-400">{t('security')}</Link>
             </div>
           </div>
         </div>

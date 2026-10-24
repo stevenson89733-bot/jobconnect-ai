@@ -92,7 +92,8 @@
     "refund": "退款",
     "faq": "常见问题",
     "learn": "学习",
-    "acceptableUse": "可接受使用"
+    "acceptableUse": "可接受使用",
+    "security": "安全"
   },
   "auth": {
     "login": {
