@@ -12,6 +12,7 @@ import Link from 'next/link'
 import type { Job } from '@/app/jobs/JobsClient'
 import ConvertedSalary from '@/components/jobs/ConvertedSalary'
 import { getGeoBadge, getEmploymentBadge, GEO_BADGE_CONFIG, EMPLOYMENT_BADGE_CONFIG } from '@/lib/geoBadge'
+import { matchScoreColor } from '@/lib/jobScoring'
 
 // Only 'yes' and 'unclear' get a badge — 'no' and null are silent
 // For 'yes': filled ✅ when confidence is 'high', outlined ◻ when 'medium', plain otherwise
@@ -255,11 +256,14 @@ export default function JobCard({
 
       {/* Row 3 — Match pill + job type */}
       <div className="flex items-center gap-2 flex-wrap">
-        {job.matchScore != null && job.matchScore >= 30 && (
-          <span className="inline-flex items-center gap-1.5 bg-[#57C7E3]/10 text-[#57C7E3] border border-[#57C7E3]/30 text-[12px] font-semibold px-3 py-1 rounded-full">
-            ✦ {job.matchScore}% match · AI ranked
-          </span>
-        )}
+        {job.matchScore != null && job.matchScore >= 30 && (() => {
+          const mc = matchScoreColor(job.matchScore)
+          return (
+            <span className={`inline-flex items-center gap-1.5 ${mc.bg} ${mc.text} border ${mc.border} text-[12px] font-semibold px-3 py-1 rounded-full`}>
+              ✦ {job.matchScore}% match
+            </span>
+          )
+        })()}
         {job.job_type && (
           <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold border whitespace-nowrap ${JOB_TYPE_COLOR[job.job_type] ?? 'bg-slate-50 text-slate-600 border-slate-200'}`}>
             {jobTypeLabel}
