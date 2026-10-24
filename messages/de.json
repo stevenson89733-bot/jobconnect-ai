@@ -458,7 +458,8 @@
     "navApplications": "Bewerbungen",
     "navAiTools": "KI-Tools",
     "navProfile": "Profil",
-    "navReferrals": "Empfehlungen"
+    "navReferrals": "Empfehlungen",
+    "autoApplyDisclaimer": "Bewerbungen werden über den Bewerbungslink des jeweiligen Arbeitgebers eingereicht. Direkte ATS-Integration kommt bald."
   },
   "recruiter": {
     "dashboardTitle": "Arbeitgeber-Dashboard",

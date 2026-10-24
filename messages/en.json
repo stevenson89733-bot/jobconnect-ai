@@ -479,7 +479,8 @@
     "navApplications": "Applications",
     "navAiTools": "AI Tools",
     "navProfile": "Profile",
-    "navReferrals": "Referrals"
+    "navReferrals": "Referrals",
+    "autoApplyDisclaimer": "Applications are submitted via each employer's apply link. Direct ATS integration coming soon."
   },
   "recruiter": {
     "dashboardTitle": "Employer Dashboard",

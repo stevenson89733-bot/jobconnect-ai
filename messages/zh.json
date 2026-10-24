@@ -458,7 +458,8 @@
     "navApplications": "申请",
     "navAiTools": "AI工具",
     "navProfile": "档案",
-    "navReferrals": "推荐"
+    "navReferrals": "推荐",
+    "autoApplyDisclaimer": "申请通过各雇主的申请链接提交。ATS 直接集成即将推出。"
   },
   "recruiter": {
     "dashboardTitle": "雇主控制台",

@@ -458,7 +458,8 @@
     "navApplications": "応募",
     "navAiTools": "AIツール",
     "navProfile": "プロフィール",
-    "navReferrals": "紹介"
+    "navReferrals": "紹介",
+    "autoApplyDisclaimer": "応募は各雇用主の応募リンクから送信されます。ATS直接統合は近日公開予定です。"
   },
   "recruiter": {
     "dashboardTitle": "採用担当者ダッシュボード",

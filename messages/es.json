@@ -464,7 +464,8 @@
     "navApplications": "Postulaciones",
     "navAiTools": "Herramientas IA",
     "navProfile": "Perfil",
-    "navReferrals": "Referidos"
+    "navReferrals": "Referidos",
+    "autoApplyDisclaimer": "Las solicitudes se envían a través del enlace de cada empleador. La integración directa con ATS llegará pronto."
   },
   "recruiter": {
     "dashboardTitle": "Panel del empleador",

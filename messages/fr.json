@@ -464,7 +464,8 @@
     "navApplications": "Candidatures",
     "navAiTools": "Outils IA",
     "navProfile": "Profil",
-    "navReferrals": "Parrainages"
+    "navReferrals": "Parrainages",
+    "autoApplyDisclaimer": "Les candidatures sont envoyées via le lien de candidature de chaque employeur. L'intégration ATS directe arrive bientôt."
   },
   "recruiter": {
     "dashboardTitle": "Tableau de bord employeur",

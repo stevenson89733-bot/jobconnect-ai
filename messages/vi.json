@@ -458,7 +458,8 @@
     "navApplications": "Đơn ứng tuyển",
     "navAiTools": "Công cụ AI",
     "navProfile": "Hồ sơ",
-    "navReferrals": "Giới thiệu"
+    "navReferrals": "Giới thiệu",
+    "autoApplyDisclaimer": "Đơn ứng tuyển được gửi qua liên kết ứng tuyển của từng nhà tuyển dụng. Tích hợp ATS trực tiếp sắp ra mắt."
   },
   "recruiter": {
     "dashboardTitle": "Bảng điều khiển Nhà tuyển dụng",

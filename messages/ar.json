@@ -458,7 +458,8 @@
     "navApplications": "الطلبات",
     "navAiTools": "أدوات الذكاء الاصطناعي",
     "navProfile": "الملف الشخصي",
-    "navReferrals": "الإحالات"
+    "navReferrals": "الإحالات",
+    "autoApplyDisclaimer": "يتم تقديم الطلبات عبر رابط التقديم الخاص بكل صاحب عمل. التكامل المباشر مع نظام ATS قريبًا."
   },
   "recruiter": {
     "dashboardTitle": "لوحة تحكم صاحب العمل",
