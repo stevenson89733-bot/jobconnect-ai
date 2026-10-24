@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { ExternalLink, X } from 'lucide-react'
 import type { Job } from '@/app/jobs/JobsClient'
 import ProLockButton from '@/components/ui/ProLockButton'
+import { matchScoreColor } from '@/lib/jobScoring'
 
 interface Props {
   job: Job
@@ -131,11 +132,14 @@ export default function JobDetailModal({ job, isOpen = true, onClose, alreadyApp
                 ⭐ Featured
               </span>
             )}
-            {job.matchScore != null && job.matchScore >= 40 && (
-              <span className="inline-flex items-center gap-1.5 bg-[#57C7E3]/10 text-[#57C7E3] border border-[#57C7E3]/30 text-xs font-semibold px-3 py-1 rounded-full">
-                ✦ {job.matchScore}% AI match
-              </span>
-            )}
+            {job.matchScore != null && job.matchScore >= 30 && (() => {
+              const mc = matchScoreColor(job.matchScore)
+              return (
+                <span className={`inline-flex items-center gap-1.5 ${mc.bg} ${mc.text} border ${mc.border} text-xs font-semibold px-3 py-1 rounded-full`}>
+                  ✦ {job.matchScore}% match
+                </span>
+              )
+            })()}
             {job.source && (
               <span className="inline-flex items-center gap-1.5 bg-slate-50 text-slate-500 border border-slate-200 text-xs px-3 py-1 rounded-full">
                 Via {sourceName}

@@ -1,5 +1,11 @@
 import { parseSkillSet } from './jobMatching'
 
+export function matchScoreColor(score: number): { bg: string; text: string; border: string } {
+  if (score > 70) return { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200' }
+  if (score >= 50) return { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200' }
+  return { bg: 'bg-slate-50', text: 'text-slate-600', border: 'border-slate-200' }
+}
+
 export type ScoreDetail = { label: string; matched: boolean }
 
 export type JobMatchScore = {
