@@ -1159,7 +1159,6 @@
     "autoApplyDesc": "让 AI 每天为您寻找并申请远程工作。",
     "learnMore": "了解更多 →",
     "comingSoon": "更多计划即将推出 — 企业招聘、精选职位 & 招聘市场。",
-    "trustedBy": "受到以下团队信任",
     "perMonth": "/月",
     "employerGrowthFeature5": "公司主页构建器",
     "employerGrowthFeature6": "团队协作（最多 5 名用户）",
@@ -1860,7 +1859,7 @@
   },
   "partnersPage": {
     "badge": "推荐工具",
-    "title": "面向国际专业人士的合作伙伴工具",
+    "title": "面向国际专业人士的推荐工具",
     "subtitle": "跨境工作面临独特挑战。这些工具受到数千名远程工作者的信赖，用于处理薪资、合规和跨境支付。",
     "affiliateNote": "以下部分链接为联盟链接。如您注册，我们可能获得少量佣金——对您免费。",
     "browseJobs": "浏览远程职位 →",

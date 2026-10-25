@@ -408,22 +408,8 @@ export default async function PricingPage({
         </div>
       </section>
 
-      {/* ── Trusted by ──────────────────────────────────────────── */}
-      <section className="mt-20 pt-12 border-t border-slate-200 dark:border-slate-800">
-        <p className="text-center text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-8">
-          {t('trustedBy')}
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-8">
-          {['Anthropic', 'Vercel', 'Stripe', 'Figma', 'Linear', 'Notion'].map((name) => (
-            <div key={name} className="flex items-center gap-2 opacity-60 hover:opacity-100 transition-opacity">
-              <span className="text-sm font-semibold text-slate-600 dark:text-slate-400">{name}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* ── Testimonials ────────────────────────────────────────── */}
-      <section className="mt-16 grid md:grid-cols-2 gap-6">
+      <section className="mt-20 pt-12 border-t border-slate-200 dark:border-slate-800 grid md:grid-cols-2 gap-6">
         <div className="card border-l-4 border-primary">
           <div className="flex items-start gap-4">
             <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm shrink-0">AD</div>
