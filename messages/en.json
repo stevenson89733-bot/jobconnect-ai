@@ -1166,7 +1166,6 @@
     "autoApplyDesc": "Let AI find and apply to remote jobs for you — every day.",
     "learnMore": "Learn more →",
     "comingSoon": "More plans coming soon — Enterprise hiring, Featured Listings & Recruiter Marketplace.",
-    "trustedBy": "Trusted by teams at",
     "upgradeButton": "Upgrade to Pro — $19.99/mo",
     "redirectingToStripe": "Redirecting to Stripe…",
     "stripeNote": "Secure payment via Stripe · Powered by trusted payment processor",
@@ -1890,7 +1889,7 @@
   },
   "partnersPage": {
     "badge": "Recommended Tools",
-    "title": "Partner Tools for International Professionals",
+    "title": "Recommended Tools for International Professionals",
     "subtitle": "Working across borders comes with unique challenges. These tools are trusted by thousands of remote workers to handle payroll, compliance, and cross-border payments — so you can focus on the work.",
     "affiliateNote": "Some links below are affiliate links. We may earn a small commission if you sign up — at no cost to you.",
     "browseJobs": "Browse Remote Jobs →",
