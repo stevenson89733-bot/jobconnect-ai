@@ -895,14 +895,20 @@
     "photoUploadFailed": "Error al subir — inténtalo de nuevo.",
     "importCv": "Importar CV",
     "deleteAccountTitle": "Eliminar cuenta",
-    "deleteAccountDesc": "Eliminar permanentemente tu cuenta y todos los datos asociados.",
+    "deleteAccountDesc": "Tu cuenta se eliminará permanentemente tras un período de gracia de 30 días. Recibirás un correo con un enlace para cancelar en cualquier momento antes de esa fecha.",
     "deleteAccountBtn": "Eliminar mi cuenta",
     "deleteAccountConfirmTitle": "¿Eliminar tu cuenta?",
-    "deleteAccountConfirmText": "Esto eliminará permanentemente tu cuenta, perfil y todas tus solicitudes. Esta acción no se puede deshacer.",
+    "deleteAccountConfirmText": "Tu cuenta quedará programada para eliminación en 30 días. Recibirás un correo con un enlace de cancelación, válido hasta la fecha de eliminación.",
     "deleteAccountConfirmBtn": "Sí, eliminar todo",
     "deleteAccountCancel": "Cancelar",
     "deleteAccountDeleting": "Eliminando…",
-    "deleteAccountError": "Ocurrió un error. Por favor, inténtalo de nuevo."
+    "deleteAccountError": "Ocurrió un error. Por favor, inténtalo de nuevo.",
+    "deleteAccountPendingTitle": "Eliminación programada",
+    "deleteAccountPendingText": "Tu cuenta se eliminará permanentemente el {date}. Se ha enviado un enlace de cancelación a tu correo electrónico.",
+    "deleteAccountCancelBtn": "Cancelar eliminación",
+    "deleteAccountCancelling": "Cancelando…",
+    "deleteAccountCancelledTitle": "Solicitud de eliminación cancelada",
+    "deleteAccountCancelledText": "Tu cuenta sigue activa."
   },
   "legal": {
     "privacy": {

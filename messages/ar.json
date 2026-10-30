@@ -889,14 +889,20 @@
     "photoUploadFailed": "فشل الرفع — يرجى المحاولة مرة أخرى.",
     "importCv": "استيراد السيرة الذاتية",
     "deleteAccountTitle": "حذف الحساب",
-    "deleteAccountDesc": "حذف حسابك وجميع البيانات المرتبطة به نهائيًا.",
+    "deleteAccountDesc": "سيتم حذف حسابك نهائيًا بعد فترة سماح مدتها 30 يومًا. ستتلقى رسالة بريد إلكتروني تحتوي على رابط للإلغاء في أي وقت قبل ذلك.",
     "deleteAccountBtn": "حذف حسابي",
     "deleteAccountConfirmTitle": "حذف حسابك؟",
-    "deleteAccountConfirmText": "سيؤدي هذا إلى حذف حسابك وملفك الشخصي وجميع طلباتك نهائيًا. لا يمكن التراجع عن هذا الإجراء.",
+    "deleteAccountConfirmText": "ستتم جدولة حذف حسابك خلال 30 يومًا. ستتلقى رسالة بريد إلكتروني تحتوي على رابط إلغاء صالح حتى تاريخ الحذف.",
     "deleteAccountConfirmBtn": "نعم، احذف كل شيء",
     "deleteAccountCancel": "إلغاء",
     "deleteAccountDeleting": "جارٍ الحذف…",
-    "deleteAccountError": "حدث خطأ. يرجى المحاولة مرة أخرى."
+    "deleteAccountError": "حدث خطأ. يرجى المحاولة مرة أخرى.",
+    "deleteAccountPendingTitle": "تم جدولة الحذف",
+    "deleteAccountPendingText": "سيتم حذف حسابك نهائيًا في {date}. تم إرسال رابط الإلغاء إلى بريدك الإلكتروني.",
+    "deleteAccountCancelBtn": "إلغاء الحذف",
+    "deleteAccountCancelling": "جارٍ الإلغاء…",
+    "deleteAccountCancelledTitle": "تم إلغاء طلب الحذف",
+    "deleteAccountCancelledText": "حسابك لا يزال نشطًا."
   },
   "legal": {
     "privacy": {

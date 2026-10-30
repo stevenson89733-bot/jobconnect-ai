@@ -3,9 +3,8 @@ import { useState } from 'react'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { FileText, Upload } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { updateProfile, type ProfileFields } from '@/app/actions/profile'
-import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import EditableSection from '@/components/profile/EditableSection'
 import Timeline from '@/components/profile/Timeline'
@@ -80,6 +79,7 @@ export default function ProfileEditor({
   cvUrl?: string | null
 }) {
   const t = useTranslations('profile')
+  const locale = useLocale()
 
   function availabilityLabel(value: string) {
     return AVAILABILITY_KEYS[value] ? t(AVAILABILITY_KEYS[value]) : value
@@ -128,16 +128,22 @@ export default function ProfileEditor({
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const [deleteError, setDeleteError] = useState<string | null>(null)
-  const router = useRouter()
+  // RGPD deferred deletion state (Art. 17) — 30-day cancellable window.
+  const [deletionScheduled, setDeletionScheduled] = useState<string | null>(null) // ISO date
+  const [cancelling, setCancelling] = useState(false)
+  const [cancelSuccess, setCancelSuccess] = useState(false)
 
   async function handleDeleteAccount() {
     setDeleting(true)
     setDeleteError(null)
     try {
-      const res = await fetch('/api/user/delete-account', { method: 'POST' })
-      if (res.ok) {
-        router.push('/')
-        router.refresh()
+      const res = await fetch('/api/rgpd/delete-account', { method: 'POST' })
+      const data = await res.json()
+      if (data.scheduled_for) {
+        // Either a fresh request (success: true) or an already-pending one
+        // (success: false) — both carry a real date to show.
+        setDeleteConfirmOpen(false)
+        setDeletionScheduled(data.scheduled_for)
       } else {
         setDeleteError(t('deleteAccountError'))
       }
@@ -145,6 +151,21 @@ export default function ProfileEditor({
       setDeleteError(t('deleteAccountError'))
     } finally {
       setDeleting(false)
+    }
+  }
+
+  async function handleCancelDeletion() {
+    setCancelling(true)
+    try {
+      const res = await fetch('/api/rgpd/cancel-deletion-inapp', { method: 'POST' })
+      if (res.ok) {
+        setDeletionScheduled(null)
+        setCancelSuccess(true)
+      }
+    } catch {
+      // silent — user can still cancel via the email link
+    } finally {
+      setCancelling(false)
     }
   }
 
@@ -396,17 +417,55 @@ export default function ProfileEditor({
         <Link href="/ai-tools/resume-builder"><Button variant="primary" size="sm">{t('openResumeBuilder')}</Button></Link>
       </div>
 
-      {/* Delete Account — GDPR right to erasure */}
+      {/* Delete Account — RGPD Art. 17 right to erasure, 30-day deferred window */}
       <div className="card p-6 border-red-200 dark:border-red-800/40">
-        <h2 className="font-semibold text-red-600 dark:text-red-400 mb-1">{t('deleteAccountTitle')}</h2>
-        <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">{t('deleteAccountDesc')}</p>
-        <button
-          type="button"
-          onClick={() => setDeleteConfirmOpen(true)}
-          className="text-sm font-semibold text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 border border-red-300 dark:border-red-700 rounded-lg px-4 py-2 transition-colors hover:bg-red-50 dark:hover:bg-red-900/20"
-        >
-          {t('deleteAccountBtn')}
-        </button>
+        {cancelSuccess ? (
+          <div className="flex items-start gap-3">
+            <div className="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center shrink-0 mt-0.5">
+              <svg className="w-4 h-4 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-slate-900 dark:text-white">{t('deleteAccountCancelledTitle')}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{t('deleteAccountCancelledText')}</p>
+            </div>
+          </div>
+        ) : deletionScheduled ? (
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center shrink-0 mt-0.5">
+                <svg className="w-4 h-4 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" /></svg>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-red-700 dark:text-red-400">{t('deleteAccountPendingTitle')}</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
+                  {t('deleteAccountPendingText', {
+                    date: new Date(deletionScheduled).toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' }),
+                  })}
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={handleCancelDeletion}
+              disabled={cancelling}
+              className="text-sm font-semibold text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-600 rounded-lg px-4 py-2 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50"
+            >
+              {cancelling ? t('deleteAccountCancelling') : t('deleteAccountCancelBtn')}
+            </button>
+          </div>
+        ) : (
+          <>
+            <h2 className="font-semibold text-red-600 dark:text-red-400 mb-1">{t('deleteAccountTitle')}</h2>
+            <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">{t('deleteAccountDesc')}</p>
+            <button
+              type="button"
+              onClick={() => setDeleteConfirmOpen(true)}
+              className="text-sm font-semibold text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 border border-red-300 dark:border-red-700 rounded-lg px-4 py-2 transition-colors hover:bg-red-50 dark:hover:bg-red-900/20"
+            >
+              {t('deleteAccountBtn')}
+            </button>
+          </>
+        )}
       </div>
 
       {/* Delete confirmation modal */}

@@ -895,14 +895,20 @@
     "photoUploadFailed": "Échec de l'envoi — veuillez réessayer.",
     "importCv": "Importer CV",
     "deleteAccountTitle": "Supprimer le compte",
-    "deleteAccountDesc": "Supprimer définitivement votre compte et toutes les données associées.",
+    "deleteAccountDesc": "Votre compte sera supprimé définitivement après un délai de 30 jours. Vous recevrez un e-mail avec un lien pour annuler à tout moment avant cette date.",
     "deleteAccountBtn": "Supprimer mon compte",
     "deleteAccountConfirmTitle": "Supprimer votre compte ?",
-    "deleteAccountConfirmText": "Cela supprimera définitivement votre compte, profil et toutes vos candidatures. Cette action est irréversible.",
+    "deleteAccountConfirmText": "Votre compte sera programmé pour suppression dans 30 jours. Vous recevrez un e-mail avec un lien d'annulation, valable jusqu'à la date de suppression.",
     "deleteAccountConfirmBtn": "Oui, tout supprimer",
     "deleteAccountCancel": "Annuler",
     "deleteAccountDeleting": "Suppression…",
-    "deleteAccountError": "Une erreur est survenue. Veuillez réessayer."
+    "deleteAccountError": "Une erreur est survenue. Veuillez réessayer.",
+    "deleteAccountPendingTitle": "Suppression planifiée",
+    "deleteAccountPendingText": "Votre compte sera définitivement supprimé le {date}. Un e-mail avec un lien d'annulation vous a été envoyé.",
+    "deleteAccountCancelBtn": "Annuler la suppression",
+    "deleteAccountCancelling": "Annulation…",
+    "deleteAccountCancelledTitle": "Demande de suppression annulée",
+    "deleteAccountCancelledText": "Votre compte reste actif."
   },
   "legal": {
     "privacy": {

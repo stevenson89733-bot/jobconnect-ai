@@ -910,14 +910,20 @@
     "photoUploadFailed": "Upload failed — please try again.",
     "importCv": "Import CV",
     "deleteAccountTitle": "Delete Account",
-    "deleteAccountDesc": "Permanently delete your account and all associated data.",
+    "deleteAccountDesc": "Your account will be permanently deleted after a 30-day grace period. You'll receive an email with a link to cancel at any time before then.",
     "deleteAccountBtn": "Delete my account",
     "deleteAccountConfirmTitle": "Delete your account?",
-    "deleteAccountConfirmText": "This will permanently delete your account, profile, and all applications. This cannot be undone.",
+    "deleteAccountConfirmText": "Your account will be scheduled for deletion in 30 days. You'll receive an email with a cancellation link, valid until the deletion date.",
     "deleteAccountConfirmBtn": "Yes, delete everything",
     "deleteAccountCancel": "Cancel",
     "deleteAccountDeleting": "Deleting…",
-    "deleteAccountError": "An error occurred. Please try again."
+    "deleteAccountError": "An error occurred. Please try again.",
+    "deleteAccountPendingTitle": "Deletion scheduled",
+    "deleteAccountPendingText": "Your account will be permanently deleted on {date}. A cancellation link has been sent to your email.",
+    "deleteAccountCancelBtn": "Cancel deletion",
+    "deleteAccountCancelling": "Cancelling…",
+    "deleteAccountCancelledTitle": "Deletion request cancelled",
+    "deleteAccountCancelledText": "Your account remains active."
   },
   "legal": {
     "privacy": {

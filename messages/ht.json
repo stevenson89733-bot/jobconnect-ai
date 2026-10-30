@@ -889,14 +889,20 @@
     "photoUploadFailed": "Voye echwe — tanpri eseye ankò.",
     "importCv": "Enpòte CV",
     "deleteAccountTitle": "Efase Kont",
-    "deleteAccountDesc": "Efase kont ou ak tout done ki asosye avèk li pou tout tan.",
+    "deleteAccountDesc": "Kont ou pral efase pou tout tan apre yon peryòd 30 jou. Ou pral resevwa yon imèl ak yon lyen pou anile nenpòt lè anvan dat sa a.",
     "deleteAccountBtn": "Efase kont mwen",
     "deleteAccountConfirmTitle": "Efase kont ou?",
-    "deleteAccountConfirmText": "Sa a pral efase kont ou, pwofil ou, ak tout aplikasyon ou pou tout tan. Sa pa ka defèt.",
+    "deleteAccountConfirmText": "Kont ou pral pwograme pou efase nan 30 jou. Ou pral resevwa yon imèl ak yon lyen anilasyon, ki valab jiska dat efasman an.",
     "deleteAccountConfirmBtn": "Wi, efase tout bagay",
     "deleteAccountCancel": "Anile",
     "deleteAccountDeleting": "Ap efase…",
-    "deleteAccountError": "Yon erè rive. Tanpri eseye ankò."
+    "deleteAccountError": "Yon erè rive. Tanpri eseye ankò.",
+    "deleteAccountPendingTitle": "Efasman pwograme",
+    "deleteAccountPendingText": "Kont ou pral efase pou tout tan nan {date}. Yon lyen anilasyon te voye nan imèl ou.",
+    "deleteAccountCancelBtn": "Anile efasman an",
+    "deleteAccountCancelling": "Ap anile…",
+    "deleteAccountCancelledTitle": "Demann efasman anile",
+    "deleteAccountCancelledText": "Kont ou rete aktif."
   },
   "legal": {
     "privacy": {

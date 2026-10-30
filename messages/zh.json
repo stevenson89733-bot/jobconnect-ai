@@ -889,14 +889,20 @@
     "photoUploadFailed": "上传失败——请重试。",
     "importCv": "导入简历",
     "deleteAccountTitle": "删除账户",
-    "deleteAccountDesc": "永久删除您的账户及所有相关数据。",
+    "deleteAccountDesc": "您的账户将在30天宽限期后永久删除。您将收到一封包含取消链接的电子邮件，可在此之前随时取消。",
     "deleteAccountBtn": "删除我的账户",
     "deleteAccountConfirmTitle": "删除您的账户？",
-    "deleteAccountConfirmText": "这将永久删除您的账户、个人资料和所有申请。此操作无法撤销。",
+    "deleteAccountConfirmText": "您的账户将被安排在30天后删除。您将收到一封包含取消链接的电子邮件，该链接在删除日期之前有效。",
     "deleteAccountConfirmBtn": "是的，删除所有内容",
     "deleteAccountCancel": "取消",
     "deleteAccountDeleting": "正在删除…",
-    "deleteAccountError": "发生错误，请重试。"
+    "deleteAccountError": "发生错误，请重试。",
+    "deleteAccountPendingTitle": "删除已安排",
+    "deleteAccountPendingText": "您的账户将于{date}永久删除。取消链接已发送至您的邮箱。",
+    "deleteAccountCancelBtn": "取消删除",
+    "deleteAccountCancelling": "取消中…",
+    "deleteAccountCancelledTitle": "删除请求已取消",
+    "deleteAccountCancelledText": "您的账户仍处于活动状态。"
   },
   "legal": {
     "privacy": {

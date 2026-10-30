@@ -889,14 +889,20 @@
     "photoUploadFailed": "Falha no envio — tente novamente.",
     "importCv": "Importar CV",
     "deleteAccountTitle": "Excluir conta",
-    "deleteAccountDesc": "Excluir permanentemente sua conta e todos os dados associados.",
+    "deleteAccountDesc": "Sua conta será excluída permanentemente após um período de carência de 30 dias. Você receberá um e-mail com um link para cancelar a qualquer momento antes dessa data.",
     "deleteAccountBtn": "Excluir minha conta",
     "deleteAccountConfirmTitle": "Excluir sua conta?",
-    "deleteAccountConfirmText": "Isso excluirá permanentemente sua conta, perfil e todas as suas candidaturas. Isso não pode ser desfeito.",
+    "deleteAccountConfirmText": "Sua conta será agendada para exclusão em 30 dias. Você receberá um e-mail com um link de cancelamento, válido até a data de exclusão.",
     "deleteAccountConfirmBtn": "Sim, excluir tudo",
     "deleteAccountCancel": "Cancelar",
     "deleteAccountDeleting": "Excluindo…",
-    "deleteAccountError": "Ocorreu um erro. Por favor, tente novamente."
+    "deleteAccountError": "Ocorreu um erro. Por favor, tente novamente.",
+    "deleteAccountPendingTitle": "Exclusão agendada",
+    "deleteAccountPendingText": "Sua conta será excluída permanentemente em {date}. Um link de cancelamento foi enviado para seu e-mail.",
+    "deleteAccountCancelBtn": "Cancelar exclusão",
+    "deleteAccountCancelling": "Cancelando…",
+    "deleteAccountCancelledTitle": "Solicitação de exclusão cancelada",
+    "deleteAccountCancelledText": "Sua conta permanece ativa."
   },
   "legal": {
     "privacy": {

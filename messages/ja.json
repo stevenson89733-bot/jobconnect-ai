@@ -889,14 +889,20 @@
     "photoUploadFailed": "アップロードに失敗しました — もう一度お試しください。",
     "importCv": "CVをインポート",
     "deleteAccountTitle": "アカウント削除",
-    "deleteAccountDesc": "アカウントと関連するすべてのデータを完全に削除します。",
+    "deleteAccountDesc": "アカウントは30日間の猶予期間後に完全に削除されます。それまでの間はいつでもキャンセルできるリンクがメールで届きます。",
     "deleteAccountBtn": "アカウントを削除",
     "deleteAccountConfirmTitle": "アカウントを削除しますか？",
-    "deleteAccountConfirmText": "アカウント、プロフィール、すべての応募が完全に削除されます。この操作は元に戻せません。",
+    "deleteAccountConfirmText": "アカウントは30日後に削除される予定になります。削除日まで有効なキャンセルリンクがメールで届きます。",
     "deleteAccountConfirmBtn": "はい、すべて削除します",
     "deleteAccountCancel": "キャンセル",
     "deleteAccountDeleting": "削除中…",
-    "deleteAccountError": "エラーが発生しました。もう一度お試しください。"
+    "deleteAccountError": "エラーが発生しました。もう一度お試しください。",
+    "deleteAccountPendingTitle": "削除予定",
+    "deleteAccountPendingText": "アカウントは{date}に完全に削除されます。キャンセルリンクがメールに送信されました。",
+    "deleteAccountCancelBtn": "削除をキャンセル",
+    "deleteAccountCancelling": "キャンセル中…",
+    "deleteAccountCancelledTitle": "削除リクエストがキャンセルされました",
+    "deleteAccountCancelledText": "アカウントは引き続き有効です。"
   },
   "legal": {
     "privacy": {

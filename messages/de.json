@@ -889,14 +889,20 @@
     "photoUploadFailed": "Upload fehlgeschlagen — bitte versuche es erneut.",
     "importCv": "CV importieren",
     "deleteAccountTitle": "Konto löschen",
-    "deleteAccountDesc": "Löschen Sie Ihr Konto und alle zugehörigen Daten dauerhaft.",
+    "deleteAccountDesc": "Ihr Konto wird nach einer 30-tägigen Übergangsfrist dauerhaft gelöscht. Sie erhalten eine E-Mail mit einem Link, um jederzeit vorher abzubrechen.",
     "deleteAccountBtn": "Mein Konto löschen",
     "deleteAccountConfirmTitle": "Konto löschen?",
-    "deleteAccountConfirmText": "Dies wird Ihr Konto, Profil und alle Bewerbungen dauerhaft löschen. Dies kann nicht rückgängig gemacht werden.",
+    "deleteAccountConfirmText": "Ihr Konto wird in 30 Tagen zur Löschung vorgemerkt. Sie erhalten eine E-Mail mit einem Abbruch-Link, der bis zum Löschdatum gültig ist.",
     "deleteAccountConfirmBtn": "Ja, alles löschen",
     "deleteAccountCancel": "Abbrechen",
     "deleteAccountDeleting": "Wird gelöscht…",
-    "deleteAccountError": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+    "deleteAccountError": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "deleteAccountPendingTitle": "Löschung geplant",
+    "deleteAccountPendingText": "Ihr Konto wird am {date} endgültig gelöscht. Ein Abbruch-Link wurde an Ihre E-Mail gesendet.",
+    "deleteAccountCancelBtn": "Löschung abbrechen",
+    "deleteAccountCancelling": "Wird abgebrochen…",
+    "deleteAccountCancelledTitle": "Löschantrag abgebrochen",
+    "deleteAccountCancelledText": "Ihr Konto bleibt aktiv."
   },
   "legal": {
     "privacy": {
