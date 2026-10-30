@@ -3,31 +3,90 @@
 import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 
+declare global {
+  interface Window {
+    _fbq?: unknown
+  }
+}
+
+type ConsentValue = 'accepted' | 'declined' | null
+
+export const CONSENT_KEY = 'cookie-consent'
+
+// The standard FB Pixel stub: a callable function that also carries a few
+// extra properties the real fbevents.js looks for once it finishes loading.
+type FbqStub = {
+  (...args: unknown[]): void
+  callMethod?: (...args: unknown[]) => void
+  queue: unknown[][]
+  loaded: boolean
+  version: string
+  push: FbqStub
+}
+
+// Initialise FB Pixel only after explicit consent.
+// Called once on "Accept" and again on mount if previously accepted.
+function initFbPixel() {
+  if (typeof window === 'undefined') return
+  if (window.fbq) {
+    window.fbq('consent', 'grant')
+    window.fbq('track', 'PageView')
+    return
+  }
+  // Inject pixel script on demand
+  const script = document.createElement('script')
+  script.async = true
+  script.src = 'https://connect.facebook.net/en_US/fbevents.js'
+  document.head.appendChild(script)
+  script.onload = () => {
+    const stub = function (...args: unknown[]) {
+      if (stub.callMethod) stub.callMethod(...args)
+      else stub.queue.push(args)
+    } as FbqStub
+    stub.queue = []
+    stub.loaded = true
+    stub.version = '2.0'
+    stub.push = stub
+    window.fbq = stub
+    if (!window._fbq) window._fbq = stub
+    window.fbq('init', '1577365084028138')
+    window.fbq('consent', 'grant')
+    window.fbq('track', 'PageView')
+  }
+}
+
 export function CookieConsent() {
   const t = useTranslations('cookieBanner')
   const [show, setShow] = useState(false)
 
   useEffect(() => {
-    const consent = localStorage.getItem('cookie-consent')
+    let consent: ConsentValue = null
+    try {
+      consent = localStorage.getItem(CONSENT_KEY) as ConsentValue
+    } catch {
+      // private browsing / storage blocked
+    }
+
     if (!consent) {
       setShow(true)
+    } else if (consent === 'accepted') {
+      // Re-initialise on page load for returning visitors who already accepted
+      initFbPixel()
     }
+    // 'declined' → do nothing; pixel stays unloaded
   }, [])
 
   const handleAccept = () => {
-    localStorage.setItem('cookie-consent', 'accepted')
+    try { localStorage.setItem(CONSENT_KEY, 'accepted') } catch { /* ignore */ }
     setShow(false)
-    if (window.fbq) {
-      window.fbq('consent', 'grant')
-    }
+    initFbPixel()
   }
 
   const handleDecline = () => {
-    localStorage.setItem('cookie-consent', 'declined')
+    try { localStorage.setItem(CONSENT_KEY, 'declined') } catch { /* ignore */ }
     setShow(false)
-    if (window.fbq) {
-      window.fbq('consent', 'revoke')
-    }
+    // Pixel was never loaded — nothing to revoke
+    if (window.fbq) window.fbq('consent', 'revoke')
   }
 
   if (!show) return null

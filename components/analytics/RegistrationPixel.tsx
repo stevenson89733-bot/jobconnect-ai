@@ -1,6 +1,7 @@
 'use client'
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { CONSENT_KEY } from '@/components/CookieConsent'
 
 declare global {
   interface Window {
@@ -14,9 +15,26 @@ export default function RegistrationPixel() {
   const router = useRouter()
 
   useEffect(() => {
-    // fbq stub is injected by <Script afterInteractive> which may not have run yet.
-    // Poll until available (max ~2s), fire, then wait 300ms before navigating so
-    // fbevents.js has time to send the network request before the soft-nav.
+    // fbq is injected on demand by <CookieConsent> — only once the user has
+    // accepted cookies (see initFbPixel there). If consent isn't 'accepted',
+    // fbq will never load, so skip the poll entirely and navigate right away
+    // rather than burning ~2s waiting for a pixel that was never going to fire.
+    let consent: string | null = null
+    try {
+      consent = localStorage.getItem(CONSENT_KEY)
+    } catch {
+      // private browsing / storage blocked — treat as no consent
+    }
+
+    if (consent !== 'accepted') {
+      router.replace('/candidate')
+      return
+    }
+
+    // Consent was already granted, so <CookieConsent> calls initFbPixel() on
+    // its own mount — poll until it's actually ready (max ~2s), fire, then
+    // wait 300ms before navigating so fbevents.js has time to send the
+    // network request before the soft-nav.
     let cancelled = false
     let timer: ReturnType<typeof setTimeout>
     let attempts = 0
