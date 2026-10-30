@@ -26,6 +26,14 @@ type FbqStub = {
 
 // Initialise FB Pixel only after explicit consent.
 // Called once on "Accept" and again on mount if previously accepted.
+//
+// The stub MUST be created synchronously, before the script tag is even
+// inserted — that's the standard snippet pattern, and the real fbevents.js
+// depends on it: once loaded, it looks for an existing window.fbq stub with
+// a .queue array and upgrades it in place, flushing anything queued while
+// it was loading. Creating the stub inside script.onload (i.e. after the
+// real script has already run its own bootstrap) means it never finds what
+// it expects and throws instead of ever sending a real tracking beacon.
 function initFbPixel() {
   if (typeof window === 'undefined') return
   if (window.fbq) {
@@ -33,26 +41,28 @@ function initFbPixel() {
     window.fbq('track', 'PageView')
     return
   }
-  // Inject pixel script on demand
+
+  const stub = function (...args: unknown[]) {
+    if (stub.callMethod) stub.callMethod(...args)
+    else stub.queue.push(args)
+  } as FbqStub
+  stub.queue = []
+  stub.loaded = true
+  stub.version = '2.0'
+  stub.push = stub
+  window.fbq = stub
+  if (!window._fbq) window._fbq = stub
+
+  // These queue on the stub immediately; the real script flushes the queue
+  // once it loads and upgrades window.fbq in place.
+  window.fbq('init', '1577365084028138')
+  window.fbq('consent', 'grant')
+  window.fbq('track', 'PageView')
+
   const script = document.createElement('script')
   script.async = true
   script.src = 'https://connect.facebook.net/en_US/fbevents.js'
   document.head.appendChild(script)
-  script.onload = () => {
-    const stub = function (...args: unknown[]) {
-      if (stub.callMethod) stub.callMethod(...args)
-      else stub.queue.push(args)
-    } as FbqStub
-    stub.queue = []
-    stub.loaded = true
-    stub.version = '2.0'
-    stub.push = stub
-    window.fbq = stub
-    if (!window._fbq) window._fbq = stub
-    window.fbq('init', '1577365084028138')
-    window.fbq('consent', 'grant')
-    window.fbq('track', 'PageView')
-  }
 }
 
 export function CookieConsent() {
