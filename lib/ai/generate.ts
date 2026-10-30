@@ -9,7 +9,7 @@ import { getPromptLanguageName, getPromptLocale, LETTER_CLOSING } from './prompt
 import { buildCountryBlock, buildCoverLetterCountryBlock } from './countryProfiles'
 import type { Locale } from '@/lib/i18n/config'
 
-// Rate limit for the primary GPT-4o/Mistral generation call itself — the
+// Rate limit for the primary GPT-4o/Groq generation call itself — the
 // most expensive, most exposed calls in the app, previously unlimited
 // (audit finding). Resume/cover letter generation is naturally iterative —
 // a candidate reasonably regenerates several times while tuning wording or
@@ -27,8 +27,8 @@ const AI_GENERATION_WINDOW_MS = 60 * 60 * 1000
  * A single entry point per tool (generateResume / generateCoverLetter) reads
  * `is_premium` SERVER-SIDE and routes the request:
  *   - premium → OpenAI (gpt-4o-mini, existing OPENAI_API_KEY)
- *   - free    → Mistral (mistral-small-latest, MISTRAL_API_KEY), through the
- *               OpenAI SDK against Mistral's OpenAI-compatible endpoint.
+ *   - free    → Groq (llama-3.3-70b-versatile, GROQ_API_KEY), through the
+ *               OpenAI SDK against Groq's OpenAI-compatible endpoint.
  *
  * Both providers use response_format json_object to guarantee structured JSON,
  * and every call is wrapped so failures return NextResponse.json({ error }, …)
@@ -104,11 +104,11 @@ async function resolveProvider(): Promise<Provider & { contact: ContactInfo; use
     return { client: new OpenAI({ apiKey }), model: 'gpt-4o-mini', tier: 'premium', contact, userId }
   }
 
-  const apiKey = process.env.MISTRAL_API_KEY
-  if (!apiKey) throw new AiError('Mistral not configured', 503)
+  const apiKey = process.env.GROQ_API_KEY
+  if (!apiKey) throw new AiError('Groq not configured', 503)
   return {
-    client: new OpenAI({ apiKey, baseURL: 'https://api.mistral.ai/v1' }),
-    model: 'mistral-small-latest',
+    client: new OpenAI({ apiKey, baseURL: 'https://api.groq.com/openai/v1' }),
+    model: 'llama-3.3-70b-versatile',
     tier: 'free',
     contact,
     userId,
@@ -238,7 +238,7 @@ Include 1 to 3 items in "suggestions", each for a different section, only where 
 }
 
 // Safety net: coerce a value to a readable string if a model returns an array
-// or object where a markdown string was requested (Mistral occasionally does).
+// or object where a markdown string was requested (Groq occasionally does).
 function coerceToString(value: unknown): string {
   if (value == null) return ''
   if (typeof value === 'string') return value

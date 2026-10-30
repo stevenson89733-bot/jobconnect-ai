@@ -14,14 +14,14 @@
  *
  * Usage: node scripts/classify-cross-border.js
  * Requires the same env vars Next.js reads from .env.local:
- *   NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, MISTRAL_API_KEY
+ *   NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, GROQ_API_KEY
  */
 const fs = require('fs')
 const path = require('path')
 const { createClient } = require('@supabase/supabase-js')
 const OpenAI = require('openai')
 
-const DELAY_MS = 1500 // spacing between real Mistral calls, no need to hammer it
+const DELAY_MS = 1500 // spacing between real Groq calls, no need to hammer it
 
 function loadEnvLocal() {
   const envPath = path.join(__dirname, '..', '.env.local')
@@ -56,7 +56,7 @@ Return a JSON object: { "status": "yes" | "no" | "unclear", "reason": "<one fact
 
 async function classify(client, title, description) {
   const res = await client.chat.completions.create({
-    model: 'mistral-small-latest',
+    model: 'llama-3.3-70b-versatile',
     messages: [{ role: 'user', content: buildPrompt(title, description) }],
     max_tokens: 200,
     response_format: { type: 'json_object' },
@@ -77,18 +77,18 @@ async function main() {
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-  const mistralKey = process.env.MISTRAL_API_KEY
+  const groqKey = process.env.GROQ_API_KEY
   if (!url || !serviceKey) {
     console.error('Missing NEXT_PUBLIC_SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY in .env.local')
     process.exit(1)
   }
-  if (!mistralKey) {
-    console.error('Missing MISTRAL_API_KEY in .env.local')
+  if (!groqKey) {
+    console.error('Missing GROQ_API_KEY in .env.local')
     process.exit(1)
   }
 
   const admin = createClient(url, serviceKey)
-  const mistral = new OpenAI({ apiKey: mistralKey, baseURL: 'https://api.mistral.ai/v1' })
+  const groq = new OpenAI({ apiKey: groqKey, baseURL: 'https://api.groq.com/openai/v1' })
 
   const { data: jobs, error } = await admin
     .from('jobs')
@@ -106,7 +106,7 @@ async function main() {
   let done = 0
   for (const job of jobs) {
     try {
-      const { status, reason } = await classify(mistral, job.title, job.description ?? '')
+      const { status, reason } = await classify(groq, job.title, job.description ?? '')
       const { error: updateError } = await admin
         .from('jobs')
         .update({ cross_border_status: status, cross_border_reason: reason })

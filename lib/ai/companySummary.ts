@@ -19,7 +19,7 @@ export type CompanySummaryResult =
   | { found: false }
 
 async function synthesize(companyName: string, researchSummary: string, locale: string): Promise<string | null> {
-  const apiKey = process.env.MISTRAL_API_KEY
+  const apiKey = process.env.GROQ_API_KEY
   if (!apiKey) return null
 
   const languageName = LOCALE_LABELS[locale as Locale] ?? 'English'
@@ -39,9 +39,9 @@ ${researchSummary}
 Return a JSON object: { "summary": "<2-4 sentence overview using ONLY the facts above>" }`
 
   try {
-    const client = new OpenAI({ apiKey, baseURL: 'https://api.mistral.ai/v1' })
+    const client = new OpenAI({ apiKey, baseURL: 'https://api.groq.com/openai/v1' })
     const res = await client.chat.completions.create({
-      model: 'mistral-small-latest',
+      model: 'llama-3.3-70b-versatile',
       messages: [{ role: 'user', content: prompt }],
       max_tokens: 300,
       response_format: { type: 'json_object' },
@@ -60,7 +60,7 @@ export async function buildCompanySummary(companyName: string, locale: string): 
   const research = await researchCompany(companyName)
   if (!research.found) return { found: false }
 
-  // If synthesis fails (no Mistral key, API error), fall back to the real
+  // If synthesis fails (no Groq key, API error), fall back to the real
   // research snippets as-is rather than discarding real, verified facts —
   // less polished, never fabricated either way.
   const summary = (await synthesize(companyName, research.summary, locale)) ?? research.summary

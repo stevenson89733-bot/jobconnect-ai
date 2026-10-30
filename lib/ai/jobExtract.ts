@@ -8,7 +8,7 @@ import OpenAI from 'openai'
  * /api/jobs (role check + employer plan limit + cross-border
  * classification) — this module never touches the `jobs` table.
  *
- * Always Mistral (free tier), same reasoning as lib/ai/crossBorder.ts: cheap
+ * Always Groq (free tier), same reasoning as lib/ai/crossBorder.ts: cheap
  * classification/extraction over existing text, not the paid generation
  * work that justifies GPT-4o elsewhere — no premium gating, consistent with
  * PostJobModal itself (gated by employer role + plan limit, not is_premium).
@@ -110,13 +110,13 @@ function normalize(raw: unknown): ExtractedJob {
 }
 
 export async function extractJobFromText(text: string): Promise<ExtractedJob> {
-  const apiKey = process.env.MISTRAL_API_KEY
-  if (!apiKey) throw new JobExtractError('Mistral not configured', 503)
+  const apiKey = process.env.GROQ_API_KEY
+  if (!apiKey) throw new JobExtractError('Groq not configured', 503)
 
-  const client = new OpenAI({ apiKey, baseURL: 'https://api.mistral.ai/v1' })
+  const client = new OpenAI({ apiKey, baseURL: 'https://api.groq.com/openai/v1' })
   try {
     const res = await client.chat.completions.create({
-      model: 'mistral-small-latest',
+      model: 'llama-3.3-70b-versatile',
       messages: [{ role: 'user', content: buildPrompt(text.slice(0, 8000)) }],
       max_tokens: 800,
       response_format: { type: 'json_object' },
