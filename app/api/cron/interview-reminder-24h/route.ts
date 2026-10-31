@@ -45,7 +45,7 @@ export async function GET(req: Request) {
     if (result.success) {
       await supabase.from('interview_schedules').update({ reminder_24h_sent: true }).eq('id', row.id)
       await supabase.from('notifications').insert({
-        user_id: row.candidate_id,
+        user_id: profile.user_id,
         type: 'interview_reminder',
         message: `Reminder: your interview for "${job.title}" is tomorrow at ${interviewDateTime}.`,
         read: false,
@@ -65,7 +65,7 @@ async function fetchRelated(
   jobId: string,
 ) {
   const [{ data: profile }, { data: job }] = await Promise.all([
-    supabase.from('profiles').select('full_name, email').eq('user_id', candidateId).single(),
+    supabase.from('profiles').select('user_id, full_name, email').eq('id', candidateId).single(),
     supabase.from('jobs').select('title').eq('id', jobId).single(),
   ])
   return { profile, job }
