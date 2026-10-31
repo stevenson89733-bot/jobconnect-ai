@@ -14,17 +14,16 @@ export async function GET(req: Request) {
   const supabase = createAdminClient()
   const now = new Date()
 
-  // 1h window: scheduled_at between now+50min and now+70min
+  // 1h window: interview_date between now+50min and now+70min
   const windowFrom = new Date(now.getTime() + 50 * 60 * 1000).toISOString()
   const windowTo = new Date(now.getTime() + 70 * 60 * 1000).toISOString()
 
   const { data: rows, error } = await supabase
     .from('interview_schedules')
-    .select('id, candidate_id, job_id, scheduled_at')
-    .eq('status', 'scheduled')
-    .eq('reminder_1h_sent', false)
-    .gte('scheduled_at', windowFrom)
-    .lte('scheduled_at', windowTo)
+    .select('id, candidate_id, job_id, interview_date')
+    .eq('reminder_2h_sent', false)
+    .gte('interview_date', windowFrom)
+    .lte('interview_date', windowTo)
 
   if (error) console.error('[interview-reminder-1h]', error.message)
 
@@ -34,7 +33,7 @@ export async function GET(req: Request) {
     const { profile, job } = await fetchRelated(supabase, row.candidate_id, row.job_id)
     if (!profile?.email || !job?.title) continue
 
-    const interviewDateTime = formatDateTime(row.scheduled_at)
+    const interviewDateTime = formatDateTime(row.interview_date)
 
     const result = await sendInterviewScheduleReminder1h({
       to: profile.email,
@@ -44,7 +43,7 @@ export async function GET(req: Request) {
     })
 
     if (result.success) {
-      await supabase.from('interview_schedules').update({ reminder_1h_sent: true }).eq('id', row.id)
+      await supabase.from('interview_schedules').update({ reminder_2h_sent: true }).eq('id', row.id)
       await supabase.from('notifications').insert({
         user_id: row.candidate_id,
         type: 'interview_reminder',
@@ -72,9 +71,9 @@ async function fetchRelated(
   return { profile, job }
 }
 
-function formatDateTime(scheduledAt: string): string {
+function formatDateTime(interviewDate: string): string {
   try {
-    const date = new Date(scheduledAt)
+    const date = new Date(interviewDate)
     const opts: Intl.DateTimeFormatOptions = {
       weekday: 'long',
       day: 'numeric',
@@ -86,6 +85,6 @@ function formatDateTime(scheduledAt: string): string {
     }
     return new Intl.DateTimeFormat('en-US', opts).format(date)
   } catch {
-    return scheduledAt
+    return interviewDate
   }
 }

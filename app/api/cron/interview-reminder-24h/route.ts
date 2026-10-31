@@ -14,17 +14,16 @@ export async function GET(req: Request) {
   const supabase = createAdminClient()
   const now = new Date()
 
-  // 24h window: scheduled_at between now+23h and now+25h
+  // 24h window: interview_date between now+23h and now+25h
   const windowFrom = new Date(now.getTime() + 23 * 60 * 60 * 1000).toISOString()
   const windowTo = new Date(now.getTime() + 25 * 60 * 60 * 1000).toISOString()
 
   const { data: rows, error } = await supabase
     .from('interview_schedules')
-    .select('id, candidate_id, job_id, scheduled_at')
-    .eq('status', 'scheduled')
+    .select('id, candidate_id, job_id, interview_date')
     .eq('reminder_24h_sent', false)
-    .gte('scheduled_at', windowFrom)
-    .lte('scheduled_at', windowTo)
+    .gte('interview_date', windowFrom)
+    .lte('interview_date', windowTo)
 
   if (error) console.error('[interview-reminder-24h]', error.message)
 
@@ -34,7 +33,7 @@ export async function GET(req: Request) {
     const { profile, job } = await fetchRelated(supabase, row.candidate_id, row.job_id)
     if (!profile?.email || !job?.title) continue
 
-    const interviewDateTime = formatDateTime(row.scheduled_at)
+    const interviewDateTime = formatDateTime(row.interview_date)
 
     const result = await sendInterviewScheduleReminder24h({
       to: profile.email,
@@ -72,9 +71,9 @@ async function fetchRelated(
   return { profile, job }
 }
 
-function formatDateTime(scheduledAt: string): string {
+function formatDateTime(interviewDate: string): string {
   try {
-    const date = new Date(scheduledAt)
+    const date = new Date(interviewDate)
     const opts: Intl.DateTimeFormatOptions = {
       weekday: 'long',
       day: 'numeric',
@@ -86,6 +85,6 @@ function formatDateTime(scheduledAt: string): string {
     }
     return new Intl.DateTimeFormat('en-US', opts).format(date)
   } catch {
-    return scheduledAt
+    return interviewDate
   }
 }
