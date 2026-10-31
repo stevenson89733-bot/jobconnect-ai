@@ -1,9 +1,29 @@
 import { parseSkillSet } from './jobMatching'
 
-export function matchScoreColor(score: number): { bg: string; text: string; border: string } {
-  if (score > 70) return { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200' }
-  if (score >= 50) return { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200' }
-  return { bg: 'bg-slate-50', text: 'text-slate-600', border: 'border-slate-200' }
+export function matchScoreColor(score: number): string {
+  if (score > 70) return 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-800'
+  if (score >= 50) return 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-400 dark:border-amber-800'
+  return 'bg-slate-50 text-slate-500 border-slate-200 dark:bg-slate-800/50 dark:text-slate-400 dark:border-slate-700'
+}
+
+const SOURCE_LABELS: Record<string, string> = {
+  arbeitnow:  'Arbeitnow',
+  remotive:   'Remotive',
+  greenhouse: 'Greenhouse',
+  himalayas:  'Himalayas',
+  jobicy:     'Jobicy',
+  wwr:        'We Work Remotely',
+  adzuna_au:  'Adzuna AU',
+  adzuna_ca:  'Adzuna CA',
+  adzuna_de:  'Adzuna DE',
+  adzuna_fr:  'Adzuna FR',
+  adzuna_gb:  'Adzuna GB',
+  adzuna_nl:  'Adzuna NL',
+}
+
+export function getSourceLabel(source: string | null | undefined): string | null {
+  if (!source) return null
+  return SOURCE_LABELS[source] ?? null
 }
 
 export type ScoreDetail = { label: string; matched: boolean }

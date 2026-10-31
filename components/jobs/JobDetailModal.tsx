@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { ExternalLink, X } from 'lucide-react'
 import type { Job } from '@/app/jobs/JobsClient'
 import ProLockButton from '@/components/ui/ProLockButton'
-import { matchScoreColor } from '@/lib/jobScoring'
+import { matchScoreColor, getSourceLabel } from '@/lib/jobScoring'
 
 interface Props {
   job: Job
@@ -42,9 +42,8 @@ export default function JobDetailModal({ job, isOpen = true, onClose, alreadyApp
 
   if (!isOpen) return null
 
-  const sourceName = job.source
-    ? job.source.charAt(0).toUpperCase() + job.source.slice(1)
-    : 'external site'
+  const sourceName = getSourceLabel(job.source)
+    ?? (job.source ? job.source.charAt(0).toUpperCase() + job.source.slice(1) : 'external site')
 
   return (
     <div
@@ -133,15 +132,14 @@ export default function JobDetailModal({ job, isOpen = true, onClose, alreadyApp
               </span>
             )}
             {job.matchScore != null && job.matchScore >= 30 && (() => {
-              const mc = matchScoreColor(job.matchScore)
               return (
-                <span className={`inline-flex items-center gap-1.5 ${mc.bg} ${mc.text} border ${mc.border} text-xs font-semibold px-3 py-1 rounded-full`}>
+                <span className={`inline-flex items-center gap-1.5 border ${matchScoreColor(job.matchScore)} text-xs font-semibold px-3 py-1 rounded-full`}>
                   ✦ {job.matchScore}% match
                 </span>
               )
             })()}
             {job.source && (
-              <span className="inline-flex items-center gap-1.5 bg-slate-50 text-slate-500 border border-slate-200 text-xs px-3 py-1 rounded-full">
+              <span className="inline-flex items-center gap-1.5 bg-slate-50 text-slate-500 border border-slate-200 dark:bg-slate-800/50 dark:text-slate-400 dark:border-slate-700 text-xs px-3 py-1 rounded-full">
                 Via {sourceName}
               </span>
             )}
