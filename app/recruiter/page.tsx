@@ -332,10 +332,10 @@ export default async function EmployerDashboard() {
       </div>
 
       {/* Interview Scheduling Link */}
-      <InterviewLinkEditor initialLink={meetingLink} isPro={employerPlan === 'pro' || isAdmin} />
+      <InterviewLinkEditor initialLink={meetingLink} isPro={['pro', 'enterprise'].includes(employerPlan) || isAdmin} />
 
       {/* Advanced Analytics — Pro only */}
-      {(employerPlan === 'pro' || isAdmin) && (
+      {(['pro', 'enterprise'].includes(employerPlan) || isAdmin) && (
         <div className="mb-6">
           <AnalyticsDashboard
             applications={applications.map(a => ({
@@ -353,7 +353,7 @@ export default async function EmployerDashboard() {
       <div className="mb-6">
         <AIScreeningPanel
           jobs={jobs.filter(j => j.is_active)}
-          isPro={employerPlan === 'pro' || isAdmin}
+          isPro={['pro', 'enterprise'].includes(employerPlan) || isAdmin}
         />
       </div>
 
@@ -366,7 +366,7 @@ export default async function EmployerDashboard() {
       <div className="mb-6">
         <TeamManagementPanel
           isGrowth={employerPlan !== 'free' || isAdmin}
-          isPro={employerPlan === 'pro' || isAdmin}
+          isPro={['pro', 'enterprise'].includes(employerPlan) || isAdmin}
         />
       </div>
 
