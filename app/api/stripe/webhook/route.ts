@@ -29,8 +29,9 @@ export async function POST(req: Request) {
   )
 
   // Employer plan is determined by which price the checkout used.
-  const EMPLOYER_PRO_PRICE_ID     = process.env.STRIPE_EMPLOYER_PRO_PRICE_ID ?? 'price_1UGMUmBHJVowT7ouBDORCd3s'
-  const FEATURED_LISTING_PRICE_ID = process.env.STRIPE_FEATURED_LISTING_PRICE_ID
+  const EMPLOYER_PRO_PRICE_ID        = process.env.STRIPE_EMPLOYER_PRO_PRICE_ID ?? 'price_1UGMUmBHJVowT7ouBDORCd3s'
+  const EMPLOYER_ENTERPRISE_PRICE_ID = process.env.STRIPE_EMPLOYER_ENTERPRISE_PRICE_ID
+  const FEATURED_LISTING_PRICE_ID    = process.env.STRIPE_FEATURED_LISTING_PRICE_ID
 
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session
@@ -53,7 +54,9 @@ export async function POST(req: Request) {
         const stripe = new Stripe(stripeKey, { apiVersion: '2022-11-15' })
         const lineItems = await stripe.checkout.sessions.listLineItems(session.id, { limit: 1 })
         const purchasedPriceId = lineItems.data[0]?.price?.id
-        const plan = purchasedPriceId === EMPLOYER_PRO_PRICE_ID ? 'pro' : 'growth'
+        const plan = purchasedPriceId === EMPLOYER_ENTERPRISE_PRICE_ID ? 'enterprise'
+                   : purchasedPriceId === EMPLOYER_PRO_PRICE_ID        ? 'pro'
+                   : 'growth'
         await supabase.from('profiles').update({ employer_plan: plan }).eq('user_id', userId)
       } else {
         // Set candidate_plan from session metadata so plan-aware features
@@ -74,7 +77,9 @@ export async function POST(req: Request) {
     const { data: profile } = await supabase.from('profiles').select('role').eq('stripe_customer_id', customerId).single()
     if (profile?.role === 'employer') {
       if (status === 'active') {
-        const plan = priceId === EMPLOYER_PRO_PRICE_ID ? 'pro' : 'growth'
+        const plan = priceId === EMPLOYER_ENTERPRISE_PRICE_ID ? 'enterprise'
+                   : priceId === EMPLOYER_PRO_PRICE_ID        ? 'pro'
+                   : 'growth'
         await supabase.from('profiles').update({ employer_plan: plan }).eq('stripe_customer_id', customerId)
       }
     } else {

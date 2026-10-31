@@ -348,10 +348,9 @@ export default async function PricingPage({
             </div>
 
             {/* Enterprise */}
-            <div className="card border-dashed border-slate-400 dark:border-slate-600 flex flex-col relative overflow-hidden opacity-90">
-              <div className="absolute top-0 right-0 bg-slate-600 dark:bg-slate-700 text-slate-200 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-bl-xl">PHASE 2</div>
+            <div className="card border-violet-500/30 bg-gradient-to-br from-violet-500/5 to-white dark:to-card flex flex-col relative overflow-hidden">
               <div className="mb-6">
-                <div className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">{t('employerEnterpriseLabel')}</div>
+                <div className="text-sm font-semibold text-violet-600 dark:text-violet-400 uppercase tracking-wider mb-1">{t('employerEnterpriseLabel')}</div>
                 <div className="flex items-end gap-1">
                   <span className="text-5xl font-black text-slate-900 dark:text-white">$299+</span>
                   <span className="text-slate-600 dark:text-slate-400 mb-1">{t('perMonth')}</span>
@@ -365,9 +364,13 @@ export default async function PricingPage({
                   </li>
                 ))}
               </ul>
-              <button disabled className="w-full font-semibold rounded-xl px-6 py-3 text-sm border border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400 opacity-70 cursor-not-allowed">
-                {t('comingSoonBtn')}
-              </button>
+              <Link
+                href="/contact"
+                className="w-full font-semibold rounded-xl px-6 py-3 text-sm text-center text-white transition-colors"
+                style={{ background: 'linear-gradient(135deg, #7c3aed, #9333ea)' }}
+              >
+                {t('employerEnterpriseButton')}
+              </Link>
             </div>
           </div>
 

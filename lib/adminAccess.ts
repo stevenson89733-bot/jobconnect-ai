@@ -26,13 +26,14 @@ export function effectiveEmployerPlan(profile: {
   is_admin?: boolean | null
   employer_plan?: string | null
 }): string {
-  if (profile.is_admin) return 'pro'
+  if (profile.is_admin) return 'enterprise'
   return profile.employer_plan ?? 'free'
 }
 
 export function effectiveIsUnlimitedPosting(profile: {
   is_admin?: boolean | null
   is_unlimited_posting?: boolean | null
+  employer_plan?: string | null
 }): boolean {
-  return profile.is_admin === true || profile.is_unlimited_posting === true
+  return profile.is_admin === true || profile.is_unlimited_posting === true || profile.employer_plan === 'enterprise'
 }

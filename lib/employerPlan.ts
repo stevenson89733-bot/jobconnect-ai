@@ -2,12 +2,13 @@
 // definition shared by the /api/jobs POST limit check and the /pricing
 // page, so the number displayed to employers can never drift from the
 // number actually enforced.
-export type EmployerPlan = 'free' | 'growth' | 'pro'
+export type EmployerPlan = 'free' | 'growth' | 'pro' | 'enterprise'
 
 export const EMPLOYER_PLAN_LIMITS: Record<EmployerPlan, number> = {
   free: 1,
   growth: 5,
-  pro: 999, // effectively unlimited
+  pro: 999,
+  enterprise: 9999, // effectively unlimited; bypass via effectiveIsUnlimitedPosting
 }
 
 export function employerPlanLimit(plan: string | null | undefined): number {

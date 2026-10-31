@@ -20,7 +20,7 @@ export async function POST(req: Request) {
   if (profile?.role !== 'employer' && !profile?.is_admin) {
     return NextResponse.json({ error: 'Employers only' }, { status: 403 })
   }
-  if (effectiveEmployerPlan(profile ?? {}) !== 'pro') {
+  if (!['pro', 'enterprise'].includes(effectiveEmployerPlan(profile ?? {}))) {
     return NextResponse.json({ error: 'Pro plan required' }, { status: 403 })
   }
 
