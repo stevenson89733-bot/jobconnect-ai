@@ -14,6 +14,8 @@
     { "path": "/api/cron/import-greenhouse",       "schedule": "0 17 * * *" },
     { "path": "/api/cron/auto-apply",              "schedule": "0 3 * * *" },
     { "path": "/api/cron/aggregate-jobs",          "schedule": "0 5 * * *" },
-    { "path": "/api/cron/interview-reminders",     "schedule": "0 * * * *" }
+    { "path": "/api/cron/interview-reminders",     "schedule": "0 * * * *" },
+    { "path": "/api/cron/interview-reminder-24h",  "schedule": "0 * * * *" },
+    { "path": "/api/cron/interview-reminder-1h",   "schedule": "0 * * * *" }
   ]
 }

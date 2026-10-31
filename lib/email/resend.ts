@@ -175,3 +175,111 @@ export async function sendInterviewReminder2h(params: InterviewReminderParams): 
     return { success: false, error: err instanceof Error ? err.message : String(err) }
   }
 }
+
+// ── interview_schedules-based reminders ─────────────────────────────────────
+// Distinct from sendInterviewReminder24h/2h above, which are tied to the
+// applications-table reminder system (French copy, requires companyName +
+// an employer meetingLink, fires at a 2h window). These two are for the
+// separate interview_schedules table: English copy, exact subject lines as
+// specified, link to /dashboard rather than a specific meeting link, and a
+// 1h (not 2h) second reminder window.
+
+type ScheduleReminderParams = {
+  to: string
+  candidateName: string
+  jobTitle: string
+  interviewDateTime: string
+}
+
+function scheduleReminderHtml(params: ScheduleReminderParams & { h1: string }): string {
+  const { jobTitle, interviewDateTime, h1 } = params
+  return `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#F7F9FF;font-family:Inter,Arial,sans-serif">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#F7F9FF;padding:40px 0">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%">
+
+        <!-- Header -->
+        <tr>
+          <td style="background:#0F1623;padding:28px 32px;border-radius:12px 12px 0 0">
+            <p style="margin:0;font-size:20px;font-weight:700;color:#ffffff;letter-spacing:-0.3px">JobConnect AI</p>
+            <p style="margin:6px 0 0;font-size:13px;color:#315bea;font-weight:500">Global AI Career Operating System</p>
+          </td>
+        </tr>
+
+        <!-- Body -->
+        <tr>
+          <td style="background:#ffffff;padding:40px 32px;border-radius:0 0 12px 12px">
+            <h1 style="margin:0 0 20px;font-size:26px;font-weight:700;color:#0F1623">${h1}</h1>
+            <p style="margin:0 0 24px;font-size:15px;line-height:1.6;color:#374151">
+              You have an interview scheduled for <strong>${jobTitle}</strong>.
+            </p>
+            <!-- Info box -->
+            <div style="background:#EEF2FE;border-left:4px solid #315bea;padding:14px 18px;border-radius:0 8px 8px 0;margin-bottom:24px">
+              <p style="margin:0;font-size:15px;font-weight:600;color:#1E3A8A">📅 ${interviewDateTime}</p>
+            </div>
+            <a href="https://jobconnect-ai.com/dashboard"
+               style="display:inline-block;background:#f97316;color:#ffffff;text-decoration:none;font-size:15px;font-weight:600;padding:14px 28px;border-radius:8px;margin-bottom:28px">
+              Go to your dashboard →
+            </a>
+            <hr style="border:none;border-top:1px solid #E5E7EB;margin:24px 0">
+            <p style="margin:0;font-size:12px;color:#9CA3AF;line-height:1.6">
+              © 2026 SJL Technologies LLC · jobconnect-ai.com
+            </p>
+          </td>
+        </tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
+}
+
+export async function sendInterviewScheduleReminder24h(params: ScheduleReminderParams): Promise<{ success: boolean; error?: string }> {
+  if (!process.env.RESEND_API_KEY) return { success: false, error: 'RESEND_API_KEY not configured' }
+  const resend = new Resend(process.env.RESEND_API_KEY)
+
+  const html = scheduleReminderHtml({
+    ...params,
+    h1: `Your interview is tomorrow, ${params.candidateName} 👋`,
+  })
+
+  try {
+    const { error } = await resend.emails.send({
+      from: 'JobConnect AI <hello@jobconnect-ai.com>',
+      to: params.to,
+      subject: 'Reminder: Your interview is tomorrow',
+      html,
+    })
+    if (error) return { success: false, error: error.message }
+    return { success: true }
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : String(err) }
+  }
+}
+
+export async function sendInterviewScheduleReminder1h(params: ScheduleReminderParams): Promise<{ success: boolean; error?: string }> {
+  if (!process.env.RESEND_API_KEY) return { success: false, error: 'RESEND_API_KEY not configured' }
+  const resend = new Resend(process.env.RESEND_API_KEY)
+
+  const html = scheduleReminderHtml({
+    ...params,
+    h1: `Your interview starts in 1 hour, ${params.candidateName} ⏰`,
+  })
+
+  try {
+    const { error } = await resend.emails.send({
+      from: 'JobConnect AI <hello@jobconnect-ai.com>',
+      to: params.to,
+      subject: 'Your interview starts in 1 hour',
+      html,
+    })
+    if (error) return { success: false, error: error.message }
+    return { success: true }
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : String(err) }
+  }
+}
